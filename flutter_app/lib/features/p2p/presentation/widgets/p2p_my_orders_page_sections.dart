@@ -37,10 +37,7 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.p2pMerchantCommerceStatPadding,
       child: Column(
         children: [
           Text(
@@ -123,13 +120,12 @@ class _SearchSortRow extends StatelessWidget {
           child: InkWell(
             onTap: onSort,
             borderRadius: AppRadii.inputRadius,
-            child: Container(
-              height: AppSpacing.buttonCompact + AppSpacing.x2 + AppSpacing.x2,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.borderSolid),
-                borderRadius: AppRadii.inputRadius,
-              ),
+            child: VitCard(
+              height: AppSpacing.p2pMerchantCommerceSortButtonHeight,
+              variant: VitCardVariant.ghost,
+              radius: VitCardRadius.sm,
+              borderColor: AppColors.borderSolid,
+              padding: AppSpacing.p2pMerchantCommerceChipPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -170,14 +166,17 @@ class _OrderCard extends StatelessWidget {
     return VitCard(
       key: P2PMyOrdersPage.orderKey(order.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMerchantCommerceCardPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              _TypePill(label: isBuy ? 'MUA' : 'BÁN', color: typeColor),
+              VitAccentPill(
+                label: isBuy ? 'MUA' : 'BÁN',
+                accentColor: typeColor,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
@@ -228,7 +227,10 @@ class _OrderCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          const Divider(color: AppColors.divider, height: 1),
+          const Divider(
+            color: AppColors.divider,
+            height: AppSpacing.p2pMerchantCommerceDividerHeight,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
@@ -327,7 +329,7 @@ class _EmptyOrders extends StatelessWidget {
     return VitCard(
       key: P2PMyOrdersPage.emptyKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.p2pMerchantCommerceLargePadding,
       child: Column(
         children: [
           const Icon(

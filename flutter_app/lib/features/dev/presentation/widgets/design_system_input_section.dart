@@ -117,18 +117,17 @@ class _InputWrapperDemo extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         DecoratedBox(
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: AppColors.surface2,
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(
-              color: hasError ? AppColors.sell : AppColors.borderSolid,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(
+                color: hasError ? AppColors.sell : AppColors.borderSolid,
+              ),
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x4,
-            ),
+            padding: AppSpacing.devInputPadding,
             child: Row(
               children: [
                 if (icon != null) ...[

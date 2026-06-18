@@ -37,7 +37,7 @@ class _ResultsState extends StatelessWidget {
           ),
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         if (results.predictions.isNotEmpty) ...[
           _ResultSection(
             icon: Icons.track_changes_rounded,
@@ -49,7 +49,7 @@ class _ResultsState extends StatelessWidget {
                 _PredictionResultCard(event: event),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
         ],
         if (results.arenaModes.isNotEmpty) ...[
           _ResultSection(
@@ -62,7 +62,7 @@ class _ResultsState extends StatelessWidget {
                 _ArenaModeResultCard(mode: mode),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
         ],
         if (results.arenaRooms.isNotEmpty) ...[
           _ResultSection(
@@ -75,7 +75,7 @@ class _ResultsState extends StatelessWidget {
                 _ArenaRoomResultCard(room: room),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
         ],
         if (results.creators.isNotEmpty) ...[
           _ResultSection(
@@ -88,7 +88,7 @@ class _ResultsState extends StatelessWidget {
                 _CreatorResultCard(creator: creator),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
         ],
         if (results.tradingPairs.isNotEmpty) ...[
           _ResultSection(
@@ -101,7 +101,7 @@ class _ResultsState extends StatelessWidget {
                 _TradingPairResultCard(pair: pair),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
         ],
         _BoundaryDisclosure(notes: snapshot.contractNotes),
       ],
@@ -131,15 +131,18 @@ class _ResultSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.buttonCompact,
               height: AppSpacing.buttonCompact,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .12),
-                borderRadius: AppRadii.mdRadius,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color.withValues(alpha: .12),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.mdRadius,
+                  ),
+                ),
+                child: Center(child: Icon(icon, color: color, size: 16)),
               ),
-              child: Icon(icon, color: color, size: 16),
             ),
             const SizedBox(width: AppSpacing.x3),
             Expanded(
@@ -154,12 +157,9 @@ class _ResultSection extends StatelessWidget {
             _CountBadge(count: count),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         ...children.expand(
-          (child) => [
-            child,
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
-          ],
+          (child) => [child, const SizedBox(height: AppSpacing.x3)],
         ),
       ],
     );

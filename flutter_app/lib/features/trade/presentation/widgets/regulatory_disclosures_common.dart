@@ -7,16 +7,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10),
-      child: Text(
-        text,
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.text2,
-          fontWeight: AppTextStyles.bold,
-          height: 1.2,
-        ),
-      ),
+    return VitSectionHeader(
+      title: text,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _legalPrimary,
     );
   }
 }

@@ -23,7 +23,7 @@ class _RuleSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.accent20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaSmartRuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -86,7 +86,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.arenaSmartRuleSummaryRowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -122,7 +122,7 @@ class _ModerationNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaSmartRuleInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -177,7 +177,7 @@ class _FooterActions extends StatelessWidget {
                 onPressed: onBack,
                 variant: VitCtaButtonVariant.secondary,
                 fullWidth: false,
-                padding: EdgeInsets.zero,
+                padding: AppSpacing.zeroInsets,
                 child: const Icon(Icons.chevron_left_rounded),
               ),
             ),

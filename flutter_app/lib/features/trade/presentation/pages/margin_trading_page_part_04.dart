@@ -8,7 +8,12 @@ class _InfoBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.searchBarHorizontalPadding,
+        top: AppSpacing.rowGapRegular,
+        right: AppSpacing.searchBarHorizontalPadding,
+        bottom: AppSpacing.rowGapRegular,
+      ),
       variant: VitCardVariant.inner,
       borderColor: _marginPrimary.withValues(alpha: .28),
       child: Row(
@@ -17,15 +22,14 @@ class _InfoBanner extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _marginPrimary,
-            size: 13,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _marginPrimary,
-                height: 1.45,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -53,14 +57,19 @@ class _Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final usesCustomColor = color != _marginCard && color != _marginPanel;
     return VitCard(
       constraints: minHeight == null
           ? null
           : BoxConstraints(minHeight: minHeight!),
       padding: padding,
-      variant: color == _marginPanel
+      variant: usesCustomColor
+          ? VitCardVariant.ghost
+          : color == _marginPanel
           ? VitCardVariant.inner
           : VitCardVariant.standard,
+      background: usesCustomColor ? ColoredBox(color: color) : null,
+      clip: usesCustomColor,
       borderColor: borderColor,
       child: child,
     );
@@ -95,6 +104,33 @@ class _MiniBadge extends StatelessWidget {
   }
 }
 
+class _MarginIconSurface extends StatelessWidget {
+  const _MarginIconSurface({
+    required this.icon,
+    required this.color,
+    this.size = AppSpacing.walletDepositCopyButtonHeight,
+    this.iconSize = AppSpacing.walletAssetActionIconInner,
+  });
+
+  final IconData icon;
+  final Color color;
+  final double size;
+  final double iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      variant: VitCardVariant.ghost,
+      background: ColoredBox(color: color.withValues(alpha: .13)),
+      clip: true,
+      child: Icon(icon, color: color, size: iconSize),
+    );
+  }
+}
+
 class _Bullet extends StatelessWidget {
   const _Bullet({required this.text, required this.color});
 
@@ -106,18 +142,12 @@ class _Bullet extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '•',
-          style: AppTextStyles.micro.copyWith(color: color, height: 1.45),
-        ),
-        const SizedBox(width: 8),
+        Icon(Icons.circle, color: color, size: AppSpacing.x2),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: 1.45,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
       ],
@@ -162,16 +192,21 @@ class _NoticeSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
-      child: DecoratedBox(
-        decoration: const BoxDecoration(color: AppColors.modalScrim),
+      child: ColoredBox(
+        color: AppColors.modalScrim,
         child: Align(
           alignment: Alignment.bottomCenter,
           child: VitCard(
-            padding: const EdgeInsets.all(20),
+            padding: AppSpacing.zeroInsets.copyWith(
+              left: AppSpacing.contentPad,
+              top: AppSpacing.contentPad,
+              right: AppSpacing.contentPad,
+              bottom: AppSpacing.contentPad,
+            ),
             radius: VitCardRadius.lg,
             child: VitPageContent(
               padding: VitContentPadding.none,
-              customGap: 12,
+              customGap: AppSpacing.walletAssetHeroTopGap,
               children: [
                 Text('Margin trading', style: AppTextStyles.baseMedium),
                 Text(
@@ -179,7 +214,7 @@ class _NoticeSheet extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
                 VitCtaButton(
-                  height: 44,
+                  height: AppSpacing.searchBarCompactHeight,
                   onPressed: onClose,
                   child: const Text('Done'),
                 ),

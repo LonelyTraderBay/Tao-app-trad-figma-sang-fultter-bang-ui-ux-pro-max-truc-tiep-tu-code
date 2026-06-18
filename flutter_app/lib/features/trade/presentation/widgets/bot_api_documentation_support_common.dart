@@ -30,7 +30,8 @@ class _RateLimitsCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: 15),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.tradeBotSectionMarkerHeight),
           ],
         ],
       ),
@@ -47,34 +48,38 @@ class _AuthCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              const Icon(Icons.key_rounded, color: _apiPrimary, size: 18),
-              const SizedBox(width: 9),
+              const Icon(
+                Icons.key_rounded,
+                color: _apiPrimary,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x3),
               Text(
                 'Authentication',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           Text(
             'All API requests require an API key. Generate yours in Security '
             'Settings. Include in header:',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.55,
+              height: AppSpacing.tradeBotLineHeightRelaxed,
             ),
           ),
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.x3),
           _CodeBlock(text: header, compact: true, dark: true),
         ],
       ),
@@ -89,7 +94,7 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(padding: const EdgeInsets.all(16), child: child);
+    return VitCard(padding: AppSpacing.tradeBotCardPadding, child: child);
   }
 }
 
@@ -111,19 +116,18 @@ class _CodeBlock extends StatelessWidget {
     return VitCard(
       variant: dark ? VitCardVariant.standard : VitCardVariant.inner,
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(
-        12,
-        compact ? 11 : 13,
-        12,
-        compact ? 11 : 13,
-      ),
+      padding: compact
+          ? AppSpacing.tradeBotCodeBlockCompactPadding
+          : AppSpacing.tradeBotCodeBlockPadding,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Text(
           text,
           style: AppTextStyles.micro.copyWith(
             color: compact ? _apiPrimary : AppColors.text2,
-            height: example ? 1.7 : 1.58,
+            height: example
+                ? AppSpacing.tradeBotLineHeightLegal
+                : AppSpacing.tradeBotLineHeightLong,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -158,28 +162,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 4,
-          height: 15,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: _apiPrimary,
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _apiPrimary,
     );
   }
 }

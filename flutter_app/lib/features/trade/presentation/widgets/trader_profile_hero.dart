@@ -14,44 +14,25 @@ class _ProfileHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final risk = _riskPresentation(trader.riskLevel);
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppColors.surface, AppColors.surface2],
-        ),
-        border: Border.all(color: _profilePrimary.withValues(alpha: .25)),
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.lg,
+      borderColor: _profilePrimary.withValues(alpha: .25),
+      padding: AppSpacing.traderProfileHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 64,
-                height: 64,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: _profilePrimary.withValues(alpha: .13),
-                  border: Border.all(
-                    color: _profilePrimary.withValues(alpha: .28),
-                    width: 2.5,
-                  ),
-                  borderRadius: AppRadii.cardRadius,
-                ),
-                child: Text(
-                  trader.avatar,
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    color: _profilePrimary,
-                    height: 1,
-                  ),
-                ),
+              VitAssetAvatar(
+                label: trader.avatar,
+                accentColor: _profilePrimary,
+                size: AppSpacing.traderProfileAvatarSize,
+                radius: AppRadii.cardRadius,
+                border: true,
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: AppSpacing.traderProfileHeaderGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +47,7 @@ class _ProfileHero extends StatelessWidget {
                             style: AppTextStyles.baseMedium.copyWith(
                               color: AppColors.onAccent,
                               fontWeight: AppTextStyles.bold,
-                              height: 1.2,
+                              height: AppSpacing.tradeBotLineHeightCaption,
                             ),
                           ),
                         ),
@@ -74,14 +55,14 @@ class _ProfileHero extends StatelessWidget {
                           const Icon(
                             Icons.star_rounded,
                             color: _profileAmber,
-                            size: 17,
+                            size: AppSpacing.traderProfileActionIcon,
                           ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.x3),
                     Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
+                      spacing: AppSpacing.traderProfileWrapGap,
+                      runSpacing: AppSpacing.traderProfileWrapGap,
                       children: [
                         for (final tag in trader.tags) _TagChip(label: tag),
                         _TagChip(
@@ -95,7 +76,7 @@ class _ProfileHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.ctaLoadingIcon),
           Row(
             children: [
               _HeroMetric(
@@ -103,19 +84,19 @@ class _ProfileHero extends StatelessWidget {
                 value: '+${trader.totalPnlPct.toStringAsFixed(1)}%',
                 color: _profileGreen,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _HeroMetric(
                 label: 'Win Rate',
                 value: '${trader.winRate.toStringAsFixed(1)}%',
                 color: _profileGreen,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _HeroMetric(
                 label: 'Sharpe',
                 value: trader.sharpeRatio.toStringAsFixed(2),
                 color: _profileAmber,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _HeroMetric(
                 label: 'MDD',
                 value: '${trader.maxDrawdown.toStringAsFixed(1)}%',
@@ -123,14 +104,14 @@ class _ProfileHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.ctaLoadingIcon),
           Row(
             children: [
               Text(
                 'Copiers: ${trader.copiers} / ${trader.maxCopiers}',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
               const Spacer(),
@@ -138,60 +119,36 @@ class _ProfileHero extends StatelessWidget {
                 '${trader.maxCopiers - trader.copiers} slots trống',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.x3 - AppSpacing.hairlineStroke),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
-              minHeight: 8,
+              minHeight: AppSpacing.traderProfileProgressHeight,
               value: (trader.copiers / trader.maxCopiers).clamp(0, 1),
               backgroundColor: AppColors.onAccent.withValues(alpha: .10),
               valueColor: const AlwaysStoppedAnimation(_profilePrimary),
             ),
           ),
-          const SizedBox(height: 15),
-          InkWell(
+          const SizedBox(height: AppSpacing.traderProfileSectionGap),
+          VitCtaButton(
             key: TraderProfilePage.copyButtonKey,
-            onTap: onToggleFollow,
-            borderRadius: AppRadii.cardRadius,
-            child: Container(
-              height: AppSpacing.inputHeight,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: isFollowing
-                    ? _profileRed.withValues(alpha: .15)
-                    : _profilePrimary,
-                border: isFollowing
-                    ? Border.all(color: _profileRed.withValues(alpha: .3))
-                    : null,
-                borderRadius: AppRadii.cardRadius,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    isFollowing
-                        ? Icons.warning_amber_rounded
-                        : Icons.content_copy_rounded,
-                    color: isFollowing ? _profileRed : AppColors.onAccent,
-                    size: 17,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    isFollowing ? 'Hủy theo dõi' : 'Copy Trader này',
-                    style: AppTextStyles.body.copyWith(
-                      color: isFollowing ? _profileRed : AppColors.onAccent,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1,
-                    ),
-                  ),
-                ],
-              ),
+            onPressed: onToggleFollow,
+            variant: isFollowing
+                ? VitCtaButtonVariant.destructive
+                : VitCtaButtonVariant.primary,
+            height: AppSpacing.inputHeight,
+            leading: Icon(
+              isFollowing
+                  ? Icons.warning_amber_rounded
+                  : Icons.content_copy_rounded,
+              size: AppSpacing.traderProfileActionIcon,
             ),
+            child: Text(isFollowing ? 'Hủy theo dõi' : 'Copy Trader này'),
           ),
         ],
       ),
@@ -208,21 +165,7 @@ class _TagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chipColor = color ?? AppColors.text2;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: (color ?? AppColors.onAccent).withValues(alpha: .08),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: chipColor,
-          fontWeight: AppTextStyles.medium,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: chipColor);
   }
 }
 
@@ -240,13 +183,10 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        height: 54,
-        padding: const EdgeInsets.fromLTRB(8, 9, 8, 8),
-        decoration: BoxDecoration(
-          color: AppColors.onAccent.withValues(alpha: .05),
-          borderRadius: AppRadii.cardRadius,
-        ),
+      child: VitCard(
+        height: AppSpacing.traderProfileMetricHeight,
+        padding: AppSpacing.traderProfileMetricPadding,
+        variant: VitCardVariant.inner,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -256,7 +196,7 @@ class _HeroMetric extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1,
+                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
             const Spacer(),
@@ -267,7 +207,7 @@ class _HeroMetric extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.tradeBotLineHeightTight,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),

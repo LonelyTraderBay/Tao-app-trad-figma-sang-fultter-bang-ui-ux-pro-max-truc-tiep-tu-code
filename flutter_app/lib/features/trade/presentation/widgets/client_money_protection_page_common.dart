@@ -7,10 +7,10 @@ class _Reconciliation extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Daily Reconciliation',
-      customGap: 12,
+      customGap: AppSpacing.tradeBotCardGap,
       children: [
         _Card(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.tradeBotCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -22,73 +22,63 @@ class _Reconciliation extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: 1,
+                        height: AppSpacing.tradeBotLineHeightTight,
                       ),
                     ),
                   ),
                   const _MatchedPill(),
                 ],
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.tradeBotStatusGap),
               const _ReconciliationRow(
                 label: 'Client Ledger Balance',
                 value: '\$45,230.50',
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.tradeBotSmallGap),
               const _ReconciliationRow(
                 label: 'Bank Account Balance',
                 value: '\$45,230.50',
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.tradeBotSmallGap),
               const _ReconciliationRow(
                 label: 'Difference',
                 value: '\$0.00',
                 success: true,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.tradeBotRowGap),
               Text(
                 'Last reconciled: Today at 09:00 UTC - Next: Tomorrow at 09:00 UTC',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.3,
+                  height: AppSpacing.tradeBotLineHeightBody,
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 13),
-        SizedBox(
-          height: 44,
-          child: OutlinedButton(
-            key: ClientMoneyProtectionPage.cassHistoryKey,
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.text1,
-              side: BorderSide(color: _moneyBorder.withValues(alpha: .72)),
-              backgroundColor: _moneyPanel2,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-            ),
-            onPressed: () =>
-                context.go(AppRoutePaths.tradeCopyCassReconciliation),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.visibility_outlined, size: 16),
-                const SizedBox(width: 9),
-                Flexible(
-                  child: Text(
-                    'View Full Reconciliation History',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                const Icon(Icons.chevron_right_rounded, size: 16),
-              ],
+        const SizedBox(height: AppSpacing.tradeBotStatusGap),
+        VitCtaButton(
+          key: ClientMoneyProtectionPage.cassHistoryKey,
+          onPressed: () =>
+              context.go(AppRoutePaths.tradeCopyCassReconciliation),
+          variant: VitCtaButtonVariant.secondary,
+          height: AppSpacing.tradeBotSheetActionHeight,
+          leading: const Icon(
+            Icons.visibility_outlined,
+            size: AppSpacing.tradeBotCheckboxIcon,
+          ),
+          trailing: const Icon(
+            Icons.chevron_right_rounded,
+            size: AppSpacing.tradeBotCheckboxIcon,
+          ),
+          child: Text(
+            'View Full Reconciliation History',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ),
@@ -113,16 +103,16 @@ class _Documents extends StatelessWidget {
     ];
     return VitPageSection(
       label: 'CASS Documents',
-      customGap: 12,
+      customGap: AppSpacing.tradeBotCardGap,
       children: [
         for (final document in documents)
           _Card(
-            padding: const EdgeInsets.all(13),
+            padding: AppSpacing.tradeBotClientMoneyDocumentsPadding,
             child: Row(
               children: [
                 VitCard(
-                  width: 40,
-                  height: 40,
+                  width: AppSpacing.tradeBotClientMoneyDocumentIcon,
+                  height: AppSpacing.tradeBotClientMoneyDocumentIcon,
                   variant: VitCardVariant.inner,
                   alignment: Alignment.center,
                   borderColor: document.$3.withValues(alpha: .35),
@@ -131,10 +121,10 @@ class _Documents extends StatelessWidget {
                         ? Icons.shield_outlined
                         : Icons.description_outlined,
                     color: document.$3,
-                    size: 18,
+                    size: AppSpacing.tradeBotClientMoneyDocumentGlyph,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.tradeBotCardIconGap),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,15 +134,15 @@ class _Documents extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
+                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
-                      const SizedBox(height: 7),
+                      const SizedBox(height: AppSpacing.tradeBotLabelGap),
                       Text(
                         document.$2,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1,
+                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
                     ],
@@ -161,7 +151,7 @@ class _Documents extends StatelessWidget {
                 const Icon(
                   Icons.download_rounded,
                   color: AppColors.text3,
-                  size: 18,
+                  size: AppSpacing.tradeBotClientMoneyDocumentGlyph,
                 ),
               ],
             ),
@@ -182,8 +172,8 @@ class _MetricBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: 53,
-      padding: const EdgeInsets.fromLTRB(12, 10, 12, 9),
+      height: AppSpacing.tradeBotClientMoneyMetricHeight,
+      padding: AppSpacing.tradeBotClientMoneyMetricPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -191,7 +181,7 @@ class _MetricBox extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           const Spacer(),
@@ -202,7 +192,7 @@ class _MetricBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -229,7 +219,7 @@ class _ReconciliationRow extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: success ? _moneyGreen.withValues(alpha: .35) : null,
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
+      padding: AppSpacing.tradeBotClientMoneyRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -238,7 +228,7 @@ class _ReconciliationRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: success ? _moneyGreen : AppColors.text3,
                 fontWeight: success ? AppTextStyles.bold : AppTextStyles.normal,
-                height: 1,
+                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
           ),
@@ -247,7 +237,7 @@ class _ReconciliationRow extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],

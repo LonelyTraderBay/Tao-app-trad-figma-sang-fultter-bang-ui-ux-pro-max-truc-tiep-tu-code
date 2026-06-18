@@ -9,7 +9,7 @@ class _ComparisonHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -27,7 +27,7 @@ class _ComparisonHero extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                    const Padding(padding: AppSpacing.dcaTopPaddingX2),
                     Text(
                       'Hiện tại vs Tối ưu',
                       style: AppTextStyles.sectionTitle.copyWith(
@@ -41,13 +41,13 @@ class _ComparisonHero extends StatelessWidget {
               _ScoreBadge(score: snapshot.score),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const Padding(padding: AppSpacing.dcaTopPaddingX5),
           _MetricStrip(snapshot: snapshot),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const Padding(padding: AppSpacing.dcaTopPaddingX5),
           for (final allocation in snapshot.currentAllocations) ...[
             _AllocationRow(allocation: allocation),
             if (allocation != snapshot.currentAllocations.last)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+              const Padding(padding: AppSpacing.dcaTopPaddingX3),
           ],
         ],
       ),
@@ -62,42 +62,43 @@ class _ScoreBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: AppColors.portfolioBtnGhost,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(color: AppColors.portfolioBtnGhostBorder),
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(color: AppColors.portfolioBtnGhostBorder),
+        ),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'Score',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.portfolioTextMuted,
-              fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.dcaScoreChipPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Score',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.portfolioTextMuted,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Text(
-            '$score',
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: AppColors.buy,
-              fontWeight: AppTextStyles.heavy,
-              fontFeatures: AppTextStyles.tabularFigures,
+            const SizedBox(width: AppSpacing.x2),
+            Text(
+              '$score',
+              style: AppTextStyles.sectionTitle.copyWith(
+                color: AppColors.buy,
+                fontWeight: AppTextStyles.heavy,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
             ),
-          ),
-          Text(
-            '/100',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.portfolioTextMuted,
+            Text(
+              '/100',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.portfolioTextMuted,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -131,16 +132,13 @@ class _MetricStrip extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Row(
         children: [
           for (final metric in metrics) ...[
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.x3,
-                  vertical: AppSpacing.x4,
-                ),
+                padding: AppSpacing.dcaMetricCellPadding,
                 child: Column(
                   children: [
                     Text(
@@ -152,7 +150,7 @@ class _MetricStrip extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                    const Padding(padding: AppSpacing.dcaTopPaddingX2),
                     Text(
                       metric.value,
                       style: AppTextStyles.sectionTitle.copyWith(
@@ -167,10 +165,10 @@ class _MetricStrip extends StatelessWidget {
               ),
             ),
             if (metric != metrics.last)
-              Container(
+              const SizedBox(
                 width: AppSpacing.dcaPortfolioOptimizerDividerWidth,
                 height: AppSpacing.x7,
-                color: AppColors.border,
+                child: ColoredBox(color: AppColors.border),
               ),
           ],
         ],
@@ -196,17 +194,21 @@ class _AllocationRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.dcaPaddingX3,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.x3,
                 height: AppSpacing.x3,
-                decoration: BoxDecoration(
-                  color: accent,
-                  borderRadius: AppRadii.smRadius,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: accent,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -229,7 +231,7 @@ class _AllocationRow extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const Padding(padding: AppSpacing.dcaTopPaddingX3),
           _PercentBar(
             label: 'Hiện tại',
             value: allocation.currentPercent,
@@ -237,7 +239,7 @@ class _AllocationRow extends StatelessWidget {
             color: accent.withValues(alpha: .65),
             valueColor: AppColors.portfolioTextDim,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const Padding(padding: AppSpacing.dcaTopPaddingX2),
           _PercentBar(
             label: 'Tối ưu',
             value: allocation.optimalPercent,

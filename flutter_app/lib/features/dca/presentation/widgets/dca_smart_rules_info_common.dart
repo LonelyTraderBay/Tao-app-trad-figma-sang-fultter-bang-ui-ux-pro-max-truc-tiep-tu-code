@@ -6,7 +6,7 @@ class _ImpactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -55,7 +55,7 @@ class _InfoCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.sm,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -87,7 +87,7 @@ class _SuccessCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.sm,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -170,15 +170,12 @@ class _TinyBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: background,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.dcaChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -203,13 +200,13 @@ class _DeleteButton extends StatelessWidget {
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
       child: DecoratedBox(
-        decoration: const BoxDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.sell10,
-          borderRadius: AppRadii.mdRadius,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
         child: IconButton(
           onPressed: onPressed,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           icon: const Icon(
             Icons.delete_outline_rounded,
             size: AppSpacing.dcaSmartInlineIcon,

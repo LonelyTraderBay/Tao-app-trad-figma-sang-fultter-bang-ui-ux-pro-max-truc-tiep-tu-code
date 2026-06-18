@@ -19,7 +19,9 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.portfolioTrackerVisualBottomExtra
+            : AppSpacing.portfolioTrackerNativeBottomExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -46,10 +48,12 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PortfolioTrackerPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.portfolioTrackerScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 12,
+                      customGap: AppSpacing.portfolioTrackerPageGap,
                       children: [
                         if (_tab == 'overview') ...[
                           _TotalValueHero(
@@ -151,38 +155,45 @@ class _PortfolioTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: SizedBox(
-        height: 54,
-        child: Row(
-          children: [
-            _UnderlinedTab(
-              key: PortfolioTrackerPage.overviewTabKey,
-              label: 'Tổng quan',
-              value: 'overview',
-              active: activeTab == 'overview',
-              onChanged: onChanged,
+    return Material(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: AppSpacing.portfolioTrackerTabsHeight,
+            child: Row(
+              children: [
+                _UnderlinedTab(
+                  key: PortfolioTrackerPage.overviewTabKey,
+                  label: 'Tổng quan',
+                  value: 'overview',
+                  active: activeTab == 'overview',
+                  onChanged: onChanged,
+                ),
+                _UnderlinedTab(
+                  key: PortfolioTrackerPage.assetsTabKey,
+                  label: 'Tài sản',
+                  value: 'assets',
+                  active: activeTab == 'assets',
+                  onChanged: onChanged,
+                ),
+                _UnderlinedTab(
+                  key: PortfolioTrackerPage.performanceTabKey,
+                  label: 'Hiệu suất',
+                  value: 'performance',
+                  active: activeTab == 'performance',
+                  onChanged: onChanged,
+                ),
+              ],
             ),
-            _UnderlinedTab(
-              key: PortfolioTrackerPage.assetsTabKey,
-              label: 'Tài sản',
-              value: 'assets',
-              active: activeTab == 'assets',
-              onChanged: onChanged,
-            ),
-            _UnderlinedTab(
-              key: PortfolioTrackerPage.performanceTabKey,
-              label: 'Hiệu suất',
-              value: 'performance',
-              active: activeTab == 'performance',
-              onChanged: onChanged,
-            ),
-          ],
-        ),
+          ),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            thickness: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
+        ],
       ),
     );
   }
@@ -222,7 +233,7 @@ class _UnderlinedTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 2,
+              height: AppSpacing.portfolioTrackerTabIndicatorHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: _marketPrimary),
@@ -249,18 +260,11 @@ class _TotalValueHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pnlColor = stats.totalPnl >= 0 ? AppColors.buy : AppColors.sell;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [_heroPrimary, AppColors.surface],
-        ),
-        border: Border.all(color: _marketPrimary.withValues(alpha: .22)),
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.hero,
+      padding: AppSpacing.portfolioTrackerHeroPadding,
+      borderColor: _marketPrimary.withValues(alpha: .22),
+      radius: VitCardRadius.lg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -280,34 +284,34 @@ class _TotalValueHero extends StatelessWidget {
                 onTap: onToggleHidden,
                 borderRadius: AppRadii.cardRadius,
                 child: Padding(
-                  padding: const EdgeInsets.all(4),
+                  padding: AppSpacing.portfolioTrackerHeroTogglePaddingInsets,
                   child: Icon(
                     hidden
                         ? Icons.visibility_off_outlined
                         : Icons.visibility_outlined,
-                    size: 16,
+                    size: AppSpacing.portfolioTrackerHeroToggleIcon,
                     color: AppColors.text3,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.portfolioTrackerHeroTitleGap),
           Text(
             _mask(_formatUsd(stats.totalValue), hidden, long: true),
             style: AppTextStyles.amountMd,
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.portfolioTrackerHeroPnlGap),
           Row(
             children: [
               Icon(
                 stats.totalPnl >= 0
                     ? Icons.north_east_rounded
                     : Icons.south_east_rounded,
-                size: 15,
+                size: AppSpacing.portfolioTrackerHeroPnlIcon,
                 color: pnlColor,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.portfolioTrackerHeroPnlIconGap),
               Text(
                 _mask(
                   '${_formatUsd(stats.totalPnl.abs())} (${_formatSignedPercent(stats.totalPnlPct)})',
@@ -344,7 +348,7 @@ class _QuickStats extends StatelessWidget {
             color: AppColors.text1,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.portfolioTrackerQuickStatGap),
         Expanded(
           child: _MiniStatCard(
             label: 'Tốt nhất 24h',
@@ -353,7 +357,7 @@ class _QuickStats extends StatelessWidget {
             color: AppColors.buy,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.portfolioTrackerQuickStatGap),
         Expanded(
           child: _MiniStatCard(
             label: 'Kém nhất 24h',
@@ -381,7 +385,7 @@ class _MiniStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: AppSpacing.portfolioTrackerMiniStatPadding,
       child: Column(
         children: [
           Text(
@@ -391,7 +395,7 @@ class _MiniStatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.portfolioTrackerMiniStatValueGap),
           Text(
             value,
             textAlign: TextAlign.center,
@@ -416,7 +420,7 @@ class _AllocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 18),
+      padding: AppSpacing.portfolioTrackerAllocationPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -427,12 +431,12 @@ class _AllocationCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.portfolioTrackerAllocationTitleGap),
           Row(
             children: [
               SizedBox(
-                width: 120,
-                height: 120,
+                width: AppSpacing.portfolioTrackerDonutSize,
+                height: AppSpacing.portfolioTrackerDonutSize,
                 child: CustomPaint(
                   painter: _AllocationDonutPainter(holdings: holdings),
                   child: Center(
@@ -457,14 +461,16 @@ class _AllocationCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 28),
+              const SizedBox(width: AppSpacing.portfolioTrackerDonutGap),
               Expanded(
                 child: Column(
                   children: [
                     for (final holding in holdings.take(5)) ...[
                       _AllocationLegendRow(holding: holding),
                       if (holding != holdings.take(5).last)
-                        const SizedBox(height: 8),
+                        const SizedBox(
+                          height: AppSpacing.portfolioTrackerLegendGap,
+                        ),
                     ],
                   ],
                 ),
@@ -486,15 +492,12 @@ class _AllocationLegendRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(
-            color: holding.color,
-            shape: BoxShape.circle,
-          ),
+        Icon(
+          Icons.circle,
+          size: AppSpacing.portfolioTrackerLegendDot,
+          color: holding.color,
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.portfolioTrackerLegendGap),
         Expanded(
           child: Text(
             holding.symbol,

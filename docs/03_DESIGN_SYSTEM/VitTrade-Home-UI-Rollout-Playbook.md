@@ -88,18 +88,43 @@ Shared visuals, local business adapter:
 - Record the L3 local reason in the rollout batch log. A local composition
   without a reason is not considered aligned.
 
+GitNexus is required during rollout:
+
+- Use `gitnexus-cli` preflight before implementation batches so the dependency
+  graph is fresh enough to trust.
+- Use GitNexus `context` for target screens to identify route, provider,
+  controller, entity, local widget, shared widget, and test dependencies before
+  editing.
+- Use GitNexus `impact` before editing any shared primitive, router file,
+  provider, controller, domain entity, repository contract, or helper that may
+  be reused outside the active screen.
+- Use GitNexus `detect_changes` after edits to record actual affected symbols
+  and processes in the batch log.
+- Use graph output to reduce missed dependencies, not to overrule Flutter
+  source, financial safety, copy boundaries, tests, or audits.
+
+Headroom is optional during rollout:
+
+- Use MCP Headroom only to compress long GitNexus output, analyzer logs, test
+  logs, audit output, route reports, diffs, or previous-batch evidence.
+- Do not use Headroom as the source of truth for the prompt, execution plan,
+  playbook, current source files, tests, financial safety rules, or
+  Prediction/Arena boundaries.
+- If Headroom is used, retrieve the relevant hash before acting on compressed
+  information and record durable evidence in the execution plan.
+
 ---
 
 ## 2. Module Rollout Matrix
 
-| Module | Layout pattern | Shared components bắt buộc | Token rules | Safety rules | Test/audit |
+| Module | Layout pattern | Required shared components | Token rules | Safety rules | Test/audit |
 | --- | --- | --- | --- | --- | --- |
 | Wallet | Financial command center: balance hero, money CTAs, assets/history, tools | `VitPageLayout`, `VitPageContent`, `VitHeader`, `VitCard`, `VitCtaButton`, `VitMetricDeltaPill`, `VitActionTileGrid`, `VitSectionHeader`, `VitInsetScrollView`, `VitStatusPill` | Use `AppModuleAccents.wallet`; `heroNumber` for total balance; `tabularFigures` for money/percent; no local colors/radii/spacing | Preserve masking, available/in-order/frozen balances, fees, limits, risk, preview/confirm, next steps | `flutter test test/features/wallet --reporter=compact`; `dart run tool/design_token_consistency_audit.dart --check`; responsive QA when first viewport changes |
 | Markets | Market discovery: ticker, tabs, pair rows, ranked lists, pair detail entry | `VitTabBar`, `VitMarketTickerStrip`, `VitMarketPairRow`, `VitRankedAssetRow`, `VitAssetAvatar`, `VitSparkline`, `VitSearchBar`, `VitSectionHeader` | Use `AppModuleAccents.markets`; use `buy`/`sell` only for movement; `tabularFigures` for price/volume/percent | Do not use hype or casino copy; color cannot be the only movement indicator; keep pair routes intact | `flutter test test/features/markets --reporter=compact`; `flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact` |
 | Trade | Order workspace: instrument context, order form, risk summary, receipt/history | `VitHeader`/instrument chrome, `VitTabBar`, `VitInput`, `VitCtaButton`, `VitCard`, `VitStatusPill`, `VitHighRiskStatePanel`, `VitErrorState`, `VitOfflineBanner` | Use `AppModuleAccents.trade`; `buy`/`sell` for side only; `tabularFigures` for price/amount/percent; no viewport-scaled fonts | Preserve order preview, fees, risk, leverage/margin disclosures, limits, confirmation, and receipt state | `flutter test test/features/trade --reporter=compact`; `dart run tool/design_token_consistency_audit.dart --check`; high-risk guardrail if touched |
 | P2P | Escrow command center: wallet actions, orders, payment methods, transfer flows | `VitCard`, `VitCtaButton`, `VitInput`, `VitStatusPill`, `VitHighRiskStatePanel`, `VitActionTileGrid`, `VitSectionHeader`, `VitInsetScrollView` | Use `AppModuleAccents.p2p`; warning/amber for escrow/risk; tabular money and limits | Preserve escrow release preview/confirm, payment-method confirmation, phone/account masking, limits, fees, next steps | `flutter test test/features/p2p --reporter=compact`; `flutter test test/quality/high_risk_state_primitives_guardrail_test.dart --reporter=compact` |
 | Profile | Account/security hub: identity, KYC, settings, security actions, support routes | `VitHeader`, `VitCard`, `VitSectionHeader`, `VitStatusPill`, `VitActionTileGrid`, `VitCtaButton`, `VitOfflineBanner` | Use `AppModuleAccents.profile`; neutral surfaces; warning only for risk/security state | Mask email/phone/account identifiers; preview/confirm security changes; keep KYC state clear | `flutter test test/features/profile --reporter=compact`; top-header guardrails if header actions change |
-| Arena | Points-only social/competition surface: points hero, challenges, fair-play state | `VitCard`, `VitSectionHeader`, `VitStatusPill`, `VitActionTileGrid`, `VitDiscoveryActionCard`, `VitEmptyState`, `VitErrorState` | Use `AppModuleAccents.arena`; warning/amber or neutral points tone; never use wallet-value tokens | Points-only language: Arena Points, pool diem, chot ket qua, thu thach; never wallet, payout, profit, stake-return | `flutter test test/features/arena --reporter=compact`; copy review for points-only language |
+| Arena | Points-only social/competition surface: points hero, challenges, fair-play state | `VitCard`, `VitSectionHeader`, `VitStatusPill`, `VitActionTileGrid`, `VitDiscoveryActionCard`, `VitEmptyState`, `VitErrorState` | Use `AppModuleAccents.arena`; warning/amber or neutral points tone; never use wallet-value tokens | Points-only language: Arena Points, points pool, resolution, challenge, completion; never wallet, payout, profit, stake-return | `flutter test test/features/arena --reporter=compact`; copy review for points-only language |
 | Predictions | Prediction market surface: event hero, probability, positions, orders, receipts | `VitCard`, `VitTabBar`, `VitStatusPill`, `VitCtaButton`, `VitMarketPairRow`-style dense rows when applicable, `VitHighRiskStatePanel` | Use `AppModuleAccents.predictions`; `tabularFigures` for probability, odds, P/L; buy/sell only for movement/side | Keep wallet-value language separate from Arena; preserve positions, probability, receipt, P/L, risk copy | `flutter test test/features/predictions --reporter=compact`; design-token audit |
 | Earn | Yield/product hub: balance context, product cards, risk tiers, history | `VitCard`, `VitSectionHeader`, `VitStatusPill`, `VitCtaButton`, `VitActionTileGrid`, `VitSkeleton`, `VitEmptyState` | Use `AppModuleAccents.earn`; tabular APY/amounts; warning for lock/risk | Show lock terms, risk, fee/limit, next steps; avoid guaranteed-return copy | `flutter test test/features/earn --reporter=compact`; responsive QA for product grids |
 | DCA | Recurring investment flow: plan setup, preview, schedule, history | `VitInput`, `VitCtaButton`, `VitCard`, `VitStatusPill`, `VitHighRiskStatePanel`, `VitSectionHeader` | Use module accent from parent trading/investment context; tabular amount, interval, estimate | Preserve preview, frequency, budget, fee, risk, and cancellation state | `flutter test test/features/dca --reporter=compact`; design-token audit |
@@ -165,6 +190,10 @@ Before marking a page as aligned with the Home UI standard:
 - [ ] Spacing, radii, icons, and surfaces come from tokens/shared components.
 - [ ] Any local composition has an explicit L3 reason: provider state, route
       logic, copy boundary, financial safety, or points-only semantics.
+- [ ] GitNexus evidence is recorded: index status, screen `context`, required
+      `impact` checks, and post-edit `detect_changes`.
+- [ ] Headroom hashes are recorded if Headroom was used for long GitNexus,
+      test, audit, route, or diff output.
 - [ ] Loading, empty, error, offline, submitting, and success states exist where
       the flow can enter those states.
 - [ ] High-risk actions show fee/risk/limit/next-step copy before confirmation.
@@ -196,12 +225,15 @@ git diff --check -- docs/03_DESIGN_SYSTEM/VitTrade-Home-UI-Rollout-Playbook.md
 
 ## 6. How To Use This Playbook
 
-1. Identify the target module row in the module matrix.
-2. Pick the closest screen type from the pattern matrix.
-3. Keep the module's business logic, routes, copy boundaries, and safety rules.
-4. Replace local repeated visuals with the listed shared components.
-5. Verify token usage and first-viewport behavior before widening the cleanup.
-6. Update tests or QA artifacts only for the module being changed.
+1. Read the execution plan's actual audit snapshot and next batch queue before
+   selecting screens. The queue decides resume order; this playbook decides the
+   UI pattern.
+2. Identify the target module row in the module matrix.
+3. Pick the closest screen type from the pattern matrix.
+4. Keep the module's business logic, routes, copy boundaries, and safety rules.
+5. Replace local repeated visuals with the listed shared components.
+6. Verify token usage and first-viewport behavior before widening the cleanup.
+7. Update tests or QA artifacts only for the module being changed.
 
 This playbook is intentionally stricter than a visual inspiration document. If
 it conflicts with Flutter source, current source wins. If it conflicts with

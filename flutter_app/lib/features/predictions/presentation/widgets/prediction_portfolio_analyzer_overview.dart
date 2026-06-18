@@ -26,11 +26,9 @@ class _AnalyzerTabBar extends StatelessWidget {
       ),
     ];
 
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
+    return Material(
+      color: AppColors.surface,
+      shape: const Border(bottom: BorderSide(color: AppColors.border)),
       child: SizedBox(
         height: AppSpacing.predictionAnalyzerTabsHeight,
         child: Row(
@@ -56,15 +54,18 @@ class _AnalyzerTabBar extends StatelessWidget {
                           ),
                         ),
                       ),
-                      AnimatedContainer(
+                      AnimatedSize(
                         duration: const Duration(milliseconds: 160),
-                        height: AppSpacing.predictionAnalyzerTabIndicatorHeight,
-                        width: activeTab == item.tab
-                            ? AppSpacing.predictionAnalyzerTabIndicatorWidth
-                            : 0,
-                        decoration: BoxDecoration(
-                          color: _predictionPrimary,
+                        child: ClipRRect(
                           borderRadius: AppRadii.hairlineRadius,
+                          child: SizedBox(
+                            height:
+                                AppSpacing.predictionAnalyzerTabIndicatorHeight,
+                            width: activeTab == item.tab
+                                ? AppSpacing.predictionAnalyzerTabIndicatorWidth
+                                : 0,
+                            child: const ColoredBox(color: _predictionPrimary),
+                          ),
                         ),
                       ),
                     ],

@@ -17,24 +17,30 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
     return VitCard(
       borderColor: AppColors.warningBorder,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaStudioCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.arenaStudioFeeIconBox,
                 height: AppSpacing.arenaStudioFeeIconBox,
-                decoration: BoxDecoration(
-                  color: AppColors.warn10,
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: const Icon(
-                  Icons.receipt_long_outlined,
-                  color: _arenaAccent,
-                  size: AppSpacing.iconMd,
+                child: const DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.warn10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.mdRadius,
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.receipt_long_outlined,
+                      color: _arenaAccent,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -82,7 +88,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
             },
             borderRadius: AppRadii.smRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+              padding: AppSpacing.arenaStudioFeeTogglePadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -154,7 +160,7 @@ class _FeeDetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x2),
+      padding: AppSpacing.arenaStudioFeeDetailPadding,
       child: Row(
         children: [
           Icon(

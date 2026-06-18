@@ -16,7 +16,7 @@ class _SummaryGrid extends StatelessWidget {
             subtitle: 'Active integrations',
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.executionVenueSummaryGap),
         Expanded(
           child: _SummaryCard(
             label: 'Avg Total Cost',
@@ -25,7 +25,7 @@ class _SummaryGrid extends StatelessWidget {
             subtitleColor: _venueGreen,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.executionVenueSummaryGap),
         Expanded(
           child: _SummaryCard(
             label: 'Avg Fill Time',
@@ -55,8 +55,8 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 90,
-      padding: const EdgeInsets.fromLTRB(12, 13, 12, 12),
+      height: AppSpacing.executionVenueSummaryHeight,
+      padding: AppSpacing.executionVenueSummaryCardPadding,
       borderColor: _venueBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,10 +67,13 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.executionVenueLineHeightTight,
             ),
           ),
-          const SizedBox(height: 17),
+          const SizedBox(
+            height:
+                AppSpacing.x4 + AppSpacing.x2 - AppSpacing.x1,
+          ),
           Text(
             value,
             maxLines: 1,
@@ -79,7 +82,7 @@ class _SummaryCard extends StatelessWidget {
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.executionVenueLineHeightTight,
             ),
           ),
           const Spacer(),
@@ -89,7 +92,7 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: subtitleColor,
-              height: 1,
+              height: AppSpacing.executionVenueLineHeightTight,
             ),
           ),
         ],
@@ -114,31 +117,42 @@ class _SortSelector extends StatelessWidget {
     ];
     return Row(
       children: [
-        const Icon(Icons.filter_alt_outlined, color: AppColors.text3, size: 17),
-        const SizedBox(width: 8),
+        const Icon(
+          Icons.filter_alt_outlined,
+          color: AppColors.text3,
+          size: AppSpacing.executionVenueSortIcon,
+        ),
+        const SizedBox(width: AppSpacing.x3),
         SizedBox(
-          width: 42,
+          width: AppSpacing.executionVenueSortLabelWidth,
           child: Text(
             'Sort\nby:',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.15,
+              height: AppSpacing.executionVenueLineHeightControl,
             ),
           ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: AppSpacing.executionVenueSortLabelGap),
         for (final option in options) ...[
           Expanded(
             child: InkWell(
               key: ExecutionVenueAnalysisPage.sortKey(option.$1),
               onTap: () => onChanged(option.$1),
-              borderRadius: BorderRadius.circular(999),
-              child: Container(
-                height: 44,
+              borderRadius: AppRadii.pillRadius,
+              child: VitCard(
+                height: AppSpacing.homeHeroActionHeight,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: activeId == option.$1 ? _venuePrimary : _venuePanel2,
-                  borderRadius: BorderRadius.circular(999),
+                variant: activeId == option.$1
+                    ? VitCardVariant.standard
+                    : VitCardVariant.inner,
+                borderColor: activeId == option.$1
+                    ? _venuePrimary
+                    : AppColors.transparent,
+                background: ColoredBox(
+                  color: activeId == option.$1
+                      ? _venuePrimary
+                      : AppColors.transparent,
                 ),
                 child: Text(
                   option.$2,
@@ -148,13 +162,13 @@ class _SortSelector extends StatelessWidget {
                         ? AppColors.onAccent
                         : AppColors.text2,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.15,
+                    height: AppSpacing.executionVenueLineHeightControl,
                   ),
                 ),
               ),
             ),
           ),
-          if (option != options.last) const SizedBox(width: 8),
+          if (option != options.last) const SizedBox(width: AppSpacing.x3),
         ],
       ],
     );
@@ -176,39 +190,18 @@ class _Tabs extends StatelessWidget {
       ('trends', 'Trends'),
     ];
     return VitCard(
-      height: 52,
-      padding: EdgeInsets.zero,
-      child: Row(
-        children: [
+      height: AppSpacing.inputHeight,
+      padding: AppSpacing.zeroInsets,
+      child: VitTabBar(
+        activeKey: activeId,
+        onChanged: onChanged,
+        variant: VitTabBarVariant.underline,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: ExecutionVenueAnalysisPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeId == tab.$1
-                                ? _venuePrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: activeId == tab.$1 ? 72 : 0,
-                      height: 2,
-                      child: const ColoredBox(color: _venuePrimary),
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: ExecutionVenueAnalysisPage.tabKey(tab.$1),
             ),
         ],
       ),

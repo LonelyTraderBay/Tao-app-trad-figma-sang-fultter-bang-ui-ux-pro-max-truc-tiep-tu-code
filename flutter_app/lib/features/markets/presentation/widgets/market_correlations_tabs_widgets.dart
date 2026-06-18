@@ -8,38 +8,45 @@ class _CorrelationTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: SizedBox(
-        height: 54,
-        child: Row(
-          children: [
-            _UnderlinedTab(
-              key: MarketCorrelationsPage.matrixTabKey,
-              label: 'Ma trận',
-              value: 'matrix',
-              active: activeTab == 'matrix',
-              onChanged: onChanged,
+    return Material(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: AppSpacing.marketCorrelationsTabsHeight,
+            child: Row(
+              children: [
+                _UnderlinedTab(
+                  key: MarketCorrelationsPage.matrixTabKey,
+                  label: 'Ma trận',
+                  value: 'matrix',
+                  active: activeTab == 'matrix',
+                  onChanged: onChanged,
+                ),
+                _UnderlinedTab(
+                  key: MarketCorrelationsPage.pairsTabKey,
+                  label: 'Cặp tương quan',
+                  value: 'pairs',
+                  active: activeTab == 'pairs',
+                  onChanged: onChanged,
+                ),
+                _UnderlinedTab(
+                  key: MarketCorrelationsPage.diversifyTabKey,
+                  label: 'Đa dạng hóa',
+                  value: 'diversify',
+                  active: activeTab == 'diversify',
+                  onChanged: onChanged,
+                ),
+              ],
             ),
-            _UnderlinedTab(
-              key: MarketCorrelationsPage.pairsTabKey,
-              label: 'Cặp tương quan',
-              value: 'pairs',
-              active: activeTab == 'pairs',
-              onChanged: onChanged,
-            ),
-            _UnderlinedTab(
-              key: MarketCorrelationsPage.diversifyTabKey,
-              label: 'Đa dạng hóa',
-              value: 'diversify',
-              active: activeTab == 'diversify',
-              onChanged: onChanged,
-            ),
-          ],
-        ),
+          ),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            thickness: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
+        ],
       ),
     );
   }
@@ -80,7 +87,7 @@ class _UnderlinedTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 2,
+              height: AppSpacing.marketCorrelationsTabIndicatorHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: _marketPrimary),
@@ -109,14 +116,14 @@ class _TimeframeChips extends StatelessWidget {
           active: timeframe == MarketCorrelationTimeframe.d7,
           onTap: () => onSelected(MarketCorrelationTimeframe.d7),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.marketCorrelationsChipGap),
         _TimeframeChip(
           key: MarketCorrelationsPage.timeframe30dKey,
           label: '30d',
           active: timeframe == MarketCorrelationTimeframe.d30,
           onTap: () => onSelected(MarketCorrelationTimeframe.d30),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.marketCorrelationsChipGap),
         _TimeframeChip(
           key: MarketCorrelationsPage.timeframe90dKey,
           label: '90d',
@@ -142,29 +149,34 @@ class _TimeframeChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
+    return Material(
+      color: active
+          ? _marketPrimary.withValues(alpha: .12)
+          : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
           color: active
-              ? _marketPrimary.withValues(alpha: .12)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? _marketPrimary.withValues(alpha: .34)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.mdRadius,
+              ? _marketPrimary.withValues(alpha: .34)
+              : AppColors.transparent,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? _marketPrimary : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
+        borderRadius: AppRadii.mdRadius,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: SizedBox(
+          height: AppSpacing.marketCorrelationsTimeframeChipHeight,
+          child: Padding(
+            padding: AppSpacing.marketCorrelationsTimeframeChipPadding,
+            child: Center(
+              child: Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? _marketPrimary : AppColors.text3,
+                  fontWeight: AppTextStyles.medium,
+                ),
+              ),
+            ),
           ),
         ),
       ),

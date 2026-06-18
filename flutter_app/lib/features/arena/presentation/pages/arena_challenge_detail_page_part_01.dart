@@ -43,7 +43,7 @@ class _ChallengeIntro extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         Text(
           challenge.title,
           style: AppTextStyles.sectionTitle.copyWith(
@@ -52,7 +52,7 @@ class _ChallengeIntro extends StatelessWidget {
             height: AppSpacing.arenaChallengeTitleLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         _InlineAction(
           key: ArenaChallengeDetailPage.modeLinkKey,
           label: challenge.modeName,
@@ -60,7 +60,7 @@ class _ChallengeIntro extends StatelessWidget {
           color: _arenaAccent,
           onTap: onMode,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           challenge.description,
           style: AppTextStyles.body.copyWith(
@@ -81,7 +81,7 @@ class _LiveStatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaPaddingX5,
       child: Column(
         children: [
           Row(
@@ -102,12 +102,12 @@ class _LiveStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           const Divider(
             height: AppSpacing.arenaChallengeDividerHeight,
             color: AppColors.divider,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               const Icon(
@@ -133,41 +133,43 @@ class _LiveStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
-          Container(
+          const SizedBox(height: AppSpacing.x3),
+          SizedBox(
             height: AppSpacing.arenaChallengeCountdownHeight,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-            decoration: BoxDecoration(
+            child: Material(
               color: AppColors.surface2,
               borderRadius: AppRadii.inputRadius,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'Đếm ngược',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
+              child: Padding(
+                padding: AppSpacing.arenaHorizontalPaddingX4,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Đếm ngược',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
                     ),
-                  ),
+                    const Icon(
+                      Icons.timer_outlined,
+                      size: AppSpacing.arenaChallengeSmallIcon,
+                      color: AppColors.sell,
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    Text(
+                      challenge.countdownLabel,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.sell,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                const Icon(
-                  Icons.timer_outlined,
-                  size: AppSpacing.arenaChallengeSmallIcon,
-                  color: AppColors.sell,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  challenge.countdownLabel,
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.sell,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -185,7 +187,7 @@ class _LiveStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
@@ -207,7 +209,7 @@ class _PoolFeeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         children: [
           Row(
@@ -249,7 +251,7 @@ class _RewardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -276,40 +278,40 @@ class _RewardCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           for (final tier in tiers)
-            Container(
-              padding: const EdgeInsets.all(AppSpacing.x4),
-              decoration: BoxDecoration(
-                color: AppColors.warningBg,
-                borderRadius: AppRadii.cardRadius,
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.emoji_events_outlined,
-                    color: AppColors.primary,
-                    size: AppSpacing.arenaChallengeMdIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Text(
-                      tier.label,
+            Material(
+              color: AppColors.warningBg,
+              borderRadius: AppRadii.cardRadius,
+              child: Padding(
+                padding: AppSpacing.arenaPaddingX4,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.emoji_events_outlined,
+                      color: AppColors.primary,
+                      size: AppSpacing.arenaChallengeMdIcon,
+                    ),
+                    const SizedBox(width: AppSpacing.x3),
+                    Expanded(
+                      child: Text(
+                        tier.label,
+                        style: AppTextStyles.body.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      tier.value,
                       style: AppTextStyles.body.copyWith(
-                        color: AppColors.text1,
+                        color: AppColors.buy,
+                        fontFeatures: AppTextStyles.tabularFigures,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                  ),
-                  Text(
-                    tier.value,
-                    style: AppTextStyles.body.copyWith(
-                      color: AppColors.buy,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
         ],
@@ -348,7 +350,7 @@ class _TeamsSection extends StatelessWidget {
           title: 'Thành viên',
           accentColor: _arenaAccent,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -376,19 +378,16 @@ class _TeamCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _color.withValues(alpha: .34),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.arenaChallengeTeamDot,
                 height: AppSpacing.arenaChallengeTeamDot,
-                decoration: BoxDecoration(
-                  color: _color,
-                  shape: BoxShape.circle,
-                ),
+                child: Material(color: _color, shape: const CircleBorder()),
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -404,7 +403,7 @@ class _TeamCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Wrap(
             spacing: AppSpacing.x1,
             runSpacing: AppSpacing.x1,
@@ -427,48 +426,45 @@ class _MemberChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _InitialBadge(name: member.name, color: color),
-          const SizedBox(width: AppSpacing.x1),
-          Flexible(
-            child: Text(
-              member.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.medium,
-                height: AppSpacing.arenaChallengeMemberLineHeight,
-              ),
-            ),
-          ),
-          if (member.role.isNotEmpty) ...[
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.arenaPresetPillPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _InitialBadge(name: member.name, color: color),
             const SizedBox(width: AppSpacing.x1),
             Flexible(
               child: Text(
-                member.role,
+                member.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.medium,
                   height: AppSpacing.arenaChallengeMemberLineHeight,
                 ),
               ),
             ),
+            if (member.role.isNotEmpty) ...[
+              const SizedBox(width: AppSpacing.x1),
+              Flexible(
+                child: Text(
+                  member.role,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                    height: AppSpacing.arenaChallengeMemberLineHeight,
+                  ),
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -498,7 +494,7 @@ class _GovernanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -543,7 +539,7 @@ class _GovernanceCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           for (final row in rows)
             _SummaryRow(label: row.label, value: row.value),
         ],

@@ -9,17 +9,22 @@ class _SheetFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Container(
-        margin: const EdgeInsets.all(AppSpacing.contentPad),
-        padding: const EdgeInsets.all(AppSpacing.x5),
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.sizeOf(context).height * 0.88,
+      child: Padding(
+        padding: AppSpacing.earnContentMargin,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.sizeOf(context).height * 0.88,
+          ),
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
+              color: AppColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.cardLargeRadius,
+              ),
+            ),
+            child: Padding(padding: AppSpacing.earnPaddingX5, child: child),
+          ),
         ),
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadii.cardLargeRadius,
-        ),
-        child: child,
       ),
     );
   }
@@ -65,31 +70,33 @@ class _CreateBatchSheet extends StatelessWidget {
             label: 'Upload CSV File',
             child: CustomPaint(
               painter: _DashedBorderPainter(),
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
-                padding: const EdgeInsets.all(AppSpacing.x4),
-                child: Column(
-                  children: [
-                    const Icon(
-                      Icons.description_outlined,
-                      color: AppColors.text3,
-                      size: AppSpacing.iconLg,
-                    ),
-                    const SizedBox(height: AppSpacing.x2),
-                    Text(
-                      'Drop CSV or click to upload',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      snapshot.csvFormatNote,
-                      style: AppTextStyles.micro.copyWith(
+                child: Padding(
+                  padding: AppSpacing.earnPaddingX4,
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.description_outlined,
                         color: AppColors.text3,
+                        size: AppSpacing.iconLg,
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: AppSpacing.x2),
+                      Text(
+                        'Drop CSV or click to upload',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text2,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        snapshot.csvFormatNote,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -138,10 +145,7 @@ class _StaticField extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnStaticSelectPadding,
       child: Row(
         children: [
           Expanded(child: Text(value, style: AppTextStyles.body)),
@@ -161,10 +165,7 @@ class _DashedBorderPainter extends CustomPainter {
       ..color = AppColors.borderSolid
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
-    final rect = RRect.fromRectAndRadius(
-      Offset.zero & size,
-      const Radius.circular(AppRadii.lg),
-    );
+    final rect = RRect.fromRectAndRadius(Offset.zero & size, AppRadii.lgCorner);
     final path = Path()..addRRect(rect);
     for (final metric in path.computeMetrics()) {
       var distance = 0.0;

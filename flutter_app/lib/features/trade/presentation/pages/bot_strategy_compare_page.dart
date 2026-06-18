@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -82,11 +82,13 @@ class _BotStrategyComparePageState
               Expanded(
                 child: SingleChildScrollView(
                   key: BotStrategyComparePage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 12,
+                    customGap: AppSpacing.tradeBotCardGap,
                     children: [
                       VitPageSection(
                         label: 'Select Strategies (2-4)',
@@ -134,7 +136,7 @@ class _BotStrategyComparePageState
                       _AnalysisPeriodCard(text: snapshot.analysisPeriod),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Strategy comparison review',

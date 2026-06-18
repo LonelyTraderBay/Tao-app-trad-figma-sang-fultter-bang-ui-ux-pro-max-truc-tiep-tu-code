@@ -66,7 +66,7 @@ class _StakingAutoCompoundPageState
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: bottomInset),
+                      padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
                         gap: VitContentGap.defaultGap,
@@ -220,7 +220,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingAutoCompoundPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -235,7 +235,7 @@ class _InfoBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -266,7 +266,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: StakingAutoCompoundPage.summaryKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -282,7 +282,7 @@ class _SummaryCard extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                    const SizedBox(height: AppSpacing.x2),
                     Text(
                       '$active/${positions.length}',
                       style: AppTextStyles.numericDisplayXl,
@@ -296,27 +296,27 @@ class _SummaryCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                width: AppSpacing.buttonHero,
-                height: AppSpacing.buttonHero,
-                decoration: BoxDecoration(
+              SizedBox.square(
+                dimension: AppSpacing.buttonHero,
+                child: Material(
                   color: AppColors.buy10,
-                  borderRadius: AppRadii.xlRadius,
-                  border: Border.all(
-                    color: AppColors.buy20,
-                    width: AppSpacing.stakingAutoCompoundHeroIconBorderWidth,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.xlRadius,
+                    side: BorderSide(
+                      color: AppColors.buy20,
+                      width: AppSpacing.stakingAutoCompoundHeroIconBorderWidth,
+                    ),
                   ),
-                ),
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.autorenew_rounded,
-                  color: AppColors.buy,
-                  size: AppSpacing.iconLg,
+                  child: const Icon(
+                    Icons.autorenew_rounded,
+                    color: AppColors.buy,
+                    size: AppSpacing.iconLg,
+                  ),
                 ),
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
           Row(
             children: [
               Expanded(
@@ -351,10 +351,7 @@ class _SummaryTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnStaticSelectPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -362,7 +359,7 @@ class _SummaryTile extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(value, style: AppTextStyles.baseMedium),
         ],
       ),
@@ -394,7 +391,7 @@ class _SettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -402,7 +399,7 @@ class _SettingsCard extends StatelessWidget {
             'Tần suất tái đầu tư',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               for (var i = 0; i < snapshot.frequencies.length; i++) ...[
@@ -418,7 +415,7 @@ class _SettingsCard extends StatelessWidget {
               ],
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
           VitInput(
             fieldKey: StakingAutoCompoundPage.thresholdKey,
             controller: thresholdController,
@@ -426,21 +423,21 @@ class _SettingsCard extends StatelessWidget {
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onChanged: onThresholdChanged,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Chỉ tái đầu tư khi phần thưởng >= ${_formatCurrency(_parseDouble(thresholdController.text, 10), compact: true)}',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
           _GasOptimizationTile(
             enabled: gasOptimization,
             onTap: onGasOptimizationChanged,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.primary20,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.earnPaddingX4,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

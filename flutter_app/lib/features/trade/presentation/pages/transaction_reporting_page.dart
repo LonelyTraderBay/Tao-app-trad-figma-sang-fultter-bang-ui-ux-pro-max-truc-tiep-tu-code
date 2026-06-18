@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_actions.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_common.dart';
@@ -80,10 +81,12 @@ class _TransactionReportingPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: TransactionReportingPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      padding: AppSpacing.transactionReportingScrollPadding(
+                        bottomInset,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
-                        customGap: 14,
+                        customGap: AppSpacing.rowPy,
                         fullBleed: true,
                         children: [
                           const VitHighRiskStatePanel(

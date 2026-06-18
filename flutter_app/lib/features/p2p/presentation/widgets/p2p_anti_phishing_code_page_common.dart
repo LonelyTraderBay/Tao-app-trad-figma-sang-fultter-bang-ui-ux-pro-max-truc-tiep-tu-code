@@ -1,47 +1,5 @@
 part of '../pages/p2p_anti_phishing_code_page.dart';
 
-class _SmallBadge extends StatelessWidget {
-  const _SmallBadge({
-    required this.label,
-    required this.icon,
-    required this.color,
-  });
-
-  final String label;
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .16),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: color, size: 12),
-            const SizedBox(width: AppSpacing.x1),
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _SoftActionButton extends StatelessWidget {
   const _SoftActionButton({
     super.key,
@@ -65,10 +23,7 @@ class _SoftActionButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.p2pSecurityDetailsActionPadding,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -102,10 +57,10 @@ class _IconAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: 32,
+      dimension: AppSpacing.p2pSecurityDetailsIconActionBox,
       child: IconButton(
         onPressed: onTap,
-        padding: EdgeInsets.zero,
+        padding: AppSpacing.zeroInsets,
         icon: Icon(icon, color: AppColors.text3, size: AppSpacing.iconSm),
       ),
     );

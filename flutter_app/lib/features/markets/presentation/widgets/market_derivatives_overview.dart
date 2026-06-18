@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_common.dart';
@@ -16,18 +17,10 @@ class MarketDerivativesOpenInterestHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.surface, AppColors.surface2],
-        ),
-        border: Border.all(
-          color: marketDerivativesPrimary.withValues(alpha: .2),
-        ),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      padding: AppSpacing.marketDerivativesHeroPadding,
+      borderColor: marketDerivativesPrimary.withValues(alpha: .2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,7 +31,7 @@ class MarketDerivativesOpenInterestHero extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.marketDerivativesHeroLabelGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -49,9 +42,9 @@ class MarketDerivativesOpenInterestHero extends StatelessWidget {
                 ),
                 style: AppTextStyles.amountMd,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.marketDerivativesHeroValueGap),
               Padding(
-                padding: const EdgeInsets.only(bottom: 5),
+                padding: AppSpacing.marketDerivativesHeroDeltaPadding,
                 child: Text(
                   marketDerivativesFormatSignedPercent(stats.oiChange24h),
                   style: AppTextStyles.caption.copyWith(
@@ -76,12 +69,12 @@ class MarketDerivativesOverviewStatGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 2,
+      crossAxisCount: AppSpacing.marketDerivativesStatGridColumns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
-      childAspectRatio: 2,
+      crossAxisSpacing: AppSpacing.marketDerivativesStatGridGap,
+      mainAxisSpacing: AppSpacing.marketDerivativesStatGridGap,
+      childAspectRatio: AppSpacing.marketDerivativesStatGridAspectRatio,
       children: [
         _StatCard(
           icon: Icons.bar_chart_rounded,
@@ -147,22 +140,28 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.marketDerivativesStatCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: 24,
-                height: 24,
-                decoration: const BoxDecoration(
+              SizedBox(
+                width: AppSpacing.marketDerivativesStatIconBox,
+                height: AppSpacing.marketDerivativesStatIconBox,
+                child: Material(
                   color: AppColors.surface2,
                   borderRadius: AppRadii.smRadius,
+                  child: Center(
+                    child: Icon(
+                      icon,
+                      size: AppSpacing.marketDerivativesStatIcon,
+                      color: iconColor,
+                    ),
+                  ),
                 ),
-                child: Icon(icon, size: 14, color: iconColor),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
                   label,
@@ -217,25 +216,10 @@ class MarketDerivativesSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 16,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: accentColor,
     );
   }
 }
@@ -266,21 +250,23 @@ class MarketDerivativesLiquidationTimeline extends StatelessWidget {
     );
 
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketDerivativesTimelinePadding,
       child: Column(
         children: [
           for (final point in history) ...[
             Row(
               children: [
                 SizedBox(
-                  width: 48,
+                  width: AppSpacing.marketDerivativesTimelineTimeWidth,
                   child: Text(
                     point.time,
                     textAlign: TextAlign.right,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(
+                  width: AppSpacing.marketDerivativesTimelineTimeGap,
+                ),
                 Expanded(
                   child: Row(
                     children: [
@@ -303,9 +289,12 @@ class MarketDerivativesLiquidationTimeline extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.marketDerivativesTimelineItemGap),
           ],
-          const Divider(height: 18, color: AppColors.borderSolid),
+          const Divider(
+            height: AppSpacing.marketDerivativesTimelineDividerHeight,
+            color: AppColors.borderSolid,
+          ),
           Row(
             children: [
               _Legend(
@@ -313,7 +302,7 @@ class MarketDerivativesLiquidationTimeline extends StatelessWidget {
                     'Long (${marketDerivativesFormatCompact(totalLong, prefix: r'$')})',
                 color: AppColors.buy,
               ),
-              const SizedBox(width: 18),
+              const SizedBox(width: AppSpacing.marketDerivativesLegendItemGap),
               _Legend(
                 label:
                     'Short (${marketDerivativesFormatCompact(totalShort, prefix: r'$')})',
@@ -340,13 +329,13 @@ class _BarSegment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 12,
-      decoration: BoxDecoration(
+    return SizedBox(
+      height: AppSpacing.marketDerivativesTimelineBarHeight,
+      child: Material(
         color: color.withValues(alpha: .78),
         borderRadius: BorderRadius.horizontal(
-          left: leftRadius ? const Radius.circular(4) : Radius.zero,
-          right: rightRadius ? const Radius.circular(4) : Radius.zero,
+          left: leftRadius ? AppRadii.chartBarCorner : Radius.zero,
+          right: rightRadius ? AppRadii.chartBarCorner : Radius.zero,
         ),
       ),
     );
@@ -364,11 +353,12 @@ class _Legend extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        DecoratedBox(
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-          child: const SizedBox(width: 10, height: 10),
+        Icon(
+          Icons.circle,
+          color: color,
+          size: AppSpacing.marketDerivativesLegendDot,
         ),
-        const SizedBox(width: 7),
+        const SizedBox(width: AppSpacing.marketDerivativesLegendGap),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -389,7 +379,7 @@ class MarketDerivativesTopOpenInterestList extends StatelessWidget {
       children: [
         for (final pair in pairs) ...[
           _OIPairRow(pair: pair),
-          const SizedBox(height: 2),
+          const SizedBox(height: AppSpacing.marketDerivativesOiRowGap),
         ],
       ],
     );
@@ -404,16 +394,15 @@ class _OIPairRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final up = pair.openInterestChange24h >= 0;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      padding: AppSpacing.marketDerivativesOiRowPadding,
       child: Row(
         children: [
-          MarketDerivativesPairLogo(pair: pair, size: 34),
-          const SizedBox(width: 12),
+          MarketDerivativesPairLogo(
+            pair: pair,
+            size: AppSpacing.marketDerivativesPairAvatarMd,
+          ),
+          const SizedBox(width: AppSpacing.marketDerivativesPairGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

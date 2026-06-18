@@ -9,7 +9,7 @@ class _OrderProofSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pFinancialSafetyInnerPadding,
       child: Column(
         children: [
           _SummaryLine(label: 'Đơn hàng', value: order.orderNumber),
@@ -149,19 +149,13 @@ class _UploadSourceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface2,
-      borderRadius: AppRadii.cardRadius,
-      child: InkWell(
-        onTap: enabled ? onPressed : null,
-        borderRadius: AppRadii.cardRadius,
-        child: Container(
-          height: AppSpacing.buttonHero + AppSpacing.ctaHeight,
-          padding: const EdgeInsets.all(AppSpacing.x4),
-          decoration: BoxDecoration(
-            border: Border.all(color: color.withValues(alpha: .45), width: 2),
-            borderRadius: AppRadii.cardRadius,
-          ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      height: AppSpacing.p2pFinancialSafetyUploadCardHeight,
+      padding: AppSpacing.p2pFinancialSafetyCardPadding,
+      borderColor: color.withValues(alpha: .45),
+      onTap: enabled ? onPressed : null,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -183,8 +177,6 @@ class _UploadSourceCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
     );
   }
 }
@@ -232,14 +224,14 @@ class _ProofThumb extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Container(
-          width: AppSpacing.x7 + AppSpacing.x6,
-          height: AppSpacing.x7 + AppSpacing.x6,
-          decoration: BoxDecoration(
-            color: AppColors.buy10,
-            border: Border.all(color: AppColors.buy20),
-            borderRadius: AppRadii.cardRadius,
-          ),
+        VitCard(
+          width: AppSpacing.p2pFinancialSafetyProofThumb,
+          height: AppSpacing.p2pFinancialSafetyProofThumb,
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.md,
+          borderColor: AppColors.buy20,
+          background: const ColoredBox(color: AppColors.buy10),
+          clip: true,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -290,7 +282,7 @@ class _TipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pFinancialSafetyInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -304,7 +296,7 @@ class _TipsCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           for (final tip in tips)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+              padding: AppSpacing.p2pFinancialSafetyTipPadding,
               child: Row(
                 children: [
                   const Icon(
@@ -337,15 +329,14 @@ class _ProofWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
-        child: Row(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.md,
+      borderColor: AppColors.warningBorder,
+      background: const ColoredBox(color: AppColors.warningBg),
+      padding: AppSpacing.p2pFinancialSafetyInnerPadding,
+      clip: true,
+      child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
@@ -362,7 +353,6 @@ class _ProofWarning extends StatelessWidget {
             ),
           ],
         ),
-      ),
     );
   }
 }

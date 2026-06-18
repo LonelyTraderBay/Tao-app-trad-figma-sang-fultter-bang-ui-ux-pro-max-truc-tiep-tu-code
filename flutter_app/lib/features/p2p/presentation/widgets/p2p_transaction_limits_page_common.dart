@@ -10,18 +10,20 @@ class _LimitDetailRow extends StatelessWidget {
     final color = _toneColor(item.toneKey);
     return Padding(
       key: P2PTransactionLimitsPage.detailItemKey(item.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTransactionLimitsCardPadding,
       child: Row(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.p2pTransactionLimitsIconBox,
+            child: Material(
+              type: MaterialType.transparency,
               color: color.withValues(alpha: .14),
               borderRadius: AppRadii.lgRadius,
-            ),
-            child: SizedBox(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
-              child: Icon(_detailIcon(item.iconKey), color: color, size: 20),
+              child: Icon(
+                _detailIcon(item.iconKey),
+                color: color,
+                size: AppSpacing.p2pTransactionLimitsDetailIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -78,22 +80,20 @@ class _UpgradeCard extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pTransactionLimitsCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DecoratedBox(
-                    decoration: BoxDecoration(
+                  SizedBox.square(
+                    dimension: AppSpacing.p2pTransactionLimitsIconBox,
+                    child: Material(
+                      type: MaterialType.transparency,
                       color: AppModuleAccents.p2p.withValues(alpha: .14),
                       borderRadius: AppRadii.lgRadius,
-                    ),
-                    child: const SizedBox(
-                      width: AppSpacing.inputHeight,
-                      height: AppSpacing.inputHeight,
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_upward_rounded,
                         color: AppModuleAccents.p2p,
                         size: AppSpacing.iconMd,
@@ -141,7 +141,7 @@ class _UpgradeCard extends StatelessWidget {
                     const Icon(
                       Icons.lock_outline_rounded,
                       color: AppColors.text3,
-                      size: 13,
+                      size: AppSpacing.p2pTransactionLimitsRequirementIcon,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -167,17 +167,16 @@ class _UpgradeCard extends StatelessWidget {
                     context.go(snapshot.kycRequirementsRoute);
                   },
                   borderRadius: AppRadii.inputRadius,
-                  child: Container(
+                  child: ConstrainedBox(
                     constraints: const BoxConstraints(
                       minHeight: AppSpacing.ctaHeight,
                     ),
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.x4,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                    child: Padding(
+                      padding: AppSpacing.p2pTransactionLimitsCtaPadding,
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
                         Flexible(
                           child: Text(
                             'Bắt đầu nâng cấp',
@@ -196,6 +195,8 @@ class _UpgradeCard extends StatelessWidget {
                           size: AppSpacing.iconMd,
                         ),
                       ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -215,21 +216,23 @@ class _LimitInfoNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PTransactionLimitsPage.infoKey,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p.withValues(alpha: .10),
+      type: MaterialType.transparency,
+      color: AppModuleAccents.p2p.withValues(alpha: .10),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppModuleAccents.p2p.withValues(alpha: .28)),
+        side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .28)),
       ),
-      child: Row(
+      child: Padding(
+        padding: AppSpacing.p2pTransactionLimitsInnerPadding,
+        child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppModuleAccents.p2p,
-            size: 16,
+            size: AppSpacing.p2pTransactionLimitsInfoIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -249,7 +252,7 @@ class _LimitInfoNotice extends StatelessWidget {
                     '• $item',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: 1.55,
+                      height: AppSpacing.p2pTransactionLimitsInfoLineHeight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x1),
@@ -258,6 +261,7 @@ class _LimitInfoNotice extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }

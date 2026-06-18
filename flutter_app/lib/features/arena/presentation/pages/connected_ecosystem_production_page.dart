@@ -84,7 +84,7 @@ class _ConnectedEcosystemProductionPageState
                   child: SingleChildScrollView(
                     key: ConnectedEcosystemProductionPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x5,

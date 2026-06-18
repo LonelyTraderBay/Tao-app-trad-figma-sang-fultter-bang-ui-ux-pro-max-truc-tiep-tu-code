@@ -19,7 +19,7 @@ class _HowItWorksTab extends StatelessWidget {
       children: [
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x1),
+          padding: AppSpacing.p2pGuideModeRailPadding,
           child: Row(
             children: [
               Expanded(
@@ -54,7 +54,7 @@ class _HowItWorksTab extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.lg,
           borderColor: AppColors.buy20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pGuideCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -120,7 +120,7 @@ class _ModeButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+          padding: AppSpacing.p2pGuideModeButtonPadding,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -164,7 +164,7 @@ class _StepRow extends StatelessWidget {
         const SizedBox(width: AppSpacing.x4),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(top: AppSpacing.x1),
+            padding: AppSpacing.p2pGuideStepContentPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -188,7 +188,7 @@ class _StepRow extends StatelessWidget {
                   step.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.p2pGuideBodyLineHeight,
                   ),
                 ),
               ],
@@ -213,7 +213,7 @@ class _SafetyTab extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.lg,
           borderColor: AppColors.sell20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pGuideCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -249,7 +249,7 @@ class _SafetyTab extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.lg,
           borderColor: AppColors.sell20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pGuideCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -300,7 +300,7 @@ class _SafetyTipCard extends StatelessWidget {
     final color = _toneColor(tip.toneKey);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pGuideSafetyTipPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -316,7 +316,7 @@ class _SafetyTipCard extends StatelessWidget {
                   tip.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.p2pGuideBodyLineHeight,
                   ),
                 ),
               ],

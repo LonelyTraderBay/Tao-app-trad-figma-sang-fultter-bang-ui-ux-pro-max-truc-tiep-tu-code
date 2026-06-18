@@ -13,21 +13,23 @@ class _RecommendationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(strategy.colorHex);
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.tradeBotCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 40,
-            height: 40,
+          VitCard(
+            width: AppSpacing.tradeBotRecommendationIconBox,
+            height: AppSpacing.tradeBotRecommendationIconBox,
+            variant: VitCardVariant.inner,
+            borderColor: color.withValues(alpha: .24),
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.inputRadius,
+            child: Icon(
+              Icons.trending_up_rounded,
+              color: color,
+              size: AppSpacing.tradeBotCardIcon,
             ),
-            child: Icon(Icons.trending_up_rounded, color: color, size: 21),
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: AppSpacing.tradeBotStatusGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,24 +38,24 @@ class _RecommendationCard extends StatelessWidget {
                   recommendation.title,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.tradeBotLabelGap),
                 Text(
                   recommendation.strategy,
                   style: AppTextStyles.caption.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
                 Text(
                   recommendation.reason,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.5,
+                    height: AppSpacing.tradeBotLineHeightLoose,
                   ),
                 ),
               ],
@@ -74,7 +76,7 @@ class _AnalysisPeriodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -83,15 +85,15 @@ class _AnalysisPeriodCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.tradeBotRowGap),
           Text(
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              height: 1.6,
+              height: AppSpacing.tradeBotLineHeightLong,
             ),
           ),
         ],

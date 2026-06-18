@@ -75,7 +75,9 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
                   child: SingleChildScrollView(
                     key: P2POrderCancelPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.p2pRiskControlsBottomScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
                       customGap: AppSpacing.x6,
@@ -151,23 +153,19 @@ class _CancelHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x6,
-      ),
+      padding: AppSpacing.p2pRiskControlsOrderHeroPadding,
       child: Column(
         children: [
-          Container(
-            width: AppSpacing.x7 + AppSpacing.x3,
-            height: AppSpacing.x7 + AppSpacing.x3,
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.p2pRiskControlsOrderHeroIconBox,
+            child: const Material(
               color: AppColors.sell10,
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: const Icon(
-              Icons.close_rounded,
-              color: AppColors.sell,
-              size: AppSpacing.iconLg,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+              child: Icon(
+                Icons.close_rounded,
+                color: AppColors.sell,
+                size: AppSpacing.iconLg,
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
@@ -181,7 +179,9 @@ class _CancelHero extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x2),
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 280),
+            constraints: const BoxConstraints(
+              maxWidth: AppSpacing.p2pRiskControlsOrderHeroMaxWidth,
+            ),
             child: Text(
               'Vui lòng chọn lý do hủy. Hủy đơn quá nhiều có thể ảnh hưởng đến uy tín.',
               textAlign: TextAlign.center,
@@ -215,7 +215,7 @@ class _OrderSummary extends StatelessWidget {
       _SummaryRowDraft(label: 'Merchant', value: order.merchant),
     ];
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pRiskControlsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -243,38 +243,37 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: showDivider
-            ? const Border(bottom: BorderSide(color: AppColors.divider))
-            : null,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                row.label,
-                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-              ),
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.p2pRiskControlsSummaryRowPadding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  row.label,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
             ),
-            const SizedBox(width: AppSpacing.x3),
-            Flexible(
-              child: Text(
-                row.value,
-                textAlign: TextAlign.right,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
+              const SizedBox(width: AppSpacing.x3),
+              Flexible(
+                child: Text(
+                  row.value,
+                  textAlign: TextAlign.right,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        if (showDivider)
+          const Divider(height: AppSpacing.dividerHairline),
+      ],
     );
   }
 }
@@ -312,7 +311,7 @@ class _ReasonSelector extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         for (final reason in reasons)
           Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+            padding: AppSpacing.p2pRiskControlsReasonItemPadding,
             child: _ReasonButton(
               reason: reason,
               selected: selectedReason == reason,
@@ -339,41 +338,45 @@ class _ReasonButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: selected ? AppColors.sell10 : AppColors.surface2,
-      borderRadius: AppRadii.inputRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(
+          color: selected ? AppColors.sell20 : AppColors.borderSolid,
+        ),
+      ),
       child: InkWell(
         key: P2POrderCancelPage.reasonKey(reason),
         onTap: onPressed,
-        borderRadius: AppRadii.inputRadius,
-        child: Container(
+        customBorder: const RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+        ),
+        child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected ? AppColors.sell20 : AppColors.borderSolid,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
+          child: Padding(
+            padding: AppSpacing.p2pRiskControlsReasonButtonPadding,
           child: Row(
             children: [
-              Container(
-                width: AppSpacing.x5,
-                height: AppSpacing.x5,
-                decoration: BoxDecoration(
+                SizedBox.square(
+                  dimension: AppSpacing.p2pRiskControlsChoiceBox,
+                  child: Material(
                   color: selected ? AppColors.sell : AppColors.transparent,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: selected ? AppColors.sell : AppColors.borderSolid,
-                    width: 2,
+                    shape: CircleBorder(
+                      side: BorderSide(
+                        color: selected
+                            ? AppColors.sell
+                            : AppColors.borderSolid,
+                        width: AppSpacing.p2pRiskControlsChoiceBorderWidth,
+                      ),
+                    ),
+                    child: selected
+                        ? const Icon(
+                            Icons.check_rounded,
+                            color: AppColors.onAccent,
+                            size: AppSpacing.iconSm,
+                          )
+                        : null,
                   ),
                 ),
-                child: selected
-                    ? const Icon(
-                        Icons.check_rounded,
-                        color: AppColors.onAccent,
-                        size: AppSpacing.iconSm,
-                      )
-                    : null,
-              ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
@@ -387,6 +390,7 @@ class _ReasonButton extends StatelessWidget {
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),
@@ -406,7 +410,7 @@ class _CancelWarning extends StatelessWidget {
       radius: VitCardRadius.lg,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pRiskControlsInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

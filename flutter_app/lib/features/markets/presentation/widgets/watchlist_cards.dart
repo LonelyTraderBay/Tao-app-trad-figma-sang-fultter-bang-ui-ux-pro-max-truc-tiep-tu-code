@@ -24,7 +24,7 @@ class _WatchlistCard extends StatelessWidget {
 
     return VitCard(
       key: WatchlistPage.cardKey(pair.id),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.watchlistCardPadding,
       child: Column(
         children: [
           Row(
@@ -35,26 +35,22 @@ class _WatchlistCard extends StatelessWidget {
                 borderRadius: AppRadii.lgRadius,
                 child: _AssetAvatar(pair: pair),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.watchlistSectionGap),
               Expanded(
                 child: InkWell(
                   onTap: onPairTap,
                   borderRadius: AppRadii.smRadius,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3),
+                    padding: AppSpacing.watchlistPairTextPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          pair.baseAsset,
-                          style: AppTextStyles.baseMedium.copyWith(height: 1.2),
-                        ),
-                        const SizedBox(height: 4),
+                        Text(pair.baseAsset, style: AppTextStyles.baseMedium),
+                        const SizedBox(height: AppSpacing.watchlistPairTextGap),
                         Text(
                           pair.symbol,
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text3,
-                            height: 1,
                           ),
                         ),
                       ],
@@ -71,10 +67,9 @@ class _WatchlistCard extends StatelessWidget {
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
-                      height: 1,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.watchlistActionGap),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -83,16 +78,15 @@ class _WatchlistCard extends StatelessWidget {
                             ? Icons.trending_up_rounded
                             : Icons.trending_down_rounded,
                         color: changeColor,
-                        size: 15,
+                        size: AppSpacing.watchlistTrendIcon,
                       ),
-                      const SizedBox(width: 3),
+                      const SizedBox(width: AppSpacing.watchlistTinyGap),
                       Text(
                         _formatPercent(pair.change24h),
                         style: AppTextStyles.caption.copyWith(
                           color: changeColor,
                           fontWeight: AppTextStyles.bold,
                           fontFeatures: AppTextStyles.tabularFigures,
-                          height: 1,
                         ),
                       ),
                     ],
@@ -101,18 +95,12 @@ class _WatchlistCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.watchlistSmallGap),
           SizedBox(
-            height: 42,
-            child: CustomPaint(
-              painter: _WatchlistSparklinePainter(
-                values: pair.sparklineData,
-                color: changeColor,
-              ),
-              child: const SizedBox.expand(),
-            ),
+            height: AppSpacing.watchlistSparklineHeight,
+            child: VitSparkline(values: pair.sparklineData, color: changeColor),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.watchlistSectionGap),
           Row(
             children: [
               Expanded(
@@ -131,13 +119,16 @@ class _WatchlistCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          const Divider(height: 1, color: AppColors.divider),
+          const SizedBox(height: AppSpacing.watchlistSectionGap),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
           if (entry.note != null) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.watchlistSectionGap),
             _NotePill(note: entry.note!),
           ],
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.watchlistSectionGap),
           Row(
             children: [
               Expanded(
@@ -149,7 +140,7 @@ class _WatchlistCard extends StatelessWidget {
                   onTap: onTradeTap,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.watchlistActionGap),
               _ActionButton(
                 key: WatchlistPage.noteKey(entry.id),
                 label: entry.note == null ? 'Thêm ghi chú' : 'Sửa ghi chú',
@@ -157,22 +148,24 @@ class _WatchlistCard extends StatelessWidget {
                 foreground: AppColors.text2,
                 onTap: onNoteTap,
               ),
-              const SizedBox(width: 8),
-              InkWell(
-                key: WatchlistPage.removeKey(entry.id),
-                onTap: onRemoveTap,
-                borderRadius: AppRadii.mdRadius,
-                child: Container(
-                  width: 38,
-                  height: 38,
-                  decoration: BoxDecoration(
-                    color: AppColors.sell10,
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: const Icon(
-                    Icons.delete_outline_rounded,
-                    color: AppColors.sell,
-                    size: 18,
+              const SizedBox(width: AppSpacing.watchlistActionGap),
+              Material(
+                color: AppColors.sell10,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+                child: InkWell(
+                  key: WatchlistPage.removeKey(entry.id),
+                  onTap: onRemoveTap,
+                  borderRadius: AppRadii.mdRadius,
+                  child: const SizedBox(
+                    width: AppSpacing.watchlistRemoveButton,
+                    height: AppSpacing.watchlistRemoveButton,
+                    child: Icon(
+                      Icons.delete_outline_rounded,
+                      color: AppColors.sell,
+                      size: AppSpacing.watchlistRemoveIcon,
+                    ),
                   ),
                 ),
               ),
@@ -191,24 +184,11 @@ class _AssetAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 44,
-      height: 44,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: pair.logoColor.withValues(alpha: 0.16),
-        shape: BoxShape.circle,
-      ),
-      child: Text(
-        pair.baseAsset.length <= 3
-            ? pair.baseAsset
-            : pair.baseAsset.substring(0, 3),
-        style: AppTextStyles.micro.copyWith(
-          color: pair.logoColor,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitAssetAvatar(
+      label: pair.baseAsset,
+      accentColor: pair.logoColor,
+      size: AppSpacing.watchlistAvatar,
+      radius: AppRadii.pillRadius,
     );
   }
 }
@@ -231,19 +211,15 @@ class _WatchlistStat extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            height: 1.2,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: AppSpacing.watchlistStatGap),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1,
           ),
         ),
       ],
@@ -258,30 +234,35 @@ class _NotePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 36,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: _marketPrimary.withValues(alpha: 0.07),
-        border: Border.all(color: _marketPrimary.withValues(alpha: 0.14)),
+    return Material(
+      color: _marketPrimary.withValues(alpha: 0.07),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.mdRadius,
+        side: BorderSide(color: _marketPrimary.withValues(alpha: 0.14)),
       ),
-      child: Row(
-        children: [
-          const Icon(Icons.edit_note_rounded, color: _marketPrimary, size: 16),
-          const SizedBox(width: 6),
-          Expanded(
-            child: Text(
-              note,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
+      child: SizedBox(
+        height: AppSpacing.watchlistNoteHeight,
+        child: Padding(
+          padding: AppSpacing.watchlistNotePadding,
+          child: Row(
+            children: [
+              const Icon(
+                Icons.edit_note_rounded,
                 color: _marketPrimary,
-                height: 1,
+                size: AppSpacing.watchlistNoteIcon,
               ),
-            ),
+              const SizedBox(width: AppSpacing.watchlistSmallGap),
+              Expanded(
+                child: Text(
+                  note,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(color: _marketPrimary),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -303,26 +284,30 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: 38,
-        constraints: const BoxConstraints(minWidth: 102),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          color: background,
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: foreground,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
+    return Material(
+      color: background,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minWidth: AppSpacing.watchlistActionMinWidth,
+            minHeight: AppSpacing.watchlistActionHeight,
+          ),
+          child: Padding(
+            padding: AppSpacing.watchlistActionPadding,
+            child: Center(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: foreground,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
           ),
         ),
       ),

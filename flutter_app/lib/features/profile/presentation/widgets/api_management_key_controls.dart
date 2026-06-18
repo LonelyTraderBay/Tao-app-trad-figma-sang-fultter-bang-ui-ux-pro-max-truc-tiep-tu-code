@@ -8,20 +8,9 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = active ? _apiGreen : _apiRed;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        active ? '\u2022 Active' : '\u2022 Disabled',
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.extraBold,
-          height: 1,
-        ),
-      ),
+    return VitAccentPill(
+      label: active ? '\u2022 Active' : '\u2022 Disabled',
+      accentColor: color,
     );
   }
 }
@@ -34,24 +23,19 @@ class _ToggleSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = active ? _apiGreen : AppColors.borderSolid;
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: 27,
-        height: 16,
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: color, width: 2),
-        ),
-        alignment: active ? Alignment.centerRight : Alignment.centerLeft,
-        child: Container(
-          width: 6,
-          height: 6,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
+      child: VitTogglePill(
+        enabled: active,
+        width: AppSpacing.profileApiToggleWidth,
+        height: AppSpacing.profileApiToggleHeight,
+        knobSize: AppSpacing.profileApiToggleKnob,
+        knobMargin: AppSpacing.profileApiToggleKnobMargin,
+        activeColor: _apiGreen.withValues(alpha: .16),
+        activeKnobColor: _apiGreen,
+        inactiveColor: AppColors.transparent,
+        inactiveKnobColor: AppColors.borderSolid,
       ),
     );
   }
@@ -74,44 +58,46 @@ class _SecretRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 32,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
+    return SizedBox(
+      height: AppSpacing.profileApiSecretRowHeight,
+      child: Material(
         color: _apiPanel2,
-        borderRadius: AppRadii.inputRadius,
-        border: redBorder
-            ? Border.all(color: _apiRed.withValues(alpha: .1))
-            : null,
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 48,
-            child: Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: labelColor,
-                fontWeight: AppTextStyles.extraBold,
-                height: 1,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: redBorder
+              ? BorderSide(color: _apiRed.withValues(alpha: .1))
+              : BorderSide.none,
+        ),
+        child: Padding(
+          padding: AppSpacing.profileApiSecretPadding,
+          child: Row(
+            children: [
+              SizedBox(
+                width: AppSpacing.profileApiSecretLabelWidth,
+                child: Text(
+                  label,
+                  style: AppTextStyles.micro.copyWith(
+                    color: labelColor,
+                    fontWeight: AppTextStyles.extraBold,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.extraBold,
-                height: 1,
+              Expanded(
+                child: Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.extraBold,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: AppSpacing.profileApiSecretTrailingGap),
+              trailing,
+            ],
           ),
-          const SizedBox(width: 8),
-          trailing,
-        ],
+        ),
       ),
     );
   }
@@ -134,7 +120,7 @@ class _IconTap extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Icon(icon, color: color, size: 14),
+      child: Icon(icon, color: color, size: AppSpacing.profileApiIconAction),
     );
   }
 }
@@ -147,8 +133,8 @@ class _PermissionBadges extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 6,
-      runSpacing: 6,
+      spacing: AppSpacing.profileApiPermissionSpacing,
+      runSpacing: AppSpacing.profileApiPermissionRunSpacing,
       children: [
         for (final permission in apiKey.permissions)
           _SmallBadge(
@@ -181,30 +167,37 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 26,
-      padding: const EdgeInsets.symmetric(horizontal: 9),
-      decoration: BoxDecoration(
+    return SizedBox(
+      height: AppSpacing.profileApiSmallBadgeHeight,
+      child: Material(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-        border: Border.all(color: color.withValues(alpha: .24)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon != null) ...[
-            Icon(icon, color: color, size: 12),
-            const SizedBox(width: 4),
-          ],
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.extraBold,
-              height: 1,
-            ),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.smRadius,
+          side: BorderSide(color: color.withValues(alpha: .24)),
+        ),
+        child: Padding(
+          padding: AppSpacing.profileApiSmallBadgePadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (icon != null) ...[
+                Icon(
+                  icon,
+                  color: color,
+                  size: AppSpacing.profileApiSmallBadgeIcon,
+                ),
+                const SizedBox(width: AppSpacing.profileApiSmallBadgeIconGap),
+              ],
+              Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.extraBold,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -219,19 +212,23 @@ class _UsageRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.access_time_rounded, color: _apiMuted, size: 11),
-        const SizedBox(width: 3),
+        const Icon(
+          Icons.access_time_rounded,
+          color: _apiMuted,
+          size: AppSpacing.profileApiUsageIcon,
+        ),
+        const SizedBox(width: AppSpacing.profileApiUsageGapInline),
         Expanded(
           child: Text(
             'D\u00F9ng l\u1EA7n cu\u1ED1i: ${apiKey.lastUsed ?? 'Ch\u01B0a d\u00F9ng'}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: _apiMuted, height: 1),
+            style: AppTextStyles.micro.copyWith(color: _apiMuted),
           ),
         ),
         Text(
           '${_formatInt(apiKey.requestCount)} requests',
-          style: AppTextStyles.micro.copyWith(color: _apiMuted, height: 1),
+          style: AppTextStyles.micro.copyWith(color: _apiMuted),
         ),
       ],
     );
@@ -245,33 +242,12 @@ class _RegenerateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 36,
-        decoration: BoxDecoration(
-          color: _apiPrimary.withValues(alpha: .1),
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: _apiPrimary.withValues(alpha: .25)),
-        ),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.sync_rounded, color: _apiPrimary, size: 13),
-            const SizedBox(width: 5),
-            Text(
-              'T\u1EA1o l\u1EA1i Secret',
-              style: AppTextStyles.micro.copyWith(
-                color: _apiPrimary,
-                fontWeight: AppTextStyles.extraBold,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return VitCtaButton(
+      onPressed: onTap,
+      height: AppSpacing.profileApiActionHeight,
+      variant: VitCtaButtonVariant.secondary,
+      leading: const Icon(Icons.sync_rounded),
+      child: const Text('T\u1EA1o l\u1EA1i Secret'),
     );
   }
 }
@@ -284,25 +260,13 @@ class _DeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitIconButton(
       key: ApiManagementPage.deleteKey(id),
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: 40,
-        height: 36,
-        decoration: BoxDecoration(
-          color: _apiRed.withValues(alpha: .1),
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: _apiRed.withValues(alpha: .25)),
-        ),
-        alignment: Alignment.center,
-        child: const Icon(
-          Icons.delete_outline_rounded,
-          color: _apiRed,
-          size: 17,
-        ),
-      ),
+      icon: Icons.delete_outline_rounded,
+      tooltip: 'Xo\u00E1 API key',
+      onPressed: onTap,
+      variant: VitIconButtonVariant.danger,
+      size: VitIconButtonSize.md,
     );
   }
 }

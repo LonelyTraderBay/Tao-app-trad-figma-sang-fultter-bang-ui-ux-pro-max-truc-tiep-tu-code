@@ -58,7 +58,6 @@ class _ChartCard extends StatelessWidget {
             title,
             style: AppTextStyles.baseMedium.copyWith(
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
           Expanded(child: child),
@@ -149,10 +148,7 @@ class _BestTimeMetric extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.walletGasBestTimeValueGap),
         Text(
@@ -160,7 +156,6 @@ class _BestTimeMetric extends StatelessWidget {
           style: AppTextStyles.sectionTitle.copyWith(
             color: _gasGreen,
             fontWeight: AppTextStyles.bold,
-            height: 1,
           ),
         ),
       ],

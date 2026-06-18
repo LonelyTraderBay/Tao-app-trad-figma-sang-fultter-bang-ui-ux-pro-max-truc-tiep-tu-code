@@ -82,7 +82,7 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
                 child: SingleChildScrollView(
                   key: DCADynamicAmount.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.dcaBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     customGap: AppSpacing.x5,
                     children: [

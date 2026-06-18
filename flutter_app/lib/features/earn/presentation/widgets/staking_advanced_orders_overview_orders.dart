@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingAdvancedOrdersPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +50,7 @@ class _StatsCard extends StatelessWidget {
     return VitCard(
       key: StakingAdvancedOrdersPage.statsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
           for (var i = 0; i < snapshot.statCards.length; i++) ...[
@@ -74,10 +74,7 @@ class _StatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.earnCardPaddingX2X3,
       borderColor: isSuccess ? AppColors.buy20 : null,
       child: Column(
         children: [
@@ -112,9 +109,9 @@ class _OrderTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: StakingAdvancedOrdersPage.tabsKey,
-      decoration: const BoxDecoration(color: AppColors.surface),
+      color: AppColors.surface,
       child: Row(
         children: [
           for (final tab in _AdvancedOrderTab.values)
@@ -125,7 +122,7 @@ class _OrderTabs extends StatelessWidget {
                   key: StakingAdvancedOrdersPage.tabKey(tab.name),
                   onTap: () => onChanged(tab),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.x4),
+                    padding: AppSpacing.earnTopPaddingX4,
                     child: Column(
                       children: [
                         Text(
@@ -138,15 +135,18 @@ class _OrderTabs extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x4),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 160),
+                        SizedBox(
                           width: active == tab ? AppSpacing.buttonHero : 0,
                           height: AppSpacing.stakingProductTabIndicatorHeight,
-                          decoration: BoxDecoration(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.transparent,
-                            borderRadius: AppRadii.xsRadius,
+                          child: DecoratedBox(
+                            decoration: ShapeDecoration(
+                              color: active == tab
+                                  ? AppColors.primarySoft
+                                  : AppColors.transparent,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: AppRadii.xsRadius,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -171,7 +171,7 @@ class _OrderCard extends StatelessWidget {
     return VitCard(
       key: StakingAdvancedOrdersPage.orderKey(order.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
           Row(
@@ -260,24 +260,23 @@ class _StatusPill extends StatelessWidget {
       StakingAdvancedOrderStatus.triggered => AppColors.primarySoft,
       StakingAdvancedOrderStatus.cancelled => AppColors.text3,
     };
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: switch (status) {
           StakingAdvancedOrderStatus.active => AppColors.buy15,
           StakingAdvancedOrderStatus.triggered => AppColors.primary15,
           StakingAdvancedOrderStatus.cancelled => AppColors.surface3,
         },
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        _statusLabel(status),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnPillPadding,
+        child: Text(
+          _statusLabel(status),
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );

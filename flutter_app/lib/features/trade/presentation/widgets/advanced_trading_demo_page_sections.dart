@@ -9,7 +9,7 @@ class _PositionModeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tradeToolRiskIntroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -20,13 +20,12 @@ class _PositionModeCard extends StatelessWidget {
                 color: AppColors.primary,
                 size: 18,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.tradeToolInlineGap),
               Text(
                 'Position Mode',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
               const Spacer(),
@@ -37,10 +36,10 @@ class _PositionModeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeToolPageTopGap),
           VitCard(
-            height: 44,
-            padding: const EdgeInsets.all(4),
+            height: AppSpacing.tradeToolRiskTabHeight,
+            padding: AppSpacing.tradeToolMetricPadding,
             variant: VitCardVariant.inner,
             child: Row(
               children: [
@@ -59,7 +58,7 @@ class _PositionModeCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.tradeToolIconGap),
           Text(
             activeMode == 'one-way'
                 ? 'Chỉ được giữ Long HOẶC Short cho mỗi cặp. Đơn giản, phù hợp beginner.'
@@ -92,24 +91,18 @@ class _ModeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final active = activeMode == id;
     return Expanded(
-      child: InkWell(
+      child: VitCard(
         key: AdvancedTradingDemoPage.modeKey(id),
         onTap: () => onChanged(id),
-        borderRadius: AppRadii.mdRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 140),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: active ? AppColors.primary : AppColors.transparent,
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.onAccent : AppColors.text3,
-              fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-              height: 1,
-            ),
+        alignment: Alignment.center,
+        variant: active ? VitCardVariant.standard : VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        borderColor: active ? AppColors.primary : AppColors.transparent,
+        child: Text(
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: active ? AppColors.onAccent : AppColors.text3,
+            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
           ),
         ),
       ),
@@ -131,48 +124,18 @@ class _UnderlineTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      borderColor: AppColors.divider,
-      child: Row(
-        children: [
-          for (final tab in _tabs)
-            Expanded(
-              child: InkWell(
-                key: AdvancedTradingDemoPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Container(
-                  height: 44,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: activeId == tab.$1
-                            ? AppColors.primary
-                            : AppColors.transparent,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  child: Text(
-                    tab.$2,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: activeId == tab.$1
-                          ? AppColors.primary
-                          : AppColors.text3,
-                      fontWeight: activeId == tab.$1
-                          ? AppTextStyles.bold
-                          : AppTextStyles.medium,
-                      height: 1,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.underline,
+      activeKey: activeId,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in _tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: AdvancedTradingDemoPage.tabKey(tab.$1),
+          ),
+      ],
     );
   }
 }
@@ -188,7 +151,7 @@ class _PositionTab extends StatelessWidget {
     return Column(
       children: [
         _Panel(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.tradeToolRiskIntroPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -197,10 +160,9 @@ class _PositionTab extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.1,
                 ),
               ),
-              const SizedBox(height: 9),
+              const SizedBox(height: AppSpacing.tradeToolInlineGap),
               Text(
                 'Professional tools để quản lý vị thế hiệu quả',
                 style: AppTextStyles.caption.copyWith(
@@ -208,16 +170,16 @@ class _PositionTab extends StatelessWidget {
                   height: 1.45,
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.tradeToolPageTopGap),
               for (final action in snapshot.positionActions) ...[
                 _ActionButton(action: action, onTap: () => onAction(action)),
                 if (action != snapshot.positionActions.last)
-                  const SizedBox(height: 9),
+                  const SizedBox(height: AppSpacing.tradeToolInlineGap),
               ],
             ],
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tradeToolPageTopGap),
         _MockPositionCard(position: snapshot.position),
       ],
     );
@@ -235,9 +197,9 @@ class _ActionButton extends StatelessWidget {
     return VitCard(
       key: AdvancedTradingDemoPage.actionKey(action.id),
       onTap: onTap,
-      constraints: const BoxConstraints(minHeight: 46),
+      constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
       alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: AppSpacing.tradeToolMetricRowPadding,
       variant: VitCardVariant.inner,
       borderColor: AppColors.borderSolid,
       child: Text(
@@ -246,7 +208,6 @@ class _ActionButton extends StatelessWidget {
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
           fontWeight: AppTextStyles.bold,
-          height: 1.25,
         ),
       ),
     );
@@ -261,7 +222,7 @@ class _MockPositionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tradeToolRiskIntroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -270,20 +231,19 @@ class _MockPositionCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeToolCardGap),
           _ValueRow(
             label: 'Pair',
             value: '${position.pair} · ${position.side.toUpperCase()}',
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeToolInlineGap),
           _ValueRow(
             label: 'Size',
             value: '${position.currentSize.toStringAsFixed(1)} BTC',
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeToolInlineGap),
           _ValueRow(
             label: 'Unrealized PnL',
             value: '+\$${position.currentPnl.toStringAsFixed(2)}',
@@ -305,7 +265,7 @@ class _OrdersTab extends StatelessWidget {
     return Column(
       children: [
         _Panel(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.tradeToolRiskIntroPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -316,16 +276,16 @@ class _OrdersTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.tradeToolIconGap),
               Wrap(
-                spacing: 8,
-                runSpacing: 8,
+                spacing: AppSpacing.tradeToolInlineGap,
+                runSpacing: AppSpacing.tradeToolInlineGap,
                 children: [
                   for (final type in snapshot.orderTypes)
                     _ChoiceChip(label: type.label, active: type.id == 'limit'),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.x4),
               Text(
                 'Time In Force',
                 style: AppTextStyles.caption.copyWith(
@@ -333,10 +293,10 @@ class _OrdersTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.tradeToolIconGap),
               Wrap(
-                spacing: 8,
-                runSpacing: 8,
+                spacing: AppSpacing.tradeToolInlineGap,
+                runSpacing: AppSpacing.tradeToolInlineGap,
                 children: [
                   for (final tif in snapshot.timeInForce)
                     _ChoiceChip(label: tif.label, active: tif.id == 'GTC'),
@@ -345,10 +305,9 @@ class _OrdersTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tradeToolPageTopGap),
         _MetricsCard(title: 'Order Summary', metrics: snapshot.orderSummary),
       ],
     );
   }
 }
-

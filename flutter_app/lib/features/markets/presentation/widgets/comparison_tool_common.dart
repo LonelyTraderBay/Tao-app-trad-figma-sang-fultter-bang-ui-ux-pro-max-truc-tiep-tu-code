@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 const comparisonToolPrimary = AppColors.primary;
 const comparisonToolAccent = AppColors.accent;
@@ -33,23 +34,11 @@ class ComparisonAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelStyle = size <= 26 ? AppTextStyles.micro : AppTextStyles.badge;
-    return Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: pair.logoColor.withValues(alpha: .16),
-        shape: BoxShape.circle,
-      ),
-      child: Text(
-        pair.baseAsset.substring(0, pair.baseAsset.length < 2 ? 1 : 2),
-        style: labelStyle.copyWith(
-          color: pair.logoColor,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitAssetAvatar(
+      label: pair.baseAsset,
+      accentColor: pair.logoColor,
+      size: size,
+      radius: AppRadii.pillRadius,
     );
   }
 }

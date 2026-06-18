@@ -109,25 +109,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: AppSpacing.walletHealthSectionMarkerWidth,
-          height: AppSpacing.walletHealthSectionMarkerHeight,
-          decoration: BoxDecoration(
-            color: _healthPrimary,
-            borderRadius: AppRadii.pillRadius,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.walletHealthSectionLabelGap),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _healthPrimary,
     );
   }
 }
@@ -140,20 +125,7 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.walletHealthBadgePadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label.toUpperCase(),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label.toUpperCase(), accentColor: color);
   }
 }
 
@@ -422,7 +394,7 @@ void _drawText(
   TextAlign align = TextAlign.center,
 }) {
   final painter = TextPainter(
-    text: TextSpan(text: text, style: style.copyWith(height: 1)),
+    text: TextSpan(text: text, style: style),
     textAlign: align,
     textDirection: TextDirection.ltr,
     maxLines: 1,

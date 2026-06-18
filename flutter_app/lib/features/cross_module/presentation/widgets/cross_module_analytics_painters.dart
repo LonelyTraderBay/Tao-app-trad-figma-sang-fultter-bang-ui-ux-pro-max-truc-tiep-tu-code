@@ -10,7 +10,7 @@ class _ChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -58,7 +58,7 @@ class _RoiBarPainter extends CustomPainter {
           barWidth,
           height,
         ),
-        const Radius.circular(AppSpacing.x2),
+        AppRadii.xsCorner,
       );
       canvas.drawRRect(rect, Paint()..color = AppColors.buy);
     }

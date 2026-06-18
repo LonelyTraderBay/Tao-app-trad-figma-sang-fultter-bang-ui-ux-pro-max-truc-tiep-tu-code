@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class WalletGroupsTab extends StatelessWidget {
   const WalletGroupsTab({super.key, required this.snapshot});
@@ -30,14 +31,14 @@ class WalletGroupsTab extends StatelessWidget {
             const SizedBox(height: AppSpacing.walletManagerGroupCardGap),
         ],
         const SizedBox(height: AppSpacing.walletManagerGroupCreateTopGap),
-        Container(
+        VitCard(
           height: AppSpacing.walletManagerGroupCreateHeight,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: walletManagerPanel2,
-            borderRadius: AppRadii.mdRadius,
-            border: Border.all(color: walletManagerBorder),
-          ),
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.sm,
+          borderColor: walletManagerBorder,
+          background: const ColoredBox(color: walletManagerPanel2),
+          clip: true,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -52,7 +53,7 @@ class WalletGroupsTab extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.medium,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
@@ -72,24 +73,23 @@ class _GroupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(group.colorHex);
-    return Container(
+    return VitCard(
       padding: AppSpacing.walletManagerGroupCardPadding,
-      decoration: BoxDecoration(
-        color: walletManagerPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: walletManagerBorder),
-      ),
+      variant: VitCardVariant.ghost,
+      borderColor: walletManagerBorder,
+      background: const ColoredBox(color: walletManagerPanel),
+      clip: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.walletManagerGroupSwatch,
                 height: AppSpacing.walletManagerGroupSwatch,
-                decoration: BoxDecoration(
-                  color: color,
+                child: ClipRRect(
                   borderRadius: AppRadii.swatchRadius,
+                  child: ColoredBox(color: color),
                 ),
               ),
               const SizedBox(width: AppSpacing.walletManagerGroupSwatchGap),
@@ -98,7 +98,7 @@ class _GroupCard extends StatelessWidget {
                   group.name,
                   style: AppTextStyles.control.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
@@ -114,7 +114,7 @@ class _GroupCard extends StatelessWidget {
             '${wallets.length} wallets',
             style: AppTextStyles.badge.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           const SizedBox(height: AppSpacing.walletManagerGroupMetaGap),
@@ -122,13 +122,16 @@ class _GroupCard extends StatelessWidget {
             'Total Value',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           const SizedBox(height: AppSpacing.walletManagerGroupValueGap),
           Text(
             formatWalletManagerUsd(group.totalValueUsd, decimals: 0),
-            style: AppTextStyles.sectionTitle.copyWith(color: color, height: 1),
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: color,
+              height: AppSpacing.tradeBotLineHeightTight,
+            ),
           ),
           const SizedBox(height: AppSpacing.walletManagerGroupMetaGap),
           for (final wallet in wallets) ...[
@@ -149,13 +152,13 @@ class _GroupWalletRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: AppSpacing.walletManagerGroupWalletRowHeight,
       padding: AppSpacing.walletManagerGroupWalletRowPadding,
-      decoration: BoxDecoration(
-        color: walletManagerBackground,
-        borderRadius: AppRadii.mdRadius,
-      ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      background: const ColoredBox(color: walletManagerBackground),
+      clip: true,
       child: Row(
         children: [
           Expanded(
@@ -168,7 +171,7 @@ class _GroupWalletRow extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
                 const SizedBox(
@@ -178,7 +181,7 @@ class _GroupWalletRow extends StatelessWidget {
                   wallet.maskedAddress,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ],

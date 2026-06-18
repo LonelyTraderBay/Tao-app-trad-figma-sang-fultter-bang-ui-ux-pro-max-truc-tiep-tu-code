@@ -10,8 +10,12 @@ class _ConceptRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(_iconFor(concept.iconName), color: _copyPrimary, size: 15),
-        const SizedBox(width: 8),
+        Icon(
+          _iconFor(concept.iconName),
+          color: _copyPrimary,
+          size: AppSpacing.walletAddressSectionIcon,
+        ),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,16 +25,12 @@ class _ConceptRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.1,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.walletAddressCompactGap),
               Text(
                 concept.description,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: 1.34,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -68,7 +68,7 @@ class _SupplementalTabContent extends StatelessWidget {
     };
 
     return _CardShell(
-      padding: const EdgeInsets.all(18),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -78,13 +78,10 @@ class _SupplementalTabContent extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.walletAddressActionGap),
           Text(
             description,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: 1.5,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ],
       ),
@@ -125,15 +122,12 @@ class _SmallGuideLine extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: color, size: 10),
-        const SizedBox(width: 4),
+        Icon(icon, color: color, size: AppSpacing.statusPillIconSizeSm),
+        const SizedBox(width: AppSpacing.walletAddressCompactGap),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1.3,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
       ],

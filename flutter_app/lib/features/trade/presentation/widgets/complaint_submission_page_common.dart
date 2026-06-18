@@ -8,46 +8,17 @@ class _SubmissionFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 67,
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 3),
-      decoration: BoxDecoration(
-        color: _submissionBackground.withValues(alpha: .94),
-        border: Border(
-          top: BorderSide(color: _submissionBorder.withValues(alpha: .35)),
-        ),
-      ),
-      child: SizedBox(
-        height: AppSpacing.inputHeight,
-        child: FilledButton(
-          key: ComplaintSubmissionPage.submitKey,
-          style: FilledButton.styleFrom(
-            backgroundColor: enabled ? _submissionPrimary : _submissionPanel2,
-            foregroundColor: enabled ? AppColors.onAccent : AppColors.text3,
-            disabledBackgroundColor: _submissionPanel2,
-            disabledForegroundColor: AppColors.text3,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-          ),
-          onPressed: enabled ? onSubmit : null,
-          child: Opacity(
-            opacity: enabled ? 1 : .52,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.chat_bubble_outline_rounded, size: 18),
-                const SizedBox(width: 9),
-                Text(
-                  'Submit Complaint',
-                  style: AppTextStyles.control.copyWith(
-                    color: enabled ? AppColors.onAccent : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+    return VitCard(
+      height: AppSpacing.complaintSubmissionFooterHeight,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.complaintSubmissionFooterPadding,
+      borderColor: _submissionBorder.withValues(alpha: .35),
+      child: VitCtaButton(
+        key: ComplaintSubmissionPage.submitKey,
+        onPressed: enabled ? onSubmit : null,
+        variant: VitCtaButtonVariant.primary,
+        leading: const Icon(Icons.chat_bubble_outline_rounded),
+        child: const Text('Submit Complaint'),
       ),
     );
   }
@@ -62,7 +33,10 @@ class _FieldLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTextStyles.navLabel.copyWith(color: AppColors.text2, height: 1),
+      style: AppTextStyles.navLabel.copyWith(
+        color: AppColors.text2,
+        height: AppSpacing.complaintSubmissionLineHeightTight,
+      ),
     );
   }
 }
@@ -74,26 +48,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _submissionPrimary,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          text,
-          style: AppTextStyles.captionSm.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: text,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _submissionPrimary,
     );
   }
 }

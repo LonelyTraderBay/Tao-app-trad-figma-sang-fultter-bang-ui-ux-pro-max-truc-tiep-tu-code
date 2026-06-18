@@ -58,12 +58,7 @@ class P2PInsurancePolicyPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pDocumentScrollPadding(bottomInset),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -110,25 +105,26 @@ class _PolicyHeroCard extends StatelessWidget {
     return VitCard(
       key: P2PInsurancePolicyPage.heroKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pDocumentLargePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: AppSpacing.x7,
-                height: AppSpacing.x7,
-                decoration: BoxDecoration(
+              const SizedBox.square(
+                dimension: AppSpacing.p2pDocumentHeroIconBox,
+                child: Material(
                   color: AppColors.primary12,
-                  borderRadius: AppRadii.lgRadius,
-                  border: Border.all(color: AppColors.primary20),
-                ),
-                child: const Icon(
-                  Icons.shield_outlined,
-                  color: AppModuleAccents.p2p,
-                  size: AppSpacing.iconMd,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.lgRadius,
+                    side: BorderSide(color: AppColors.primary20),
+                  ),
+                  child: Icon(
+                    Icons.shield_outlined,
+                    color: AppModuleAccents.p2p,
+                    size: AppSpacing.iconMd,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -193,7 +189,7 @@ class _PolicyMetaChip extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: color, size: 13),
+        Icon(icon, color: color, size: AppSpacing.p2pDocumentTinyIcon),
         const SizedBox(width: AppSpacing.x2),
         Text(
           label,
@@ -216,14 +212,14 @@ class _PolicyNoticeCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDocumentCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppModuleAccents.p2p,
-            size: 17,
+            size: AppSpacing.p2pDocumentRowIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -231,7 +227,7 @@ class _PolicyNoticeCard extends StatelessWidget {
               text,
               style: AppTextStyles.caption.copyWith(
                 color: AppModuleAccents.p2p,
-                height: 1.6,
+                height: AppSpacing.p2pDocumentPolicyLineHeight,
               ),
             ),
           ),
@@ -271,7 +267,7 @@ class _PolicySectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pDocumentLargePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -304,13 +300,12 @@ class _PolicyBullet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.x3),
-          child: Container(
-            width: AppSpacing.x2,
-            height: AppSpacing.x2,
-            decoration: const BoxDecoration(
+          padding: AppSpacing.p2pDocumentBulletTopPadding,
+          child: const SizedBox.square(
+            dimension: AppSpacing.p2pDocumentBullet,
+            child: Material(
               color: AppColors.text3,
-              shape: BoxShape.circle,
+              shape: CircleBorder(),
             ),
           ),
         ),
@@ -320,7 +315,7 @@ class _PolicyBullet extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.6,
+              height: AppSpacing.p2pDocumentPolicyLineHeight,
             ),
           ),
         ),
@@ -340,14 +335,14 @@ class _PrivacyNoticeCard extends StatelessWidget {
       key: P2PInsurancePolicyPage.privacyKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDocumentCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.lock_outline_rounded,
             color: AppColors.text3,
-            size: 15,
+            size: AppSpacing.p2pDocumentSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -355,7 +350,7 @@ class _PrivacyNoticeCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.5,
+                height: AppSpacing.p2pDocumentPrivacyLineHeight,
               ),
             ),
           ),

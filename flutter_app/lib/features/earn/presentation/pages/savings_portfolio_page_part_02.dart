@@ -10,7 +10,7 @@ class _AllocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnPaddingX5,
       child: Column(
         children: [
           SizedBox(
@@ -150,13 +150,13 @@ class _IncomeProjectionCard extends StatelessWidget {
     };
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
           DecoratedBox(
-            decoration: const BoxDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.primary12,
-              borderRadius: AppRadii.mdRadius,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             ),
             child: SizedBox(
               width: AppSpacing.x7,
@@ -198,13 +198,13 @@ class _MaturitySummary extends StatelessWidget {
     final total = events.length;
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
           DecoratedBox(
-            decoration: const BoxDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.warn10,
-              borderRadius: AppRadii.mdRadius,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             ),
             child: const SizedBox(
               width: AppSpacing.x7,
@@ -268,7 +268,7 @@ class _MaturityCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: color.withValues(alpha: 0.45),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -313,12 +313,12 @@ class _MaturityCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           DecoratedBox(
-            decoration: const BoxDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.surface3,
-              borderRadius: AppRadii.lgRadius,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnPaddingX4,
               child: Row(
                 children: [
                   Expanded(
@@ -454,7 +454,7 @@ class _PositionCard extends StatelessWidget {
     final color = _assetColor(position.asset);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
           _AssetBadge(asset: position.asset, color: color),

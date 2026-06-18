@@ -8,7 +8,7 @@ class _SriExplanationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 30),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -19,22 +19,22 @@ class _SriExplanationCard extends StatelessWidget {
             'the markets or because we are not able to pay you.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.55,
+              height: AppSpacing.tradeBotLineHeightRelaxed,
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.tradeToolContentGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 1),
+                padding: AppSpacing.tradeBotNoticeIconTopPadding,
                 child: Icon(
                   Icons.info_outline_rounded,
                   color: AppColors.text1,
-                  size: 15,
+                  size: AppSpacing.tradeBotSmallIcon,
                 ),
               ),
-              const SizedBox(width: 9),
+              const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
               Expanded(
                 child: Text(
                   'The risk indicator assumes you keep the product for '
@@ -43,7 +43,7 @@ class _SriExplanationCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.28,
+                    height: AppSpacing.tradeBotLineHeightCompact,
                   ),
                 ),
               ),
@@ -64,88 +64,82 @@ class _RiskLevelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _colorForTier(level.tier);
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 76),
-      child: _Card(
-        key: RiskIndicatorExplainerPage.levelKey(level.level),
-        padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .11),
-                borderRadius: AppRadii.lgRadius,
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                '${level.level}',
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
+    return _Card(
+      key: RiskIndicatorExplainerPage.levelKey(level.level),
+      padding: AppSpacing.tradeBotCompactCardPadding,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            width: AppSpacing.tradeBotQuestionIconBox,
+            height: AppSpacing.tradeBotQuestionIconBox,
+            alignment: Alignment.center,
+            clip: true,
+            borderColor: color.withValues(alpha: .18),
+            background: ColoredBox(color: color.withValues(alpha: .11)),
+            child: Text(
+              '${level.level}',
+              style: AppTextStyles.baseMedium.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
-            const SizedBox(width: 13),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          level.label,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1.1,
-                          ),
+          ),
+          const SizedBox(width: AppSpacing.tradeBotCardGap),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        level.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                          height: AppSpacing.tradeBotLineHeightShort,
                         ),
                       ),
-                      if (isProductLevel) ...[
-                        const SizedBox(width: 9),
-                        Text(
-                          'THIS PRODUCT',
-                          style: AppTextStyles.micro.copyWith(
-                            color: _riskPrimary,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ],
+                    ),
+                    if (isProductLevel) ...[
+                      const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+                      const VitAccentPill(
+                        label: 'THIS PRODUCT',
+                        accentColor: _riskPrimary,
+                      ),
                     ],
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                Text(
+                  level.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    height: AppSpacing.tradeBotLineHeightShort,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    level.description,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: 1.1,
-                    ),
+                ),
+                const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
+                Text(
+                  'Examples: ${level.examples.join(', ')}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'Examples: ${level.examples.join(', ')}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: 1,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -161,12 +155,13 @@ class _AdditionalRisksCard extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 164),
       child: _Card(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 17),
+        padding: AppSpacing.tradeBotCardPaddingLoose,
         child: Column(
           children: [
             for (final risk in risks) ...[
               _AdditionalRiskRow(risk: risk),
-              if (risk != risks.last) const SizedBox(height: 14),
+              if (risk != risks.last)
+                const SizedBox(height: AppSpacing.tradeBotStatusGap),
             ],
           ],
         ),
@@ -187,14 +182,14 @@ class _AdditionalRiskRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.only(top: 1),
+          padding: AppSpacing.tradeBotNoticeIconTopPadding,
           child: Icon(
             Icons.warning_amber_rounded,
             color: AppColors.text1,
-            size: 14,
+            size: AppSpacing.tradeBotSmallIcon,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.tradeBotSmallGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -204,53 +199,18 @@ class _AdditionalRiskRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
               Text(
                 risk.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.25,
+                  height: AppSpacing.tradeBotLineHeightCompact,
                 ),
               ),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _riskPrimary,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: 7),
-        Expanded(
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
           ),
         ),
       ],

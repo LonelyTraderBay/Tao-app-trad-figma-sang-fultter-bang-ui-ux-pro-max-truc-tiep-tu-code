@@ -7,25 +7,25 @@ class _TaxHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PTaxReportingPage.heroKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.accent,
+      color: AppColors.accent,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppColors.accent),
+        side: BorderSide(color: AppColors.accent),
       ),
-      child: Row(
+      child: Padding(
+        padding: AppSpacing.p2pDocumentCardPadding,
+        child: Row(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.p2pDocumentIconBox,
+            child: Material(
               color: AppColors.onAccent.withValues(alpha: .20),
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: const SizedBox(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
-              child: Icon(
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+              ),
+              child: const Icon(
                 Icons.description_outlined,
                 color: AppColors.onAccent,
                 size: AppSpacing.iconMd,
@@ -58,7 +58,8 @@ class _TaxHero extends StatelessWidget {
               ],
             ),
           ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -124,29 +125,33 @@ class _YearChip extends StatelessWidget {
     return Material(
       key: P2PTaxReportingPage.yearKey(year),
       color: selected ? AppColors.accent : AppColors.bg,
-      borderRadius: AppRadii.inputRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(
+          color: selected ? AppColors.accent : AppColors.borderSolid,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Container(
+        customBorder: const RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+        ),
+        child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.buttonCompact,
-            minWidth: 64,
+            minWidth: AppSpacing.p2pDocumentChipMinWidth,
           ),
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
-          decoration: BoxDecoration(
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(
-              color: selected ? AppColors.accent : AppColors.borderSolid,
-            ),
-          ),
-          child: Text(
-            '$year',
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.onAccent : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
+          child: Padding(
+            padding: AppSpacing.p2pDocumentChipPadding,
+            child: Center(
+              child: Text(
+                '$year',
+                style: AppTextStyles.caption.copyWith(
+                  color: selected ? AppColors.onAccent : AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
             ),
           ),
         ),
@@ -209,61 +214,61 @@ class _JurisdictionTile extends StatelessWidget {
     return Material(
       key: P2PTaxReportingPage.jurisdictionKey(jurisdiction.code),
       color: selected ? AppColors.accent12 : AppColors.bg,
-      borderRadius: AppRadii.inputRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(
+          color: selected ? AppColors.accent : AppColors.borderSolid,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Container(
+        customBorder: const RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+        ),
+        child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
-          padding: const EdgeInsets.all(AppSpacing.x3),
-          decoration: BoxDecoration(
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(
-              color: selected ? AppColors.accent : AppColors.borderSolid,
+          child: Padding(
+            padding: AppSpacing.p2pDocumentCardPadding,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        jurisdiction.name,
+                        style: AppTextStyles.caption.copyWith(
+                          color: selected ? AppColors.accent : AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        jurisdiction.form,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (selected)
+                  const SizedBox.square(
+                    dimension: AppSpacing.iconMd,
+                    child: Material(
+                      color: AppColors.accent,
+                      shape: CircleBorder(),
+                      child: Center(
+                        child: Icon(
+                          Icons.circle,
+                          color: AppColors.onAccent,
+                          size: AppSpacing.x2,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             ),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      jurisdiction.name,
-                      style: AppTextStyles.caption.copyWith(
-                        color: selected ? AppColors.accent : AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      jurisdiction.form,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (selected)
-                DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: AppColors.accent,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const SizedBox(
-                    width: AppSpacing.iconMd,
-                    height: AppSpacing.iconMd,
-                    child: Center(
-                      child: Icon(
-                        Icons.circle,
-                        color: AppColors.onAccent,
-                        size: AppSpacing.x2,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
           ),
         ),
       ),
@@ -329,7 +334,7 @@ class _TaxSummary extends StatelessWidget {
           radius: VitCardRadius.lg,
           variant: VitCardVariant.inner,
           borderColor: AppColors.accent20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pDocumentCardPadding,
           child: Row(
             children: [
               Expanded(

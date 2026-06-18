@@ -12,7 +12,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: P2PBlacklistPage.summaryKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pBlacklistCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -102,7 +102,7 @@ class _FilterRail extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
+      padding: AppSpacing.p2pBlacklistFilterRailPadding,
       child: Row(
         children: [
           for (final filter in filters) ...[
@@ -136,23 +136,19 @@ class _FilterChip extends StatelessWidget {
     return Material(
       key: P2PBlacklistPage.filterKey(filter.id),
       color: selected ? color.withValues(alpha: .14) : AppColors.surface2,
-      borderRadius: AppRadii.inputRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(
+          color: selected
+              ? color.withValues(alpha: .42)
+              : AppColors.borderSolid,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected
-                  ? color.withValues(alpha: .42)
-                  : AppColors.borderSolid,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
+        child: Padding(
+          padding: AppSpacing.p2pBlacklistChipPadding,
           child: Text(
             filter.label,
             maxLines: 1,

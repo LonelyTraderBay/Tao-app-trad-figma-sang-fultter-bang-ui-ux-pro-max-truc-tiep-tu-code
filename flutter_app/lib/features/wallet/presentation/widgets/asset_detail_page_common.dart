@@ -1,59 +1,5 @@
 part of '../pages/asset_detail_page.dart';
 
-class _AssetChartPainter extends CustomPainter {
-  const _AssetChartPainter({required this.points, required this.color});
-
-  final List<WalletAssetChartPoint> points;
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (points.length < 2) return;
-    final minPrice = points.map((p) => p.price).reduce(math.min);
-    final maxPrice = points.map((p) => p.price).reduce(math.max);
-    final range = math.max(1, maxPrice - minPrice);
-    final dx = size.width / (points.length - 1);
-    final path = Path();
-
-    for (var i = 0; i < points.length; i++) {
-      final x = i * dx;
-      final normalized = (points[i].price - minPrice) / range;
-      final y =
-          size.height - normalized * (size.height * .82) - size.height * .08;
-      if (i == 0) {
-        path.moveTo(x, y);
-      } else {
-        path.lineTo(x, y);
-      }
-    }
-
-    final fillPath = Path.from(path)
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-    final fillPaint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [color.withValues(alpha: .22), color.withValues(alpha: .02)],
-      ).createShader(Offset.zero & size);
-    canvas.drawPath(fillPath, fillPaint);
-
-    final linePaint = Paint()
-      ..color = color
-      ..strokeWidth = 2.2
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-    canvas.drawPath(path, linePaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant _AssetChartPainter oldDelegate) {
-    return oldDelegate.points != points || oldDelegate.color != color;
-  }
-}
-
 class _AssetTransactions extends StatelessWidget {
   const _AssetTransactions({
     required this.transactions,
@@ -108,20 +54,20 @@ class _AssetTransactionRow extends StatelessWidget {
       key: AssetDetailPage.transactionKey(tx.id),
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSpacing.walletTransactionDetailsPadVertical,
+      padding: AppSpacing.zeroInsets.copyWith(
+        top: AppSpacing.walletTransactionDetailsPadVertical,
+        bottom: AppSpacing.walletTransactionDetailsPadVertical,
       ),
       onTap: onTap,
       child: Row(
         children: [
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             width: AppSpacing.walletAssetTransactionIcon,
             height: AppSpacing.walletAssetTransactionIcon,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.cardRadius,
-            ),
             alignment: Alignment.center,
+            borderColor: color.withValues(alpha: .20),
             child: Icon(
               tx.isIncoming
                   ? Icons.trending_up_rounded

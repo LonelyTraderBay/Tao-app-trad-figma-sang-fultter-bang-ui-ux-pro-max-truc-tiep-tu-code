@@ -9,7 +9,7 @@ class _ClaimCalculatorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,15 +26,15 @@ class _ClaimCalculatorCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
-          Container(
-            height: AppSpacing.inputHeight,
+          VitCard(
+            height: AppSpacing.p2pTrustProgressInputHeight,
             alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              border: Border.all(color: AppColors.borderSolid),
-              borderRadius: AppRadii.inputRadius,
-            ),
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            borderColor: AppColors.borderSolid,
+            background: const ColoredBox(color: AppColors.surface2),
+            padding: AppSpacing.p2pTrustProgressInputPadding,
+            clip: true,
             child: Text(
               'VD: 50.000.000',
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -60,7 +60,7 @@ class _PlatformStatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -155,7 +155,10 @@ class _InsuranceTourOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = math.min(MediaQuery.sizeOf(context).height, 956.0);
+    final height = math.min(
+      MediaQuery.sizeOf(context).height,
+      AppSpacing.p2pTrustProgressTourMaxHeight,
+    );
     return Positioned(
       top: 0,
       left: 0,
@@ -166,35 +169,28 @@ class _InsuranceTourOverlay extends StatelessWidget {
         color: AppColors.bg.withValues(alpha: .82),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x7,
-              AppSpacing.contentPad,
-              AppSpacing.x5,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                border: Border.all(color: AppColors.cardBorder),
-                borderRadius: AppRadii.cardLargeRadius,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x4),
-                child: Column(
+            padding: AppSpacing.p2pTrustProgressTourPadding,
+            child: VitCard(
+              radius: VitCardRadius.lg,
+              padding: AppSpacing.p2pTrustProgressCardPadding,
+              child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
                       children: [
                         for (var i = 0; i < 5; i++) ...[
                           Expanded(
-                            child: Container(
-                              height: 3,
-                              decoration: BoxDecoration(
+                            child: VitCard(
+                              height: AppSpacing.p2pTrustProgressTourStepHeight,
+                              variant: VitCardVariant.ghost,
+                              radius: VitCardRadius.sm,
+                              background: ColoredBox(
                                 color: i == 0
                                     ? AppModuleAccents.p2p
                                     : AppColors.surface3,
-                                borderRadius: AppRadii.xsRadius,
                               ),
+                              clip: true,
+                              child: const SizedBox.shrink(),
                             ),
                           ),
                           if (i != 4) const SizedBox(width: AppSpacing.x2),
@@ -219,13 +215,13 @@ class _InsuranceTourOverlay extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x4),
                     Align(
                       alignment: Alignment.center,
-                      child: Container(
+                      child: VitCard(
                         width: AppSpacing.x7,
                         height: AppSpacing.x7,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary12,
-                          borderRadius: AppRadii.lgRadius,
-                        ),
+                        variant: VitCardVariant.ghost,
+                        radius: VitCardRadius.md,
+                        background: const ColoredBox(color: AppColors.primary12),
+                        clip: true,
                         child: const Icon(
                           Icons.shield_outlined,
                           color: AppModuleAccents.p2p,
@@ -247,7 +243,7 @@ class _InsuranceTourOverlay extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
+                        height: AppSpacing.p2pTrustProgressBodyLineHeight,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x5),
@@ -299,11 +295,10 @@ class _InsuranceTourOverlay extends StatelessWidget {
                       ],
                     ),
                   ],
-                ),
-              ),
             ),
           ),
         ),
+      ),
       ),
     );
   }
@@ -328,7 +323,7 @@ class _TourInfoCard extends StatelessWidget {
       variant: muted ? VitCardVariant.inner : VitCardVariant.standard,
       radius: VitCardRadius.sm,
       borderColor: muted ? AppColors.borderSolid : AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -350,17 +345,16 @@ class _TourInfoCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: AppSpacing.iconMd,
-                  height: AppSpacing.iconMd,
-                  decoration: const BoxDecoration(
+                const SizedBox.square(
+                  dimension: AppSpacing.iconMd,
+                  child: Material(
                     color: AppColors.primary12,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.trending_up_rounded,
-                    color: AppModuleAccents.p2p,
-                    size: AppSpacing.iconSm,
+                    shape: CircleBorder(),
+                    child: Icon(
+                      Icons.trending_up_rounded,
+                      color: AppModuleAccents.p2p,
+                      size: AppSpacing.iconSm,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x3),
@@ -370,7 +364,7 @@ class _TourInfoCard extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.medium,
-                      height: 1.35,
+                      height: AppSpacing.p2pTrustProgressCaptionLineHeight,
                     ),
                   ),
                 ),
@@ -394,7 +388,7 @@ class _ClaimCard extends StatelessWidget {
     final config = _claimStatusConfig(claim.status);
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pClaim(claim.id));

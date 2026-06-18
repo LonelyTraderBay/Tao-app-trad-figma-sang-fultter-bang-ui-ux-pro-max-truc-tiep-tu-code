@@ -12,7 +12,7 @@ class _SuggestedFallbackCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,10 +24,10 @@ class _SuggestedFallbackCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           for (final item in suggestions)
             Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+              padding: AppSpacing.arenaGovernanceListItemPadding,
               child: VitCard(
                 variant: VitCardVariant.inner,
-                padding: const EdgeInsets.all(AppSpacing.x3),
+                padding: AppSpacing.arenaGovernanceInnerPadding,
                 onTap: () => onTap(item),
                 child: Row(
                   children: [
@@ -84,7 +84,7 @@ class _EligibilityPanel extends StatelessWidget {
     final color = _tierColor(result.tier);
     return VitCard(
       borderColor: _tierBorder(result.tier),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -111,7 +111,7 @@ class _EligibilityPanel extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           for (final check in result.checks)
             Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+              padding: AppSpacing.arenaGovernanceListItemPadding,
               child: Row(
                 children: [
                   Icon(

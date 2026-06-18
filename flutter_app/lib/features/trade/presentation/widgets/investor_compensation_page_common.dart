@@ -7,24 +7,26 @@ class _WarningBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
-      decoration: BoxDecoration(
-        color: _compAmber.withValues(alpha: .13),
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      padding: AppSpacing.tradeBotCompactCardPadding,
+      variant: VitCardVariant.ghost,
+      borderColor: _compAmber.withValues(alpha: .35),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline_rounded, color: _compAmber, size: 14),
-          const SizedBox(width: 8),
+          const Icon(
+            Icons.info_outline_rounded,
+            color: _compAmber,
+            size: AppSpacing.statusPillIconSizeLg,
+          ),
+          const SizedBox(width: AppSpacing.tradeBotSmallGap),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _compAmber,
                 fontWeight: AppTextStyles.bold,
-                height: 1.3,
+                height: AppSpacing.tradeBotLineHeightBody,
               ),
             ),
           ),
@@ -45,25 +47,25 @@ class _Eligibility extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionLabel('Who Is Eligible?'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _Card(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.cardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const _EligibilityHeading('Eligible Customers:'),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.tradeBotRowGap),
               for (final item in snapshot.eligibleCustomers) ...[
                 _Bullet(text: item, color: _compGreen),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
               ],
-              const SizedBox(height: 6),
+              const SizedBox(height: AppSpacing.formFieldLabelGap),
               const _EligibilityHeading('Not Eligible:'),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.tradeBotRowGap),
               for (final item in snapshot.ineligibleCustomers) ...[
                 _Bullet(text: item, color: _compRed),
                 if (item != snapshot.ineligibleCustomers.last)
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.tradeBotSmallGap),
               ],
             ],
           ),
@@ -84,25 +86,18 @@ class _ClaimGuide extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionLabel('How to Make a Claim'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         for (final step in snapshot.claimSteps) ...[
           _ClaimStep(step: step),
-          if (step != snapshot.claimSteps.last) const SizedBox(height: 12),
+          if (step != snapshot.claimSteps.last)
+            const SizedBox(height: AppSpacing.tradeBotCardGap),
         ],
-        const SizedBox(height: 12),
-        SizedBox(
-          height: 44,
-          child: FilledButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.open_in_new_rounded, size: 16),
-            label: Text(
-              'Visit FSCS Website',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.onAccent,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
+        VitCtaButton(
+          height: AppSpacing.searchBarCompactHeight,
+          onPressed: () {},
+          leading: const Icon(Icons.open_in_new_rounded),
+          child: const Text('Visit FSCS Website'),
         ),
       ],
     );
@@ -117,27 +112,26 @@ class _ClaimStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.all(13),
+      padding: AppSpacing.tradeBotAttributionPanelPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: _compPrimary.withValues(alpha: .13),
-              borderRadius: AppRadii.smRadius,
-            ),
+          VitCard(
+            width: AppSpacing.statusPillHeightLg,
+            height: AppSpacing.statusPillHeightLg,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            borderColor: _compPrimary.withValues(alpha: .24),
             alignment: Alignment.center,
             child: Text(
               '${step.step}',
               style: AppTextStyles.baseMedium.copyWith(
                 color: _compPrimary,
-                height: 1,
+                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,15 +141,15 @@ class _ClaimStep extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.formFieldLabelGap),
                 Text(
                   step.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.35,
+                    height: AppSpacing.tradeBotLineHeightBody,
                   ),
                 ),
               ],
@@ -179,7 +173,7 @@ class _EligibilityHeading extends StatelessWidget {
       style: AppTextStyles.caption.copyWith(
         color: AppColors.text1,
         fontWeight: AppTextStyles.bold,
-        height: 1,
+        height: AppSpacing.tradeBotLineHeightTight,
       ),
     );
   }
@@ -201,15 +195,15 @@ class _Bullet extends StatelessWidget {
               ? Icons.check_circle_outline
               : Icons.error_outline_rounded,
           color: color,
-          size: 13,
+          size: AppSpacing.iconSm,
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.tradeBotSmallGap),
         Expanded(
           child: Text(
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.35,
+              height: AppSpacing.tradeBotLineHeightBody,
             ),
           ),
         ),
@@ -223,43 +217,14 @@ class _FaqButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 44,
-      child: OutlinedButton(
-        key: InvestorCompensationPage.faqKey,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.text1,
-          side: BorderSide(color: _compBorder.withValues(alpha: .72)),
-          backgroundColor: _compPanel2,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-        ),
-        onPressed: () {},
-        child: Row(
-          children: [
-            const Icon(
-              Icons.help_outline_rounded,
-              color: _compPrimary,
-              size: 16,
-            ),
-            const SizedBox(width: 9),
-            Expanded(
-              child: Text(
-                'FSCS FAQs',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: 16,
-            ),
-          ],
-        ),
-      ),
+    return VitCtaButton(
+      key: InvestorCompensationPage.faqKey,
+      height: AppSpacing.searchBarCompactHeight,
+      variant: VitCtaButtonVariant.secondary,
+      onPressed: () {},
+      leading: const Icon(Icons.help_outline_rounded),
+      trailing: const Icon(Icons.chevron_right_rounded),
+      child: const Text('FSCS FAQs'),
     );
   }
 }
@@ -271,26 +236,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 14,
-          decoration: BoxDecoration(
-            color: _compPrimary,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          text,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: text,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _compPrimary,
     );
   }
 }
@@ -303,13 +252,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _compPanel,
-        border: Border.all(color: _compBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _compBorder.withValues(alpha: .72),
       child: child,
     );
   }

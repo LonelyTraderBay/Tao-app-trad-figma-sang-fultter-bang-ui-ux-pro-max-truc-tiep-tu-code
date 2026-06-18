@@ -12,7 +12,7 @@ class _OnchainTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.tokenInfoOnchainCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -21,9 +21,9 @@ class _OnchainTab extends StatelessWidget {
                   const Icon(
                     Icons.bolt_rounded,
                     color: AppColors.buy,
-                    size: 16,
+                    size: AppSpacing.tokenInfoOnchainIcon,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.tokenInfoOnchainIconGap),
                   Text(
                     'Hoat dong mang luoi (24h)',
                     style: AppTextStyles.caption.copyWith(
@@ -33,7 +33,7 @@ class _OnchainTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.tokenInfoOnchainTitleGap),
               Row(
                 children: [
                   Expanded(
@@ -42,7 +42,7 @@ class _OnchainTab extends StatelessWidget {
                       value: _formatCompact(f.activeAddresses24h.toDouble()),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: AppSpacing.tokenInfoMiniStatGap),
                   Expanded(
                     child: _MiniStat(
                       label: 'Giao dich',
@@ -51,7 +51,7 @@ class _OnchainTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.tokenInfoMiniStatGap),
               Row(
                 children: [
                   Expanded(
@@ -60,7 +60,7 @@ class _OnchainTab extends StatelessWidget {
                       value: _formatCompact(f.holders.toDouble()),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: AppSpacing.tokenInfoMiniStatGap),
                   Expanded(
                     child: _MiniStat(
                       label: 'TVL',
@@ -74,10 +74,11 @@ class _OnchainTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 14),
-        const _SectionHeader(
-          label: 'Thong tin mang luoi',
+        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const VitSectionHeader(
+          title: 'Thong tin mang luoi',
           accentColor: _marketPrimary,
+          variant: VitSectionHeaderVariant.accentBar,
         ),
         _InfoCard(
           rows: [
@@ -116,7 +117,7 @@ class _MiniStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.tokenInfoMiniStatPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -124,7 +125,7 @@ class _MiniStat extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.tokenInfoMiniStatValueGap),
           Text(
             value,
             style: AppTextStyles.amountSm.copyWith(
@@ -149,7 +150,7 @@ class _ProjectTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.tokenInfoProjectCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -158,9 +159,9 @@ class _ProjectTab extends StatelessWidget {
                   const Icon(
                     Icons.article_outlined,
                     color: _marketPrimary,
-                    size: 16,
+                    size: AppSpacing.tokenInfoOnchainIcon,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.tokenInfoOnchainIconGap),
                   Text(
                     'Gioi thieu',
                     style: AppTextStyles.caption.copyWith(
@@ -170,18 +171,23 @@ class _ProjectTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.tokenInfoProjectTitleGap),
               Text(f.description, style: AppTextStyles.body),
             ],
           ),
         ),
-        const SizedBox(height: 14),
-        const _SectionHeader(label: 'Lien ket', accentColor: _marketPrimary),
+        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const VitSectionHeader(
+          title: 'Lien ket',
+          accentColor: _marketPrimary,
+          variant: VitSectionHeaderVariant.accentBar,
+        ),
         _ProjectLinks(fundamentals: f),
-        const SizedBox(height: 14),
-        const _SectionHeader(
-          label: 'Chi so quan trong',
+        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const VitSectionHeader(
+          title: 'Chi so quan trong',
           accentColor: AppColors.buy,
+          variant: VitSectionHeaderVariant.accentBar,
         ),
         _InfoCard(
           rows: [
@@ -224,19 +230,19 @@ class _ProjectLinks extends StatelessWidget {
           label: 'Website',
           value: fundamentals.website,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.tokenInfoProjectLinkGap),
         _LinkRow(
           icon: Icons.description_outlined,
           label: 'Whitepaper',
           value: fundamentals.whitepaper,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.tokenInfoProjectLinkGap),
         _LinkRow(
           icon: Icons.code_rounded,
           label: 'GitHub',
           value: fundamentals.github,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.tokenInfoProjectLinkGap),
         _LinkRow(
           icon: Icons.alternate_email_rounded,
           label: 'Twitter',
@@ -261,11 +267,15 @@ class _LinkRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.tokenInfoProjectLinkPadding,
       child: Row(
         children: [
-          Icon(icon, color: _marketPrimary, size: 18),
-          const SizedBox(width: 10),
+          Icon(
+            icon,
+            color: _marketPrimary,
+            size: AppSpacing.tokenInfoProjectLinkIcon,
+          ),
+          const SizedBox(width: AppSpacing.tokenInfoProjectLinkIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,7 +299,7 @@ class _LinkRow extends StatelessWidget {
           const Icon(
             Icons.open_in_new_rounded,
             color: AppColors.text3,
-            size: 15,
+            size: AppSpacing.tokenInfoProjectLinkOpenIcon,
           ),
         ],
       ),
@@ -302,29 +312,29 @@ class _Disclaimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.warn08,
-        border: Border.all(color: AppColors.warningBorder),
+    return Material(
+      color: AppColors.warn08,
+      shape: const RoundedRectangleBorder(
+        side: BorderSide(color: AppColors.warningBorder),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: AppSpacing.tokenInfoDisclaimerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.info_outline_rounded,
               color: AppColors.warn,
-              size: 14,
+              size: AppSpacing.tokenInfoDisclaimerIcon,
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.tokenInfoDisclaimerIconGap),
             Expanded(
               child: Text(
                 'Thong tin mang tinh tham khao, khong phai loi khuyen dau tu. Hay tu nghien cuu truoc khi dua ra quyet dinh.',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.warn,
-                  height: 1.35,
+                  height: AppSpacing.tokenInfoDisclaimerLineHeight,
                 ),
               ),
             ),

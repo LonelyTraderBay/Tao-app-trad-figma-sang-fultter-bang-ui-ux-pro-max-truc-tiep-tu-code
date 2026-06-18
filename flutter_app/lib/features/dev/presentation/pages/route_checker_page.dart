@@ -70,7 +70,7 @@ class _RouteCheckerState extends ConsumerState<RouteChecker> {
                 child: SingleChildScrollView(
                   key: RouteChecker.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.devScrollPadding(bottomInset),
                   child: VitPageContent(
                     gap: VitContentGap.defaultGap,
                     children: [

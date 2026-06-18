@@ -18,14 +18,14 @@ class _QuickAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       height: AppSpacing.inputHeight,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: AppSpacing.tradeBotControlPadding,
       variant: VitCardVariant.inner,
       borderColor: _dashBorder,
       onTap: onTap,
       child: Row(
         children: [
-          Icon(icon, color: color, size: 17),
-          const SizedBox(width: 8),
+          Icon(icon, color: color, size: AppSpacing.tradeBotMediumIcon),
+          const SizedBox(width: AppSpacing.tradeBotSmallGap),
           Expanded(
             child: Text(
               label,
@@ -40,7 +40,7 @@ class _QuickAction extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: 17,
+            size: AppSpacing.tradeBotMediumIcon,
           ),
         ],
       ),
@@ -68,10 +68,10 @@ class _SmallMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
         Text(
           value,
           maxLines: 1,
@@ -79,7 +79,7 @@ class _SmallMetric extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ],
@@ -132,22 +132,25 @@ class _NoticePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 20,
-      right: 20,
-      bottom: 108 + MediaQuery.paddingOf(context).bottom,
+      left: AppSpacing.contentPad,
+      right: AppSpacing.contentPad,
+      bottom:
+          AppSpacing.tradeBotBottomInsetVisual +
+          AppSpacing.tradeBotPanelGap +
+          MediaQuery.paddingOf(context).bottom,
       child: Material(
         color: AppColors.transparent,
         child: VitCard(
-          padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
+          padding: AppSpacing.tradeBotDisputeNoticePadding,
           borderColor: _dashGreen.withValues(alpha: .35),
           child: Row(
             children: [
               const Icon(
                 Icons.check_circle_outline,
                 color: _dashGreen,
-                size: 18,
+                size: AppSpacing.tradeBotActionIcon,
               ),
-              const SizedBox(width: 9),
+              const SizedBox(width: AppSpacing.tradeBotRowGap),
               Expanded(
                 child: Text(
                   text,
@@ -157,7 +160,10 @@ class _NoticePanel extends StatelessWidget {
               IconButton(
                 visualDensity: VisualDensity.compact,
                 onPressed: onClose,
-                icon: const Icon(Icons.close_rounded, size: 18),
+                icon: const Icon(
+                  Icons.close_rounded,
+                  size: AppSpacing.tradeBotActionIcon,
+                ),
                 color: AppColors.text3,
               ),
             ],
@@ -177,10 +183,10 @@ class _TrendPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final grid = Paint()
       ..color = _dashBorder.withValues(alpha: .62)
-      ..strokeWidth = 1;
+      ..strokeWidth = AppSpacing.tradeBotHairline;
     final axis = Paint()
       ..color = AppColors.text3.withValues(alpha: .50)
-      ..strokeWidth = 1;
+      ..strokeWidth = AppSpacing.tradeBotHairline;
     final chartRect = Rect.fromLTWH(58, 8, size.width - 66, size.height - 34);
     const maxValue = 240.0;
     final textPainter = TextPainter(textDirection: TextDirection.ltr);

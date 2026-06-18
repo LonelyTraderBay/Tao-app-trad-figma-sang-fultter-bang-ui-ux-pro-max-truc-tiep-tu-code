@@ -8,24 +8,24 @@ class _MessagePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
-      child: DecoratedBox(
-        decoration: const BoxDecoration(color: AppColors.modalScrim),
+      child: ColoredBox(
+        color: AppColors.modalScrim,
         child: Align(
           alignment: Alignment.bottomCenter,
           child: VitCard(
             radius: VitCardRadius.lg,
-            padding: const EdgeInsets.all(20),
+            padding: AppSpacing.providerGovernanceMessagePanelPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text('Broadcast Message', style: AppTextStyles.baseMedium),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.rowGapRegular),
                 Text(
                   'Send announcement to all followers',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: AppSpacing.ctaLoadingIcon),
                 _RequestButton(onPressed: onClose),
               ],
             ),

@@ -5,26 +5,25 @@ class _WarningNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 70),
-      padding: const EdgeInsets.fromLTRB(13, 12, 13, 12),
-      decoration: BoxDecoration(
-        color: _scenarioAmber.withValues(alpha: .09),
-        border: Border.all(color: _scenarioAmber.withValues(alpha: .38)),
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotSecurityCardMinHeight,
       ),
+      padding: AppSpacing.tradeBotDisputeNoticePadding,
+      borderColor: _scenarioAmber.withValues(alpha: .38),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 2),
+            padding: AppSpacing.tradeBotIntroIconTopPadding,
             child: Icon(
               Icons.warning_amber_rounded,
               color: _scenarioAmber,
-              size: 16,
+              size: AppSpacing.tradeBotSmallIcon,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,10 +32,10 @@ class _WarningNotice extends StatelessWidget {
                   'Not a Guarantee',
                   style: AppTextStyles.badge.copyWith(
                     color: _scenarioAmber,
-                    height: 1.1,
+                    height: AppSpacing.tradeBotLineHeightShort,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
                 Text(
                   'These scenarios are illustrations based on past '
                   'performance and statistical models. Actual results may '
@@ -44,7 +43,7 @@ class _WarningNotice extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: _scenarioAmber,
                     fontWeight: AppTextStyles.medium,
-                    height: 1.35,
+                    height: AppSpacing.tradeBotLineHeightBody,
                   ),
                 ),
               ],
@@ -64,7 +63,7 @@ class _InvestmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 18),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -72,15 +71,15 @@ class _InvestmentCard extends StatelessWidget {
             'Example Investment',
             style: AppTextStyles.navLabel.copyWith(
               color: AppColors.text3,
-              height: 1.2,
+              height: AppSpacing.tradeBotLineHeightCaption,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           Text(
             _formatEur(investment),
             style: AppTextStyles.amountMd.copyWith(
               color: AppColors.text1,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -102,74 +101,18 @@ class _HoldingPeriodSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (final period in periods) ...[
-          Expanded(
-            child: SizedBox(
-              height: 32,
-              child: TextButton(
-                key: PerformanceScenariosPage.periodKey(period),
-                onPressed: () => onChanged(period),
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  backgroundColor: selectedPeriod == period
-                      ? _scenarioPrimary
-                      : _scenarioPanel2,
-                  foregroundColor: selectedPeriod == period
-                      ? AppColors.onAccent
-                      : AppColors.text2,
-                  shape: const StadiumBorder(),
-                ),
-                child: Text(
-                  '$period ${period == 1 ? 'Year' : 'Years'}',
-                  style: AppTextStyles.captionSm.copyWith(
-                    color: selectedPeriod == period
-                        ? AppColors.onAccent
-                        : AppColors.text2,
-                    fontWeight: selectedPeriod == period
-                        ? AppTextStyles.bold
-                        : AppTextStyles.medium,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      tabs: [
+        for (final period in periods)
+          VitTabItem(
+            key: '$period',
+            label: '$period ${period == 1 ? 'Year' : 'Years'}',
+            widgetKey: PerformanceScenariosPage.periodKey(period),
           ),
-          if (period != periods.last) const SizedBox(width: 8),
-        ],
       ],
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _scenarioPrimary,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+      activeKey: '$selectedPeriod',
+      onChanged: (value) => onChanged(int.parse(value)),
     );
   }
 }

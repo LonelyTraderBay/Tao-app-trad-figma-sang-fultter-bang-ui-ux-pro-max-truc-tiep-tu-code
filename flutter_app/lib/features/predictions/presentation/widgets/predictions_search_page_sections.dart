@@ -164,39 +164,38 @@ class _FilterPanel extends StatelessWidget {
           ),
           if (hasActiveFilters) ...[
             const Padding(padding: AppSpacing.predictionSearchClearGap),
-            InkWell(
+            Material(
               key: PredictionsSearchPage.clearFiltersKey,
-              onTap: onClear,
-              borderRadius: AppRadii.mdRadius,
-              child: Container(
-                height: AppSpacing.predictionSearchClearHeight,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.sell.withValues(alpha: .10),
-                  border: Border.all(
-                    color: AppColors.sell.withValues(alpha: .18),
-                  ),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.close_rounded,
-                      color: AppColors.sell,
-                      size: AppSpacing.predictionSearchClearIcon,
-                    ),
-                    const SizedBox(
-                      width: AppSpacing.predictionSearchClearIconGap,
-                    ),
-                    Text(
-                      'Clear all filters',
-                      style: AppTextStyles.caption.copyWith(
+              color: AppColors.sell.withValues(alpha: .10),
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: AppColors.sell.withValues(alpha: .18)),
+                borderRadius: AppRadii.mdRadius,
+              ),
+              child: InkWell(
+                onTap: onClear,
+                borderRadius: AppRadii.mdRadius,
+                child: SizedBox(
+                  height: AppSpacing.predictionSearchClearHeight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.close_rounded,
                         color: AppColors.sell,
-                        fontWeight: AppTextStyles.bold,
+                        size: AppSpacing.predictionSearchClearIcon,
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        width: AppSpacing.predictionSearchClearIconGap,
+                      ),
+                      Text(
+                        'Clear all filters',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.sell,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -240,40 +239,46 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: AppSpacing.predictionSearchSortChipHeight,
-        padding: AppSpacing.predictionSearchSortChipPadding,
-        decoration: BoxDecoration(
+    return Material(
+      color: active
+          ? _predictionPrimary.withValues(alpha: .14)
+          : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
           color: active
-              ? _predictionPrimary.withValues(alpha: .14)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? _predictionPrimary.withValues(alpha: .36)
-                : AppColors.borderSolid,
-          ),
-          borderRadius: AppRadii.mdRadius,
+              ? _predictionPrimary.withValues(alpha: .36)
+              : AppColors.borderSolid,
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: AppSpacing.predictionSearchSortIcon,
-              color: active ? _predictionPrimary : AppColors.text3,
+        borderRadius: AppRadii.mdRadius,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: SizedBox(
+          height: AppSpacing.predictionSearchSortChipHeight,
+          child: Padding(
+            padding: AppSpacing.predictionSearchSortChipPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  size: AppSpacing.predictionSearchSortIcon,
+                  color: active ? _predictionPrimary : AppColors.text3,
+                ),
+                const SizedBox(width: AppSpacing.predictionSearchSortIconGap),
+                Text(
+                  label,
+                  style: AppTextStyles.micro.copyWith(
+                    color: active ? _predictionPrimary : AppColors.text2,
+                    fontWeight: active
+                        ? AppTextStyles.bold
+                        : AppTextStyles.normal,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: AppSpacing.predictionSearchSortIconGap),
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: active ? _predictionPrimary : AppColors.text2,
-                fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -294,28 +299,31 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: AppSpacing.predictionSearchStatusChipHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
+    return Material(
+      color: active
+          ? _predictionPrimary.withValues(alpha: .14)
+          : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
           color: active
-              ? _predictionPrimary.withValues(alpha: .14)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? _predictionPrimary.withValues(alpha: .36)
-                : AppColors.borderSolid,
-          ),
-          borderRadius: AppRadii.mdRadius,
+              ? _predictionPrimary.withValues(alpha: .36)
+              : AppColors.borderSolid,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? _predictionPrimary : AppColors.text2,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+        borderRadius: AppRadii.mdRadius,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: SizedBox(
+          height: AppSpacing.predictionSearchStatusChipHeight,
+          child: Center(
+            child: Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
+                color: active ? _predictionPrimary : AppColors.text2,
+                fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+              ),
+            ),
           ),
         ),
       ),

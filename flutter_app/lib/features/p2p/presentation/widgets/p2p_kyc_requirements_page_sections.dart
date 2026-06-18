@@ -11,22 +11,26 @@ class _KycHero extends StatelessWidget {
       key: P2PKycRequirementsPage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pKycCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.inputHeight,
             height: AppSpacing.inputHeight,
-            decoration: BoxDecoration(
+            child: Material(
               color: AppColors.primary15,
-              borderRadius: AppRadii.lgRadius,
-              border: Border.all(color: AppColors.primary20),
-            ),
-            child: const Icon(
-              Icons.shield_outlined,
-              color: AppModuleAccents.p2p,
-              size: AppSpacing.iconMd,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+                side: const BorderSide(color: AppColors.primary20),
+              ),
+              child: const Center(
+                child: Icon(
+                  Icons.shield_outlined,
+                  color: AppModuleAccents.p2p,
+                  size: AppSpacing.iconMd,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -47,7 +51,7 @@ class _KycHero extends StatelessWidget {
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pKycReadableLineHeight,
                   ),
                 ),
               ],
@@ -71,7 +75,7 @@ class _KycNotice extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pKycNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -97,7 +101,7 @@ class _KycNotice extends StatelessWidget {
                   snapshot.noticeBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pKycReadableLineHeight,
                   ),
                 ),
               ],
@@ -128,23 +132,24 @@ class _KycTierCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.x4),
-            decoration: BoxDecoration(color: _tierHeaderBackground(tier)),
-            child: Row(
+          ColoredBox(
+            color: _tierHeaderBackground(tier),
+            child: Padding(
+              padding: AppSpacing.p2pKycCardPadding,
+              child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   width: AppSpacing.inputHeight,
                   height: AppSpacing.inputHeight,
-                  decoration: BoxDecoration(
+                  child: Material(
                     color: color,
                     borderRadius: AppRadii.lgRadius,
-                  ),
-                  child: Icon(
-                    _tierIcon(tier.iconKey),
-                    color: AppColors.onAccent,
-                    size: AppSpacing.iconMd,
+                    child: Icon(
+                      _tierIcon(tier.iconKey),
+                      color: AppColors.onAccent,
+                      size: AppSpacing.iconMd,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x4),
@@ -161,7 +166,7 @@ class _KycTierCard extends StatelessWidget {
                             'Tier ${tier.id}',
                             style: AppTextStyles.pageTitle.copyWith(
                               color: color,
-                              height: 1.05,
+                              height: AppSpacing.p2pKycTitleLineHeight,
                             ),
                           ),
                           VitStatusPill(
@@ -177,7 +182,7 @@ class _KycTierCard extends StatelessWidget {
                           const Icon(
                             Icons.schedule_rounded,
                             color: AppColors.text3,
-                            size: 12,
+                            size: AppSpacing.p2pKycSmallIcon,
                           ),
                           const SizedBox(width: AppSpacing.x1),
                           Flexible(
@@ -198,6 +203,7 @@ class _KycTierCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.x2),
                 _TierStatusBadge(tier: tier),
               ],
+              ),
             ),
           ),
           _TierSection(
@@ -213,12 +219,18 @@ class _KycTierCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.borderSolid),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.borderSolid,
+          ),
           _TierSection(
             title: 'Giới hạn giao dịch:',
             child: _LimitsGrid(limits: tier.limits, color: color),
           ),
-          const Divider(height: 1, color: AppColors.borderSolid),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.borderSolid,
+          ),
           _TierSection(
             title: 'Quyền lợi:',
             child: Column(
@@ -234,18 +246,13 @@ class _KycTierCard extends StatelessWidget {
           ),
           if (onUpgrade != null)
             Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.x4,
-                0,
-                AppSpacing.x4,
-                AppSpacing.x4,
-              ),
+              padding: AppSpacing.p2pKycTierActionPadding,
               child: VitCtaButton(
                 key: P2PKycRequirementsPage.upgradeKey(tier.id),
                 variant: tier.status == P2PKycTierStatus.available
                     ? VitCtaButtonVariant.primary
                     : VitCtaButtonVariant.secondary,
-                height: 48,
+                height: AppSpacing.ctaHeight,
                 onPressed: onUpgrade,
                 trailing: const Icon(Icons.arrow_forward_rounded),
                 child: Text('Nâng cấp lên Tier ${tier.id}'),
@@ -297,10 +304,7 @@ class _TierSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.p2pKycTierSectionPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -328,17 +332,17 @@ class _RequirementRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.x6,
           height: AppSpacing.x6,
-          decoration: BoxDecoration(
+          child: Material(
             color: AppColors.surface2,
             borderRadius: AppRadii.smRadius,
-          ),
-          child: Icon(
-            _requirementIcon(requirement.iconKey),
-            color: AppColors.text2,
-            size: 13,
+            child: Icon(
+              _requirementIcon(requirement.iconKey),
+              color: AppColors.text2,
+              size: AppSpacing.p2pKycChecklistIcon,
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),

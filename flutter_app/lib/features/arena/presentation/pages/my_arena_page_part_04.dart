@@ -21,28 +21,36 @@ class _AccentPillButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.myArenaAccentPillHeight,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-          decoration: BoxDecoration(
+          child: Material(
             color: color.withValues(alpha: .12),
-            border: Border.all(color: color.withValues(alpha: .22)),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: color, size: AppSpacing.myArenaAccentPillIcon),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.myArenaAccentPillLineHeight,
-                ),
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(color: color.withValues(alpha: .22)),
+            ),
+            child: Padding(
+              padding: AppSpacing.arenaHorizontalPaddingX4,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    icon,
+                    color: color,
+                    size: AppSpacing.myArenaAccentPillIcon,
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Text(
+                    label,
+                    style: AppTextStyles.caption.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                      height: AppSpacing.myArenaAccentPillLineHeight,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -70,10 +78,7 @@ class _TextIconButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x2,
-        ),
+        padding: AppSpacing.arenaPresetPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

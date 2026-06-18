@@ -61,7 +61,7 @@ class DesignSystemPlayground extends StatelessWidget {
       label: 'Interactive Playground',
       children: [
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.devCardPadding,
           radius: VitCardRadius.lg,
           borderColor: AppColors.primary20,
           child: Column(
@@ -75,7 +75,7 @@ class DesignSystemPlayground extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: const EdgeInsets.all(AppSpacing.x5),
+                padding: AppSpacing.devCardPaddingLarge,
                 child: Center(
                   child: VitCtaButton(
                     variant: designSystemVariantFromString(variant),
@@ -125,7 +125,7 @@ class DesignSystemPlayground extends StatelessWidget {
           ),
         ),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.devCardPadding,
           radius: VitCardRadius.lg,
           borderColor: AppColors.buy20,
           child: Column(
@@ -139,7 +139,7 @@ class DesignSystemPlayground extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: const EdgeInsets.all(AppSpacing.x5),
+                padding: AppSpacing.devCardPaddingLarge,
                 child: VitInput(
                   controller: inputController,
                   label: 'Email',
@@ -273,18 +273,17 @@ class _ChoiceChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: ShapeDecoration(
           color: selected ? AppColors.primary12 : AppColors.surface2,
-          borderRadius: AppRadii.smRadius,
-          border: Border.all(
-            color: selected ? AppColors.primary20 : AppColors.borderSolid,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.smRadius,
+            side: BorderSide(
+              color: selected ? AppColors.primary20 : AppColors.borderSolid,
+            ),
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
+          padding: AppSpacing.devChipPadding,
           child: Text(
             label,
             style: AppTextStyles.micro.copyWith(
@@ -324,16 +323,15 @@ class _ToggleChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
       child: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: ShapeDecoration(
           color: active ? background : AppColors.surface2,
-          borderRadius: AppRadii.smRadius,
-          border: Border.all(color: active ? border : AppColors.borderSolid),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.smRadius,
+            side: BorderSide(color: active ? border : AppColors.borderSolid),
+          ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
+          padding: AppSpacing.devChipPadding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

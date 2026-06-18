@@ -16,7 +16,7 @@ class _HelpHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.supportCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -43,7 +43,7 @@ class _HelpHero extends StatelessWidget {
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.portfolioTextDim,
-              height: 1.45,
+              height: AppSpacing.supportLineHeightBody,
             ),
           ),
           const SizedBox(height: AppSpacing.x5),
@@ -113,10 +113,7 @@ class _QuickActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.supportQuickCardPadding,
       onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

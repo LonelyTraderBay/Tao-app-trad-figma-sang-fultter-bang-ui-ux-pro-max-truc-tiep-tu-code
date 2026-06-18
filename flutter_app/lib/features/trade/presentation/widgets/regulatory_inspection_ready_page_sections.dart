@@ -8,8 +8,10 @@ class _ComplianceScoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(minHeight: 203),
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.regulatoryInspectionScoreMinHeight,
+      ),
+      padding: AppSpacing.regulatoryInspectionCardPadding,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -17,23 +19,23 @@ class _ComplianceScoreCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: _inspectionGreen.withValues(alpha: .14),
-                  borderRadius: AppRadii.cardRadius,
-                ),
-                child: const Icon(
+              const VitCard(
+                variant: VitCardVariant.inner,
+                radius: VitCardRadius.md,
+                width: AppSpacing.regulatoryInspectionScoreIconBox,
+                height: AppSpacing.regulatoryInspectionScoreIconBox,
+                borderColor: _inspectionGreen,
+                alignment: Alignment.center,
+                child: Icon(
                   Icons.military_tech_outlined,
                   color: _inspectionGreen,
-                  size: 30,
+                  size: AppSpacing.regulatoryInspectionScoreIcon,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.regulatoryInspectionSmallGap),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 3),
+                  padding: AppSpacing.regulatoryInspectionScoreTextPadding,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -42,10 +44,13 @@ class _ComplianceScoreCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
                           fontWeight: AppTextStyles.normal,
-                          height: 1.1,
+                          height:
+                              AppSpacing.regulatoryInspectionLineHeightCompact,
                         ),
                       ),
-                      const SizedBox(height: 14),
+                      const SizedBox(
+                        height: AppSpacing.regulatoryInspectionMediumGap,
+                      ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.baseline,
                         textBaseline: TextBaseline.alphabetic,
@@ -55,15 +60,19 @@ class _ComplianceScoreCard extends StatelessWidget {
                             style: AppTextStyles.amountLg.copyWith(
                               color: _inspectionGreen,
                               fontFeatures: AppTextStyles.tabularFigures,
-                              height: 1,
+                              height:
+                                  AppSpacing.regulatoryInspectionLineHeightTight,
                             ),
                           ),
-                          const SizedBox(width: 7),
+                          const SizedBox(
+                            width: AppSpacing.regulatoryInspectionInlineGap,
+                          ),
                           Text(
                             '/ 100%',
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
-                              height: 1,
+                              height:
+                                  AppSpacing.regulatoryInspectionLineHeightTight,
                             ),
                           ),
                         ],
@@ -74,13 +83,13 @@ class _ComplianceScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: AppSpacing.regulatoryInspectionLargeGap),
           LayoutBuilder(
             builder: (context, constraints) {
               return ClipRRect(
                 borderRadius: AppRadii.xlRadius,
                 child: SizedBox(
-                  height: 11,
+                  height: AppSpacing.regulatoryInspectionProgressHeight,
                   child: Stack(
                     children: [
                       Positioned.fill(
@@ -93,7 +102,7 @@ class _ComplianceScoreCard extends StatelessWidget {
                               constraints.maxWidth *
                               snapshot.complianceScore /
                               100,
-                          height: 11,
+                          height: AppSpacing.regulatoryInspectionProgressHeight,
                           child: const ColoredBox(color: _inspectionGreen),
                         ),
                       ),
@@ -103,26 +112,26 @@ class _ComplianceScoreCard extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: 25),
+          const SizedBox(height: AppSpacing.regulatoryInspectionLooseGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 1),
+                padding: AppSpacing.regulatoryInspectionReadyIconPadding,
                 child: Icon(
                   Icons.check_circle_outline_rounded,
                   color: AppColors.text1,
-                  size: 15,
+                  size: AppSpacing.regulatoryInspectionBodyIcon,
                 ),
               ),
-              const SizedBox(width: 7),
+              const SizedBox(width: AppSpacing.regulatoryInspectionInlineGap),
               Expanded(
                 child: RichText(
                   text: TextSpan(
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: 1.25,
+                      height: AppSpacing.regulatoryInspectionLineHeightNote,
                     ),
                     children: [
                       TextSpan(text: '${snapshot.readyTitle} '),
@@ -150,7 +159,8 @@ class _QuickStats extends StatelessWidget {
       children: [
         for (final stat in stats) ...[
           Expanded(child: _QuickStatCard(stat: stat)),
-          if (stat != stats.last) const SizedBox(width: 10),
+          if (stat != stats.last)
+            const SizedBox(width: AppSpacing.regulatoryInspectionMetricGap),
         ],
       ],
     );
@@ -166,30 +176,34 @@ class _QuickStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = _styleForStat(stat.icon);
     return VitCard(
-      height: 80,
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
+      height: AppSpacing.regulatoryInspectionQuickStatHeight,
+      padding: AppSpacing.regulatoryInspectionQuickStatPadding,
       radius: VitCardRadius.sm,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(style.icon, color: style.color, size: 14),
-          const SizedBox(height: 14),
+          Icon(
+            style.icon,
+            color: style.color,
+            size: AppSpacing.regulatoryInspectionQuickStatIcon,
+          ),
+          const SizedBox(height: AppSpacing.regulatoryInspectionMediumGap),
           Text(
             stat.value,
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
-              height: 1,
+              height: AppSpacing.regulatoryInspectionLineHeightTight,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             stat.label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.regulatoryInspectionLineHeightTight,
             ),
           ),
         ],
@@ -206,7 +220,7 @@ class _FrameworkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
+      padding: AppSpacing.regulatoryInspectionCardPadding,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -218,7 +232,7 @@ class _FrameworkCard extends StatelessWidget {
                   framework.name,
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
-                    height: 1,
+                    height: AppSpacing.regulatoryInspectionLineHeightTight,
                   ),
                 ),
               ),
@@ -227,22 +241,24 @@ class _FrameworkCard extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: _inspectionGreen,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.regulatoryInspectionLineHeightTight,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.regulatoryInspectionMetricGap),
               const Icon(
                 Icons.check_circle_outline_rounded,
                 color: _inspectionGreen,
-                size: 18,
+                size: AppSpacing.regulatoryInspectionStandardIcon,
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.regulatoryInspectionMediumGap),
           for (final requirement in framework.requirements) ...[
             _RequirementRow(requirement),
             if (requirement != framework.requirements.last)
-              const SizedBox(height: 9),
+              const SizedBox(
+                height: AppSpacing.regulatoryInspectionProgressHeight,
+              ),
           ],
         ],
       ),
@@ -262,9 +278,9 @@ class _RequirementRow extends StatelessWidget {
         const Icon(
           Icons.check_circle_outline_rounded,
           color: _inspectionGreen,
-          size: 11,
+          size: AppSpacing.regulatoryInspectionRequirementIcon,
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.regulatoryInspectionInlineGap),
         Expanded(
           child: Row(
             children: [
@@ -275,12 +291,16 @@ class _RequirementRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: 1,
+                    height: AppSpacing.regulatoryInspectionLineHeightTight,
                   ),
                 ),
               ),
-              const SizedBox(width: 3),
-              const Icon(Icons.check_rounded, color: AppColors.text2, size: 9),
+              const SizedBox(width: AppSpacing.x1),
+              const Icon(
+                Icons.check_rounded,
+                color: AppColors.text2,
+                size: AppSpacing.regulatoryInspectionTinyIcon,
+              ),
             ],
           ),
         ),

@@ -17,7 +17,7 @@ class _SummaryGrid extends StatelessWidget {
             captionColor: _cassGreen,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.tradeBotCardGap),
         Expanded(
           child: _SummaryCard(
             label: 'Resolved',
@@ -26,7 +26,7 @@ class _SummaryGrid extends StatelessWidget {
             captionColor: AppColors.text3,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.tradeBotCardGap),
         Expanded(
           child: _SummaryCard(
             label: 'Outstanding',
@@ -56,8 +56,8 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 89,
-      padding: const EdgeInsets.fromLTRB(12, 16, 12, 13),
+      height: AppSpacing.tradeBotCassSummaryHeight,
+      padding: AppSpacing.tradeBotStrategyCardPadding,
       borderColor: _cassBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,16 +68,16 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.tradeBotRowGap),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: AppColors.text1,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           const Spacer(),
@@ -85,7 +85,10 @@ class _SummaryCard extends StatelessWidget {
             caption,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: captionColor, height: 1),
+            style: AppTextStyles.micro.copyWith(
+              color: captionColor,
+              height: AppSpacing.tradeBotLineHeightTight,
+            ),
           ),
         ],
       ),
@@ -102,44 +105,22 @@ class _Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tabs = [('recent', 'Recent (7 Days)'), ('history', 'History')];
-    return Container(
-      height: 53,
-      color: _cassPanel,
-      child: Row(
-        children: [
+    return VitCard(
+      height: AppSpacing.tradeBotCassTabsHeight,
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.tradeBotCompactPanelPadding,
+      child: VitTabBar(
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: CassReconciliationPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeId == tab.$1
-                                ? _cassPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: activeId == tab.$1 ? 161 : 0,
-                      height: 2,
-                      color: _cassPrimary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: CassReconciliationPage.tabKey(tab.$1),
             ),
         ],
+        activeKey: activeId,
+        onChanged: onChanged,
+        variant: VitTabBarVariant.segment,
       ),
     );
   }

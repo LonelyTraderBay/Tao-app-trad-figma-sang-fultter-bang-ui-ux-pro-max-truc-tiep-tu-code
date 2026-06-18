@@ -54,7 +54,7 @@ class StakingForumPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.defaultPadding,
                     gap: VitContentGap.defaultGap,
@@ -97,7 +97,7 @@ class _ForumHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.accent30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -159,7 +159,7 @@ class _CategoryCard extends StatelessWidget {
     return VitCard(
       key: StakingForumPage.categoryKey(category.name),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       onTap: () {},
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,10 +217,7 @@ class _ThreadCard extends StatelessWidget {
     return VitCard(
       key: StakingForumPage.threadKey(index),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnCardPaddingX3X4,
       onTap: () {},
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

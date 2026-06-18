@@ -10,7 +10,7 @@ class _TwoColumnInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+      padding: AppSpacing.p2pTrustProgressInfoRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -46,18 +46,15 @@ class _RangeChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
-      decoration: BoxDecoration(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: active ? AppColors.primary20 : AppColors.cardBorder,
+      background: ColoredBox(
         color: active ? AppColors.primary12 : AppColors.surface2,
-        borderRadius: AppRadii.xlRadius,
-        border: Border.all(
-          color: active ? AppColors.primary20 : AppColors.cardBorder,
-        ),
       ),
+      padding: AppSpacing.p2pTrustProgressChipPadding,
+      clip: true,
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(
@@ -80,10 +77,9 @@ class _LegendDot extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: AppSpacing.x2,
-          height: AppSpacing.x2,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        SizedBox.square(
+          dimension: AppSpacing.p2pTrustProgressDotSize,
+          child: Material(color: color, shape: const CircleBorder()),
         ),
         const SizedBox(width: AppSpacing.x1),
         Flexible(
@@ -109,15 +105,14 @@ class _TierRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
-      decoration: BoxDecoration(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      background: ColoredBox(
         color: tier.highlight ? AppColors.primary12 : AppColors.transparent,
-        borderRadius: AppRadii.smRadius,
       ),
+      padding: AppSpacing.p2pTrustProgressChipPadding,
+      clip: true,
       child: Row(
         children: [
           Expanded(
@@ -152,7 +147,7 @@ class _NotificationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.p2pTrustProgressNotificationRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -199,12 +194,12 @@ class _StepRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+      padding: AppSpacing.p2pTrustProgressStepPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: 12,
+            radius: AppSpacing.p2pTrustProgressStepRadius,
             backgroundColor: AppColors.surface3,
             child: Text(
               index,
@@ -255,7 +250,7 @@ class _StatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: Row(
         children: [
           Icon(icon, color: AppModuleAccents.p2p, size: AppSpacing.iconMd),

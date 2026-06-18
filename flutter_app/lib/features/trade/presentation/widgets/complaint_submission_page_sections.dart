@@ -7,17 +7,18 @@ class _ProcessNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 10, 0),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.complaintSubmissionNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.text1,
-            size: 16,
+            size: AppSpacing.inputPrefixIcon,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,16 +28,16 @@ class _ProcessNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.complaintSubmissionLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   snapshot.processDescription,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
+                    height: AppSpacing.complaintSubmissionLineHeightBody,
                   ),
                 ),
               ],
@@ -65,12 +66,12 @@ class _CategoryField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const _FieldLabel('Category *'),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.x3),
         PopupMenuButton<String>(
           color: _submissionPanel,
           elevation: 8,
           onSelected: onChanged,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           position: PopupMenuPosition.under,
           shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
           itemBuilder: (_) => [
@@ -81,22 +82,17 @@ class _CategoryField extends StatelessWidget {
                   category,
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
-                    height: 1.2,
+                    height: AppSpacing.complaintSubmissionLineHeightShort,
                   ),
                 ),
               ),
           ],
-          child: Container(
+          child: VitCard(
             key: ComplaintSubmissionPage.categoryKey,
-            height: 48,
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            decoration: BoxDecoration(
-              color: _submissionPanel2,
-              border: Border.all(
-                color: _submissionBorder.withValues(alpha: .76),
-              ),
-              borderRadius: AppRadii.cardRadius,
-            ),
+            height: AppSpacing.inputHeight,
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.complaintSubmissionCategoryPadding,
+            borderColor: _submissionBorder.withValues(alpha: .76),
             child: Row(
               children: [
                 Expanded(
@@ -104,14 +100,14 @@ class _CategoryField extends StatelessWidget {
                     value ?? 'Select category',
                     style: AppTextStyles.base.copyWith(
                       color: AppColors.text1,
-                      height: 1,
+                      height: AppSpacing.complaintSubmissionLineHeightTight,
                     ),
                   ),
                 ),
                 const Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: AppColors.text1,
-                  size: 21,
+                  size: AppSpacing.iconMd,
                 ),
               ],
             ),
@@ -143,12 +139,14 @@ class _TextInputBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = multiline ? 169.0 : 48.0;
+    final height = multiline
+        ? AppSpacing.complaintSubmissionMultilineHeight
+        : AppSpacing.complaintSubmissionSingleLineHeight;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _FieldLabel(label),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.x3),
         if (!multiline)
           VitInput(
             controller: controller,
@@ -175,7 +173,9 @@ class _TextInputBlock extends StatelessWidget {
                   : TextAlignVertical.center,
               style: AppTextStyles.base.copyWith(
                 color: AppColors.text1,
-                height: multiline ? 1.35 : 1,
+                height: multiline
+                    ? AppSpacing.complaintSubmissionLineHeightBody
+                    : AppSpacing.complaintSubmissionLineHeightTight,
               ),
               decoration: InputDecoration(
                 counterText: '',
@@ -184,24 +184,26 @@ class _TextInputBlock extends StatelessWidget {
                 hintStyle: AppTextStyles.base.copyWith(
                   color: AppColors.text3,
                   fontWeight: AppTextStyles.bold,
-                  height: multiline ? 1.4 : 1,
+                  height: multiline
+                      ? AppSpacing.complaintSubmissionLineHeightHint
+                      : AppSpacing.complaintSubmissionLineHeightTight,
                 ),
                 filled: true,
                 fillColor: _submissionPanel2,
                 contentPadding: multiline
-                    ? const EdgeInsets.fromLTRB(12, 15, 12, 12)
-                    : const EdgeInsets.symmetric(horizontal: 12),
+                    ? AppSpacing.complaintSubmissionMultilineContentPadding
+                    : AppSpacing.complaintSubmissionSingleLineContentPadding,
                 enabledBorder: _inputBorder,
                 focusedBorder: _inputBorder,
               ),
             ),
           ),
-        const SizedBox(height: 5),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           '${controller.text.length}/$maxLength characters (min $minLength)',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.complaintSubmissionLineHeightTight,
           ),
         ),
       ],
@@ -215,60 +217,47 @@ class _EvidenceUploadCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.complaintSubmissionEvidencePadding,
       child: SizedBox(
-        height: 139,
+        height: AppSpacing.complaintSubmissionEvidenceHeight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(
-                color: _submissionPanel2,
-                borderRadius: AppRadii.inputRadius,
-              ),
-              child: const Icon(
+            const VitCard(
+              width: AppSpacing.searchBarCompactHeight,
+              height: AppSpacing.searchBarCompactHeight,
+              variant: VitCardVariant.inner,
+              radius: VitCardRadius.sm,
+              alignment: Alignment.center,
+              child: Icon(
                 Icons.upload_rounded,
                 color: AppColors.text3,
-                size: 22,
+                size: AppSpacing.iconMd,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: AppSpacing.x4),
             Text(
               'Upload Evidence (Optional)',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.complaintSubmissionLineHeightTight,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: AppSpacing.formFieldLabelGap),
             Text(
               'Screenshots, emails, or other supporting documents',
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1,
+                height: AppSpacing.complaintSubmissionLineHeightTight,
               ),
             ),
-            const SizedBox(height: 10),
-            Container(
-              height: 30,
-              padding: const EdgeInsets.symmetric(horizontal: 17),
-              decoration: BoxDecoration(
-                color: _submissionPanel2,
-                borderRadius: AppRadii.cardRadius,
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                'Choose Files',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
+            const SizedBox(height: AppSpacing.x4),
+            const VitAccentPill(
+              label: 'Choose Files',
+              accentColor: AppColors.text1,
+              size: VitStatusPillSize.md,
             ),
           ],
         ),
@@ -291,7 +280,7 @@ class _TermsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 15),
+      padding: AppSpacing.complaintSubmissionTermsPadding,
       child: InkWell(
         key: ComplaintSubmissionPage.acceptKey,
         onTap: () => onChanged(!accepted),
@@ -300,8 +289,8 @@ class _TermsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: 22,
-              height: 22,
+              width: AppSpacing.complaintSubmissionCheckboxSize,
+              height: AppSpacing.complaintSubmissionCheckboxSize,
               child: Checkbox(
                 value: accepted,
                 onChanged: (value) => onChanged(value ?? false),
@@ -310,7 +299,7 @@ class _TermsCard extends StatelessWidget {
                 activeColor: _submissionPrimary,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.x4),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -319,16 +308,16 @@ class _TermsCard extends StatelessWidget {
                     snapshot.termsIntro,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      height: 1.45,
+                      height: AppSpacing.complaintSubmissionLineHeightReadable,
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: AppSpacing.x2),
                   for (final term in snapshot.terms)
                     Text(
                       '- $term',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: 1.5,
+                        height: AppSpacing.complaintSubmissionLineHeightLong,
                       ),
                     ),
                 ],
@@ -340,5 +329,3 @@ class _TermsCard extends StatelessWidget {
     );
   }
 }
-
-

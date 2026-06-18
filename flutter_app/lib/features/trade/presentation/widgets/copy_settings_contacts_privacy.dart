@@ -17,7 +17,7 @@ class _EmergencyContactCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: AppColors.warn15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -28,22 +28,22 @@ class _EmergencyContactCard extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.warn,
-                size: 15,
+                size: AppSpacing.walletTokenApprovalActionIcon,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
                   'Người liên hệ khẩn cấp sẽ được thông báo nếu tài khoản của bạn có hoạt động bất thường hoặc kích hoạt circuit breaker.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.warn,
                     fontWeight: AppTextStyles.medium,
-                    height: 1.45,
+                    height: AppSpacing.copySettingsLineHeightReadable,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.x4),
           _SettingsTextField(
             label: 'Email',
             initialValue: email,
@@ -51,7 +51,7 @@ class _EmergencyContactCard extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             onChanged: onEmailChanged,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.walletAssetPillGap),
           _SettingsTextField(
             label: 'Số điện thoại',
             initialValue: phone,
@@ -129,35 +129,35 @@ class _PrivacyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SettingsCard(
-      height: 84,
+      height: AppSpacing.copySettingsPrivacyCardHeight,
       child: Row(
         children: [
           Icon(
             active ? Icons.visibility_rounded : Icons.visibility_off_rounded,
             color: active ? _settingsPrimary : AppColors.text3,
-            size: 15,
+            size: AppSpacing.walletTokenApprovalActionIcon,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Hiển thị portfolio công khai', style: _cardTitleStyle()),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   'Cho phép người khác xem portfolio copy của bạn (không hiện số tiền cụ thể)',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.2,
+                    height: AppSpacing.copySettingsLineHeightCompact,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.cardGap),
           _ToggleSwitch(value: active, onChanged: onChanged),
         ],
       ),
@@ -190,7 +190,7 @@ class _SettingsCard extends StatelessWidget {
   const _SettingsCard({
     required this.child,
     required this.height,
-    this.padding = const EdgeInsets.all(12),
+    this.padding = AppSpacing.cardPaddingCompact,
   });
 
   final Widget child;
@@ -212,7 +212,7 @@ TextStyle _cardTitleStyle() {
   return AppTextStyles.captionSm.copyWith(
     color: AppColors.text1,
     fontWeight: AppTextStyles.bold,
-    height: 1.15,
+    height: AppSpacing.copySettingsLineHeightDense,
   );
 }
 

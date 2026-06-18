@@ -30,14 +30,16 @@ class _AccentIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.dcaScheduleAccentIconBox,
       height: AppSpacing.dcaScheduleAccentIconBox,
-      decoration: BoxDecoration(
-        color: accent.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: accent.withValues(alpha: .14),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Icon(icon, color: accent, size: AppSpacing.iconMd),
       ),
-      child: Icon(icon, color: accent, size: AppSpacing.iconMd),
     );
   }
 }
@@ -49,17 +51,22 @@ class _SelectedDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.dcaScheduleSelectedDot,
       height: AppSpacing.dcaScheduleSelectedDot,
-      decoration: BoxDecoration(color: accent, shape: BoxShape.circle),
-      alignment: Alignment.center,
-      child: Container(
-        width: AppSpacing.dcaScheduleSelectedDotInner,
-        height: AppSpacing.dcaScheduleSelectedDotInner,
-        decoration: const BoxDecoration(
-          color: AppColors.navCenterIcon,
-          shape: BoxShape.circle,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(color: accent, shape: const CircleBorder()),
+        child: Center(
+          child: SizedBox(
+            width: AppSpacing.dcaScheduleSelectedDotInner,
+            height: AppSpacing.dcaScheduleSelectedDotInner,
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.navCenterIcon,
+                shape: CircleBorder(),
+              ),
+            ),
+          ),
         ),
       ),
     );

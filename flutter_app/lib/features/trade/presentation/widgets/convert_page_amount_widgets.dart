@@ -28,7 +28,12 @@ class _AmountCard extends StatelessWidget {
         'Số dư: ${formatConvertBalance(asset.balance, asset.symbol)} ${asset.symbol}';
     return VitCard(
       height: height,
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.x4 + AppSpacing.x1,
+        top: AppSpacing.x4 + AppSpacing.x1,
+        right: AppSpacing.x4 + AppSpacing.x1,
+        bottom: AppSpacing.x4 + AppSpacing.x1,
+      ),
       child: Column(
         children: [
           Row(
@@ -50,7 +55,7 @@ class _AmountCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.rowGapRegular),
           Row(
             children: [
               _AssetButton(
@@ -58,7 +63,7 @@ class _AmountCard extends StatelessWidget {
                 asset: asset,
                 onTap: onAssetTap,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.rowGapRegular),
               Expanded(
                 child: input
                     ? VitInput(
@@ -97,7 +102,7 @@ class _AmountCard extends StatelessWidget {
             ],
           ),
           if (input) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.x4),
             Row(
               children: [
                 for (final pct in const [25, 50, 75, 100]) ...[
@@ -106,7 +111,7 @@ class _AmountCard extends StatelessWidget {
                     label: '$pct%',
                     onTap: () => onPercent?.call(pct),
                   ),
-                  if (pct != 100) const SizedBox(width: 8),
+                  if (pct != 100) const SizedBox(width: AppSpacing.rowGap),
                 ],
               ],
             ),
@@ -117,7 +122,7 @@ class _AmountCard extends StatelessWidget {
                   'Min: \$10',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: AppSpacing.x4),
                 Text(
                   'Max: \$500,000',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -140,53 +145,48 @@ class _AssetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(asset.colorHex);
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 40,
-        padding: const EdgeInsets.fromLTRB(12, 0, 10, 0),
-        decoration: BoxDecoration(
-          color: _chipBackground,
-          border: Border.all(color: _tradePrimary.withValues(alpha: .22)),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 26,
-              height: 26,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .18),
-                shape: BoxShape.circle,
-              ),
-              child: Text(
-                asset.symbol.substring(0, math.min(3, asset.symbol.length)),
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              asset.symbol,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
+      variant: VitCardVariant.inner,
+      height: AppSpacing.buttonStandard - AppSpacing.rowPy,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowGapRegular,
+        right: AppSpacing.rowGapRegular,
+      ),
+      borderColor: _tradePrimary.withValues(alpha: .22),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          VitCard(
+            width: 26,
+            height: 26,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            alignment: Alignment.center,
+            borderColor: color.withValues(alpha: .22),
+            child: Text(
+              asset.symbol.substring(0, math.min(3, asset.symbol.length)),
+              style: AppTextStyles.micro.copyWith(
+                color: color,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(width: 5),
-            const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              color: AppColors.text2,
-              size: 16,
+          ),
+          const SizedBox(width: AppSpacing.rowGap),
+          Text(
+            asset.symbol,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
             ),
-          ],
-        ),
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: AppColors.text2,
+            size: 16,
+          ),
+        ],
       ),
     );
   }
@@ -200,24 +200,18 @@ class _PercentChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        width: 50,
-        height: 34,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _chipBackground,
-          border: Border.all(color: _tradePrimary.withValues(alpha: .16)),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
+      variant: VitCardVariant.inner,
+      width: AppSpacing.inputHeight,
+      height: AppSpacing.buttonCompact,
+      alignment: Alignment.center,
+      borderColor: _tradePrimary.withValues(alpha: .16),
+      child: Text(
+        label,
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.text2,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

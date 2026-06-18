@@ -51,7 +51,7 @@ class _ReportCard extends StatelessWidget {
       opacity: isPublished ? 1 : 0.78,
       child: VitCard(
         radius: VitCardRadius.lg,
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.earnCardPaddingX4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -173,7 +173,7 @@ class _FindingsSummary extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -251,7 +251,7 @@ class _ProgressNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           const Icon(

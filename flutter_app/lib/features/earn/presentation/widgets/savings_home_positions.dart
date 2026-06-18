@@ -12,7 +12,7 @@ class _SavingsPositions extends StatelessWidget {
         for (final position in positions) ...[
           VitCard(
             radius: VitCardRadius.lg,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.earnCardPaddingX4,
             child: Row(
               children: [
                 _AssetBadge(
@@ -72,9 +72,9 @@ class _RoundIcon extends StatelessWidget {
     };
 
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: _riskTint(tone),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: SizedBox(
         width: AppSpacing.x6,
@@ -93,15 +93,12 @@ class _RiskPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.buy10,
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -123,10 +120,12 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.surface2,
-        border: Border.all(color: color.withValues(alpha: 0.4)),
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: 0.4)),
+          borderRadius: AppRadii.mdRadius,
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -159,15 +158,12 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: background,
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

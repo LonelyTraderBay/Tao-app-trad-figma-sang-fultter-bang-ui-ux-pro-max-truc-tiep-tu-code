@@ -9,13 +9,13 @@ class _Disclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(18, 14, 18, 15),
+      padding: AppSpacing.providerLeaderboardDisclaimerPadding,
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.5,
+          height: AppSpacing.providerLeaderboardLineHeightLoose,
         ),
       ),
     );

@@ -73,7 +73,7 @@ class _AdminHomeState extends ConsumerState<AdminHome> {
               child: SingleChildScrollView(
                 key: AdminHome.contentKey,
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: scrollBottom),
+                padding: AppSpacing.adminScrollPadding(scrollBottom),
                 child: VitPageContent(
                   customGap: AppSpacing.x5,
                   children: [

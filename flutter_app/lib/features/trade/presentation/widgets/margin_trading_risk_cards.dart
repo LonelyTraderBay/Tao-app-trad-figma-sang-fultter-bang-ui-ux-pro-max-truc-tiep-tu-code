@@ -10,16 +10,16 @@ class _RiskWarningCard extends StatelessWidget {
     return _Panel(
       color: _marginAmber.withValues(alpha: .06),
       borderColor: _marginAmber.withValues(alpha: .35),
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: _marginAmber,
-            size: 22,
+            size: AppSpacing.walletAssetActionIconInner,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,13 +29,13 @@ class _RiskWarningCard extends StatelessWidget {
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.onAccent,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.1,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.walletAssetChartBottomGap),
                 for (final item in warning.items) ...[
                   _Bullet(text: item, color: _marginAmber),
-                  if (item != warning.items.last) const SizedBox(height: 9),
+                  if (item != warning.items.last)
+                    const SizedBox(height: AppSpacing.transferCardGap),
                 ],
               ],
             ),
@@ -56,24 +56,15 @@ class _NegativeBalanceCard extends StatelessWidget {
     return _Panel(
       color: _marginGreen.withValues(alpha: .07),
       borderColor: _marginGreen.withValues(alpha: .18),
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-              color: _marginGreen.withValues(alpha: .13),
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: const Icon(
-              Icons.shield_outlined,
-              color: _marginGreen,
-              size: 23,
-            ),
+          const _MarginIconSurface(
+            icon: Icons.shield_outlined,
+            color: _marginGreen,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,18 +74,14 @@ class _NegativeBalanceCard extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: _marginGreen,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.1,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   disclosure.body,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1.45,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: 9),
+                const SizedBox(height: AppSpacing.transferCardGap),
                 Text(
                   disclosure.footer,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -117,24 +104,15 @@ class _BestExecutionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-              color: _marginPrimary.withValues(alpha: .13),
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: const Icon(
-              Icons.description_outlined,
-              color: _marginPrimary,
-              size: 23,
-            ),
+          const _MarginIconSurface(
+            icon: Icons.description_outlined,
+            color: _marginPrimary,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,18 +122,14 @@ class _BestExecutionCard extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.onAccent,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.1,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   disclosure.body,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1.45,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.x3),
                 for (final item in disclosure.items) ...[
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,9 +137,9 @@ class _BestExecutionCard extends StatelessWidget {
                       const Icon(
                         Icons.check_circle_outline_rounded,
                         color: _marginPrimary,
-                        size: 13,
+                        size: AppSpacing.iconSm,
                       ),
-                      const SizedBox(width: 6),
+                      const SizedBox(width: AppSpacing.formFieldLabelGap),
                       Expanded(
                         child: Text(
                           item,
@@ -176,29 +150,17 @@ class _BestExecutionCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (item != disclosure.items.last) const SizedBox(height: 5),
+                  if (item != disclosure.items.last)
+                    const SizedBox(height: AppSpacing.x2),
                 ],
-                const SizedBox(height: 12),
-                InkWell(
-                  onTap: onTap,
-                  borderRadius: AppRadii.smRadius,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: _marginPrimary.withValues(alpha: .12),
-                      borderRadius: AppRadii.smRadius,
-                    ),
-                    child: Text(
-                      disclosure.actionLabel,
-                      style: AppTextStyles.caption.copyWith(
-                        color: _marginPrimary,
-                        fontWeight: AppTextStyles.bold,
-                        height: 1,
-                      ),
-                    ),
+                const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: VitStatusPill(
+                    label: disclosure.actionLabel,
+                    status: VitStatusPillStatus.info,
+                    size: VitStatusPillSize.lg,
+                    onTap: onTap,
                   ),
                 ),
               ],

@@ -33,7 +33,7 @@ class _StakingProofOfReservesPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -89,7 +89,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingProofOfReservesPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -104,7 +104,7 @@ class _InfoBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
@@ -129,9 +129,9 @@ class _ReserveTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: StakingProofOfReservesPage.tabsKey,
-      decoration: const BoxDecoration(color: AppColors.surface),
+      color: AppColors.surface,
       child: Row(
         children: [
           for (final tab in _ReserveTab.values)
@@ -142,7 +142,7 @@ class _ReserveTabs extends StatelessWidget {
                   key: StakingProofOfReservesPage.tabKey(tab.name),
                   onTap: () => onChanged(tab),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.x4),
+                    padding: AppSpacing.earnTopPaddingX4,
                     child: Column(
                       children: [
                         Text(
@@ -154,18 +154,18 @@ class _ReserveTabs extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x4),
-                        ),
-                        AnimatedContainer(
+                        const SizedBox(height: AppSpacing.x4),
+                        AnimatedSize(
                           duration: const Duration(milliseconds: 160),
-                          width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: AppSpacing.stakingProofTabIndicatorHeight,
-                          decoration: BoxDecoration(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.transparent,
-                            borderRadius: AppRadii.xsRadius,
+                          child: SizedBox(
+                            width: active == tab ? AppSpacing.buttonHero : 0,
+                            height: AppSpacing.stakingProofTabIndicatorHeight,
+                            child: Material(
+                              color: active == tab
+                                  ? AppColors.primarySoft
+                                  : AppColors.transparent,
+                              borderRadius: AppRadii.xsRadius,
+                            ),
                           ),
                         ),
                       ],
@@ -200,7 +200,7 @@ class _OverviewTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x5),
+              padding: AppSpacing.earnPaddingX5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -225,9 +225,9 @@ class _OverviewTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+                  const SizedBox(height: AppSpacing.x5),
                   Center(child: _ReserveProgress(ratio: overall.reserveRatio)),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+                  const SizedBox(height: AppSpacing.x5),
                   Row(
                     children: [
                       Expanded(
@@ -247,7 +247,7 @@ class _OverviewTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                  const SizedBox(height: AppSpacing.x3),
                   Text(
                     'Last updated: ${overall.lastUpdated} - Live data',
                     textAlign: TextAlign.center,
@@ -265,7 +265,7 @@ class _OverviewTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnPaddingX4,
               child: Column(
                 children: [
                   SizedBox(
@@ -275,7 +275,7 @@ class _OverviewTab extends StatelessWidget {
                       child: const SizedBox.expand(),
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                  const SizedBox(height: AppSpacing.x3),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -292,12 +292,12 @@ class _OverviewTab extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: AppSpacing.x4),
-                      Container(
+                      const SizedBox(
                         width: AppSpacing.x1,
                         height: AppSpacing.x1,
-                        decoration: const BoxDecoration(
+                        child: Material(
                           color: AppColors.borderSolid,
-                          shape: BoxShape.circle,
+                          shape: CircleBorder(),
                         ),
                       ),
                       const SizedBox(width: AppSpacing.x4),
@@ -364,24 +364,24 @@ class _VerifyTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: AppSpacing.ctaHeight,
                         height: AppSpacing.ctaHeight,
-                        decoration: BoxDecoration(
+                        child: const Material(
                           color: AppColors.primary12,
                           borderRadius: AppRadii.lgRadius,
-                        ),
-                        child: const Icon(
-                          Icons.visibility_outlined,
-                          color: AppColors.primarySoft,
-                          size: AppSpacing.iconMd,
+                          child: Icon(
+                            Icons.visibility_outlined,
+                            color: AppColors.primarySoft,
+                            size: AppSpacing.iconMd,
+                          ),
                         ),
                       ),
                       const SizedBox(width: AppSpacing.x3),
@@ -393,9 +393,7 @@ class _VerifyTab extends StatelessWidget {
                               'Merkle Tree Verification',
                               style: AppTextStyles.baseMedium,
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: AppSpacing.x2),
-                            ),
+                            const Padding(padding: AppSpacing.earnTopPaddingX2),
                             Text(
                               'Prove your staked balance is included in our Proof of Reserves using cryptographic Merkle tree proofs.',
                               style: AppTextStyles.caption.copyWith(
@@ -408,7 +406,7 @@ class _VerifyTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                  const SizedBox(height: AppSpacing.x4),
                   SizedBox(
                     height: AppSpacing.ctaHeight,
                     child: FilledButton(
@@ -432,7 +430,7 @@ class _VerifyTab extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.primary20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -479,23 +477,25 @@ class _ReserveProgress extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.x6,
                 height: AppSpacing.x6,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColors.buy,
-                    width: AppSpacing.stakingProofProgressBorderWidth,
+                child: const Material(
+                  color: AppColors.transparent,
+                  shape: CircleBorder(
+                    side: BorderSide(
+                      color: AppColors.buy,
+                      width: AppSpacing.stakingProofProgressBorderWidth,
+                    ),
                   ),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.check_rounded,
-                  color: AppColors.buy,
-                  size: AppSpacing.iconMd,
+                  child: Icon(
+                    Icons.check_rounded,
+                    color: AppColors.buy,
+                    size: AppSpacing.iconMd,
+                  ),
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+              const SizedBox(height: AppSpacing.x3),
               Text(
                 '${ratio.toStringAsFixed(1)}%',
                 style: AppTextStyles.pageTitle.copyWith(

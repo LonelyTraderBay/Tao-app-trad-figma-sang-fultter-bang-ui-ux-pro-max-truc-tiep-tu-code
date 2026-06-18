@@ -14,15 +14,12 @@ class _FeedbackPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.10),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -51,7 +48,7 @@ class _EmptyResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         children: [
           const Icon(
@@ -87,7 +84,7 @@ class _SupportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           const _QuestionIcon(color: AppColors.primary),
@@ -108,7 +105,7 @@ class _SupportCard extends StatelessWidget {
             key: SavingsFAQPage.supportButtonKey,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+            padding: AppSpacing.earnHorizontalPaddingX3,
             onPressed: () {
               HapticFeedback.selectionClick();
               context.go(snapshot.supportRoute);
@@ -132,7 +129,7 @@ class _Disclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

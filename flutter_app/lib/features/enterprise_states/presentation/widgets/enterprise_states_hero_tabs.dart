@@ -9,18 +9,21 @@ class _PageHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: AppSpacing.inputHeight,
-          height: AppSpacing.inputHeight,
-          decoration: BoxDecoration(
-            color: AppColors.buy,
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(color: AppColors.buy20),
-          ),
-          child: const Icon(
-            Icons.layers_outlined,
-            color: AppColors.text1,
-            size: AppSpacing.iconLg,
+        SizedBox.square(
+          dimension: AppSpacing.enterpriseStatesIconBox,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: AppColors.buy,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.cardRadius,
+                side: const BorderSide(color: AppColors.buy20),
+              ),
+            ),
+            child: const Icon(
+              Icons.layers_outlined,
+              color: AppColors.text1,
+              size: AppSpacing.iconLg,
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
@@ -68,7 +71,7 @@ class _SectionTabs extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: AppSpacing.enterpriseStatesTabShellPadding,
       child: Row(
         children: [
           for (final tab in tabs)
@@ -104,24 +107,24 @@ class _SectionTabButton extends StatelessWidget {
         key: EnterpriseStatesPage.sectionKey(tab.section),
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.rowPy,
-          ),
-          decoration: BoxDecoration(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
             color: active ? AppColors.primary : AppColors.transparent,
-            borderRadius: AppRadii.cardRadius,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
           ),
-          alignment: Alignment.center,
-          child: Text(
-            tab.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.text1 : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.enterpriseStatesTabButtonPadding,
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                tab.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? AppColors.text1 : AppColors.text3,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
         ),

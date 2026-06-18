@@ -14,7 +14,7 @@ class _FundingLinePainter extends CustomPainter {
     final zeroY = size.height * (maxValue / span).clamp(0, 1);
     final gridPaint = Paint()
       ..color = AppColors.text3.withValues(alpha: .18)
-      ..strokeWidth = 1;
+      ..strokeWidth = AppSpacing.dividerHairline;
     canvas.drawLine(Offset(0, zeroY), Offset(size.width, zeroY), gridPaint);
 
     final path = Path();
@@ -30,7 +30,7 @@ class _FundingLinePainter extends CustomPainter {
     final paint = Paint()
       ..color = _analyticsRed
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
+      ..strokeWidth = AppSpacing.hairlineStroke
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
     canvas.drawPath(path, paint);

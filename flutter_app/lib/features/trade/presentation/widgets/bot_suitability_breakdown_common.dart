@@ -13,10 +13,10 @@ class _CategoryBreakdown extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 2,
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
-      childAspectRatio: 1.47,
+      crossAxisCount: AppSpacing.tradeBotGridColumns,
+      crossAxisSpacing: AppSpacing.tradeBotCardGap,
+      mainAxisSpacing: AppSpacing.tradeBotCardGap,
+      childAspectRatio: AppSpacing.tradeBotGridAspectRatio,
       children: [
         for (final category in categories)
           _CategoryScoreCard(
@@ -66,7 +66,7 @@ class _CategoryScoreCard extends StatelessWidget {
         : _assessmentRed;
 
     return _ResultCard(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      padding: AppSpacing.tradeBotInnerPanelPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -74,24 +74,24 @@ class _CategoryScoreCard extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             '$score/$maxScore',
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.tradeBotRowGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
               value: percent,
-              minHeight: 6,
+              minHeight: AppSpacing.tradeBotCompactProgressHeight,
               backgroundColor: _assessmentPanel2,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
@@ -120,7 +120,7 @@ class _RecommendationsCard extends StatelessWidget {
               icon: _iconForResult(result.outcome),
             ),
             if (recommendation != result.recommendations.last)
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.tradeBotCardGap),
           ],
         ],
       ),
@@ -144,17 +144,18 @@ class _RecommendationRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 2),
-          child: Icon(icon, color: color, size: 16),
+        Icon(
+          icon,
+          color: color,
+          size: AppSpacing.tradeBotSelectionDot,
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.tradeBotSmallGap),
         Expanded(
           child: Text(
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.55,
+              height: AppSpacing.tradeBotLineHeightRelaxed,
             ),
           ),
         ),
@@ -171,7 +172,7 @@ class _RegulatoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       variant: VitCardVariant.inner,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,15 +182,15 @@ class _RegulatoryCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.15,
+              height: AppSpacing.tradeBotLineHeightShort,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Text(
             snapshot.regulatoryDescription,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              height: 1.55,
+              height: AppSpacing.tradeBotLineHeightRelaxed,
             ),
           ),
         ],
@@ -205,13 +206,9 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: AppTextStyles.baseMedium.copyWith(
-        color: AppColors.text1,
-        fontWeight: AppTextStyles.bold,
-        height: 1,
-      ),
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.plain,
     );
   }
 }
@@ -219,7 +216,7 @@ class _SectionLabel extends StatelessWidget {
 class _ResultCard extends StatelessWidget {
   const _ResultCard({
     required this.child,
-    this.padding = const EdgeInsets.fromLTRB(16, 16, 16, 16),
+    this.padding = AppSpacing.tradeBotCardPadding,
   });
 
   final Widget child;

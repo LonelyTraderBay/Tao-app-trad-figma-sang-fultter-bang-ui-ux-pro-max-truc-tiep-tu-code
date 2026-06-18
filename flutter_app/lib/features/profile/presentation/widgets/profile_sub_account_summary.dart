@@ -17,7 +17,7 @@ class _SubAccountSummaryCard extends StatelessWidget {
 
     return VitCard(
       key: SubAccountPage.summaryKey,
-      padding: const EdgeInsets.all(20),
+      padding: AppSpacing.profileSubAccountSummaryPadding,
       radius: VitCardRadius.lg,
       variant: VitCardVariant.hero,
       borderColor: AppColors.primary20,
@@ -29,17 +29,14 @@ class _SubAccountSummaryCard extends StatelessWidget {
               const Icon(
                 Icons.group_outlined,
                 color: AppColors.primary,
-                size: 18,
+                size: AppSpacing.profileSubAccountSummaryIcon,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.profileSubAccountSummaryIconGap),
               Expanded(
                 child: Text(
                   'T\u1ED5ng t\u00E0i s\u1EA3n t\u1EA5t c\u1EA3 t\u00E0i kho\u1EA3n',
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1.2,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
               VitIconButton(
@@ -56,17 +53,16 @@ class _SubAccountSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: 17)),
+          const SizedBox(height: AppSpacing.profileSubAccountSummaryBalanceGap),
           Text(
             isBalanceHidden
                 ? '\u2022\u2022\u2022\u2022\u2022\u2022'
                 : _formatUsd(snapshot.totalBalance),
             style: AppTextStyles.heroNumber.copyWith(
-              height: 1.05,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: 14)),
+          const SizedBox(height: AppSpacing.profileSubAccountSummaryPnlGap),
           Text(
             isBalanceHidden
                 ? 'PnL 30d: \u2022\u2022\u2022\u2022'
@@ -74,10 +70,11 @@ class _SubAccountSummaryCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: pnlColor,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: 20)),
+          const SizedBox(
+            height: AppSpacing.profileSubAccountSummaryMetricTopGap,
+          ),
           Row(
             children: [
               Expanded(
@@ -87,7 +84,9 @@ class _SubAccountSummaryCard extends StatelessWidget {
                   valueColor: AppColors.text1,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(
+                width: AppSpacing.profileSubAccountSummaryMetricGap,
+              ),
               Expanded(
                 child: _SummaryMetric(
                   label: 'Ho\u1EA1t \u0111\u1ED9ng',
@@ -95,7 +94,9 @@ class _SubAccountSummaryCard extends StatelessWidget {
                   valueColor: AppColors.buy,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(
+                width: AppSpacing.profileSubAccountSummaryMetricGap,
+              ),
               Expanded(
                 child: _SummaryMetric(
                   label: 'API Keys',
@@ -124,35 +125,35 @@ class _SummaryMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 58,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
+    return SizedBox(
+      height: AppSpacing.profileSubAccountSummaryMetricHeight,
+      child: Material(
         color: AppColors.portfolioBtnGhost,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.portfolioTextMuted,
-              height: 1,
-            ),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+        child: Padding(
+          padding: AppSpacing.profileSubAccountSummaryMetricPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.portfolioTextMuted,
+                ),
+              ),
+              const SizedBox(
+                height: AppSpacing.profileSubAccountSummaryMetricValueGap,
+              ),
+              Text(
+                value,
+                style: AppTextStyles.baseMedium.copyWith(color: valueColor),
+              ),
+            ],
           ),
-          const Padding(padding: EdgeInsets.only(top: 8)),
-          Text(
-            value,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: valueColor,
-              height: 1,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -61,7 +61,7 @@ class _ModesTab extends StatelessWidget {
       children: [
         VitCard(
           clip: true,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               for (final mode in modes)
@@ -109,23 +109,26 @@ class _ModeRow extends StatelessWidget {
       key: ArenaCreatorPage.modeKey(mode.id),
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x4,
-          vertical: AppSpacing.x4,
-        ),
+        padding: AppSpacing.arenaCreatorModeRowPadding,
         child: Row(
           children: [
-            Container(
+            const SizedBox(
               width: AppSpacing.arenaCreatorModeIconBox,
               height: AppSpacing.arenaCreatorModeIconBox,
-              decoration: const BoxDecoration(
-                color: AppColors.primary12,
-                borderRadius: AppRadii.mdRadius,
-              ),
-              child: const Icon(
-                Icons.calculate_rounded,
-                color: AppColors.primary,
-                size: AppSpacing.arenaCreatorModeGlyph,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: AppColors.primary12,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.mdRadius,
+                  ),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.calculate_rounded,
+                    color: AppColors.primary,
+                    size: AppSpacing.arenaCreatorModeGlyph,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -183,7 +186,7 @@ class _HistoryTab extends StatelessWidget {
     }
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaCreatorCardPadding,
       child: Text(
         '${rooms.length} challenge đã hoàn tất',
         style: AppTextStyles.base.copyWith(color: AppColors.text1),
@@ -203,7 +206,7 @@ class _AboutTab extends StatelessWidget {
     return Column(
       children: [
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaCreatorCardPadding,
           child: Text(
             creator.bio,
             style: AppTextStyles.base.copyWith(
@@ -214,7 +217,7 @@ class _AboutTab extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaCreatorCardPadding,
           child: Column(
             children: [
               for (final row in rows) ...[

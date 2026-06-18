@@ -36,20 +36,23 @@ class _DashboardCard extends StatelessWidget {
     return VitCard(
       key: AdminHome.dashboardKey(dashboard.id),
       onTap: () => context.go(dashboard.route),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.adminCardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.inputHeight,
-            height: AppSpacing.inputHeight,
-            decoration: BoxDecoration(
-              color: _accentTint(dashboard.accent),
-              borderRadius: AppRadii.inputRadius,
-            ),
-            child: Icon(
-              _metricIcon(dashboard.icon),
-              color: accent,
-              size: AppSpacing.adminIcon2xl,
+          SizedBox.square(
+            dimension: AppSpacing.inputHeight,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: _accentTint(dashboard.accent),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.inputRadius,
+                ),
+              ),
+              child: Icon(
+                _metricIcon(dashboard.icon),
+                color: accent,
+                size: AppSpacing.adminIcon2xl,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -105,7 +108,7 @@ class _FooterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.adminCardPadding,
       child: Column(
         children: [
           Text(

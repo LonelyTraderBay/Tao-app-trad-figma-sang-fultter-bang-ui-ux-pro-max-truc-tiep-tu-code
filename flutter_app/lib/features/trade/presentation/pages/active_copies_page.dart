@@ -22,9 +22,6 @@ part 'active_copies_page_part_02.dart';
 part 'active_copies_page_part_03.dart';
 
 const _copyPrimary = AppColors.primary;
-const _lightBuyBackground = AppColors.surfaceSuccessLight;
-const _lightSellBackground = AppColors.surfaceDangerLight;
-const _lightWarnBackground = AppColors.surfaceWarningLight;
 
 class ActiveCopiesPage extends ConsumerStatefulWidget {
   const ActiveCopiesPage({super.key, this.shellRenderMode});
@@ -65,7 +62,9 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 104 : 28);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.activeCopiesBottomInsetVisual
+            : AppSpacing.activeCopiesBottomInsetNative);
     final copies = _filteredCopies(snapshot.copies);
 
     return VitPageLayout(
@@ -94,10 +93,12 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: ActiveCopiesPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      padding: AppSpacing.activeCopiesScrollPadding(
+                        bottomInset,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
-                        customGap: 20,
+                        customGap: AppSpacing.sectionGap,
                         fullBleed: true,
                         children: [
                           _PortfolioOverview(snapshot: snapshot.portfolio),

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_gradients.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -55,8 +54,10 @@ class _VIPPageState extends ConsumerState<VIPPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 110
-            : DeviceMetrics.nativeBottomChrome + 30) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.profileVipBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.profileVipBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -80,7 +81,7 @@ class _VIPPageState extends ConsumerState<VIPPage> {
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.relaxed,
-                    customGap: AppSpacing.x5,
+                    customGap: AppSpacing.profileVipContentGap,
                     children: [
                       _VipHero(snapshot: snapshot),
                       _VipTabs(

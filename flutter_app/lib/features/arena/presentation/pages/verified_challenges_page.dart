@@ -61,14 +61,14 @@ class VerifiedChallengesPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.defaultPadding,
                       customGap: AppSpacing.x6,
                       children: [
                         VitCard(child: _VerifiedHero(snapshot: snapshot)),
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: _VerifiedInfoCard(snapshot: snapshot),
                         ),
                       ],
@@ -102,28 +102,33 @@ class _VerifiedHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-        Container(
-          width: AppSpacing.x7 + AppSpacing.x5,
-          height: AppSpacing.x7 + AppSpacing.x5,
-          decoration: BoxDecoration(
-            color: AppColors.accent12,
-            border: Border.all(color: AppColors.accent20),
-            borderRadius: AppRadii.cardLargeRadius,
-          ),
-          child: const Icon(
-            Icons.lock_outline_rounded,
-            color: AppColors.accent,
-            size: AppSpacing.iconLg,
+        const SizedBox(height: AppSpacing.x1),
+        const SizedBox.square(
+          dimension: AppSpacing.arenaVerifiedHeroIconBox,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: AppColors.accent12,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.cardLargeRadius,
+                side: BorderSide(color: AppColors.accent20),
+              ),
+            ),
+            child: Center(
+              child: Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.accent,
+                size: AppSpacing.iconLg,
+              ),
+            ),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x6)),
+        const SizedBox(height: AppSpacing.x6),
         Text(
           snapshot.title,
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         ConstrainedBox(
           constraints: const BoxConstraints(
             maxWidth: AppSpacing.arenaVerifiedHeroTextMaxWidth,
@@ -137,7 +142,7 @@ class _VerifiedHero extends StatelessWidget {
             ),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         VitStatusPill(
           label: snapshot.statusLabel,
           status: VitStatusPillStatus.purple,
@@ -157,7 +162,7 @@ class _VerifiedInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: VerifiedChallengesPage.infoCardKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaVerifiedInfoPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -178,11 +183,11 @@ class _VerifiedInfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 for (final feature in snapshot.features) ...[
                   _FeatureRow(feature: feature),
                   if (feature != snapshot.features.last)
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const SizedBox(height: AppSpacing.x1),
                 ],
               ],
             ),
@@ -204,7 +209,7 @@ class _FeatureRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.x1),
+          padding: AppSpacing.arenaVerifiedFeatureIconPadding,
           child: Icon(
             _featureIcon(feature.kind),
             color: AppColors.accent,

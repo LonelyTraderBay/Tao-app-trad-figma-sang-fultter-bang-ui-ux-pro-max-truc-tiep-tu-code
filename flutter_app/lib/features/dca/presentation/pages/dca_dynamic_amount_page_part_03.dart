@@ -16,12 +16,16 @@ class _LegendItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        SizedBox(
           width: block ? AppSpacing.x3 : AppSpacing.x4,
           height: block ? AppSpacing.x3 : AppSpacing.x1,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: AppRadii.deviceRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.deviceRadius,
+              ),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

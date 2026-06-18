@@ -60,8 +60,10 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 126
-            : DeviceMetrics.nativeBottomChrome + 32) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.profileDevicesBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.profileDevicesBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final currentDevice = _currentDevice;
     final otherDevices = _otherDevices;
@@ -85,7 +87,7 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                 child: SingleChildScrollView(
                   key: DeviceManagementPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.profileDevicesScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 0,
@@ -100,7 +102,9 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                           activeCount: _activeCount,
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 18)),
+                      const SizedBox(
+                        height: AppSpacing.profileDevicesSummaryGap,
+                      ),
                       VitCard(
                         padding: EdgeInsets.zero,
                         child: VitHighRiskStatePanel(
@@ -112,7 +116,7 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                               'Trusted devices: $_trustedCount/${_devices.length}',
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 27)),
+                      const SizedBox(height: AppSpacing.profileDevicesRiskGap),
                       VitCard(
                         padding: EdgeInsets.zero,
                         child: currentDevice != null
@@ -123,8 +127,9 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                                     label:
                                         'THI\u1EBET B\u1ECA HI\u1EC6N T\u1EA0I',
                                   ),
-                                  const Padding(
-                                    padding: EdgeInsets.only(top: 10),
+                                  const SizedBox(
+                                    height: AppSpacing
+                                        .profileDevicesCurrentHeaderGap,
                                   ),
                                   _DeviceCard(
                                     device: currentDevice,
@@ -142,12 +147,16 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                                 icon: Icons.devices_other_outlined,
                               ),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 26)),
+                      const SizedBox(
+                        height: AppSpacing.profileDevicesOtherHeaderGap,
+                      ),
                       _OtherDevicesHeader(
                         count: otherDevices.length,
                         onLogoutAll: otherDevices.isEmpty ? null : _logoutAll,
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 10)),
+                      const SizedBox(
+                        height: AppSpacing.profileDevicesOtherListGap,
+                      ),
                       if (otherDevices.isEmpty)
                         const VitEmptyState(
                           title:
@@ -165,9 +174,13 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                             onLogout: () => _logoutDevice(device.id),
                           ),
                           if (device != otherDevices.last)
-                            const Padding(padding: EdgeInsets.only(top: 13)),
+                            const SizedBox(
+                              height: AppSpacing.profileDevicesCardGap,
+                            ),
                         ],
-                      const Padding(padding: EdgeInsets.only(top: 27)),
+                      const SizedBox(
+                        height: AppSpacing.profileDevicesFooterSummaryGap,
+                      ),
                       _SecuritySummaryCard(
                         totalDevices: _devices.length,
                         trustedCount: _trustedCount,

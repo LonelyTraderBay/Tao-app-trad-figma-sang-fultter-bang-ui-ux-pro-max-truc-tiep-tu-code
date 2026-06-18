@@ -62,10 +62,7 @@ class P2PTradingLevelPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PTradingLevelPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x5,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pTradingLevelScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(

@@ -8,7 +8,7 @@ class _VolumeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -23,7 +23,7 @@ class _VolumeCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: AppSpacing.x7 * 3,
+            height: AppSpacing.p2pMarketplaceAnalyticsChartTallHeight,
             child: CustomPaint(
               painter: _VolumeBarPainter(points),
               child: const SizedBox.expand(),
@@ -48,7 +48,7 @@ class _HeatmapCard extends StatelessWidget {
     );
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -75,13 +75,10 @@ class _HeatmapCard extends StatelessWidget {
                       width: side,
                       child: Column(
                         children: [
-                          Container(
-                            width: side,
-                            height: side,
-                            decoration: BoxDecoration(
-                              color: _heatColor(point.orders, maxOrders),
-                              borderRadius: AppRadii.smRadius,
-                            ),
+                          Material(
+                            color: _heatColor(point.orders, maxOrders),
+                            borderRadius: AppRadii.smRadius,
+                            child: SizedBox(width: side, height: side),
                           ),
                           if (point.hour % 3 == 0) ...[
                             const SizedBox(height: AppSpacing.x1),
@@ -89,7 +86,8 @@ class _HeatmapCard extends StatelessWidget {
                               '${point.hour}h',
                               style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text3,
-                                height: 1,
+                                height: AppSpacing
+                                    .p2pMarketplaceAnalyticsTightLineHeight,
                               ),
                             ),
                           ] else
@@ -139,7 +137,7 @@ class _PaymentBreakdownCard extends StatelessWidget {
     );
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -230,7 +228,7 @@ class _CompetitorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -245,7 +243,7 @@ class _CompetitorCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           SizedBox(
-            height: AppSpacing.buttonHero * 2 + AppSpacing.x6,
+            height: AppSpacing.p2pMarketplaceAnalyticsRadarHeight,
             child: CustomPaint(
               painter: _RadarComparisonPainter(rows),
               child: const SizedBox.expand(),
@@ -262,31 +260,27 @@ class _CompetitorCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          ClipRRect(
-            borderRadius: AppRadii.cardRadius,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.divider),
-                borderRadius: AppRadii.cardRadius,
-              ),
-              child: Column(
-                children: [
-                  const _ComparisonTableRow(
-                    metric: 'Chỉ số',
-                    yours: 'Bạn',
-                    average: 'TB',
-                    top: 'Top',
-                    header: true,
+          VitCard(
+            variant: VitCardVariant.ghost,
+            borderColor: AppColors.divider,
+            clip: true,
+            child: Column(
+              children: [
+                const _ComparisonTableRow(
+                  metric: 'Chỉ số',
+                  yours: 'Bạn',
+                  average: 'TB',
+                  top: 'Top',
+                  header: true,
+                ),
+                for (final row in rows)
+                  _ComparisonTableRow(
+                    metric: row.metric,
+                    yours: _formatComparison(row.metric, row.yours),
+                    average: _formatComparison(row.metric, row.average),
+                    top: _formatComparison(row.metric, row.top),
                   ),
-                  for (final row in rows)
-                    _ComparisonTableRow(
-                      metric: row.metric,
-                      yours: _formatComparison(row.metric, row.yours),
-                      average: _formatComparison(row.metric, row.average),
-                      top: _formatComparison(row.metric, row.top),
-                    ),
-                ],
-              ),
+              ],
             ),
           ),
         ],
@@ -315,51 +309,56 @@ class _ComparisonTableRow extends StatelessWidget {
     final bg = header ? AppColors.surface2 : AppColors.transparent;
     final weight = header ? AppTextStyles.bold : AppTextStyles.normal;
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: bg,
-        border: header
-            ? null
-            : const Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Text(
-                metric,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: header ? AppColors.text3 : AppColors.text2,
-                  fontWeight: weight,
+    return ColoredBox(
+      color: bg,
+      child: Column(
+        children: [
+          if (!header)
+            const Divider(
+              height: AppSpacing.p2pMarketplaceAnalyticsDividerHeight,
+              color: AppColors.divider,
+            ),
+          Padding(
+            padding: AppSpacing.p2pMarketplaceAnalyticsTableCellPadding,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    metric,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: header ? AppColors.text3 : AppColors.text2,
+                      fontWeight: weight,
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: _TableCell(
+                    text: yours,
+                    color: header ? AppColors.accent : AppColors.text1,
+                    bold: header,
+                  ),
+                ),
+                Expanded(
+                  child: _TableCell(
+                    text: average,
+                    color: AppColors.text3,
+                    bold: header,
+                  ),
+                ),
+                Expanded(
+                  child: _TableCell(
+                    text: top,
+                    color: AppColors.buy,
+                    bold: header,
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              child: _TableCell(
-                text: yours,
-                color: header ? AppColors.accent : AppColors.text1,
-                bold: header,
-              ),
-            ),
-            Expanded(
-              child: _TableCell(
-                text: average,
-                color: AppColors.text3,
-                bold: header,
-              ),
-            ),
-            Expanded(
-              child: _TableCell(text: top, color: AppColors.buy, bold: header),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -400,7 +399,7 @@ class _TipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -429,14 +428,14 @@ class _TipRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(tip.tone);
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .06),
-        border: Border.all(color: color.withValues(alpha: .14)),
+    return Material(
+      color: color.withValues(alpha: .06),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: color.withValues(alpha: .14)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -447,7 +446,7 @@ class _TipRow extends StatelessWidget {
                 tip.text,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: 1.6,
+                  height: AppSpacing.p2pMarketplaceAnalyticsBodyLineHeight,
                 ),
               ),
             ),

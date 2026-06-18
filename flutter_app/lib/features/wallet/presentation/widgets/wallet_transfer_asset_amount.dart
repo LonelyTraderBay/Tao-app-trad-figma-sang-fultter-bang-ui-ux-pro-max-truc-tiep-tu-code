@@ -68,21 +68,11 @@ class _AssetLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(asset.colorHex);
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: AppRadii.avatarRadius,
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        asset.symbol.substring(
-          0,
-          asset.symbol.length < 3 ? asset.symbol.length : 3,
-        ),
-        style: AppTextStyles.numericMicro.copyWith(color: color),
-      ),
+    return VitAssetAvatar(
+      label: asset.symbol,
+      accentColor: color,
+      size: size,
+      radius: AppRadii.avatarRadius,
     );
   }
 }
@@ -169,15 +159,13 @@ class TransferInfoNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       constraints: const BoxConstraints(
         minHeight: AppSpacing.transferNoticeMinHeight,
       ),
       padding: AppSpacing.transferNoticePadding,
-      decoration: BoxDecoration(
-        color: AppColors.primary08,
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _transferPrimary.withValues(alpha: .20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

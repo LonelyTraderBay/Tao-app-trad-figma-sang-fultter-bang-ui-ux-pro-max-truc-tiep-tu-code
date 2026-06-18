@@ -127,10 +127,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                   child: SingleChildScrollView(
                     key: P2PCreateAdPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pMerchantCommerceScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -337,7 +334,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pMerchantCommerceCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P ad publish review',
@@ -354,7 +351,9 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
               VitStickyFooter(
                 backgroundColor: AppColors.surface.withValues(alpha: .96),
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: footerInset),
+                  padding: AppSpacing.p2pMerchantCommerceFooterPadding(
+                    footerInset,
+                  ),
                   child: VitCtaButton(
                     key: P2PCreateAdPage.publishButtonKey,
                     onPressed: preview.canPublish && !_submitting

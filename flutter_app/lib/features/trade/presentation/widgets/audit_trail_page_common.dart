@@ -9,22 +9,22 @@ class _AuditEntryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = _styleForCategory(entry.category);
     return VitCard(
-      constraints: const BoxConstraints(minHeight: 89),
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
+      constraints: const BoxConstraints(minHeight: AppSpacing.buttonHero),
+      padding: AppSpacing.tradeToolCardPadding,
       borderColor: _auditBorder.withValues(alpha: .76),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: style.color.withValues(alpha: .14),
-              borderRadius: AppRadii.lgRadius,
-            ),
+          VitCard(
+            width: AppSpacing.tradeToolIconTileSm,
+            height: AppSpacing.tradeToolIconTileSm,
+            alignment: Alignment.center,
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
+            borderColor: style.color.withValues(alpha: .28),
             child: Icon(style.icon, color: style.color, size: 19),
           ),
-          const SizedBox(width: 13),
+          const SizedBox(width: AppSpacing.tradeToolPageTopGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,25 +42,25 @@ class _AuditEntryCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 7),
+                    const SizedBox(width: AppSpacing.tradeToolInlineGap),
                     _CategoryBadge(entry: entry, color: style.color),
                   ],
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.tradeToolInlineGap),
                 Text(
                   entry.details,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.tradeToolTinyGap),
                 Text(
                   _metadata(entry),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.tradeToolTinyGap),
                 Text(
                   'ID: ${entry.id}',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -91,19 +91,10 @@ class _CategoryBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        entry.categoryLabel,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
+    return VitAccentPill(
+      label: entry.categoryLabel,
+      accentColor: color,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -134,7 +125,8 @@ class _ExportActions extends StatelessWidget {
               ),
             ),
           ),
-          if (format != formats.last) const SizedBox(width: 12),
+          if (format != formats.last)
+            const SizedBox(width: AppSpacing.tradeToolCardGap),
         ],
       ],
     );

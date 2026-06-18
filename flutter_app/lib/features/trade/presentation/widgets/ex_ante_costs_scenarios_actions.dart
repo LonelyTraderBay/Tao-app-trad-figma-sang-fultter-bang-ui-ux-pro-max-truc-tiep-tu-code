@@ -21,7 +21,7 @@ class _Scenarios extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionLabel('Cost Scenarios by Holding Period'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeListGap),
         Row(
           children: [
             for (final period in const [1, 3, 5]) ...[
@@ -32,13 +32,13 @@ class _Scenarios extends StatelessWidget {
                   onPressed: () => onChanged(period),
                 ),
               ),
-              if (period != 5) const SizedBox(width: 8),
+              if (period != 5) const SizedBox(width: AppSpacing.x3),
             ],
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeListGap),
         _Card(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.tradeFeeCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -50,7 +50,7 @@ class _Scenarios extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.tradeListGap),
               _ScenarioRow(label: 'One-off Costs', value: snapshot.oneOffCosts),
               _ScenarioRow(
                 label: 'Recurring Costs ($holdingPeriod years)',
@@ -60,13 +60,11 @@ class _Scenarios extends StatelessWidget {
                 label: 'Incidental Costs (estimated)',
                 value: snapshot.incidentalCosts * holdingPeriod,
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 4),
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: _costRed.withValues(alpha: .13),
-                  borderRadius: AppRadii.smRadius,
-                ),
+              VitCard(
+                variant: VitCardVariant.inner,
+                margin: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x1),
+                padding: AppSpacing.cardPaddingCompact,
+                borderColor: _costRed.withValues(alpha: .28),
                 child: Row(
                   children: [
                     Expanded(
@@ -110,7 +108,7 @@ class _QuickLinks extends StatelessWidget {
                 context.go(AppRoutePaths.tradeCopyExPostCostsReport),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.tradeListGap),
         Expanded(
           child: _QuickLinkButton(
             key: ExAnteCostsPage.kidKey,
@@ -144,7 +142,7 @@ class _QuickLinkButton extends StatelessWidget {
     return VitCtaButton(
       onPressed: onPressed,
       variant: VitCtaButtonVariant.secondary,
-      height: 44,
+      height: AppSpacing.buttonStandard - AppSpacing.rowGapRegular,
       leading: Icon(icon, color: color),
       trailing: const Icon(Icons.chevron_right_rounded),
       child: Text(label),
@@ -169,7 +167,7 @@ class _FullWidthButton extends StatelessWidget {
     return VitCtaButton(
       onPressed: onPressed,
       variant: VitCtaButtonVariant.secondary,
-      height: 44,
+      height: AppSpacing.buttonStandard - AppSpacing.rowGapRegular,
       leading: Icon(icon),
       child: Text(label),
     );
@@ -191,17 +189,19 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: 56,
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
+      height: AppSpacing.walletAddressStatsHeight,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.tradeFeeRowGap,
+        top: AppSpacing.tradeFeeRowGap,
+        right: AppSpacing.tradeFeeRowGap,
+        bottom: AppSpacing.tradeReceiptTotalGap,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const Spacer(),
           Text(
@@ -209,7 +209,6 @@ class _MetricBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
         ],
@@ -227,20 +226,23 @@ class _WarningBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _costAmber.withValues(alpha: .28),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline_rounded, color: _costAmber, size: 14),
-          const SizedBox(width: 8),
+          const Icon(
+            Icons.info_outline_rounded,
+            color: _costAmber,
+            size: AppSpacing.tradeReceiptNoticeIcon,
+          ),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _costAmber,
                 fontWeight: AppTextStyles.bold,
-                height: 1.3,
               ),
             ),
           ),
@@ -264,7 +266,7 @@ class _PeriodButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36,
+      height: AppSpacing.walletAddressCopyHeight,
       child: FilledButton(
         style: FilledButton.styleFrom(
           backgroundColor: selected ? _costPrimary : _costPanel2,
@@ -288,8 +290,13 @@ class _ScenarioRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(10),
+      margin: AppSpacing.zeroInsets.copyWith(bottom: AppSpacing.x3),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.tradeFeeRowGap,
+        top: AppSpacing.tradeFeeRowGap,
+        right: AppSpacing.tradeFeeRowGap,
+        bottom: AppSpacing.tradeFeeRowGap,
+      ),
       child: Row(
         children: [
           Expanded(

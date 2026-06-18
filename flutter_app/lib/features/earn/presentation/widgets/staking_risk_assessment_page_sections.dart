@@ -82,7 +82,7 @@ class _QuestionCard extends StatelessWidget {
     return VitCard(
       key: StakingRiskAssessmentPage.questionCardKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -152,10 +152,12 @@ class _QuestionNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.primary12,
-        border: Border.all(color: AppColors.primary30),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.primary30),
+          borderRadius: AppRadii.xlRadius,
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -199,17 +201,16 @@ class _RiskOptionTile extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.xlRadius,
           child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: selected ? AppColors.primary : AppColors.borderSolid,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: selected ? AppColors.primary : AppColors.borderSolid,
+                ),
+                borderRadius: AppRadii.xlRadius,
               ),
-              borderRadius: AppRadii.xlRadius,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x4,
-                vertical: AppSpacing.x4,
-              ),
+              padding: AppSpacing.earnStaticSelectPadding,
               child: Row(
                 children: [
                   Expanded(
@@ -269,7 +270,7 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

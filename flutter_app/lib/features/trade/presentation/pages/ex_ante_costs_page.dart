@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -12,9 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -86,16 +84,28 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: ExAnteCostsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top:
+                        AppSpacing.x6 -
+                        AppSpacing.x3 +
+                        AppSpacing.x1 -
+                        AppSpacing.hairlineStroke,
+                    bottom: bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
                     customGap: 0,
                     children: [
                       const _RegulatoryNotice(),
-                      const SizedBox(height: 35),
+                      const SizedBox(
+                        height:
+                            AppSpacing.x6 +
+                            AppSpacing.x1 -
+                            AppSpacing.hairlineStroke,
+                      ),
                       _InvestmentCard(snapshot: snapshot),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Ex-ante cost preview',
@@ -103,9 +113,15 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
                             'Review one-off, recurring, incidental fees, RIY impact, limits, and next-step documents before investing.',
                         contractId: 'SC-105 ex-ante costs review',
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: AppSpacing.x5 + AppSpacing.x1),
                       _Tabs(activeId: _tab, onChanged: _setTab),
-                      const SizedBox(height: 27),
+                      const SizedBox(
+                        height:
+                            AppSpacing.x6 -
+                            AppSpacing.x3 +
+                            AppSpacing.x1 -
+                            AppSpacing.hairlineStroke,
+                      ),
                       if (_tab == 'summary')
                         _Summary(snapshot: snapshot)
                       else if (_tab == 'breakdown')
@@ -117,7 +133,7 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
                           onChanged: (period) =>
                               setState(() => _holdingPeriod = period),
                         ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: AppSpacing.x5 + AppSpacing.x1),
                       const _QuickLinks(),
                     ],
                   ),

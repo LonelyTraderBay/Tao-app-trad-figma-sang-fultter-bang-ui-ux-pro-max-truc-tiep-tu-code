@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_common.dart';
@@ -14,6 +15,7 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 
@@ -67,7 +69,9 @@ class _ExecutionQualityDemoPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 104 : 24);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.tradeToolBottomInsetSlippageVisual
+            : AppSpacing.tradeToolBottomInsetSlippageNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -88,32 +92,27 @@ class _ExecutionQualityDemoPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: ExecutionQualityDemoPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      padding: AppSpacing.tradeToolScrollPadding(bottomInset),
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        fullBleed: true,
+                        customGap: AppSpacing.tradeToolCardGap,
                         children: [
                           const ExecutionQualityIntroCard(),
-                          const SizedBox(height: 12),
-                          for (final feature in snapshot.features) ...[
+                          for (final feature in snapshot.features)
                             ExecutionQualityFeatureCard(
                               feature: feature,
                               onTap: () => _onFeatureTap(feature),
                             ),
-                            const SizedBox(height: 12),
-                          ],
                           const ExecutionQualityBenefitsCard(),
-                          const SizedBox(height: 12),
                           ExecutionQualityProgressCard(
                             items: snapshot.statusItems,
                           ),
-                          const SizedBox(height: 12),
                           const ExecutionQualityParityCard(),
-                          const SizedBox(height: 18),
                           ExecutionQualityTabs(
                             active: _tab,
                             onChanged: (tab) => setState(() => _tab = tab),
                           ),
-                          const SizedBox(height: 14),
                           if (_tab == ExecutionQualityTab.slippage)
                             ExecutionQualitySlippageTab(
                               settings: _settings,
@@ -127,7 +126,6 @@ class _ExecutionQualityDemoPageState
                             ExecutionQualityAmendmentTab(
                               onOpen: _openAmendmentSheet,
                             ),
-                          const SizedBox(height: 14),
                           const TradeBodyReviewSection(
                             title: 'Execution quality review',
                             message: 'Execution quality body reviewed',

@@ -10,26 +10,29 @@ class _RecordCard extends StatelessWidget {
     final tone = _toneFor(record.status);
     return VitCard(
       key: CassReconciliationPage.recordKey(record.id),
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       borderColor: _cassBorder.withValues(alpha: .72),
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: tone.color.withValues(alpha: .13),
-                  borderRadius: AppRadii.inputRadius,
+              VitCard(
+                width: AppSpacing.tradeBotRecommendationIconBox,
+                height: AppSpacing.tradeBotRecommendationIconBox,
+                variant: VitCardVariant.inner,
+                borderColor: tone.color.withValues(alpha: .24),
+                alignment: Alignment.center,
+                child: Icon(
+                  tone.icon,
+                  color: tone.color,
+                  size: AppSpacing.tradeBotActionIcon,
                 ),
-                child: Icon(tone.icon, color: tone.color, size: 20),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.tradeBotCardIconGap),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 4),
+                  padding: AppSpacing.tradeBotRecordIconTopPadding,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -46,19 +49,22 @@ class _RecordCard extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          _StatusPill(label: tone.label, color: tone.color),
+                          const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                          VitAccentPill(
+                            label: tone.label,
+                            accentColor: tone.color,
+                          ),
                         ],
                       ),
                       if (record.notes != null) ...[
-                        const SizedBox(height: 9),
+                        const SizedBox(height: AppSpacing.tradeBotDisclosureGap),
                         Text(
                           record.notes!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            height: 1,
+                            height: AppSpacing.tradeBotLineHeightTight,
                           ),
                         ),
                       ],
@@ -68,7 +74,7 @@ class _RecordCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.tradeBotDisclosureGap),
           Row(
             children: [
               Expanded(
@@ -77,14 +83,14 @@ class _RecordCard extends StatelessWidget {
                   value: _formatUsd(record.clientLedger),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: _MetricBox(
                   label: 'Bank Balance',
                   value: _formatUsd(record.bankBalance),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: _MetricBox(
                   label: 'Difference',
@@ -118,13 +124,13 @@ class _MetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 47,
-      padding: const EdgeInsets.fromLTRB(8, 9, 8, 8),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      height: AppSpacing.tradeBotCassMetricHeight,
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.tradeBotMetricBoxPadding,
+      borderColor: background.withValues(alpha: .24),
+      background: ColoredBox(color: background),
+      clip: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -134,7 +140,7 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           const Spacer(),
@@ -153,31 +159,6 @@ class _MetricBox extends StatelessWidget {
   }
 }
 
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
-    );
-  }
-}
-
 class _ExportButton extends StatelessWidget {
   const _ExportButton();
 
@@ -187,8 +168,11 @@ class _ExportButton extends StatelessWidget {
       key: CassReconciliationPage.exportKey,
       onPressed: () {},
       variant: VitCtaButtonVariant.secondary,
-      height: 44,
-      leading: const Icon(Icons.download_rounded, size: 16),
+      height: AppSpacing.tradeBotSheetActionHeight,
+      leading: const Icon(
+        Icons.download_rounded,
+        size: AppSpacing.tradeBotCheckboxIcon,
+      ),
       child: Text(
         'Export Reconciliation Report (CSV)',
         maxLines: 1,
@@ -209,25 +193,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 14,
-          decoration: BoxDecoration(
-            color: _cassPrimary,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          text,
-          style: AppTextStyles.captionSm.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: text,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _cassPrimary,
     );
   }
 }

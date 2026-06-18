@@ -18,16 +18,15 @@ class _LayerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: active ? color.withValues(alpha: .08) : AppColors.bg,
-      borderRadius: AppRadii.cardRadius,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: active ? color : AppColors.border),
+        borderRadius: AppRadii.cardRadius,
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
-        child: Container(
+        child: Padding(
           padding: AppSpacing.predictionAdvancedLayerPadding,
-          decoration: BoxDecoration(
-            border: Border.all(color: active ? color : AppColors.border),
-            borderRadius: AppRadii.cardRadius,
-          ),
           child: Row(
             children: [
               Expanded(

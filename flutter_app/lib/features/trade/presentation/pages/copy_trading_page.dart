@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -50,7 +51,9 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 126 : 28);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.copyTradingBottomInsetVisual
+            : AppSpacing.copyTradingBottomInsetNative);
     final traders = _sortedTraders(snapshot.traders);
 
     return VitPageLayout(
@@ -75,10 +78,10 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyTradingPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.copyTradingScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 20,
+                    customGap: AppSpacing.sectionGap,
                     fullBleed: true,
                     children: [
                       _CopyHeroCard(snapshot: snapshot),
@@ -114,7 +117,7 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
                             ),
                           ),
                           if (trader != traders.last)
-                            const SizedBox(height: 20),
+                            const SizedBox(height: AppSpacing.sectionGap),
                         ],
                       _Disclaimer(text: snapshot.disclaimer),
                     ],

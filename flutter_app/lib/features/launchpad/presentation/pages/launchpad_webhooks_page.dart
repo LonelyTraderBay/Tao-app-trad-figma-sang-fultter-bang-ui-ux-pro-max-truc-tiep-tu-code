@@ -110,32 +110,35 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
-                      AppSpacing.x2,
-                    ),
+                    padding: AppSpacing.launchpadHeaderStatsPadding,
                     child: _StatsGrid(
                       key: LaunchpadWebhooksPage.statsKey,
                       stats: stats,
                     ),
                   ),
-                  Container(
+                  ColoredBox(
                     key: LaunchpadWebhooksPage.tabsKey,
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface,
-                      border: Border(
-                        top: BorderSide(color: AppColors.divider),
-                        bottom: BorderSide(color: AppColors.divider),
-                      ),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.contentPad,
-                    ),
-                    child: _WebhookTabs(
-                      activeTab: _activeTab,
-                      onChanged: (tab) => setState(() => _activeTab = tab),
+                    color: AppColors.surface,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Divider(
+                          height: AppSpacing.launchpadDividerHeight,
+                          color: AppColors.divider,
+                        ),
+                        Padding(
+                          padding: AppSpacing.launchpadHorizontalContentPadding,
+                          child: _WebhookTabs(
+                            activeTab: _activeTab,
+                            onChanged: (tab) =>
+                                setState(() => _activeTab = tab),
+                          ),
+                        ),
+                        const Divider(
+                          height: AppSpacing.launchpadDividerHeight,
+                          color: AppColors.divider,
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -66,8 +67,10 @@ class _ArmIntegrationStatusPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                AppSpacing.armIntegrationBottomInsetVisualExtra
+            : DeviceMetrics.nativeBottomChrome +
+                AppSpacing.armIntegrationBottomInsetNativeExtra) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -89,10 +92,12 @@ class _ArmIntegrationStatusPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ArmIntegrationStatusPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.armIntegrationScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 14,
+                    customGap: AppSpacing.armIntegrationContentGap,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(

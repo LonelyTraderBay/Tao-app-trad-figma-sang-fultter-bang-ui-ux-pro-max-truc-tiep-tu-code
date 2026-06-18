@@ -6,10 +6,7 @@ InputDecoration _inputDecoration(String hint) {
     hintStyle: AppTextStyles.base.copyWith(color: AppColors.text3),
     filled: true,
     fillColor: AppColors.surface2,
-    contentPadding: const EdgeInsets.symmetric(
-      horizontal: AppSpacing.x4,
-      vertical: AppSpacing.x3,
-    ),
+    contentPadding: AppSpacing.arenaGovernanceInputPadding,
     enabledBorder: const OutlineInputBorder(
       borderRadius: AppRadii.inputRadius,
       borderSide: BorderSide(

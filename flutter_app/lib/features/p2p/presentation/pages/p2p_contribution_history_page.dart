@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -68,10 +67,7 @@ class _P2PContributionHistoryPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pTrustProgressScrollPadding(
                       bottomInset,
                     ),
                     child: Column(
@@ -136,7 +132,7 @@ class _ContributionSummaryCard extends StatelessWidget {
     return VitCard(
       key: P2PContributionHistoryPage.summaryKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pTrustProgressHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -177,7 +173,10 @@ class _ContributionSummaryCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.p2pMerchantCommerceDividerHeight,
+            color: AppColors.divider,
+          ),
           const SizedBox(height: AppSpacing.x4),
           _SummaryLine(
             label: 'Trung bình/giao dịch',
@@ -272,13 +271,13 @@ class _FeedbackBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: 18,
+            size: AppSpacing.p2pTrustProgressSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -332,7 +331,7 @@ class _MonthGroup extends StatelessWidget {
             const Icon(
               Icons.calendar_month_outlined,
               color: AppColors.text2,
-              size: 18,
+              size: AppSpacing.p2pTrustProgressSmallIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -382,7 +381,7 @@ class _ContributionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -421,7 +420,7 @@ class _ContributionCard extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x4),
           SizedBox(
-            width: 112,
+            width: AppSpacing.p2pTrustProgressContributionAmountWidth,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -460,24 +459,9 @@ class _CoinPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.surface3,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: AppColors.text3,
     );
   }
 }

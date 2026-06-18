@@ -51,7 +51,7 @@ class _Podium extends StatelessWidget {
     final third = entries.firstWhere((entry) => entry.rank == 3);
 
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x2, bottom: AppSpacing.x4),
+      padding: AppSpacing.arenaLeaderboardPodiumPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -100,31 +100,37 @@ class _PodiumItem extends StatelessWidget {
           const Icon(Icons.workspace_premium_rounded, color: AppColors.warn),
           const SizedBox(height: AppSpacing.x1),
         ],
-        Container(
+        SizedBox(
           width: size,
           height: size,
-          decoration: BoxDecoration(
-            color: AppColors.surface2,
-            border: Border.all(
-              color: color,
-              width: AppSpacing.arenaLeaderboardPodiumBorderWidth,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: AppColors.surface2,
+              shape: RoundedRectangleBorder(
+                borderRadius: crown ? AppRadii.cardRadius : AppRadii.mdRadius,
+                side: BorderSide(
+                  color: color,
+                  width: AppSpacing.arenaLeaderboardPodiumBorderWidth,
+                ),
+              ),
+              shadows: crown
+                  ? [
+                      BoxShadow(
+                        color: AppColors.warn.withValues(alpha: .24),
+                        blurRadius: AppSpacing.arenaLeaderboardPodiumShadowBlur,
+                        spreadRadius:
+                            AppSpacing.arenaLeaderboardPodiumShadowSpread,
+                      ),
+                    ]
+                  : null,
             ),
-            borderRadius: crown ? AppRadii.cardRadius : AppRadii.mdRadius,
-            boxShadow: crown
-                ? [
-                    BoxShadow(
-                      color: AppColors.warn.withValues(alpha: .24),
-                      blurRadius: AppSpacing.arenaLeaderboardPodiumShadowBlur,
-                      spreadRadius:
-                          AppSpacing.arenaLeaderboardPodiumShadowSpread,
-                    ),
-                  ]
-                : null,
-          ),
-          child: Icon(
-            _leaderboardIcon(entry.icon),
-            color: color,
-            size: AppSpacing.arenaLeaderboardPodiumIcon,
+            child: Center(
+              child: Icon(
+                _leaderboardIcon(entry.icon),
+                color: color,
+                size: AppSpacing.arenaLeaderboardPodiumIcon,
+              ),
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
@@ -185,7 +191,7 @@ class _EntrySection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         VitCard(
           clip: true,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               for (final entry in entries) ...[
@@ -220,12 +226,16 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.arenaLeaderboardSectionMarkerWidth,
           height: AppSpacing.arenaLeaderboardSectionMarkerHeight,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: AppRadii.xsRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: accentColor,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.xsRadius,
+              ),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),

@@ -113,12 +113,7 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
               if (snapshot.showOfflineBanner)
                 Padding(
                   key: TopicHubPage.offlineKey,
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    AppSpacing.x2,
-                  ),
+                  padding: AppSpacing.discoveryOfflineBannerPadding,
                   child: VitOfflineBanner(
                     message: snapshot.staleMessage,
                     detail: snapshot.staleDetail,
@@ -132,10 +127,7 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
                   child: SingleChildScrollView(
                     key: TopicHubPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x2,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.discoveryContentScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(

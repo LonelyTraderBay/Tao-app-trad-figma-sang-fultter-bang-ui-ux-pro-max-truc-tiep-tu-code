@@ -9,7 +9,7 @@ class _PendingCommissionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -54,14 +54,14 @@ class _PendingCommissionCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           _ProgressBar(progress: item.progress / 100, color: AppColors.warn),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             item.reasonDetail,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Align(
             alignment: Alignment.centerLeft,
             child: _TinyPill(
@@ -97,7 +97,7 @@ class _RewardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: color.withValues(alpha: .20),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -117,7 +117,7 @@ class _RewardCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -130,7 +130,7 @@ class _RewardCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           if (chip != null) ...[
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
             _TinyPill(
               label: chip!,
               color: AppColors.primarySoft,
@@ -219,50 +219,51 @@ class _DetailLinkRow extends StatelessWidget {
         _ => null,
       },
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          border: showDivider
-              ? const Border(bottom: BorderSide(color: AppColors.divider))
-              : null,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          shape: Border(
+            bottom: showDivider
+                ? const BorderSide(color: AppColors.divider)
+                : BorderSide.none,
+          ),
         ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x4,
-          vertical: AppSpacing.x3,
-        ),
-        child: Row(
-          children: [
-            _IconBubble(
-              icon: style.icon,
-              color: style.color,
-              background: style.color.withValues(alpha: .10),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.title,
-                    style: AppTextStyles.body.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  Text(
-                    item.subtitle,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                    ),
-                  ),
-                ],
+        child: Padding(
+          padding: AppSpacing.referralLedgerHeaderPadding,
+          child: Row(
+            children: [
+              _IconBubble(
+                icon: style.icon,
+                color: style.color,
+                background: style.color.withValues(alpha: .10),
               ),
-            ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.iconMd,
-            ),
-          ],
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    Text(
+                      item.subtitle,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.iconMd,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -284,7 +285,7 @@ class _StepRow extends StatelessWidget {
     ];
     final color = colors[(step.step - 1).clamp(0, colors.length - 1)];
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.referralStepRowPadding,
       child: Row(
         children: [
           _IconBubble(
@@ -311,19 +312,22 @@ class _StepRow extends StatelessWidget {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: AppSpacing.referralRankWidth,
             height: AppSpacing.referralStepBox,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: Text(
-              '${step.step}',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.bold,
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.surface2,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+              ),
+              child: Center(
+                child: Text(
+                  '${step.step}',
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
               ),
             ),
           ),
@@ -346,7 +350,7 @@ class _CampaignHistoryCard extends StatelessWidget {
     return VitCard(
       key: ReferralHomePage.campaignHistoryKey(item.id),
       borderColor: active ? AppColors.buy20 : AppColors.cardBorder,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -368,20 +372,20 @@ class _CampaignHistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             item.dateRange,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             item.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.referralInnerPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -401,7 +405,7 @@ class _CampaignHistoryCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   item.result,
                   style: AppTextStyles.caption.copyWith(
@@ -409,9 +413,9 @@ class _CampaignHistoryCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 _ProgressBar(progress: progress, color: color),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 Row(
                   children: [
                     Expanded(
@@ -433,7 +437,7 @@ class _CampaignHistoryCard extends StatelessWidget {
                   ],
                 ),
                 if (active) ...[
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                  const SizedBox(height: AppSpacing.x3),
                   const _NoticeCard(
                     icon: Icons.campaign_rounded,
                     text: 'Đang diễn ra - mời thêm bạn bè để nhận x2.',
@@ -465,12 +469,9 @@ class _HistoryDatum extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.smRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.referralInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -480,7 +481,7 @@ class _HistoryDatum extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 2,
@@ -512,12 +513,16 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.referralSectionMarkerWidth,
           height: AppSpacing.referralSectionMarkerHeight,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: AppRadii.xsRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.xsRadius,
+              ),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

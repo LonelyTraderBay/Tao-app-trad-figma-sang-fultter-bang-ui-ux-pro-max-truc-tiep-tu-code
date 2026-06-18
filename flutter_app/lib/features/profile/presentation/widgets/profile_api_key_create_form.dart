@@ -21,23 +21,17 @@ class _NameSection extends StatelessWidget {
             maxLength: 30,
             onChanged: (_) => onChanged(),
           ),
-          const Padding(padding: EdgeInsets.only(top: 8)),
+          const SizedBox(height: AppSpacing.profileApiCreateHintGap),
           Row(
             children: [
               Text(
                 'T\u1ED1i thi\u1EC3u 3 k\u00FD t\u1EF1',
-                style: AppTextStyles.micro.copyWith(
-                  color: _apiMuted,
-                  height: 1,
-                ),
+                style: AppTextStyles.micro.copyWith(color: _apiMuted),
               ),
               const Spacer(),
               Text(
                 '${controller.text.length}/30',
-                style: AppTextStyles.micro.copyWith(
-                  color: _apiMuted,
-                  height: 1,
-                ),
+                style: AppTextStyles.micro.copyWith(color: _apiMuted),
               ),
             ],
           ),
@@ -72,7 +66,7 @@ class _PermissionsSection extends StatelessWidget {
               onTap: () => onToggle(permission.id),
             ),
             if (permission != permissions.last)
-              const Padding(padding: EdgeInsets.only(top: 12)),
+              const SizedBox(height: AppSpacing.profileApiCreatePermissionGap),
           ],
         ],
       ),
@@ -100,30 +94,33 @@ class _PermissionCard extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: VitCard(
-        height: 73,
-        padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
+        height: AppSpacing.profileApiCreatePermissionHeight,
+        padding: AppSpacing.profileApiCreatePermissionPadding,
         variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
         borderColor: selected ? accent.withValues(alpha: .42) : _apiBorder,
         child: Row(
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
+            SizedBox(
+              width: AppSpacing.profileApiCreatePermissionIconBox,
+              height: AppSpacing.profileApiCreatePermissionIconBox,
+              child: Material(
                 color: selected ? accent.withValues(alpha: .12) : _apiPanel,
-                borderRadius: AppRadii.lgRadius,
-                border: Border.all(
-                  color: selected ? accent.withValues(alpha: .25) : _apiBorder,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.lgRadius,
+                  side: BorderSide(
+                    color: selected
+                        ? accent.withValues(alpha: .25)
+                        : _apiBorder,
+                  ),
+                ),
+                child: Icon(
+                  _apiPermissionIcon(permission.iconKey),
+                  color: selected ? accent : _apiMuted,
+                  size: AppSpacing.profileApiCreatePermissionIcon,
                 ),
               ),
-              alignment: Alignment.center,
-              child: Icon(
-                _apiPermissionIcon(permission.iconKey),
-                color: selected ? accent : _apiMuted,
-                size: 18,
-              ),
             ),
-            const SizedBox(width: 13),
+            const SizedBox(width: AppSpacing.profileApiCreatePermissionIconGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +136,6 @@ class _PermissionCard extends StatelessWidget {
                           style: AppTextStyles.caption.copyWith(
                             color: selected ? AppColors.text1 : AppColors.text2,
                             fontWeight: FontWeight.w700,
-                            height: 1,
                           ),
                         ),
                       ),
@@ -148,25 +144,25 @@ class _PermissionCard extends StatelessWidget {
                           ' (b\u1EAFt bu\u1ED9c)',
                           style: AppTextStyles.caption.copyWith(
                             color: _apiMuted,
-                            height: 1,
                           ),
                         ),
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.only(top: 8)),
+                  const SizedBox(
+                    height: AppSpacing.profileApiCreatePermissionDescriptionGap,
+                  ),
                   Text(
                     permission.description,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: _apiMuted,
-                      height: 1,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: _apiMuted),
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(
+              width: AppSpacing.profileApiCreatePermissionTrailingGap,
+            ),
             _PermissionCheck(selected: selected, color: accent),
           ],
         ),
@@ -183,18 +179,25 @@ class _PermissionCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
+    return SizedBox(
+      width: AppSpacing.profileApiCreatePermissionCheck,
+      height: AppSpacing.profileApiCreatePermissionCheck,
+      child: Material(
         color: selected ? color : AppColors.transparent,
-        shape: BoxShape.circle,
-        border: Border.all(color: selected ? color : _apiBorder, width: 2),
+        shape: CircleBorder(
+          side: BorderSide(
+            color: selected ? color : _apiBorder,
+            width: AppSpacing.profileApiCreatePermissionCheckBorder,
+          ),
+        ),
+        child: selected
+            ? const Icon(
+                Icons.check_rounded,
+                color: AppColors.onAccent,
+                size: AppSpacing.profileApiCreatePermissionCheckIcon,
+              )
+            : null,
       ),
-      alignment: Alignment.center,
-      child: selected
-          ? const Icon(Icons.check_rounded, color: AppColors.onAccent, size: 15)
-          : null,
     );
   }
 }
@@ -231,64 +234,54 @@ class _IpWhitelistSection extends StatelessWidget {
                   onSubmitted: (_) => onAdd(),
                 ),
               ),
-              const SizedBox(width: 8),
-              GestureDetector(
-                onTap: onAdd,
-                behavior: HitTestBehavior.opaque,
-                child: Container(
-                  width: 56,
-                  height: AppSpacing.inputHeight,
-                  decoration: BoxDecoration(
-                    color: _apiPrimary,
-                    borderRadius: AppRadii.cardRadius,
-                  ),
-                  alignment: Alignment.center,
-                  child: const Icon(
-                    Icons.add_rounded,
-                    color: AppColors.onAccent,
-                    size: 22,
-                  ),
+              const SizedBox(width: AppSpacing.profileApiCreateIpInputGap),
+              SizedBox(
+                width: AppSpacing.profileApiCreateIpAddWidth,
+                height: AppSpacing.inputHeight,
+                child: VitIconButton(
+                  icon: Icons.add_rounded,
+                  tooltip: 'Th\u00EAm IP whitelist',
+                  onPressed: onAdd,
+                  variant: VitIconButtonVariant.primary,
+                  size: VitIconButtonSize.lg,
                 ),
               ),
             ],
           ),
           if (ips.isEmpty) ...[
-            const Padding(padding: EdgeInsets.only(top: 8)),
+            const SizedBox(height: AppSpacing.profileApiCreateIpWarningGap),
             Text(
               'Kh\u00F4ng c\u00F3 IP whitelist \u2014 key c\u00F3 th\u1EC3 \u0111\u01B0\u1EE3c d\u00F9ng t\u1EEB b\u1EA5t k\u1EF3 \u0111\u00E2u',
               style: AppTextStyles.micro.copyWith(
                 color: _apiAmber,
                 fontWeight: FontWeight.w600,
-                height: 1,
               ),
             ),
           ] else ...[
-            const Padding(padding: EdgeInsets.only(top: 10)),
+            const SizedBox(height: AppSpacing.profileApiCreateIpListGap),
             Wrap(
-              spacing: 6,
-              runSpacing: 6,
+              spacing: AppSpacing.profileApiCreateIpChipGap,
+              runSpacing: AppSpacing.profileApiCreateIpChipGap,
               children: [
                 for (final ip in ips)
                   GestureDetector(
                     onTap: () => onRemove(ip),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 7,
-                      ),
-                      decoration: BoxDecoration(
-                        color: _apiGreen.withValues(alpha: .1),
+                    child: Material(
+                      color: _apiGreen.withValues(alpha: .1),
+                      shape: RoundedRectangleBorder(
                         borderRadius: AppRadii.mdRadius,
-                        border: Border.all(
+                        side: BorderSide(
                           color: _apiGreen.withValues(alpha: .25),
                         ),
                       ),
-                      child: Text(
-                        ip,
-                        style: AppTextStyles.micro.copyWith(
-                          color: _apiGreen,
-                          fontWeight: FontWeight.w700,
-                          height: 1,
+                      child: Padding(
+                        padding: AppSpacing.profileApiCreateIpChipPadding,
+                        child: Text(
+                          ip,
+                          style: AppTextStyles.micro.copyWith(
+                            color: _apiGreen,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
@@ -321,10 +314,10 @@ class _ExpirySection extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
-          mainAxisExtent: 57,
+          crossAxisCount: AppSpacing.profileApiCreateExpiryCrossAxisCount,
+          mainAxisSpacing: AppSpacing.profileApiCreateExpirySpacing,
+          crossAxisSpacing: AppSpacing.profileApiCreateExpirySpacing,
+          mainAxisExtent: AppSpacing.profileApiCreateExpiryExtent,
         ),
         itemCount: options.length,
         itemBuilder: (context, index) {
@@ -334,44 +327,44 @@ class _ExpirySection extends StatelessWidget {
             key: ApiKeyCreatePage.expiryKey(option.id),
             onTap: () => onSelect(option.id),
             behavior: HitTestBehavior.opaque,
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(13, 10, 13, 9),
-              decoration: BoxDecoration(
-                color: isSelected
-                    ? _apiPrimary.withValues(alpha: .12)
-                    : _apiPanel2,
+            child: Material(
+              color: isSelected
+                  ? _apiPrimary.withValues(alpha: .12)
+                  : _apiPanel2,
+              shape: RoundedRectangleBorder(
                 borderRadius: AppRadii.cardRadius,
-                border: Border.all(
+                side: BorderSide(
                   color: isSelected
                       ? _apiPrimary.withValues(alpha: .55)
                       : _apiBorder,
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    option.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: isSelected ? _apiPrimary : AppColors.text2,
-                      fontWeight: FontWeight.w700,
-                      height: 1,
+              child: Padding(
+                padding: AppSpacing.profileApiCreateExpiryPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      option.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: isSelected ? _apiPrimary : AppColors.text2,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: 8)),
-                  Text(
-                    option.description,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: _apiMuted,
-                      height: 1,
+                    const SizedBox(
+                      height: AppSpacing.profileApiCreateExpiryDescriptionGap,
                     ),
-                  ),
-                ],
+                    Text(
+                      option.description,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(color: _apiMuted),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -389,49 +382,52 @@ class _SecurityTips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 160,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      height: AppSpacing.profileApiCreateTipsHeight,
+      padding: AppSpacing.profileApiCreateTipsPadding,
       borderColor: _apiBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              const Icon(Icons.shield_outlined, color: _apiPrimary, size: 15),
-              const SizedBox(width: 8),
+              const Icon(
+                Icons.shield_outlined,
+                color: _apiPrimary,
+                size: AppSpacing.profileApiCreateTipsIcon,
+              ),
+              const SizedBox(width: AppSpacing.profileApiCreateTipsTitleGap),
               Text(
                 'M\u1EB9o b\u1EA3o m\u1EADt',
                 style: AppTextStyles.caption.copyWith(
                   color: _apiPrimary,
                   fontWeight: FontWeight.w700,
-                  height: 1,
                 ),
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: 14)),
+          const SizedBox(height: AppSpacing.profileApiCreateTipsListGap),
           for (var i = 0; i < tips.length; i++) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 16,
-                  height: 16,
-                  decoration: BoxDecoration(
+                SizedBox(
+                  width: AppSpacing.profileApiCreateTipsBullet,
+                  height: AppSpacing.profileApiCreateTipsBullet,
+                  child: Material(
                     color: _apiPrimary.withValues(alpha: .14),
-                    shape: BoxShape.circle,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    '${i + 1}',
-                    style: AppTextStyles.micro.copyWith(
-                      color: _apiPrimary,
-                      fontWeight: FontWeight.w700,
-                      height: 1,
+                    shape: const CircleBorder(),
+                    child: Center(
+                      child: Text(
+                        '${i + 1}',
+                        style: AppTextStyles.micro.copyWith(
+                          color: _apiPrimary,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 9),
+                const SizedBox(width: AppSpacing.profileApiCreateTipsBulletGap),
                 Expanded(
                   child: Text(
                     tips[i],
@@ -446,7 +442,7 @@ class _SecurityTips extends StatelessWidget {
               ],
             ),
             if (i != tips.length - 1)
-              const Padding(padding: EdgeInsets.only(top: 9)),
+              const SizedBox(height: AppSpacing.profileApiCreateTipsItemGap),
           ],
         ],
       ),

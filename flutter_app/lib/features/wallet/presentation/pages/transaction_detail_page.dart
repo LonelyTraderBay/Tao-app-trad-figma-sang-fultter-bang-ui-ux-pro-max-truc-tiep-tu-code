@@ -22,11 +22,9 @@ part '../widgets/transaction_detail_page_sections.dart';
 part '../widgets/transaction_detail_page_common.dart';
 
 const _detailBackground = AppColors.bg;
-const _detailPanel2 = AppColors.surface2;
 const _detailPrimary = AppColors.primary;
 const _detailGreen = AppColors.buy;
 const _detailRed = AppColors.sell;
-const _detailAmber = AppColors.caution;
 
 class TransactionDetailPage extends ConsumerWidget {
   const TransactionDetailPage({
@@ -73,11 +71,9 @@ class TransactionDetailPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.pageHorizontalPadding,
-                    AppSpacing.rowPy,
-                    AppSpacing.pageHorizontalPadding,
-                    bottomInset,
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.rowPy,
+                    bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,

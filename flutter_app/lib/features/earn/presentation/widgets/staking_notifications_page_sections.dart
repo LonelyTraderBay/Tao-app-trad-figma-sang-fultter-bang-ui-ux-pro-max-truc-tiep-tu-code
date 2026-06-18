@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingNotificationsPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -86,7 +86,7 @@ class _SettingCard extends StatelessWidget {
     final color = _priorityColor(setting.priority);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       onTap: onToggle,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,7 +147,7 @@ class _ChannelsList extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             children: [
               for (final channel in channels) ...[
@@ -271,7 +271,7 @@ class _NotificationCard extends StatelessWidget {
       borderColor: notification.read
           ? null
           : AppColors.primarySoft.withValues(alpha: 0.28),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,7 +336,7 @@ class _DoNotDisturbCard extends StatelessWidget {
     return VitCard(
       key: StakingNotificationsPage.dndKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

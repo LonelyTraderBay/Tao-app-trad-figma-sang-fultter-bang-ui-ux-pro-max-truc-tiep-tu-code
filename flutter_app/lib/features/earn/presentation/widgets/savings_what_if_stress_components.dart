@@ -57,8 +57,7 @@ class _StressBars extends StatelessWidget {
               ),
             ],
           ),
-          if (entry != results.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          if (entry != results.last) const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -76,7 +75,7 @@ class _StressRankCard extends StatelessWidget {
     final color = result.difference >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       borderColor: color.withValues(alpha: .18),
       child: Column(
         children: [
@@ -123,7 +122,7 @@ class _StressRankCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(

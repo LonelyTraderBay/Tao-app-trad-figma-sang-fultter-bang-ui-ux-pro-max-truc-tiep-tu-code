@@ -8,25 +8,10 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 16,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: AppRadii.xlRadius,
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      accentColor: accentColor,
+      variant: VitSectionHeaderVariant.accentBar,
     );
   }
 }
@@ -53,7 +38,8 @@ class _TopHoldings extends StatelessWidget {
             hidden: hidden,
             onTap: () => onTap(holding),
           ),
-          if (holding != holdings.last) const SizedBox(height: 4),
+          if (holding != holdings.last)
+            const SizedBox(height: AppSpacing.portfolioTrackerSectionGap),
         ],
       ],
     );
@@ -77,11 +63,14 @@ class _HoldingRow extends StatelessWidget {
     final pnlColor = holding.pnlPct >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: AppSpacing.portfolioTrackerHoldingRowPadding,
       child: Row(
         children: [
-          _TokenBadge(holding: holding, size: 32),
-          const SizedBox(width: 12),
+          _TokenBadge(
+            holding: holding,
+            size: AppSpacing.portfolioTrackerHoldingAvatarMd,
+          ),
+          const SizedBox(width: AppSpacing.portfolioTrackerHoldingRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,18 +90,18 @@ class _HoldingRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 54,
-            height: 22,
-            child: CustomPaint(
-              painter: _SparklinePainter(
-                values: holding.sparkline,
-                color: holding.change24h >= 0 ? AppColors.buy : AppColors.sell,
-              ),
+            width: AppSpacing.portfolioTrackerHoldingSparklineWidth,
+            height: AppSpacing.portfolioTrackerHoldingSparklineHeight,
+            child: VitSparkline(
+              values: holding.sparkline,
+              color: holding.change24h >= 0 ? AppColors.buy : AppColors.sell,
+              showFill: false,
+              strokeWidth: AppSpacing.portfolioTrackerSparklineStroke,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.portfolioTrackerHoldingSparklineGap),
           SizedBox(
-            width: 86,
+            width: AppSpacing.portfolioTrackerHoldingValueWidth,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -151,7 +140,7 @@ class _RiskCard extends StatelessWidget {
     final balanced = stats.stableAllocation > 20;
     final color = balanced ? AppColors.buy : AppColors.warn;
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.portfolioTrackerRiskPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -166,23 +155,16 @@ class _RiskCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: .12),
-                  borderRadius: AppRadii.smRadius,
-                ),
-                child: Text(
-                  balanced ? 'Cân bằng' : 'Rủi ro cao',
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
+              VitAccentPill(
+                label: balanced ? 'CÃ¢n báº±ng' : 'Rá»§i ro cao',
+                accentColor: color,
+                semanticStatus: balanced
+                    ? VitStatusPillStatus.success
+                    : VitStatusPillStatus.warning,
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.portfolioTrackerRiskTitleGap),
           Row(
             children: [
               Expanded(
@@ -200,29 +182,24 @@ class _RiskCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 5),
+          const SizedBox(
+            height: AppSpacing.portfolioTrackerRiskProgressLabelGap,
+          ),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
-            child: SizedBox(
-              height: 5,
-              child: Stack(
-                children: [
-                  Container(color: AppColors.surface2),
-                  FractionallySizedBox(
-                    alignment: Alignment.centerLeft,
-                    widthFactor: stats.stableAllocation / 100,
-                    child: Container(color: AppColors.buy),
-                  ),
-                ],
-              ),
+            child: LinearProgressIndicator(
+              minHeight: AppSpacing.portfolioTrackerRiskProgressHeight,
+              value: stats.stableAllocation / 100,
+              backgroundColor: AppColors.surface2,
+              valueColor: const AlwaysStoppedAnimation(AppColors.buy),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.portfolioTrackerRiskCopyGap),
           Text(
             'Danh mục có ${stats.stableAllocation.toStringAsFixed(1)}% stablecoin, giúp giảm biến động. Khuyến nghị duy trì ít nhất 10-20% stablecoin cho quản lý rủi ro.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.45,
+              height: AppSpacing.portfolioTrackerRiskLineHeight,
             ),
           ),
         ],
@@ -255,7 +232,8 @@ class _SortChips extends StatelessWidget {
               active: active == entry.key,
               onTap: () => onSelected(entry.key),
             ),
-            if (entry.key != chips.keys.last) const SizedBox(width: 8),
+            if (entry.key != chips.keys.last)
+              const SizedBox(width: AppSpacing.portfolioTrackerChipGap),
           ],
         ],
       ),
@@ -280,7 +258,8 @@ class _TimeFilterChips extends StatelessWidget {
             active: active == filter,
             onTap: () => onSelected(filter),
           ),
-          if (filter != filters.last) const SizedBox(width: 8),
+          if (filter != filters.last)
+            const SizedBox(width: AppSpacing.portfolioTrackerChipGap),
         ],
       ],
     );
@@ -301,27 +280,29 @@ class _ChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
+    return Material(
+      color: active
+          ? _marketPrimary.withValues(alpha: .15)
+          : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
           color: active
-              ? _marketPrimary.withValues(alpha: .15)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? _marketPrimary.withValues(alpha: .35)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.cardRadius,
+              ? _marketPrimary.withValues(alpha: .35)
+              : AppColors.transparent,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? _marketPrimary : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.cardRadius,
+        child: Padding(
+          padding: AppSpacing.portfolioTrackerChipPadding,
+          child: Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: active ? _marketPrimary : AppColors.text3,
+              fontWeight: AppTextStyles.medium,
+            ),
           ),
         ),
       ),
@@ -345,13 +326,16 @@ class _HoldingDetailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.portfolioTrackerHoldingDetailPadding,
       child: Column(
         children: [
           Row(
             children: [
-              _TokenBadge(holding: holding, size: 36),
-              const SizedBox(width: 12),
+              _TokenBadge(
+                holding: holding,
+                size: AppSpacing.portfolioTrackerHoldingAvatarLg,
+              ),
+              const SizedBox(width: AppSpacing.portfolioTrackerHoldingRowGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -390,7 +374,7 @@ class _HoldingDetailCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.portfolioTrackerHoldingDetailGap),
           Row(
             children: [
               _HoldingMetric(
@@ -441,7 +425,7 @@ class _HoldingMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: AppSpacing.portfolioTrackerHoldingMetricGap),
           Text(
             value,
             maxLines: 1,
@@ -466,7 +450,7 @@ class _PerformanceChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.portfolioTrackerChartCardPadding,
       child: Column(
         children: [
           Row(
@@ -489,9 +473,9 @@ class _PerformanceChartCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.portfolioTrackerChartTitleGap),
           SizedBox(
-            height: 160,
+            height: AppSpacing.portfolioTrackerChartHeight,
             width: double.infinity,
             child: CustomPaint(painter: _PerformancePainter(points: points)),
           ),

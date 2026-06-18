@@ -57,14 +57,14 @@ class _BalanceCard extends StatelessWidget {
     return VitCard(
       key: P2PWalletPage.balanceKey(balance.asset),
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           InkWell(
             onTap: onToggle,
             borderRadius: AppRadii.cardLargeRadius,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.p2pWalletCardPadding,
               child: Row(
                 children: [
                   _AssetMark(symbol: balance.asset),
@@ -122,9 +122,12 @@ class _BalanceCard extends StatelessWidget {
             ),
           ),
           if (expanded) ...[
-            const Divider(height: 1, color: AppColors.borderSolid),
+            const Divider(
+              height: AppSpacing.dividerHairline,
+              color: AppColors.borderSolid,
+            ),
             Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.p2pWalletCardPadding,
               child: Column(
                 children: [
                   _BalanceBreakdown(balance: balance),
@@ -182,17 +185,16 @@ class _AssetMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: _assetColor(symbol).withValues(alpha: .14),
-        borderRadius: AppRadii.lgRadius,
-      ),
+    final color = _assetColor(symbol);
+    return Material(
+      color: color.withValues(alpha: .14),
+      borderRadius: AppRadii.lgRadius,
       child: SizedBox(
         width: AppSpacing.inputHeight,
         height: AppSpacing.inputHeight,
         child: Icon(
           _assetIcon(symbol),
-          color: _assetColor(symbol),
+          color: color,
           size: AppSpacing.iconMd,
         ),
       ),

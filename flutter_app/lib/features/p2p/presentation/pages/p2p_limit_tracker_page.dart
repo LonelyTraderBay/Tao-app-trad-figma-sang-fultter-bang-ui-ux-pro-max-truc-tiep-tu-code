@@ -46,8 +46,10 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pComplianceBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pComplianceBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -72,12 +74,7 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -98,7 +95,7 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pComplianceCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P limit review',
@@ -171,19 +168,22 @@ class _PeriodTab extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.buttonCompact,
           ),
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
-          child: Text(
-            usage.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.onAccent : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.p2pCompliancePeriodTabPadding,
+            child: Center(
+              child: Text(
+                usage.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: selected ? AppColors.onAccent : AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -199,59 +199,61 @@ class _UsageHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PLimitTrackerPage.usageHeroKey,
-      padding: const EdgeInsets.all(AppSpacing.x5),
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p,
+      color: AppModuleAccents.p2p,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppModuleAccents.p2p),
+        side: BorderSide(color: AppModuleAccents.p2p),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Đã dùng',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.onAccent.withValues(alpha: .82),
-              fontWeight: AppTextStyles.medium,
+      child: Padding(
+        padding: AppSpacing.p2pComplianceCardPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Đã dùng',
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.onAccent.withValues(alpha: .82),
+                fontWeight: AppTextStyles.medium,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            '${_formatComma(usage.used, 0)} VND',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.heroNumber.copyWith(
-              color: AppColors.onAccent,
-              fontFeatures: AppTextStyles.tabularFigures,
+            const SizedBox(height: AppSpacing.x2),
+            Text(
+              '${_formatComma(usage.used, 0)} VND',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.heroNumber.copyWith(
+                color: AppColors.onAccent,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          ClipRRect(
-            borderRadius: AppRadii.xsRadius,
-            child: ColoredBox(
-              color: AppColors.onAccent.withValues(alpha: .24),
-              child: SizedBox(
-                key: P2PLimitTrackerPage.progressKey,
-                height: AppSpacing.x3,
-                child: FractionallySizedBox(
-                  widthFactor: usage.percentage / 100,
-                  alignment: Alignment.centerLeft,
-                  child: const ColoredBox(color: AppColors.onAccent),
+            const SizedBox(height: AppSpacing.x4),
+            ClipRRect(
+              borderRadius: AppRadii.xsRadius,
+              child: ColoredBox(
+                color: AppColors.onAccent.withValues(alpha: .24),
+                child: SizedBox(
+                  key: P2PLimitTrackerPage.progressKey,
+                  height: AppSpacing.x3,
+                  child: FractionallySizedBox(
+                    widthFactor: usage.percentage / 100,
+                    alignment: Alignment.centerLeft,
+                    child: const ColoredBox(color: AppColors.onAccent),
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            '${usage.percentage}% / ${_formatComma(usage.limit, 0)} VND',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.onAccent.withValues(alpha: .90),
-              fontWeight: AppTextStyles.bold,
+            const SizedBox(height: AppSpacing.x2),
+            Text(
+              '${usage.percentage}% / ${_formatComma(usage.limit, 0)} VND',
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.onAccent.withValues(alpha: .90),
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -294,7 +296,7 @@ class _DayBreakdownCard extends StatelessWidget {
     return VitCard(
       key: P2PLimitTrackerPage.dayKey(item.date),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pComplianceCompactCardPadding,
       child: Column(
         children: [
           Row(
@@ -302,7 +304,7 @@ class _DayBreakdownCard extends StatelessWidget {
               const Icon(
                 Icons.calendar_today_outlined,
                 color: AppColors.text3,
-                size: 12,
+                size: AppSpacing.p2pComplianceCalendarIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -359,16 +361,11 @@ class _TradeSideBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
+    return Material(
+      color: color.withValues(alpha: .12),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
+        padding: AppSpacing.p2pComplianceMetricPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -411,5 +408,3 @@ String _formatComma(double value, int decimals) {
   if (decimals == 0) return buffer.toString();
   return '$buffer.${parts.last}';
 }
-
-

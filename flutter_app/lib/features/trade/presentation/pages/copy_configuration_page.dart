@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -91,7 +92,9 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 84 : 24);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.copyConfigurationBottomInsetVisual
+            : AppSpacing.copyConfigurationBottomInsetNative);
     final allocationPercent = draft.copyCapital / snapshot.totalPortfolio * 100;
     final resolvedBackPath = resolveSafeBackPath(
       candidate: widget.backPath,
@@ -117,12 +120,16 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyConfigurationPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
+                  padding: AppSpacing.copyConfigurationScrollPadding(
+                    bottomInset,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _ProviderCard(provider: provider),
-                      const SizedBox(height: 18),
+                      const SizedBox(
+                        height: AppSpacing.copyConfigurationPrimaryGap,
+                      ),
                       _CapitalSection(
                         controller: _capitalController,
                         allocationPercent: allocationPercent,
@@ -131,24 +138,36 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
                         onChanged: _updateCapital,
                         onPreset: _setCapitalPercent,
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(
+                        height: AppSpacing.copyConfigurationPrimaryGap,
+                      ),
                       _ModeSection(
                         selected: draft.copyMode,
                         copyRatio: draft.copyRatio,
                         onModeChanged: _setMode,
                         onRatioChanged: _setCopyRatio,
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(
+                        height: AppSpacing.copyConfigurationPrimaryGap,
+                      ),
                       _RiskSection(draft: draft, onDraftChanged: _setDraft),
-                      const SizedBox(height: 18),
+                      const SizedBox(
+                        height: AppSpacing.copyConfigurationPrimaryGap,
+                      ),
                       _FeeSection(preview: preview),
-                      const SizedBox(height: 18),
+                      const SizedBox(
+                        height: AppSpacing.copyConfigurationPrimaryGap,
+                      ),
                       if (preview.validations.isNotEmpty) ...[
                         _ValidationList(items: preview.validations),
-                        const SizedBox(height: 18),
+                        const SizedBox(
+                          height: AppSpacing.copyConfigurationPrimaryGap,
+                        ),
                       ],
                       _SummaryCard(draft: draft),
-                      const SizedBox(height: 18),
+                      const SizedBox(
+                        height: AppSpacing.copyConfigurationPrimaryGap,
+                      ),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Copy configuration state review',
@@ -161,8 +180,8 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
-                  bottom: bottomChrome + MediaQuery.paddingOf(context).bottom,
+                padding: AppSpacing.copyConfigurationFooterPadding(
+                  bottomChrome + MediaQuery.paddingOf(context).bottom,
                 ),
                 child: VitStickyFooter(
                   child: VitCtaButton(

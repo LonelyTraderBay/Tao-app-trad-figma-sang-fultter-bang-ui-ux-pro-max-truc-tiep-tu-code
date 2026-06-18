@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -43,8 +44,9 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 96
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.tradeBotBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -64,11 +66,13 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 12,
+                    customGap: AppSpacing.tradeBotCardGap,
                     children: [
                       _MetricGrid(summary: snapshot.summary),
                       const _SectionLabel('Underwater Equity'),
@@ -80,7 +84,7 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
                       _AnalysisCard(insights: snapshot.insights),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Drawdown review state',

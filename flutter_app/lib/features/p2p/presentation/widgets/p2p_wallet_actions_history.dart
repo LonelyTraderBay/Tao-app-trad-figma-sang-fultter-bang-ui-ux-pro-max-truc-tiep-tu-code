@@ -22,13 +22,17 @@ class _InlineActionButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.inputHeight,
-          alignment: Alignment.center,
+          child: Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: color, size: 14),
+              Icon(
+                icon,
+                color: color,
+                size: AppSpacing.p2pWalletInlineActionIcon,
+              ),
               const SizedBox(width: AppSpacing.x1),
               Text(
                 label,
@@ -38,6 +42,7 @@ class _InlineActionButton extends StatelessWidget {
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),
@@ -60,16 +65,16 @@ class _EscrowDetailButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.inputHeight,
-          alignment: Alignment.center,
+          child: Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(
                 Icons.description_outlined,
                 color: AppColors.text2,
-                size: 14,
+                size: AppSpacing.p2pWalletInlineActionIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -80,6 +85,7 @@ class _EscrowDetailButton extends StatelessWidget {
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),
@@ -112,7 +118,7 @@ class _RecentTransactions extends StatelessWidget {
               onPressed: () => context.go(snapshot.historyRoute),
               style: TextButton.styleFrom(
                 foregroundColor: AppModuleAccents.p2p,
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+                padding: AppSpacing.p2pWalletTextActionPadding,
               ),
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
@@ -128,7 +134,7 @@ class _RecentTransactions extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               for (
@@ -138,7 +144,10 @@ class _RecentTransactions extends StatelessWidget {
               ) ...[
                 _TransactionRow(tx: snapshot.transactions[index]),
                 if (index != snapshot.transactions.length - 1)
-                  const Divider(height: 1, color: AppColors.borderSolid),
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    color: AppColors.borderSolid,
+                  ),
               ],
             ],
           ),
@@ -159,18 +168,20 @@ class _TransactionRow extends StatelessWidget {
     final positive = _transactionIsPositive(tx.type);
 
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pWalletCardPadding,
       child: Row(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
-              borderRadius: AppRadii.lgRadius,
-            ),
+          Material(
+            color: color.withValues(alpha: .14),
+            borderRadius: AppRadii.lgRadius,
             child: SizedBox(
               width: AppSpacing.inputHeight,
               height: AppSpacing.inputHeight,
-              child: Icon(_transactionIcon(tx.type), color: color, size: 20),
+              child: Icon(
+                _transactionIcon(tx.type),
+                color: color,
+                size: AppSpacing.p2pWalletTransactionIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -193,7 +204,7 @@ class _TransactionRow extends StatelessWidget {
                     const Icon(
                       Icons.access_time_rounded,
                       color: AppColors.text3,
-                      size: 11,
+                      size: AppSpacing.p2pWalletMetaIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Flexible(

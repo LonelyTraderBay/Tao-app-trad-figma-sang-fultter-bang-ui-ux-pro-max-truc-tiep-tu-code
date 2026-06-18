@@ -75,10 +75,7 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pTransactionLimitsScrollPadding(
                       bottomInset,
                     ),
                     child: Column(

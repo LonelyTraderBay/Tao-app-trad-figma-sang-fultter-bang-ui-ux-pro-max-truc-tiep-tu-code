@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/onboarding_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_gradients.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';

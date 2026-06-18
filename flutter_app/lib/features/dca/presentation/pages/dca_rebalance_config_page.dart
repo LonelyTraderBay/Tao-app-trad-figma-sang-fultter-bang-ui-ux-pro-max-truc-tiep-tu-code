@@ -98,7 +98,7 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
                       child: SingleChildScrollView(
                         key: DCARebalanceConfig.contentKey,
                         physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.only(bottom: bottomInset),
+                        padding: AppSpacing.dcaBottomInsetPadding(bottomInset),
                         child: VitPageContent(
                           padding: VitContentPadding.relaxed,
                           customGap: AppSpacing.x5,

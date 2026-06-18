@@ -66,7 +66,7 @@ class _SummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -141,7 +141,7 @@ class _HighlightCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .24),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -195,7 +195,7 @@ class _MetricDetailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -309,7 +309,7 @@ class _EfficiencyRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final efficiency = _efficiency(module);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Column(
         children: [
           Row(

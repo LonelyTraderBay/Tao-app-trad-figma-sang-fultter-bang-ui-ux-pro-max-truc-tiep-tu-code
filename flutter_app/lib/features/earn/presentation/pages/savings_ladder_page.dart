@@ -97,7 +97,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -300,15 +300,11 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
       backgroundColor: AppColors.transparent,
       builder: (context) {
         return SafeArea(
-          child: DecoratedBox(
-            decoration: const BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(AppSpacing.savingsLadderSheetRadius),
-              ),
-            ),
+          child: Material(
+            color: AppColors.surface,
+            borderRadius: AppRadii.sheetTopLargeRadius,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x5),
+              padding: AppSpacing.earnPaddingX5,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -11,7 +11,7 @@ class _HeroCard extends StatelessWidget {
       key: StakingRegulatoryFrameworkPage.heroKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -120,7 +120,7 @@ class _LicenseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

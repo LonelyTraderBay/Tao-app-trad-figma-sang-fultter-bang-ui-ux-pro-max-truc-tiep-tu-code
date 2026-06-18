@@ -1,5 +1,7 @@
 part of 'wallet_page_sections.dart';
 
+const _walletToolGridCrossAxisCount = 2;
+
 class WalletDcaCard extends StatelessWidget {
   const WalletDcaCard({super.key, required this.dca});
 
@@ -10,7 +12,7 @@ class WalletDcaCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.standard,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.homeNextActionCardPadding),
+      padding: AppSpacing.walletDustPreviewPadding,
       borderColor: _walletPurple.withValues(alpha: .28),
       child: Column(
         children: [
@@ -147,10 +149,7 @@ class _DcaStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.searchBarHorizontalPadding,
-        vertical: AppSpacing.x1,
-      ),
+      padding: AppSpacing.walletAddressAddNetworkChipPadding,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
       borderColor: iconColor.withValues(alpha: .18),
@@ -204,16 +203,17 @@ class _IconCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
-      decoration: BoxDecoration(
-        color: muted
-            ? AppColors.dynamicIslandBg.withValues(alpha: .16)
-            : color.withValues(alpha: .12),
-        shape: BoxShape.circle,
+      child: ClipOval(
+        child: ColoredBox(
+          color: muted
+              ? AppColors.dynamicIslandBg.withValues(alpha: .16)
+              : color.withValues(alpha: .12),
+          child: Center(child: Icon(icon, color: color, size: size * .56)),
+        ),
       ),
-      child: Icon(icon, color: color, size: size * .56),
     );
   }
 }
@@ -239,7 +239,7 @@ class WalletToolGrid extends StatelessWidget {
 
     return VitActionTileGrid(
       density: VitDensity.compact,
-      crossAxisCount: 2,
+      crossAxisCount: _walletToolGridCrossAxisCount,
       itemCount: tools.length,
       itemBuilder: (context, index, density) {
         final tool = tools[index];

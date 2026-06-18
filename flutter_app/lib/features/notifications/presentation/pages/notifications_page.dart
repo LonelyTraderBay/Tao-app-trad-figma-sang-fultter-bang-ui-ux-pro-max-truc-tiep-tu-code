@@ -81,7 +81,7 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                   child: SingleChildScrollView(
                     key: NotificationsPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.notificationsScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,

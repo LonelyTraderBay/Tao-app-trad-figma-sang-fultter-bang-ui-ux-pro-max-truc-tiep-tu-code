@@ -9,7 +9,7 @@ class _AnalysisCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 23),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -18,32 +18,30 @@ class _AnalysisCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           for (final insight in insights) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 12,
+                  width: AppSpacing.tradeBotCardIconGap,
                   child: insight.symbol == 'alert'
                       ? Text(
                           '!',
                           textAlign: TextAlign.center,
                           style: AppTextStyles.caption.copyWith(
                             color: Color(insight.colorHex),
-                            height: 1,
                           ),
                         )
                       : Icon(
                           Icons.check_rounded,
                           color: Color(insight.colorHex),
-                          size: 15,
+                          size: AppSpacing.iconSm,
                         ),
                 ),
-                const SizedBox(width: 9),
+                const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
                 Expanded(
                   child: Text(
                     insight.text,
@@ -55,7 +53,8 @@ class _AnalysisCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (insight != insights.last) const SizedBox(height: 15),
+            if (insight != insights.last)
+              const SizedBox(height: AppSpacing.tradeBotContentGap),
           ],
         ],
       ),
@@ -86,30 +85,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _drawdownPrimary,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: 7),
-        Expanded(
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _drawdownPrimary,
     );
   }
 }
@@ -237,8 +216,8 @@ class _DurationPainter extends CustomPainter {
       final barTop = chart.bottom - item.count / 8 * chart.height;
       final rect = RRect.fromRectAndCorners(
         Rect.fromLTWH(left, barTop, barWidth, chart.bottom - barTop),
-        topLeft: const Radius.circular(4),
-        topRight: const Radius.circular(4),
+        topLeft: AppRadii.xsCorner,
+        topRight: AppRadii.xsCorner,
       );
       canvas.drawRRect(rect, barPaint);
       _paintText(
@@ -270,7 +249,6 @@ void _paintText(
       text: text,
       style: style.copyWith(
         fontWeight: AppTextStyles.medium,
-        height: 1,
         decoration: TextDecoration.none,
       ),
     ),

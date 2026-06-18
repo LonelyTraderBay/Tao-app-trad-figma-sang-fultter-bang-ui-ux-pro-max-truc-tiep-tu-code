@@ -140,9 +140,7 @@ class WalletAssetHeader extends StatelessWidget {
           density: VitDensity.compact,
           variant: VitCtaButtonVariant.ghost,
           fullWidth: false,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.searchBarHorizontalPadding,
-          ),
+          padding: AppSpacing.walletAddressFilterPadding,
           onPressed: () => onNavigate('/wallet/address-book'),
           child: const Text('S\u1ED5 \u0111\u1ECBa ch\u1EC9'),
         ),

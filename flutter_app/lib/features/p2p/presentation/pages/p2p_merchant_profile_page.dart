@@ -84,10 +84,7 @@ class _P2PMerchantProfilePageState
                   child: SingleChildScrollView(
                     key: P2PMerchantProfilePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x5,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pMerchantCommerceRelaxedScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(

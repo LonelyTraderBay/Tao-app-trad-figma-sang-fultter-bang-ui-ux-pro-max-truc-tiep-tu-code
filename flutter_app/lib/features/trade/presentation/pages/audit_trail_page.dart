@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -20,8 +20,6 @@ part '../widgets/audit_trail_page_sections.dart';
 part '../widgets/audit_trail_page_common.dart';
 
 const _auditBackground = AppColors.bg;
-const _auditPanel2 = AppColors.surface2;
-const _auditTabsBackground = AppColors.surface;
 const _auditBorder = AppColors.borderSolid;
 const _auditPrimary = AppColors.primary;
 const _auditGreen = AppColors.buy;
@@ -54,8 +52,10 @@ class _AuditTrailPageState extends ConsumerState<AuditTrailPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 38
-            : DeviceMetrics.nativeBottomChrome + 24) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.tradeToolBottomInsetRiskVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.tradeToolBottomInsetRiskNative) +
         MediaQuery.paddingOf(context).bottom;
     final entries = _filteredEntries(snapshot.entries);
 
@@ -83,10 +83,10 @@ class _AuditTrailPageState extends ConsumerState<AuditTrailPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: AuditTrailPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 26, 20, bottomInset),
+                  padding: AppSpacing.tradeToolScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 14,
+                    customGap: AppSpacing.tradeToolPageTopGap,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(

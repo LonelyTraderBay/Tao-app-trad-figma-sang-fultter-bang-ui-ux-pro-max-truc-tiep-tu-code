@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_depth_chart.dart';
@@ -89,10 +90,10 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketDepthPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.marketScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
+                      customGap: AppSpacing.marketDepthSectionGap,
                       children: [
                         MarketDepthPairSummary(pair: snapshot.pair),
                         if (_tab == 'depth')

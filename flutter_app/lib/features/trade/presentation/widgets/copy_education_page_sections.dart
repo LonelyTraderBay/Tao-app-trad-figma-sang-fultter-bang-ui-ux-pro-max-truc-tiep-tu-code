@@ -1,4 +1,4 @@
-﻿part of '../pages/copy_education_page.dart';
+part of '../pages/copy_education_page.dart';
 
 class _IntroBanner extends StatelessWidget {
   const _IntroBanner({required this.snapshot});
@@ -8,14 +8,20 @@ class _IntroBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(minHeight: 96),
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.copyEducationIntroMinHeight,
+      ),
+      padding: AppSpacing.cardPadding,
       borderColor: _copyPrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.menu_book_outlined, color: _copyPrimary, size: 25),
-          const SizedBox(width: 13),
+          const Icon(
+            Icons.menu_book_outlined,
+            color: _copyPrimary,
+            size: AppSpacing.statusPillHeightMd,
+          ),
+          const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +30,7 @@ class _IntroBanner extends StatelessWidget {
                   snapshot.introTitle,
                   style: AppTextStyles.baseMedium.copyWith(color: _copyPrimary),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   snapshot.introDescription,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -53,55 +59,23 @@ class _EducationTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 54,
-      color: AppColors.surface,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: CopyEducationPage.tabKey(tab.id),
-                onTap: () => onChanged(tab.id),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: Text(
-                        _tabLabel(tab),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style:
-                            (active == tab.id
-                                    ? AppTextStyles.baseMedium
-                                    : AppTextStyles.caption)
-                                .copyWith(
-                                  color: active == tab.id
-                                      ? _copyPrimary
-                                      : AppColors.text3,
-                                ),
-                      ),
-                    ),
-                    if (active == tab.id)
-                      const Positioned(
-                        left: 28,
-                        right: 28,
-                        bottom: 0,
-                        child: SizedBox(
-                          height: 2,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(color: _copyPrimary),
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
+    return SizedBox(
+      height: AppSpacing.copyEducationTabHeight,
+      child: ColoredBox(
+        color: AppColors.surface,
+        child: VitTabBar(
+          activeKey: active,
+          onChanged: onChanged,
+          variant: VitTabBarVariant.underline,
+          tabs: [
+            for (final tab in tabs)
+              VitTabItem(
+                key: tab.id,
+                label: _tabLabel(tab),
+                widgetKey: CopyEducationPage.tabKey(tab.id),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -117,9 +91,9 @@ class _HowItWorksContent extends StatelessWidget {
     return Column(
       children: [
         _StepsCard(steps: snapshot.steps),
-        const SizedBox(height: 22),
+        const SizedBox(height: AppSpacing.x5),
         _CopyModesCard(modes: snapshot.copyModes),
-        const SizedBox(height: 22),
+        const SizedBox(height: AppSpacing.x5),
         _ConceptsCard(concepts: snapshot.concepts),
       ],
     );
@@ -134,7 +108,7 @@ class _StepsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _CardShell(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 14),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -142,10 +116,11 @@ class _StepsCard extends StatelessWidget {
             'Copy Trading hoạt động như thế nào?',
             style: AppTextStyles.baseMedium,
           ),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.walletAddressActionIcon),
           for (final step in steps) ...[
             _StepRow(step: step),
-            if (step != steps.last) const SizedBox(height: 17),
+            if (step != steps.last)
+              const SizedBox(height: AppSpacing.walletAddressActionIcon),
           ],
         ],
       ),
@@ -164,9 +139,9 @@ class _StepRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 34,
+          width: AppSpacing.iconLg,
           child: Padding(
-            padding: const EdgeInsets.only(top: 11),
+            padding: AppSpacing.copyEducationStepNumberPadding,
             child: Text(
               '${step.number}',
               textAlign: TextAlign.center,
@@ -174,7 +149,7 @@ class _StepRow extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 16),
+        const SizedBox(width: AppSpacing.walletAddressFilterGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,9 +159,9 @@ class _StepRow extends StatelessWidget {
                   Icon(
                     _iconFor(step.iconName),
                     color: AppColors.text1,
-                    size: 15,
+                    size: AppSpacing.walletAddressSectionIcon,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.x3),
                   Expanded(
                     child: Text(
                       step.title,
@@ -199,7 +174,7 @@ class _StepRow extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: AppSpacing.tabBarPillVertical),
               Text(
                 step.description,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -222,15 +197,15 @@ class _CopyModesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _CardShell(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 18),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Các chế độ sao chép', style: AppTextStyles.baseMedium),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.walletAddressAddSheetSectionGap),
           for (final mode in modes) ...[
             _CopyModeTile(mode: mode),
-            if (mode != modes.last) const SizedBox(height: 12),
+            if (mode != modes.last) const SizedBox(height: AppSpacing.x4),
           ],
         ],
       ),
@@ -249,20 +224,23 @@ class _CopyModeTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      constraints: const BoxConstraints(minHeight: 116),
-      padding: const EdgeInsets.fromLTRB(14, 13, 14, 12),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.copyEducationModeMinHeight,
+      ),
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+              VitAssetAvatar(
+                label: '',
+                accentColor: color,
+                size: AppSpacing.x3,
+                radius: AppRadii.avatarRadius,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Text(
                 mode.title,
                 style: AppTextStyles.baseMedium.copyWith(
@@ -271,14 +249,14 @@ class _CopyModeTile extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.x4),
           Text(
             mode.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -289,7 +267,7 @@ class _CopyModeTile extends StatelessWidget {
                   text: mode.pro,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: _SmallGuideLine(
                   icon: Icons.cancel_outlined,
@@ -313,15 +291,16 @@ class _ConceptsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _CardShell(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 18),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Khái niệm quan trọng', style: AppTextStyles.baseMedium),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.walletAddressAddSheetSectionGap),
           for (final concept in concepts) ...[
             _ConceptRow(concept: concept),
-            if (concept != concepts.last) const SizedBox(height: 11),
+            if (concept != concepts.last)
+              const SizedBox(height: AppSpacing.rowGapRegular),
           ],
         ],
       ),

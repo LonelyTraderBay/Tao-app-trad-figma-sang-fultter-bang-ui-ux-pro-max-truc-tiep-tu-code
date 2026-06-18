@@ -169,7 +169,7 @@ class P2PCreateAdRequirementCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMerchantCommerceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -266,26 +266,28 @@ class P2PCreateAdMultilineBlock extends StatelessWidget {
     return P2PCreateAdInputBlock(
       label: label,
       hint: hint,
-      child: Container(
+      child: VitCard(
         constraints: const BoxConstraints(
-          minHeight: AppSpacing.buttonHero + AppSpacing.x6,
+          minHeight: AppSpacing.p2pMerchantCommerceTextAreaMinHeight,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          border: Border.all(color: AppColors.borderSolid, width: 1.5),
-          borderRadius: AppRadii.inputRadius,
-        ),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        borderColor: AppColors.borderSolid,
+        background: const ColoredBox(color: AppColors.surface2),
+        padding: AppSpacing.p2pMerchantCommerceTextAreaPadding,
+        clip: true,
         child: TextField(
           controller: controller,
           maxLines: 3,
           cursorColor: AppColors.primary,
-          style: AppTextStyles.body.copyWith(height: 1.45),
+          style: AppTextStyles.body.copyWith(
+            height: AppSpacing.p2pMerchantCommerceBodyLineHeight,
+          ),
           decoration: InputDecoration.collapsed(
             hintText: hintText,
             hintStyle: AppTextStyles.body.copyWith(
               color: AppColors.text3,
-              height: 1.45,
+              height: AppSpacing.p2pMerchantCommerceBodyLineHeight,
             ),
           ),
         ),
@@ -301,35 +303,33 @@ class P2PCreateAdWarningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.warn10,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.warn,
-                  height: 1.55,
-                  fontWeight: AppTextStyles.bold,
-                ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.md,
+      borderColor: AppColors.warningBorder,
+      background: const ColoredBox(color: AppColors.warn10),
+      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+      clip: true,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: AppColors.warn,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.warn,
+                height: AppSpacing.p2pMerchantCommerceWarningLineHeight,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -10,20 +10,20 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: 96),
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       borderColor: _termsPrimary.withValues(alpha: .24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 3),
+            padding: AppSpacing.tradeBotIntroIconTopPadding,
             child: Icon(
               Icons.description_outlined,
               color: _termsPrimary,
-              size: 20,
+              size: AppSpacing.tradeBotActionIcon,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,15 +33,15 @@ class _InfoBanner extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.15,
+                    height: AppSpacing.tradeBotLineHeightShort,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
                 Text(
                   snapshot.infoDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.tradeBotLineHeightRelaxed,
                   ),
                 ),
               ],
@@ -62,14 +62,14 @@ class _TermsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 575,
+      height: AppSpacing.tradeBotTermsCardHeight,
       borderColor: AppColors.cardBorder,
       child: ClipRRect(
         borderRadius: AppRadii.cardRadius,
         child: SingleChildScrollView(
           key: BotTermsOfServicePage.termsScrollKey,
           controller: controller,
-          padding: const EdgeInsets.fromLTRB(20, 22, 20, 22),
+          padding: AppSpacing.tradeBotTermsScrollPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -77,24 +77,27 @@ class _TermsCard extends StatelessWidget {
                 snapshot.title,
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: AppColors.text1,
-                  height: 1.15,
+                  height: AppSpacing.tradeBotLineHeightShort,
                 ),
               ),
-              const SizedBox(height: 22),
+              const SizedBox(height: AppSpacing.x5),
               Text(
                 snapshot.lastUpdatedLabel,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: AppSpacing.x6),
               for (final section in snapshot.sections) ...[
                 _TermsSection(section: section),
                 if (section != snapshot.sections.last)
-                  const SizedBox(height: 26),
+                  const SizedBox(height: AppSpacing.x5),
               ],
-              const Divider(color: AppColors.borderSolid, height: 32),
+              const Divider(
+                color: AppColors.borderSolid,
+                height: AppSpacing.x6,
+              ),
               Center(
                 child: Text(
                   '-- End of Terms --',
@@ -123,34 +126,35 @@ class _TermsSection extends StatelessWidget {
           section.title,
           style: AppTextStyles.baseMedium.copyWith(
             color: AppColors.text1,
-            height: 1.15,
+            height: AppSpacing.tradeBotLineHeightShort,
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         if (section.warningTitle != null && section.warningBody != null) ...[
           _CriticalWarning(section: section),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.contentPad),
         ],
         for (final paragraph in section.paragraphs) ...[
           Text(
             paragraph,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text2,
-              height: 1.68,
+              height: AppSpacing.tradeBotLineHeightLegal,
             ),
           ),
-          if (paragraph != section.paragraphs.last) const SizedBox(height: 12),
+          if (paragraph != section.paragraphs.last)
+            const SizedBox(height: AppSpacing.tradeBotCardGap),
         ],
         if (section.bullets.isNotEmpty) ...[
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           for (final bullet in section.bullets)
             Padding(
-              padding: const EdgeInsets.only(left: 12, bottom: 8),
+              padding: AppSpacing.tradeBotTermsBulletPadding,
               child: Text(
                 '- $bullet',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: 1.45,
+                  height: AppSpacing.tradeBotLineHeightReadable,
                 ),
               ),
             ),
@@ -169,26 +173,26 @@ class _CriticalWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: const EdgeInsets.fromLTRB(13, 14, 13, 13),
+      padding: AppSpacing.tradeBotTermsWarningPadding,
       borderColor: _termsRed.withValues(alpha: .35),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 2),
+            padding: AppSpacing.tradeBotIntroIconTopPadding,
             child: Icon(
               Icons.warning_amber_rounded,
               color: _termsRed,
-              size: 17,
+              size: AppSpacing.tradeBotMediumIcon,
             ),
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
           Expanded(
             child: RichText(
               text: TextSpan(
                 style: AppTextStyles.caption.copyWith(
                   color: _termsRed,
-                  height: 1.5,
+                  height: AppSpacing.tradeBotLineHeightLoose,
                 ),
                 children: [
                   TextSpan(
@@ -219,18 +223,22 @@ class _ScrollWarning extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: 45),
-      padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
+      padding: AppSpacing.tradeBotCompactCardPadding,
       borderColor: _termsAmber.withValues(alpha: .32),
       child: Row(
         children: [
-          const Icon(Icons.warning_amber_rounded, color: _termsAmber, size: 16),
-          const SizedBox(width: 9),
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: _termsAmber,
+            size: AppSpacing.tradeBotCheckboxIcon,
+          ),
+          const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
           Expanded(
             child: Text(
               snapshot.scrollWarning,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.25,
+                height: AppSpacing.tradeBotLineHeightCompact,
               ),
             ),
           ),
@@ -257,65 +265,50 @@ class _AgreementCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: enabled ? 1 : .5,
-      child: InkWell(
+      child: VitCard(
         key: BotTermsOfServicePage.agreementKey,
         onTap: enabled ? onTap : null,
-        borderRadius: AppRadii.inputRadius,
-        child: Container(
-          constraints: const BoxConstraints(minHeight: 122),
-          padding: const EdgeInsets.fromLTRB(12, 14, 12, 14),
-          decoration: BoxDecoration(
-            color: enabled ? _termsPanel2 : _termsPanel,
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 24,
-                height: 24,
-                margin: const EdgeInsets.only(top: 2),
-                decoration: BoxDecoration(
-                  color: agreed ? AppColors.primary : AppColors.transparent,
-                  border: Border.all(
-                    color: agreed ? AppColors.primary : AppColors.borderSolid,
+        constraints: const BoxConstraints(minHeight: 122),
+        padding: AppSpacing.tradeBotAgreementPadding,
+        variant: enabled ? VitCardVariant.inner : VitCardVariant.standard,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: AppSpacing.tradeBotAgreementIconMargin,
+              child: Icon(
+                agreed
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.radio_button_unchecked_rounded,
+                color: agreed ? AppColors.primary : AppColors.borderSolid,
+                size: AppSpacing.tradeBotCheckbox,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    snapshot.agreementTitle,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                      height: AppSpacing.tradeBotLineHeightBody,
+                    ),
                   ),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: agreed
-                    ? const Icon(
-                        Icons.check_circle_outline_rounded,
-                        color: AppColors.onAccent,
-                        size: 16,
-                      )
-                    : null,
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      snapshot.agreementTitle,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                        height: 1.35,
-                      ),
+                  const SizedBox(height: AppSpacing.tradeBotLabelGap),
+                  Text(
+                    snapshot.agreementDescription,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text3,
+                      height: AppSpacing.tradeBotLineHeightReadable,
                     ),
-                    const SizedBox(height: 7),
-                    Text(
-                      snapshot.agreementDescription,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                        height: 1.45,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

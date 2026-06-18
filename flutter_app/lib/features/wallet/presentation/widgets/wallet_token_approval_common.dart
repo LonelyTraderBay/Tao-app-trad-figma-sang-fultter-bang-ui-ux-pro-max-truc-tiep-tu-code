@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
 
 const walletTokenApprovalBackground = AppColors.bg;
 const walletTokenApprovalPanel = AppColors.surface;
@@ -67,27 +68,10 @@ class WalletTokenApprovalSectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: AppSpacing.walletTokenSectionMarkerWidth,
-          height: AppSpacing.walletTokenSectionMarkerHeight,
-          decoration: BoxDecoration(
-            color: walletTokenApprovalPrimary,
-            borderRadius: BorderRadius.circular(
-              AppSpacing.walletTokenSectionMarkerRadius,
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.walletAddressSectionGap),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.textMutedBlue,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: walletTokenApprovalPrimary,
     );
   }
 }
@@ -119,18 +103,13 @@ class WalletTokenApprovalInfoNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       constraints: const BoxConstraints(
         minHeight: AppSpacing.walletTokenNoticeMinHeight,
       ),
       padding: AppSpacing.walletTokenNoticePadding,
-      decoration: BoxDecoration(
-        color: walletTokenApprovalPrimary.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(
-          color: walletTokenApprovalPrimary.withValues(alpha: .20),
-        ),
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: walletTokenApprovalPrimary.withValues(alpha: .20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

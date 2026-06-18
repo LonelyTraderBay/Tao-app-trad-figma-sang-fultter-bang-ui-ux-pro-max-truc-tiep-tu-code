@@ -51,8 +51,10 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pMarketplaceAnalyticsBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pMarketplaceAnalyticsBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -77,10 +79,7 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x5,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pMarketplaceAnalyticsScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -111,7 +110,8 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding:
+                              AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Order book liquidity review',

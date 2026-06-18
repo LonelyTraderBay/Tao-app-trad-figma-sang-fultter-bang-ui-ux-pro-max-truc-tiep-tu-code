@@ -90,37 +90,15 @@ class _DepositDetails extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.walletPendingTxGap),
-              GestureDetector(
+              VitStatusPill(
                 key: PendingDepositsPage.copyKey(deposit.id),
+                label: copied ? '\u0110\u00E3 ch\u00E9p' : 'Copy',
+                icon: copied ? Icons.check_rounded : Icons.content_copy_rounded,
+                status: copied
+                    ? VitStatusPillStatus.success
+                    : VitStatusPillStatus.neutral,
+                size: VitStatusPillSize.sm,
                 onTap: onCopy,
-                behavior: HitTestBehavior.opaque,
-                child: Container(
-                  height: AppSpacing.walletPendingCopyHeight,
-                  padding: AppSpacing.walletPendingCopyPadding,
-                  decoration: BoxDecoration(
-                    color: AppColors.onAccent.withValues(alpha: .04),
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        copied
-                            ? Icons.check_rounded
-                            : Icons.content_copy_rounded,
-                        color: copied ? _pendingGreen : AppColors.text3,
-                        size: AppSpacing.walletPendingCopyIcon,
-                      ),
-                      const SizedBox(width: AppSpacing.walletPendingCopyGap),
-                      Text(
-                        copied ? '\u0110\u00E3 ch\u00E9p' : 'Copy',
-                        style: AppTextStyles.micro.copyWith(
-                          color: copied ? _pendingGreen : AppColors.text3,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ],
           ),
@@ -169,13 +147,11 @@ class _EmptyDeposits extends StatelessWidget {
       padding: AppSpacing.walletPendingEmptyPadding,
       child: Column(
         children: [
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             width: AppSpacing.walletPendingEmptyIconBox,
             height: AppSpacing.walletPendingEmptyIconBox,
-            decoration: BoxDecoration(
-              color: _pendingPanel,
-              borderRadius: AppRadii.cardRadius,
-            ),
             alignment: Alignment.center,
             child: const Icon(
               Icons.inbox_outlined,

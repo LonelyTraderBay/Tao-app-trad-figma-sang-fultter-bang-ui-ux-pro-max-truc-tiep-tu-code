@@ -17,55 +17,69 @@ class WalletManagerTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSpacing.walletManagerTabsHeight,
-      decoration: const BoxDecoration(
+      child: ColoredBox(
         color: walletManagerPanel,
-        border: Border(bottom: BorderSide(color: walletManagerBorder)),
-      ),
-      child: Row(
-        children: [
-          for (final tab in const [
-            walletManagerTabAll,
-            walletManagerTabGroups,
-            walletManagerTabActivity,
-          ])
-            Expanded(
-              child: GestureDetector(
-                key: Key('sc148_multi_manager_tab_$tab'),
-                onTap: () => onChanged(tab),
-                behavior: HitTestBehavior.opaque,
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Text(
-                        tab,
-                        style: AppTextStyles.caption.copyWith(
-                          color: activeTab == tab
-                              ? walletManagerPrimary
-                              : AppColors.textDisabled,
-                          fontWeight: AppTextStyles.medium,
-                          height: 1,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: AppSpacing.walletManagerTabIndicatorInset,
-                      right: AppSpacing.walletManagerTabIndicatorInset,
-                      bottom: 0,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 150),
-                        height: AppSpacing.walletManagerTabIndicatorHeight,
-                        color: activeTab == tab
-                            ? walletManagerPrimary
-                            : AppColors.transparent,
-                      ),
-                    ),
-                  ],
-                ),
+        child: Stack(
+          children: [
+            const Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SizedBox(
+                height: AppSpacing.walletManagerWalletDividerHeight,
+                child: ColoredBox(color: walletManagerBorder),
               ),
             ),
-        ],
+            Row(
+              children: [
+                for (final tab in const [
+                  walletManagerTabAll,
+                  walletManagerTabGroups,
+                  walletManagerTabActivity,
+                ])
+                  Expanded(
+                    child: GestureDetector(
+                      key: Key('sc148_multi_manager_tab_$tab'),
+                      onTap: () => onChanged(tab),
+                      behavior: HitTestBehavior.opaque,
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Text(
+                              tab,
+                              style: AppTextStyles.caption.copyWith(
+                                color: activeTab == tab
+                                    ? walletManagerPrimary
+                                    : AppColors.textDisabled,
+                                fontWeight: AppTextStyles.medium,
+                                height: AppSpacing.tradeBotLineHeightTight,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: AppSpacing.walletManagerTabIndicatorInset,
+                            right: AppSpacing.walletManagerTabIndicatorInset,
+                            bottom: 0,
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 150),
+                              opacity: activeTab == tab ? 1 : 0,
+                              child: const SizedBox(
+                                height:
+                                    AppSpacing.walletManagerTabIndicatorHeight,
+                                child: ColoredBox(color: walletManagerPrimary),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -11,10 +11,13 @@ class _LegendDot extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: AppSpacing.x3,
-          height: AppSpacing.x3,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        Material(
+          color: color,
+          shape: const CircleBorder(),
+          child: const SizedBox(
+            width: AppSpacing.p2pMarketplaceAnalyticsLegendDot,
+            height: AppSpacing.p2pMarketplaceAnalyticsLegendDot,
+          ),
         ),
         const SizedBox(width: AppSpacing.x2),
         Text(
@@ -33,12 +36,12 @@ class _HeatLegendCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.x3,
-      height: AppSpacing.x3,
-      decoration: BoxDecoration(
-        color: AppColors.buy.withValues(alpha: alpha),
-        borderRadius: AppRadii.smRadius,
+    return Material(
+      color: AppColors.buy.withValues(alpha: alpha),
+      borderRadius: AppRadii.smRadius,
+      child: const SizedBox(
+        width: AppSpacing.p2pMarketplaceAnalyticsLegendDot,
+        height: AppSpacing.p2pMarketplaceAnalyticsLegendDot,
       ),
     );
   }
@@ -115,7 +118,7 @@ class _VolumeBarPainter extends CustomPainter {
       final right = chart.left + slot * (i + 1) - slot * .24;
       final rect = RRect.fromRectAndRadius(
         Rect.fromLTRB(left, chart.bottom - barHeight, right, chart.bottom),
-        const Radius.circular(AppSpacing.x1),
+        AppRadii.chartBarCorner,
       );
       canvas.drawRRect(rect, paint);
     }

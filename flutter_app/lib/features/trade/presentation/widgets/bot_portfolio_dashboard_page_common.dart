@@ -1,4 +1,4 @@
-part of '../pages/bot_portfolio_dashboard_page.dart';
+﻿part of '../pages/bot_portfolio_dashboard_page.dart';
 
 class _HealthCard extends StatelessWidget {
   const _HealthCard({required this.items});
@@ -10,27 +10,18 @@ class _HealthCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: _portfolioGreen.withValues(alpha: .30),
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: 13,
-                height: 13,
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: AppColors.successAccentSoft,
-                  shape: BoxShape.rectangle,
-                ),
-                child: const Icon(
-                  Icons.check_rounded,
-                  size: 11,
-                  color: AppColors.onAccent,
-                ),
+              const Icon(
+                Icons.check_circle_rounded,
+                size: AppSpacing.iconSm,
+                color: _portfolioGreen,
               ),
-              const SizedBox(width: 7),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: Text(
                   'Portfolio Health: Excellent',
@@ -39,55 +30,38 @@ class _HealthCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: _portfolioGreen,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
           for (final item in items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 4,
-                  height: 4,
-                  margin: const EdgeInsets.only(top: 7),
-                  decoration: const BoxDecoration(
-                    color: AppColors.text3,
-                    shape: BoxShape.circle,
-                  ),
+                const Icon(
+                  Icons.circle,
+                  color: AppColors.text3,
+                  size: AppSpacing.x1,
                 ),
-                const SizedBox(width: 11),
+                const SizedBox(width: AppSpacing.tradeBotRowGap),
                 Expanded(
                   child: Text(
                     item,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.45,
                     ),
                   ),
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: 12),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.tradeBotCardGap),
           ],
         ],
       ),
     );
-  }
-}
-
-class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
-
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(padding: padding, child: child);
   }
 }
 
@@ -205,7 +179,6 @@ void _paintText(
       style: AppTextStyles.micro.copyWith(
         color: color,
         fontWeight: FontWeight.w500,
-        height: 1,
         decoration: TextDecoration.none,
       ),
     ),

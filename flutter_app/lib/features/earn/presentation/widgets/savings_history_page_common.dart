@@ -16,19 +16,21 @@ class _TransactionCard extends StatelessWidget {
     final amountColor = _amountColor(tx.type);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(receiptRoute);
       },
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.earnCardPaddingX4,
         child: Row(
           children: [
             DecoratedBox(
-              decoration: BoxDecoration(
+              decoration: ShapeDecoration(
                 color: typeColor.withValues(alpha: 0.16),
-                borderRadius: AppRadii.mdRadius,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
               ),
               child: SizedBox(
                 width: AppSpacing.x6,
@@ -60,7 +62,7 @@ class _TransactionCard extends StatelessWidget {
                       ),
                       if (tx.status == SavingsHistoryTransactionStatus.pending)
                         Padding(
-                          padding: const EdgeInsets.only(left: AppSpacing.x2),
+                          padding: AppSpacing.earnLeftPaddingX2(true),
                           child: _StatusPill(
                             label: 'Đang xử lý',
                             color: AppColors.warn,
@@ -115,15 +117,12 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

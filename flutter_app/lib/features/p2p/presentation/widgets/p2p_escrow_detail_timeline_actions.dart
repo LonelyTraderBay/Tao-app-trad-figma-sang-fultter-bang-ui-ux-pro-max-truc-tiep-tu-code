@@ -10,7 +10,7 @@ class _EscrowTimelineCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.timelineKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pEscrowDetailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -55,29 +55,33 @@ class _TimelineRow extends StatelessWidget {
           width: AppSpacing.buttonCompact,
           child: Column(
             children: [
-              Container(
-                width: AppSpacing.buttonCompact,
-                height: AppSpacing.buttonCompact,
-                decoration: BoxDecoration(
+              SizedBox.square(
+                dimension: AppSpacing.buttonCompact,
+                child: Material(
                   color: _timelineBackground(event.status),
-                  shape: BoxShape.circle,
-                  border: Border.all(color: color),
-                ),
-                child: Icon(
-                  _timelineIcon(event.iconKey),
-                  color: color,
-                  size: 14,
+                  shape: CircleBorder(side: BorderSide(color: color)),
+                  child: Icon(
+                    _timelineIcon(event.iconKey),
+                    color: color,
+                    size: AppSpacing.p2pEscrowDetailTimelineIcon,
+                  ),
                 ),
               ),
               if (!isLast)
-                Container(width: 1, height: AppSpacing.x5, color: color),
+                SizedBox(
+                  width: AppSpacing.dividerHairline,
+                  height: AppSpacing.x5,
+                  child: ColoredBox(color: color),
+                ),
             ],
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.only(bottom: isLast ? 0 : AppSpacing.x3),
+            padding: isLast
+                ? AppSpacing.zeroInsets
+                : AppSpacing.p2pEscrowDetailTimelineRowPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -137,7 +141,7 @@ class _SecurityNotice extends StatelessWidget {
       borderColor: AppColors.buy20,
       messageStyle: AppTextStyles.caption.copyWith(
         color: AppColors.text2,
-        height: 1.45,
+        height: AppSpacing.p2pEscrowDetailBodyLineHeight,
       ),
     );
   }
@@ -153,7 +157,7 @@ class _OrderLink extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.orderLinkKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pEscrowDetailCardPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pOrder(orderId));
@@ -197,7 +201,7 @@ class _FeedbackBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pEscrowDetailInnerPadding,
       child: Row(
         children: [
           const Icon(

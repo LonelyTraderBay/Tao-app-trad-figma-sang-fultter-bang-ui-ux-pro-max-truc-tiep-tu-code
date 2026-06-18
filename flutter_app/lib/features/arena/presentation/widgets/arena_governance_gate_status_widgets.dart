@@ -37,7 +37,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.arenaGovernanceSummaryRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -85,21 +85,16 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color == AppColors.sell
             ? AppColors.sell10
             : color == AppColors.buy
             ? AppColors.buy10
             : AppColors.warn10,
-        borderRadius: AppRadii.xlRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: compact ? AppSpacing.x1 : AppSpacing.x2,
-          vertical: compact
-              ? AppSpacing.arenaGovernancePillPadCompactV
-              : AppSpacing.arenaGovernancePillPadV,
-        ),
+        padding: AppSpacing.arenaGovernancePillPadding(compact: compact),
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -122,10 +117,7 @@ class _NextActionChip extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent20,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.arenaGovernanceNextActionPadding,
       child: Row(
         children: [
           const Icon(
@@ -157,7 +149,7 @@ class _ModerationNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaGovernanceInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

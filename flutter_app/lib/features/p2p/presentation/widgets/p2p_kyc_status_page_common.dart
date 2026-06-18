@@ -10,7 +10,7 @@ class _SupportCard extends StatelessWidget {
     return VitCard(
       key: P2PKycStatusPage.supportKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pKycCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -35,7 +35,7 @@ class _SupportCard extends StatelessWidget {
                   snapshot.supportBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pKycReadableLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x3),

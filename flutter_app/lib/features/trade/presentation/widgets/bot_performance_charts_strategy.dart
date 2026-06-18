@@ -7,8 +7,8 @@ class _KeyMetricsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         children: [
           Row(
@@ -36,40 +36,28 @@ class _KeyMetricsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          Container(
+          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+          VitCard(
+            variant: VitCardVariant.inner,
             width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-            decoration: BoxDecoration(
-              color: _analyticsGreen.withValues(alpha: .08),
-              borderRadius: AppRadii.cardRadius,
-            ),
+            padding: AppSpacing.tradeBotControlPadding,
+            borderColor: _analyticsGreen.withValues(alpha: .22),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 13,
-                  height: 13,
-                  margin: const EdgeInsets.only(top: 2),
-                  decoration: BoxDecoration(
-                    color: _analyticsGreen.withValues(alpha: .9),
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                  child: const Icon(
-                    Icons.check_rounded,
-                    color: AppColors.onAccent,
-                    size: 11,
-                  ),
+                const Icon(
+                  Icons.check_circle_rounded,
+                  color: _analyticsGreen,
+                  size: AppSpacing.iconSm,
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: AppSpacing.tradeBotSmallGap),
                 Flexible(
                   child: Text(
                     'Excellent performance - Sharpe > 1.5 indicates strong risk-adjusted returns',
                     textAlign: TextAlign.center,
                     style: AppTextStyles.caption.copyWith(
                       color: _analyticsGreen,
-                      height: 1.45,
                     ),
                   ),
                 ),
@@ -99,16 +87,10 @@ class _MetricColumn extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 10),
-        Text(
-          value,
-          style: AppTextStyles.sectionTitle.copyWith(color: color, height: 1),
-        ),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
+        Text(value, style: AppTextStyles.sectionTitle.copyWith(color: color)),
       ],
     );
   }
@@ -128,61 +110,19 @@ class _TimeframeTabs extends StatelessWidget {
       (_AnalyticsTimeframe.allTime, 'all', 'All Time'),
     ];
 
-    return Row(
-      children: [
-        for (final tab in tabs) ...[
-          _TimeframePill(
-            key: BotPerformanceAnalyticsPage.timeframeKey(tab.$2),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: active.name,
+      onChanged: (key) =>
+          onChanged(tabs.firstWhere((tab) => tab.$1.name == key).$1),
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1.name,
             label: tab.$3,
-            active: active == tab.$1,
-            onTap: () => onChanged(tab.$1),
+            widgetKey: BotPerformanceAnalyticsPage.timeframeKey(tab.$2),
           ),
-          if (tab != tabs.last) const SizedBox(width: 10),
-        ],
       ],
-    );
-  }
-}
-
-class _TimeframePill extends StatelessWidget {
-  const _TimeframePill({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _analyticsPrimary.withValues(alpha: .12)
-              : _analyticsPanel2,
-          border: active
-              ? Border.all(color: _analyticsPrimary.withValues(alpha: .55))
-              : null,
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? _analyticsPrimary : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ),
     );
   }
 }
@@ -194,10 +134,10 @@ class _PnlChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 18),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: SizedBox(
-        height: 220,
+        height: AppSpacing.tradeBotAnalyticsChartHeight,
         child: CustomPaint(
           painter: _PnlChartPainter(points),
           size: Size.infinite,
@@ -214,10 +154,10 @@ class _WinLossChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 18),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: SizedBox(
-        height: 200,
+        height: AppSpacing.tradeBotDistributionChartHeight,
         child: CustomPaint(
           painter: _WinLossChartPainter(points),
           size: Size.infinite,
@@ -238,13 +178,14 @@ class _StrategyPerformanceCard extends StatelessWidget {
         .map((strategy) => strategy.pnl.abs())
         .fold<double>(0, math.max);
 
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Column(
         children: [
           for (final strategy in strategies) ...[
             _StrategyRow(strategy: strategy, maxPnl: maxPnl),
-            if (strategy != strategies.last) const SizedBox(height: 14),
+            if (strategy != strategies.last)
+              const SizedBox(height: AppSpacing.tradeBotPageTopGap),
           ],
         ],
       ),
@@ -267,19 +208,14 @@ class _StrategyRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-            ),
-            const SizedBox(width: 8),
+            Icon(Icons.circle, color: color, size: AppSpacing.tradeBotCardGap),
+            const SizedBox(width: AppSpacing.tradeBotSmallGap),
             Expanded(
               child: Text(
                 '${strategy.strategy} Bot',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ),
@@ -288,16 +224,15 @@ class _StrategyRow extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: isPositive ? _analyticsGreen : _analyticsRed,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         ClipRRect(
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadii.pillRadius,
           child: SizedBox(
-            height: 8,
+            height: AppSpacing.tradeBotProgressHeight,
             child: LinearProgressIndicator(
               value: widthFactor.clamp(0, 1),
               backgroundColor: _chartTrack,

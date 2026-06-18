@@ -10,7 +10,7 @@ class _SecurityCard extends StatelessWidget {
     return VitCard(
       key: P2PIdentityVerificationPage.securityKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pKycCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -73,11 +73,11 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 2),
+          padding: AppSpacing.p2pKycChecklistIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: color,
-            size: 13,
+            size: AppSpacing.p2pKycChecklistIcon,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -86,7 +86,7 @@ class _ChecklistRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.p2pKycReadableLineHeight,
             ),
           ),
         ),

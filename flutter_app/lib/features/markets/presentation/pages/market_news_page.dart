@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -58,7 +59,9 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.marketNewsVisualBottomExtra
+            : AppSpacing.marketNewsNativeBottomExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -81,10 +84,10 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketNewsPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.marketNewsScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 14,
+                      customGap: AppSpacing.marketNewsPageGap,
                       children: [
                         if (snapshot.breakingNews.isNotEmpty &&
                             _category == 'all')

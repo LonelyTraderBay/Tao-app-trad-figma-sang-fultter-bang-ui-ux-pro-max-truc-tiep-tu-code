@@ -17,9 +17,11 @@ class _LegendRow extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               DecoratedBox(
-                decoration: BoxDecoration(
+                decoration: ShapeDecoration(
                   color: entry.color,
-                  borderRadius: AppRadii.swatchRadius,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.swatchRadius,
+                  ),
                 ),
                 child: const SizedBox(
                   width: AppSpacing.earnAnalyticsLegendMarkerWidth,

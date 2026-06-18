@@ -20,19 +20,18 @@ class _RungTile extends StatelessWidget {
       key: SavingsLadderPage.rungKey(rung.id),
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.savingsLadderRungIndexBox,
-            height: AppSpacing.savingsLadderRungIndexBox,
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.savingsLadderRungIndexBox,
+            child: Material(
               color: color.withValues(alpha: .14),
-              shape: BoxShape.circle,
-              border: Border.all(color: color.withValues(alpha: .35)),
+              shape: const CircleBorder(),
+              child: Center(
+                child: Text('$index', style: _microBold.copyWith(color: color)),
+              ),
             ),
-            alignment: Alignment.center,
-            child: Text('$index', style: _microBold.copyWith(color: color)),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -124,7 +123,7 @@ class _AddRungButton extends StatelessWidget {
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+      padding: AppSpacing.earnVerticalPaddingX4,
       onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -166,7 +165,7 @@ class _AllocationStatus extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: color.withValues(alpha: .18),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         children: [
           Expanded(
@@ -246,7 +245,7 @@ class _TimelineChart extends StatelessWidget {
     final maxDays = rungs.map((rung) => rung.lockDays).reduce(math.max);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -310,34 +309,38 @@ class _TimelineBar extends StatelessWidget {
         Expanded(
           child: Stack(
             children: [
-              Container(
+              SizedBox(
                 height: AppSpacing.savingsLadderTimelineBarHeight,
-                decoration: BoxDecoration(
+                child: Material(
                   color: AppColors.surface3,
                   borderRadius: AppRadii.smRadius,
                 ),
               ),
               FractionallySizedBox(
                 widthFactor: widthFactor,
-                child: Container(
+                child: SizedBox(
                   height: AppSpacing.savingsLadderTimelineBarHeight,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x2,
-                  ),
-                  decoration: BoxDecoration(
+                  child: Material(
                     color: color.withValues(alpha: .18),
-                    border: Border.all(color: color.withValues(alpha: .3)),
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '${_money(rung.amountUsd)} · ${rung.apyPct.toStringAsFixed(1)}%',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: color,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                      side: BorderSide(color: color.withValues(alpha: .3)),
+                    ),
+                    child: Padding(
+                      padding: AppSpacing.earnHorizontalPaddingX2,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '${_money(rung.amountUsd)} · ${rung.apyPct.toStringAsFixed(1)}%',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: color,
+                            fontWeight: AppTextStyles.bold,
+                            fontFeatures: AppTextStyles.tabularFigures,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -362,26 +365,28 @@ class _MaturityTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.savingsLadderMaturityBadgeWidth,
             height: AppSpacing.savingsLadderMaturityBadgeHeight,
-            decoration: BoxDecoration(
+            child: Material(
               color: color.withValues(alpha: .12),
-              border: Border.all(color: color.withValues(alpha: .25)),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(parts.first, style: _captionBold.copyWith(color: color)),
-                Text(
-                  'T${parts[1]}',
-                  style: AppTextStyles.micro.copyWith(color: color),
-                ),
-              ],
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.mdRadius,
+                side: BorderSide(color: color.withValues(alpha: .25)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(parts.first, style: _captionBold.copyWith(color: color)),
+                  Text(
+                    'T${parts[1]}',
+                    style: AppTextStyles.micro.copyWith(color: color),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -439,7 +444,7 @@ class _CashFlowCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
           for (final rung in rungs) ...[

@@ -11,7 +11,7 @@ class _SystemNoteCard extends StatelessWidget {
       title: 'Ghi chú hệ thống',
       accentColor: AppColors.text3,
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.arenaReportCardPadding,
         child: _SystemNotePanel(note: note),
       ),
     );
@@ -26,12 +26,12 @@ class _SystemNotePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.arenaReportInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -66,7 +66,7 @@ class _AppealNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaReportCardPadding,
       borderColor: AppColors.warningBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +141,7 @@ class _LinkedActionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaReportCardPadding,
       child: Row(
         children: [
           Icon(

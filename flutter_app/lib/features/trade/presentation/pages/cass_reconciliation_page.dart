@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -22,7 +22,6 @@ part '../widgets/cass_reconciliation_summary_tabs.dart';
 part '../widgets/cass_reconciliation_records_common.dart';
 
 const _cassBackground = AppColors.bg;
-const _cassPanel = AppColors.surface;
 const _cassPanel2 = AppColors.surface2;
 const _cassBorder = AppColors.borderSolid;
 const _cassPrimary = AppColors.primary;
@@ -80,10 +79,12 @@ class _CassReconciliationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: CassReconciliationPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 14,
+                    customGap: AppSpacing.tradeBotPageTopGap,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(

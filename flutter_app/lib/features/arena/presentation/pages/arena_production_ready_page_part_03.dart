@@ -10,25 +10,22 @@ class _ComponentLine extends StatelessWidget {
     final color = _componentColor(component.type);
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+      padding: AppSpacing.arenaBottomPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x2,
-              vertical: AppSpacing.x1,
-            ),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .13),
-              borderRadius: AppRadii.xsRadius,
-            ),
-            child: Text(
-              component.type,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.arenaProductionCompactLineHeight,
+          Material(
+            color: color.withValues(alpha: .13),
+            borderRadius: AppRadii.xsRadius,
+            child: Padding(
+              padding: AppSpacing.arenaProductionPillPadding,
+              child: Text(
+                component.type,
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.arenaProductionCompactLineHeight,
+                ),
               ),
             ),
           ),
@@ -44,7 +41,7 @@ class _ComponentLine extends StatelessWidget {
                     height: AppSpacing.arenaProductionTitleLineHeight,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   component.description,
                   style: AppTextStyles.micro.copyWith(
@@ -89,25 +86,22 @@ class _DictionaryLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+      padding: AppSpacing.arenaBottomPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x2,
-              vertical: AppSpacing.x1,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.xsRadius,
-            ),
-            child: Text(
-              item.code,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.arenaProductionCompactLineHeight,
+          Material(
+            color: AppColors.surface2,
+            borderRadius: AppRadii.xsRadius,
+            child: Padding(
+              padding: AppSpacing.arenaProductionPillPadding,
+              child: Text(
+                item.code,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.arenaProductionCompactLineHeight,
+                ),
               ),
             ),
           ),
@@ -123,7 +117,7 @@ class _DictionaryLine extends StatelessWidget {
                     height: AppSpacing.arenaProductionTitleLineHeight,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   item.description,
                   style: AppTextStyles.micro.copyWith(
@@ -148,7 +142,7 @@ class _ChecklistLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.arenaBottomPaddingX2,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -181,7 +175,7 @@ class _InternalOnlyFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -216,21 +210,18 @@ class _StatusPill extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _statusColor(status);
 
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        _statusLabel(status),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.arenaProductionCompactLineHeight,
+    return Material(
+      color: color.withValues(alpha: .13),
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.arenaProductionPillPadding,
+        child: Text(
+          _statusLabel(status),
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.arenaProductionCompactLineHeight,
+          ),
         ),
       ),
     );
@@ -244,20 +235,17 @@ class _StateMiniPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text2,
-          height: AppSpacing.arenaProductionCompactLineHeight,
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.arenaProductionPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text2,
+            height: AppSpacing.arenaProductionCompactLineHeight,
+          ),
         ),
       ),
     );
@@ -306,39 +294,38 @@ class _StateMatrixPill extends StatelessWidget {
 
     return Opacity(
       opacity: active ? 1 : .32,
-      child: Container(
+      child: ConstrainedBox(
         constraints: const BoxConstraints(
           minWidth: AppSpacing.arenaProductionStateMatrixMinWidth,
         ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        decoration: BoxDecoration(
+        child: Material(
           color: active ? color.withValues(alpha: .12) : AppColors.surface2,
           borderRadius: AppRadii.xsRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              _stateIcon(state),
-              color: color,
-              size: AppSpacing.arenaProductionStateMatrixIcon,
-            ),
-            const SizedBox(width: AppSpacing.x1),
-            Flexible(
-              child: Text(
-                _stateLabel(state),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
+          child: Padding(
+            padding: AppSpacing.arenaProductionPillPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  _stateIcon(state),
                   color: color,
-                  fontWeight: active ? AppTextStyles.bold : FontWeight.w400,
+                  size: AppSpacing.arenaProductionStateMatrixIcon,
                 ),
-              ),
+                const SizedBox(width: AppSpacing.x1),
+                Flexible(
+                  child: Text(
+                    _stateLabel(state),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: color,
+                      fontWeight: active ? AppTextStyles.bold : FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

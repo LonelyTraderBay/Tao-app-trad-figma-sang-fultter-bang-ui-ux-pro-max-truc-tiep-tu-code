@@ -52,7 +52,7 @@ class SavingsRedeemPage extends ConsumerWidget {
                   VitCard(
                     variant: VitCardVariant.standard,
                     radius: VitCardRadius.md,
-                    padding: EdgeInsets.zero,
+                    padding: AppSpacing.zeroInsets,
                     child: _MissingPositionState(snapshot: snapshot),
                   ),
                   const Spacer(),
@@ -88,7 +88,6 @@ class _MissingPositionState extends StatelessWidget {
             key: SavingsRedeemPage.backButtonKey,
             fullWidth: false,
             height: AppSpacing.savingsFlowHeroHeight,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x5),
             onPressed: () {
               HapticFeedback.selectionClick();
               context.go(snapshot.backRoute);

@@ -5,30 +5,34 @@ class _InfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: LaunchpadWebhooksPage.infoKey,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.accent06,
-        border: Border.all(color: AppColors.accent20),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.accent20),
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.accent,
-            size: AppSpacing.launchpadIconLg,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              'Webhooks gui HTTP POST den URL cua ban moi khi event xay ra tren blockchain. Dam bao endpoint co the xu ly payload va tra ve 2xx status code.',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX3,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.info_outline_rounded,
+              color: AppColors.accent,
+              size: AppSpacing.launchpadIconLg,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                'Webhooks gui HTTP POST den URL cua ban moi khi event xay ra tren blockchain. Dam bao endpoint co the xu ly payload va tra ve 2xx status code.',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -13,30 +13,32 @@ class _TopicRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: SingleChildScrollView(
-        key: TopicHubPage.topicRailKey,
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.contentPad,
-          vertical: AppSpacing.x4,
-        ),
-        child: Row(
-          children: [
-            for (final topic in topics) ...[
-              _TopicChip(
-                topic: topic,
-                active: topic.id == selectedTopicId,
-                onTap: () => onSelect(topic.id),
-              ),
-              const SizedBox(width: AppSpacing.x3),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SingleChildScrollView(
+          key: TopicHubPage.topicRailKey,
+          scrollDirection: Axis.horizontal,
+          padding: AppSpacing.discoveryRailPadding,
+          child: Row(
+            children: [
+              for (final topic in topics) ...[
+                _TopicChip(
+                  topic: topic,
+                  active: topic.id == selectedTopicId,
+                  onTap: () => onSelect(topic.id),
+                ),
+                const SizedBox(width: AppSpacing.x3),
+              ],
             ],
-          ],
+          ),
         ),
-      ),
+        const Divider(
+          height: AppSpacing.dividerHairline,
+          thickness: AppSpacing.dividerHairline,
+          color: AppColors.divider,
+        ),
+      ],
     );
   }
 }
@@ -59,25 +61,34 @@ class _TopicChip extends StatelessWidget {
       key: TopicHubPage.topicKey(topic.id),
       onTap: onTap,
       borderRadius: AppRadii.lgRadius,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.buttonCompact + AppSpacing.x2,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? accent.withValues(alpha: .14) : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? accent.withValues(alpha: .44)
-                : AppColors.transparent,
-            width: 1.5,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: active ? accent.withValues(alpha: .14) : AppColors.surface2,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: active
+                    ? accent.withValues(alpha: .44)
+                    : AppColors.transparent,
+                width: 1.5,
+              ),
+              borderRadius: AppRadii.lgRadius,
+            ),
           ),
-          borderRadius: AppRadii.lgRadius,
-        ),
-        child: Text(
-          topic.label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? accent : AppColors.text2,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
+          child: Padding(
+            padding: AppSpacing.discoveryChipHorizontalPadding,
+            child: Center(
+              child: Text(
+                topic.label,
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? accent : AppColors.text2,
+                  fontWeight: active
+                      ? AppTextStyles.bold
+                      : AppTextStyles.medium,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -110,17 +121,17 @@ class _TopicContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _TopicHero(snapshot: snapshot),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         _PredictionSection(snapshot: snapshot),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         _ArenaRoomsSection(snapshot: snapshot),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         _ModesSection(snapshot: snapshot),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         _CreatorsSection(snapshot: snapshot),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         _CreateRoomCard(snapshot: snapshot),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         _DisclosureCard(notes: snapshot.contractNotes),
       ],
     );
@@ -139,7 +150,7 @@ class _TopicHero extends StatelessWidget {
     return VitCard(
       key: TopicHubPage.heroKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       borderColor: accent.withValues(alpha: .22),
       child: Column(
         children: [
@@ -152,7 +163,7 @@ class _TopicHero extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(topic.label, style: AppTextStyles.pageTitle),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       topic.summary,
                       style: AppTextStyles.caption.copyWith(
@@ -164,7 +175,7 @@ class _TopicHero extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -214,15 +225,20 @@ class _HeroIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = _accentForTopic(topic);
-    return Container(
+    return SizedBox(
       width: AppSpacing.ctaHeight,
       height: AppSpacing.ctaHeight,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: accent.withValues(alpha: .14),
-        borderRadius: AppRadii.cardRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: accent.withValues(alpha: .14),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
+        ),
+        child: Center(
+          child: Icon(_iconForTopic(topic), color: accent, size: 23),
+        ),
       ),
-      child: Icon(_iconForTopic(topic), color: accent, size: 23),
     );
   }
 }
@@ -240,28 +256,30 @@ class _HeroStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-      decoration: const BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
-      child: Column(
-        children: [
-          Text(
-            '$value',
-            style: AppTextStyles.base.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
+      child: Padding(
+        padding: AppSpacing.discoveryHeroStatPadding,
+        child: Column(
+          children: [
+            Text(
+              '$value',
+              style: AppTextStyles.base.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
             ),
-          ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ],
+        ),
       ),
     );
   }

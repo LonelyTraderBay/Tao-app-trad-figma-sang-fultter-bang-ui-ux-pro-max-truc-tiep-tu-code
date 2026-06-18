@@ -140,12 +140,7 @@ class _P2PSelfieVerificationPageState
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.fromLTRB(
-          AppSpacing.contentPad,
-          AppSpacing.x4,
-          AppSpacing.contentPad,
-          bottomInset,
-        ),
+        padding: AppSpacing.p2pSelfieScrollPadding(bottomInset),
         child: VitPageContent(
           padding: VitContentPadding.none,
           fullBleed: true,
@@ -154,7 +149,7 @@ class _P2PSelfieVerificationPageState
             stepBody,
             const VitCard(
               variant: VitCardVariant.inner,
-              padding: EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.p2pSelfieReviewPadding,
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
                 title: 'Selfie verification review',

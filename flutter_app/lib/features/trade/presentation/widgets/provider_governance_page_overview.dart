@@ -9,27 +9,29 @@ class _ProviderDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      height: 136,
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
+      height: AppSpacing.providerGovernanceDashboardHeight,
+      padding: AppSpacing.providerGovernanceDashboardPadding,
       borderColor: _governancePrimary,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: const BoxDecoration(
-                  color: _governancePrimary,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
+              const VitCard(
+                variant: VitCardVariant.inner,
+                radius: VitCardRadius.lg,
+                width: AppSpacing.providerGovernanceDashboardIconBox,
+                height: AppSpacing.providerGovernanceDashboardIconBox,
+                borderColor: _governancePrimary,
+                alignment: Alignment.center,
+                child: Icon(
                   Icons.shield_outlined,
-                  color: AppColors.onAccent,
-                  size: 24,
+                  color: _governancePrimary,
+                  size: AppSpacing.providerGovernanceDashboardIcon,
                 ),
               ),
-              const SizedBox(width: 14),
+              const SizedBox(
+                width: AppSpacing.providerGovernanceDashboardGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,15 +41,17 @@ class _ProviderDashboard extends StatelessWidget {
                       style: AppTextStyles.body.copyWith(
                         color: _governancePrimary,
                         fontWeight: AppTextStyles.bold,
-                        height: 1,
+                        height: AppSpacing.providerGovernanceLineHeightTight,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(
+                      height: AppSpacing.providerGovernanceCompactGap,
+                    ),
                     Text(
                       'Managing ${stats.followers} followers',
                       style: AppTextStyles.caption.copyWith(
                         color: _governancePrimary,
-                        height: 1,
+                        height: AppSpacing.providerGovernanceLineHeightTight,
                       ),
                     ),
                   ],
@@ -55,7 +59,9 @@ class _ProviderDashboard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(
+            height: AppSpacing.providerGovernanceDashboardMetricGap,
+          ),
           Row(
             children: [
               Expanded(
@@ -95,16 +101,16 @@ class _DashboardStat extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: _governancePrimary,
-            height: 1,
+            height: AppSpacing.providerGovernanceLineHeightTight,
           ),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: AppSpacing.providerGovernanceCompactGap),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
             color: _governancePrimary,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.providerGovernanceLineHeightTight,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -127,41 +133,18 @@ class _GovernanceTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 53,
-      padding: EdgeInsets.zero,
-      child: Row(
-        children: [
+      height: AppSpacing.providerGovernanceTabHeight,
+      padding: AppSpacing.zeroInsets,
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: activeId,
+        onChanged: onChanged,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: ProviderGovernancePage.tabKey(tab.id),
-                onTap: () => onChanged(tab.id),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.label,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: tab.id == activeId
-                                ? _governancePrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: tab.id == activeId ? 67 : 0,
-                      height: 2,
-                      color: _governancePrimary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.id,
+              label: tab.label,
+              widgetKey: ProviderGovernancePage.tabKey(tab.id),
             ),
         ],
       ),
@@ -181,25 +164,25 @@ class _ModificationsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _Notice(text: snapshot.warning),
-        const SizedBox(height: 20),
+        const SizedBox(height: AppSpacing.contentPad),
         Padding(
-          padding: const EdgeInsets.only(left: 10),
+          padding: AppSpacing.providerGovernanceSectionTitlePadding,
           child: Text(
             'Strategy Modification Log',
             style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.providerGovernanceLineHeightTight,
             ),
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.x4),
         for (final modification in snapshot.modifications) ...[
           _ModificationCard(modification: modification),
           if (modification != snapshot.modifications.last)
-            const SizedBox(height: 10),
+            const SizedBox(height: AppSpacing.rowGapRegular),
         ],
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.contentPad - AppSpacing.x1),
         _RequestButton(onPressed: onRequest),
       ],
     );
@@ -215,8 +198,10 @@ class _Notice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      constraints: const BoxConstraints(minHeight: 52),
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.providerGovernanceNoticeMinHeight,
+      ),
+      padding: AppSpacing.providerGovernanceNoticePadding,
       borderColor: _governanceWarningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,16 +209,16 @@ class _Notice extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: _governanceWarning,
-            size: 14,
+            size: AppSpacing.providerGovernanceNoticeIcon,
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: AppSpacing.providerGovernanceNoticeGap),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _governanceWarning,
                 fontWeight: AppTextStyles.bold,
-                height: 1.45,
+                height: AppSpacing.providerGovernanceLineHeightReadable,
               ),
             ),
           ),

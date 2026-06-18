@@ -9,10 +9,12 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        border: Border.all(color: color.withValues(alpha: .35)),
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .35)),
+          borderRadius: AppRadii.mdRadius,
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -37,15 +39,12 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

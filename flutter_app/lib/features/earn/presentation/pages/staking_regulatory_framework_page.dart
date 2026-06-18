@@ -78,7 +78,7 @@ class _StakingRegulatoryFrameworkPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -123,22 +123,17 @@ class _StakingRegulatoryFrameworkPageState
         return FractionallySizedBox(
           heightFactor: 0.72,
           child: DecoratedBox(
-            decoration: const BoxDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(AppRadii.xl),
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.sheetTopLargeRadius,
               ),
             ),
             child: SafeArea(
               top: false,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.contentPad,
-                  AppSpacing.x5,
-                  AppSpacing.contentPad,
-                  AppSpacing.x6,
-                ),
+                padding: AppSpacing.earnSheetContentPadding,
                 child: _LicenseDetailSheet(license: license),
               ),
             ),

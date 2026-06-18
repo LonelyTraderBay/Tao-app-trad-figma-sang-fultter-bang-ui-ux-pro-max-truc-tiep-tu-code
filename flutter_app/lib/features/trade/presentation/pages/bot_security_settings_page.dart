@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -68,8 +69,8 @@ class _BotSecuritySettingsPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 28
-            : DeviceMetrics.nativeBottomChrome + 24) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetNative
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.contentPad) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -89,15 +90,17 @@ class _BotSecuritySettingsPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: BotSecuritySettingsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  padding: AppSpacing.tradeBotSecurityScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 18,
+                    customGap: AppSpacing.tradeBotContentGap,
                     children: [
                       VitPageSection(
                         label: 'Two-Factor Authentication',
-                        customGap: 12,
+                        customGap: AppSpacing.tradeBotCardGap,
                         children: [
                           _TwoFaCard(
                             enabled: _twoFaEnabled,
@@ -105,10 +108,10 @@ class _BotSecuritySettingsPageState
                           ),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: EdgeInsets.all(12),
+                            padding: AppSpacing.tradeBotInnerPanelPadding,
                             child: VitPageContent(
                               padding: VitContentPadding.none,
-                              customGap: 8,
+                              customGap: AppSpacing.tradeBotSmallGap,
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
@@ -129,11 +132,11 @@ class _BotSecuritySettingsPageState
                       ),
                       VitPageSection(
                         label: 'API Keys',
-                        customGap: 10,
+                        customGap: AppSpacing.tradeBotRowGap,
                         children: [
                           VitPageContent(
                             padding: VitContentPadding.none,
-                            customGap: 10,
+                            customGap: AppSpacing.tradeBotRowGap,
                             children: [
                               for (final key in snapshot.apiKeys)
                                 _ApiKeyCard(apiKey: key),
@@ -149,11 +152,11 @@ class _BotSecuritySettingsPageState
                       ),
                       VitPageSection(
                         label: 'IP Whitelist',
-                        customGap: 10,
+                        customGap: AppSpacing.tradeBotRowGap,
                         children: [
                           VitPageContent(
                             padding: VitContentPadding.none,
-                            customGap: 10,
+                            customGap: AppSpacing.tradeBotRowGap,
                             children: [
                               for (final entry in snapshot.ipWhitelist)
                                 _IpCard(entry: entry),
@@ -169,14 +172,14 @@ class _BotSecuritySettingsPageState
                       ),
                       VitPageSection(
                         label: 'Recent Activity',
-                        customGap: 10,
+                        customGap: AppSpacing.tradeBotRowGap,
                         children: [
                           _ActivityCard(activities: snapshot.recentActivity),
                         ],
                       ),
                       VitPageSection(
                         label: 'Security Tips',
-                        customGap: 10,
+                        customGap: AppSpacing.tradeBotRowGap,
                         children: [
                           _SecurityTipsCard(tips: snapshot.securityTips),
                         ],
@@ -207,7 +210,7 @@ class _BotSecuritySettingsPageState
       context: context,
       backgroundColor: _securityPanel,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: AppRadii.sheetTopLargeRadius,
       ),
       builder: (context) => _ApiKeySheet(snapshot: snapshot),
     );
@@ -218,7 +221,7 @@ class _BotSecuritySettingsPageState
       context: context,
       backgroundColor: _securityPanel,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: AppRadii.sheetTopLargeRadius,
       ),
       builder: (context) => const _IpSheet(),
     );

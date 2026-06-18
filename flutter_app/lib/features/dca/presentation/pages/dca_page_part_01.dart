@@ -40,7 +40,7 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                       child: SingleChildScrollView(
                         key: DCAPage.contentKey,
                         physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.only(bottom: bottomInset),
+                        padding: AppSpacing.dcaBottomInsetPadding(bottomInset),
                         child: VitPageContent(
                           padding: VitContentPadding.relaxed,
                           customGap: AppSpacing.x5,
@@ -140,7 +140,7 @@ class _DcaOverviewCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.contentPad),
+      padding: AppSpacing.dcaContentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -318,38 +318,39 @@ class _DeltaPill extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: AppColors.buy15,
-          borderRadius: AppRadii.inputRadius,
-          border: Border.all(color: AppColors.buy20),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
+            side: const BorderSide(color: AppColors.buy20),
+          ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.arrow_upward_rounded,
-              color: AppColors.buy,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Flexible(
-              child: Text(
-                value,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.buy,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.dcaMainTightLineHeight,
+        child: Padding(
+          padding: AppSpacing.dcaButtonChipPadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.arrow_upward_rounded,
+                color: AppColors.buy,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Flexible(
+                child: Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.buy,
+                    fontWeight: AppTextStyles.bold,
+                    height: AppSpacing.dcaMainTightLineHeight,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -376,7 +377,7 @@ class _OverviewMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: SizedBox(
         height: AppSpacing.dcaMainStatCardHeight,
         child: Column(
@@ -384,15 +385,19 @@ class _OverviewMetric extends StatelessWidget {
           children: [
             Row(
               children: [
-                Container(
+                SizedBox(
                   width: AppSpacing.x6,
                   height: AppSpacing.x6,
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: .15),
-                    borderRadius: AppRadii.mdRadius,
-                    border: Border.all(color: color.withValues(alpha: .2)),
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: color.withValues(alpha: .15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.mdRadius,
+                        side: BorderSide(color: color.withValues(alpha: .2)),
+                      ),
+                    ),
+                    child: Icon(icon, color: color, size: AppSpacing.iconMd),
                   ),
-                  child: Icon(icon, color: color, size: AppSpacing.iconMd),
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(

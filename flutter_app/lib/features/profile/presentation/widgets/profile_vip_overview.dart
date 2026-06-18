@@ -11,10 +11,10 @@ class _OverviewTab extends StatelessWidget {
     final children = <Widget>[];
     if (nextTier != null) {
       children.add(_ProgressCard(snapshot: snapshot, nextTier: nextTier));
-      children.add(const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)));
+      children.add(const SizedBox(height: AppSpacing.profileVipContentGap));
     }
     children.add(_TierTable(snapshot: snapshot));
-    children.add(const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)));
+    children.add(const SizedBox(height: AppSpacing.profileVipContentGap));
     children.add(const _FeeSavingsCard());
 
     return Column(
@@ -40,7 +40,7 @@ class _ProgressCard extends StatelessWidget {
     );
 
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.profileVipProgressPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -54,7 +54,7 @@ class _ProgressCard extends StatelessWidget {
               _TierIcon(tier: nextTier),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: 16)),
+          const SizedBox(height: AppSpacing.profileVipProgressTitleGap),
           _ProgressLine(
             label: 'Kh\u1ED1i l\u01B0\u1EE3ng 30 ng\u00E0y',
             value:
@@ -64,7 +64,7 @@ class _ProgressCard extends StatelessWidget {
             helper:
                 'C\u1EA7n th\u00EAm ${_formatUsd(nextTier.monthlyVolume - snapshot.monthlyVolume)} \u0111\u1EC3 \u0111\u1EA1t m\u1EE5c ti\u00EAu',
           ),
-          const Padding(padding: EdgeInsets.only(top: 17)),
+          const SizedBox(height: AppSpacing.profileVipProgressLineGap),
           _ProgressLine(
             label: 'T\u00E0i s\u1EA3n \u0111ang gi\u1EEF',
             value:
@@ -108,10 +108,7 @@ class _ProgressLine extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  height: 1,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
             Text(
@@ -120,26 +117,22 @@ class _ProgressLine extends StatelessWidget {
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.heavy,
                 fontFeatures: AppTextStyles.tabularFigures,
-                height: 1,
               ),
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.profileVipProgressBarGap),
         ClipRRect(
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadii.pillRadius,
           child: LinearProgressIndicator(
-            minHeight: 10,
+            minHeight: AppSpacing.profileVipProgressBarHeight,
             value: progress,
             color: color,
             backgroundColor: AppColors.surface3,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
-        Text(
-          helper,
-          style: AppTextStyles.micro.copyWith(color: helperColor, height: 1),
-        ),
+        const SizedBox(height: AppSpacing.profileVipProgressBarGap),
+        Text(helper, style: AppTextStyles.micro.copyWith(color: helperColor)),
       ],
     );
   }
@@ -157,22 +150,29 @@ class _TierTable extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+            padding: AppSpacing.profileVipTableTitlePadding,
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'So s\u00E1nh c\u00E1c c\u1EA5p VIP',
                 style: AppTextStyles.body.copyWith(
                   fontWeight: AppTextStyles.heavy,
-                  height: 1,
                 ),
               ),
             ),
           ),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.profileVipTableDividerHeight,
+            color: AppColors.divider,
+          ),
           const _TableHeader(),
-          for (final tier in snapshot.tiers)
+          for (final tier in snapshot.tiers) ...[
+            const Divider(
+              height: AppSpacing.profileVipTableDividerHeight,
+              color: AppColors.divider,
+            ),
             _TierRow(tier: tier, active: tier.level == snapshot.currentLevel),
+          ],
         ],
       ),
     );
@@ -185,7 +185,7 @@ class _TableHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: AppSpacing.profileVipTableHeaderPadding,
       child: Row(
         children: [
           _TableCell(
@@ -218,67 +218,62 @@ class _TierRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textColor = active ? _vipAccent : AppColors.text1;
-    return Container(
+    return Material(
       key: VIPPage.tierRowKey(tier.level),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(
-        color: active ? AppColors.primary08 : AppColors.transparent,
-        border: const Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          _TableCell(
-            flex: 28,
-            child: Row(
-              children: [
-                _TierIcon(tier: tier),
-                const SizedBox(width: AppSpacing.x3),
-                Flexible(
-                  child: Text(
-                    tier.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: textColor,
-                      fontWeight: active
-                          ? AppTextStyles.heavy
-                          : AppTextStyles.bold,
-                      height: 1.15,
+      color: active ? AppColors.primary08 : AppColors.transparent,
+      child: Padding(
+        padding: AppSpacing.profileVipTableRowPadding,
+        child: Row(
+          children: [
+            _TableCell(
+              flex: 28,
+              child: Row(
+                children: [
+                  _TierIcon(tier: tier),
+                  const SizedBox(width: AppSpacing.profileVipTierNameGap),
+                  Flexible(
+                    child: Text(
+                      tier.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: textColor,
+                        fontWeight: active
+                            ? AppTextStyles.heavy
+                            : AppTextStyles.bold,
+                      ),
                     ),
                   ),
-                ),
-                if (active) ...[
-                  const SizedBox(width: AppSpacing.x2),
-                  Container(
-                    width: 6,
-                    height: 6,
-                    decoration: const BoxDecoration(
-                      color: _vipAccent,
-                      shape: BoxShape.circle,
+                  if (active) ...[
+                    const SizedBox(width: AppSpacing.profileVipActiveDotGap),
+                    const SizedBox(
+                      width: AppSpacing.profileVipActiveDot,
+                      height: AppSpacing.profileVipActiveDot,
+                      child: Material(color: _vipAccent, shape: CircleBorder()),
                     ),
-                  ),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-          _TableCell(
-            flex: 26,
-            child: Text(
-              tier.monthlyVolume == 0
-                  ? '-'
-                  : _formatCompactUsd(tier.monthlyVolume),
-              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+            _TableCell(
+              flex: 26,
+              child: Text(
+                tier.monthlyVolume == 0
+                    ? '-'
+                    : _formatCompactUsd(tier.monthlyVolume),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+              ),
             ),
-          ),
-          _TableCell(
-            flex: 22,
-            child: Text(_formatFee(tier.makerFee), style: _feeStyle(active)),
-          ),
-          _TableCell(
-            flex: 22,
-            child: Text(_formatFee(tier.takerFee), style: _feeStyle(active)),
-          ),
-        ],
+            _TableCell(
+              flex: 22,
+              child: Text(_formatFee(tier.makerFee), style: _feeStyle(active)),
+            ),
+            _TableCell(
+              flex: 22,
+              child: Text(_formatFee(tier.takerFee), style: _feeStyle(active)),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -311,25 +306,28 @@ class _FeeSavingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _vipSuccess.withValues(alpha: .24),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.profileVipSavingsPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              const Icon(Icons.bolt_rounded, color: _vipSuccess, size: 17),
-              const SizedBox(width: AppSpacing.x3),
+              const Icon(
+                Icons.bolt_rounded,
+                color: _vipSuccess,
+                size: AppSpacing.profileVipSavingsIcon,
+              ),
+              const SizedBox(width: AppSpacing.profileVipSavingsIconGap),
               Text(
                 'Ti\u1EBFt ki\u1EC7m ph\u00ED c\u1EE7a b\u1EA1n',
                 style: AppTextStyles.body.copyWith(
                   color: _vipSuccess,
                   fontWeight: AppTextStyles.heavy,
-                  height: 1,
                 ),
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.profileVipSavingsBoxGap),
           Row(
             children: const [
               Expanded(
@@ -339,7 +337,7 @@ class _FeeSavingsCard extends StatelessWidget {
                   sub: 'vs. Standard rate',
                 ),
               ),
-              SizedBox(width: AppSpacing.x4),
+              SizedBox(width: AppSpacing.profileVipSavingsBoxGap),
               Expanded(
                 child: _SavingBox(
                   label: 'T\u1ED5ng t\u00EDch l\u0169y',
@@ -371,26 +369,22 @@ class _SavingBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.profileVipSavingBoxPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label, style: AppTextStyles.micro.copyWith(color: _vipMuted)),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.profileVipSavingBoxValueGap),
           Text(
             value,
             style: AppTextStyles.base.copyWith(
               color: _vipSuccess,
               fontWeight: AppTextStyles.heavy,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
-          Text(
-            sub,
-            style: AppTextStyles.micro.copyWith(color: _vipMuted, height: 1),
-          ),
+          const SizedBox(height: AppSpacing.profileVipSavingBoxValueGap),
+          Text(sub, style: AppTextStyles.micro.copyWith(color: _vipMuted)),
         ],
       ),
     );

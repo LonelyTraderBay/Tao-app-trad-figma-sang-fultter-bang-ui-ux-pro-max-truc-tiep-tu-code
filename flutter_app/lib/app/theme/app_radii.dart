@@ -20,6 +20,9 @@ final class AppRadii {
   static const double sheetTop = 22;
   static const double avatar = 999;
   static const double chart = 13;
+  static const double chartBar = 4;
+  static const double predictionDetailChartVolumeBar = hairline;
+  static const double predictionDetailOrderBookRow = chartBar;
   static const double disputeBubble = 16;
   static const double disputeBubbleTail = 4;
 
@@ -32,6 +35,7 @@ final class AppRadii {
   static const BorderRadius swatchRadius = BorderRadius.all(
     Radius.circular(swatch),
   );
+  static const Radius swatchCorner = Radius.circular(swatch);
   static const BorderRadius badgeRadius = BorderRadius.all(
     Radius.circular(badge),
   );
@@ -52,6 +56,7 @@ final class AppRadii {
     Radius.circular(card),
   );
   static const BorderRadius lgRadius = BorderRadius.all(Radius.circular(lg));
+  static const Radius lgCorner = Radius.circular(lg);
   static const BorderRadius cardLargeRadius = BorderRadius.all(
     Radius.circular(cardLarge),
   );
@@ -81,6 +86,11 @@ final class AppRadii {
   static const BorderRadius chartRadius = BorderRadius.all(
     Radius.circular(chart),
   );
+  static const Radius chartBarCorner = Radius.circular(chartBar);
+  static const BorderRadius predictionDetailChartVolumeBarRadius =
+      BorderRadius.all(Radius.circular(predictionDetailChartVolumeBar));
+  static const BorderRadius predictionDetailOrderBookRowRadius =
+      BorderRadius.all(Radius.circular(predictionDetailOrderBookRow));
   static const BorderRadius deviceRadius = BorderRadius.all(
     Radius.circular(device),
   );

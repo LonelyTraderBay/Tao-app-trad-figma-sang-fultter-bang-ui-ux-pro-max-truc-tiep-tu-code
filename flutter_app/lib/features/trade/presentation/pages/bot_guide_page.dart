@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -51,8 +50,9 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.tradeBotBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -72,7 +72,9 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: BotGuidePage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
@@ -81,10 +83,10 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
                       const _IntroBanner(),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: VitPageContent(
                           padding: VitContentPadding.none,
-                          customGap: 8,
+                          customGap: AppSpacing.tradeBotSmallGap,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,

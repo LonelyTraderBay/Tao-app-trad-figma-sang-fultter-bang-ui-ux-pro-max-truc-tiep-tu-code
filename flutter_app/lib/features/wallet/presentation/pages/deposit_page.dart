@@ -92,11 +92,9 @@ class _DepositPageState extends ConsumerState<DepositPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: DepositPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.pageHorizontalPadding,
-                    AppSpacing.x4,
-                    AppSpacing.pageHorizontalPadding,
-                    bottomInset,
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.x4,
+                    bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
@@ -175,7 +173,7 @@ class _DepositPageState extends ConsumerState<DepositPage> {
               children: [
                 Text('Chọn mạng lưới', style: AppTextStyles.sectionTitle),
                 const SizedBox(height: AppSpacing.walletDepositTitleGap),
-                for (final network in networks)
+                for (final network in networks) ...[
                   _NetworkOption(
                     network: network,
                     selected:
@@ -187,6 +185,8 @@ class _DepositPageState extends ConsumerState<DepositPage> {
                       Navigator.of(context).pop();
                     },
                   ),
+                  const SizedBox(height: AppSpacing.x2),
+                ],
               ],
             ),
           ),

@@ -67,7 +67,7 @@ class _DepthChartPainter extends CustomPainter {
       final top = origin.dy - height;
       final rect = RRect.fromRectAndRadius(
         Rect.fromLTWH(left, top, barWidth, height),
-        const Radius.circular(4),
+        AppRadii.chartBarCorner,
       );
       canvas.drawRRect(rect, Paint()..color = color);
     }

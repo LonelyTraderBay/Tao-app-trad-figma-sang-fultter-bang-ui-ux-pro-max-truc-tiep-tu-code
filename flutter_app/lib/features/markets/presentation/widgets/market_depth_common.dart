@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -23,26 +24,27 @@ class MarketDepthPairSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = pair.change24h >= 0;
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketDepthPairSummaryPadding,
       child: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: pair.logoColor.withValues(alpha: .16),
-              shape: BoxShape.circle,
-            ),
-            child: Text(
-              pair.baseAsset.substring(0, 2),
-              style: AppTextStyles.caption.copyWith(
-                color: pair.logoColor,
-                fontWeight: AppTextStyles.bold,
+          Material(
+            color: pair.logoColor.withValues(alpha: .16),
+            shape: const CircleBorder(),
+            child: SizedBox.square(
+              dimension: AppSpacing.marketDepthAvatar,
+              child: Center(
+                child: Text(
+                  pair.baseAsset.substring(0, 2),
+                  style: AppTextStyles.caption.copyWith(
+                    color: pair.logoColor,
+                    fontWeight: AppTextStyles.bold,
+                    height: AppSpacing.marketLineHeightTight,
+                  ),
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,24 +53,26 @@ class MarketDepthPairSummary extends StatelessWidget {
                   pair.symbol,
                   style: AppTextStyles.baseMedium.copyWith(
                     fontWeight: AppTextStyles.bold,
+                    height: AppSpacing.marketLineHeightCaption,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
                 Row(
                   children: [
                     Icon(
                       positive
                           ? Icons.arrow_upward_rounded
                           : Icons.arrow_downward_rounded,
-                      size: 12,
+                      size: AppSpacing.marketDepthTrendIcon,
                       color: positive ? AppColors.buy : AppColors.sell,
                     ),
-                    const SizedBox(width: 2),
+                    const SizedBox(width: AppSpacing.marketAnalyticsTinyGap),
                     Text(
                       '${positive ? '+' : ''}${pair.change24h.toStringAsFixed(2)}%',
                       style: AppTextStyles.micro.copyWith(
                         color: positive ? AppColors.buy : AppColors.sell,
                         fontWeight: AppTextStyles.medium,
+                        height: AppSpacing.marketLineHeightTight,
                       ),
                     ),
                   ],
@@ -78,7 +82,10 @@ class MarketDepthPairSummary extends StatelessWidget {
           ),
           Text(
             '\$${formatMarketDepthPrice(pair.price)}',
-            style: AppTextStyles.sectionTitle,
+            style: AppTextStyles.sectionTitle.copyWith(
+              fontFeatures: AppTextStyles.tabularFigures,
+              height: AppSpacing.marketLineHeightCaption,
+            ),
           ),
         ],
       ),
@@ -98,25 +105,10 @@ class MarketDepthSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 16,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: BorderRadius.circular(99),
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: accentColor,
     );
   }
 }

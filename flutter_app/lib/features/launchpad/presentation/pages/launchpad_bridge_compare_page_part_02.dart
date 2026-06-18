@@ -29,7 +29,7 @@ class _RouteCard extends StatelessWidget {
           : route.recommended
           ? AppColors.primary.withValues(alpha: .24)
           : AppColors.cardBorder,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         children: [
@@ -37,7 +37,7 @@ class _RouteCard extends StatelessWidget {
             key: LaunchpadBridgeComparePage.routeSelectKey(route.id),
             onTap: onSelect,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.launchpadPaddingX4,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -90,7 +90,7 @@ class _RouteCard extends StatelessWidget {
             key: LaunchpadBridgeComparePage.expandKey(route.id),
             onTap: onExpand,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+              padding: AppSpacing.launchpadVerticalPaddingX2,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -140,20 +140,23 @@ class _RankedProviderBadge extends StatelessWidget {
           Positioned(
             top: -6,
             right: -6,
-            child: Container(
+            child: SizedBox(
               width: AppSpacing.launchpadBox17,
               height: AppSpacing.launchpadBox17,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                color: AppColors.primarySoft,
-                shape: BoxShape.circle,
-              ),
-              child: Text(
-                '1',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.onAccent,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.launchpadLineHeightTight,
+              child: DecoratedBox(
+                decoration: const ShapeDecoration(
+                  color: AppColors.primarySoft,
+                  shape: CircleBorder(),
+                ),
+                child: Center(
+                  child: Text(
+                    '1',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
+                      height: AppSpacing.launchpadLineHeightTight,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -176,20 +179,24 @@ class _ProviderBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: accent.withValues(alpha: .16),
-        border: Border.all(color: accent.withValues(alpha: .28)),
-        borderRadius: BorderRadius.circular(size / 2.8),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: accent,
-          fontWeight: AppTextStyles.bold,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: accent.withValues(alpha: .16),
+          shape: CircleBorder(
+            side: BorderSide(color: accent.withValues(alpha: .28)),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: AppTextStyles.micro.copyWith(
+              color: accent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -201,20 +208,19 @@ class _RecommendedBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: 2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.primary08,
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
-      child: Text(
-        'KHUYẾN NGHỊ',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.primary,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadMiniChipPadding,
+        child: Text(
+          'KHUYẾN NGHỊ',
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.primary,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -272,18 +278,22 @@ class _MetricTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: tag.color.withValues(alpha: .10),
-        border: Border.all(color: tag.color.withValues(alpha: .16)),
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.xsRadius,
+          side: BorderSide(color: tag.color.withValues(alpha: .16)),
+        ),
       ),
-      child: Text(
-        tag.label,
-        style: AppTextStyles.micro.copyWith(
-          color: tag.color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadMiniChipPadding,
+        child: Text(
+          tag.label,
+          style: AppTextStyles.micro.copyWith(
+            color: tag.color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -429,15 +439,19 @@ class _SecurityDots extends StatelessWidget {
     return Row(
       children: [
         for (var i = 0; i < 5; i++)
-          Container(
-            width: AppSpacing.launchpadDotXs,
-            height: AppSpacing.launchpadDotXs,
-            margin: const EdgeInsets.only(right: AppSpacing.launchpadGapXxs),
-            decoration: BoxDecoration(
-              color: i < filled
-                  ? AppColors.buy
-                  : AppColors.text3.withValues(alpha: .30),
-              shape: BoxShape.circle,
+          Padding(
+            padding: AppSpacing.launchpadRightMarginXxs,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: i < filled
+                    ? AppColors.buy
+                    : AppColors.text3.withValues(alpha: .30),
+                shape: const CircleBorder(),
+              ),
+              child: const SizedBox(
+                width: AppSpacing.launchpadDotXs,
+                height: AppSpacing.launchpadDotXs,
+              ),
             ),
           ),
       ],
@@ -453,75 +467,81 @@ class _ExpandedRouteDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.x4,
-        AppSpacing.x3,
-        AppSpacing.x4,
-        AppSpacing.x4,
-      ),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Route path (${route.hops} hops)',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
+          const Divider(
+            height: AppSpacing.launchpadDividerHeight,
+            color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x2),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
+          Padding(
+            padding: AppSpacing.launchpadSheetHeaderPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                for (final hop in route.path) ...[
-                  _HopChip(label: hop.fromToken, subtitle: hop.chain),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSpacing.x1),
-                    child: Icon(
-                      Icons.arrow_forward_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.launchpadIconXs,
-                    ),
+                Text(
+                  'Route path (${route.hops} hops)',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  _HopChip(label: hop.dex, subtitle: 'DEX'),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppSpacing.x1),
-                    child: Icon(
-                      Icons.arrow_forward_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.launchpadIconXs,
-                    ),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (final hop in route.path) ...[
+                        _HopChip(label: hop.fromToken, subtitle: hop.chain),
+                        const Padding(
+                          padding: AppSpacing.launchpadHorizontalPaddingX1,
+                          child: Icon(
+                            Icons.arrow_forward_rounded,
+                            color: AppColors.text3,
+                            size: AppSpacing.launchpadIconXs,
+                          ),
+                        ),
+                        _HopChip(label: hop.dex, subtitle: 'DEX'),
+                        const Padding(
+                          padding: AppSpacing.launchpadHorizontalPaddingX1,
+                          child: Icon(
+                            Icons.arrow_forward_rounded,
+                            color: AppColors.text3,
+                            size: AppSpacing.launchpadIconXs,
+                          ),
+                        ),
+                        _HopChip(label: hop.toToken, subtitle: hop.chain),
+                        const SizedBox(width: AppSpacing.x2),
+                      ],
+                    ],
                   ),
-                  _HopChip(label: hop.toToken, subtitle: hop.chain),
-                  const SizedBox(width: AppSpacing.x2),
-                ],
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                _DetailsRow(
+                  label: 'Gas cost',
+                  value: '\$${route.gasCost.toStringAsFixed(2)}',
+                ),
+                _DetailsRow(
+                  label: 'Bridge fee',
+                  value: '\$${route.bridgeFee.toStringAsFixed(2)}',
+                ),
+                _DetailsRow(
+                  label: 'Price impact',
+                  value: '${_trimDouble(route.priceImpact)}%',
+                ),
+                _DetailsRow(
+                  label: 'Slippage tolerance',
+                  value: '${_trimDouble(route.slippage)}%',
+                ),
+                _DetailsRow(
+                  label: 'Liquidity depth',
+                  value: route.liquidityDepth,
+                ),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
-          _DetailsRow(
-            label: 'Gas cost',
-            value: '\$${route.gasCost.toStringAsFixed(2)}',
-          ),
-          _DetailsRow(
-            label: 'Bridge fee',
-            value: '\$${route.bridgeFee.toStringAsFixed(2)}',
-          ),
-          _DetailsRow(
-            label: 'Price impact',
-            value: '${_trimDouble(route.priceImpact)}%',
-          ),
-          _DetailsRow(
-            label: 'Slippage tolerance',
-            value: '${_trimDouble(route.slippage)}%',
-          ),
-          _DetailsRow(label: 'Liquidity depth', value: route.liquidityDepth),
         ],
       ),
     );

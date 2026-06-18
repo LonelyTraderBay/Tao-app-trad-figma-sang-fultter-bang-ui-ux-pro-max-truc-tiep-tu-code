@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingCommunityGovernancePage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -54,7 +54,7 @@ class _OverviewCard extends StatelessWidget {
     return VitCard(
       key: StakingCommunityGovernancePage.overviewKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -93,7 +93,7 @@ class _StatTile extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: _toneBorder(stat.tone),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -132,7 +132,7 @@ class _ActiveProposal extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           onTap: onTap,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -191,7 +191,7 @@ class _DecisionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -235,14 +235,14 @@ class _GovernanceSteps extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             children: [
               for (var i = 0; i < steps.length; i++) ...[
                 _StepRow(step: steps[i]),
                 if (i != steps.length - 1)
                   const Padding(
-                    padding: EdgeInsets.symmetric(vertical: AppSpacing.x3),
+                    padding: AppSpacing.earnVerticalPaddingX3,
                     child: Divider(
                       height: AppSpacing.stakingGovernanceDividerHeight,
                       color: AppColors.divider,
@@ -267,20 +267,23 @@ class _StepRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: AppSpacing.x6,
-          height: AppSpacing.x6,
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
+        DecoratedBox(
+          decoration: const ShapeDecoration(
             color: AppColors.accent,
-            borderRadius: AppRadii.lgRadius,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
           ),
-          child: Text(
-            '${step.step}',
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.navCenterIcon,
-              fontWeight: AppTextStyles.bold,
-              height: AppSpacing.stakingGovernancePillLineHeight,
+          child: SizedBox(
+            width: AppSpacing.x6,
+            height: AppSpacing.x6,
+            child: Center(
+              child: Text(
+                '${step.step}',
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.navCenterIcon,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.stakingGovernancePillLineHeight,
+                ),
+              ),
             ),
           ),
         ),

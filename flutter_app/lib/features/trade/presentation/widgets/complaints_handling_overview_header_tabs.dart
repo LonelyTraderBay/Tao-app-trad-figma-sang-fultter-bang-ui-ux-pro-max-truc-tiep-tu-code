@@ -6,12 +6,16 @@ class _RightsNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
+      padding: AppSpacing.complaintsHandlingRightsPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.text1, size: 16),
-          const SizedBox(width: 10),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.text1,
+            size: AppSpacing.complaintCaseActionIcon,
+          ),
+          const SizedBox(width: AppSpacing.complaintsHandlingRightsIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,10 +25,10 @@ class _RightsNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.complaintCaseLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   'You have the right to complain. We will investigate fairly '
                   'and respond within 8 weeks. If dissatisfied, you can refer '
@@ -32,7 +36,7 @@ class _RightsNotice extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
+                    height: AppSpacing.complaintsHandlingRightsBodyLineHeight,
                   ),
                 ),
               ],
@@ -54,19 +58,22 @@ class _StatsRow extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _StatCard(label: 'Active', value: '${snapshot.activeCount}'),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _StatCard(
-            label: 'Resolved',
-            value: '${snapshot.resolvedCount}',
-            valueColor: _complaintsGreen,
+          child: VitMetricCard(
+            label: 'Active',
+            value: '${snapshot.activeCount}',
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.x4),
         Expanded(
-          child: _StatCard(
+          child: VitMetricCard(
+            label: 'Resolved',
+            value: '${snapshot.resolvedCount}',
+            accentColor: _complaintsGreen,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.x4),
+        Expanded(
+          child: VitMetricCard(
             label: 'Avg. Days',
             value: '${snapshot.averageResolutionDays}',
           ),
@@ -76,117 +83,20 @@ class _StatsRow extends StatelessWidget {
   }
 }
 
-class _StatCard extends StatelessWidget {
-  const _StatCard({
-    required this.label,
-    required this.value,
-    this.valueColor = AppColors.text1,
-  });
-
-  final String label;
-  final String value;
-  final Color valueColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(12, 14, 12, 14),
-      child: SizedBox(
-        height: 46,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: 1,
-              ),
-            ),
-            const Spacer(),
-            Text(
-              value,
-              style: AppTextStyles.heroNumber.copyWith(
-                color: valueColor,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _SubmitComplaintButton extends StatelessWidget {
   const _SubmitComplaintButton();
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: _complaintsPrimary,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: ComplaintsHandlingPage.submitKey,
-        borderRadius: AppRadii.inputRadius,
-        onTap: () => context.go(AppRoutePaths.tradeCopyComplaintSubmission),
-        child: SizedBox(
-          height: 86,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 10, 15, 10),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 48,
-                  height: AppSpacing.inputHeight,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: AppColors.onAccent.withValues(alpha: .20),
-                      borderRadius: AppRadii.cardRadius,
-                    ),
-                    child: const Icon(
-                      Icons.chat_bubble_outline_rounded,
-                      color: AppColors.onAccent,
-                      size: 25,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Submit a Complaint',
-                        style: AppTextStyles.baseMedium.copyWith(
-                          color: AppColors.onAccent,
-                          fontWeight: AppTextStyles.bold,
-                          height: 1,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "We'll respond within 8 weeks",
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.onAccent,
-                          fontWeight: AppTextStyles.bold,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: AppColors.onAccent,
-                  size: 25,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitNextActionCard(
+      key: ComplaintsHandlingPage.submitKey,
+      icon: Icons.chat_bubble_outline_rounded,
+      title: 'Submit a Complaint',
+      subtitle: "We'll respond within 8 weeks",
+      statusLabel: 'Regulated',
+      ctaLabel: 'Start',
+      accentColor: _complaintsPrimary,
+      onTap: () => context.go(AppRoutePaths.tradeCopyComplaintSubmission),
     );
   }
 }
@@ -200,77 +110,35 @@ class _Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 52,
+      height: AppSpacing.x7 + AppSpacing.x2,
       variant: VitCardVariant.inner,
-      child: Row(
-        children: [
-          _TabButton(
-            tab: _ComplaintsTab.overview,
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: active.name,
+        tabs: [
+          VitTabItem(
+            key: _ComplaintsTab.overview.name,
             label: 'Overview',
-            active: active,
-            onChanged: onChanged,
+            widgetKey: ComplaintsHandlingPage.tabKey(
+              _ComplaintsTab.overview.name,
+            ),
           ),
-          _TabButton(
-            tab: _ComplaintsTab.myComplaints,
+          VitTabItem(
+            key: _ComplaintsTab.myComplaints.name,
             label: 'My Complaints',
-            active: active,
-            onChanged: onChanged,
+            widgetKey: ComplaintsHandlingPage.tabKey(
+              _ComplaintsTab.myComplaints.name,
+            ),
           ),
-          _TabButton(
-            tab: _ComplaintsTab.process,
+          VitTabItem(
+            key: _ComplaintsTab.process.name,
             label: 'Process',
-            active: active,
-            onChanged: onChanged,
+            widgetKey: ComplaintsHandlingPage.tabKey(
+              _ComplaintsTab.process.name,
+            ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _TabButton extends StatelessWidget {
-  const _TabButton({
-    required this.tab,
-    required this.label,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final _ComplaintsTab tab;
-  final String label;
-  final _ComplaintsTab active;
-  final ValueChanged<_ComplaintsTab> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final isActive = active == tab;
-    return Expanded(
-      child: InkWell(
-        key: ComplaintsHandlingPage.tabKey(tab.name),
-        onTap: () => onChanged(tab),
-        child: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: isActive ? _complaintsPrimary : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 100,
-              height: 2,
-              child: ColoredBox(
-                color: isActive ? _complaintsPrimary : AppColors.transparent,
-              ),
-            ),
-          ],
-        ),
+        onChanged: (key) => onChanged(_ComplaintsTab.values.byName(key)),
       ),
     );
   }

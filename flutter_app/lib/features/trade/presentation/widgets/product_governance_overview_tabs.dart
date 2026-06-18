@@ -8,16 +8,16 @@ class _ComplianceNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+      padding: AppSpacing.productGovernanceNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.check_circle_outline,
             color: AppColors.text1,
-            size: 17,
+            size: AppSpacing.productGovernanceNoticeIcon,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.productGovernanceInlineGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,16 +27,16 @@ class _ComplianceNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.productGovernanceLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.productGovernancePillGap),
                 Text(
                   '${snapshot.products.length}/3 products have approved target markets. Next review: ${snapshot.nextReviewLabel}.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.productGovernanceLineHeightTight,
                   ),
                 ),
               ],
@@ -55,9 +55,6 @@ class _Stats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final approved = products
-        .where((product) => product.status == 'approved')
-        .length;
     const cards = [
       ('Total Products', '3', '2 approved', _govGreen),
       ('Reviews Due', '1', 'Within 3 months', _govAmber),
@@ -67,73 +64,17 @@ class _Stats extends StatelessWidget {
       children: [
         for (final card in cards) ...[
           Expanded(
-            child: _StatCard(
+            child: VitMetricCard(
               label: card.$1,
               value: card.$1 == 'Total Products'
                   ? products.length.toString()
                   : card.$2,
-              helper: card.$1 == 'Total Products'
-                  ? '$approved approved'
-                  : card.$3,
-              helperColor: card.$4,
+              accentColor: card.$4,
             ),
           ),
-          if (card != cards.last) const SizedBox(width: 12),
+          if (card != cards.last) const SizedBox(width: AppSpacing.x4),
         ],
       ],
-    );
-  }
-}
-
-class _StatCard extends StatelessWidget {
-  const _StatCard({
-    required this.label,
-    required this.value,
-    required this.helper,
-    required this.helperColor,
-  });
-
-  final String label;
-  final String value;
-  final String helper;
-  final Color helperColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      height: 89,
-      padding: const EdgeInsets.fromLTRB(12, 14, 12, 12),
-      borderColor: _govBorder.withValues(alpha: .72),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            value,
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
-          const Spacer(),
-          Text(
-            helper,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: helperColor, height: 1),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -152,41 +93,20 @@ class _Tabs extends StatelessWidget {
       ('distribution', 'Distribution'),
     ];
     return VitCard(
-      height: 53,
-      padding: EdgeInsets.zero,
-      child: Row(
-        children: [
+      height: AppSpacing.x7 + AppSpacing.x2,
+      padding: AppSpacing.zeroInsets,
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: activeId,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: ProductGovernancePage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeId == tab.$1
-                                ? _govPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: activeId == tab.$1 ? 100 : 0,
-                      height: 2,
-                      color: _govPrimary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: ProductGovernancePage.tabKey(tab.$1),
             ),
         ],
+        onChanged: onChanged,
       ),
     );
   }

@@ -78,10 +78,7 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pFinancialSafetyScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -152,23 +149,21 @@ class _SourceHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppModuleAccents.p2p.withValues(alpha: .24),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pFinancialSafetyCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppModuleAccents.p2p,
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: const SizedBox(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
-              child: Icon(
-                Icons.attach_money_rounded,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconMd,
-              ),
+          VitCard(
+            width: AppSpacing.p2pFinancialSafetyIconBox,
+            height: AppSpacing.p2pFinancialSafetyIconBox,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            background: const ColoredBox(color: AppModuleAccents.p2p),
+            clip: true,
+            child: const Icon(
+              Icons.attach_money_rounded,
+              color: AppColors.onAccent,
+              size: AppSpacing.iconMd,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -192,7 +187,7 @@ class _SourceHero extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pFinancialSafetyBodyLineHeight,
                   ),
                 ),
               ],
@@ -263,24 +258,24 @@ class _FundSourceTile extends StatelessWidget {
           radius: VitCardRadius.lg,
           borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
           constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pFinancialSafetyCardPadding,
           child: Row(
             children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
+              VitCard(
+                width: AppSpacing.p2pFinancialSafetyCompactIconBox,
+                height: AppSpacing.p2pFinancialSafetyCompactIconBox,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.lg,
+                background: ColoredBox(
                   color: selected
                       ? AppModuleAccents.p2p.withValues(alpha: .16)
                       : AppColors.surface2,
-                  borderRadius: AppRadii.lgRadius,
                 ),
-                child: SizedBox(
-                  width: AppSpacing.buttonCompact,
-                  height: AppSpacing.buttonCompact,
-                  child: Icon(
-                    _fundIcon(source.iconKey),
-                    color: color,
-                    size: AppSpacing.iconMd,
-                  ),
+                clip: true,
+                child: Icon(
+                  _fundIcon(source.iconKey),
+                  color: color,
+                  size: AppSpacing.iconMd,
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),

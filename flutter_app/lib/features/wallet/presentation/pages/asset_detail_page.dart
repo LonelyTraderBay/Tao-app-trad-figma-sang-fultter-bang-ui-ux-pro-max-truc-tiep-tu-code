@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -78,11 +76,9 @@ class _AssetDetailPageState extends ConsumerState<AssetDetailPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: AssetDetailPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.pageHorizontalPadding,
-                    AppSpacing.rowPy,
-                    AppSpacing.pageHorizontalPadding,
-                    bottomInset,
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.rowPy,
+                    bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,

@@ -32,7 +32,7 @@ class _SummaryGrid extends StatelessWidget {
             subtitle: 'Q1 2026 (YTD)',
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
         Expanded(
           child: _SummaryCard(
             icon: Icons.attach_money_rounded,
@@ -42,7 +42,7 @@ class _SummaryGrid extends StatelessWidget {
             subtitle: 'Executed value',
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
         Expanded(
           child: _SummaryCard(
             icon: Icons.workspace_premium_outlined,
@@ -75,8 +75,12 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 95,
-      padding: const EdgeInsets.fromLTRB(12, 13, 12, 12),
+      height:
+          AppSpacing.x7 +
+          AppSpacing.x6 +
+          AppSpacing.x3 -
+          AppSpacing.hairlineStroke,
+      padding: AppSpacing.bestExecutionSummaryCardPadding,
       borderColor: _bestBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +88,7 @@ class _SummaryCard extends StatelessWidget {
           Row(
             children: [
               Icon(icon, color: iconColor, size: 15),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
                   label,
@@ -92,13 +96,13 @@ class _SummaryCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.bestExecutionSummaryLineHeight,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -107,7 +111,7 @@ class _SummaryCard extends StatelessWidget {
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.bestExecutionSummaryLineHeight,
             ),
           ),
           const Spacer(),
@@ -117,7 +121,7 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.bestExecutionSummaryLineHeight,
             ),
           ),
         ],
@@ -136,39 +140,19 @@ class _Tabs extends StatelessWidget {
   Widget build(BuildContext context) {
     const tabs = [('current', 'Q1 2026 (Current)'), ('archive', 'Archive')];
     return VitCard(
-      height: 52,
+      height: AppSpacing.inputHeight,
       variant: VitCardVariant.inner,
-      child: Row(
-        children: [
+      padding: AppSpacing.zeroInsets,
+      child: VitTabBar(
+        activeKey: activeId,
+        onChanged: onChanged,
+        variant: VitTabBarVariant.underline,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: BestExecutionReportsPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeId == tab.$1
-                                ? _bestPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: activeId == tab.$1 ? 160 : 0,
-                      height: 2,
-                      color: _bestPrimary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: BestExecutionReportsPage.tabKey(tab.$1),
             ),
         ],
       ),

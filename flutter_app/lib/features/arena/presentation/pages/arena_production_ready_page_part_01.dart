@@ -39,7 +39,7 @@ class _ArenaProductionReadyPageState
                   child: SingleChildScrollView(
                     key: ArenaProductionReadyPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x5,
@@ -90,7 +90,7 @@ class _ProductionHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.primary,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -112,7 +112,7 @@ class _ProductionHero extends StatelessWidget {
                     height: AppSpacing.arenaProductionHeroLineHeight,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   'QA/Dev handoff dashboard. Internal-only release checks, not an end-user production claim.',
                   style: AppTextStyles.micro.copyWith(
@@ -178,38 +178,42 @@ class _SectionTabPill extends StatelessWidget {
         key: ArenaProductionReadyPage.tabKey(config.id),
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.arenaProductionTabHeight,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-          decoration: BoxDecoration(
+          child: Material(
             color: active
                 ? AppColors.primary.withValues(alpha: .14)
                 : AppColors.surface2,
-            border: Border.all(
-              color: active
-                  ? AppColors.primary.withValues(alpha: .55)
-                  : AppColors.cardBorder,
-              width: active ? 1.5 : 1,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: active
+                    ? AppColors.primary.withValues(alpha: .55)
+                    : AppColors.cardBorder,
+                width: active ? 1.5 : 1,
+              ),
+              borderRadius: AppRadii.inputRadius,
             ),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                config.icon,
-                color: active ? AppColors.primary : AppColors.text2,
-                size: AppSpacing.arenaProductionTabIcon,
+            child: Padding(
+              padding: AppSpacing.arenaHorizontalPaddingX4,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    config.icon,
+                    color: active ? AppColors.primary : AppColors.text2,
+                    size: AppSpacing.arenaProductionTabIcon,
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Text(
+                    config.label,
+                    style: AppTextStyles.micro.copyWith(
+                      color: active ? AppColors.primary : AppColors.text2,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                config.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? AppColors.primary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -312,7 +316,7 @@ class _ScreensSection extends StatelessWidget {
           title: 'A - Canonical Screens (vFinal)',
           accentColor: AppColors.accent,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           '7 core screens đã được consolidate thành bản vFinal. Mỗi screen đã audit: trust-first, accessibility, states đầy đủ.',
           style: AppTextStyles.micro.copyWith(
@@ -320,11 +324,10 @@ class _ScreensSection extends StatelessWidget {
             height: AppSpacing.arenaProductionBodyLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         for (final screen in screens) ...[
           _ProductionScreenCard(screen: screen, onRoute: onRoute),
-          if (screen != screens.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          if (screen != screens.last) const SizedBox(height: AppSpacing.x4),
         ],
       ],
     );
@@ -342,7 +345,7 @@ class _ProductionScreenCard extends StatelessWidget {
     return VitCard(
       key: ArenaProductionReadyPage.screenKey(screen.name),
       onTap: () => onRoute(screen.route),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       constraints: const BoxConstraints(
         minHeight: AppSpacing.arenaProductionScreenMinHeight,
       ),
@@ -379,7 +382,7 @@ class _ProductionScreenCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             screen.route,
             style: AppTextStyles.micro.copyWith(
@@ -388,7 +391,7 @@ class _ProductionScreenCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             screen.notes,
             style: AppTextStyles.micro.copyWith(
@@ -396,7 +399,7 @@ class _ProductionScreenCard extends StatelessWidget {
               height: AppSpacing.arenaProductionBodyLineHeight,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -427,7 +430,7 @@ class _StatesSection extends StatelessWidget {
           title: 'B - State Matrix',
           accentColor: AppColors.warn,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           'Lưới states cho từng core screen. Chỉ hiển thị states thực sự áp dụng.',
           style: AppTextStyles.micro.copyWith(
@@ -435,9 +438,9 @@ class _StatesSection extends StatelessWidget {
             height: AppSpacing.arenaProductionBodyLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.arenaPaddingX3,
           child: Wrap(
             spacing: AppSpacing.x3,
             runSpacing: AppSpacing.x2,
@@ -447,10 +450,10 @@ class _StatesSection extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         for (final screen in screens) ...[
           VitCard(
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.arenaPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -460,7 +463,7 @@ class _StatesSection extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x2,
@@ -475,8 +478,7 @@ class _StatesSection extends StatelessWidget {
               ],
             ),
           ),
-          if (screen != screens.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          if (screen != screens.last) const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -498,7 +500,7 @@ class _FlowsSection extends StatelessWidget {
           title: 'C - End-to-End Flows',
           accentColor: AppColors.primary,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           'Các flow chính có prototype link thật. Tap step để navigate bằng route canonical.',
           style: AppTextStyles.micro.copyWith(
@@ -506,11 +508,10 @@ class _FlowsSection extends StatelessWidget {
             height: AppSpacing.arenaProductionBodyLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         for (final flow in flows) ...[
           _FlowCard(flow: flow, onRoute: onRoute),
-          if (flow != flows.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          if (flow != flows.last) const SizedBox(height: AppSpacing.x4),
         ],
       ],
     );

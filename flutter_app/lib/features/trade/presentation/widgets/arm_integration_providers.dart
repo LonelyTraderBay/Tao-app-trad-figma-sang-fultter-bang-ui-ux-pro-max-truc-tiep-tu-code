@@ -30,24 +30,27 @@ class _ArmProviderCard extends StatelessWidget {
     final style = _statusStyle(connection.status);
     return VitCard(
       key: ArmIntegrationStatusPage.connectionKey(connection.id),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.armIntegrationCardPadding,
       borderColor: _armBorder.withValues(alpha: .72),
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: style.color.withValues(alpha: .15),
-                  borderRadius: AppRadii.cardRadius,
-                ),
+              VitCard(
+                variant: VitCardVariant.inner,
+                radius: VitCardRadius.md,
+                width: AppSpacing.armIntegrationProviderIconBox,
+                height: AppSpacing.armIntegrationProviderIconBox,
+                borderColor: style.color.withValues(alpha: .28),
                 alignment: Alignment.center,
-                child: Icon(style.icon, color: style.color, size: 24),
+                child: Icon(
+                  style.icon,
+                  color: style.color,
+                  size: AppSpacing.armIntegrationProviderIcon,
+                ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.armIntegrationInlineGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,68 +65,43 @@ class _ArmProviderCard extends StatelessWidget {
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              height: 1,
+                              height: AppSpacing.armIntegrationLineHeightTight,
                             ),
                           ),
                         ),
                         if (connection.isPrimary) ...[
-                          const SizedBox(width: 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 7,
-                              vertical: 3,
-                            ),
-                            decoration: BoxDecoration(
-                              color: _armPrimary.withValues(alpha: .15),
-                              borderRadius: AppRadii.smRadius,
-                            ),
-                            child: Text(
-                              'PRIMARY',
-                              style: AppTextStyles.micro.copyWith(
-                                color: _armPrimary,
-                                fontWeight: AppTextStyles.bold,
-                                height: 1,
-                              ),
-                            ),
+                          const SizedBox(width: AppSpacing.x3),
+                          const VitAccentPill(
+                            label: 'PRIMARY',
+                            accentColor: _armPrimary,
                           ),
                         ],
                       ],
                     ),
-                    const SizedBox(height: 9),
+                    const SizedBox(
+                      height: AppSpacing.rowGapRegular + AppSpacing.x1,
+                    ),
                     Text(
                       connection.region,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: 1,
+                        height: AppSpacing.armIntegrationLineHeightTight,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 10),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 11,
-                  vertical: 7,
-                ),
-                decoration: BoxDecoration(
-                  color: style.color.withValues(alpha: .13),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: Text(
-                  style.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: style.color,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
+              const SizedBox(width: AppSpacing.rowGapRegular),
+              VitAccentPill(
+                label: style.label,
+                accentColor: style.color,
+                size: VitStatusPillSize.md,
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.armIntegrationMetricRowGap),
           Row(
             children: [
               Expanded(
@@ -133,14 +111,14 @@ class _ArmProviderCard extends StatelessWidget {
                   color: _armGreen,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.armIntegrationInlineGap),
               Expanded(
                 child: _MetricBox(
                   label: 'Avg Latency',
                   value: '${connection.avgLatency}ms',
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.armIntegrationInlineGap),
               Expanded(
                 child: _MetricBox(
                   label: 'Current',
@@ -152,9 +130,9 @@ class _ArmProviderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.armIntegrationCardSectionGap),
           _ConnectionDetails(connection: connection),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.armIntegrationCardSectionGap),
           Row(
             children: [
               Expanded(
@@ -164,7 +142,7 @@ class _ArmProviderCard extends StatelessWidget {
                   onTap: onTest,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.armIntegrationInlineGap),
               const _LogsButton(),
             ],
           ),
@@ -189,8 +167,8 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: 55,
-      padding: const EdgeInsets.fromLTRB(9, 9, 9, 8),
+      height: AppSpacing.armIntegrationMetricHeight,
+      padding: AppSpacing.armIntegrationMetricPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -201,10 +179,10 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.armIntegrationLineHeightTight,
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             value,
             maxLines: 1,
@@ -213,7 +191,7 @@ class _MetricBox extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.armIntegrationLineHeightTight,
             ),
           ),
         ],
@@ -231,7 +209,7 @@ class _ConnectionDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(10, 9, 10, 9),
+      padding: AppSpacing.armIntegrationDetailsPadding,
       child: Column(
         children: [
           _DetailRow(
@@ -239,9 +217,9 @@ class _ConnectionDetails extends StatelessWidget {
             value: connection.endpoint,
             mono: true,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.armIntegrationDetailsGap),
           _DetailRow(label: 'Last Check:', value: connection.lastCheck),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.armIntegrationDetailsGap),
           _DetailRow(label: 'Cert Expiry:', value: connection.certExpiry),
         ],
       ),
@@ -268,10 +246,10 @@ class _DetailRow extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.armIntegrationLineHeightTight,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Text(
             value,
@@ -281,7 +259,7 @@ class _DetailRow extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
               fontFeatures: mono ? AppTextStyles.tabularFigures : null,
-              height: 1,
+              height: AppSpacing.armIntegrationLineHeightTight,
             ),
           ),
         ),
@@ -307,18 +285,18 @@ class _TestButton extends StatelessWidget {
       key: ArmIntegrationStatusPage.testKey(connectionId),
       onPressed: isTesting ? null : onTap,
       variant: VitCtaButtonVariant.secondary,
-      height: 34,
+      height: AppSpacing.buttonCompact,
       leading: Icon(
         isTesting ? Icons.sync_rounded : Icons.bolt_rounded,
         color: isTesting ? AppColors.text3 : _armPrimary,
-        size: 15,
+        size: AppSpacing.armIntegrationTestIcon,
       ),
       child: Text(
         isTesting ? 'Testing...' : 'Test Connection',
         style: AppTextStyles.caption.copyWith(
           color: isTesting ? AppColors.text3 : _armPrimary,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.armIntegrationLineHeightTight,
         ),
       ),
     );
@@ -334,18 +312,18 @@ class _LogsButton extends StatelessWidget {
       onPressed: () {},
       variant: VitCtaButtonVariant.secondary,
       fullWidth: false,
-      height: 34,
+      height: AppSpacing.buttonCompact,
       leading: const Icon(
         Icons.open_in_new_rounded,
         color: AppColors.text2,
-        size: 14,
+        size: AppSpacing.armIntegrationLogsIcon,
       ),
       child: Text(
         'Logs',
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text2,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.armIntegrationLineHeightTight,
         ),
       ),
     );

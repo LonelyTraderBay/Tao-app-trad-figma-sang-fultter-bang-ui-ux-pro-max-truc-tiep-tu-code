@@ -8,30 +8,37 @@ class _TokenTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface2,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
-      child: Row(
+    return Material(
+      color: AppColors.surface2,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          _TabButton(
-            key: TokenInfoPage.overviewTabKey,
-            label: 'Tong quan',
-            active: active == _TokenInfoTab.overview,
-            onTap: () => onChanged(_TokenInfoTab.overview),
+          Row(
+            children: [
+              _TabButton(
+                key: TokenInfoPage.overviewTabKey,
+                label: 'Tong quan',
+                active: active == _TokenInfoTab.overview,
+                onTap: () => onChanged(_TokenInfoTab.overview),
+              ),
+              _TabButton(
+                key: TokenInfoPage.onchainTabKey,
+                label: 'On-chain',
+                active: active == _TokenInfoTab.onchain,
+                onTap: () => onChanged(_TokenInfoTab.onchain),
+              ),
+              _TabButton(
+                key: TokenInfoPage.projectTabKey,
+                label: 'Du an',
+                active: active == _TokenInfoTab.project,
+                onTap: () => onChanged(_TokenInfoTab.project),
+              ),
+            ],
           ),
-          _TabButton(
-            key: TokenInfoPage.onchainTabKey,
-            label: 'On-chain',
-            active: active == _TokenInfoTab.onchain,
-            onTap: () => onChanged(_TokenInfoTab.onchain),
-          ),
-          _TabButton(
-            key: TokenInfoPage.projectTabKey,
-            label: 'Du an',
-            active: active == _TokenInfoTab.project,
-            onTap: () => onChanged(_TokenInfoTab.project),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            thickness: AppSpacing.dividerHairline,
+            color: AppColors.border,
           ),
         ],
       ),
@@ -62,7 +69,7 @@ class _TabButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 14),
+                padding: AppSpacing.tokenInfoTabPadding,
                 child: Text(
                   label,
                   style: AppTextStyles.caption.copyWith(
@@ -73,13 +80,15 @@ class _TabButton extends StatelessWidget {
                   ),
                 ),
               ),
-              AnimatedContainer(
+              AnimatedSize(
                 duration: const Duration(milliseconds: 180),
-                height: 2,
-                width: active ? 116 : 0,
-                decoration: BoxDecoration(
-                  color: _marketPrimary,
-                  borderRadius: AppRadii.xsRadius,
+                child: SizedBox(
+                  height: AppSpacing.tokenInfoTabIndicatorHeight,
+                  width: active ? AppSpacing.tokenInfoTabIndicatorWidth : 0,
+                  child: Material(
+                    color: active ? _marketPrimary : AppColors.transparent,
+                    borderRadius: AppRadii.xsRadius,
+                  ),
                 ),
               ),
             ],
@@ -113,10 +122,11 @@ class _OverviewTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _HeroCard(snapshot: snapshot),
-        const SizedBox(height: 14),
-        _SectionHeader(
-          label: 'Thong ke thi truong',
+        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        VitSectionHeader(
+          title: 'Thong ke thi truong',
           accentColor: pair.logoColor,
+          variant: VitSectionHeaderVariant.accentBar,
         ),
         _InfoCard(
           rows: [
@@ -157,23 +167,32 @@ class _OverviewTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 14),
-        const _SectionHeader(label: 'Cung token', accentColor: _marketPrimary),
+        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const VitSectionHeader(
+          title: 'Cung token',
+          accentColor: _marketPrimary,
+          variant: VitSectionHeaderVariant.accentBar,
+        ),
         _SupplyCard(fundamentals: fundamentals, supplyPct: supplyPct),
-        const SizedBox(height: 14),
-        const _SectionHeader(
-          label: 'Phan bo cung',
+        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const VitSectionHeader(
+          title: 'Phan bo cung',
           accentColor: AppColors.accent,
+          variant: VitSectionHeaderVariant.accentBar,
         ),
         _DistributionCard(distribution: fundamentals.supplyDistribution),
-        const SizedBox(height: 14),
-        const _SectionHeader(label: 'Ky luc gia', accentColor: AppColors.warn),
+        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const VitSectionHeader(
+          title: 'Ky luc gia',
+          accentColor: AppColors.warn,
+          variant: VitSectionHeaderVariant.accentBar,
+        ),
         _AthAtlCards(
           fundamentals: fundamentals,
           athDropPct: athDropPct,
           atlGainPct: atlGainPct,
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
         _ChartLink(pairId: pair.id),
       ],
     );
@@ -191,62 +210,53 @@ class _HeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final pair = snapshot.pair;
     final fundamentals = snapshot.fundamentals;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        border: Border.all(color: _marketPrimary.withValues(alpha: 0.22)),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                _TokenAvatar(symbol: pair.baseAsset, color: pair.logoColor),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        fundamentals.name,
-                        style: AppTextStyles.sectionTitle,
+    return VitCard(
+      padding: AppSpacing.tokenInfoHeroPadding,
+      borderColor: _marketPrimary.withValues(alpha: 0.22),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              _TokenAvatar(symbol: pair.baseAsset, color: pair.logoColor),
+              const SizedBox(width: AppSpacing.tokenInfoHeroAvatarGap),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(fundamentals.name, style: AppTextStyles.sectionTitle),
+                    const SizedBox(height: AppSpacing.tokenInfoHeroSubtitleGap),
+                    Text(
+                      fundamentals.consensus,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        fundamentals.consensus,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: Text(
-                    _formatPrice(pair.price),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.amountMd.copyWith(
-                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.tokenInfoHeroPriceGap),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Text(
+                  _formatPrice(pair.price),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.amountMd.copyWith(
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                _ChangePill(change: pair.change24h),
-              ],
-            ),
-          ],
-        ),
+              ),
+              _ChangePill(change: pair.change24h),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -260,21 +270,11 @@ class _TokenAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 44,
-      height: 44,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.20),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        symbol,
-        style: AppTextStyles.caption.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
+    return VitAssetAvatar(
+      label: symbol,
+      accentColor: color,
+      size: AppSpacing.tokenInfoHeroAvatar,
+      radius: AppRadii.cardRadius,
     );
   }
 }
@@ -288,51 +288,12 @@ class _ChangePill extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = change >= 0;
     final color = positive ? AppColors.buy : AppColors.sell;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.16),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        '${positive ? '+' : ''}${change.toStringAsFixed(2)}%',
-        style: AppTextStyles.caption.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
-  }
-}
-
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({required this.label, required this.accentColor});
-
-  final String label;
-  final Color accentColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 14,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitAccentPill(
+      label: '${positive ? '+' : ''}${change.toStringAsFixed(2)}%',
+      accentColor: color,
+      semanticStatus: positive
+          ? VitStatusPillStatus.success
+          : VitStatusPillStatus.error,
     );
   }
 }
@@ -361,7 +322,7 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: AppSpacing.tokenInfoInfoCardPadding,
       child: Column(
         children: [
           for (var i = 0; i < rows.length; i += 1)
@@ -380,36 +341,43 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: showDivider
-            ? const Border(bottom: BorderSide(color: AppColors.divider))
-            : null,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 11),
-        child: Row(
-          children: [
-            Icon(row.icon, size: 13, color: row.iconColor),
-            const SizedBox(width: 9),
-            Expanded(
-              child: Text(
-                row.label,
-                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.tokenInfoInfoRowPadding,
+          child: Row(
+            children: [
+              Icon(
+                row.icon,
+                size: AppSpacing.tokenInfoInfoIcon,
+                color: row.iconColor,
               ),
-            ),
-            Text(
-              row.value,
-              textAlign: TextAlign.right,
-              style: AppTextStyles.caption.copyWith(
-                color: row.valueColor ?? AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: AppTextStyles.tabularFigures,
+              const SizedBox(width: AppSpacing.tokenInfoInfoIconGap),
+              Expanded(
+                child: Text(
+                  row.label,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
               ),
-            ),
-          ],
+              Text(
+                row.value,
+                textAlign: TextAlign.right,
+                style: AppTextStyles.caption.copyWith(
+                  color: row.valueColor ?? AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+        if (showDivider)
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            thickness: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
+      ],
     );
   }
 }

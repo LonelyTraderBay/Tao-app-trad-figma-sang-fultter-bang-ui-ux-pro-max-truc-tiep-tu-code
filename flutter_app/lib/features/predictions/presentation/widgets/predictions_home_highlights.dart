@@ -24,18 +24,11 @@ class _PredictionCtaCard extends StatelessWidget {
       padding: AppSpacing.predictionHomeCompactCardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.predictionHomeHighlightIconBox,
-            height: AppSpacing.predictionHomeHighlightIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              icon,
-              color: color,
-              size: AppSpacing.predictionHomeHighlightCtaIcon,
-            ),
+          _HighlightIconBox(
+            icon: icon,
+            color: color,
+            background: color.withValues(alpha: .12),
+            iconSize: AppSpacing.predictionHomeHighlightCtaIcon,
           ),
           const SizedBox(width: AppSpacing.predictionHomeHighlightGap),
           Expanded(
@@ -84,18 +77,11 @@ class _BreakingMoversCard extends StatelessWidget {
       padding: AppSpacing.predictionHomeCompactCardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.predictionHomeHighlightIconBox,
-            height: AppSpacing.predictionHomeHighlightIconBox,
-            decoration: BoxDecoration(
-              color: AppColors.warn10,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.bolt_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.predictionHomeHighlightIcon,
-            ),
+          const _HighlightIconBox(
+            icon: Icons.bolt_rounded,
+            color: AppColors.warn,
+            background: AppColors.warn10,
+            iconSize: AppSpacing.predictionHomeHighlightIcon,
           ),
           const SizedBox(width: AppSpacing.predictionHomeHighlightGap),
           Expanded(
@@ -162,18 +148,11 @@ class _ArenaBridgeCard extends StatelessWidget {
       padding: AppSpacing.predictionHomeBridgeCardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.predictionHomeHighlightIconBox,
-            height: AppSpacing.predictionHomeHighlightIconBox,
-            decoration: BoxDecoration(
-              color: AppColors.warn10,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.sports_esports_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.predictionHomeHighlightIcon,
-            ),
+          const _HighlightIconBox(
+            icon: Icons.sports_esports_rounded,
+            color: AppColors.warn,
+            background: AppColors.warn10,
+            iconSize: AppSpacing.predictionHomeHighlightIcon,
           ),
           const SizedBox(width: AppSpacing.predictionHomeHighlightGap),
           Expanded(
@@ -221,6 +200,32 @@ class _ArenaBridgeCard extends StatelessWidget {
             size: AppSpacing.predictionHomeHighlightCtaIcon,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _HighlightIconBox extends StatelessWidget {
+  const _HighlightIconBox({
+    required this.icon,
+    required this.color,
+    required this.background,
+    required this.iconSize,
+  });
+
+  final IconData icon;
+  final Color color;
+  final Color background;
+  final double iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.square(
+      dimension: AppSpacing.predictionHomeHighlightIconBox,
+      child: Material(
+        color: background,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        child: Icon(icon, color: color, size: iconSize),
       ),
     );
   }

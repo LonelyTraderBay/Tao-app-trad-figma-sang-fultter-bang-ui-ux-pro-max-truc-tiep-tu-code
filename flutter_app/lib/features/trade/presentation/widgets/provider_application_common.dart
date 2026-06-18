@@ -8,25 +8,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 14,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: AppRadii.xlRadius,
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.extraBold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: color,
     );
   }
 }
@@ -39,7 +24,7 @@ class _StepTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: AppSpacing.providerApplicationStepTitlePadding,
       child: Text(title, style: AppTextStyles.sectionTitle),
     );
   }
@@ -75,11 +60,11 @@ class _TogglePanel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _PanelHeader(icon: icon, title: title),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.x3),
             Text(description, style: _panelDescriptionStyle),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
             SizedBox(
-              height: 40,
+              height: AppSpacing.inputHeight - AppSpacing.x4,
               width: double.infinity,
               child: FilledButton(
                 onPressed: onTap,
@@ -121,14 +106,14 @@ class _NumberPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _PanelHeader(icon: Icons.schedule_rounded, title: title),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.x3),
           Text(description, style: _panelDescriptionStyle),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
           Text(
             label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
           VitInput(
             fieldKey: ProviderApplicationPage.monthsFieldKey,
             controller: controller,
@@ -164,7 +149,7 @@ class _ConsentTile extends StatelessWidget {
       borderRadius: AppRadii.cardRadius,
       child: VitCard(
         variant: checked ? VitCardVariant.inner : VitCardVariant.standard,
-        padding: const EdgeInsets.all(14),
+        padding: AppSpacing.providerApplicationConsentPadding,
         borderColor: checked ? _providerPrimary : AppColors.cardBorder,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,13 +161,13 @@ class _ConsentTile extends StatelessWidget {
               color: checked ? _providerPrimary : AppColors.text3,
               size: 22,
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
             Expanded(
               child: Text(
                 text,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  height: 1.5,
+                  height: AppSpacing.providerApplicationConsentLineHeight,
                 ),
               ),
             ),
@@ -211,7 +196,7 @@ class _InfoPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _PanelHeader(icon: icon, title: title),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.x3),
           Text(description, style: _panelDescriptionStyle),
         ],
       ),
@@ -226,7 +211,10 @@ class _Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(padding: const EdgeInsets.all(16), child: child);
+    return VitCard(
+      padding: AppSpacing.providerApplicationPanelPadding,
+      child: child,
+    );
   }
 }
 
@@ -241,7 +229,7 @@ class _PanelHeader extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, color: _providerPrimary, size: 18),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.x3),
         Text(
           title,
           style: AppTextStyles.baseMedium.copyWith(
@@ -254,7 +242,10 @@ class _PanelHeader extends StatelessWidget {
 }
 
 TextStyle get _panelDescriptionStyle =>
-    AppTextStyles.caption.copyWith(color: AppColors.text3, height: 1.45);
+    AppTextStyles.caption.copyWith(
+      color: AppColors.text3,
+      height: AppSpacing.providerApplicationPanelDescriptionLineHeight,
+    );
 
 InputDecoration _inputDecoration(String hint) {
   return InputDecoration(
@@ -262,7 +253,7 @@ InputDecoration _inputDecoration(String hint) {
     hintStyle: AppTextStyles.caption.copyWith(color: AppColors.text3),
     filled: true,
     fillColor: _providerField,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+    contentPadding: AppSpacing.providerApplicationInputContentPadding,
     border: OutlineInputBorder(
       borderSide: BorderSide.none,
       borderRadius: AppRadii.inputRadius,

@@ -23,56 +23,58 @@ class _ResultView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         Center(
-          child: Container(
-            width: 96,
-            height: 96,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              shape: BoxShape.circle,
-              border: Border.all(color: color, width: 3),
+          child: CircleAvatar(
+            radius: AppSpacing.tradeBotResultIconBox / 2,
+            backgroundColor: color.withValues(alpha: .12),
+            child: Icon(
+              _iconForResult(result.outcome),
+              color: color,
+              size: AppSpacing.tradeBotResultIcon,
             ),
-            child: Icon(_iconForResult(result.outcome), color: color, size: 48),
           ),
         ),
-        const SizedBox(height: 23),
+        const SizedBox(height: AppSpacing.tradeBotCheckbox),
         Text(
           result.title,
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(color: color, height: 1.1),
+          style: AppTextStyles.sectionTitle.copyWith(
+            color: color,
+            height: AppSpacing.tradeBotSuitabilityResultTitleLineHeight,
+          ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         Text(
           result.message,
           textAlign: TextAlign.center,
           style: AppTextStyles.body.copyWith(
             color: AppColors.text2,
-            height: 1.6,
+            height: AppSpacing.tradeBotLineHeightLong,
           ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: AppSpacing.tradeBotCheckbox),
         _ScoreCard(
           score: score,
           maxScore: maxScore,
           percent: percent,
           color: color,
         ),
-        const SizedBox(height: 21),
+        const SizedBox(height: AppSpacing.x5),
         _SectionLabel('Category Breakdown'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _CategoryBreakdown(snapshot: snapshot, answers: answers),
-        const SizedBox(height: 21),
+        const SizedBox(height: AppSpacing.x5),
         _SectionLabel('Recommendations'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _RecommendationsCard(result: result, color: color),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.tradeBotContentGap),
         _RegulatoryCard(snapshot: snapshot),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.tradeBotSelectionDot),
         VitCtaButton(
           key: BotSuitabilityAssessmentPage.resultCtaKey,
           onPressed: () => onComplete(result),
-          height: 44,
+          height: AppSpacing.tradeBotSheetActionHeight,
           variant: result.outcome == TradeBotSuitabilityOutcome.fail
               ? VitCtaButtonVariant.danger
               : VitCtaButtonVariant.success,
@@ -81,7 +83,7 @@ class _ResultView extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.onAccent,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ),
@@ -121,7 +123,7 @@ class _ScoreCard extends StatelessWidget {
                   'Your Score',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
@@ -130,27 +132,27 @@ class _ScoreCard extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
               value: percent,
-              minHeight: 12,
+              minHeight: AppSpacing.tradeBotScoreProgressHeight,
               backgroundColor: _assessmentPanel2,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Text(
             '${(percent * 100).toStringAsFixed(0)}% proficiency',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],

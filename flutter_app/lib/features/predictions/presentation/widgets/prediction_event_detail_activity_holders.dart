@@ -11,19 +11,22 @@ class _HoldersContent extends StatelessWidget {
       children: [
         Row(
           children: [
-            const SizedBox(width: 28, child: _OrderBookLabel('#')),
+            const SizedBox(
+              width: AppSpacing.predictionDetailHolderRankColumnWidth,
+              child: _OrderBookLabel('#'),
+            ),
             const Expanded(child: _OrderBookLabel('TRADER')),
             const SizedBox(
-              width: 54,
+              width: AppSpacing.predictionDetailHolderSideColumnWidth,
               child: _OrderBookLabel('SIDE', alignEnd: true),
             ),
             const SizedBox(
-              width: 70,
+              width: AppSpacing.predictionDetailHolderSharesColumnWidth,
               child: _OrderBookLabel('SHARES', alignEnd: true),
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: 8)),
+        const SizedBox(height: AppSpacing.predictionDetailHolderHeaderGap),
         for (var index = 0; index < snapshot.topHolders.length; index += 1)
           _HolderRow(rank: index + 1, holder: snapshot.topHolders[index]),
       ],
@@ -41,15 +44,17 @@ class _HolderRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = holder.outcome == 'Yes' ? AppColors.buy : AppColors.sell;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: AppSpacing.predictionDetailHolderRowPadding,
       child: Row(
         children: [
           SizedBox(
-            width: 28,
+            width: AppSpacing.predictionDetailHolderRankColumnWidth,
             child: Icon(
               rank == 1 ? Icons.workspace_premium_rounded : Icons.circle,
               color: rank == 1 ? AppColors.warn : AppColors.text3,
-              size: rank == 1 ? 15 : 6,
+              size: rank == 1
+                  ? AppSpacing.predictionDetailHolderWinnerIcon
+                  : AppSpacing.predictionDetailHolderDefaultIcon,
             ),
           ),
           Expanded(
@@ -62,7 +67,7 @@ class _HolderRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 54,
+            width: AppSpacing.predictionDetailHolderSideColumnWidth,
             child: Align(
               alignment: Alignment.centerRight,
               child: _TinyBadge(
@@ -73,7 +78,7 @@ class _HolderRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 70,
+            width: AppSpacing.predictionDetailHolderSharesColumnWidth,
             child: Text(
               _formatInt(holder.shares),
               textAlign: TextAlign.end,
@@ -100,23 +105,24 @@ class _ActivityContent extends StatelessWidget {
       children: [
         for (final item in snapshot.activity)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: AppSpacing.predictionDetailActivityRowPadding,
             child: Row(
               children: [
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    color: AppColors.surface2,
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: const Icon(
-                    Icons.flash_on_rounded,
-                    color: _predictionPrimary,
-                    size: 14,
+                Material(
+                  color: AppColors.surface2,
+                  borderRadius: AppRadii.smRadius,
+                  child: const SizedBox.square(
+                    dimension: AppSpacing.predictionDetailActivityIconBox,
+                    child: Icon(
+                      Icons.flash_on_rounded,
+                      color: _predictionPrimary,
+                      size: AppSpacing.predictionDetailActivityIcon,
+                    ),
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(
+                  width: AppSpacing.predictionDetailActivityIconGap,
+                ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -207,10 +207,10 @@ class _TwoFASetupPageState extends ConsumerState<TwoFASetupPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: TwoFASetupPage.contentKey,
-                padding: const EdgeInsets.only(bottom: AppSpacing.x6),
+                padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
                   padding: VitContentPadding.relaxed,
-                  customGap: 20,
+                  customGap: AppSpacing.authTwoFaContentGap,
                   children: [
                     if (_step == 1)
                       _QrStep(onCopy: _copySecret, copied: _copied),

@@ -67,7 +67,7 @@ class _StakingFAQPageState extends ConsumerState<StakingFAQPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -145,27 +145,26 @@ class _CategoryTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: StakingFAQPage.tabsKey,
       color: AppColors.surface,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.x3,
-        AppSpacing.x4,
-        AppSpacing.x3,
-        0,
-      ),
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: active.name,
-        onChanged: (key) => onChanged(
-          StakingFAQCategory.values.firstWhere(
-            (category) => category.name == key,
-          ),
+      child: Padding(
+        padding: AppSpacing.earnHorizontalPaddingX3.copyWith(
+          top: AppSpacing.x4,
         ),
-        tabs: [
-          for (final category in StakingFAQCategory.values)
-            VitTabItem(key: category.name, label: _categoryLabel(category)),
-        ],
+        child: VitTabBar(
+          variant: VitTabBarVariant.underline,
+          activeKey: active.name,
+          onChanged: (key) => onChanged(
+            StakingFAQCategory.values.firstWhere(
+              (category) => category.name == key,
+            ),
+          ),
+          tabs: [
+            for (final category in StakingFAQCategory.values)
+              VitTabItem(key: category.name, label: _categoryLabel(category)),
+          ],
+        ),
       ),
     );
   }
@@ -218,14 +217,14 @@ class _FAQCard extends StatelessWidget {
     final color = _categoryColor(item.category);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           InkWell(
             onTap: onTap,
             borderRadius: AppRadii.cardLargeRadius,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -260,11 +259,10 @@ class _FAQCard extends StatelessWidget {
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
             secondChild: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.x7,
-                0,
-                AppSpacing.x4,
-                AppSpacing.x4,
+              padding: AppSpacing.earnContentHorizontalPadding.copyWith(
+                left: AppSpacing.x7,
+                top: AppSpacing.zero,
+                bottom: AppSpacing.x4,
               ),
               child: Text(
                 item.answer,
@@ -294,7 +292,7 @@ class _EmptyResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingFAQPage.emptyKey,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         children: [
           const Icon(
@@ -332,7 +330,7 @@ class _SupportPanel extends StatelessWidget {
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

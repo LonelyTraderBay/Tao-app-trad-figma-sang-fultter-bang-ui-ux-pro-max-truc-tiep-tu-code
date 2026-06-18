@@ -95,7 +95,7 @@ class _ArenaChallengeDetailPageState
                   child: SingleChildScrollView(
                     key: ArenaChallengeDetailPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x5,
@@ -224,17 +224,12 @@ class _ArenaChallengeDetailPageState
       backgroundColor: AppColors.surface,
       barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .55),
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadii.lg)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) => SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.x5,
-            AppSpacing.x5,
-            AppSpacing.x5,
-            AppSpacing.x6,
-          ),
+          padding: AppSpacing.arenaActionSheetPadding,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,7 +249,7 @@ class _ArenaChallengeDetailPageState
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               Text(
                 body,
                 style: AppTextStyles.body.copyWith(
@@ -262,7 +257,7 @@ class _ArenaChallengeDetailPageState
                   height: AppSpacing.arenaChallengeBodyLineHeight,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+              const SizedBox(height: AppSpacing.x5),
               VitCtaButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text('Đã hiểu'),

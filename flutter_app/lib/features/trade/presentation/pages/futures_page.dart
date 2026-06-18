@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -22,9 +21,6 @@ part 'futures_page_part_03.dart';
 const _tradePrimary = AppColors.primary;
 const _futuresRed = AppColors.sell;
 const _futuresGreen = AppColors.buy;
-const _panelBackground = AppColors.surface;
-const _chipBackground = AppColors.surface2;
-const _warningBackground = AppColors.caution10;
 const _warningBorder = AppColors.caution20;
 
 class FuturesPage extends ConsumerStatefulWidget {

@@ -10,25 +10,29 @@ class _OverallStatusCard extends StatelessWidget {
     return VitCard(
       key: P2PKycStatusPage.statusCardKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pKycCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.inputHeight,
                 height: AppSpacing.inputHeight,
-                decoration: BoxDecoration(
+                child: Material(
                   color: AppColors.primary15,
-                  borderRadius: AppRadii.lgRadius,
-                  border: Border.all(color: AppColors.primary20),
-                ),
-                child: const Icon(
-                  Icons.shield_outlined,
-                  color: AppModuleAccents.p2p,
-                  size: AppSpacing.iconMd,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.lgRadius,
+                    side: const BorderSide(color: AppColors.primary20),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.shield_outlined,
+                      color: AppModuleAccents.p2p,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -89,7 +93,7 @@ class _OverallStatusCard extends StatelessWidget {
             variant: VitCardVariant.inner,
             radius: VitCardRadius.md,
             borderColor: AppColors.primary20,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.p2pKycNoticePadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -104,7 +108,7 @@ class _OverallStatusCard extends StatelessWidget {
                     snapshot.infoBody,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.45,
+                      height: AppSpacing.p2pKycReadableLineHeight,
                     ),
                   ),
                 ),
@@ -128,14 +132,25 @@ class _ProgressTrack extends StatelessWidget {
       borderRadius: AppRadii.xsRadius,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          return Container(
+          return SizedBox(
             height: AppSpacing.x2,
-            color: AppColors.surface3,
-            alignment: Alignment.centerLeft,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 220),
-              width: constraints.maxWidth * value.clamp(0, 1),
-              decoration: const BoxDecoration(color: AppModuleAccents.p2p),
+            child: ColoredBox(
+              color: AppColors.surface3,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: TweenAnimationBuilder<double>(
+                  tween: Tween<double>(end: value.clamp(0, 1).toDouble()),
+                  duration: const Duration(milliseconds: 220),
+                  builder: (context, animatedValue, child) {
+                    return SizedBox(
+                      width: constraints.maxWidth * animatedValue,
+                      height: AppSpacing.x2,
+                      child: child,
+                    );
+                  },
+                  child: const ColoredBox(color: AppModuleAccents.p2p),
+                ),
+              ),
             ),
           );
         },
@@ -154,7 +169,7 @@ class _StatusTimeline extends StatelessWidget {
     return VitCard(
       key: P2PKycStatusPage.timelineKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pKycCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -184,27 +199,34 @@ class _StepTimelineRow extends StatelessWidget {
             width: AppSpacing.inputHeight,
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: AppSpacing.inputHeight,
                   height: AppSpacing.inputHeight,
-                  decoration: BoxDecoration(
+                  child: Material(
                     color: _stepBackground(step.status),
-                    borderRadius: AppRadii.lgRadius,
-                    border: Border.all(color: color, width: 2),
-                  ),
-                  child: Icon(
-                    _stepIcon(step.iconKey),
-                    color: color,
-                    size: AppSpacing.iconMd,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.lgRadius,
+                      side: BorderSide(
+                        color: color,
+                        width: AppSpacing.p2pKycTimelineNodeBorder,
+                      ),
+                    ),
+                    child: Icon(
+                      _stepIcon(step.iconKey),
+                      color: color,
+                      size: AppSpacing.iconMd,
+                    ),
                   ),
                 ),
                 if (!isLast)
                   Expanded(
-                    child: Container(
-                      width: 2,
-                      color: step.status == P2PKycStepStatus.completed
-                          ? AppColors.buy
-                          : AppColors.borderSolid,
+                    child: SizedBox(
+                      width: AppSpacing.p2pKycTimelineLineWidth,
+                      child: ColoredBox(
+                        color: step.status == P2PKycStepStatus.completed
+                            ? AppColors.buy
+                            : AppColors.borderSolid,
+                      ),
                     ),
                   ),
               ],
@@ -213,7 +235,9 @@ class _StepTimelineRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(bottom: isLast ? 0 : AppSpacing.x5),
+              padding: isLast
+                  ? AppSpacing.zeroInsets
+                  : AppSpacing.p2pKycTimelineRowPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -308,7 +332,7 @@ class _StepMeta extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: color, size: 11),
+        Icon(icon, color: color, size: AppSpacing.p2pKycTimelineMetaIcon),
         const SizedBox(width: AppSpacing.x1),
         Expanded(
           child: Text(
@@ -342,10 +366,7 @@ class _StepActionButton extends StatelessWidget {
           context.go(step.actionRoute!);
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.p2pKycInlineActionPadding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

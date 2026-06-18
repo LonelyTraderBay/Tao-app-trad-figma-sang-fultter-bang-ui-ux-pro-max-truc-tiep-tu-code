@@ -17,35 +17,37 @@ class _PreviewRow extends StatelessWidget {
       DcaRebalanceTradeAction.sell => 'Bán',
       DcaRebalanceTradeAction.hold => 'Giữ',
     };
-    return Container(
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Row(
-        children: [
-          Text(
-            preview.symbol,
-            style: AppTextStyles.base.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.dcaPaddingX4,
+        child: Row(
+          children: [
+            Text(
+              preview.symbol,
+              style: AppTextStyles.base.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-          const Spacer(),
-          Text(
-            '${preview.currentPercent.toStringAsFixed(0)}% → ${preview.targetPercent.toStringAsFixed(0)}%',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-          const SizedBox(width: AppSpacing.x4),
-          Text(
-            '$label \$${preview.tradeAmountUsd.toStringAsFixed(0)}',
-            style: AppTextStyles.caption.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
+            const Spacer(),
+            Text(
+              '${preview.currentPercent.toStringAsFixed(0)}% → ${preview.targetPercent.toStringAsFixed(0)}%',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x4),
+            Text(
+              '$label \$${preview.tradeAmountUsd.toStringAsFixed(0)}',
+              style: AppTextStyles.caption.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -93,14 +95,18 @@ class _AccentIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.iconLg,
       height: AppSpacing.iconLg,
-      decoration: BoxDecoration(
-        color: muted ? AppColors.surface2 : color.withValues(alpha: .15),
-        borderRadius: AppRadii.inputRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: muted ? AppColors.surface2 : color.withValues(alpha: .15),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
+          ),
+        ),
+        child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
     );
   }
 }
@@ -130,32 +136,31 @@ class _PillButton extends StatelessWidget {
         child: AnimatedOpacity(
           duration: const Duration(milliseconds: 150),
           opacity: enabled ? 1 : .45,
-          child: Container(
-            decoration: BoxDecoration(
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
               color: AppColors.accent10,
-              borderRadius: AppRadii.inputRadius,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
             ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x3,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  color: AppColors.accent,
-                  size: AppSpacing.dcaRebalanceIconSm,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
+            child: Padding(
+              padding: AppSpacing.dcaPrimaryChipPadding,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    icon,
                     color: AppColors.accent,
-                    fontWeight: AppTextStyles.bold,
+                    size: AppSpacing.dcaRebalanceIconSm,
                   ),
-                ),
-              ],
+                  const SizedBox(width: AppSpacing.x2),
+                  Text(
+                    label,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.accent,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -174,12 +179,16 @@ class _LegendRow extends StatelessWidget {
     final accent = _accentColor(target.accent);
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.x4,
           height: AppSpacing.x4,
-          decoration: BoxDecoration(
-            color: accent,
-            borderRadius: AppRadii.xsRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: accent,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.xsRadius,
+              ),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -209,24 +218,28 @@ class _CoinBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.dcaRebalanceTileIconBox,
       height: AppSpacing.dcaRebalanceTileIconBox,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: accent.withValues(alpha: .12),
-        border: Border.all(color: accent.withValues(alpha: .35)),
-      ),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x2),
-          child: Text(
-            symbol.length > 3 ? symbol.substring(0, 3) : symbol,
-            style: AppTextStyles.caption.copyWith(
-              color: accent,
-              fontWeight: AppTextStyles.bold,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: accent.withValues(alpha: .12),
+          shape: CircleBorder(
+            side: BorderSide(color: accent.withValues(alpha: .35)),
+          ),
+        ),
+        child: Center(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Padding(
+              padding: AppSpacing.dcaPaddingX2,
+              child: Text(
+                symbol.length > 3 ? symbol.substring(0, 3) : symbol,
+                style: AppTextStyles.caption.copyWith(
+                  color: accent,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -256,14 +269,16 @@ class _IconBadgeButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         customBorder: const CircleBorder(),
-        child: Container(
+        child: SizedBox(
           width: AppSpacing.iconLg,
           height: AppSpacing.iconLg,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: neutral ? AppColors.surface : color.withValues(alpha: .12),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: neutral ? AppColors.surface : color.withValues(alpha: .12),
+              shape: const CircleBorder(),
+            ),
+            child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
           ),
-          child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
         ),
       ),
     );
@@ -283,22 +298,32 @@ class _TogglePill extends StatelessWidget {
       checked: value,
       child: GestureDetector(
         onTap: () => onChanged(!value),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
+        child: SizedBox(
           width: AppSpacing.dcaRebalanceToggleWidth,
           height: AppSpacing.dcaRebalanceToggleHeight,
-          decoration: BoxDecoration(
-            color: value ? AppColors.buy : AppColors.borderSolid,
-            borderRadius: AppRadii.xlRadius,
-          ),
-          alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-          padding: const EdgeInsets.all(AppSpacing.x1),
-          child: Container(
-            width: AppSpacing.dcaRebalanceToggleThumb,
-            height: AppSpacing.dcaRebalanceToggleThumb,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.text1,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: value ? AppColors.buy : AppColors.borderSolid,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.xlRadius,
+              ),
+            ),
+            child: Padding(
+              padding: AppSpacing.dcaPaddingX1,
+              child: AnimatedAlign(
+                duration: const Duration(milliseconds: 160),
+                alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+                child: const SizedBox(
+                  width: AppSpacing.dcaRebalanceToggleThumb,
+                  height: AppSpacing.dcaRebalanceToggleThumb,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: AppColors.text1,
+                      shape: CircleBorder(),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ),

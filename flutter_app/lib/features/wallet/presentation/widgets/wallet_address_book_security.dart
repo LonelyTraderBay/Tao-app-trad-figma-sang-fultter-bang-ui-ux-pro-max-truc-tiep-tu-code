@@ -18,13 +18,13 @@ class _WhitelistModeCard extends StatelessWidget {
         borderColor: AppColors.overlayStroke,
         child: Row(
           children: [
-            Container(
+            VitCard(
               width: AppSpacing.walletAddressIconSize,
               height: AppSpacing.walletAddressIconSize,
-              decoration: BoxDecoration(
-                color: enabled ? AppColors.buy10 : _bookPanel2,
-                borderRadius: AppRadii.lgRadius,
-              ),
+              variant: VitCardVariant.inner,
+              radius: VitCardRadius.lg,
+              borderColor: enabled ? AppColors.buy20 : AppColors.borderSolid,
+              alignment: Alignment.center,
               child: Icon(
                 Icons.lock_outline_rounded,
                 color: enabled ? _bookGreen : AppColors.text3,
@@ -72,31 +72,7 @@ class _SwitchPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.walletAddressSwitchWidth,
-      height: AppSpacing.walletAddressSwitchHeight,
-      decoration: BoxDecoration(
-        color: enabled ? _bookGreen : _bookPanel2,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(
-          color: enabled ? _bookGreen : AppColors.borderSolid,
-          width: AppSpacing.walletAddressSwitchBorder,
-        ),
-      ),
-      child: AnimatedAlign(
-        alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-        duration: const Duration(milliseconds: 160),
-        child: Container(
-          width: AppSpacing.walletAddressSwitchKnob,
-          height: AppSpacing.walletAddressSwitchKnob,
-          margin: AppSpacing.walletAddressSwitchKnobMargin,
-          decoration: BoxDecoration(
-            color: enabled ? AppColors.onAccent : AppColors.textDisabledBlue,
-            shape: BoxShape.circle,
-          ),
-        ),
-      ),
-    );
+    return VitTogglePill(enabled: enabled, activeColor: _bookGreen);
   }
 }
 
@@ -111,8 +87,12 @@ class _SecurityTip extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: _bookPrimary, size: 16),
-          const SizedBox(width: 10),
+          const Icon(
+            Icons.shield_outlined,
+            color: _bookPrimary,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.rowGap),
           Expanded(
             child: Text.rich(
               TextSpan(

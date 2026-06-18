@@ -8,21 +8,7 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.tradeHistoryBadgePadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .16),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -34,28 +20,15 @@ class _TypeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final label = switch (type) {
-      TradeOrderType.market => '',
+      TradeOrderType.market => 'Market',
       TradeOrderType.limit => 'Limit',
       TradeOrderType.stop => 'Stop',
     };
-    return Container(
+    return ConstrainedBox(
       constraints: const BoxConstraints(
         minWidth: AppSpacing.tradeHistoryTypeBadgeMinWidth,
       ),
-      padding: AppSpacing.tradeHistoryBadgePadding,
-      decoration: BoxDecoration(
-        color: AppColors.surface3,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        textAlign: TextAlign.center,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text2,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+      child: VitAccentPill(label: label, accentColor: AppColors.text2),
     );
   }
 }
@@ -78,10 +51,7 @@ class _InfoColumn extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            height: 1.15,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         const SizedBox(height: AppSpacing.tradeHistoryInfoGap),
         Text(
@@ -89,7 +59,6 @@ class _InfoColumn extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: valueColor,
             fontWeight: AppTextStyles.bold,
-            height: 1.15,
           ),
         ),
       ],

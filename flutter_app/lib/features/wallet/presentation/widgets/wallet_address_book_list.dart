@@ -133,14 +133,12 @@ class _ShieldBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: AppSpacing.walletAddressIconSize,
       height: AppSpacing.walletAddressIconSize,
-      decoration: BoxDecoration(
-        color: _bookPanel2,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.borderSolid),
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.borderSolid,
+      alignment: Alignment.center,
       child: Icon(
         Icons.shield_outlined,
         color: whitelisted ? _bookGreen : AppColors.text3,
@@ -194,21 +192,16 @@ class _CopyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       key: AddressBookPage.copyKey(addressId),
+      height: AppSpacing.walletAddressCopyHeight,
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.primary20,
+      alignment: Alignment.center,
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: AppSpacing.walletAddressCopyHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: AppColors.primary12,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: AppColors.primary20),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
             Icon(
               copied ? Icons.check_circle_outline_rounded : Icons.copy_rounded,
               color: _bookPrimary,
@@ -222,8 +215,7 @@ class _CopyButton extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -274,14 +266,13 @@ class _EmptyAddressState extends StatelessWidget {
       padding: AppSpacing.walletAddressEmptyPadding,
       child: Column(
         children: [
-          Container(
+          const VitCard(
             width: AppSpacing.walletAddressEmptyIconSize,
             height: AppSpacing.walletAddressEmptyIconSize,
-            decoration: BoxDecoration(
-              color: _bookPanel2,
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: const Icon(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.lg,
+            alignment: Alignment.center,
+            child: Icon(
               Icons.shield_outlined,
               color: AppColors.text3,
               size: AppSpacing.walletAddressEmptyIconGlyph,

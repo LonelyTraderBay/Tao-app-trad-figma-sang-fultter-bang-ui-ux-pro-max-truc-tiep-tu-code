@@ -62,8 +62,10 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pBlacklistBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pBlacklistBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final canSubmit =
         _usernameController.text.trim().isNotEmpty && !_isSubmitting;
@@ -90,16 +92,13 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pBlacklistFormScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      customGap: AppSpacing.p2pBlacklistFormContentGap,
                       children: [
                         _Hero(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x4),
@@ -140,7 +139,7 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pBlacklistCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Blacklist action review',
@@ -172,28 +171,32 @@ class _Hero extends StatelessWidget {
     return Column(
       key: P2PBlacklistAddPage.heroKey,
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.buttonStandard,
           height: AppSpacing.buttonStandard,
-          decoration: BoxDecoration(
+          child: Material(
             color: AppColors.sell10,
             borderRadius: AppRadii.cardRadius,
-          ),
-          child: const Icon(
-            Icons.person_remove_alt_1_outlined,
-            color: AppColors.sell,
-            size: AppSpacing.iconLg,
+            child: const Icon(
+              Icons.person_remove_alt_1_outlined,
+              color: AppColors.sell,
+              size: AppSpacing.iconLg,
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.x4),
         Text(
           snapshot.heroTitle,
           textAlign: TextAlign.center,
-          style: AppTextStyles.pageTitle.copyWith(height: 1.1),
+          style: AppTextStyles.pageTitle.copyWith(
+            height: AppSpacing.p2pBlacklistHeroTitleLineHeight,
+          ),
         ),
         const SizedBox(height: AppSpacing.x3),
         ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 280),
+          constraints: const BoxConstraints(
+            maxWidth: AppSpacing.p2pBlacklistHeroSubtitleMaxWidth,
+          ),
           child: Text(
             snapshot.heroSubtitle,
             textAlign: TextAlign.center,
@@ -256,37 +259,33 @@ class _ReasonTile extends StatelessWidget {
     return Material(
       key: P2PBlacklistAddPage.reasonKey(reason.id),
       color: selected ? color.withValues(alpha: .08) : AppColors.surface2,
-      borderRadius: AppRadii.inputRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(
+          color: selected
+              ? color.withValues(alpha: .46)
+              : AppColors.borderSolid,
+          width: AppSpacing.borderWidth,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected
-                  ? color.withValues(alpha: .46)
-                  : AppColors.borderSolid,
-              width: 1.5,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
+        child: Padding(
+          padding: AppSpacing.p2pBlacklistReasonTilePadding,
           child: Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.buttonCompact,
                 height: AppSpacing.buttonCompact,
-                decoration: BoxDecoration(
+                child: Material(
                   color: color.withValues(alpha: .12),
                   borderRadius: AppRadii.cardRadius,
-                ),
-                child: Icon(
-                  _reasonIcon(reason.iconKey),
-                  color: color,
-                  size: 16,
+                  child: Icon(
+                    _reasonIcon(reason.iconKey),
+                    color: color,
+                    size: AppSpacing.p2pBlacklistReasonIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -332,29 +331,35 @@ class _NoteField extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         const SizedBox(height: AppSpacing.x2),
-        Container(
-          height: 110,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
-          decoration: BoxDecoration(
+        SizedBox(
+          height: AppSpacing.p2pBlacklistNoteFieldHeight,
+          child: Material(
             color: AppColors.surface2,
-            border: Border.all(color: AppColors.borderSolid, width: 1.5),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: TextField(
-            key: P2PBlacklistAddPage.noteKey,
-            controller: controller,
-            minLines: null,
-            maxLines: null,
-            expands: true,
-            textAlignVertical: TextAlignVertical.top,
-            cursorColor: AppColors.primary,
-            style: AppTextStyles.body,
-            decoration: InputDecoration.collapsed(
-              hintText: hint,
-              hintStyle: AppTextStyles.body.copyWith(color: AppColors.text3),
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: const BorderSide(
+                color: AppColors.borderSolid,
+                width: AppSpacing.borderWidth,
+              ),
+            ),
+            child: Padding(
+              padding: AppSpacing.p2pBlacklistReasonTilePadding,
+              child: TextField(
+                key: P2PBlacklistAddPage.noteKey,
+                controller: controller,
+                minLines: null,
+                maxLines: null,
+                expands: true,
+                textAlignVertical: TextAlignVertical.top,
+                cursorColor: AppColors.primary,
+                style: AppTextStyles.body,
+                decoration: InputDecoration.collapsed(
+                  hintText: hint,
+                  hintStyle: AppTextStyles.body.copyWith(
+                    color: AppColors.text3,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -373,7 +378,7 @@ class _WarningCard extends StatelessWidget {
     return VitCard(
       key: P2PBlacklistAddPage.warningKey,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pBlacklistCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -388,7 +393,7 @@ class _WarningCard extends StatelessWidget {
               snapshot.warning,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
-                height: 1.45,
+                height: AppSpacing.p2pBlacklistReadableLineHeight,
               ),
             ),
           ),

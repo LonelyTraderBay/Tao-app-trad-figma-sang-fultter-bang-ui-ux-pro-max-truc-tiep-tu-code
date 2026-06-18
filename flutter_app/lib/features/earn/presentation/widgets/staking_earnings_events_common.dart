@@ -40,13 +40,15 @@ class _EventCard extends StatelessWidget {
     final color = _eventColor(event.type);
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           DecoratedBox(
-            decoration: BoxDecoration(
+            decoration: ShapeDecoration(
               color: color.withValues(alpha: 0.14),
-              borderRadius: AppRadii.lgRadius,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+              ),
             ),
             child: SizedBox(
               width: AppSpacing.buttonCompact + AppSpacing.x2,
@@ -123,15 +125,12 @@ class _TimingPill extends StatelessWidget {
     if (label == null) return const SizedBox.shrink();
 
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.primary12,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: 3,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -205,7 +204,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingEarningsCalendarPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -228,7 +227,7 @@ class _InfoBanner extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 for (final bullet in snapshot.infoBullets)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+                    padding: AppSpacing.earnBottomPaddingX1,
                     child: Text(
                       bullet,
                       style: AppTextStyles.caption.copyWith(

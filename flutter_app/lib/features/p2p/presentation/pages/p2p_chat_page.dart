@@ -93,12 +93,7 @@ class _P2PChatPageState extends ConsumerState<P2PChatPage> {
                 child: SingleChildScrollView(
                   key: P2PChatPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                  ),
+                  padding: AppSpacing.p2pChatScrollPadding,
                   child: Column(
                     children: [
                       _EncryptionPill(

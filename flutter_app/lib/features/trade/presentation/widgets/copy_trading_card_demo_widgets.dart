@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -51,7 +50,7 @@ class CopyTradingVariantSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           variant: VitCardVariant.standard,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.tradeBotCopyDemoCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -103,38 +102,35 @@ class _HeroCopyCard extends StatelessWidget {
       key: CopyTradingCardDemoUiKeys.cardKey('hero'),
       variant: VitCardVariant.standard,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       borderColor: AppColors.borderSolid,
       child: Column(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              border: Border.all(color: AppColors.cardBorder),
-              borderRadius: AppRadii.cardLargeRadius,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x5),
-              child: Column(
-                children: [
-                  Text(
-                    'ASSET UNDER MANAGEMENT',
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            padding: AppSpacing.tradeBotCopyDemoPanelPadding,
+            borderColor: AppColors.cardBorder,
+            background: const ColoredBox(color: AppColors.surface),
+            child: Column(
+              children: [
+                Text(
+                  'ASSET UNDER MANAGEMENT',
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x3),
-                  Text(
-                    formatCopyTradingUsd(metrics.aumUsd),
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.numericDisplayHeroSm,
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  CopyTradingTrendPill(value: metrics.aumTrendPercent),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                Text(
+                  formatCopyTradingUsd(metrics.aumUsd),
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.numericDisplayHeroSm,
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                CopyTradingTrendPill(value: metrics.aumTrendPercent),
+              ],
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
@@ -182,12 +178,15 @@ class _TabularCopyCard extends StatelessWidget {
       key: CopyTradingCardDemoUiKeys.cardKey('tabular'),
       variant: VitCardVariant.standard,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: Column(
         children: [
           _CopyCardHeader(),
           const SizedBox(height: AppSpacing.x4),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
           _TableMetricRow(
             label: 'Total AUM',
             value: formatCopyTradingUsd(metrics.aumUsd),
@@ -204,7 +203,10 @@ class _TabularCopyCard extends StatelessWidget {
             icon: Icons.group_add_outlined,
             showDivider: false,
           ),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
           const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
@@ -234,7 +236,7 @@ class _CompactCopyCard extends StatelessWidget {
       key: CopyTradingCardDemoUiKeys.cardKey('compact'),
       variant: VitCardVariant.standard,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: Column(
         children: [
           _CopyCardHeader(),
@@ -275,18 +277,15 @@ class _CopyCardHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const DecoratedBox(
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(AppSpacing.x4),
-            child: Icon(
-              Icons.dashboard_customize_outlined,
-              color: AppColors.navCenterIcon,
-              size: 22,
-            ),
+        const VitCard(
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.sm,
+          padding: AppSpacing.tradeBotCopyDemoCardPadding,
+          background: ColoredBox(color: AppColors.primary),
+          child: Icon(
+            Icons.dashboard_customize_outlined,
+            color: AppColors.navCenterIcon,
+            size: AppSpacing.tradeBotClientMoneyProtectionGap,
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
@@ -328,7 +327,7 @@ class _SecondaryMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.tradeBotCopyDemoCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -372,47 +371,49 @@ class _TableMetricRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: showDivider
-            ? const Border(bottom: BorderSide(color: AppColors.divider))
-            : null,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
-        child: Row(
-          children: [
-            if (icon != null) ...[
-              Icon(icon, color: AppColors.text2, size: 16),
-              const SizedBox(width: AppSpacing.x2),
-            ],
-            Expanded(
-              child: Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.medium,
-                ),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  value,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    fontFeatures: AppTextStyles.tabularFigures,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.tradeBotCopyDemoDividerPadding,
+          child: Row(
+            children: [
+              if (icon != null) ...[
+                Icon(icon, color: AppColors.text2, size: 16),
+                const SizedBox(width: AppSpacing.x2),
+              ],
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.medium,
                   ),
                 ),
-                if (trailing != null) ...[
-                  const SizedBox(height: AppSpacing.x1),
-                  trailing!,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    value,
+                    style: AppTextStyles.baseMedium.copyWith(
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                  if (trailing != null) ...[
+                    const SizedBox(height: AppSpacing.x1),
+                    trailing!,
+                  ],
                 ],
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
-      ),
+        if (showDivider)
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
+      ],
     );
   }
 }
@@ -430,36 +431,33 @@ class _CompactMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.bg,
-        border: emphasized ? Border.all(color: AppColors.primary40) : null,
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
-        child: Column(
-          children: [
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: emphasized ? AppColors.primary : AppColors.text2,
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.tradeBotCopyDemoCompactPadding,
+      borderColor: emphasized ? AppColors.primary40 : null,
+      background: const ColoredBox(color: AppColors.bg),
+      child: Column(
+        children: [
+          Text(
+            label,
+            style: AppTextStyles.micro.copyWith(
+              color: emphasized ? AppColors.primary : AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              style: AppTextStyles.baseMedium.copyWith(
                 fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
-            const SizedBox(height: AppSpacing.x2),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                value,
-                style: AppTextStyles.baseMedium.copyWith(
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

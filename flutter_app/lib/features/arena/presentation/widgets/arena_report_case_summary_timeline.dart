@@ -9,7 +9,7 @@ class _CaseSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final accentColor = _targetColor(reportCase.targetType);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaReportCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -79,7 +79,7 @@ class _ReportReasonCard extends StatelessWidget {
       title: 'Lý do báo cáo',
       accentColor: AppColors.sell,
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.arenaReportCardPadding,
         borderColor: AppColors.sell20,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +118,7 @@ class _TimelineCard extends StatelessWidget {
       title: 'Tiến trình xử lý',
       accentColor: AppColors.buy,
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.arenaReportCardPadding,
         child: Column(
           children: [
             for (var index = 0; index < reportCase.timeline.length; index++)
@@ -149,26 +149,34 @@ class _TimelineRow extends StatelessWidget {
           width: AppSpacing.arenaReportTimelineColumnWidth,
           child: Column(
             children: [
-              Container(
-                width: AppSpacing.arenaReportTimelineDot,
-                height: AppSpacing.arenaReportTimelineDot,
-                margin: const EdgeInsets.only(top: AppSpacing.x1),
-                decoration: BoxDecoration(
-                  color: dotColor,
-                  shape: BoxShape.circle,
-                  border: step.done
-                      ? null
-                      : Border.all(
-                          color: AppColors.borderSolid,
-                          width: AppSpacing.arenaReportTimelineBorderWidth,
-                        ),
+              Padding(
+                padding: AppSpacing.arenaReportTimelineDotMargin,
+                child: SizedBox(
+                  width: AppSpacing.arenaReportTimelineDot,
+                  height: AppSpacing.arenaReportTimelineDot,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: dotColor,
+                      shape: CircleBorder(
+                        side: step.done
+                            ? BorderSide.none
+                            : const BorderSide(
+                                color: AppColors.borderSolid,
+                                width:
+                                    AppSpacing.arenaReportTimelineBorderWidth,
+                              ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               if (!isLast)
-                Container(
+                SizedBox(
                   width: AppSpacing.arenaReportTimelineLineWidth,
                   height: AppSpacing.arenaReportTimelineLineHeight,
-                  color: step.done ? AppColors.buy20 : AppColors.divider,
+                  child: ColoredBox(
+                    color: step.done ? AppColors.buy20 : AppColors.divider,
+                  ),
                 ),
             ],
           ),
@@ -176,7 +184,9 @@ class _TimelineRow extends StatelessWidget {
         const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.only(bottom: isLast ? 0 : AppSpacing.x3),
+            padding: isLast
+                ? AppSpacing.zeroInsets
+                : AppSpacing.arenaReportTimelineBodyPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -217,7 +227,7 @@ class _ActionTakenCard extends StatelessWidget {
       title: 'Hành động đã thực hiện',
       accentColor: AppColors.warn,
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.arenaReportCardPadding,
         child: Column(
           children: [
             Row(

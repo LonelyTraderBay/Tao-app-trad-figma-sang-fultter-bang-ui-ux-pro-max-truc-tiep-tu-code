@@ -25,14 +25,16 @@ class _DustHero extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              VitCard(
                 width: AppSpacing.walletDustHeroIconBox,
                 height: AppSpacing.walletDustHeroIconBox,
-                decoration: BoxDecoration(
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.md,
+                borderColor: _dustAmber.withValues(alpha: .5),
+                background: ColoredBox(
                   color: _dustAmber.withValues(alpha: .14),
-                  borderRadius: AppRadii.cardRadius,
-                  border: Border.all(color: _dustAmber.withValues(alpha: .5)),
                 ),
+                clip: true,
                 alignment: Alignment.center,
                 child: const Icon(
                   Icons.auto_awesome_rounded,
@@ -105,13 +107,10 @@ class _HeroStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
+      child: VitCard(
         height: AppSpacing.walletDustHeroStatHeight,
         padding: AppSpacing.walletDustHeroStatPadding,
-        decoration: BoxDecoration(
-          color: AppColors.surface3,
-          borderRadius: AppRadii.cardRadius,
-        ),
+        variant: VitCardVariant.inner,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

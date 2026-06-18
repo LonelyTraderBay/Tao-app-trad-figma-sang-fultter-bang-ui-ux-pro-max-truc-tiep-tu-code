@@ -101,7 +101,7 @@ class _StakingRiskScoreCalculatorPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -140,7 +140,7 @@ class _StakingRiskScoreCalculatorPageState
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: footerBottomInset),
+                padding: AppSpacing.earnBottomInsetPadding(footerBottomInset),
                 child: VitStickyFooter(
                   backgroundColor: AppColors.bg,
                   child: VitCtaButton(

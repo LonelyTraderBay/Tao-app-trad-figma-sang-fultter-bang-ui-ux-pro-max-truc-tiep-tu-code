@@ -35,7 +35,7 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -115,7 +115,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: StakingAnalyticsPage.summaryKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
           Row(
@@ -254,7 +254,7 @@ class _CalculatorCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -334,7 +334,7 @@ class _CalculatorMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.standard,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -378,12 +378,12 @@ class _AnalyticsTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
+        shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+        padding: AppSpacing.earnHorizontalPaddingX2,
         child: VitTabBar(
           variant: VitTabBarVariant.underline,
           activeKey: activeTab,
@@ -430,12 +430,7 @@ class _EarningsChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingAnalyticsPage.earningsChartKey,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.x4,
-        AppSpacing.x5,
-        AppSpacing.x4,
-        AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnCardPaddingX4TopX5,
       child: Column(
         children: [
           SizedBox(

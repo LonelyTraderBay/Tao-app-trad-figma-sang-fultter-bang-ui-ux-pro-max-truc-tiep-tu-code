@@ -9,30 +9,29 @@ class _ProtectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       constraints: const BoxConstraints(minHeight: 154),
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       borderColor: _compBorder.withValues(alpha: .72),
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: _compGreen.withValues(alpha: .13),
-                  borderRadius: AppRadii.cardRadius,
-                ),
+              VitCard(
+                width: AppSpacing.x7 + AppSpacing.x1,
+                height: AppSpacing.x7 + AppSpacing.x1,
+                variant: VitCardVariant.ghost,
+                borderColor: _compGreen.withValues(alpha: .24),
+                alignment: Alignment.center,
                 child: const Icon(
                   Icons.shield_outlined,
                   color: _compGreen,
-                  size: 29,
+                  size: AppSpacing.iconMd + AppSpacing.x3,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 6),
+                  padding: AppSpacing.tradeBotDisputeDescriptionLabelPadding,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -40,15 +39,15 @@ class _ProtectionCard extends StatelessWidget {
                         'Protected up to ${snapshot.coverageLimit}',
                         style: AppTextStyles.baseMedium.copyWith(
                           color: AppColors.text1,
-                          height: 1,
+                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
-                      const SizedBox(height: 7),
+                      const SizedBox(height: AppSpacing.walletAssetSmallGap),
                       Text(
                         snapshot.summary,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          height: 1.38,
+                          height: AppSpacing.tradeBotLineHeightMedium,
                         ),
                       ),
                     ],
@@ -57,23 +56,23 @@ class _ProtectionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.tradeToolContentGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Icon(
                 Icons.check_circle_outline,
                 color: AppColors.text1,
-                size: 15,
+                size: AppSpacing.iconSm + AppSpacing.hairlineStroke,
               ),
-              const SizedBox(width: 7),
+              const SizedBox(width: AppSpacing.walletAssetSmallGap),
               Expanded(
                 child: Text(
                   snapshot.coveredMessage,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
+                    height: AppSpacing.tradeBotLineHeightBody,
                   ),
                 ),
               ),
@@ -93,16 +92,16 @@ class _InfoNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 6, 0),
+      padding: AppSpacing.tradeBotClientMoneyNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.text1,
-            size: 16,
+            size: AppSpacing.inputPrefixIcon - AppSpacing.hairlineStroke,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,16 +111,16 @@ class _InfoNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
                 Text(
                   snapshot.automaticProtection,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
+                    height: AppSpacing.tradeBotLineHeightBody,
                   ),
                 ),
               ],
@@ -147,43 +146,20 @@ class _Tabs extends StatelessWidget {
       ('claim', 'How to Claim'),
     ];
     return VitCard(
-      height: 53,
+      height: AppSpacing.x7 + AppSpacing.x2,
       variant: VitCardVariant.inner,
-      child: Row(
-        children: [
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: activeId,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: InvestorCompensationPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeId == tab.$1
-                                ? _compPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: activeId == tab.$1 ? 100 : 0,
-                      height: 2,
-                      color: _compPrimary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: InvestorCompensationPage.tabKey(tab.$1),
             ),
         ],
+        onChanged: onChanged,
       ),
     );
   }
@@ -200,9 +176,9 @@ class _Overview extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionLabel('What Is FSCS?'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _Card(
-          padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+          padding: AppSpacing.tradeBotCardPaddingTall,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -210,21 +186,21 @@ class _Overview extends StatelessWidget {
                 snapshot.overviewDescription,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.55,
+                  height: AppSpacing.tradeBotLineHeightRelaxed,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.tradeBotSmallGap),
               for (final item in snapshot.overviewItems) ...[
                 _InfoRow(item: item),
                 if (item != snapshot.overviewItems.last)
-                  const SizedBox(height: 11),
+                  const SizedBox(height: AppSpacing.rowGapRegular),
               ],
             ],
           ),
         ),
-        const SizedBox(height: 26),
+        const SizedBox(height: AppSpacing.tradeToolSectionGap),
         const _SectionLabel('Coverage Limits'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _CoverageCard(snapshot: snapshot),
       ],
     );
@@ -241,8 +217,12 @@ class _InfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(Icons.check_circle_outline, color: _compGreen, size: 16),
-        const SizedBox(width: 9),
+        const Icon(
+          Icons.check_circle_outline,
+          color: _compGreen,
+          size: AppSpacing.inputPrefixIcon - AppSpacing.hairlineStroke,
+        ),
+        const SizedBox(width: AppSpacing.walletAssetPillGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,15 +232,15 @@ class _InfoRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 item.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.25,
+                  height: AppSpacing.tradeBotLineHeightCompact,
                 ),
               ),
             ],
@@ -279,15 +259,15 @@ class _CoverageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       child: Column(
         children: [
           for (final coverage in snapshot.coverageItems) ...[
             _CoverageBox(coverage: coverage),
             if (coverage != snapshot.coverageItems.last)
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.tradeBotCardGap),
           ],
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.rowGapRelaxed),
           _WarningBox(text: snapshot.warning),
         ],
       ),
@@ -302,13 +282,11 @@ class _CoverageBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 68,
-      padding: const EdgeInsets.fromLTRB(12, 14, 12, 11),
-      decoration: BoxDecoration(
-        color: _compPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      height: AppSpacing.x7 + AppSpacing.x4,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.tradeBotStrategyCardPadding,
       child: Column(
         children: [
           Row(
@@ -318,7 +296,7 @@ class _CoverageBox extends StatelessWidget {
                   coverage.label,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
@@ -326,7 +304,7 @@ class _CoverageBox extends StatelessWidget {
                 coverage.amount,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: coverage.emphasized ? _compGreen : AppColors.text1,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
@@ -338,7 +316,7 @@ class _CoverageBox extends StatelessWidget {
               coverage.caption,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1,
+                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
           ),

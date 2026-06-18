@@ -67,8 +67,10 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pExpressBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pExpressBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final accent = snapshot.isBuy ? AppColors.buy : AppColors.sell;
 
@@ -95,12 +97,7 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                   child: SingleChildScrollView(
                     key: P2PExpressConfirmPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pExpressScrollPadding(bottomInset),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -186,17 +183,19 @@ class _Hero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: AppSpacing.ctaHeight,
-          height: AppSpacing.ctaHeight,
-          decoration: BoxDecoration(
-            color: accent,
-            borderRadius: AppRadii.lgRadius,
-          ),
-          child: const Icon(
-            Icons.bolt_outlined,
-            color: AppColors.onAccent,
-            size: AppSpacing.iconMd,
+        Material(
+          color: accent,
+          borderRadius: AppRadii.lgRadius,
+          child: const SizedBox(
+            width: AppSpacing.ctaHeight,
+            height: AppSpacing.ctaHeight,
+            child: Center(
+              child: Icon(
+                Icons.bolt_outlined,
+                color: AppColors.onAccent,
+                size: AppSpacing.iconMd,
+              ),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
@@ -263,7 +262,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       borderColor: accent.withValues(alpha: .30),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+      padding: AppSpacing.p2pOrderLifecycleHorizontalPadding,
       child: Column(
         children: [
           for (var index = 0; index < rows.length; index++)
@@ -296,43 +295,45 @@ class _SummaryLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: last
-            ? null
-            : const Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                row.label,
-                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Flexible(
-              child: Text(
-                row.value,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.end,
-                style: AppTextStyles.caption.copyWith(
-                  color: row.color ?? AppColors.text1,
-                  fontWeight: row.strong
-                      ? AppTextStyles.bold
-                      : AppTextStyles.medium,
-                  fontFeatures: row.strong
-                      ? AppTextStyles.tabularFigures
-                      : null,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.p2pOrderLifecycleSummaryLinePadding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  row.label,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(width: AppSpacing.x3),
+              Flexible(
+                child: Text(
+                  row.value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: AppTextStyles.caption.copyWith(
+                    color: row.color ?? AppColors.text1,
+                    fontWeight: row.strong
+                        ? AppTextStyles.bold
+                        : AppTextStyles.medium,
+                    fontFeatures: row.strong
+                        ? AppTextStyles.tabularFigures
+                        : null,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+        if (!last)
+          const Divider(
+            height: AppSpacing.p2pOrderDividerHeight,
+            color: AppColors.divider,
+          ),
+      ],
     );
   }
 }
@@ -345,24 +346,14 @@ class _MerchantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pExpressCompactCardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.x6,
-            height: AppSpacing.x6,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: AppColors.accent,
-              shape: BoxShape.circle,
-            ),
-            child: Text(
-              ad.merchant.characters.first,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.onAccent,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+          VitAssetAvatar(
+            label: ad.merchant,
+            accentColor: AppColors.accent,
+            size: AppSpacing.x6,
+            radius: AppRadii.avatarRadius,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -440,14 +431,14 @@ class _NoticeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .08),
-        border: Border.all(color: color.withValues(alpha: .22)),
+    return Material(
+      color: color.withValues(alpha: .08),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: color.withValues(alpha: .22)),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pExpressCompactCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

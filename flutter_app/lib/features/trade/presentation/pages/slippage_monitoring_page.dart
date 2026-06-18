@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -12,9 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -58,8 +57,10 @@ class _SlippageMonitoringPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                AppSpacing.tradeToolBottomInsetSlippageVisual
+            : DeviceMetrics.nativeBottomChrome +
+                AppSpacing.tradeToolBottomInsetSlippageNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -89,14 +90,16 @@ class _SlippageMonitoringPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: SlippageMonitoringPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      padding: AppSpacing.tradeToolScrollPadding(bottomInset),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
                         customGap: 0,
                         children: [
                           _CriticalAlert(summary: snapshot.summary),
-                          const SizedBox(height: 14),
+                          const SizedBox(
+                            height: AppSpacing.tradeToolPageTopGap,
+                          ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Slippage risk review',
@@ -104,15 +107,21 @@ class _SlippageMonitoringPageState
                                 'Review critical events, average slippage, provider routing, alert thresholds, fee impact, and next steps before changing copy execution settings.',
                             contractId: 'SC-098 slippage monitoring review',
                           ),
-                          const SizedBox(height: 22),
+                          const SizedBox(
+                            height: AppSpacing.tradeToolReviewGap,
+                          ),
                           _StatsGrid(summary: snapshot.summary),
-                          const SizedBox(height: 24),
+                          const SizedBox(
+                            height: AppSpacing.tradeToolContentGap,
+                          ),
                           _Tabs(
                             activeId: _tab,
                             summary: snapshot.summary,
                             onChanged: (id) => setState(() => _tab = id),
                           ),
-                          const SizedBox(height: 26),
+                          const SizedBox(
+                            height: AppSpacing.tradeToolSectionGap,
+                          ),
                           if (_tab == 'realtime')
                             _RealtimeTab(events: snapshot.events)
                           else if (_tab == 'providers')

@@ -7,96 +7,101 @@ class _CampaignBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: ReferralHomePage.campaignKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.primaryDark,
-        border: Border.all(color: AppColors.primary40),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: AppColors.primary40),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              const _IconBubble(
-                icon: Icons.bolt_rounded,
-                color: AppColors.primarySoft,
-                background: AppColors.primary20,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: AppSpacing.x2,
-                      runSpacing: AppSpacing.x1,
-                      children: [
-                        Text(
-                          campaign.title,
-                          style: AppTextStyles.baseMedium.copyWith(
-                            color: AppColors.text1,
-                            height: AppSpacing.referralLineHeightShort,
+      child: Padding(
+        padding: AppSpacing.referralCardPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                const _IconBubble(
+                  icon: Icons.bolt_rounded,
+                  color: AppColors.primarySoft,
+                  background: AppColors.primary20,
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: AppSpacing.x2,
+                        runSpacing: AppSpacing.x1,
+                        children: [
+                          Text(
+                            campaign.title,
+                            style: AppTextStyles.baseMedium.copyWith(
+                              color: AppColors.text1,
+                              height: AppSpacing.referralLineHeightShort,
+                            ),
                           ),
-                        ),
-                        _TinyPill(
-                          label: campaign.bonusLabel,
-                          color: AppColors.bg,
-                          background: AppColors.primarySoft,
-                        ),
-                      ],
-                    ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-                    Text(
-                      campaign.description,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.portfolioTextDim,
+                          _TinyPill(
+                            label: campaign.bonusLabel,
+                            color: AppColors.bg,
+                            background: AppColors.primarySoft,
+                          ),
+                        ],
                       ),
-                    ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-                    Wrap(
-                      spacing: AppSpacing.x4,
-                      runSpacing: AppSpacing.x1,
-                      children: [
-                        _InlineIconText(
-                          icon: Icons.timer_rounded,
-                          text: 'Còn ${campaign.daysLeft} ngày',
-                          color: AppColors.primarySoft,
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        campaign.description,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.portfolioTextDim,
                         ),
-                        _InlineIconText(
-                          icon: Icons.groups_rounded,
-                          text:
-                              '${_formatCompactInt(campaign.totalParticipants)} tham gia',
-                          color: AppColors.portfolioTextMuted,
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      const SizedBox(height: AppSpacing.x2),
+                      Wrap(
+                        spacing: AppSpacing.x4,
+                        runSpacing: AppSpacing.x1,
+                        children: [
+                          _InlineIconText(
+                            icon: Icons.timer_rounded,
+                            text: 'Còn ${campaign.daysLeft} ngày',
+                            color: AppColors.primarySoft,
+                          ),
+                          _InlineIconText(
+                            icon: Icons.groups_rounded,
+                            text:
+                                '${_formatCompactInt(campaign.totalParticipants)} tham gia',
+                            color: AppColors.portfolioTextMuted,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.x3),
+            DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.primary12,
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(color: AppColors.primary30),
+                  borderRadius: AppRadii.smRadius,
                 ),
               ),
-            ],
-          ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
+              child: Padding(
+                padding: AppSpacing.referralCompactPillPadding,
+                child: _InlineIconText(
+                  icon: Icons.emoji_events_rounded,
+                  text: campaign.extraReward,
+                  color: AppColors.portfolioTextDim,
+                ),
+              ),
             ),
-            decoration: BoxDecoration(
-              color: AppColors.primary12,
-              border: Border.all(color: AppColors.primary30),
-              borderRadius: AppRadii.smRadius,
-            ),
-            child: _InlineIconText(
-              icon: Icons.emoji_events_rounded,
-              text: campaign.extraReward,
-              color: AppColors.portfolioTextDim,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -136,7 +141,7 @@ class _PendingKycBanner extends StatelessWidget {
       key: ReferralHomePage.pendingKycKey,
       onTap: onTap,
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Row(
         children: [
           const _IconBubble(
@@ -195,7 +200,7 @@ class _ReferralHero extends StatelessWidget {
       key: ReferralHomePage.heroKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -235,7 +240,7 @@ class _ReferralHero extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -267,7 +272,7 @@ class _ReferralHero extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           _NoticeCard(
             icon: Icons.schedule_rounded,
             text:
@@ -277,10 +282,10 @@ class _ReferralHero extends StatelessWidget {
             border: AppColors.warningBorder,
             dense: true,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.referralInnerPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -303,7 +308,7 @@ class _ReferralHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   snapshot.referralCode,
                   style: AppTextStyles.base.copyWith(
@@ -316,11 +321,11 @@ class _ReferralHero extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.buy20,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.referralInnerPadding,
             child: Row(
               children: [
                 Expanded(
@@ -330,10 +335,10 @@ class _ReferralHero extends StatelessWidget {
                         '${_formatUsd(snapshot.currentTier.kycBonus)} + ${snapshot.currentTier.commissionPercent}%',
                   ),
                 ),
-                Container(
+                const SizedBox(
                   width: AppSpacing.referralSplitDividerWidth,
                   height: AppSpacing.referralSplitDividerHeight,
-                  color: AppColors.buy20,
+                  child: ColoredBox(color: AppColors.buy20),
                 ),
                 const Expanded(
                   child: _SplitReward(
@@ -344,7 +349,7 @@ class _ReferralHero extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -365,7 +370,7 @@ class _ReferralHero extends StatelessWidget {
                 fullWidth: false,
                 height: AppSpacing.referralCtaHeight,
                 variant: VitCtaButtonVariant.secondary,
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+                padding: AppSpacing.referralFilterChipPadding,
                 child: const Icon(Icons.share_rounded),
               ),
             ],
@@ -430,7 +435,7 @@ class _MilestoneSection extends StatelessWidget {
           trailing: next == null ? null : 'Còn ${remaining.clamp(0, 999)} bạn',
           color: AppColors.warn,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           clipBehavior: Clip.none,
@@ -465,7 +470,7 @@ class _TierProgress extends StatelessWidget {
     if (next == null) return const SizedBox.shrink();
     final progress = (stats.totalFriends / next.minFriends).clamp(0.0, 1.0);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -489,9 +494,9 @@ class _TierProgress extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           _ProgressBar(progress: progress, color: AppColors.primarySoft),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(

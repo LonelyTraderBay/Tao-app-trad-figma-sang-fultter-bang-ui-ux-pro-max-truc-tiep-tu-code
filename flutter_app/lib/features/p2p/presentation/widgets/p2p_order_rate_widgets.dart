@@ -9,27 +9,14 @@ class _MerchantSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x6,
-      ),
+      padding: AppSpacing.p2pOrderLifecycleHeroPadding,
       child: Column(
         children: [
-          Container(
-            width: AppSpacing.x7 + AppSpacing.x3,
-            height: AppSpacing.x7 + AppSpacing.x3,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: AppColors.primary,
-              shape: BoxShape.circle,
-            ),
-            child: Text(
-              order.merchant.substring(0, 1),
-              style: AppTextStyles.sectionTitle.copyWith(
-                color: AppColors.onAccent,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+          VitAssetAvatar(
+            label: order.merchant,
+            accentColor: AppColors.primary,
+            size: AppSpacing.p2pOrderRatingMerchantAvatarSize,
+            radius: AppRadii.avatarRadius,
           ),
           const SizedBox(height: AppSpacing.x3),
           Text(
@@ -61,7 +48,7 @@ class _RatingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pOrderLifecycleSuccessPadding,
       child: Column(
         children: [
           Text(
@@ -121,7 +108,7 @@ class _StarButton extends StatelessWidget {
       icon: Icon(
         selected ? Icons.star_rounded : Icons.star_border_rounded,
         color: selected ? AppColors.warn : AppColors.borderSolid,
-        size: AppSpacing.iconLg + AppSpacing.x2,
+        size: AppSpacing.p2pOrderRatingStarIcon,
       ),
     );
   }
@@ -289,21 +276,23 @@ class _SuccessView extends StatelessWidget {
     return Center(
       child: VitCard(
         radius: VitCardRadius.lg,
-        padding: const EdgeInsets.all(AppSpacing.contentPad),
+        padding: AppSpacing.p2pOrderLifecycleSuccessPadding,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: AppSpacing.x7 + AppSpacing.x5,
-              height: AppSpacing.x7 + AppSpacing.x5,
-              decoration: BoxDecoration(
-                color: AppColors.buy15,
-                borderRadius: AppRadii.cardLargeRadius,
-              ),
-              child: const Icon(
-                Icons.check_circle_outline,
-                color: AppColors.buy,
-                size: AppSpacing.iconLg,
+            Material(
+              color: AppColors.buy15,
+              borderRadius: AppRadii.cardLargeRadius,
+              child: const SizedBox(
+                width: AppSpacing.p2pOrderRatingSuccessIconBox,
+                height: AppSpacing.p2pOrderRatingSuccessIconBox,
+                child: Center(
+                  child: Icon(
+                    Icons.check_circle_outline,
+                    color: AppColors.buy,
+                    size: AppSpacing.iconLg,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: AppSpacing.x4),

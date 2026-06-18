@@ -37,7 +37,7 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -173,7 +173,7 @@ class _GoalSummaryCard extends StatelessWidget {
       key: SavingsGoalPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         children: [
           Row(
@@ -263,10 +263,7 @@ class _SummaryStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         children: [
           FittedBox(
@@ -312,7 +309,7 @@ class _GoalCard extends StatelessWidget {
     return VitCard(
       key: SavingsGoalPage.goalKey(goal.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -472,10 +469,14 @@ class _MilestoneRail extends StatelessWidget {
           _MilestoneDot(milestone: milestone, color: color),
           if (milestone != goal.milestones.last)
             Expanded(
-              child: Container(
-                height: AppSpacing.savingsGoalTimelineDividerHeight,
-                margin: const EdgeInsets.symmetric(horizontal: AppSpacing.x1),
-                color: milestone.unlocked ? color : AppColors.borderSolid,
+              child: Padding(
+                padding: AppSpacing.earnInlineMarginX1,
+                child: SizedBox(
+                  height: AppSpacing.savingsGoalTimelineDividerHeight,
+                  child: ColoredBox(
+                    color: milestone.unlocked ? color : AppColors.borderSolid,
+                  ),
+                ),
               ),
             ),
         ],

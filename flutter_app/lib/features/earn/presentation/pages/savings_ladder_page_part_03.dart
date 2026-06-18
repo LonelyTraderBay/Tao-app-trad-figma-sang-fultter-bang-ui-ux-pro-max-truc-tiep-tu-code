@@ -18,7 +18,7 @@ class _MetricGrid extends StatelessWidget {
         for (final metric in metrics)
           VitCard(
             radius: VitCardRadius.lg,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.earnPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -77,7 +77,7 @@ class _AssetBreakdown extends StatelessWidget {
     }
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
           for (final entry in byAsset.entries) ...[
@@ -163,7 +163,7 @@ class _DurationTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         children: [
           _RoundIcon(icon: Icons.schedule_rounded, color: color),
@@ -214,10 +214,9 @@ class _BreakdownRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
-              width: AppSpacing.savingsLadderBreakdownDot,
-              height: AppSpacing.savingsLadderBreakdownDot,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            SizedBox.square(
+              dimension: AppSpacing.savingsLadderBreakdownDot,
+              child: Material(color: color, shape: const CircleBorder()),
             ),
             const SizedBox(width: AppSpacing.x2),
             Text(label, style: _captionBold.copyWith(color: AppColors.text1)),
@@ -270,7 +269,7 @@ class _LiquidityCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: color.withValues(alpha: .25),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
           Row(
@@ -394,7 +393,7 @@ class _LiquidityMini extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x2),
+      padding: AppSpacing.earnPaddingX2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -437,7 +436,7 @@ class _OptimizationTip extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: AppColors.accent20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -489,21 +488,22 @@ class _ChoicePill extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-          decoration: BoxDecoration(
-            color: selected ? AppColors.primary12 : AppColors.transparent,
-            border: Border.all(
+        child: Material(
+          color: selected ? AppColors.primary12 : AppColors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
+            side: BorderSide(
               color: selected ? AppColors.primary30 : AppColors.cardBorder,
             ),
-            borderRadius: AppRadii.inputRadius,
           ),
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: _captionBold.copyWith(
-              color: selected ? AppColors.primary : AppColors.text2,
+          child: Padding(
+            padding: AppSpacing.earnVerticalPaddingX2,
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              style: _captionBold.copyWith(
+                color: selected ? AppColors.primary : AppColors.text2,
+              ),
             ),
           ),
         ),
@@ -521,10 +521,10 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: AppSpacing.savingsLadderSectionMarkerWidth,
           height: AppSpacing.savingsLadderSectionMarkerHeight,
-          decoration: const BoxDecoration(
+          child: Material(
             color: AppColors.primary,
             borderRadius: AppRadii.xsRadius,
           ),

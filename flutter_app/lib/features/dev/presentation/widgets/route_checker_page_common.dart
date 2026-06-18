@@ -26,7 +26,7 @@ class _ActionsRow extends StatelessWidget {
               onTap: onReset,
               borderRadius: AppRadii.inputRadius,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+                padding: AppSpacing.devVerticalPaddingX4,
                 child: Text(
                   'Reset Tests',
                   textAlign: TextAlign.center,
@@ -43,12 +43,14 @@ class _ActionsRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: DecoratedBox(
-              decoration: const BoxDecoration(
+              decoration: const ShapeDecoration(
                 color: AppColors.buy10,
-                borderRadius: AppRadii.inputRadius,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.inputRadius,
+                ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+                padding: AppSpacing.devVerticalPaddingX4,
                 child: Text(
                   'All Routes Tested',
                   textAlign: TextAlign.center,
@@ -75,7 +77,7 @@ class _PhaseStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.devCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,12 +134,12 @@ class _PhaseStatTile extends StatelessWidget {
     final progress = total == 0 ? 0.0 : tested / total;
 
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x2),
+        padding: AppSpacing.devTinyPadding,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -186,13 +188,15 @@ class _InternalNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.primary08,
-        border: Border.all(color: AppColors.primary20),
-        borderRadius: AppRadii.cardRadius,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.primary20),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.devCompactPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -228,14 +232,15 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.x6,
-      height: AppSpacing.x6,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.mdRadius,
+    return SizedBox.square(
+      dimension: AppSpacing.x6,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: background,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconSm),
     );
   }
 }

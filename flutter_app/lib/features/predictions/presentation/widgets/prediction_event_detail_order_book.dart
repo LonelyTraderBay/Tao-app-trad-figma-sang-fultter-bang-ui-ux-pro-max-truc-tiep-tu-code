@@ -22,77 +22,95 @@ class _OrderBookSection extends StatelessWidget {
           key: PredictionEventDetailPage.orderBookToggleKey,
           onTap: onToggle,
           borderRadius: AppRadii.cardRadius,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              border: Border.all(color: AppColors.cardBorder),
+          child: Material(
+            color: AppColors.surface,
+            shape: RoundedRectangleBorder(
               borderRadius: AppRadii.cardRadius,
+              side: const BorderSide(color: AppColors.cardBorder),
             ),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.layers_rounded,
-                  color: _predictionPrimary,
-                  size: 15,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    'Order Book',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
+            child: Padding(
+              padding: AppSpacing.predictionDetailOrderBookTogglePadding,
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.layers_rounded,
+                    color: _predictionPrimary,
+                    size: AppSpacing.predictionDetailOrderBookToggleIcon,
+                  ),
+                  const SizedBox(
+                    width: AppSpacing.predictionDetailOrderBookToggleGap,
+                  ),
+                  Expanded(
+                    child: Text(
+                      'Order Book',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    'Spread ${_formatPrice(bestAsk - bestBid)}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.end,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  const SizedBox(
+                    width: AppSpacing.predictionDetailOrderBookToggleGap,
                   ),
-                ),
-                const SizedBox(width: 8),
-                Icon(
-                  expanded
-                      ? Icons.keyboard_arrow_up_rounded
-                      : Icons.keyboard_arrow_down_rounded,
-                  color: AppColors.text3,
-                  size: 18,
-                ),
-              ],
+                  Flexible(
+                    child: Text(
+                      'Spread ${_formatPrice(bestAsk - bestBid)}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: AppSpacing.predictionDetailOrderBookToggleGap,
+                  ),
+                  Icon(
+                    expanded
+                        ? Icons.keyboard_arrow_up_rounded
+                        : Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.text3,
+                    size: AppSpacing.predictionDetailOrderBookChevron,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
         if (expanded) ...[
-          const Padding(padding: EdgeInsets.only(top: 8)),
+          const SizedBox(
+            height: AppSpacing.predictionDetailOrderBookExpandedGap,
+          ),
           VitCard(
-            padding: const EdgeInsets.all(14),
+            padding: AppSpacing.predictionDetailOrderBookCardPadding,
             child: Column(
               children: [
                 _OrderBookHeader(),
-                const Padding(padding: EdgeInsets.only(top: 6)),
+                const SizedBox(
+                  height: AppSpacing.predictionDetailOrderBookHeaderGap,
+                ),
                 for (final ask in snapshot.orderBook.asks.reversed)
                   _OrderBookRow(entry: ask, isBid: false),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 7),
-                  padding: const EdgeInsets.symmetric(vertical: 7),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
+                Padding(
+                  padding: AppSpacing.predictionDetailOrderBookMidPriceMargin,
+                  child: Material(
                     color: AppColors.surface2,
                     borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Text(
-                    '${_formatPrice(chance)} · mid price',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
+                    child: Padding(
+                      padding:
+                          AppSpacing.predictionDetailOrderBookMidPricePadding,
+                      child: Center(
+                        child: Text(
+                          '${_formatPrice(chance)} \u00B7 mid price',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -113,8 +131,14 @@ class _OrderBookHeader extends StatelessWidget {
     return const Row(
       children: [
         Expanded(child: _OrderBookLabel('PRICE')),
-        SizedBox(width: 72, child: _OrderBookLabel('SHARES', alignEnd: true)),
-        SizedBox(width: 72, child: _OrderBookLabel('TOTAL', alignEnd: true)),
+        SizedBox(
+          width: AppSpacing.predictionDetailOrderBookColumnWidth,
+          child: _OrderBookLabel('SHARES', alignEnd: true),
+        ),
+        SizedBox(
+          width: AppSpacing.predictionDetailOrderBookColumnWidth,
+          child: _OrderBookLabel('TOTAL', alignEnd: true),
+        ),
       ],
     );
   }
@@ -148,47 +172,47 @@ class _OrderBookRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isBid ? AppColors.buy : AppColors.sell;
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .04),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              _formatPrice(entry.price),
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: AppTextStyles.tabularFigures,
+    return Material(
+      color: color.withValues(alpha: .04),
+      borderRadius: AppRadii.predictionDetailOrderBookRowRadius,
+      child: Padding(
+        padding: AppSpacing.predictionDetailOrderBookRowPadding,
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                _formatPrice(entry.price),
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            width: 72,
-            child: Text(
-              _formatInt(entry.shares),
-              textAlign: TextAlign.end,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontFeatures: AppTextStyles.tabularFigures,
+            SizedBox(
+              width: AppSpacing.predictionDetailOrderBookColumnWidth,
+              child: Text(
+                _formatInt(entry.shares),
+                textAlign: TextAlign.end,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text2,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            width: 72,
-            child: Text(
-              _formatInt((entry.price * entry.shares).round()),
-              textAlign: TextAlign.end,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontFeatures: AppTextStyles.tabularFigures,
+            SizedBox(
+              width: AppSpacing.predictionDetailOrderBookColumnWidth,
+              child: Text(
+                _formatInt((entry.price * entry.shares).round()),
+                textAlign: TextAlign.end,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -34,7 +34,7 @@ class _VipHistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isVip = row.level != 'Standard';
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.profileVipHistoryCardPadding,
       child: Column(
         children: [
           Row(

@@ -74,7 +74,7 @@ class _StakingSlashingHistoryPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -82,7 +82,7 @@ class _StakingSlashingHistoryPageState
                       VitCard(
                         variant: VitCardVariant.standard,
                         radius: VitCardRadius.md,
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: StakingSlashingInsuranceBanner(
                           snapshot: snapshot,
                         ),

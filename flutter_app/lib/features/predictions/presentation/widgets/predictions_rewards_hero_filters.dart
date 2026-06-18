@@ -7,33 +7,25 @@ class _RewardsHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.hero,
+      borderColor: AppColors.accent20,
       padding: AppSpacing.predictionRewardsHeroPadding,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppColors.surface, AppColors.surface2, AppColors.warningBg],
-        ),
-        border: Border.all(color: AppColors.accent20),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.predictionRewardsHeroIconBox,
-                height: AppSpacing.predictionRewardsHeroIconBox,
-                decoration: BoxDecoration(
-                  color: AppColors.warn10,
-                  borderRadius: AppRadii.cardRadius,
-                ),
-                child: const Icon(
-                  Icons.card_giftcard_rounded,
-                  color: AppColors.warn,
-                  size: AppSpacing.predictionRewardsHeroIcon,
+              Material(
+                color: AppColors.warn10,
+                borderRadius: AppRadii.cardRadius,
+                child: const SizedBox.square(
+                  dimension: AppSpacing.predictionRewardsHeroIconBox,
+                  child: Icon(
+                    Icons.card_giftcard_rounded,
+                    color: AppColors.warn,
+                    size: AppSpacing.predictionRewardsHeroIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.predictionRewardsHeroTitleGap),
@@ -60,11 +52,7 @@ class _RewardsHero extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.only(
-              top: AppSpacing.predictionRewardsHeroPoolGap,
-            ),
-          ),
+          const SizedBox(height: AppSpacing.predictionRewardsHeroPoolGap),
           Row(
             children: [
               const Icon(
@@ -101,73 +89,75 @@ class _HowItWorksNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionRewardsNotePadding,
-      decoration: BoxDecoration(
-        color: _predictionPrimary.withValues(alpha: .07),
-        border: Border.all(color: _predictionPrimary.withValues(alpha: .18)),
+    return Material(
+      color: _predictionPrimary.withValues(alpha: .07),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
+        side: BorderSide(color: _predictionPrimary.withValues(alpha: .18)),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: _predictionPrimary,
-            size: AppSpacing.predictionRewardsNoteIcon,
-          ),
-          const SizedBox(width: AppSpacing.predictionRewardsNoteGap),
-          Expanded(
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  const TextSpan(text: 'How it works:'),
-                  TextSpan(
-                    text: ' Place a ',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      height: AppSpacing.predictionRewardsNoteLineHeight,
-                      fontWeight: AppTextStyles.normal,
+      child: Padding(
+        padding: AppSpacing.predictionRewardsNotePadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.info_outline_rounded,
+              color: _predictionPrimary,
+              size: AppSpacing.predictionRewardsNoteIcon,
+            ),
+            const SizedBox(width: AppSpacing.predictionRewardsNoteGap),
+            Expanded(
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    const TextSpan(text: 'How it works:'),
+                    TextSpan(
+                      text: ' Place a ',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        height: AppSpacing.predictionRewardsNoteLineHeight,
+                        fontWeight: AppTextStyles.normal,
+                      ),
                     ),
-                  ),
-                  const TextSpan(text: 'limit order'),
-                  TextSpan(
-                    text: ' (not market order) within the ',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      height: AppSpacing.predictionRewardsNoteLineHeight,
-                      fontWeight: AppTextStyles.normal,
+                    const TextSpan(text: 'limit order'),
+                    TextSpan(
+                      text: ' (not market order) within the ',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        height: AppSpacing.predictionRewardsNoteLineHeight,
+                        fontWeight: AppTextStyles.normal,
+                      ),
                     ),
-                  ),
-                  const TextSpan(text: 'Max Spread'),
-                  TextSpan(
-                    text: ' and hold at least ',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      height: AppSpacing.predictionRewardsNoteLineHeight,
-                      fontWeight: AppTextStyles.normal,
+                    const TextSpan(text: 'Max Spread'),
+                    TextSpan(
+                      text: ' and hold at least ',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        height: AppSpacing.predictionRewardsNoteLineHeight,
+                        fontWeight: AppTextStyles.normal,
+                      ),
                     ),
-                  ),
-                  const TextSpan(text: 'Min Shares'),
-                  TextSpan(
-                    text:
-                        '. Rewards are distributed daily in USDT at 00:00 UTC.',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      height: AppSpacing.predictionRewardsNoteLineHeight,
-                      fontWeight: AppTextStyles.normal,
+                    const TextSpan(text: 'Min Shares'),
+                    TextSpan(
+                      text:
+                          '. Rewards are distributed daily in USDT at 00:00 UTC.',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        height: AppSpacing.predictionRewardsNoteLineHeight,
+                        fontWeight: AppTextStyles.normal,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.predictionRewardsNoteLineHeight,
-                fontWeight: AppTextStyles.bold,
+                  ],
+                ),
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text2,
+                  height: AppSpacing.predictionRewardsNoteLineHeight,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -195,7 +185,7 @@ class _CategoryFilters extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          if (index == categories.length) {
+          if (index == 0) {
             return _FilterChip(
               key: PredictionsRewardsPage.favoritesFilterKey,
               label: 'Favs',
@@ -205,7 +195,7 @@ class _CategoryFilters extends StatelessWidget {
               onTap: onFavoritesToggle,
             );
           }
-          final category = categories[index];
+          final category = categories[index - 1];
           return _FilterChip(
             key: category == 'All'
                 ? PredictionsRewardsPage.allFilterKey
@@ -243,42 +233,48 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Container(
-        height: AppSpacing.predictionRewardsFilterHeight,
-        padding: AppSpacing.predictionRewardsFilterPadding,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
+    return Material(
+      color: active ? activeColor.withValues(alpha: .13) : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.smRadius,
+        side: BorderSide(
           color: active
-              ? activeColor.withValues(alpha: .13)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? activeColor.withValues(alpha: .35)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.smRadius,
+              ? activeColor.withValues(alpha: .35)
+              : AppColors.transparent,
         ),
-        child: Row(
-          children: [
-            if (icon != null) ...[
-              Icon(
-                icon,
-                color: active ? activeColor : AppColors.text3,
-                size: AppSpacing.predictionRewardsFilterIcon,
-              ),
-              const SizedBox(width: AppSpacing.predictionRewardsFilterIconGap),
-            ],
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: active ? activeColor : AppColors.text3,
-                fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
-              ),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.smRadius,
+        child: SizedBox(
+          height: AppSpacing.predictionRewardsFilterHeight,
+          child: Padding(
+            padding: AppSpacing.predictionRewardsFilterPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (icon != null) ...[
+                  Icon(
+                    icon,
+                    color: active ? activeColor : AppColors.text3,
+                    size: AppSpacing.predictionRewardsFilterIcon,
+                  ),
+                  const SizedBox(
+                    width: AppSpacing.predictionRewardsFilterIconGap,
+                  ),
+                ],
+                Text(
+                  label,
+                  style: AppTextStyles.micro.copyWith(
+                    color: active ? activeColor : AppColors.text3,
+                    fontWeight: active
+                        ? AppTextStyles.bold
+                        : AppTextStyles.normal,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

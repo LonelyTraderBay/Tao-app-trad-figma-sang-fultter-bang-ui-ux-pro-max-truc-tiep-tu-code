@@ -9,7 +9,7 @@ class _PlaceholderPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.tradeBotInnerPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -20,13 +20,13 @@ class _PlaceholderPanel extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Text(
             description,
             style: AppTextStyles.navLabel.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.normal,
-              height: 1.35,
+              height: AppSpacing.tradeBotLineHeightBody,
             ),
           ),
         ],
@@ -62,7 +62,7 @@ class _StressScenarioPanel extends StatelessWidget {
         for (final scenario in scenarios) ...[
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(12),
+            padding: AppSpacing.tradeBotInnerPanelPadding,
             child: Row(
               children: [
                 Expanded(
@@ -88,7 +88,8 @@ class _StressScenarioPanel extends StatelessWidget {
               ],
             ),
           ),
-          if (scenario != scenarios.last) const SizedBox(height: 8),
+          if (scenario != scenarios.last)
+            const SizedBox(height: AppSpacing.tradeBotSmallGap),
         ],
       ],
     );
@@ -113,7 +114,7 @@ class _ExposurePiePainter extends CustomPainter {
       final stroke = Paint()
         ..color = AppColors.onAccent
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 1;
+        ..strokeWidth = AppSpacing.tradeBotHairline;
       canvas.drawArc(rect, start, sweep, true, stroke);
       start += sweep;
     }

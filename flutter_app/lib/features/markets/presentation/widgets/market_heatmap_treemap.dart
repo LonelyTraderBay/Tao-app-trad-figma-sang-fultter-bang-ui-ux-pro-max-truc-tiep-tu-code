@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_heatmap_common.dart';
@@ -26,7 +27,7 @@ class MarketHeatmapTreemap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 360,
+      height: AppSpacing.marketHeatmapTreemapHeight,
       clip: true,
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -57,9 +58,9 @@ class MarketHeatmapTreemap extends StatelessWidget {
     List<HeatmapCoin> sorted,
     double width,
   ) {
-    const columns = 5;
-    const cellHeight = 50.0;
-    const gap = 4.0;
+    const columns = AppSpacing.marketHeatmapTreemapColumns;
+    const cellHeight = AppSpacing.marketHeatmapTreemapCellHeight;
+    const gap = AppSpacing.marketHeatmapTreemapGap;
     final cellWidth = (width - (columns - 1) * gap) / columns;
     final occupied = <List<bool>>[];
     final placements = <MarketHeatmapTilePlacement>[];
@@ -168,66 +169,77 @@ class _HeatmapTile extends StatelessWidget {
     final change = metric == '7d' ? coin.change7d : coin.change24h;
     final large = placement.columnSpan >= 2;
 
-    return InkWell(
-      key: MarketHeatmapKeys.tile(coin.id),
-      onTap: onTap,
-      borderRadius: AppRadii.xsRadius,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 140),
-        padding: EdgeInsets.symmetric(horizontal: large ? 8 : 4, vertical: 5),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: marketHeatmapColor(change),
-          border: Border.all(
-            color: selected
-                ? AppColors.onAccent
-                : AppColors.onAccent.withValues(alpha: .10),
-            width: selected ? 2 : 1,
-          ),
-          borderRadius: AppRadii.xsRadius,
+    return Material(
+      color: marketHeatmapColor(change),
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.xsRadius,
+        side: BorderSide(
+          color: selected
+              ? AppColors.onAccent
+              : AppColors.onAccent.withValues(alpha: .10),
+          width: selected
+              ? AppSpacing.hairlineStroke
+              : AppSpacing.dividerHairline,
         ),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                coin.symbol,
-                style:
-                    (large ? AppTextStyles.baseMedium : AppTextStyles.caption)
-                        .copyWith(
-                          color: AppColors.onAccent,
-                          fontWeight: AppTextStyles.bold,
-                          shadows: marketHeatmapTextShadow,
-                          height: 1.08,
-                        ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                marketHeatmapFormatPercent(change),
-                style: (large ? AppTextStyles.captionSm : AppTextStyles.micro)
-                    .copyWith(
-                      color: AppColors.onAccent.withValues(alpha: .92),
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                      shadows: marketHeatmapTextShadow,
-                      height: 1,
-                    ),
-              ),
-              if (large) ...[
-                const SizedBox(height: 7),
-                Text(
-                  marketHeatmapFormatCompact(coin.marketCap),
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.onAccent.withValues(alpha: .58),
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                    shadows: marketHeatmapTextShadow,
-                    height: 1,
+      ),
+      child: InkWell(
+        key: MarketHeatmapKeys.tile(coin.id),
+        onTap: onTap,
+        borderRadius: AppRadii.xsRadius,
+        child: Padding(
+          padding: large
+              ? AppSpacing.marketHeatmapTilePaddingLarge
+              : AppSpacing.marketHeatmapTilePaddingSmall,
+          child: Center(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    coin.symbol,
+                    style:
+                        (large
+                                ? AppTextStyles.baseMedium
+                                : AppTextStyles.caption)
+                            .copyWith(
+                              color: AppColors.onAccent,
+                              fontWeight: AppTextStyles.bold,
+                              shadows: marketHeatmapTextShadow,
+                              height: AppSpacing.marketLineHeightShort,
+                            ),
                   ),
-                ),
-              ],
-            ],
+                  const SizedBox(height: AppSpacing.marketAnalyticsMicroGap),
+                  Text(
+                    marketHeatmapFormatPercent(change),
+                    style:
+                        (large ? AppTextStyles.captionSm : AppTextStyles.micro)
+                            .copyWith(
+                              color: AppColors.onAccent.withValues(alpha: .92),
+                              fontWeight: AppTextStyles.bold,
+                              fontFeatures: AppTextStyles.tabularFigures,
+                              shadows: marketHeatmapTextShadow,
+                              height: AppSpacing.marketLineHeightTight,
+                            ),
+                  ),
+                  if (large) ...[
+                    const SizedBox(
+                      height: AppSpacing.marketOverviewMiniHeaderGap,
+                    ),
+                    Text(
+                      marketHeatmapFormatCompact(coin.marketCap),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.onAccent.withValues(alpha: .58),
+                        fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                        shadows: marketHeatmapTextShadow,
+                        height: AppSpacing.marketLineHeightTight,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
           ),
         ),
       ),

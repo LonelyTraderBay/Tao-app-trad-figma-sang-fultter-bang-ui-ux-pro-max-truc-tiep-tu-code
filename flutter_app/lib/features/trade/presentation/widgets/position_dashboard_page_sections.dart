@@ -17,40 +17,44 @@ class _SummaryCard extends StatelessWidget {
       (sum, item) => sum + (item.margin ?? 0),
     );
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 16),
-      child: Container(
-        height: 72,
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
-        decoration: BoxDecoration(
-          color: _cardBackground,
-          border: Border.all(color: AppColors.cardBorder),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: _SummaryMetric(
-                label: 'Tổng P/L',
-                value: _formatSignedMoney(totalPnl),
-                color: totalPnl >= 0 ? AppColors.buy : AppColors.sell,
-                large: true,
-              ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      height: AppSpacing.walletAddressStatsHeight + AppSpacing.hairlineStroke,
+      margin: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.contentPad,
+        top: AppSpacing.walletAssetChartBottomGap,
+        right: AppSpacing.contentPad,
+        bottom: AppSpacing.walletAssetSectionGap,
+      ),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.rowPy,
+        right: AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.walletAssetHeroTopGap,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: _SummaryMetric(
+              label: 'Tổng P/L',
+              value: _formatSignedMoney(totalPnl),
+              color: totalPnl >= 0 ? AppColors.buy : AppColors.sell,
+              large: true,
             ),
-            Expanded(
-              child: _SummaryMetric(
-                label: 'Tổng giá trị',
-                value: _formatCompactMoney(totalValue),
-              ),
+          ),
+          Expanded(
+            child: _SummaryMetric(
+              label: 'Tổng giá trị',
+              value: _formatCompactMoney(totalValue),
             ),
-            Expanded(
-              child: _SummaryMetric(
-                label: 'Ký quỹ đang dùng',
-                value: '\$${_formatMoney(totalMargin)}',
-              ),
+          ),
+          Expanded(
+            child: _SummaryMetric(
+              label: 'Ký quỹ đang dùng',
+              value: '\$${_formatMoney(totalMargin)}',
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -81,10 +85,10 @@ class _SummaryMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1.1,
+            height: AppSpacing.positionDashboardLabelLineHeight,
           ),
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: AppSpacing.transferTileGap),
         Text(
           value,
           maxLines: 1,
@@ -93,7 +97,7 @@ class _SummaryMetric extends StatelessWidget {
               .copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.positionDashboardTightLineHeight,
               ),
         ),
       ],
@@ -122,20 +126,22 @@ class _TypeTabs extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
-      child: Row(
-        children: [
-          for (var i = 0; i < tabs.length; i++) ...[
-            Expanded(
-              child: _PillButton(
-                key: PositionDashboardPage.tabKey(tabs[i].$1),
-                label: tabs[i].$2,
-                active: active == tabs[i].$1,
-                onTap: () => onChanged(tabs[i].$1),
-              ),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.contentPad,
+        right: AppSpacing.contentPad,
+        bottom: AppSpacing.walletAssetHeroTopGap,
+      ),
+      child: VitTabBar(
+        variant: VitTabBarVariant.segment,
+        activeKey: active,
+        onChanged: onChanged,
+        tabs: [
+          for (final tab in tabs)
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: PositionDashboardPage.tabKey(tab.$1),
             ),
-            if (i < tabs.length - 1) const SizedBox(width: 8),
-          ],
         ],
       ),
     );
@@ -161,7 +167,7 @@ class _SortChips extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      padding: AppSpacing.pageHorizontal,
       child: Row(
         children: [
           Text(
@@ -169,10 +175,10 @@ class _SortChips extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.positionDashboardTightLineHeight,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
           for (final sort in sorts) ...[
             _SortChip(
               key: PositionDashboardPage.sortKey(sort.$1),
@@ -180,53 +186,9 @@ class _SortChips extends StatelessWidget {
               active: active == sort.$1,
               onTap: () => onChanged(sort.$1),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.x3),
           ],
         ],
-      ),
-    );
-  }
-}
-
-class _PillButton extends StatelessWidget {
-  const _PillButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.lgRadius,
-      child: Container(
-        height: 38,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _tradePrimary.withValues(alpha: .16)
-              : _chipBackground,
-          border: Border.all(
-            color: active ? _tradePrimary : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.lgRadius,
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? _tradePrimary : AppColors.text3,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-            height: 1,
-          ),
-        ),
       ),
     );
   }
@@ -246,25 +208,20 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: 32,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _tradePrimary.withValues(alpha: .16)
-              : _chipBackground,
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.badge.copyWith(
-            color: active ? _tradePrimary : AppColors.text3,
-            height: 1,
-          ),
+    return VitCtaButton(
+      onPressed: onTap,
+      fullWidth: false,
+      height: AppSpacing.statusPillHeightLg,
+      variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowPy,
+        right: AppSpacing.rowPy,
+      ),
+      child: Text(
+        label,
+        style: AppTextStyles.badge.copyWith(
+          color: active ? AppColors.onAccent : AppColors.text3,
+          height: AppSpacing.positionDashboardTightLineHeight,
         ),
       ),
     );

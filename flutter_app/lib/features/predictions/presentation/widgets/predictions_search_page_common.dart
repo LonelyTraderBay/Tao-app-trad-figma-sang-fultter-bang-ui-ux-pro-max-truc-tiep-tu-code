@@ -14,27 +14,29 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Container(
-        padding: AppSpacing.predictionSearchCategoryChipPadding,
-        decoration: BoxDecoration(
+    return Material(
+      color: active
+          ? _predictionPrimary.withValues(alpha: .12)
+          : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
           color: active
-              ? _predictionPrimary.withValues(alpha: .12)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? _predictionPrimary.withValues(alpha: .30)
-                : AppColors.borderSolid,
-          ),
-          borderRadius: AppRadii.smRadius,
+              ? _predictionPrimary.withValues(alpha: .30)
+              : AppColors.borderSolid,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? _predictionPrimary : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
+        borderRadius: AppRadii.smRadius,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.smRadius,
+        child: Padding(
+          padding: AppSpacing.predictionSearchCategoryChipPadding,
+          child: Text(
+            label,
+            style: AppTextStyles.micro.copyWith(
+              color: active ? _predictionPrimary : AppColors.text3,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
         ),
       ),
@@ -69,19 +71,19 @@ class _SearchResultCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.predictionSearchChanceBox,
-            height: AppSpacing.predictionSearchChanceBox,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: chanceColor.withValues(alpha: .14),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Text(
-              '${topOutcome.chance}%',
-              style: AppTextStyles.body.copyWith(
-                color: chanceColor,
-                fontWeight: AppTextStyles.bold,
+          Material(
+            color: chanceColor.withValues(alpha: .14),
+            borderRadius: AppRadii.mdRadius,
+            child: SizedBox.square(
+              dimension: AppSpacing.predictionSearchChanceBox,
+              child: Center(
+                child: Text(
+                  '${topOutcome.chance}%',
+                  style: AppTextStyles.body.copyWith(
+                    color: chanceColor,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
               ),
             ),
           ),
@@ -135,19 +137,19 @@ class _TinyBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionSearchTinyBadgePadding,
-      decoration: BoxDecoration(
-        color: muted
-            ? AppColors.surface2
-            : _predictionPrimary.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: muted ? AppColors.text3 : _predictionPrimary,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: muted
+          ? AppColors.surface2
+          : _predictionPrimary.withValues(alpha: .14),
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.predictionSearchTinyBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: muted ? AppColors.text3 : _predictionPrimary,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );

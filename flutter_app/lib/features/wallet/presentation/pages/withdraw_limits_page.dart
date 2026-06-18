@@ -63,11 +63,9 @@ class WithdrawLimitsPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: WithdrawLimitsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.pageHorizontalPadding,
-                    AppSpacing.rowPy,
-                    AppSpacing.pageHorizontalPadding,
-                    bottomInset,
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.rowPy,
+                    bottom: bottomInset,
                   ),
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
@@ -79,24 +77,29 @@ class WithdrawLimitsPage extends ConsumerWidget {
                       const SizedBox(height: AppSpacing.transferSectionGap),
                       _QuickStats(tier: snapshot.currentTier),
                       const SizedBox(height: AppSpacing.sectionGapCompact),
-                      const _SectionLabel(
-                        label:
+                      const VitSectionHeader(
+                        title:
                             'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
+                        variant: VitSectionHeaderVariant.accentBar,
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: AppSpacing.walletAddressActionGap),
                       for (final tier in snapshot.tiers) ...[
                         _KycTierCard(
                           tier: tier,
                           currentLevel: snapshot.currentLevel,
                         ),
                         if (tier != snapshot.tiers.last)
-                          const SizedBox(height: 10),
+                          const SizedBox(
+                            height: AppSpacing.walletAddressActionGap,
+                          ),
                       ],
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.transferSectionGap),
                       const _LimitWarning(),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.transferSectionGap),
                       _FaqCard(faqs: snapshot.faqs),
-                      const SizedBox(height: 14),
+                      const SizedBox(
+                        height: AppSpacing.walletWithdrawSectionGap,
+                      ),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Review withdrawal limits',

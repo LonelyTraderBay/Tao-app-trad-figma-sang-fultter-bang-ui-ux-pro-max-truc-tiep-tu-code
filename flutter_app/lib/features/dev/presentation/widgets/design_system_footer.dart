@@ -13,11 +13,11 @@ class DesignSystemFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
+      decoration: const ShapeDecoration(
+        shape: Border(top: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x5),
+        padding: AppSpacing.devVerticalPaddingX5,
         child: Column(
           children: [
             Text(

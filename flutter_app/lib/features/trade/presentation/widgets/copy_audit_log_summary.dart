@@ -11,7 +11,7 @@ class _SummarySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 10),
+          padding: AppSpacing.copyAuditSummaryTitlePadding,
           child: Text(
             'Thống kê tổng quan',
             style: AppTextStyles.captionSm.copyWith(
@@ -20,7 +20,7 @@ class _SummarySection extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 13),
+        const SizedBox(height: AppSpacing.x4),
         Row(
           children: [
             Expanded(
@@ -30,7 +30,7 @@ class _SummarySection extends StatelessWidget {
                 color: AppColors.text1,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: _SummaryCard(
                 label: 'Trades',
@@ -40,7 +40,7 @@ class _SummarySection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.walletAssetPillGap),
         Row(
           children: [
             Expanded(
@@ -50,7 +50,7 @@ class _SummarySection extends StatelessWidget {
                 color: _auditPurple,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: _SummaryCard(
                 label: 'Risk Alerts',
@@ -88,7 +88,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: 69,
+      height: AppSpacing.copyAuditSummaryCardHeight,
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -100,7 +100,7 @@ class _SummaryCard extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.walletAssetPillGap),
           Text(
             value,
             style: AppTextStyles.amountSm.copyWith(
@@ -128,7 +128,7 @@ class _ExportFormatButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(13),
+      padding: AppSpacing.copyAuditExportButtonPadding,
       borderColor: AppColors.cardBorder,
       onTap: onTap,
       child: Row(
@@ -142,15 +142,15 @@ class _ExportFormatButton extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.1,
+                    height: AppSpacing.copyAuditExportLineHeight,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   format.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.1,
+                    height: AppSpacing.copyAuditExportLineHeight,
                   ),
                 ),
               ],
@@ -159,7 +159,7 @@ class _ExportFormatButton extends StatelessWidget {
           const Icon(
             Icons.file_download_outlined,
             color: AppColors.text3,
-            size: 17,
+            size: AppSpacing.walletAssetActionIcon,
           ),
         ],
       ),

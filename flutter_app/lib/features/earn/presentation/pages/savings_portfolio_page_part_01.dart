@@ -31,15 +31,10 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DecoratedBox(
-                decoration: const BoxDecoration(
-                  color: AppColors.surface,
-                  border: Border(bottom: BorderSide(color: AppColors.divider)),
-                ),
+              ColoredBox(
+                color: AppColors.surface,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x4,
-                  ),
+                  padding: AppSpacing.earnHorizontalPaddingX4,
                   child: VitTabBar(
                     variant: VitTabBarVariant.underline,
                     activeKey: _tab.name,
@@ -58,7 +53,7 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -166,7 +161,7 @@ class _PortfolioHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -205,15 +200,14 @@ class _PortfolioHero extends StatelessWidget {
           Row(
             children: [
               DecoratedBox(
-                decoration: const BoxDecoration(
+                decoration: const ShapeDecoration(
                   color: AppColors.buy15,
-                  borderRadius: AppRadii.mdRadius,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.mdRadius,
+                  ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x3,
-                    vertical: AppSpacing.x1,
-                  ),
+                  padding: AppSpacing.earnPillPadding,
                   child: Text(
                     gain,
                     style: AppTextStyles.micro.copyWith(
@@ -302,7 +296,7 @@ class _HeroIconButton extends StatelessWidget {
       height: AppSpacing.savingsPortfolioHeroIconButton,
       child: IconButton(
         onPressed: onPressed,
-        padding: EdgeInsets.zero,
+        padding: AppSpacing.zeroInsets,
         style: IconButton.styleFrom(
           backgroundColor: AppColors.portfolioBtnGhost,
           side: const BorderSide(color: AppColors.portfolioBtnGhostBorder),
@@ -328,13 +322,15 @@ class _HeroStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.portfolioBtnGhost,
-        border: Border.all(color: AppColors.portfolioBtnGhostBorder),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: const BorderSide(color: AppColors.portfolioBtnGhostBorder),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.earnPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -371,13 +367,15 @@ class _HeroPositionStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.portfolioBtnGhost,
-        border: Border.all(color: AppColors.portfolioBtnGhostBorder),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: const BorderSide(color: AppColors.portfolioBtnGhostBorder),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.earnPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -440,7 +438,7 @@ class _HeroAction extends StatelessWidget {
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.secondary,
       height: AppSpacing.savingsPortfolioActionHeight,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+      padding: AppSpacing.earnHorizontalPaddingX2,
       onPressed: () {
         HapticFeedback.selectionClick();
         onTap();

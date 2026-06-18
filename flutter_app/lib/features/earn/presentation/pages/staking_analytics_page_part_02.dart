@@ -24,16 +24,18 @@ class _AssetEarningsGrid extends StatelessWidget {
           final color = _assetColor(product.colorIndex);
           return VitCard(
             key: StakingAnalyticsPage.assetKey(product.asset),
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.earnCardPaddingX4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     DecoratedBox(
-                      decoration: BoxDecoration(
+                      decoration: ShapeDecoration(
                         color: color,
-                        borderRadius: AppRadii.swatchRadius,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: AppRadii.swatchRadius,
+                        ),
                       ),
                       child: const SizedBox(
                         width: AppSpacing.earnAnalyticsAssetDot,
@@ -83,7 +85,7 @@ class _ApyTab extends StatelessWidget {
       children: [
         VitCard(
           key: StakingAnalyticsPage.apyChartKey,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -152,7 +154,7 @@ class _RoiTab extends StatelessWidget {
       children: [
         VitCard(
           key: StakingAnalyticsPage.roiChartKey,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             children: [
               SizedBox(
@@ -227,7 +229,7 @@ class _ProductPerformanceCard extends StatelessWidget {
 
     return VitCard(
       key: StakingAnalyticsPage.productKey(product.asset),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
           Row(
@@ -324,7 +326,7 @@ class _SmallStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -358,10 +360,11 @@ class _AssetAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        border: Border.all(color: color.withValues(alpha: 0.45)),
-        shape: BoxShape.circle,
+        shape: CircleBorder(
+          side: BorderSide(color: color.withValues(alpha: 0.45)),
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.earnAnalyticsAvatarBox,
@@ -388,12 +391,12 @@ class _InsightBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.earnCardPaddingX3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -428,7 +431,7 @@ class _FooterNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,

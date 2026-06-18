@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_common.dart';
@@ -19,9 +20,9 @@ class ExecutionQualityIntroCard extends StatelessWidget {
           const ExecutionQualityIconTile(
             icon: Icons.bolt_rounded,
             color: executionQualityPrimary,
-            size: 40,
+            size: AppSpacing.tradeToolIconTileSm,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tradeToolCardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +33,7 @@ class ExecutionQualityIntroCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   '3 công cụ đảm bảo execution tối ưu: bảo vệ khỏi slippage xấu, transparency về routing, và modify orders không mất queue position.',
                   style: AppTextStyles.caption.copyWith(
@@ -67,15 +68,15 @@ class ExecutionQualityFeatureCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: ExecutionQualityPanel(
-        padding: const EdgeInsets.all(16),
+        padding: AppSpacing.tradeToolRiskIntroPadding,
         child: Row(
           children: [
             ExecutionQualityIconTile(
               icon: _iconFor(feature.id),
               color: color,
-              size: 48,
+              size: AppSpacing.tradeToolIconTileMd,
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.tradeToolCardGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +87,7 @@ class ExecutionQualityFeatureCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     feature.description,
                     style: AppTextStyles.caption.copyWith(
@@ -97,7 +98,7 @@ class ExecutionQualityFeatureCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.tradeToolInlineGap),
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
@@ -152,10 +153,11 @@ class ExecutionQualityBenefitsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeToolCardGap),
           for (final item in _items) ...[
             _BenefitItem(icon: item.$1, title: item.$2, description: item.$3),
-            if (item != _items.last) const SizedBox(height: 12),
+            if (item != _items.last)
+              const SizedBox(height: AppSpacing.tradeToolCardGap),
           ],
         ],
       ),
@@ -180,7 +182,7 @@ class ExecutionQualityProgressCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeToolCardGap),
           for (final item in items) ...[
             Row(
               children: [
@@ -195,7 +197,8 @@ class ExecutionQualityProgressCard extends StatelessWidget {
                 ExecutionQualityStatusPill(complete: item.complete),
               ],
             ),
-            if (item != items.last) const SizedBox(height: 9),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.tradeToolInlineGap),
           ],
         ],
       ),
@@ -218,7 +221,7 @@ class ExecutionQualityParityCard extends StatelessWidget {
             color: AppColors.buy,
             size: 18,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.tradeToolIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,7 +233,7 @@ class ExecutionQualityParityCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Phase 1 + Phase 2 = 100% feature parity với Binance/Coinbase Pro cho execution quality. Order amendment + slippage protection là standard features trên các sàn hàng đầu.',
                   style: AppTextStyles.caption.copyWith(
@@ -263,9 +266,8 @@ class _BenefitItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(width: 0),
         Icon(icon, color: executionQualityPrimary, size: 18),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.tradeToolIconGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,7 +279,7 @@ class _BenefitItem extends StatelessWidget {
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: AppSpacing.tradeToolMicroGap),
               Text(
                 description,
                 style: AppTextStyles.micro.copyWith(
@@ -292,5 +294,3 @@ class _BenefitItem extends StatelessWidget {
     );
   }
 }
-
-

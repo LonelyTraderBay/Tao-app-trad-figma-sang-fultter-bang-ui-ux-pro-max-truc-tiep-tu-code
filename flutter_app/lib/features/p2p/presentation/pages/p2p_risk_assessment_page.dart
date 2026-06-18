@@ -62,10 +62,7 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pRiskControlsScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -88,7 +85,7 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pRiskControlsInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P risk score review',
@@ -117,53 +114,52 @@ class _RiskScoreHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PRiskAssessmentPage.scoreHeroKey,
-      padding: const EdgeInsets.all(AppSpacing.x5),
-      decoration: BoxDecoration(
-        color: AppColors.buy,
+      color: AppColors.buy,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppColors.buy),
+        side: BorderSide(color: AppColors.buy),
       ),
-      child: Column(
-        children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.onAccent.withValues(alpha: .20),
-              shape: BoxShape.circle,
-            ),
-            child: SizedBox(
-              width: 80,
-              height: 80,
-              child: Center(
-                child: Text(
-                  '${snapshot.score}',
-                  style: AppTextStyles.heroNumber.copyWith(
-                    color: AppColors.onAccent,
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
+      child: Padding(
+        padding: AppSpacing.p2pRiskControlsHeroPadding,
+        child: Column(
+          children: [
+            SizedBox.square(
+              dimension: AppSpacing.p2pRiskControlsScoreBox,
+              child: Material(
+                color: AppColors.onAccent.withValues(alpha: .20),
+                shape: const CircleBorder(),
+                child: Center(
+                  child: Text(
+                    '${snapshot.score}',
+                    style: AppTextStyles.heroNumber.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x5),
-          Text(
-            snapshot.scoreLabel,
-            style: AppTextStyles.pageTitle.copyWith(
-              color: AppColors.onAccent,
-              fontWeight: AppTextStyles.bold,
+            const SizedBox(height: AppSpacing.x5),
+            Text(
+              snapshot.scoreLabel,
+              style: AppTextStyles.pageTitle.copyWith(
+                color: AppColors.onAccent,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            snapshot.scoreSubtitle,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.onAccent.withValues(alpha: .90),
-              fontWeight: AppTextStyles.bold,
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              snapshot.scoreSubtitle,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.onAccent.withValues(alpha: .90),
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -176,33 +172,35 @@ class _RiskInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PRiskAssessmentPage.infoKey,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p.withValues(alpha: .10),
+      color: AppModuleAccents.p2p.withValues(alpha: .10),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppModuleAccents.p2p.withValues(alpha: .24)),
+        side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .24)),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppModuleAccents.p2p,
-            size: 16,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              snapshot.infoText,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: 1.5,
+      child: Padding(
+        padding: AppSpacing.p2pRiskControlsInnerPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.info_outline_rounded,
+              color: AppModuleAccents.p2p,
+              size: AppSpacing.p2pRiskControlsInfoIcon,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                snapshot.infoText,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text2,
+                  height: AppSpacing.p2pRiskControlsInfoLineHeight,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -218,14 +216,17 @@ class _RiskFactorList extends StatelessWidget {
     return VitCard(
       key: P2PRiskAssessmentPage.factorsKey,
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         children: [
           for (var index = 0; index < factors.length; index++) ...[
             _RiskFactorRow(factor: factors[index]),
             if (index != factors.length - 1)
-              const Divider(height: 1, color: AppColors.borderSolid),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                color: AppColors.borderSolid,
+              ),
           ],
         ],
       ),
@@ -242,17 +243,14 @@ class _RiskFactorRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: P2PRiskAssessmentPage.factorKey(factor.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pRiskControlsCardPadding,
       child: Row(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.inputHeight,
+            child: const Material(
               color: AppColors.buy15,
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: const SizedBox(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
               child: Icon(
                 Icons.check_circle_outline_rounded,
                 color: AppColors.buy,

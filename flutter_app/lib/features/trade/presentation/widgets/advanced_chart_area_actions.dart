@@ -17,33 +17,35 @@ class _ChartArea extends StatelessWidget {
         .where((indicator) => indicator.enabled && indicator.id != 'vol')
         .toList(growable: false);
 
-    return Container(
-      height: 150,
-      color: _chartBlack,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: CustomPaint(
-              painter: _AdvancedTradeChartPainter(
-                candles: candles,
-                indicators: indicators,
-                chartType: chartType,
+    return SizedBox(
+      height: AppSpacing.tradeBotCompactChartHeight + AppSpacing.tradeBotRowGap,
+      child: ColoredBox(
+        color: _chartBlack,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: CustomPaint(
+                painter: _AdvancedTradeChartPainter(
+                  candles: candles,
+                  indicators: indicators,
+                  chartType: chartType,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            left: 8,
-            top: 9,
-            child: Row(
-              children: [
-                for (final indicator in legend) ...[
-                  _LegendChip(indicator: indicator),
-                  const SizedBox(width: 5),
+            Positioned(
+              left: AppSpacing.tradeBotSmallGap,
+              top: AppSpacing.tradeBotDisclosureGap,
+              child: Row(
+                children: [
+                  for (final indicator in legend) ...[
+                    _LegendChip(indicator: indicator),
+                    const SizedBox(width: AppSpacing.tradeBotTinyGap),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -56,20 +58,10 @@ class _LegendChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Color(indicator.colorHex);
-    return Container(
-      height: 20,
-      padding: const EdgeInsets.symmetric(horizontal: 6),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.dynamicIslandBg.withValues(alpha: .72),
-        border: Border.all(color: color.withValues(alpha: .45)),
-        borderRadius: BorderRadius.circular(9),
-      ),
-      child: Text(
-        indicator.label,
-        style: AppTextStyles.navLabel.copyWith(color: color, height: 1),
-      ),
+    return VitAccentPill(
+      label: indicator.label,
+      accentColor: Color(indicator.colorHex),
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -81,52 +73,49 @@ class _ActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 64,
-      padding: const EdgeInsets.fromLTRB(12, 9, 12, 10),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
+    return SizedBox(
+      height: AppSpacing.x7 + AppSpacing.tradeBotDisclosureGap,
+      child: Column(
         children: [
-          Expanded(
-            child: _TradeActionButton(
-              key: AdvancedChartPage.buyKey,
-              label: 'MUA',
-              color: AppColors.buy,
-              onTap: () => context.go(AppRoutePaths.tradePair(pairId)),
-            ),
+          const Divider(
+            height: AppSpacing.tradeBotHairline,
+            thickness: AppSpacing.dividerHairline,
+            color: AppColors.divider,
           ),
-          const SizedBox(width: 8),
           Expanded(
-            child: _TradeActionButton(
-              key: AdvancedChartPage.sellKey,
-              label: 'BÁN',
-              color: AppColors.sell,
-              onTap: () =>
-                  context.go('${AppRoutePaths.tradePair(pairId)}?side=sell'),
-            ),
-          ),
-          const SizedBox(width: 8),
-          InkWell(
-            key: AdvancedChartPage.alertKey,
-            onTap: () => context.go(AppRoutePaths.marketsAlerts),
-            borderRadius: AppRadii.cardRadius,
-            child: Container(
-              width: 44,
-              height: 44,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: _toolbarBackground,
-                border: Border.all(
-                  color: AppColors.onAccent.withValues(alpha: .12),
-                ),
-                borderRadius: AppRadii.cardRadius,
-              ),
-              child: const Icon(
-                Icons.error_outline_rounded,
-                size: 19,
-                color: AppColors.primarySoft,
+            child: Padding(
+              padding: AppSpacing.tradeReceiptSupportPadding,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _TradeActionButton(
+                      key: AdvancedChartPage.buyKey,
+                      label: 'MUA',
+                      color: AppColors.buy,
+                      onTap: () => context.go(AppRoutePaths.tradePair(pairId)),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                  Expanded(
+                    child: _TradeActionButton(
+                      key: AdvancedChartPage.sellKey,
+                      label: 'BÁN',
+                      color: AppColors.sell,
+                      onTap: () => context.go(
+                        '${AppRoutePaths.tradePair(pairId)}?side=sell',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                  VitIconButton(
+                    key: AdvancedChartPage.alertKey,
+                    icon: Icons.error_outline_rounded,
+                    tooltip: 'Open alerts',
+                    onPressed: () => context.go(AppRoutePaths.marketsAlerts),
+                    variant: VitIconButtonVariant.primary,
+                    size: VitIconButtonSize.lg,
+                  ),
+                ],
               ),
             ),
           ),
@@ -150,24 +139,20 @@ class _TradeActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      height: AppSpacing.tradeBotControlCompact,
+      alignment: Alignment.center,
+      variant: VitCardVariant.ghost,
+      borderColor: color.withValues(alpha: .34),
+      clip: true,
+      background: ColoredBox(color: color.withValues(alpha: .15)),
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 44,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: .15),
-          border: Border.all(color: color.withValues(alpha: .34)),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.body.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
+      child: Text(
+        label,
+        style: AppTextStyles.body.copyWith(
+          color: color,
+          fontWeight: AppTextStyles.bold,
+          height: AppSpacing.tradeBotLineHeightTight,
         ),
       ),
     );
@@ -196,28 +181,18 @@ class _IndicatorSheet extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: GestureDetector(
               onTap: () {},
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 440),
-                padding: const EdgeInsets.fromLTRB(20, 12, 20, 22),
-                decoration: BoxDecoration(
-                  color: AppColors.surface,
-                  border: Border.all(color: AppColors.borderSolid),
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(24),
-                  ),
+              child: VitCard(
+                constraints: const BoxConstraints(
+                  maxWidth: AppSpacing.launchpadSheetMaxWidth,
                 ),
+                padding: AppSpacing.homeMoreProductsSheetPadding,
+                variant: VitCardVariant.standard,
+                radius: VitCardRadius.lg,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      width: 40,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: AppColors.borderSolid,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
+                    const VitSheetHandle(),
+                    const SizedBox(height: AppSpacing.tradeBotPanelGap),
                     Row(
                       children: [
                         Expanded(
@@ -228,25 +203,24 @@ class _IndicatorSheet extends StatelessWidget {
                             ),
                           ),
                         ),
-                        IconButton(
+                        VitIconButton(
                           key: AdvancedChartPage.closeIndicatorsKey,
+                          icon: Icons.close_rounded,
+                          tooltip: 'Close indicators',
                           onPressed: onClose,
-                          icon: const Icon(
-                            Icons.close_rounded,
-                            color: AppColors.text2,
-                            size: 20,
-                          ),
+                          variant: VitIconButtonVariant.transparent,
+                          size: VitIconButtonSize.md,
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.tradeBotSmallGap),
                     for (final indicator in indicators) ...[
                       _IndicatorOption(
                         key: AdvancedChartPage.indicatorKey(indicator.id),
                         indicator: indicator,
                         onTap: () => onToggle(indicator.id),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: AppSpacing.tradeBotSmallGap),
                     ],
                   ],
                 ),
@@ -273,61 +247,63 @@ class _IndicatorOption extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(indicator.colorHex);
 
-    return InkWell(
+    return VitCard(
+      height: AppSpacing.inputHeight,
+      padding: AppSpacing.tradeReceiptSupportPadding,
+      variant: VitCardVariant.inner,
+      borderColor: indicator.enabled
+          ? color.withValues(alpha: .34)
+          : AppColors.borderSolid,
+      clip: true,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: AppSpacing.inputHeight,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          color: indicator.enabled ? AppColors.surface2 : AppColors.surface,
-          border: Border.all(
-            color: indicator.enabled
-                ? color.withValues(alpha: .34)
-                : AppColors.borderSolid,
+      background: ColoredBox(
+        color: indicator.enabled ? AppColors.surface2 : AppColors.surface,
+      ),
+      child: Row(
+        children: [
+          VitCard(
+            width: AppSpacing.tradeReceiptStatusIcon,
+            height: AppSpacing.tradeReceiptStatusIcon,
+            padding: AppSpacing.zeroInsets,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            clip: true,
+            background: ColoredBox(color: color),
+            child: const SizedBox.shrink(),
           ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                indicator.label,
-                style: AppTextStyles.body.copyWith(
-                  color: indicator.enabled ? AppColors.text1 : AppColors.text2,
-                  fontWeight: indicator.enabled
-                      ? AppTextStyles.medium
-                      : AppTextStyles.normal,
-                ),
+          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          Expanded(
+            child: Text(
+              indicator.label,
+              style: AppTextStyles.body.copyWith(
+                color: indicator.enabled ? AppColors.text1 : AppColors.text2,
+                fontWeight: indicator.enabled
+                    ? AppTextStyles.medium
+                    : AppTextStyles.normal,
               ),
             ),
-            Container(
-              width: 24,
-              height: 24,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: indicator.enabled ? color : AppColors.transparent,
-                border: Border.all(
-                  color: indicator.enabled ? color : AppColors.borderSolid,
-                ),
-                shape: BoxShape.circle,
-              ),
-              child: indicator.enabled
-                  ? const Icon(
-                      Icons.check_rounded,
-                      color: AppColors.onAccent,
-                      size: 14,
-                    )
-                  : null,
+          ),
+          VitCard(
+            width: AppSpacing.tradeBotCheckbox,
+            height: AppSpacing.tradeBotCheckbox,
+            alignment: Alignment.center,
+            padding: AppSpacing.zeroInsets,
+            variant: VitCardVariant.ghost,
+            borderColor: indicator.enabled ? color : AppColors.borderSolid,
+            radius: VitCardRadius.sm,
+            clip: true,
+            background: ColoredBox(
+              color: indicator.enabled ? color : AppColors.transparent,
             ),
-          ],
-        ),
+            child: indicator.enabled
+                ? const Icon(
+                    Icons.check_rounded,
+                    color: AppColors.onAccent,
+                    size: AppSpacing.tradeBotSmallIcon,
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
       ),
     );
   }

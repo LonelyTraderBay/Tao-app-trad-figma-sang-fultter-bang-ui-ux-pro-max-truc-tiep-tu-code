@@ -29,7 +29,7 @@ class _CreateSubAccountForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SubAccountPage.createFormKey,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.profileSubAccountCreatePadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -38,20 +38,19 @@ class _CreateSubAccountForm extends StatelessWidget {
             'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5',
             style: AppTextStyles.baseMedium.copyWith(
               fontWeight: AppTextStyles.extraBold,
-              height: 1,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: 14)),
+          const SizedBox(height: AppSpacing.profileSubAccountCreateTitleGap),
           const _FormFieldPreview(
             label: 'T\u00EAn t\u00E0i kho\u1EA3n',
             value: 'VD: Grid Bot #2',
           ),
-          const Padding(padding: EdgeInsets.only(top: 12)),
+          const SizedBox(height: AppSpacing.profileSubAccountCreateSectionGap),
           const _FormPillRow(
             label: 'Lo\u1EA1i t\u00E0i kho\u1EA3n',
             values: ['Spot', 'Margin', 'Futures', 'T\u1EA5t c\u1EA3'],
           ),
-          const Padding(padding: EdgeInsets.only(top: 12)),
+          const SizedBox(height: AppSpacing.profileSubAccountCreateSectionGap),
           const _FormPillRow(
             label: 'Quy\u1EC1n h\u1EA1n',
             values: [
@@ -64,7 +63,7 @@ class _CreateSubAccountForm extends StatelessWidget {
             ],
             wrap: true,
           ),
-          const Padding(padding: EdgeInsets.only(top: 14)),
+          const SizedBox(height: AppSpacing.profileSubAccountCreateCtaGap),
           VitCtaButton(
             onPressed: () {},
             child: const Text('T\u1EA1o t\u00E0i kho\u1EA3n'),
@@ -88,26 +87,26 @@ class _FormFieldPreview extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const Padding(padding: EdgeInsets.only(top: 7)),
-        Container(
+        const SizedBox(height: AppSpacing.profileSubAccountFormLabelGap),
+        SizedBox(
           height: AppSpacing.inputHeight,
-          padding: const EdgeInsets.symmetric(horizontal: 14),
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
+          child: Material(
             color: AppColors.surface2,
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(color: AppColors.borderSolid),
-          ),
-          child: Text(
-            value,
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.text3,
-              height: 1,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: const BorderSide(color: AppColors.borderSolid),
+            ),
+            child: Padding(
+              padding: AppSpacing.profileSubAccountFormInputPadding,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  value,
+                  style: AppTextStyles.body.copyWith(color: AppColors.text3),
+                ),
+              ),
             ),
           ),
         ),
@@ -131,12 +130,7 @@ class _FormPillRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final children = [
       for (final value in values)
-        _SmallPill(
-          label: value,
-          foreground: AppColors.primary,
-          background: AppColors.primary08,
-          border: AppColors.primary20,
-        ),
+        VitAccentPill(label: value, accentColor: AppColors.primary),
     ];
 
     return Column(
@@ -144,20 +138,24 @@ class _FormPillRow extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const Padding(padding: EdgeInsets.only(top: 8)),
+        const SizedBox(height: AppSpacing.profileSubAccountFormPillLabelGap),
         if (wrap)
-          Wrap(spacing: 8, runSpacing: 8, children: children)
+          Wrap(
+            spacing: AppSpacing.profileSubAccountFormPillGap,
+            runSpacing: AppSpacing.profileSubAccountFormPillGap,
+            children: children,
+          )
         else
           Row(
             children: [
               for (final child in children) ...[
                 Expanded(child: child),
-                if (child != children.last) const SizedBox(width: 8),
+                if (child != children.last)
+                  const SizedBox(
+                    width: AppSpacing.profileSubAccountFormPillGap,
+                  ),
               ],
             ],
           ),

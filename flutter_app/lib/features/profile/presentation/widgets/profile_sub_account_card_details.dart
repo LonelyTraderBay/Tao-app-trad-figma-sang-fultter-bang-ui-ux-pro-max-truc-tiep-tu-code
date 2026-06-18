@@ -9,12 +9,15 @@ class _SubAccountDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      padding: AppSpacing.profileSubAccountDetailsPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Divider(height: 1, color: AppColors.divider),
-          const Padding(padding: EdgeInsets.only(top: 14)),
+          const Divider(
+            height: AppSpacing.profileSubAccountDetailsDividerHeight,
+            color: AppColors.divider,
+          ),
+          const SizedBox(height: AppSpacing.profileSubAccountDetailsTopGap),
           Row(
             children: [
               Expanded(
@@ -40,29 +43,26 @@ class _SubAccountDetails extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: 13)),
+          const SizedBox(height: AppSpacing.profileSubAccountDetailsMetricGap),
           Text(
             'Quy\u1EC1n h\u1EA1n:',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: 8)),
+          const SizedBox(
+            height: AppSpacing.profileSubAccountPermissionLabelGap,
+          ),
           Wrap(
-            spacing: 7,
-            runSpacing: 7,
+            spacing: AppSpacing.profileSubAccountPermissionGap,
+            runSpacing: AppSpacing.profileSubAccountPermissionGap,
             children: [
               for (final permission in account.permissions)
-                _SmallPill(
+                VitAccentPill(
                   label: _permissionLabel(permission),
-                  foreground: AppColors.text2,
-                  background: AppColors.surface3.withValues(alpha: .72),
-                  border: AppColors.cardBorder,
+                  accentColor: AppColors.text3,
                 ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: 13)),
+          const SizedBox(height: AppSpacing.profileSubAccountEmailGap),
           Text.rich(
             TextSpan(
               text: 'Email: ',
@@ -75,7 +75,7 @@ class _SubAccountDetails extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: 13)),
+          const SizedBox(height: AppSpacing.profileSubAccountActionsGap),
           Row(
             children: [
               Expanded(
@@ -86,7 +86,7 @@ class _SubAccountDetails extends StatelessWidget {
                   background: AppColors.primary08,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.profileSubAccountActionGap),
               Expanded(
                 child: _ActionChip(
                   icon: Icons.key_rounded,
@@ -95,7 +95,7 @@ class _SubAccountDetails extends StatelessWidget {
                   background: AppColors.warn08,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.profileSubAccountActionGap),
               Expanded(
                 child: _ActionChip(
                   icon: Icons.settings_outlined,
@@ -132,12 +132,9 @@ class _DetailMetric extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const Padding(padding: EdgeInsets.only(top: 7)),
+        const SizedBox(height: AppSpacing.profileSubAccountDetailLabelGap),
         Text(
           value,
           maxLines: 1,
@@ -145,7 +142,6 @@ class _DetailMetric extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
           ),
         ),
       ],
@@ -168,30 +164,33 @@ class _ActionChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 36,
-      decoration: BoxDecoration(
+    return SizedBox(
+      height: AppSpacing.profileSubAccountActionHeight,
+      child: Material(
         color: background,
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: 14),
-          const SizedBox(width: 5),
-          Flexible(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: color,
+              size: AppSpacing.profileSubAccountActionIcon,
+            ),
+            const SizedBox(width: AppSpacing.profileSubAccountActionIconGap),
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_accent_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 part 'wallet_token_approval_cards.dart';
@@ -65,13 +65,11 @@ class WalletTokenSecurityOverview extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              VitCard(
                 width: AppSpacing.walletTokenHeroIcon,
                 height: AppSpacing.walletTokenHeroIcon,
-                decoration: BoxDecoration(
-                  color: walletTokenApprovalPurple.withValues(alpha: .14),
-                  borderRadius: AppRadii.inputRadius,
-                ),
+                variant: VitCardVariant.inner,
+                borderColor: walletTokenApprovalPurple.withValues(alpha: .20),
                 alignment: Alignment.center,
                 child: const Icon(
                   Icons.shield_outlined,
@@ -185,16 +183,11 @@ class WalletTokenCriticalAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: AppSpacing.walletTokenAlertHeight,
       padding: AppSpacing.walletTokenAlertPadding,
-      decoration: BoxDecoration(
-        color: walletTokenApprovalRed.withValues(alpha: .07),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(
-          color: walletTokenApprovalRed.withValues(alpha: .23),
-        ),
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: walletTokenApprovalRed.withValues(alpha: .23),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

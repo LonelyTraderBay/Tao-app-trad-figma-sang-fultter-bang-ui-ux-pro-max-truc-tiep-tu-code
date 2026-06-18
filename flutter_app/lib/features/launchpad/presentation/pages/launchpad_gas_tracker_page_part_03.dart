@@ -21,29 +21,29 @@ class _SelectablePill extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
             color: active ? color.withValues(alpha: .14) : AppColors.surface2,
-            border: Border.all(
-              color: active
-                  ? color.withValues(alpha: .34)
-                  : AppColors.cardBorder,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: active
+                    ? color.withValues(alpha: .34)
+                    : AppColors.cardBorder,
+              ),
+              borderRadius: AppRadii.smRadius,
             ),
-            borderRadius: AppRadii.smRadius,
           ),
-          child: Center(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: active ? color : AppColors.text3,
-                fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.launchpadPillPadding,
+            child: Center(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: active ? color : AppColors.text3,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
           ),
@@ -60,19 +60,22 @@ class _ChainBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.launchpadBox32,
       height: AppSpacing.launchpadBox32,
-      decoration: BoxDecoration(
-        color: price.accent.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        price.chainIcon,
-        style: AppTextStyles.micro.copyWith(
-          color: price.accent,
-          fontWeight: AppTextStyles.bold,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: price.accent.withValues(alpha: .14),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(
+          child: Text(
+            price.chainIcon,
+            style: AppTextStyles.micro.copyWith(
+              color: price.accent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -88,12 +91,12 @@ class _TrendPill extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _trendColor(price.trend);
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+        padding: AppSpacing.launchpadBadgePadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -183,7 +186,7 @@ class _EmptyAlerts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.launchpadPaddingX6,
       child: Column(
         children: [
           const Icon(

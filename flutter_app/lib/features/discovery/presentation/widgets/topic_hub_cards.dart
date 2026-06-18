@@ -10,7 +10,7 @@ class _PredictionEventCard extends StatelessWidget {
     return VitCard(
       key: TopicHubPage.predictionKey(event.id),
       onTap: () => context.go(event.route),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       borderColor: AppModuleAccents.predictions.withValues(alpha: .16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,16 +34,16 @@ class _PredictionEventCard extends StatelessWidget {
               ],
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             event.title,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              height: 1.32,
+              height: AppSpacing.discoveryPredictionTitleLineHeight,
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Text(
@@ -85,7 +85,7 @@ class _ArenaRoomCard extends StatelessWidget {
     return VitCard(
       key: TopicHubPage.roomKey(room.id),
       onTap: () => context.go(room.route),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       borderColor: AppModuleAccents.arena.withValues(alpha: .16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,7 @@ class _ArenaRoomCard extends StatelessWidget {
               _StatusMini(label: room.statusLabel, color: statusColor),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             room.title,
             style: AppTextStyles.body.copyWith(
@@ -109,7 +109,7 @@ class _ArenaRoomCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Text(
@@ -150,7 +150,7 @@ class _ArenaModeCard extends StatelessWidget {
     return VitCard(
       key: TopicHubPage.modeKey(mode.id),
       onTap: () => context.go(mode.route),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       child: Row(
         children: [
           _SmallAccentIcon(
@@ -185,7 +185,7 @@ class _ArenaModeCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${mode.activeChallenges} challenges · ${mode.cloneCount} clones',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -211,38 +211,39 @@ class _CreatorChip extends StatelessWidget {
       key: TopicHubPage.creatorKey(creator.id),
       onTap: () => context.go(creator.route),
       borderRadius: AppRadii.lgRadius,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x4,
-          vertical: AppSpacing.x3,
-        ),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: AppColors.surface2,
-          border: Border.all(color: AppColors.borderSolid),
-          borderRadius: AppRadii.lgRadius,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: AppColors.borderSolid),
+            borderRadius: AppRadii.lgRadius,
+          ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _CreatorAvatar(initials: creator.initials),
-            const SizedBox(width: AppSpacing.x3),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  creator.name,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
+        child: Padding(
+          padding: AppSpacing.discoveryPillPadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _CreatorAvatar(initials: creator.initials),
+              const SizedBox(width: AppSpacing.x3),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    creator.name,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  'Trust ${creator.trustScore}%',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ],
+                  Text(
+                    'Trust ${creator.trustScore}%',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -258,7 +259,7 @@ class _CreateRoomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: TopicHubPage.createRoomKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       borderColor: AppModuleAccents.arena.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,7 +282,7 @@ class _CreateRoomCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Tạo thách đấu Arena Points liên quan đến ${snapshot.selectedTopic.label}',
                       style: AppTextStyles.micro.copyWith(
@@ -295,14 +296,14 @@ class _CreateRoomCard extends StatelessWidget {
                 onPressed: () => context.go(snapshot.createArenaRoute),
                 fullWidth: false,
                 height: AppSpacing.buttonCompact,
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+                padding: AppSpacing.discoveryChipHorizontalPadding,
                 child: const Text('Tạo room'),
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Padding(
-            padding: const EdgeInsets.only(left: AppSpacing.x7),
+            padding: AppSpacing.discoveryLeftIndentedCopyPadding,
             child: Text(
               'Chủ đề chỉ là bối cảnh. Room Arena không ảnh hưởng vị thế Prediction Markets.',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -324,7 +325,7 @@ class _DisclosureCard extends StatelessWidget {
     return VitCard(
       key: TopicHubPage.disclosureKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       child: Text(
         'Lưu ý: Prediction Markets sử dụng USDT thật (vị thế thực). Arena Challenges chỉ dùng Arena Points (không phải tài sản tài chính). Topic Hub là trang khám phá, 2 module hoàn toàn riêng biệt.\n$notes',
         textAlign: TextAlign.center,

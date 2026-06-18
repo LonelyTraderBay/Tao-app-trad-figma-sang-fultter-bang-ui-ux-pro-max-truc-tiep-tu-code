@@ -20,7 +20,7 @@ class _StatCell extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const Padding(padding: AppSpacing.dcaTopPaddingX2),
         Text(
           value,
           style: AppTextStyles.sectionTitle.copyWith(
@@ -48,7 +48,7 @@ class _MiniStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.dcaPaddingX3,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -59,7 +59,7 @@ class _MiniStatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const Padding(padding: AppSpacing.dcaTopPaddingX2),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -89,20 +89,27 @@ class _CorrelationCell extends StatelessWidget {
         : value >= .4
         ? AppColors.warn
         : AppColors.buy;
-    return Container(
-      height: AppSpacing.x7,
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.x1),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: value == 1 ? .08 : .14),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Text(
-        value.toStringAsFixed(2),
-        style: AppTextStyles.micro.copyWith(
-          color: value == 1 ? AppColors.text3 : color,
-          fontWeight: AppTextStyles.bold,
-          fontFeatures: AppTextStyles.tabularFigures,
+    return Padding(
+      padding: AppSpacing.dcaHorizontalPaddingX1,
+      child: SizedBox(
+        height: AppSpacing.x7,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: color.withValues(alpha: value == 1 ? .08 : .14),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.mdRadius,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              value.toStringAsFixed(2),
+              style: AppTextStyles.micro.copyWith(
+                color: value == 1 ? AppColors.text3 : color,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -118,7 +125,7 @@ class _DisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warn15,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -23,7 +23,8 @@ class _MetricsGrid extends StatelessWidget {
               color: metrics[i].$3,
             ),
           ),
-          if (i < metrics.length - 1) const SizedBox(width: 10),
+          if (i < metrics.length - 1)
+            const SizedBox(width: AppSpacing.copyTradingHeroMetricGap),
         ],
       ],
     );
@@ -52,7 +53,7 @@ class _MetricCell extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: AppSpacing.copyTradingMetricCellGap),
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
@@ -84,32 +85,15 @@ class _WeeklyChart extends StatelessWidget {
           'P/L 7 ngày gần nhất',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.copyTradingWeeklyTitleGap),
         SizedBox(
-          height: 28,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              for (var i = 0; i < values.length; i++) ...[
-                Expanded(
-                  child: FractionallySizedBox(
-                    heightFactor: ((values[i].abs() * 10 + 5) / 100)
-                        .clamp(.16, 1.0)
-                        .toDouble(),
-                    alignment: Alignment.bottomCenter,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: values[i] >= 0
-                            ? AppColors.buy.withValues(alpha: .70)
-                            : AppColors.sell.withValues(alpha: .72),
-                        borderRadius: AppRadii.xsRadius,
-                      ),
-                    ),
-                  ),
-                ),
-                if (i < values.length - 1) const SizedBox(width: 4),
-              ],
-            ],
+          height: AppSpacing.copyTradingWeeklyChartHeight,
+          child: VitSparkline(
+            values: values,
+            color: values.isNotEmpty && values.last < values.first
+                ? AppColors.sell
+                : AppColors.buy,
+            strokeWidth: AppSpacing.copyTradingWeeklyStrokeWidth,
           ),
         ),
       ],
@@ -125,21 +109,7 @@ class _MiniBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1.2,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -151,13 +121,13 @@ class _Disclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 2, bottom: 4),
+      padding: AppSpacing.copyTradingDisclaimerPadding,
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: 1.5,
+          height: AppSpacing.copyTradingDisclaimerLineHeight,
         ),
       ),
     );

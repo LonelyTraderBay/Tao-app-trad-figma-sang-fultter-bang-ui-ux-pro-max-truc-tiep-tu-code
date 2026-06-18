@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
@@ -111,17 +110,13 @@ class AddressTextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasValue = controller.text.trim().isNotEmpty;
-    return Container(
+    return VitCard(
       height: height,
-      decoration: BoxDecoration(
-        color: addressAddPanel2,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(
-          color: hasValue ? addressAddPrimary : AppColors.borderSolid,
-          width: AppSpacing.borderWidth,
-        ),
-      ),
+      variant: VitCardVariant.ghost,
+      borderColor: hasValue ? addressAddPrimary : AppColors.borderSolid,
+      background: const ColoredBox(color: addressAddPanel2),
       alignment: Alignment.center,
+      clip: true,
       child: Semantics(
         textField: true,
         label: semanticLabel,
@@ -159,17 +154,14 @@ class AddressWalletInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasValue = controller.text.trim().length > 8;
-    return Container(
+    return VitCard(
       height: AppSpacing.inputHeight,
       padding: AppSpacing.walletAddressAddWalletInputPadding,
-      decoration: BoxDecoration(
-        color: addressAddPanel2,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(
-          color: hasValue ? addressAddPrimary : AppColors.borderSolid,
-          width: AppSpacing.borderWidth,
-        ),
-      ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: hasValue ? addressAddPrimary : AppColors.borderSolid,
+      background: const ColoredBox(color: addressAddPanel2),
+      clip: true,
       child: Row(
         children: [
           Expanded(

@@ -108,3 +108,55 @@ repository, or broad structural changes.
   `flutter_app/`.
 - Treat `docs/02_FLUTTER_MIGRATION/` as the retained path for Flutter coverage
   and QA docs, not as a dependency on old React code.
+
+## Agent Skills
+
+Local agent workflow skills live in `.codex/skills/`. Use them selectively for
+spec, planning, implementation, testing, debugging, review, security, and UI
+work. This AGENTS.md remains the higher-priority project contract; GitNexus,
+Flutter commands, financial safety, and Prediction Markets/Open Arena
+boundaries always take precedence over generic skill guidance.
+
+<!-- gitnexus:start -->
+# GitNexus — Code Intelligence
+
+This project is indexed by GitNexus as **Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code** (59889 symbols, 97348 relationships, 36 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+
+> Index stale? Run `node .gitnexus/run.cjs analyze --skip-agents-md --skip-skills` from the project root — it refreshes the graph without generating `CLAUDE.md` or `.claude/skills`. No `.gitnexus/run.cjs` yet? `npx gitnexus analyze --skip-agents-md --skip-skills` (npm 11 crash → `npm i -g gitnexus`; #1939).
+
+## Always Do
+
+- **MUST run impact analysis before editing any symbol.** Before modifying a function, class, or method, run `impact({target: "symbolName", direction: "upstream"})` and report the blast radius (direct callers, affected processes, risk level) to the user.
+- **MUST run `detect_changes()` before committing** to verify your changes only affect expected symbols and execution flows. For regression review, compare against the default branch: `detect_changes({scope: "compare", base_ref: "main"})`.
+- **MUST warn the user** if impact analysis returns HIGH or CRITICAL risk before proceeding with edits.
+- When exploring unfamiliar code, use `query({query: "concept"})` to find execution flows instead of grepping. It returns process-grouped results ranked by relevance.
+- When you need full context on a specific symbol — callers, callees, which execution flows it participates in — use `context({name: "symbolName"})`.
+
+## Never Do
+
+- NEVER edit a function, class, or method without first running `impact` on it.
+- NEVER ignore HIGH or CRITICAL risk warnings from impact analysis.
+- NEVER rename symbols with find-and-replace — use `rename` which understands the call graph.
+- NEVER commit changes without running `detect_changes()` to check affected scope.
+
+## Resources
+
+| Resource | Use for |
+|----------|---------|
+| `gitnexus://repo/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/context` | Codebase overview, check index freshness |
+| `gitnexus://repo/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/clusters` | All functional areas |
+| `gitnexus://repo/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/processes` | All execution flows |
+| `gitnexus://repo/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/process/{name}` | Step-by-step execution trace |
+
+## CLI
+
+| Task | Read this skill file |
+|------|---------------------|
+| Understand architecture / "How does X work?" | `.codex/skills/gitnexus-exploring/SKILL.md` |
+| Blast radius / "What breaks if I change X?" | `.codex/skills/gitnexus-impact-analysis/SKILL.md` |
+| Trace bugs / "Why is X failing?" | `.codex/skills/gitnexus-debugging/SKILL.md` |
+| Rename / extract / split / refactor | `.codex/skills/gitnexus-refactoring/SKILL.md` |
+| Tools, resources, schema reference | `.codex/skills/gitnexus-guide/SKILL.md` |
+| Index, status, clean, wiki CLI commands | `.codex/skills/gitnexus-cli/SKILL.md` |
+
+<!-- gitnexus:end -->

@@ -14,7 +14,7 @@ class _DisputeTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 54,
+      height: AppSpacing.tradeBotDisputeTabsHeight,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       child: Row(
@@ -42,22 +42,28 @@ class _DisputeTabs extends StatelessWidget {
                                       ? _disputePrimary
                                       : AppColors.text3,
                                   fontWeight: AppTextStyles.bold,
-                                  height: 1,
+                                  height: AppSpacing.tradeBotLineHeightTight,
                                 ),
                               ),
                             ),
                             if (tab.badgeCount != null) ...[
-                              const SizedBox(width: 5),
+                              const SizedBox(width: AppSpacing.tradeBotTinyGap),
                               _TabBadge(tab.badgeCount!),
                             ],
                           ],
                         ),
                       ),
                     ),
-                    Container(
-                      width: tab.id == activeId ? 70 : 0,
-                      height: 2,
-                      color: _disputePrimary,
+                    VitCard(
+                      width: tab.id == activeId
+                          ? AppSpacing.tradeBotDisputeTabIndicatorWidth
+                          : 0,
+                      height: AppSpacing.tabBarUnderlineHeight,
+                      variant: VitCardVariant.inner,
+                      radius: VitCardRadius.sm,
+                      borderColor: _disputePrimary,
+                      background: const ColoredBox(color: _disputePrimary),
+                      child: const SizedBox.shrink(),
                     ),
                   ],
                 ),
@@ -76,22 +82,10 @@ class _TabBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 18,
-      height: 18,
-      alignment: Alignment.center,
-      decoration: const BoxDecoration(
-        color: _disputePrimary,
-        shape: BoxShape.circle,
-      ),
-      child: Text(
-        '$count',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.onAccent,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitAccentPill(
+      label: '$count',
+      accentColor: _disputePrimary,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -115,7 +109,7 @@ class _CasesTab extends StatelessWidget {
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: 12,
+      customGap: AppSpacing.tradeBotCardGap,
       children: [
         if (lastResult != null && activeTabId == 'active')
           _ResultBanner(result: lastResult!),
@@ -154,7 +148,7 @@ class _DisputeCaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final resolved = disputeCase.status == 'resolved';
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tradeBotCardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -173,7 +167,7 @@ class _DisputeCaseCard extends StatelessWidget {
                   status: _statusPillStatus(disputeCase.status),
                   size: VitStatusPillSize.sm,
                 ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: Text(
                   resolved
@@ -184,48 +178,48 @@ class _DisputeCaseCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: resolved ? AppColors.buy : AppColors.text3,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           Text(
             disputeCase.subject,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.25,
+              height: AppSpacing.tradeBotLineHeightCompact,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
           Text(
             'Provider: ${disputeCase.providerName}',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.25,
+              height: AppSpacing.tradeBotLineHeightCompact,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Text(
             disputeCase.description,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: 1.4,
+              height: AppSpacing.tradeBotLineHeightMedium,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           if (!resolved)
             _CaseTimeline(disputeCase: disputeCase)
           else
             _RefundPanel(disputeCase: disputeCase),
           if (!resolved) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.tradeBotCardGap),
             VitCtaButton(
               onPressed: () {},
               variant: VitCtaButtonVariant.danger,
-              height: 36,
+              height: AppSpacing.tradeBotDisputeEscalateHeight,
               child: const Text('Escalate to Senior Support'),
             ),
           ],

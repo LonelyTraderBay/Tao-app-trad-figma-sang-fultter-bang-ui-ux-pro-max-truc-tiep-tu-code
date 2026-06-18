@@ -18,7 +18,7 @@ class _StateKitSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
+      padding: AppSpacing.enterpriseStatesContentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -26,7 +26,7 @@ class _StateKitSection extends StatelessWidget {
             '5 state pattern chuẩn enterprise, match 100% visual style hiện tại. Chọn state để xem preview.',
             style: AppTextStyles.body.copyWith(
               color: AppColors.text2,
-              height: 1.55,
+              height: AppSpacing.enterpriseStatesLineHeightBody,
             ),
           ),
           const SizedBox(height: AppSpacing.x5),
@@ -114,36 +114,35 @@ class _PreviewFrame extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       clip: true,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x3,
+          DecoratedBox(
+            decoration: const ShapeDecoration(
+              shape: Border(bottom: BorderSide(color: AppColors.divider)),
             ),
-            decoration: const BoxDecoration(
-              border: Border(bottom: BorderSide(color: AppColors.divider)),
-            ),
-            child: Row(
-              children: [
-                const VitSkeleton(
-                  width: AppSpacing.x6,
-                  height: AppSpacing.x6,
-                  borderRadius: AppRadii.cardRadius,
-                ),
-                Expanded(
-                  child: Text(
-                    'Preview — ${_previewLabel(activeState).toLowerCase()}',
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.baseMedium.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
+            child: Padding(
+              padding: AppSpacing.enterpriseStatesFrameHeaderPadding,
+              child: Row(
+                children: [
+                  const VitSkeleton(
+                    width: AppSpacing.x6,
+                    height: AppSpacing.x6,
+                    borderRadius: AppRadii.cardRadius,
+                  ),
+                  Expanded(
+                    child: Text(
+                      'Preview — ${_previewLabel(activeState).toLowerCase()}',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.baseMedium.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: AppSpacing.x6),
-              ],
+                  const SizedBox(width: AppSpacing.x6),
+                ],
+              ),
             ),
           ),
           if (activeState == EnterprisePreviewState.loading)
@@ -168,7 +167,7 @@ class _SkeletonPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.enterpriseStatesCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -243,7 +242,7 @@ class _EmptyPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.enterpriseStatesPreviewLargePadding,
       child: VitEmptyState(
         icon: Icons.star_border_rounded,
         title: 'Bạn chưa theo dõi cặp nào',
@@ -263,7 +262,7 @@ class _ErrorPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.enterpriseStatesPreviewLargePadding,
       child: VitErrorState(
         title: 'Có lỗi xảy ra',
         message: 'Vui lòng thử lại. Nếu lỗi tiếp tục, hãy kiểm tra kết nối.',
@@ -278,7 +277,7 @@ class _OfflinePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.enterpriseStatesPreviewPadding,
       child: Column(
         children: [
           VitOfflineBanner(message: 'Mất kết nối. Đang hiển thị dữ liệu cũ.'),
@@ -298,10 +297,10 @@ class _GatePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.enterpriseStatesPreviewPadding,
       child: VitCard(
         variant: VitCardVariant.inner,
-        padding: const EdgeInsets.all(AppSpacing.x5),
+        padding: AppSpacing.enterpriseStatesPreviewPadding,
         child: Column(
           children: [
             const Icon(

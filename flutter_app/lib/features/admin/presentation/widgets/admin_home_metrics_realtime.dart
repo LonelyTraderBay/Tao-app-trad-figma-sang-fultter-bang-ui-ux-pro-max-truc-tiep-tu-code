@@ -30,7 +30,7 @@ class _MetricCard extends StatelessWidget {
       label:
           'Admin home metric ${metric.label}: ${metric.value}. ${metric.deltaLabel} ${metric.timeframeLabel}',
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.adminCompactPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -131,7 +131,7 @@ class _RealTimeMetricsSection extends StatelessWidget {
         _MetricGrid(metrics: snapshot.liveStats),
         const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.adminCardPadding,
           child: Column(
             children: [
               Row(
@@ -198,7 +198,10 @@ class _LiveDot extends StatelessWidget {
       width: AppSpacing.x3,
       height: AppSpacing.x3,
       child: DecoratedBox(
-        decoration: BoxDecoration(color: AppColors.buy, shape: BoxShape.circle),
+        decoration: ShapeDecoration(
+          color: AppColors.buy,
+          shape: CircleBorder(),
+        ),
       ),
     );
   }
@@ -216,19 +219,16 @@ class _PauseButton extends StatelessWidget {
       button: true,
       label: isLive ? 'Pause live admin updates' : 'Resume live admin updates',
       child: DecoratedBox(
-        decoration: const BoxDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.surface3,
-          borderRadius: AppRadii.inputRadius,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
         child: GestureDetector(
           key: AdminHome.pauseKey,
           onTap: onPressed,
           behavior: HitTestBehavior.opaque,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x2,
-            ),
+            padding: AppSpacing.adminSegmentButtonPadding,
             child: Text(
               isLive ? 'Tạm dừng' : 'Tiếp tục',
               style: AppTextStyles.caption.copyWith(

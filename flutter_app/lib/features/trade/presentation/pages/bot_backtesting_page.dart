@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -22,7 +22,6 @@ import '../widgets/trade_body_review_widgets.dart';
 part '../widgets/bot_backtesting_widgets.dart';
 
 const _backtestBackground = AppColors.bg;
-const _backtestPanel = AppColors.surface;
 const _backtestPrimary = AppColors.primary;
 
 class BotBacktestingPage extends ConsumerStatefulWidget {
@@ -70,8 +69,9 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomGap =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 154
-            : DeviceMetrics.nativeBottomChrome + 36) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.tradeBotFooterBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
     final range = snapshot.dateRanges.firstWhere(
       (item) => item.id == _selectedRange,
@@ -95,15 +95,15 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: BotBacktestingPage.contentKey,
-                  padding: EdgeInsets.zero,
+                  padding: AppSpacing.zeroInsets,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
+                        padding: AppSpacing.tradeBotScrollPadding,
                         child: VitPageContent(
                           padding: VitContentPadding.none,
-                          customGap: 10,
+                          customGap: AppSpacing.tradeBotRowGap,
                           fullBleed: true,
                           children: [
                             const VitHighRiskStatePanel(
@@ -144,10 +144,10 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       _RunFooter(onRun: () => _handleRun(snapshot)),
                       const Padding(
-                        padding: EdgeInsets.fromLTRB(20, 14, 20, 0),
+                        padding: AppSpacing.tradeBotScrollPadding,
                         child: TradeBodyReviewSection(
                           title: 'Backtest body review',
                           message: 'Bot backtesting body reviewed',

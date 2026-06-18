@@ -21,7 +21,9 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.tokenUnlocksVisualBottomExtra
+            : AppSpacing.tokenUnlocksNativeBottomExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -48,10 +50,10 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: TokenUnlocksPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.tokenUnlocksScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 12,
+                      customGap: AppSpacing.tokenUnlocksPageGap,
                       children: [
                         if (_tab == 'upcoming') ...[
                           _UnlockHero(snapshot: allSnapshot),
@@ -121,13 +123,10 @@ class _UnlockTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
+    return Material(
+      color: AppColors.surface,
       child: SizedBox(
-        height: 54,
+        height: AppSpacing.tokenUnlocksTabsHeight,
         child: Row(
           children: [
             _UnderlinedTab(
@@ -193,7 +192,7 @@ class _UnderlinedTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 2,
+              height: AppSpacing.tokenUnlocksTabIndicatorHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: _marketPrimary),
@@ -213,14 +212,10 @@ class _UnlockHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        border: Border.all(color: _marketPrimary.withValues(alpha: .18)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      padding: AppSpacing.tokenUnlocksHeroPadding,
+      borderColor: _marketPrimary.withValues(alpha: .18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -231,19 +226,19 @@ class _UnlockHero extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.tokenUnlocksHeroLabelGap),
           Text(
             _formatCompactUsd(snapshot.totalValueNext30d),
             style: AppTextStyles.amountMd.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.tokenUnlocksHeroValueGap),
           Row(
             children: [
               Text(
                 '${snapshot.highImpactCount} tác động cao',
                 style: AppTextStyles.micro.copyWith(color: AppColors.sell),
               ),
-              const SizedBox(width: 18),
+              const SizedBox(width: AppSpacing.tokenUnlocksHeroMetaGap),
               Text(
                 'TB dilution: ${snapshot.avgDilution.toStringAsFixed(1)}%',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -286,7 +281,7 @@ class _UnlockFilters extends StatelessWidget {
             color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.nearest),
           ),
-          const SizedBox(width: 2),
+          const SizedBox(width: AppSpacing.tokenUnlocksFilterGap),
           _FilterChipButton(
             key: TokenUnlocksPage.sortValueKey,
             label: 'Giá trị cao',
@@ -294,21 +289,21 @@ class _UnlockFilters extends StatelessWidget {
             color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.value),
           ),
-          const SizedBox(width: 2),
+          const SizedBox(width: AppSpacing.tokenUnlocksFilterGap),
           _FilterChipButton(
             label: 'Tác động',
             active: sortBy == MarketUnlockSort.impact,
             color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.impact),
           ),
-          const SizedBox(width: 2),
+          const SizedBox(width: AppSpacing.tokenUnlocksFilterGap),
           _FilterChipButton(
             label: 'Tất cả',
             active: impactFilter == null,
             color: AppColors.text3,
             onTap: onAllImpacts,
           ),
-          const SizedBox(width: 2),
+          const SizedBox(width: AppSpacing.tokenUnlocksFilterGap),
           for (final entry in impactConfigs.entries) ...[
             _FilterChipButton(
               key: entry.key == MarketUnlockImpact.high
@@ -319,7 +314,8 @@ class _UnlockFilters extends StatelessWidget {
               color: entry.value.color,
               onTap: () => onImpactSelected(entry.key),
             ),
-            if (entry.key != impactConfigs.keys.last) const SizedBox(width: 2),
+            if (entry.key != impactConfigs.keys.last)
+              const SizedBox(width: AppSpacing.tokenUnlocksFilterGap),
           ],
         ],
       ),
@@ -343,27 +339,22 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
+    return Material(
+      color: active
+          ? color.withValues(alpha: color == AppColors.text3 ? .06 : .12)
+          : AppColors.surface2,
       borderRadius: AppRadii.smRadius,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
-        decoration: BoxDecoration(
-          color: active
-              ? color.withValues(alpha: color == AppColors.text3 ? .06 : .12)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? color.withValues(alpha: .26)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? color : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.smRadius,
+        child: Padding(
+          padding: AppSpacing.tokenUnlocksFilterPadding,
+          child: Text(
+            label,
+            style: AppTextStyles.micro.copyWith(
+              color: active ? color : AppColors.text3,
+              fontWeight: AppTextStyles.medium,
+            ),
           ),
         ),
       ),
@@ -399,7 +390,8 @@ class _UnlockList extends StatelessWidget {
             expanded: expandedId == unlock.id,
             onToggle: () => onToggleExpanded(unlock),
           ),
-          if (unlock != unlocks.last) const SizedBox(height: 4),
+          if (unlock != unlocks.last)
+            const SizedBox(height: AppSpacing.tokenUnlocksListGap),
         ],
       ],
     );

@@ -58,21 +58,18 @@ class _StatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.p2pLoginHistoryStatPadding,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: AppSpacing.inputHeight,
-            height: AppSpacing.inputHeight,
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.p2pLoginHistoryIconBox,
+            child: Material(
+              type: MaterialType.transparency,
               color: color.withValues(alpha: .12),
               borderRadius: AppRadii.lgRadius,
+              child: Icon(icon, color: color, size: AppSpacing.iconMd),
             ),
-            child: Icon(icon, color: color, size: AppSpacing.iconMd),
           ),
           const SizedBox(height: AppSpacing.x2),
           Text(
@@ -148,10 +145,7 @@ class _FilterPill extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x2,
-          ),
+          padding: AppSpacing.p2pLoginHistoryFilterPadding,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
@@ -172,15 +166,16 @@ class _RiskWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return Material(
       key: P2PLoginHistoryPage.warningKey,
-      decoration: BoxDecoration(
-        color: AppColors.warn10,
+      type: MaterialType.transparency,
+      color: AppColors.warn10,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppColors.warningBorder),
+        side: BorderSide(color: AppColors.warningBorder),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pLoginHistoryNoticePadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -206,7 +201,7 @@ class _RiskWarning extends StatelessWidget {
                     snapshot.warningBody,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: 1.5,
+                      height: AppSpacing.p2pLoginHistoryWarningLineHeight,
                     ),
                   ),
                 ],

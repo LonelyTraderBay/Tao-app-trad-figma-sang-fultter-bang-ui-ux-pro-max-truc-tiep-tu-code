@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -77,7 +78,10 @@ class _WalletTokenApprovalPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: WalletTokenApprovalPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.x4,
+                    bottom: bottomInset,
+                  ),
                   child: _tabSurface(_contentForTab(controller)),
                 ),
               ),
@@ -141,7 +145,7 @@ class _WalletTokenApprovalPageState
     return VitCard(
       variant: VitCardVariant.standard,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       child: child,
     );
   }
@@ -154,9 +158,6 @@ class _WalletTokenApprovalPageState
     showVitBottomSheet<void>(
       context: context,
       backgroundColor: walletTokenApprovalPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
-      ),
       builder: (context) => WalletTokenRevokeSheet(preview: preview),
     );
   }

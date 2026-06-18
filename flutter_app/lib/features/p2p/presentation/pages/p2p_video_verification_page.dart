@@ -43,8 +43,10 @@ class _P2PVideoVerificationPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pComplianceBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pComplianceBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -69,12 +71,7 @@ class _P2PVideoVerificationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -108,7 +105,7 @@ class _P2PVideoVerificationPageState
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pComplianceCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Video verification review',
@@ -141,22 +138,24 @@ class _VideoHero extends StatelessWidget {
       key: P2PVideoVerificationPage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pComplianceCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.inputHeight,
-            height: AppSpacing.inputHeight,
-            decoration: BoxDecoration(
-              color: AppColors.primary15,
+          const Material(
+            color: AppColors.primary15,
+            shape: RoundedRectangleBorder(
               borderRadius: AppRadii.lgRadius,
-              border: Border.all(color: AppColors.primary20),
+              side: BorderSide(color: AppColors.primary20),
             ),
-            child: const Icon(
-              Icons.videocam_outlined,
-              color: AppModuleAccents.p2p,
-              size: AppSpacing.iconMd,
+            child: SizedBox(
+              width: AppSpacing.p2pComplianceIconBox,
+              height: AppSpacing.p2pComplianceIconBox,
+              child: Icon(
+                Icons.videocam_outlined,
+                color: AppModuleAccents.p2p,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -175,7 +174,7 @@ class _VideoHero extends StatelessWidget {
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pComplianceReadableLineHeight,
                   ),
                 ),
               ],
@@ -197,14 +196,15 @@ class _PreparationCard extends StatelessWidget {
     return VitCard(
       key: P2PVideoVerificationPage.preparationKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pComplianceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const _SectionTitle(
+          const VitSectionHeader(
             icon: Icons.info_outline_rounded,
             title: 'Chuẩn bị',
-            color: AppModuleAccents.p2p,
+            iconColor: AppModuleAccents.p2p,
+            accentColor: AppModuleAccents.p2p,
           ),
           const SizedBox(height: AppSpacing.x3),
           for (final item in snapshot.preparationItems) ...[
@@ -275,7 +275,7 @@ class _SlotCard extends StatelessWidget {
         radius: VitCardRadius.lg,
         variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
         borderColor: selected ? AppColors.primary20 : AppColors.borderSolid,
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.p2pComplianceCardPadding,
         onTap: slot.available ? onTap : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -317,58 +317,16 @@ class _SlotCard extends StatelessWidget {
                   ),
                 ),
                 if (!slot.available)
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.x3,
-                      vertical: AppSpacing.x1,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.surface2,
-                      borderRadius: AppRadii.mdRadius,
-                    ),
-                    child: Text(
-                      'Hết chỗ',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
+                  const VitStatusPill(
+                    label: 'Hết chỗ',
+                    status: VitStatusPillStatus.neutral,
+                    size: VitStatusPillSize.sm,
                   ),
               ],
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({
-    required this.icon,
-    required this.title,
-    required this.color,
-  });
-
-  final IconData icon;
-  final String title;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: color, size: AppSpacing.iconSm),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            title,
-            style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -384,11 +342,11 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.only(top: 2),
+          padding: AppSpacing.p2pComplianceChecklistIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: 13,
+            size: AppSpacing.p2pComplianceChecklistIcon,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -397,7 +355,7 @@ class _ChecklistRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.p2pComplianceReadableLineHeight,
             ),
           ),
         ),

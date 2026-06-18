@@ -77,7 +77,7 @@ class _StakingDataExportPageState extends ConsumerState<StakingDataExportPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.defaultPadding,
                     gap: VitContentGap.defaultGap,
@@ -122,7 +122,7 @@ class _ExportHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -202,7 +202,7 @@ class _QuickExportCard extends StatelessWidget {
       key: StakingDataExportPage.quickExportKey(item.id),
       radius: VitCardRadius.lg,
       borderColor: selected ? AppColors.primary : null,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,7 +254,7 @@ class _CustomExport extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -312,34 +312,40 @@ class _DateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSpacing.inputHeight,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        border: Border.all(color: AppColors.borderSolid),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.surface2,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: AppColors.borderSolid),
+            borderRadius: AppRadii.inputRadius,
+          ),
+        ),
+        child: Padding(
+          padding: AppSpacing.earnHorizontalPaddingX3,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.body.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: AppSpacing.x2),
+              const Icon(
+                Icons.calendar_today_outlined,
+                color: AppColors.text3,
+                size: AppSpacing.iconSm,
+              ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.x2),
-          const Icon(
-            Icons.calendar_today_outlined,
-            color: AppColors.text3,
-            size: AppSpacing.iconSm,
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -369,29 +375,37 @@ class _FormatSelect extends StatelessWidget {
           final next = options[(index + 1) % options.length];
           onChanged(next);
         },
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.inputHeight,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.borderSolid),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  format,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.body.copyWith(color: AppColors.text1),
-                ),
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: AppColors.borderSolid),
+                borderRadius: AppRadii.inputRadius,
               ),
-              const Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: AppColors.text2,
-                size: AppSpacing.iconMd,
+            ),
+            child: Padding(
+              padding: AppSpacing.earnHorizontalPaddingX3,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      format,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.text1,
+                      ),
+                    ),
+                  ),
+                  const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.text2,
+                    size: AppSpacing.iconMd,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -410,7 +424,7 @@ class _FooterNote extends StatelessWidget {
       key: StakingDataExportPage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,

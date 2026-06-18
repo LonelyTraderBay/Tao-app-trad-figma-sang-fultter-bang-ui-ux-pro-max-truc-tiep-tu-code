@@ -15,21 +15,21 @@ class _DashedActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 46,
+      height: AppSpacing.tradeBotControlHeight,
       alignment: Alignment.center,
       borderColor: _securityPrimary.withValues(alpha: .72),
       onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: _securityPrimary, size: 18),
-          const SizedBox(width: 9),
+          Icon(icon, color: _securityPrimary, size: AppSpacing.iconSm),
+          const SizedBox(width: AppSpacing.x3),
           Text(
             label,
             style: AppTextStyles.caption.copyWith(
               color: _securityPrimary,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -49,25 +49,10 @@ class _Switch extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.cardLargeRadius,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 140),
-        width: 48,
-        height: 24,
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          color: enabled ? _securityGreen : _securityPanel2,
-          borderRadius: AppRadii.cardLargeRadius,
-        ),
-        child: Align(
-          alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-          child: const DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.onAccent,
-              shape: BoxShape.circle,
-            ),
-            child: SizedBox(width: 20, height: 20),
-          ),
-        ),
+      child: VitTogglePill(
+        enabled: enabled,
+        activeColor: _securityGreen,
+        inactiveColor: _securityPanel2,
       ),
     );
   }

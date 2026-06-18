@@ -10,7 +10,7 @@ class _SmartAlertCard extends StatelessWidget {
     final module = _moduleVisual(alert.module);
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,15 +119,12 @@ class _StatusBadge extends StatelessWidget {
     };
 
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: background,
-        borderRadius: AppRadii.xlRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.crossModulePillPadding,
         child: Text(
           status.name.toUpperCase(),
           style: AppTextStyles.chartLabelTiny.copyWith(

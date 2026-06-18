@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -23,7 +22,6 @@ part '../widgets/wallet_address_book_list.dart';
 
 const _bookBackground = AppColors.bg;
 const _bookPanel = AppColors.surface;
-const _bookPanel2 = AppColors.surface2;
 const _bookPrimary = AppColors.primary;
 const _bookGreen = AppColors.buy;
 const _bookAmber = AppColors.caution;
@@ -107,11 +105,9 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: AddressBookPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    bottomInset,
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.x4,
+                    bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,

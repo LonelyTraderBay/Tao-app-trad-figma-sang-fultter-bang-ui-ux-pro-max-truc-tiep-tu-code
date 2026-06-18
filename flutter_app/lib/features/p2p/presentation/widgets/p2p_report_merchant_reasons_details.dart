@@ -16,41 +16,40 @@ class _ReasonCard extends StatelessWidget {
     final tone = _toneColor(reason.tone);
     return Material(
       key: P2PReportMerchantPage.reasonKey(reason.id),
-      color: AppColors.transparent,
-      borderRadius: AppRadii.cardRadius,
-      child: Ink(
-        decoration: BoxDecoration(
-          color: selected ? tone.withValues(alpha: 0.10) : AppColors.surface2,
-          border: Border.all(
-            color: selected
-                ? tone.withValues(alpha: 0.36)
-                : AppColors.borderSolid,
-            width: selected ? 1.5 : 1,
-          ),
-          borderRadius: AppRadii.cardRadius,
+      color: selected ? tone.withValues(alpha: 0.10) : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.cardRadius,
+        side: BorderSide(
+          color: selected
+              ? tone.withValues(alpha: 0.36)
+              : AppColors.borderSolid,
+          width: selected
+              ? AppSpacing.p2pRiskControlsSelectedBorderWidth
+              : AppSpacing.dividerHairline,
         ),
+      ),
+      child: Ink(
         child: InkWell(
           onTap: onTap,
-          borderRadius: AppRadii.cardRadius,
+          customBorder: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x3,
-            ),
+            padding: AppSpacing.p2pRiskControlsReasonPadding,
             child: Row(
               children: [
-                Container(
-                  width: 36,
-                  height: 36,
-                  decoration: BoxDecoration(
+                SizedBox.square(
+                  dimension: AppSpacing.p2pRiskControlsReasonIconBox,
+                  child: Material(
                     color: tone.withValues(alpha: 0.12),
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(
-                    _reasonIcon(reason.iconKey),
-                    color: tone,
-                    size: 16,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.mdRadius,
+                    ),
+                    child: Icon(
+                      _reasonIcon(reason.iconKey),
+                      color: tone,
+                      size: AppSpacing.p2pRiskControlsReasonIcon,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x3),
@@ -157,14 +156,14 @@ class _NoticeCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.border,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pRiskControlsInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppModuleAccents.p2p,
-            size: 14,
+            size: AppSpacing.p2pRiskControlsNoticeIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -172,7 +171,7 @@ class _NoticeCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.55,
+                height: AppSpacing.p2pRiskControlsNoticeLineHeight,
               ),
             ),
           ),

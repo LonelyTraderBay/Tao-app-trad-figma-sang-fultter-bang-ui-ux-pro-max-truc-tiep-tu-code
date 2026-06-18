@@ -70,7 +70,9 @@ class _ComplaintSubmissionPageState
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
     final footerBottom = bottomChrome + MediaQuery.paddingOf(context).bottom;
-    final scrollBottomInset = mode.usesVisualQaFrame ? 32.0 : 24.0;
+    final scrollBottomInset = mode.usesVisualQaFrame
+        ? AppSpacing.complaintSubmissionBottomInsetVisual
+        : AppSpacing.complaintSubmissionBottomInsetNative;
     final canSubmit = _canSubmit(snapshot);
 
     return VitPageLayout(
@@ -91,10 +93,12 @@ class _ComplaintSubmissionPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ComplaintSubmissionPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 27, 20, scrollBottomInset),
+                  padding: AppSpacing.complaintSubmissionScrollPadding(
+                    scrollBottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 14,
+                    customGap: AppSpacing.complaintSubmissionSectionGap,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(
@@ -152,7 +156,9 @@ class _ComplaintSubmissionPageState
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: footerBottom),
+                padding: AppSpacing.complaintSubmissionFooterInset(
+                  footerBottom,
+                ),
                 child: _SubmissionFooter(
                   enabled: canSubmit,
                   onSubmit: () => _submit(context, snapshot, canSubmit),

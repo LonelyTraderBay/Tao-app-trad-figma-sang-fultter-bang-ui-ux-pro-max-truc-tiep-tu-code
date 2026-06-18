@@ -11,22 +11,24 @@ class _AddressHero extends StatelessWidget {
       key: P2PAddressProofPage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pAddressProofCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.inputHeight,
             height: AppSpacing.inputHeight,
-            decoration: BoxDecoration(
+            child: Material(
               color: AppColors.primary15,
-              borderRadius: AppRadii.lgRadius,
-              border: Border.all(color: AppColors.primary20),
-            ),
-            child: const Icon(
-              Icons.location_on_outlined,
-              color: AppModuleAccents.p2p,
-              size: AppSpacing.iconMd,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+                side: const BorderSide(color: AppColors.primary20),
+              ),
+              child: const Icon(
+                Icons.location_on_outlined,
+                color: AppModuleAccents.p2p,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -45,7 +47,7 @@ class _AddressHero extends StatelessWidget {
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pAddressProofReadableLineHeight,
                   ),
                 ),
               ],
@@ -67,7 +69,7 @@ class _RequirementsCard extends StatelessWidget {
     return VitCard(
       key: P2PAddressProofPage.requirementsKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -114,7 +116,7 @@ class _DocumentTypePicker extends StatelessWidget {
           VitCard(
             key: P2PAddressProofPage.documentTypeKey(document.id),
             radius: VitCardRadius.lg,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.p2pAddressProofCardPadding,
             onTap: () => onSelected(document),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -122,17 +124,17 @@ class _DocumentTypePicker extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: AppSpacing.buttonCompact,
                       height: AppSpacing.buttonCompact,
-                      decoration: BoxDecoration(
+                      child: Material(
                         color: AppColors.primary12,
                         borderRadius: AppRadii.smRadius,
-                      ),
-                      child: Icon(
-                        _documentIcon(document.iconKey),
-                        color: AppModuleAccents.p2p,
-                        size: AppSpacing.iconSm,
+                        child: Icon(
+                          _documentIcon(document.iconKey),
+                          color: AppModuleAccents.p2p,
+                          size: AppSpacing.iconSm,
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x4),
@@ -165,27 +167,22 @@ class _DocumentTypePicker extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x3),
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: AppSpacing.buttonCompact + AppSpacing.x4,
-                  ),
+                  padding: AppSpacing.p2pAddressProofDocumentExamplePadding,
                   child: Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x2,
                     children: [
                       for (final example in document.examples)
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.x3,
-                            vertical: AppSpacing.x1,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.surface2,
-                            borderRadius: AppRadii.cardLargeRadius,
-                          ),
-                          child: Text(
-                            example,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text3,
+                        Material(
+                          color: AppColors.surface2,
+                          borderRadius: AppRadii.cardLargeRadius,
+                          child: Padding(
+                            padding: AppSpacing.p2pAddressProofExamplePadding,
+                            child: Text(
+                              example,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text3,
+                              ),
                             ),
                           ),
                         ),
@@ -248,22 +245,22 @@ class _UploadSection extends StatelessWidget {
           radius: VitCardRadius.lg,
           variant: uploaded ? VitCardVariant.inner : VitCardVariant.ghost,
           borderColor: uploaded ? AppColors.buy20 : AppColors.borderSolid,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pAddressProofCardPadding,
           onTap: uploaded ? null : onUpload,
           child: uploaded
               ? Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: AppSpacing.inputHeight,
                       height: AppSpacing.inputHeight,
-                      decoration: BoxDecoration(
+                      child: Material(
                         color: AppColors.buy10,
                         borderRadius: AppRadii.lgRadius,
-                      ),
-                      child: const Icon(
-                        Icons.check_circle_outline_rounded,
-                        color: AppColors.buy,
-                        size: AppSpacing.iconMd,
+                        child: const Icon(
+                          Icons.check_circle_outline_rounded,
+                          color: AppColors.buy,
+                          size: AppSpacing.iconMd,
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x4),
@@ -295,21 +292,21 @@ class _UploadSection extends StatelessWidget {
                   ],
                 )
               : SizedBox(
-                  height: 178,
+                  height: AppSpacing.p2pAddressProofUploadDropHeight,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: AppSpacing.x7,
                         height: AppSpacing.x7,
-                        decoration: BoxDecoration(
+                        child: Material(
                           color: AppColors.primary12,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.cloud_upload_outlined,
-                          color: AppModuleAccents.p2p,
-                          size: AppSpacing.iconLg,
+                          shape: const CircleBorder(),
+                          child: const Icon(
+                            Icons.cloud_upload_outlined,
+                            color: AppModuleAccents.p2p,
+                            size: AppSpacing.iconLg,
+                          ),
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x3),
@@ -349,7 +346,7 @@ class _ExtractedDataCard extends StatelessWidget {
       radius: VitCardRadius.md,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

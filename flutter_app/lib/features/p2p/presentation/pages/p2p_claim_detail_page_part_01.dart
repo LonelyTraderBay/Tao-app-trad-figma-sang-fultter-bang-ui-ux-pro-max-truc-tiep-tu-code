@@ -19,8 +19,9 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.p2pClaimBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pClaimBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -61,16 +62,11 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pClaimScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.x4,
+                      customGap: AppSpacing.p2pClaimContentGap,
                       children: [
                         _ClaimHeroCard(claim: claim),
                         VitPageSection(
@@ -135,7 +131,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                           ),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pClaimCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Claim detail review',
@@ -167,7 +163,7 @@ class _ClaimHeroCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.heroKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pClaimHeroPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
@@ -191,7 +187,10 @@ class _ClaimHeroCard extends StatelessWidget {
             ],
           ),
           _ClaimProgress(status: claim.status),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
           _InfoRow(
             label: 'Lệnh P2P',
             value: claim.orderId,
@@ -208,7 +207,10 @@ class _ClaimHeroCard extends StatelessWidget {
             value: '${claim.coveragePct}%',
             valueColor: AppModuleAccents.p2p,
           ),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
           if (claim.paidAmount != null)
             _InfoRow(
               label: claim.statusLabel,
@@ -244,13 +246,15 @@ class _ClaimProgress extends StatelessWidget {
           children: [
             for (var i = 0; i < steps.length; i++) ...[
               Expanded(
-                child: Container(
-                  height: AppSpacing.x1,
-                  decoration: BoxDecoration(
-                    color: i <= activeIndex
-                        ? _stepColor(i)
-                        : AppColors.surface3,
-                    borderRadius: AppRadii.xsRadius,
+                child: ClipRRect(
+                  borderRadius: AppRadii.xsRadius,
+                  child: SizedBox(
+                    height: AppSpacing.p2pClaimProgressLineHeight,
+                    child: ColoredBox(
+                      color: i <= activeIndex
+                          ? _stepColor(i)
+                          : AppColors.surface3,
+                    ),
                   ),
                 ),
               ),
@@ -295,7 +299,7 @@ class _InfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.p2pClaimInfoRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -324,7 +328,11 @@ class _InfoRow extends StatelessWidget {
                 ),
                 if (trailing != null) ...[
                   const SizedBox(width: AppSpacing.x1),
-                  Icon(trailing, color: valueColor, size: 12),
+                  Icon(
+                    trailing,
+                    color: valueColor,
+                    size: AppSpacing.p2pClaimInlineIcon,
+                  ),
                 ],
               ],
             ),
@@ -345,7 +353,7 @@ class _ClaimBenchmarksCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.benchmarksKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pClaimHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -412,7 +420,7 @@ class _BenchmarkMetricCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pClaimCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -421,7 +429,7 @@ class _BenchmarkMetricCard extends StatelessWidget {
               Icon(
                 _benchmarkIcon(benchmark.id),
                 color: AppColors.text3,
-                size: 15,
+                size: AppSpacing.p2pClaimBenchmarkIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -474,7 +482,7 @@ class _ReasonDistribution extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pClaimCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -483,7 +491,7 @@ class _ReasonDistribution extends StatelessWidget {
               const Icon(
                 Icons.groups_outlined,
                 color: AppColors.text3,
-                size: 15,
+                size: AppSpacing.p2pClaimBenchmarkIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(

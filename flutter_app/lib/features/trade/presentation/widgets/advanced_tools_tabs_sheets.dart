@@ -8,30 +8,27 @@ class _ToolsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (_ToolsTab.ladder, 'Ladder'),
-      (_ToolsTab.bulk, 'Bulk Ops'),
-      (_ToolsTab.shortcuts, 'Shortcuts'),
-    ];
-    return VitCard(
-      height: 44,
-      padding: const EdgeInsets.all(4),
-      variant: VitCardVariant.inner,
-      child: Row(
-        children: [
-          for (var i = 0; i < tabs.length; i++) ...[
-            Expanded(
-              child: _TabButton(
-                key: AdvancedToolsDemoPage.tabKey(tabs[i].$1.name),
-                label: tabs[i].$2,
-                active: active == tabs[i].$1,
-                onTap: () => onChanged(tabs[i].$1),
-              ),
-            ),
-            if (i < tabs.length - 1) const SizedBox(width: 4),
-          ],
-        ],
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: active.name,
+      onChanged: (key) => onChanged(_ToolsTab.values.byName(key)),
+      tabs: [
+        VitTabItem(
+          key: _ToolsTab.ladder.name,
+          label: 'Ladder',
+          widgetKey: AdvancedToolsDemoPage.tabKey(_ToolsTab.ladder.name),
+        ),
+        VitTabItem(
+          key: _ToolsTab.bulk.name,
+          label: 'Bulk Ops',
+          widgetKey: AdvancedToolsDemoPage.tabKey(_ToolsTab.bulk.name),
+        ),
+        VitTabItem(
+          key: _ToolsTab.shortcuts.name,
+          label: 'Shortcuts',
+          widgetKey: AdvancedToolsDemoPage.tabKey(_ToolsTab.shortcuts.name),
+        ),
+      ],
     );
   }
 }
@@ -62,7 +59,7 @@ class _ActionTab extends StatelessWidget {
           description,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeToolCardGap),
         _GradientButton(
           key: buttonKey,
           label: label,
@@ -91,12 +88,12 @@ class _LadderSheet extends StatelessWidget {
             'BTC/USDT DOM · click price level to place instant order.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeToolCardGap),
           for (final offset in const [150, 100, 50, 0, -50, -100]) ...[
             _LadderLevel(price: 69000 + offset),
-            const SizedBox(height: 6),
+            const SizedBox(height: AppSpacing.x2),
           ],
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeToolInlineGap),
           for (final order in orders) ...[
             _SheetRow(
               label: '${order.side.name.toUpperCase()} ${order.id}',
@@ -104,7 +101,7 @@ class _LadderSheet extends StatelessWidget {
                   '${order.amount.toStringAsFixed(1)} BTC @ \$${_formatMoney(order.price)}',
             ),
           ],
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeToolPageTopGap),
           _GradientButton(
             key: AdvancedToolsDemoPage.ladderSubmitKey,
             label: 'Place Buy Order',
@@ -134,7 +131,7 @@ class _BulkSheet extends StatelessWidget {
             '${orders.length} open orders selected for batch action.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeToolCardGap),
           for (final order in orders) ...[
             _SheetRow(
               label: '${order.symbol} ${order.side.name.toUpperCase()}',
@@ -142,7 +139,7 @@ class _BulkSheet extends StatelessWidget {
                   '${order.remaining.toStringAsFixed(1)} @ \$${_formatMoney(order.price)}',
             ),
           ],
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeToolPageTopGap),
           _GradientButton(
             key: AdvancedToolsDemoPage.bulkCancelKey,
             label: 'Cancel Selected Orders',
@@ -171,7 +168,7 @@ class _ShortcutsSheet extends StatelessWidget {
           for (final shortcut in shortcuts) ...[
             _SheetRow(label: shortcut.keys, value: shortcut.label),
           ],
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeToolPageTopGap),
           _GradientButton(
             key: AdvancedToolsDemoPage.shortcutTriggerKey,
             label: 'Trigger Quick Buy',
@@ -195,8 +192,8 @@ class _LadderLevel extends StatelessWidget {
     final isAsk = price > 69000;
     final color = isAsk ? AppColors.sell : AppColors.buy;
     return VitCard(
-      height: 32,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      height: AppSpacing.tradeToolMetricRowHeight,
+      padding: AppSpacing.tradeToolMetricRowPadding,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: color.withValues(alpha: .35),

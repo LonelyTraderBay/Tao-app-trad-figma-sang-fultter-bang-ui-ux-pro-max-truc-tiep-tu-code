@@ -20,7 +20,7 @@ class _RiskParameter extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         children: [
           Row(
@@ -29,7 +29,7 @@ class _RiskParameter extends StatelessWidget {
               Text(value, style: _captionBold.copyWith(color: color)),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
@@ -39,7 +39,7 @@ class _RiskParameter extends StatelessWidget {
               backgroundColor: AppColors.surface3,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(child: Text(minLabel, style: AppTextStyles.micro)),
@@ -69,13 +69,11 @@ class _ActionDetailSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final typeColor = _actionTypeColor(action.type);
     return SafeArea(
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadii.sheetTopLargeRadius,
-        ),
+      child: Material(
+        color: AppColors.surface,
+        borderRadius: AppRadii.sheetTopLargeRadius,
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.earnPaddingX5,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -107,22 +105,20 @@ class _ActionDetailSheet extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               Text(
                 action.description,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: const EdgeInsets.all(AppSpacing.x3),
+                padding: AppSpacing.earnPaddingX3,
                 child: Column(
                   children: [
                     for (final entry in action.details.entries)
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: AppSpacing.x1,
-                        ),
+                        padding: AppSpacing.earnVerticalPaddingX1,
                         child: Row(
                           children: [
                             Expanded(
@@ -141,7 +137,7 @@ class _ActionDetailSheet extends StatelessWidget {
                 ),
               ),
               if (onApprove != null && onSkip != null) ...[
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                const SizedBox(height: AppSpacing.x4),
                 Row(
                   children: [
                     Expanded(
@@ -178,14 +174,14 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.savingsAutoPilotIconBadge,
       height: AppSpacing.savingsAutoPilotIconBadge,
-      decoration: BoxDecoration(
+      child: Material(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.mdRadius,
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconSm),
     );
   }
 }
@@ -198,16 +194,11 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
-      ),
+    return Material(
+      color: color.withValues(alpha: .12),
+      borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(label, style: _microBold.copyWith(color: color)),
       ),
     );
@@ -231,7 +222,7 @@ class _ChoicePill extends StatelessWidget {
     return OutlinedButton(
       onPressed: onTap,
       style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+        padding: AppSpacing.earnVerticalPaddingX2,
         foregroundColor: selected ? AppColors.primary : AppColors.text2,
         side: BorderSide(
           color: selected ? AppColors.primary40 : AppColors.borderSolid,
@@ -256,10 +247,10 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.savingsAutoPilotSectionMarkerWidth,
           height: AppSpacing.savingsAutoPilotSectionMarkerHeight,
-          decoration: BoxDecoration(
+          child: const Material(
             color: AppColors.primary,
             borderRadius: AppRadii.pillRadius,
           ),
@@ -288,7 +279,7 @@ class _InfoCallout extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: color.withValues(alpha: .18),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

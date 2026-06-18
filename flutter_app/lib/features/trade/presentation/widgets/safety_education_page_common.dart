@@ -21,13 +21,13 @@ class _SeveritySection extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.tradeBotDisclosureGap),
         for (final flag in flags) ...[
           VitCard(
-            padding: const EdgeInsets.all(12),
+            padding: AppSpacing.tradeBotInnerPanelPadding,
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.sm,
             borderColor: color.withValues(alpha: .65),
@@ -39,21 +39,21 @@ class _SeveritySection extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
+                    height: AppSpacing.tradeBotLineHeightBody,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.tradeBotLabelGap),
                 Text(
                   flag.explanation,
                   style: AppTextStyles.micro.copyWith(
                     color: color,
-                    height: 1.35,
+                    height: AppSpacing.tradeBotLineHeightBody,
                   ),
                 ),
               ],
             ),
           ),
-          if (flag != flags.last) const SizedBox(height: 8),
+          if (flag != flags.last) const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -75,7 +75,7 @@ class _VerificationTab extends StatelessWidget {
               'Verification là cơ chế bảo vệ user. Provider verified đã qua kiểm tra KYC và performance audit.',
           color: _safetyPrimary,
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         Text(
           'Verification Tiers',
           style: AppTextStyles.caption.copyWith(
@@ -83,10 +83,11 @@ class _VerificationTab extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         for (final tier in tiers) ...[
           _TierCard(tier: tier),
-          if (tier != tiers.last) const SizedBox(height: 12),
+          if (tier != tiers.last)
+            const SizedBox(height: AppSpacing.tradeBotCardGap),
         ],
       ],
     );
@@ -102,35 +103,40 @@ class _TierCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(tier.colorHex);
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.tradeBotCompactCardPadding,
       borderColor: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.check_circle_outline_rounded, color: color, size: 16),
-              const SizedBox(width: 8),
+              Icon(
+                Icons.check_circle_outline_rounded,
+                color: color,
+                size: AppSpacing.tradeBotSmallIcon,
+              ),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               Text(
                 tier.tier,
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           for (final req in tier.requirements) ...[
             Text(
               '• $req',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.4,
+                height: AppSpacing.tradeBotLineHeightMedium,
               ),
             ),
-            if (req != tier.requirements.last) const SizedBox(height: 4),
+            if (req != tier.requirements.last)
+              const SizedBox(height: AppSpacing.x1),
           ],
         ],
       ),
@@ -153,9 +159,9 @@ class _ReportTab extends StatelessWidget {
               'Khi nào nên report?\n${reasons.map((item) => '• $item').join('\n')}',
           color: AppColors.sell,
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.tradeBotCardPadding,
           borderColor: AppColors.cardBorder,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -167,17 +173,20 @@ class _ReportTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: 13),
+              const SizedBox(height: AppSpacing.tradeBotStatusGap),
               const _ReportField(label: 'Provider ID hoặc tên'),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.tradeBotCardGap),
               const _ReportField(label: 'Lý do report'),
-              const SizedBox(height: 12),
-              const _ReportField(label: 'Mô tả chi tiết', height: 82),
-              const SizedBox(height: 13),
+              const SizedBox(height: AppSpacing.tradeBotCardGap),
+              const _ReportField(
+                label: 'Mô tả chi tiết',
+                height: AppSpacing.tradeBotControlTall,
+              ),
+              const SizedBox(height: AppSpacing.tradeBotStatusGap),
               VitCtaButton(
                 onPressed: () {},
                 variant: VitCtaButtonVariant.danger,
-                height: 46,
+                height: AppSpacing.tradeBotControlHeight,
                 child: Text(
                   'Submit Report',
                   style: AppTextStyles.body.copyWith(
@@ -195,7 +204,10 @@ class _ReportTab extends StatelessWidget {
 }
 
 class _ReportField extends StatelessWidget {
-  const _ReportField({required this.label, this.height = 45});
+  const _ReportField({
+    required this.label,
+    this.height = AppSpacing.tradeBotDisputeEvidenceHeight,
+  });
 
   final String label;
   final double height;
@@ -209,14 +221,14 @@ class _ReportField extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: 1,
+            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: AppSpacing.tradeBotLabelGap),
         SizedBox(
           height: height,
           child: const VitCardStat(
-            padding: EdgeInsets.zero,
+            padding: AppSpacing.zeroInsets,
             child: SizedBox.expand(),
           ),
         ),

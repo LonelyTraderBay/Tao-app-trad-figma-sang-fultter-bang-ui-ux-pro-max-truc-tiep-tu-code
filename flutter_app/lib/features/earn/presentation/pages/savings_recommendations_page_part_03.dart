@@ -16,7 +16,7 @@ class _CompareRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.earnVerticalPaddingX2,
       child: Row(
         children: [
           SizedBox(
@@ -59,7 +59,7 @@ class _SheetMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.earnVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -192,16 +192,14 @@ class _BulletSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  top: AppSpacing.savingsRecommendationsBulletTop,
-                ),
+                padding: AppSpacing.savingsRecommendationsBulletPadding,
                 child: SizedBox(
                   width: AppSpacing.x1,
                   height: AppSpacing.x1,
                   child: DecoratedBox(
-                    decoration: BoxDecoration(
+                    decoration: ShapeDecoration(
                       color: color,
-                      shape: BoxShape.circle,
+                      shape: const CircleBorder(),
                     ),
                   ),
                 ),
@@ -234,15 +232,12 @@ class _SmallPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           maxLines: 1,
@@ -266,10 +261,12 @@ class _RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.22)),
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.mdRadius,
+          side: BorderSide(color: color.withValues(alpha: 0.22)),
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -289,10 +286,12 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.xlRadius,
+          side: BorderSide(color: color.withValues(alpha: 0.25)),
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,

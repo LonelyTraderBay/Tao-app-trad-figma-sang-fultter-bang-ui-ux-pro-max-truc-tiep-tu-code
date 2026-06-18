@@ -8,7 +8,7 @@ class _SafeInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -51,33 +51,37 @@ class _SecurityNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: LaunchpadMultisigPage.noticeKey,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.accent08,
-        border: Border.all(color: AppColors.accent20),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.accent20),
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.lock_outline_rounded,
-            color: AppColors.accent,
-            size: AppSpacing.launchpadIconLg,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              'Multi-sig yeu cau ${safe.threshold}/${safe.owners.length} chu ky truoc khi thuc hien. Moi giao dich co thoi han 7 ngay. Dam bao tat ca signers xac nhan truoc khi het han.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.launchpadLineHeightLong,
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX3,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.lock_outline_rounded,
+              color: AppColors.accent,
+              size: AppSpacing.launchpadIconLg,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                'Multi-sig yeu cau ${safe.threshold}/${safe.owners.length} chu ky truoc khi thuc hien. Moi giao dich co thoi han 7 ngay. Dam bao tat ca signers xac nhan truoc khi het han.',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text2,
+                  height: AppSpacing.launchpadLineHeightLong,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -127,102 +131,103 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
       child: SafeArea(
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
+          child: ConstrainedBox(
             constraints: const BoxConstraints(
               maxWidth: DeviceMetrics.width,
               maxHeight: 760,
             ),
-            decoration: const BoxDecoration(
-              color: AppColors.bg,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(AppRadii.cardLarge),
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.bg,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.sheetTopLargeRadius,
+                ),
               ),
-            ),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.contentPad,
-                AppSpacing.x3,
-                AppSpacing.contentPad,
-                AppSpacing.x6,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Center(
-                    child: Container(
-                      width: AppSpacing.launchpadBox40,
-                      height: AppSpacing.launchpadSheetHandleHeight,
-                      decoration: const BoxDecoration(
-                        color: AppColors.borderSolid,
-                        borderRadius: AppRadii.xsRadius,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.x4),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Tao giao dich Multi-sig',
-                          style: AppTextStyles.base.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
+              child: SingleChildScrollView(
+                padding: AppSpacing.launchpadCreateSheetPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Center(
+                      child: SizedBox(
+                        width: AppSpacing.launchpadBox40,
+                        height: AppSpacing.launchpadSheetHandleHeight,
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: AppColors.borderSolid,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadii.xsRadius,
+                            ),
                           ),
                         ),
                       ),
-                      IconButton(
-                        key: LaunchpadMultisigPage.cancelCreateKey,
-                        onPressed: widget.onClose,
-                        icon: const Icon(
-                          Icons.close_rounded,
-                          color: AppColors.text3,
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Tao giao dich Multi-sig',
+                            style: AppTextStyles.base.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  _SafeSheetBadge(safe: widget.safe),
-                  const SizedBox(height: AppSpacing.x3),
-                  VitInput(
-                    label: 'Ten giao dich',
-                    hintText: 'VD: Withdraw rewards',
-                    controller: _labelController,
-                    onChanged: (_) => setState(() {}),
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  VitInput(
-                    label: 'Mo ta',
-                    hintText: 'Chi tiet giao dich...',
-                    controller: _descriptionController,
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  VitInput(
-                    label: 'Contract Address',
-                    hintText: '0x...',
-                    controller: _contractController,
-                    onChanged: (_) => setState(() {}),
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  VitInput(
-                    label: 'Function Name',
-                    hintText: 'VD: transfer, approve, claimRewards',
-                    controller: _functionController,
-                    onChanged: (_) => setState(() {}),
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  VitInput(
-                    label: 'Value (native token)',
-                    hintText: '0',
-                    controller: _valueController,
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  _CreateWarning(safe: widget.safe),
-                  const SizedBox(height: AppSpacing.x4),
-                  VitCtaButton(
-                    key: LaunchpadMultisigPage.submitCreateKey,
-                    onPressed: canSubmit ? _submit : null,
-                    child: const Text('Tao giao dich'),
-                  ),
-                ],
+                        IconButton(
+                          key: LaunchpadMultisigPage.cancelCreateKey,
+                          onPressed: widget.onClose,
+                          icon: const Icon(
+                            Icons.close_rounded,
+                            color: AppColors.text3,
+                          ),
+                        ),
+                      ],
+                    ),
+                    _SafeSheetBadge(safe: widget.safe),
+                    const SizedBox(height: AppSpacing.x3),
+                    VitInput(
+                      label: 'Ten giao dich',
+                      hintText: 'VD: Withdraw rewards',
+                      controller: _labelController,
+                      onChanged: (_) => setState(() {}),
+                    ),
+                    const SizedBox(height: AppSpacing.x3),
+                    VitInput(
+                      label: 'Mo ta',
+                      hintText: 'Chi tiet giao dich...',
+                      controller: _descriptionController,
+                    ),
+                    const SizedBox(height: AppSpacing.x3),
+                    VitInput(
+                      label: 'Contract Address',
+                      hintText: '0x...',
+                      controller: _contractController,
+                      onChanged: (_) => setState(() {}),
+                    ),
+                    const SizedBox(height: AppSpacing.x3),
+                    VitInput(
+                      label: 'Function Name',
+                      hintText: 'VD: transfer, approve, claimRewards',
+                      controller: _functionController,
+                      onChanged: (_) => setState(() {}),
+                    ),
+                    const SizedBox(height: AppSpacing.x3),
+                    VitInput(
+                      label: 'Value (native token)',
+                      hintText: '0',
+                      controller: _valueController,
+                    ),
+                    const SizedBox(height: AppSpacing.x3),
+                    _CreateWarning(safe: widget.safe),
+                    const SizedBox(height: AppSpacing.x4),
+                    VitCtaButton(
+                      key: LaunchpadMultisigPage.submitCreateKey,
+                      onPressed: canSubmit ? _submit : null,
+                      child: const Text('Tao giao dich'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -266,34 +271,36 @@ class _SafeSheetBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x2),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.accent08,
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.shield_outlined,
-            color: safe.accent,
-            size: AppSpacing.launchpadIconLg,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              safe.label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX2,
+        child: Row(
+          children: [
+            Icon(
+              Icons.shield_outlined,
+              color: safe.accent,
+              size: AppSpacing.launchpadIconLg,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                safe.label,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
-          ),
-          Text(
-            '${safe.threshold}/${safe.owners.length}',
-            style: AppTextStyles.micro.copyWith(color: safe.accent),
-          ),
-        ],
+            Text(
+              '${safe.threshold}/${safe.owners.length}',
+              style: AppTextStyles.micro.copyWith(color: safe.accent),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -306,29 +313,33 @@ class _CreateWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.warn08,
-        border: Border.all(color: AppColors.warn15),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.warn15),
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.launchpadIconMd,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              'Can ${safe.threshold} chu ky tu ${safe.owners.length} signers. Giao dich het han sau 7 ngay.',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX3,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.launchpadIconMd,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                'Can ${safe.threshold} chu ky tu ${safe.owners.length} signers. Giao dich het han sau 7 ngay.',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -370,15 +381,18 @@ class _IconBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .14),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(
+          child: Icon(icon, color: color, size: size * .45),
+        ),
       ),
-      alignment: Alignment.center,
-      child: Icon(icon, color: color, size: size * .45),
     );
   }
 }
@@ -392,12 +406,12 @@ class _MiniPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+        padding: AppSpacing.launchpadTinyChipPadding,
         child: Text(
           label,
           style: AppTextStyles.chartLabelTiny.copyWith(

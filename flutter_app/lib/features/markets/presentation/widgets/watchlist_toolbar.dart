@@ -17,63 +17,71 @@ class _WatchlistToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 13),
-        child: Column(
-          children: [
-            Row(
+    return Material(
+      color: AppColors.surface,
+      child: Column(
+        children: [
+          Padding(
+            padding: AppSpacing.watchlistToolbarPadding,
+            child: Column(
               children: [
-                Expanded(
-                  child: _ToolbarSearchField(
-                    key: WatchlistPage.searchKey,
-                    controller: controller,
-                    placeholder: 'Tìm kiếm cặp giao dịch...',
-                    onChanged: onChanged,
-                    onClear: onClear,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                InkWell(
-                  key: WatchlistPage.addPairKey,
-                  onTap: onAddPair,
-                  borderRadius: AppRadii.lgRadius,
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: const BoxDecoration(
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ToolbarSearchField(
+                        key: WatchlistPage.searchKey,
+                        controller: controller,
+                        placeholder: 'Tìm kiếm cặp giao dịch...',
+                        onChanged: onChanged,
+                        onClear: onClear,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.watchlistActionGap),
+                    Material(
                       color: _marketPrimary,
-                      shape: BoxShape.circle,
+                      shape: const CircleBorder(),
+                      child: InkWell(
+                        key: WatchlistPage.addPairKey,
+                        onTap: onAddPair,
+                        customBorder: const CircleBorder(),
+                        child: const SizedBox(
+                          width: AppSpacing.watchlistAddButton,
+                          height: AppSpacing.watchlistAddButton,
+                          child: Icon(
+                            Icons.add_rounded,
+                            color: AppColors.onAccent,
+                            size: AppSpacing.watchlistAddIcon,
+                          ),
+                        ),
+                      ),
                     ),
-                    child: const Icon(
-                      Icons.add_rounded,
-                      color: AppColors.onAccent,
-                      size: 22,
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.watchlistSectionGap),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star_rounded,
+                      color: AppColors.warn,
+                      size: AppSpacing.watchlistCountIcon,
                     ),
-                  ),
+                    const SizedBox(width: AppSpacing.watchlistCountGap),
+                    Text(
+                      '$count cặp đang theo dõi',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                const Icon(Icons.star_rounded, color: AppColors.warn, size: 15),
-                const SizedBox(width: 7),
-                Text(
-                  '$count cặp đang theo dõi',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
+        ],
       ),
     );
   }

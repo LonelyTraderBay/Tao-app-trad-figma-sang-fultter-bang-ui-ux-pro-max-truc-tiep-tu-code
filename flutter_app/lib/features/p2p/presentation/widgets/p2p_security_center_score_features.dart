@@ -18,7 +18,7 @@ class _WhitelistAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pSecurityCenterItemPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -39,7 +39,7 @@ class _WhitelistAction extends StatelessWidget {
                   body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.35,
+                    height: AppSpacing.p2pSecurityCenterCompactLineHeight,
                   ),
                 ),
               ],
@@ -68,7 +68,7 @@ class _SecurityScoreCard extends StatelessWidget {
     return VitCard(
       key: P2PSecurityCenterPage.scoreKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pSecurityCenterCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -100,16 +100,16 @@ class _SecurityScoreCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x5),
           Center(
             child: SizedBox(
-              width: 128,
-              height: 128,
+              width: AppSpacing.p2pSecurityCenterScoreBox,
+              height: AppSpacing.p2pSecurityCenterScoreBox,
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   SizedBox.square(
-                    dimension: 118,
+                    dimension: AppSpacing.p2pSecurityCenterScoreTrack,
                     child: CircularProgressIndicator(
                       value: progress,
-                      strokeWidth: 7,
+                      strokeWidth: AppSpacing.p2pSecurityCenterScoreStroke,
                       strokeCap: StrokeCap.round,
                       backgroundColor: AppColors.surface2,
                       color: AppColors.buy,
@@ -122,7 +122,7 @@ class _SecurityScoreCard extends StatelessWidget {
                         '${snapshot.score}',
                         style: AppTextStyles.heroNumber.copyWith(
                           color: AppColors.buy,
-                          height: 1,
+                          height: AppSpacing.p2pSecurityCenterNumberLineHeight,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x1),
@@ -139,21 +139,17 @@ class _SecurityScoreCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x5),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.buy10,
-              borderRadius: AppRadii.mdRadius,
-            ),
+          Material(
+            type: MaterialType.transparency,
+            color: AppColors.buy10,
+            borderRadius: AppRadii.mdRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x3,
-              ),
+              padding: AppSpacing.p2pSecurityCenterNoticePadding,
               child: Text(
                 snapshot.scoreBody,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.45,
+                  height: AppSpacing.p2pSecurityCenterBodyLineHeight,
                 ),
               ),
             ),
@@ -180,7 +176,7 @@ class _SecurityFeatures extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               for (var index = 0; index < features.length; index++) ...[
@@ -189,7 +185,10 @@ class _SecurityFeatures extends StatelessWidget {
                   onTap: () => onOpen(features[index].route),
                 ),
                 if (index != features.length - 1)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),
@@ -214,7 +213,7 @@ class _SecurityFeatureRow extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.p2pSecurityCenterItemPadding,
         child: Row(
           children: [
             _IconBadge(icon: _featureIcon(feature.iconKey), color: color),

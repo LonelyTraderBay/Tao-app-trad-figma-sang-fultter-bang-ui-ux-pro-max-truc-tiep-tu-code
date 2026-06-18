@@ -8,14 +8,14 @@ class _CopyHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: const EdgeInsets.all(20),
+      padding: AppSpacing.copyTradingHeroPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            padding: const EdgeInsets.all(16),
+            padding: AppSpacing.copyTradingHeroAumPadding,
             borderColor: AppColors.cardBorder,
             child: Column(
               children: [
@@ -26,18 +26,18 @@ class _CopyHeroCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.copyTradingHeroLabelGap),
                 Text(
                   _formatCompact(snapshot.totalAum, prefix: r'$'),
                   textAlign: TextAlign.center,
                   style: AppTextStyles.heroNumber,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.copyTradingHeroLabelGap),
                 _TrendPill(value: snapshot.aumTrendPct),
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.copyTradingHeroGap),
           Row(
             children: [
               Expanded(
@@ -48,7 +48,7 @@ class _CopyHeroCard extends StatelessWidget {
                   color: _copyPrimary,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.copyTradingHeroMetricGap),
               Expanded(
                 child: _HeroMetric(
                   icon: Icons.how_to_reg_rounded,
@@ -59,7 +59,7 @@ class _CopyHeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.copyTradingHeroGap),
           Text(
             'Updated ${snapshot.lastUpdatedLabel}',
             textAlign: TextAlign.center,
@@ -91,15 +91,15 @@ class _HeroMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.copyTradingHeroMetricPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, color: color, size: 15),
-              const SizedBox(width: 6),
+              Icon(icon, color: color, size: AppSpacing.copyTradingMetricIcon),
+              const SizedBox(width: AppSpacing.copyTradingMetricIconGap),
               Expanded(
                 child: Text(
                   label,
@@ -113,7 +113,7 @@ class _HeroMetric extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.copyTradingMetricIconGap),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -134,41 +134,16 @@ class _TrendPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final positive = value >= 0;
-    final color = positive ? AppColors.buy : AppColors.sell;
     return Align(
       alignment: Alignment.center,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: .08),
-          border: Border.all(color: color.withValues(alpha: .18)),
-          borderRadius: AppRadii.xlRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              positive
-                  ? Icons.arrow_upward_rounded
-                  : Icons.arrow_downward_rounded,
-              color: color,
-              size: 13,
-            ),
-            const SizedBox(width: 4),
-            Text(
-              '${value.abs().toStringAsFixed(1)}%',
-              style: AppTextStyles.caption.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-            const SizedBox(width: 4),
-            Text(
-              'vs last month',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ],
-        ),
+      child: VitMetricDeltaPill(
+        label: '${value.abs().toStringAsFixed(1)}% vs last month',
+        tone: positive
+            ? VitMetricDeltaTone.positive
+            : VitMetricDeltaTone.negative,
+        icon: positive
+            ? Icons.arrow_upward_rounded
+            : Icons.arrow_downward_rounded,
       ),
     );
   }

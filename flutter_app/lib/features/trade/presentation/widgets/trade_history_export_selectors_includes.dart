@@ -24,7 +24,8 @@ class _FormatSelector extends StatelessWidget {
               onTap: () => onChanged(formats[i].id),
             ),
           ),
-          if (i < formats.length - 1) const SizedBox(width: 12),
+          if (i < formats.length - 1)
+            const SizedBox(width: AppSpacing.tradeToolCardGap),
         ],
       ],
     );
@@ -50,49 +51,33 @@ class _FormatCard extends StatelessWidget {
         ? Icons.table_chart_outlined
         : Icons.description_outlined;
 
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 110,
-        padding: const EdgeInsets.fromLTRB(12, 16, 12, 14),
-        decoration: BoxDecoration(
-          color: active
-              ? _tradePrimary.withValues(alpha: .12)
-              : _inactiveFormatBackground,
-          border: Border.all(
-            color: active
-                ? _tradePrimary.withValues(alpha: .7)
-                : AppColors.onAccent.withValues(alpha: .12),
-            width: active ? 1.2 : 1,
+      height: AppSpacing.tradeToolFormatHeight,
+      padding: AppSpacing.tradeToolFormatPadding,
+      borderColor: active
+          ? _tradePrimary.withValues(alpha: .7)
+          : AppColors.cardBorder,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: color, size: AppSpacing.tradeToolFormatIcon),
+          const SizedBox(height: AppSpacing.tradeToolInlineGap),
+          Text(
+            format.label,
+            style: AppTextStyles.body.copyWith(
+              color: active ? _tradePrimary : AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: color, size: 24),
-            const SizedBox(height: 12),
-            Text(
-              format.label,
-              style: AppTextStyles.body.copyWith(
-                color: active ? _tradePrimary : AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              format.description,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.navLabel.copyWith(
-                color: AppColors.text3,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
+          const SizedBox(height: AppSpacing.tradeToolInlineGap),
+          Text(
+            format.description,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.navLabel.copyWith(color: AppColors.text3),
+          ),
+        ],
       ),
     );
   }
@@ -112,8 +97,8 @@ class _PeriodSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 10,
-      runSpacing: 10,
+      spacing: AppSpacing.tradeToolIconGap,
+      runSpacing: AppSpacing.tradeToolIconGap,
       children: [
         for (final period in periods)
           _PeriodChip(
@@ -141,37 +126,21 @@ class _PeriodChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       onTap: onTap,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: active
-              ? _tradePrimary.withValues(alpha: .14)
-              : _chipBackground,
-          border: Border.all(
-            color: active
-                ? _tradePrimary.withValues(alpha: .8)
-                : AppColors.onAccent.withValues(alpha: .12),
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17),
-          child: SizedBox(
-            height: 36,
-            child: Center(
-              widthFactor: 1,
-              child: Text(
-                period.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? _tradePrimary : AppColors.text2,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.medium,
-                  height: 1,
-                ),
-              ),
-            ),
+      variant: VitCardVariant.inner,
+      height: AppSpacing.tradeHistoryFilterHeight,
+      padding: AppSpacing.tradeBotChipPadding,
+      borderColor: active
+          ? _tradePrimary.withValues(alpha: .8)
+          : AppColors.cardBorder,
+      child: Center(
+        widthFactor: 1,
+        child: Text(
+          period.label,
+          style: AppTextStyles.caption.copyWith(
+            color: active ? _tradePrimary : AppColors.text2,
+            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
           ),
         ),
       ),
@@ -187,22 +156,19 @@ class _IncludeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: _cardBackground,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      padding: AppSpacing.tradeToolIncludeListPadding,
       child: Column(
         children: [
-          for (var i = 0; i < includes.length; i++)
+          for (var i = 0; i < includes.length; i++) ...[
             _IncludeRow(
               key: TradeHistoryExportPage.includeKey(includes[i].id),
               include: includes[i],
-              isLast: i == includes.length - 1,
               onTap: () => onToggle(includes[i].id),
             ),
+            if (i < includes.length - 1)
+              const Divider(height: AppSpacing.dividerHairline),
+          ],
         ],
       ),
     );
@@ -213,27 +179,18 @@ class _IncludeRow extends StatelessWidget {
   const _IncludeRow({
     super.key,
     required this.include,
-    required this.isLast,
     required this.onTap,
   });
 
   final TradeExportInclude include;
-  final bool isLast;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        height: 41,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: isLast ? AppColors.transparent : AppColors.divider,
-            ),
-          ),
-        ),
+      child: SizedBox(
+        height: AppSpacing.tradeToolIncludeRowHeight,
         child: Row(
           children: [
             Expanded(
@@ -244,7 +201,6 @@ class _IncludeRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.medium,
-                  height: 1,
                 ),
               ),
             ),
@@ -263,25 +219,10 @@ class _CheckBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 20,
-      height: 20,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: checked ? AppColors.buy : AppColors.transparent,
-        border: Border.all(
-          color: checked ? AppColors.buy : AppColors.borderSolid,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: checked
-          ? const Icon(
-              Icons.check_circle_outline,
-              color: AppColors.onAccent,
-              size: 14,
-            )
-          : null,
+    return Icon(
+      checked ? Icons.check_box_rounded : Icons.check_box_outline_blank_rounded,
+      color: checked ? AppColors.buy : AppColors.borderSolid,
+      size: AppSpacing.iconMd,
     );
   }
 }

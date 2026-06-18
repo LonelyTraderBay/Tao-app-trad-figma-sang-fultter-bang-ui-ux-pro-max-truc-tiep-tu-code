@@ -12,7 +12,6 @@ class _SectionTitle extends StatelessWidget {
       style: AppTextStyles.micro.copyWith(
         color: AppColors.sectionLabel,
         fontWeight: AppTextStyles.bold,
-        height: 1,
       ),
     );
   }
@@ -32,14 +31,18 @@ class _CurrencyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 86,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 15),
+      height: AppSpacing.settingsCurrencyCardHeight,
+      padding: AppSpacing.settingsCurrencyCardPadding,
       radius: VitCardRadius.lg,
       borderColor: _settingsBorder,
       child: Row(
         children: [
-          const Icon(Icons.language_rounded, color: _settingsPrimary, size: 21),
-          const SizedBox(width: 16),
+          const Icon(
+            Icons.language_rounded,
+            color: _settingsPrimary,
+            size: AppSpacing.settingsCurrencyIcon,
+          ),
+          const SizedBox(width: AppSpacing.settingsCurrencyIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,10 +52,9 @@ class _CurrencyCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.settingsCurrencyTitleGap),
                 Row(
                   children: [
                     for (final currency in currencies) ...[
@@ -61,7 +63,10 @@ class _CurrencyCard extends StatelessWidget {
                         selected: currency == selectedCurrency,
                         onTap: () => onChanged(currency),
                       ),
-                      if (currency != currencies.last) const SizedBox(width: 8),
+                      if (currency != currencies.last)
+                        const SizedBox(
+                          width: AppSpacing.settingsCurrencyChipGap,
+                        ),
                     ],
                   ],
                 ),
@@ -91,21 +96,27 @@ class _CurrencyChip extends StatelessWidget {
       key: SettingsPage.currencyKey(currency),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 24,
-        constraints: const BoxConstraints(minWidth: 48),
-        padding: const EdgeInsets.symmetric(horizontal: 13),
-        decoration: BoxDecoration(
-          color: selected ? _settingsPrimary : _settingsPanel2,
-          borderRadius: AppRadii.mdRadius,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minWidth: AppSpacing.settingsCurrencyChipMinWidth,
         ),
-        alignment: Alignment.center,
-        child: Text(
-          currency,
-          style: AppTextStyles.micro.copyWith(
-            color: selected ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
+        child: SizedBox(
+          height: AppSpacing.settingsCurrencyChipHeight,
+          child: Material(
+            color: selected ? _settingsPrimary : _settingsPanel2,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+            child: Padding(
+              padding: AppSpacing.settingsCurrencyChipPadding,
+              child: Center(
+                child: Text(
+                  currency,
+                  style: AppTextStyles.micro.copyWith(
+                    color: selected ? AppColors.onAccent : AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -139,7 +150,10 @@ class _LanguageCard extends StatelessWidget {
               onTap: () => onChanged(language.id),
             ),
             if (language != languages.last)
-              const Divider(height: 1, color: _settingsDivider),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                color: _settingsDivider,
+              ),
           ],
         ],
       ),
@@ -164,32 +178,35 @@ class _LanguageRow extends StatelessWidget {
       key: SettingsPage.languageKey(language.id),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 54,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Material(
         color: selected ? _settingsSelected : AppColors.transparent,
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                language.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
+        child: SizedBox(
+          height: AppSpacing.settingsLanguageRowHeight,
+          child: Padding(
+            padding: AppSpacing.settingsLanguageRowPadding,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    language.label,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
                 ),
-              ),
+                if (selected)
+                  const SizedBox(
+                    width: AppSpacing.settingsLanguageSelectedDot,
+                    height: AppSpacing.settingsLanguageSelectedDot,
+                    child: Material(
+                      color: _settingsPrimary,
+                      shape: CircleBorder(),
+                    ),
+                  ),
+              ],
             ),
-            if (selected)
-              Container(
-                width: 10,
-                height: 10,
-                decoration: const BoxDecoration(
-                  color: _settingsPrimary,
-                  shape: BoxShape.circle,
-                ),
-              ),
-          ],
+          ),
         ),
       ),
     );
@@ -225,7 +242,10 @@ class _SettingsListCard extends StatelessWidget {
               height: rowHeight,
             ),
             if (row != rows.last)
-              const Divider(height: 1, color: _settingsDivider),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                color: _settingsDivider,
+              ),
           ],
         ],
       ),
@@ -250,54 +270,60 @@ class _SettingsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasIcon = row.iconKey != 'none';
 
-    return Container(
+    return SizedBox(
       height: height,
-      padding: EdgeInsets.fromLTRB(hasIcon ? 16 : 20, 0, 16, 0),
-      child: Row(
-        children: [
-          if (hasIcon) ...[
-            Icon(_iconFor(row.iconKey), color: _settingsPrimary, size: 20),
-            const SizedBox(width: 16),
-          ],
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  row.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
+      child: Padding(
+        padding: hasIcon
+            ? AppSpacing.settingsRowPaddingWithIcon
+            : AppSpacing.settingsRowPaddingNoIcon,
+        child: Row(
+          children: [
+            if (hasIcon) ...[
+              Icon(
+                _iconFor(row.iconKey),
+                color: _settingsPrimary,
+                size: AppSpacing.settingsRowIcon,
+              ),
+              const SizedBox(width: AppSpacing.settingsRowIconGap),
+            ],
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    row.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  row.subtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: _settingsMuted,
-                    fontWeight: AppTextStyles.medium,
-                    height: 1,
+                  const SizedBox(height: AppSpacing.settingsRowSubtitleGap),
+                  Text(
+                    row.subtitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: _settingsMuted,
+                      fontWeight: AppTextStyles.medium,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          if (row.canToggle && row.enabled != null) ...[
-            const SizedBox(width: 12),
-            _SettingsSwitch(
-              key: SettingsPage.toggleKey(row.id),
-              value: enabled,
-              label: row.title,
-              onChanged: onToggle,
-            ),
+            if (row.canToggle && row.enabled != null) ...[
+              const SizedBox(width: AppSpacing.settingsRowSwitchGap),
+              _SettingsSwitch(
+                key: SettingsPage.toggleKey(row.id),
+                value: enabled,
+                label: row.title,
+                onChanged: onToggle,
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -323,40 +349,16 @@ class _SettingsSwitch extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onChanged(!value),
         behavior: HitTestBehavior.opaque,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeOutCubic,
-          width: 48,
-          height: 28,
-          padding: const EdgeInsets.all(3),
-          decoration: BoxDecoration(
-            color: value ? _settingsGreen : AppColors.toggleTrackOff,
-            borderRadius: BorderRadius.circular(999),
-          ),
-          alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: 22,
-            height: 22,
-            decoration: const BoxDecoration(
-              color: AppColors.onAccent,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.overlayScrim,
-                  blurRadius: 4,
-                  offset: Offset(0, 2),
-                ),
-                BoxShadow(
-                  color: AppColors.overlayScrimSoft,
-                  blurRadius: 1,
-                  offset: Offset(0, 1),
-                ),
-              ],
-            ),
-          ),
+        child: VitTogglePill(
+          enabled: value,
+          width: AppSpacing.settingsSwitchWidth,
+          height: AppSpacing.settingsSwitchHeight,
+          knobSize: AppSpacing.settingsSwitchKnob,
+          knobMargin: AppSpacing.settingsSwitchKnobMargin,
+          activeColor: _settingsGreen,
+          inactiveColor: AppColors.toggleTrackOff,
         ),
       ),
     );
   }
 }
-

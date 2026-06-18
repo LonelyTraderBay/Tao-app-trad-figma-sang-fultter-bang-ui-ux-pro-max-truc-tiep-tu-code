@@ -27,7 +27,7 @@ class _LicenseDetailSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -109,7 +109,7 @@ class _SheetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x2),
+      padding: AppSpacing.earnTopPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -143,7 +143,7 @@ class _InfoNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -174,7 +174,7 @@ class _WarningNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -209,7 +209,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingRegulatoryFrameworkPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -243,15 +243,12 @@ class _SmallPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           maxLines: 1,
@@ -275,10 +272,12 @@ class _RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.xlRadius,
+          side: BorderSide(color: color.withValues(alpha: 0.25)),
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.stakingRegulatoryIconBox,

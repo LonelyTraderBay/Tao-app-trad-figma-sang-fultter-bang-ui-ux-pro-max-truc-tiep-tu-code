@@ -67,9 +67,8 @@ class _TradeSection extends StatelessWidget {
                     children: [
                       for (final option in event.outcomes)
                         Padding(
-                          padding: const EdgeInsets.only(
-                            right: AppSpacing.predictionDetailTradeLabelGap,
-                          ),
+                          padding: AppSpacing
+                              .predictionDetailTradeOutcomeChipPadding,
                           child: _SmallToggleChip(
                             label: option.label,
                             color: option.color,

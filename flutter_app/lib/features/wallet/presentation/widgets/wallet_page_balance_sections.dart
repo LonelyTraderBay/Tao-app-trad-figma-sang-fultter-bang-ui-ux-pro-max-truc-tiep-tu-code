@@ -32,12 +32,7 @@ class WalletBalanceHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
       clip: true,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.homeAnnouncementCardHorizontalPadding,
-        AppSpacing.homePortfolioBadgeVerticalPadding + AppSpacing.x1,
-        AppSpacing.homeAnnouncementCardHorizontalPadding,
-        AppSpacing.homePortfolioBadgeVerticalPadding,
-      ),
+      padding: AppSpacing.homePortfolioCardPadding,
       borderColor: _walletPrimary.withValues(alpha: .20),
       background: const VitHeroGlow(),
       child: Column(
@@ -206,9 +201,7 @@ class _CompactActionChip extends StatelessWidget {
       density: VitDensity.compact,
       variant: VitCtaButtonVariant.ghost,
       onPressed: onTap,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.searchBarHorizontalPadding,
-      ),
+      padding: AppSpacing.walletAddressFilterPadding,
       leading: Icon(_actionIcon(action.iconKey), color: color),
       child: Text(action.label),
     );

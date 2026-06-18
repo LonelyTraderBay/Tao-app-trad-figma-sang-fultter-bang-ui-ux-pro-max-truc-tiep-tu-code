@@ -41,7 +41,7 @@ class _ProductPickerSheet extends StatelessWidget {
         if (availableProducts.isEmpty)
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x5),
+            padding: AppSpacing.earnCardPaddingX5,
             child: Text(
               'Đã chọn hết sản phẩm',
               textAlign: TextAlign.center,
@@ -73,7 +73,7 @@ class _PickerProductTile extends StatelessWidget {
     return VitCard(
       key: SavingsComparisonPage.pickerOptionKey(product.id),
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Row(
         children: [
@@ -118,7 +118,7 @@ class _EmptyComparisonState extends StatelessWidget {
     return VitCard(
       key: SavingsComparisonPage.emptyStateKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         children: [
           const Icon(
@@ -160,7 +160,7 @@ class _Disclaimer extends StatelessWidget {
       key: SavingsComparisonPage.disclaimerKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -199,15 +199,12 @@ class _TinyPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -236,10 +233,12 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.xlRadius,
+          side: BorderSide(color: color.withValues(alpha: 0.25)),
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x5,

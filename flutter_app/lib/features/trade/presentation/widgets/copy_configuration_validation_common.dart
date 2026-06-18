@@ -15,11 +15,15 @@ class _RiskToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: AppSpacing.copyConfigurationRiskTogglePadding,
       child: Row(
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.text3, size: 18),
-          const SizedBox(width: 10),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.text3,
+            size: AppSpacing.copyConfigurationRiskIcon,
+          ),
+          const SizedBox(width: AppSpacing.copyConfigurationMediumGap),
           Expanded(
             child: Text(
               title,
@@ -56,18 +60,22 @@ class _ValidationCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: color.withValues(alpha: .55),
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.copyConfigurationValidationPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(_validationIcon(item.level), color: color, size: 16),
-          const SizedBox(width: 8),
+          Icon(
+            _validationIcon(item.level),
+            color: color,
+            size: AppSpacing.copyConfigurationValidationIcon,
+          ),
+          const SizedBox(width: AppSpacing.copyConfigurationSmallGap),
           Expanded(
             child: Text(
               item.message,
               style: AppTextStyles.captionSm.copyWith(
                 color: color,
-                height: 1.35,
+                height: AppSpacing.copyConfigurationDescriptionLineHeight,
               ),
             ),
           ),
@@ -91,7 +99,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: AppSpacing.copyConfigurationSummaryRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -100,7 +108,7 @@ class _SummaryRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.copyConfigurationInlineGap),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(
@@ -123,14 +131,14 @@ class _PresetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36,
+      height: AppSpacing.copyConfigurationPresetHeight,
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.text2,
           side: const BorderSide(color: AppColors.borderSolid),
           shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
         ),
         child: Text(label, style: AppTextStyles.caption),
       ),
@@ -151,25 +159,13 @@ class _RiskPill extends StatelessWidget {
       TradeCopyRiskLevel.high => _configurationRed,
     };
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child: Text(
-          switch (level) {
-            TradeCopyRiskLevel.low => 'Low',
-            TradeCopyRiskLevel.medium => 'Medium',
-            TradeCopyRiskLevel.high => 'High',
-          },
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.extraBold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: switch (level) {
+        TradeCopyRiskLevel.low => 'Low',
+        TradeCopyRiskLevel.medium => 'Medium',
+        TradeCopyRiskLevel.high => 'High',
+      },
+      accentColor: color,
     );
   }
 }

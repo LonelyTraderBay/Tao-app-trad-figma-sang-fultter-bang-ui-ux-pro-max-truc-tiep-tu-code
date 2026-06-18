@@ -15,15 +15,21 @@ class _GovernanceStepper extends StatelessWidget {
             child: _StepMarker(item: steps[i], activeStep: step),
           ),
           if (i != steps.length - 1)
-            Container(
-              width: AppSpacing.x5,
-              height: AppSpacing.arenaGovernanceStepperLineHeight,
-              margin: const EdgeInsets.only(bottom: AppSpacing.x5),
-              decoration: BoxDecoration(
-                color: steps[i].index < step
-                    ? AppColors.buy
-                    : AppColors.surface3,
-                borderRadius: AppRadii.xsRadius,
+            Padding(
+              padding: AppSpacing.arenaGovernanceStepperLineMargin,
+              child: SizedBox(
+                width: AppSpacing.x5,
+                height: AppSpacing.arenaGovernanceStepperLineHeight,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: steps[i].index < step
+                        ? AppColors.buy
+                        : AppColors.surface3,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.xsRadius,
+                    ),
+                  ),
+                ),
               ),
             ),
         ],
@@ -44,35 +50,38 @@ class _StepMarker extends StatelessWidget {
     final active = item.index == activeStep;
     return Column(
       children: [
-        Container(
+        SizedBox(
           width: active
               ? AppSpacing.arenaGovernanceStepActive
               : AppSpacing.arenaGovernanceStepDefault,
           height: active
               ? AppSpacing.arenaGovernanceStepActive
               : AppSpacing.arenaGovernanceStepDefault,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: done
-                ? AppColors.buy
-                : active
-                ? AppColors.accent
-                : AppColors.surface3,
-            shape: BoxShape.circle,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: done
+                  ? AppColors.buy
+                  : active
+                  ? AppColors.accent
+                  : AppColors.surface3,
+              shape: const CircleBorder(),
+            ),
+            child: Center(
+              child: done
+                  ? const Icon(
+                      Icons.check_rounded,
+                      color: AppColors.onAccent,
+                      size: AppSpacing.arenaGovernanceIcon,
+                    )
+                  : Text(
+                      '${item.index}',
+                      style: AppTextStyles.micro.copyWith(
+                        color: active ? AppColors.onAccent : AppColors.text3,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+            ),
           ),
-          child: done
-              ? const Icon(
-                  Icons.check_rounded,
-                  color: AppColors.onAccent,
-                  size: AppSpacing.arenaGovernanceIcon,
-                )
-              : Text(
-                  '${item.index}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: active ? AppColors.onAccent : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
         ),
         const SizedBox(height: AppSpacing.x1),
         Text(

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -76,7 +77,9 @@ class _MarketCalendarPageState extends ConsumerState<MarketCalendarPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.marketCalendarVisualBottomExtra
+            : AppSpacing.marketCalendarNativeBottomExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -103,10 +106,12 @@ class _MarketCalendarPageState extends ConsumerState<MarketCalendarPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketCalendarPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.marketCalendarScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
+                      customGap: AppSpacing.marketCalendarPageGap,
                       children: [
                         MarketCalendarStatsSummary(stats: snapshot.stats),
                         MarketCalendarTypeFilters(

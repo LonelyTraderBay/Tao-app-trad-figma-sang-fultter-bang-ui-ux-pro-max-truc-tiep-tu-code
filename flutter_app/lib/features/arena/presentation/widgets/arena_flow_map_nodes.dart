@@ -18,7 +18,7 @@ class _FlowGroupCard extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         VitCard(
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           clip: true,
           child: Column(
             children: [
@@ -31,7 +31,7 @@ class _FlowGroupCard extends StatelessWidget {
                   ),
               ],
               Padding(
-                padding: const EdgeInsets.all(AppSpacing.x4),
+                padding: AppSpacing.arenaFlowMapCardPadding,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -77,7 +77,7 @@ class _FlowNodeRow extends StatelessWidget {
         key: ArenaFlowMapPage.nodeKey(node.label),
         onTap: route == null ? null : () => onRoute(route),
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaFlowMapCardPadding,
           child: Row(
             children: [
               _FlowIcon(kind: node.kind),
@@ -146,7 +146,7 @@ class _SharedComponents extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         for (final component in components) ...[
           VitCard(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.arenaFlowMapCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -205,7 +205,7 @@ class _HandoffNotes extends StatelessWidget {
       children: [
         for (final note in notes) ...[
           VitCard(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.arenaFlowMapCardPadding,
             borderColor: _flowColor(note.kind).withValues(alpha: .22),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,

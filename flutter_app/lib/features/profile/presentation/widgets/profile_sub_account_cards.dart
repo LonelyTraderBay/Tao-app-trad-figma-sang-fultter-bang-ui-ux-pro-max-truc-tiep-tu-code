@@ -31,7 +31,7 @@ class _SubAccountCard extends StatelessWidget {
               onTap: onTap,
               borderRadius: AppRadii.cardRadius,
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: AppSpacing.profileSubAccountCardTapPadding,
                 child: Row(
                   children: [
                     _AccountAvatar(
@@ -40,7 +40,9 @@ class _SubAccountCard extends StatelessWidget {
                           : account.name.substring(0, 1),
                       color: typeColor,
                     ),
-                    const SizedBox(width: 13),
+                    const SizedBox(
+                      width: AppSpacing.profileSubAccountAvatarGap,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,37 +56,43 @@ class _SubAccountCard extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.baseMedium.copyWith(
                                     fontWeight: AppTextStyles.extraBold,
-                                    height: 1,
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 7),
-                              _SmallPill(
+                              const SizedBox(
+                                width: AppSpacing.profileSubAccountTitlePillGap,
+                              ),
+                              VitAccentPill(
                                 label: _typeLabel(account.type),
-                                foreground: typeColor,
-                                background: typeColor.withValues(alpha: .12),
-                                border: typeColor.withValues(alpha: .18),
+                                accentColor: typeColor,
                               ),
                             ],
                           ),
-                          const Padding(padding: EdgeInsets.only(top: 9)),
+                          const SizedBox(
+                            height: AppSpacing.profileSubAccountStatusTopGap,
+                          ),
                           Row(
                             children: [
                               Icon(
                                 _statusIcon(account.status),
                                 color: statusColor,
-                                size: 12,
+                                size: AppSpacing.profileSubAccountStatusIcon,
                               ),
-                              const SizedBox(width: 5),
+                              const SizedBox(
+                                width:
+                                    AppSpacing.profileSubAccountStatusIconGap,
+                              ),
                               Text(
                                 _statusLabel(account.status),
                                 style: AppTextStyles.micro.copyWith(
                                   color: statusColor,
                                   fontWeight: AppTextStyles.bold,
-                                  height: 1,
                                 ),
                               ),
-                              const SizedBox(width: 6),
+                              const SizedBox(
+                                width:
+                                    AppSpacing.profileSubAccountStatusMetaGap,
+                              ),
                               Flexible(
                                 child: Text(
                                   '\u00B7 ${account.lastActive}',
@@ -92,7 +100,6 @@ class _SubAccountCard extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.micro.copyWith(
                                     color: AppColors.text3,
-                                    height: 1,
                                   ),
                                 ),
                               ),
@@ -101,7 +108,9 @@ class _SubAccountCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(
+                      width: AppSpacing.profileSubAccountTrailingGap,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -111,11 +120,12 @@ class _SubAccountCard extends StatelessWidget {
                               : _formatUsd(account.balance),
                           style: AppTextStyles.body.copyWith(
                             fontWeight: AppTextStyles.extraBold,
-                            height: 1,
                             fontFeatures: AppTextStyles.tabularFigures,
                           ),
                         ),
-                        const Padding(padding: EdgeInsets.only(top: 8)),
+                        const SizedBox(
+                          height: AppSpacing.profileSubAccountTrailingPnlGap,
+                        ),
                         Text(
                           isBalanceHidden
                               ? '\u2022\u2022'
@@ -123,7 +133,6 @@ class _SubAccountCard extends StatelessWidget {
                           style: AppTextStyles.micro.copyWith(
                             color: pnlColor,
                             fontWeight: AppTextStyles.bold,
-                            height: 1,
                           ),
                         ),
                       ],

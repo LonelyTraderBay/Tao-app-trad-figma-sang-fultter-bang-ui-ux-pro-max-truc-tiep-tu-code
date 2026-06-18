@@ -9,19 +9,25 @@ class _ReportActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.bestExecutionReportActionsPadding,
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: _bestPrimary.withValues(alpha: .14),
-                  borderRadius: AppRadii.cardRadius,
-                ),
+              VitCard(
+                width:
+                    AppSpacing.x7 -
+                    AppSpacing.x3 +
+                    AppSpacing.x1 -
+                    AppSpacing.hairlineStroke,
+                height:
+                    AppSpacing.x7 -
+                    AppSpacing.x3 +
+                    AppSpacing.x1 -
+                    AppSpacing.hairlineStroke,
+                variant: VitCardVariant.inner,
+                borderColor: _bestPrimary.withValues(alpha: .26),
                 alignment: Alignment.center,
                 child: const Icon(
                   Icons.description_outlined,
@@ -29,7 +35,7 @@ class _ReportActions extends StatelessWidget {
                   size: 23,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,15 +45,17 @@ class _ReportActions extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: 1.2,
+                        height: AppSpacing.bestExecutionReportTitleLineHeight,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(
+                      height: AppSpacing.x2 + AppSpacing.hairlineStroke,
+                    ),
                     Text(
                       'Report period: Jan 1 - Mar 31, 2026. Due date: April 15, 2026. Status: Draft.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: 1.35,
+                        height: AppSpacing.bestExecutionReportMetaLineHeight,
                       ),
                     ),
                   ],
@@ -55,7 +63,7 @@ class _ReportActions extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
           Row(
             children: [
               Expanded(
@@ -69,7 +77,7 @@ class _ReportActions extends StatelessWidget {
                   onTap: onExport,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: _ActionButton(
                   key: BestExecutionReportsPage.publishKey,
@@ -102,23 +110,30 @@ class _ArchiveReport extends StatelessWidget {
       children: [
         for (final report in reports)
           _Card(
-            padding: const EdgeInsets.all(13),
+            padding: AppSpacing.bestExecutionArchiveReportPadding,
             child: Row(
               children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: _bestPrimary.withValues(alpha: .14),
-                    borderRadius: AppRadii.inputRadius,
-                  ),
+                VitCard(
+                  width:
+                      AppSpacing.x7 -
+                      AppSpacing.x5 +
+                      AppSpacing.x3 -
+                      AppSpacing.hairlineStroke,
+                  height:
+                      AppSpacing.x7 -
+                      AppSpacing.x5 +
+                      AppSpacing.x3 -
+                      AppSpacing.hairlineStroke,
+                  variant: VitCardVariant.inner,
+                  borderColor: _bestPrimary.withValues(alpha: .26),
+                  alignment: Alignment.center,
                   child: const Icon(
                     Icons.calendar_today_outlined,
                     color: _bestPrimary,
                     size: 18,
                   ),
                 ),
-                const SizedBox(width: 13),
+                const SizedBox(width: AppSpacing.x4),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +145,9 @@ class _ArchiveReport extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(
+                        height: AppSpacing.x1 + AppSpacing.hairlineStroke,
+                      ),
                       Text(
                         report.period,
                         style: AppTextStyles.micro.copyWith(
@@ -141,7 +158,7 @@ class _ArchiveReport extends StatelessWidget {
                   ),
                 ),
                 _ReportStatus(status: report.status),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.x3),
                 IconButton(
                   onPressed: () => onExport(report.id),
                   visualDensity: VisualDensity.compact,
@@ -199,7 +216,7 @@ class _ActionButton extends StatelessWidget {
       variant: bordered
           ? VitCtaButtonVariant.secondary
           : VitCtaButtonVariant.primary,
-      height: 40,
+      height: AppSpacing.bestExecutionActionButtonHeight,
       leading: Icon(icon, color: foreground, size: 15),
       child: Text(
         label,
@@ -208,7 +225,7 @@ class _ActionButton extends StatelessWidget {
         style: AppTextStyles.caption.copyWith(
           color: foreground,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.bestExecutionSummaryLineHeight,
         ),
       ),
     );
@@ -240,15 +257,15 @@ class _NoticePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 20,
-      right: 20,
-      top: MediaQuery.paddingOf(context).top + 18,
+      left: AppSpacing.contentPad,
+      right: AppSpacing.contentPad,
+      top: MediaQuery.paddingOf(context).top + AppSpacing.ctaLoadingIcon,
       child: Material(
         color: AppColors.transparent,
         child: VitCard(
           variant: VitCardVariant.inner,
           borderColor: _bestBorder,
-          padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
+          padding: AppSpacing.bestExecutionNoticePadding,
           child: Row(
             children: [
               const Icon(
@@ -256,7 +273,7 @@ class _NoticePanel extends StatelessWidget {
                 color: _bestGreen,
                 size: 18,
               ),
-              const SizedBox(width: 9),
+              const SizedBox(width: AppSpacing.x3 + AppSpacing.x1),
               Expanded(
                 child: Text(
                   text,

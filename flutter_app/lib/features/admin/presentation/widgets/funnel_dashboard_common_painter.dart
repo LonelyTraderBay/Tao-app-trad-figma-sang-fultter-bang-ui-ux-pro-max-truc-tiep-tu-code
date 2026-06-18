@@ -6,7 +6,7 @@ class _EmptyFunnelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.adminEmptyPadding,
       child: Column(
         children: [
           const Icon(
@@ -65,19 +65,21 @@ class _StepNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.adminBox24,
-      height: AppSpacing.adminBox24,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.accent30,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        '$index',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text1,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox.square(
+      dimension: AppSpacing.adminBox24,
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.accent30,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        ),
+        child: Center(
+          child: Text(
+            '$index',
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );

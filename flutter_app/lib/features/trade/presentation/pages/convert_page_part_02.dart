@@ -7,21 +7,19 @@ class _SwapButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: ConvertPage.swapKey,
       onTap: onTap,
-      borderRadius: AppRadii.lgRadius,
-      child: VitCard(
-        variant: VitCardVariant.inner,
-        width: 44,
-        height: 44,
-        alignment: Alignment.center,
-        borderColor: _tradePrimary.withValues(alpha: .45),
-        child: const Icon(
-          Icons.swap_vert_rounded,
-          color: _tradePrimary,
-          size: 25,
-        ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      width: AppSpacing.buttonStandard - AppSpacing.rowGapRegular,
+      height: AppSpacing.buttonStandard - AppSpacing.rowGapRegular,
+      alignment: Alignment.center,
+      borderColor: _tradePrimary.withValues(alpha: .45),
+      child: const Icon(
+        Icons.swap_vert_rounded,
+        color: _tradePrimary,
+        size: AppSpacing.iconMd,
       ),
     );
   }
@@ -33,7 +31,7 @@ class _ToolRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 38,
+      height: AppSpacing.inputHeight - AppSpacing.rowPy,
       child: Row(
         children: const [
           Expanded(
@@ -43,7 +41,7 @@ class _ToolRow extends StatelessWidget {
               icon: Icons.bar_chart_rounded,
             ),
           ),
-          SizedBox(width: 7),
+          SizedBox(width: AppSpacing.rowGap),
           Expanded(
             child: _ToolChip(
               id: 'depth',
@@ -51,7 +49,7 @@ class _ToolRow extends StatelessWidget {
               icon: Icons.layers_outlined,
             ),
           ),
-          SizedBox(width: 7),
+          SizedBox(width: AppSpacing.rowGap),
           Expanded(
             child: _ToolChip(
               id: 'info',
@@ -59,7 +57,7 @@ class _ToolRow extends StatelessWidget {
               icon: Icons.info_outline_rounded,
             ),
           ),
-          SizedBox(width: 7),
+          SizedBox(width: AppSpacing.rowGap),
           Expanded(
             child: _ToolChip(
               id: 'alert',
@@ -68,7 +66,7 @@ class _ToolRow extends StatelessWidget {
               badge: true,
             ),
           ),
-          SizedBox(width: 7),
+          SizedBox(width: AppSpacing.rowGap),
           _SettingsChip(),
         ],
       ),
@@ -91,26 +89,23 @@ class _ToolChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: ConvertPage.toolKey(id),
       onTap: () {},
-      borderRadius: AppRadii.lgRadius,
+      radius: VitCardRadius.lg,
+      variant: VitCardVariant.inner,
+      height: AppSpacing.inputHeight - AppSpacing.rowPy,
+      alignment: Alignment.center,
+      borderColor: _tradePrimary.withValues(alpha: .14),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Container(
-            height: 38,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: _disabledPrimary,
-              border: Border.all(color: _tradePrimary.withValues(alpha: .14)),
-              borderRadius: AppRadii.lgRadius,
-            ),
+          Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, size: 13, color: AppColors.text3),
-                const SizedBox(width: 5),
+                Icon(icon, size: AppSpacing.iconSm, color: AppColors.text3),
+                const SizedBox(width: AppSpacing.x2),
                 Flexible(
                   child: Text(
                     label,
@@ -128,21 +123,19 @@ class _ToolChip extends StatelessWidget {
           if (badge)
             Positioned(
               top: -3,
-              right: 5,
-              child: Container(
+              right: AppSpacing.x2,
+              child: VitCard(
                 width: 16,
                 height: 16,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.lg,
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: AppColors.sell,
-                  shape: BoxShape.circle,
-                ),
+                borderColor: AppColors.sell,
                 child: Text(
                   '1',
                   style: AppTextStyles.micro.copyWith(
-                    color: AppColors.onAccent,
+                    color: AppColors.sell,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
               ),
@@ -158,24 +151,19 @@ class _SettingsChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: ConvertPage.toolKey('settings'),
       onTap: () {},
-      borderRadius: AppRadii.lgRadius,
-      child: Container(
-        width: 38,
-        height: 38,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _disabledPrimary,
-          border: Border.all(color: _tradePrimary.withValues(alpha: .14)),
-          shape: BoxShape.circle,
-        ),
-        child: const Icon(
-          Icons.settings_outlined,
-          color: AppColors.text3,
-          size: 15,
-        ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      width: AppSpacing.inputHeight - AppSpacing.rowPy,
+      height: AppSpacing.inputHeight - AppSpacing.rowPy,
+      alignment: Alignment.center,
+      borderColor: _tradePrimary.withValues(alpha: .14),
+      child: const Icon(
+        Icons.settings_outlined,
+        color: AppColors.text3,
+        size: AppSpacing.iconSm,
       ),
     );
   }
@@ -190,8 +178,11 @@ class _PairMiniCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 54,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      height: AppSpacing.buttonStandard,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.x4,
+        right: AppSpacing.x4,
+      ),
       child: Row(
         children: [
           Text(
@@ -201,15 +192,24 @@ class _PairMiniCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(width: 6),
-          const Icon(Icons.show_chart_rounded, color: AppColors.buy, size: 15),
+          const SizedBox(width: AppSpacing.x2),
+          const Icon(
+            Icons.show_chart_rounded,
+            color: AppColors.buy,
+            size: AppSpacing.iconSm,
+          ),
           const Spacer(),
           SizedBox(
-            width: 72,
-            height: 31,
-            child: CustomPaint(painter: _SparklinePainter()),
+            width: AppSpacing.convertPairSparklineWidth,
+            height: AppSpacing.convertPairSparklineHeight,
+            child: const VitSparkline(
+              values: [3.2, 3.8, 3.5, 4.4, 4.0, 4.8, 4.6, 5.2],
+              color: AppColors.buy,
+              showFill: false,
+              strokeWidth: 1.7,
+            ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.rowGap),
           Text(
             '+0.62%',
             style: AppTextStyles.micro.copyWith(
@@ -221,33 +221,6 @@ class _PairMiniCard extends StatelessWidget {
       ),
     );
   }
-}
-
-class _SparklinePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = AppColors.successAccentBright
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.7
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-    final path = Path();
-    for (var i = 0; i < 28; i++) {
-      final x = size.width * i / 27;
-      final wave = math.sin(i * 1.45) * .33 + math.sin(i * 3.2) * .18;
-      final y = size.height * (.50 - wave);
-      if (i == 0) {
-        path.moveTo(x, y);
-      } else {
-        path.lineTo(x, y);
-      }
-    }
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class _SlippageCard extends StatelessWidget {
@@ -264,8 +237,13 @@ class _SlippageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 108,
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 16),
+      height: AppSpacing.convertSlippageCardHeight,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.x4,
+        top: AppSpacing.x4,
+        right: AppSpacing.x4,
+        bottom: AppSpacing.x4,
+      ),
       child: Column(
         children: [
           Row(
@@ -273,9 +251,9 @@ class _SlippageCard extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.text3,
-                size: 15,
+                size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: 7),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
                   'Slippage tolerance',
@@ -284,7 +262,7 @@ class _SlippageCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.rowGap),
               Text(
                 'Tùy chỉnh',
                 style: AppTextStyles.micro.copyWith(
@@ -294,7 +272,7 @@ class _SlippageCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               for (final option in options) ...[
@@ -304,7 +282,7 @@ class _SlippageCard extends StatelessWidget {
                   active: option == active,
                   onTap: () => onChanged(option),
                 ),
-                const SizedBox(width: 9),
+                const SizedBox(width: AppSpacing.rowGap),
               ],
             ],
           ),
@@ -328,40 +306,20 @@ class _SlippageChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? _tradePrimary : _chipBackground,
-          gradient: active
-              ? const LinearGradient(colors: [_tradePrimary, _tradePrimaryDark])
-              : null,
-          border: Border.all(
-            color: active
-                ? _tradePrimary
-                : _tradePrimary.withValues(alpha: .16),
-          ),
-          borderRadius: AppRadii.cardRadius,
-          boxShadow: active
-              ? [
-                  BoxShadow(
-                    color: _tradePrimary.withValues(alpha: .35),
-                    blurRadius: 18,
-                    offset: const Offset(0, 8),
-                  ),
-                ]
-              : null,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
+    return VitCtaButton(
+      onPressed: onTap,
+      fullWidth: false,
+      height: AppSpacing.buttonCompact,
+      variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowPy,
+        right: AppSpacing.rowPy,
+      ),
+      child: Text(
+        label,
+        style: AppTextStyles.micro.copyWith(
+          color: active ? AppColors.onAccent : AppColors.text2,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -447,14 +405,18 @@ class _HistoryHeader extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 10),
-        const Icon(Icons.download_rounded, color: AppColors.text3, size: 13),
-        const SizedBox(width: 4),
+        const SizedBox(width: AppSpacing.rowGapRegular),
+        const Icon(
+          Icons.download_rounded,
+          color: AppColors.text3,
+          size: AppSpacing.iconSm,
+        ),
+        const SizedBox(width: AppSpacing.x1),
         Text(
           'Xuất',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.rowGapRegular),
         Text(
           'Xem tất cả',
           style: AppTextStyles.micro.copyWith(
@@ -462,8 +424,12 @@ class _HistoryHeader extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(width: 2),
-        const Icon(Icons.chevron_right_rounded, color: _tradePrimary, size: 16),
+        const SizedBox(width: AppSpacing.dividerHairline),
+        const Icon(
+          Icons.chevron_right_rounded,
+          color: _tradePrimary,
+          size: AppSpacing.iconMd,
+        ),
       ],
     );
   }
@@ -477,7 +443,7 @@ class _HistoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           for (var i = 0; i < records.length; i++)

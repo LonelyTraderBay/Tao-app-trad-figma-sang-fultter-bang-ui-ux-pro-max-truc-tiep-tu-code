@@ -34,7 +34,7 @@ class _StakingWithdrawalPolicyPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -93,52 +93,56 @@ class _InfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ConstrainedBox(
       key: StakingWithdrawalPolicyPage.infoKey,
       constraints: const BoxConstraints(
         minHeight: AppSpacing.earnWithdrawalInfoMinHeight,
       ),
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
+      child: Material(
         color: AppColors.primary08,
-        border: Border.all(
-          color: AppColors.primary20,
-          width: AppSpacing.earnWithdrawalBorderWidth,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardLargeRadius,
+          side: const BorderSide(
+            color: AppColors.primary20,
+            width: AppSpacing.earnWithdrawalBorderWidth,
+          ),
         ),
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.primary,
-            size: AppSpacing.earnWithdrawalInfoIcon,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.infoTitle,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+        child: Padding(
+          padding: AppSpacing.earnPaddingX4,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.info_outline_rounded,
+                color: AppColors.primary,
+                size: AppSpacing.earnWithdrawalInfoIcon,
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      snapshot.infoTitle,
+                      style: AppTextStyles.baseMedium.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x2),
+                    Text(
+                      snapshot.infoBody,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                        height: AppSpacing.earnWithdrawalInfoLineHeight,
+                      ),
+                    ),
+                  ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-                Text(
-                  snapshot.infoBody,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.earnWithdrawalInfoLineHeight,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -157,21 +161,27 @@ class _PolicyTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.surface2,
+    return ConstrainedBox(
       constraints: const BoxConstraints(
         minHeight: AppSpacing.earnWithdrawalTabMinHeight,
       ),
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: active,
-        onChanged: onChanged,
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(key: tab.id, label: tab.label, icon: null),
-        ],
+      child: Material(
+        color: AppColors.surface2,
+        child: Padding(
+          padding: AppSpacing.earnHorizontalPaddingX4,
+          child: Align(
+            alignment: Alignment.center,
+            child: VitTabBar(
+              variant: VitTabBarVariant.underline,
+              activeKey: active,
+              onChanged: onChanged,
+              tabs: [
+                for (final tab in tabs)
+                  VitTabItem(key: tab.id, label: tab.label, icon: null),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -191,7 +201,7 @@ class _TimelineTab extends StatelessWidget {
           label: snapshot.processTitle,
           children: [_ProcessCard(steps: snapshot.processSteps)],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         VitPageSection(
           label: snapshot.timelineTitle,
           children: [
@@ -199,7 +209,7 @@ class _TimelineTab extends StatelessWidget {
               _TimelineCard(timeline: timeline),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _NoteCard(text: snapshot.timelineNote),
       ],
     );
@@ -216,13 +226,12 @@ class _ProcessCard extends StatelessWidget {
     return VitCard(
       key: StakingWithdrawalPolicyPage.processKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
           for (final step in steps) ...[
             _ProcessStepRow(step: step),
-            if (step != steps.last)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+            if (step != steps.last) const SizedBox(height: AppSpacing.x4),
           ],
         ],
       ),
@@ -241,21 +250,23 @@ class _ProcessStepRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.earnWithdrawalProcessIconBox,
           height: AppSpacing.earnWithdrawalProcessIconBox,
-          decoration: BoxDecoration(
+          child: Material(
             color: _toneTint(step.tone),
-            border: Border.all(
-              color: color.withValues(alpha: .28),
-              width: AppSpacing.earnWithdrawalBorderWidth,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.lgRadius,
+              side: BorderSide(
+                color: color.withValues(alpha: .28),
+                width: AppSpacing.earnWithdrawalBorderWidth,
+              ),
             ),
-            borderRadius: AppRadii.lgRadius,
-          ),
-          child: Icon(
-            _stepIcon(step.step),
-            color: color,
-            size: AppSpacing.earnWithdrawalProcessIcon,
+            child: Icon(
+              _stepIcon(step.step),
+              color: color,
+              size: AppSpacing.earnWithdrawalProcessIcon,
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -278,7 +289,7 @@ class _ProcessStepRow extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 step.description,
                 style: AppTextStyles.caption.copyWith(
@@ -309,7 +320,7 @@ class _TimelineCard extends StatelessWidget {
             ? AppSpacing.earnWithdrawalTimelineMinHeightTall
             : AppSpacing.earnWithdrawalTimelineMinHeight,
       ),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -320,7 +331,7 @@ class _TimelineCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -339,7 +350,7 @@ class _TimelineCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -383,7 +394,7 @@ class _TimelineMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
@@ -413,7 +424,7 @@ class _PenaltiesTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -424,49 +435,47 @@ class _PenaltiesTab extends StatelessWidget {
                       height: AppSpacing.earnWithdrawalPenaltyBodyLineHeight,
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
-                  Container(
-                    padding: const EdgeInsets.all(AppSpacing.x4),
-                    decoration: BoxDecoration(
-                      color: AppColors.surface2,
-                      borderRadius: AppRadii.lgRadius,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.cancel_outlined,
-                              color: AppColors.sell,
-                              size: AppSpacing.earnWithdrawalFormulaIcon,
-                            ),
-                            const SizedBox(width: AppSpacing.x2),
-                            Expanded(
-                              child: Text(
-                                'Công thức Phí rút sớm:',
-                                style: AppTextStyles.caption.copyWith(
-                                  color: AppColors.text1,
-                                  fontWeight: AppTextStyles.bold,
+                  const SizedBox(height: AppSpacing.x4),
+                  Material(
+                    color: AppColors.surface2,
+                    borderRadius: AppRadii.lgRadius,
+                    child: Padding(
+                      padding: AppSpacing.earnPaddingX4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.cancel_outlined,
+                                color: AppColors.sell,
+                                size: AppSpacing.earnWithdrawalFormulaIcon,
+                              ),
+                              const SizedBox(width: AppSpacing.x2),
+                              Expanded(
+                                child: Text(
+                                  'Công thức Phí rút sớm:',
+                                  style: AppTextStyles.caption.copyWith(
+                                    color: AppColors.text1,
+                                    fontWeight: AppTextStyles.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x3),
-                        ),
-                        for (final rule in snapshot.penaltyRules) ...[
-                          _BulletLine(
-                            text: rule.label,
-                            color: _toneColor(rule.tone),
+                            ],
                           ),
-                          if (rule != snapshot.penaltyRules.last)
-                            const Padding(
-                              padding: EdgeInsets.only(top: AppSpacing.x2),
+                          const Padding(padding: AppSpacing.earnTopPaddingX3),
+                          for (final rule in snapshot.penaltyRules) ...[
+                            _BulletLine(
+                              text: rule.label,
+                              color: _toneColor(rule.tone),
                             ),
+                            if (rule != snapshot.penaltyRules.last)
+                              const Padding(
+                                padding: AppSpacing.earnTopPaddingX2,
+                              ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -474,7 +483,7 @@ class _PenaltiesTab extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         VitPageSection(
           label: 'Ví dụ Tính toán',
           children: [
@@ -482,14 +491,14 @@ class _PenaltiesTab extends StatelessWidget {
               _PenaltyExampleCard(example: example),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         VitCtaButton(
           key: StakingWithdrawalPolicyPage.calculatorCtaKey,
           onPressed: onOpenCalculator,
           leading: const Icon(Icons.calculate_rounded),
           child: Text(snapshot.calculatorCta),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         const _NoteCard(
           text:
               'Số lượng gốc không bị ảnh hưởng. Chỉ phần thưởng staking bị phạt; bạn luôn nhận lại 100% số tiền gốc đã stake.',

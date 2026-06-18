@@ -95,10 +95,10 @@ class _NewsPageState extends ConsumerState<NewsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: NewsPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.newsScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 12,
+                      customGap: AppSpacing.newsFeedGap,
                       children: [
                         if (snapshot.screenState == NewsScreenState.empty)
                           const _NewsEmptyState()
@@ -119,7 +119,7 @@ class _NewsPageState extends ConsumerState<NewsPage> {
                               ),
                           ],
                           if (snapshot.normalArticles.isNotEmpty) ...[
-                            const SizedBox(height: 18),
+                            const SizedBox(height: AppSpacing.newsSectionBreak),
                             const _SectionLabel(label: 'TIN TỨC KHÁC'),
                             for (final article in snapshot.normalArticles)
                               _NewsArticleCard(

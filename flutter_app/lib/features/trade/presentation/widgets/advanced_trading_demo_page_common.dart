@@ -10,7 +10,7 @@ class _AnalyticsTab extends StatelessWidget {
     return Column(
       children: [
         _MetricsCard(title: 'PnL Summary', metrics: snapshot.pnlSummary),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tradeToolPageTopGap),
         _MetricsCard(
           title: 'Performance Stats',
           metrics: snapshot.performanceMetrics,
@@ -29,7 +29,7 @@ class _MetricsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tradeToolRiskIntroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -40,14 +40,15 @@ class _MetricsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeToolCardGap),
           for (final metric in metrics) ...[
             _ValueRow(
               label: metric.label,
               value: metric.value,
               tone: metric.tone,
             ),
-            if (metric != metrics.last) const SizedBox(height: 9),
+            if (metric != metrics.last)
+              const SizedBox(height: AppSpacing.tradeToolInlineGap),
           ],
         ],
       ),
@@ -64,7 +65,7 @@ class _ChoiceChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+      padding: AppSpacing.tradeToolMetricRowPadding,
       variant: active ? VitCardVariant.standard : VitCardVariant.inner,
       borderColor: active ? AppColors.primary : null,
       child: Text(
@@ -72,7 +73,6 @@ class _ChoiceChip extends StatelessWidget {
         style: AppTextStyles.caption.copyWith(
           color: active ? AppColors.onAccent : AppColors.text2,
           fontWeight: AppTextStyles.bold,
-          height: 1,
         ),
       ),
     );
@@ -137,57 +137,44 @@ class _DemoSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset =
+        DeviceMetrics.nativeBottomChrome +
+        MediaQuery.paddingOf(context).bottom +
+        AppSpacing.tradeToolBottomInsetRiskNative;
     return Positioned.fill(
-      child: DecoratedBox(
-        decoration: const BoxDecoration(color: AppColors.modalScrim),
+      child: ColoredBox(
+        color: AppColors.modalScrim,
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: EdgeInsets.only(
-              bottom:
-                  DeviceMetrics.nativeBottomChrome +
-                  MediaQuery.paddingOf(context).bottom +
-                  24,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                VitCard(
-                  padding: const EdgeInsets.all(20),
-                  radius: VitCardRadius.lg,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        title,
-                        style: AppTextStyles.baseMedium.copyWith(
-                          color: AppColors.onAccent,
+            padding: AppSpacing.tradeToolScrollPadding(bottomInset),
+            child: VitSheetPanel(
+              title: title,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Demo control state only. Backend execution stays in draft mode for SC-088.',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    VitCtaButton(
+                      onPressed: onClose,
+                      height: AppSpacing.tradeToolRiskTabHeight,
+                      child: Text(
+                        'Đóng',
+                        style: AppTextStyles.body.copyWith(
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Demo control state only. Backend execution stays in draft mode for SC-088.',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      VitCtaButton(
-                        onPressed: onClose,
-                        height: 44,
-                        child: Text(
-                          'Đóng',
-                          style: AppTextStyles.body.copyWith(
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

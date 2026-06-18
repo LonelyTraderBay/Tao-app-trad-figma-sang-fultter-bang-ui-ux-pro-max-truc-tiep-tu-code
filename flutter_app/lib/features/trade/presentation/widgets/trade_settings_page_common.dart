@@ -19,30 +19,25 @@ class _ChoiceChipButton extends StatelessWidget {
     final labelStyle = height < 32
         ? AppTextStyles.badge
         : AppTextStyles.captionSm;
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(height / 2),
-      child: Container(
-        height: height,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _tradePrimary.withValues(alpha: .14)
-              : _chipBackground,
-          border: Border.all(
-            color: active ? _tradePrimary : AppColors.surface3,
-          ),
-          borderRadius: BorderRadius.circular(height / 2),
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: labelStyle.copyWith(
-            color: active ? _tradePrimary : AppColors.textMutedLight,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-            height: 1,
-          ),
+      height: height,
+      alignment: Alignment.center,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: active ? _tradePrimary : AppColors.surface3,
+      clip: true,
+      background: ColoredBox(
+        color: active ? _tradePrimary.withValues(alpha: .14) : _chipBackground,
+      ),
+      child: Text(
+        label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: labelStyle.copyWith(
+          color: active ? _tradePrimary : AppColors.textMutedLight,
+          fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
+          height: AppSpacing.tradeBotLineHeightTight,
         ),
       ),
     );
@@ -73,25 +68,25 @@ class _SettingRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.25,
+                  height: AppSpacing.tradeBotLineHeightCompact,
                 ),
               ),
               if (description != null) ...[
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.tradeBotTinyGap),
                 Text(
                   description!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text3,
-                    height: 1.25,
+                    height: AppSpacing.tradeBotLineHeightCompact,
                   ),
                 ),
               ],
             ],
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.tradeBotCardGap),
         trailing,
       ],
     );
@@ -111,34 +106,15 @@ class _VitToggle extends StatelessWidget {
       toggled: on,
       child: GestureDetector(
         onTap: onToggle,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 120),
-          width: 44,
-          height: 24,
-          decoration: BoxDecoration(
-            color: on ? AppColors.buy : AppColors.surface3,
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: AnimatedAlign(
-            duration: const Duration(milliseconds: 120),
-            alignment: on ? Alignment.centerRight : Alignment.centerLeft,
-            child: Container(
-              width: 20,
-              height: 20,
-              margin: const EdgeInsets.symmetric(horizontal: 2),
-              decoration: const BoxDecoration(
-                color: AppColors.onAccent,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.overlayScrim,
-                    blurRadius: 4,
-                    offset: Offset(0, 1),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        child: VitTogglePill(
+          enabled: on,
+          width: AppSpacing.walletAddressAddSwitchWidth,
+          height: AppSpacing.walletAddressAddSwitchHeight,
+          knobSize: AppSpacing.walletAddressAddSwitchKnob,
+          knobMargin: AppSpacing.walletAddressAddSwitchKnobMargin,
+          inactiveColor: AppColors.surface3,
+          inactiveKnobColor: AppColors.onAccent,
+          inactiveBorderColor: AppColors.surface3,
         ),
       ),
     );
@@ -156,7 +132,7 @@ class _ResetButton extends StatelessWidget {
       key: TradeSettingsPage.resetKey,
       onPressed: onReset,
       variant: VitCtaButtonVariant.danger,
-      height: 46,
+      height: AppSpacing.tradeBotFooterButtonHeight,
       leading: const Icon(Icons.restart_alt_rounded),
       child: const Text('Đặt lại mặc định'),
     );

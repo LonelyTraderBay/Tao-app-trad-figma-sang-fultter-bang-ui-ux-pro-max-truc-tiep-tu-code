@@ -14,23 +14,27 @@ class _ChainPositionCard extends StatelessWidget {
     return VitCard(
       key: StakingMultiChainPage.chainKey(position.chainId),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: AppSpacing.ctaHeight,
-                height: AppSpacing.ctaHeight,
-                decoration: BoxDecoration(
+              DecoratedBox(
+                decoration: ShapeDecoration(
                   color: _chainTint(position.chainId),
-                  borderRadius: AppRadii.xlRadius,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.xlRadius,
+                  ),
                 ),
-                child: Icon(
-                  _chainIcon(position.chainId),
-                  color: AppColors.text1,
-                  size: AppSpacing.iconMd,
+                child: SizedBox(
+                  width: AppSpacing.ctaHeight,
+                  height: AppSpacing.ctaHeight,
+                  child: Icon(
+                    _chainIcon(position.chainId),
+                    color: AppColors.text1,
+                    size: AppSpacing.iconMd,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -91,20 +95,19 @@ class _ApyPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: const BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.buy15,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        value,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.buy,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          value,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.buy,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -145,7 +148,7 @@ class _ActionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -188,7 +191,7 @@ class _ApyComparison extends StatelessWidget {
     return VitCard(
       key: StakingMultiChainPage.apyComparisonKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -248,7 +251,7 @@ class _Benefits extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -282,7 +285,7 @@ class _TechnicalNote extends StatelessWidget {
     return VitCard(
       key: StakingMultiChainPage.technicalNoteKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

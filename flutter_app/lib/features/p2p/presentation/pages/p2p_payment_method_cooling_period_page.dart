@@ -121,17 +121,17 @@ class _CoolingHero extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: AppSpacing.x7,
-                height: AppSpacing.x7,
-                decoration: BoxDecoration(
-                  color: AppColors.warn15,
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: const Icon(
-                  Icons.schedule_rounded,
-                  color: AppColors.warn,
-                  size: AppSpacing.p2pPaymentHeroIcon,
+              const Material(
+                color: AppColors.warn15,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+                child: SizedBox(
+                  width: AppSpacing.x7,
+                  height: AppSpacing.x7,
+                  child: Icon(
+                    Icons.schedule_rounded,
+                    color: AppColors.warn,
+                    size: AppSpacing.p2pPaymentHeroIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -158,27 +158,29 @@ class _CoolingHero extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          Container(
-            padding: AppSpacing.p2pPaymentCountdownPadding,
-            decoration: BoxDecoration(
-              color: AppColors.warn15,
+          Material(
+            color: AppColors.warn15,
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.mdRadius,
             ),
-            child: Column(
-              children: [
-                Text(
-                  '${daysLeft}d ${hoursLeft}h',
-                  style: AppTextStyles.heroNumber.copyWith(
-                    color: AppColors.warn,
-                    fontWeight: AppTextStyles.bold,
+            child: Padding(
+              padding: AppSpacing.p2pPaymentCountdownPadding,
+              child: Column(
+                children: [
+                  Text(
+                    '${daysLeft}d ${hoursLeft}h',
+                    style: AppTextStyles.heroNumber.copyWith(
+                      color: AppColors.warn,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  'Còn lại',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-                ),
-              ],
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    'Còn lại',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

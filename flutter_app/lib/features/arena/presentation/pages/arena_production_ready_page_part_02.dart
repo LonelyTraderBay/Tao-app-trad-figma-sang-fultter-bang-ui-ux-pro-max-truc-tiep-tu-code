@@ -11,7 +11,7 @@ class _FlowCard extends StatelessWidget {
     final color = _flowColor(flow.id);
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,17 +31,14 @@ class _FlowCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: AppSpacing.x4,
                 height: AppSpacing.arenaProductionFlowBarHeight,
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: AppRadii.xsRadius,
-                ),
+                child: Material(color: color, borderRadius: AppRadii.xsRadius),
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           for (var i = 0; i < flow.steps.length; i++)
             _FlowStepRow(
               flowId: flow.id,
@@ -84,26 +81,27 @@ class _FlowStepRow extends StatelessWidget {
             width: AppSpacing.arenaProductionFlowColumnWidth,
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: AppSpacing.arenaProductionFlowDot,
                   height: AppSpacing.arenaProductionFlowDot,
-                  decoration: BoxDecoration(
+                  child: Material(
                     color: first ? color : AppColors.transparent,
-                    border: Border.all(
-                      color: color,
-                      width: AppSpacing.arenaProductionFlowBorderWidth,
+                    shape: CircleBorder(
+                      side: BorderSide(
+                        color: color,
+                        width: AppSpacing.arenaProductionFlowBorderWidth,
+                      ),
                     ),
-                    shape: BoxShape.circle,
                   ),
                 ),
                 if (!last)
                   Expanded(
-                    child: Container(
-                      width: AppSpacing.arenaProductionFlowLineWidth,
-                      margin: const EdgeInsets.symmetric(
-                        vertical: AppSpacing.arenaProductionFlowLineMargin,
+                    child: Padding(
+                      padding: AppSpacing.arenaProductionFlowLineMarginPadding,
+                      child: SizedBox(
+                        width: AppSpacing.arenaProductionFlowLineWidth,
+                        child: ColoredBox(color: color.withValues(alpha: .30)),
                       ),
-                      color: color.withValues(alpha: .30),
                     ),
                   ),
               ],
@@ -116,11 +114,7 @@ class _FlowStepRow extends StatelessWidget {
               onTap: () => onRoute(step.route),
               borderRadius: AppRadii.smRadius,
               child: Padding(
-                padding: EdgeInsets.only(
-                  bottom: last ? 0 : AppSpacing.x4,
-                  left: AppSpacing.x1,
-                  right: AppSpacing.x1,
-                ),
+                padding: AppSpacing.arenaProductionFlowStepPadding(last),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -130,7 +124,7 @@ class _FlowStepRow extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       step.description,
                       style: AppTextStyles.micro.copyWith(
@@ -163,7 +157,7 @@ class _RegistrySection extends StatelessWidget {
           title: 'D - Live vs Release-gated vs QA',
           accentColor: AppColors.buy,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           'Clear labels: Live = implemented local UI, Release-gated = not user-available, QA = internal only.',
           style: AppTextStyles.micro.copyWith(
@@ -171,9 +165,9 @@ class _RegistrySection extends StatelessWidget {
             height: AppSpacing.arenaProductionBodyLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Row(
             children: [
               for (final status in ArenaProductionScreenStatus.values) ...[
@@ -186,10 +180,10 @@ class _RegistrySection extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         for (final status in ArenaProductionScreenStatus.values) ...[
           _StatusGroup(status: status, screens: screens),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
         ],
       ],
     );
@@ -217,7 +211,7 @@ class _StatusMetric extends StatelessWidget {
             height: AppSpacing.arenaProductionCompactLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           _statusLabel(status),
           maxLines: 1,
@@ -246,10 +240,10 @@ class _StatusGroup extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.arenaProductionStatusDot,
               height: AppSpacing.arenaProductionStatusDot,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+              child: Material(color: color, shape: const CircleBorder()),
             ),
             const SizedBox(width: AppSpacing.x2),
             Text(
@@ -261,9 +255,9 @@ class _StatusGroup extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               for (var i = 0; i < items.length; i++)
@@ -293,16 +287,8 @@ class _RegistryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
-      decoration: BoxDecoration(
-        border: divider
-            ? const Border(bottom: BorderSide(color: AppColors.divider))
-            : null,
-      ),
+    final row = Padding(
+      padding: AppSpacing.arenaProductionRegistryRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -317,7 +303,7 @@ class _RegistryRow extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   screen.route,
                   maxLines: 1,
@@ -336,6 +322,15 @@ class _RegistryRow extends StatelessWidget {
           ),
         ],
       ),
+    );
+
+    if (!divider) return row;
+
+    return Column(
+      children: [
+        row,
+        const Divider(height: AppSpacing.dividerHairline),
+      ],
     );
   }
 }
@@ -359,7 +354,7 @@ class _HandoffSection extends StatelessWidget {
           title: 'E - Dev Handoff Pack',
           accentColor: AppColors.sell,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           '4 handoff boards: Route Registry, Component Registry, Trust & Governance Rules, Points Ledger / Resolution Dictionary.',
           style: AppTextStyles.micro.copyWith(
@@ -367,7 +362,7 @@ class _HandoffSection extends StatelessWidget {
             height: AppSpacing.arenaProductionBodyLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _HandoffBoard(
           icon: Icons.map_outlined,
           color: AppColors.accent,
@@ -379,7 +374,7 @@ class _HandoffSection extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _HandoffBoard(
           icon: Icons.layers_outlined,
           color: AppColors.primary,
@@ -391,10 +386,10 @@ class _HandoffSection extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         for (final dictionary in snapshot.dictionaries) ...[
           _DictionaryBoard(dictionary: dictionary),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
         ],
         _HandoffBoard(
           icon: Icons.check_circle_outline,
@@ -427,7 +422,7 @@ class _HandoffBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -449,7 +444,7 @@ class _HandoffBoard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           child,
         ],
       ),
@@ -465,7 +460,7 @@ class _RouteRegistryLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.arenaBottomPaddingX2,
       child: Row(
         children: [
           _StatusPill(status: screen.status),

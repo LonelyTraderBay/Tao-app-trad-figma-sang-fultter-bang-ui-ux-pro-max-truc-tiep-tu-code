@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -20,7 +20,6 @@ part '../widgets/client_money_protection_page_sections.dart';
 part '../widgets/client_money_protection_page_common.dart';
 
 const _moneyBackground = AppColors.bg;
-const _moneyPanel2 = AppColors.surface2;
 const _moneyBorder = AppColors.borderSolid;
 const _moneyPrimary = AppColors.primary;
 const _moneyGreen = AppColors.buy;
@@ -73,11 +72,13 @@ class _ClientMoneyProtectionPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ClientMoneyProtectionPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
+                  padding: AppSpacing.tradeBotClientMoneyScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 12,
+                    customGap: AppSpacing.tradeBotCardGap,
                     children: [
                       const _ProtectionNotice(),
                       _BalanceCard(snapshot: snapshot),
@@ -90,11 +91,11 @@ class _ClientMoneyProtectionPageState
                         const _Documents(),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: VitPageContent(
                           padding: VitContentPadding.none,
                           fullBleed: true,
-                          customGap: 8,
+                          customGap: AppSpacing.tradeBotClientMoneyRiskGap,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,

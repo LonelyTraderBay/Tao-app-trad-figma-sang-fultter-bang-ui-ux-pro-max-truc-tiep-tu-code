@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class CopyTradingTrendPill extends StatelessWidget {
   const CopyTradingTrendPill({super.key, required this.value});
@@ -13,27 +13,11 @@ class CopyTradingTrendPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: value >= 0 ? AppColors.buy15 : AppColors.sell15,
-        border: Border.all(
-          color: value >= 0 ? AppColors.buy20 : AppColors.sell20,
-        ),
-        borderRadius: AppRadii.xlRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        child: Text(
-          '${value >= 0 ? '↑' : '↓'} ${value.abs().toStringAsFixed(1)}% vs last month',
-          style: AppTextStyles.micro.copyWith(
-            color: value >= 0 ? AppColors.buy : AppColors.sell,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label:
+          '${value >= 0 ? '+' : '-'}${value.abs().toStringAsFixed(1)}% vs last month',
+      accentColor: value >= 0 ? AppColors.buy : AppColors.sell,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -46,7 +30,7 @@ class CopyTradingTrendSmall extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${value >= 0 ? '↑' : '↓'} ${value.abs().toStringAsFixed(1)}%',
+      '${value >= 0 ? '+' : '-'}${value.abs().toStringAsFixed(1)}%',
       style: AppTextStyles.micro.copyWith(
         color: value >= 0 ? AppColors.buy : AppColors.sell,
         fontWeight: AppTextStyles.bold,
@@ -67,29 +51,21 @@ class CopyTradingSmallButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.tradeBotCopyDemoInlinePadding,
+      borderColor: AppColors.primary20,
+      background: const ColoredBox(color: AppColors.primary15),
       onTap: () {
         HapticFeedback.selectionClick();
         onTap();
       },
-      borderRadius: AppRadii.smRadius,
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: AppColors.primary15,
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.primary,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
+      child: Text(
+        label,
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.primary,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -103,24 +79,10 @@ class CopyTradingBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.buy15,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.buy,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: AppColors.buy,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -138,11 +100,15 @@ class CopyTradingIconLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.tradeBotCopyDemoLinePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.buy, size: 15),
+          Icon(
+            icon,
+            color: AppColors.buy,
+            size: AppSpacing.tradeBotSmallIcon + AppSpacing.hairlineStroke,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(

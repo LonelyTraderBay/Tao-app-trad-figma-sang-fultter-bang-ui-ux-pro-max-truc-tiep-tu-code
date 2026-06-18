@@ -23,7 +23,7 @@ class _VideoTab extends StatelessWidget {
         ],
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.p2pGuideVideoEmptyPadding,
           child: Column(
             children: [
               const Icon(
@@ -55,18 +55,20 @@ class _VideoCard extends StatelessWidget {
     return VitCard(
       key: P2PGuidePage.videoKey(video.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pGuideVideoCardPadding,
       onTap: HapticFeedback.selectionClick,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.x7,
-            height: AppSpacing.buttonStandard,
-            decoration: BoxDecoration(
+          SizedBox(
+            width: AppSpacing.p2pGuideThumbWidth,
+            height: AppSpacing.p2pGuideThumbHeight,
+            child: Material(
               color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.smRadius,
-            ),
-            child: Stack(
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.smRadius,
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Stack(
               alignment: Alignment.center,
               children: [
                 Text(
@@ -76,14 +78,11 @@ class _VideoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const DecoratedBox(
-                  decoration: BoxDecoration(
+                const SizedBox.square(
+                  dimension: AppSpacing.buttonCompact,
+                  child: Material(
                     color: AppColors.bg,
-                    shape: BoxShape.circle,
-                  ),
-                  child: SizedBox(
-                    width: AppSpacing.buttonCompact,
-                    height: AppSpacing.buttonCompact,
+                    shape: CircleBorder(),
                     child: Icon(
                       Icons.play_arrow_rounded,
                       color: AppColors.text1,
@@ -92,6 +91,7 @@ class _VideoCard extends StatelessWidget {
                   ),
                 ),
               ],
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -159,10 +159,7 @@ class _ConceptList extends StatelessWidget {
         for (final concept in concepts) ...[
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x3,
-            ),
+            padding: AppSpacing.p2pGuideConceptPadding,
             child: RichText(
               text: TextSpan(
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -194,14 +191,13 @@ class _RoundIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.buttonCompact,
-      height: AppSpacing.buttonCompact,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.buttonCompact,
+      child: Material(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconSm),
     );
   }
 }
@@ -219,15 +215,16 @@ class _NumberIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.buttonStandard,
-      height: AppSpacing.buttonStandard,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.buttonStandard,
+      child: Material(
         color: color.withValues(alpha: .12),
-        border: Border.all(color: color),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Stack(
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: color),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Stack(
         alignment: Alignment.center,
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
@@ -239,11 +236,12 @@ class _NumberIcon extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.p2pGuidePillLineHeight,
               ),
             ),
           ),
         ],
+        ),
       ),
     );
   }
@@ -276,26 +274,10 @@ class _TonePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        border: Border.all(color: color.withValues(alpha: .20)),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      size: VitStatusPillSize.sm,
     );
   }
 }

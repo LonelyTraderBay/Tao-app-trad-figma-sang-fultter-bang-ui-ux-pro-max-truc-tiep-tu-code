@@ -16,7 +16,7 @@ class _DeviceStatsCard extends StatelessWidget {
     return VitCard(
       key: P2PDeviceManagementPage.statsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pSecurityDetailsCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -67,14 +67,14 @@ class _DeviceStat extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: AppSpacing.inputHeight,
-          height: AppSpacing.inputHeight,
-          decoration: BoxDecoration(
+        SizedBox.square(
+          dimension: AppSpacing.p2pSecurityDetailsIconBox,
+          child: Material(
+            type: MaterialType.transparency,
             color: color.withValues(alpha: .12),
             borderRadius: AppRadii.lgRadius,
+            child: Icon(icon, color: color, size: AppSpacing.iconMd),
           ),
-          child: Icon(icon, color: color, size: AppSpacing.iconMd),
         ),
         const SizedBox(height: AppSpacing.x2),
         Text(value, style: AppTextStyles.amountSm.copyWith(color: color)),
@@ -97,15 +97,16 @@ class _TrustedDeviceNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return Material(
       key: P2PDeviceManagementPage.infoKey,
-      decoration: BoxDecoration(
-        color: AppColors.primary08,
+      type: MaterialType.transparency,
+      color: AppColors.primary08,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppColors.primary20),
+        side: BorderSide(color: AppColors.primary20),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pSecurityDetailsInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -131,7 +132,7 @@ class _TrustedDeviceNotice extends StatelessWidget {
                     snapshot.infoBody,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: 1.5,
+                      height: AppSpacing.p2pSecurityDetailsDeviceNoticeLineHeight,
                     ),
                   ),
                 ],

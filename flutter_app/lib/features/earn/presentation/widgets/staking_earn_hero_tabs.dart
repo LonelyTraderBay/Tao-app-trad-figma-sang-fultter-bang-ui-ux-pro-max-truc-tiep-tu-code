@@ -10,7 +10,7 @@ class _EarnHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -46,10 +46,7 @@ class _EarnHero extends StatelessWidget {
               ),
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.x5,
-                  vertical: AppSpacing.x3,
-                ),
+                padding: AppSpacing.earnCardPaddingX4X3,
                 child: Column(
                   children: [
                     Text(
@@ -128,10 +125,7 @@ class _HeroPill extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.earnCardPaddingX3,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -241,10 +235,7 @@ class _FilterChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x2,
-          ),
+          padding: AppSpacing.earnSmallPillPadding,
           child: Row(
             children: [
               if (_filterIcon(filter) != null) ...[

@@ -26,21 +26,19 @@ class _ConfirmTransferView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          padding: AppSpacing.p2pWalletTransferConfirmHeroPadding,
           child: Column(
             children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppModuleAccents.p2p.withValues(alpha: .14),
-                  shape: BoxShape.circle,
-                ),
+              Material(
+                color: AppModuleAccents.p2p.withValues(alpha: .14),
+                shape: const CircleBorder(),
                 child: const SizedBox(
-                  width: 80,
-                  height: 80,
+                  width: AppSpacing.p2pWalletTransferConfirmIconBox,
+                  height: AppSpacing.p2pWalletTransferConfirmIconBox,
                   child: Icon(
                     Icons.swap_horiz_rounded,
                     color: AppModuleAccents.p2p,
-                    size: 40,
+                    size: AppSpacing.p2pWalletTransferConfirmIcon,
                   ),
                 ),
               ),
@@ -58,7 +56,7 @@ class _ConfirmTransferView extends StatelessWidget {
         const SizedBox(height: AppSpacing.x5),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               _ConfirmRow(
@@ -66,7 +64,10 @@ class _ConfirmTransferView extends StatelessWidget {
                 value: '${_formatAvailable(amount, asset)} $asset',
                 large: true,
               ),
-              const Divider(color: AppColors.divider, height: 1),
+              const Divider(
+                color: AppColors.divider,
+                height: AppSpacing.dividerHairline,
+              ),
               _ConfirmRow(label: 'Từ', value: source.walletLabel),
               _ConfirmRow(label: 'Đến', value: destination.walletLabel),
               _ConfirmRow(
@@ -132,7 +133,7 @@ class _ConfirmRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pWalletCardPadding,
       child: Row(
         children: [
           Expanded(

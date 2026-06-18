@@ -30,7 +30,7 @@ class _ExampleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(example.tone);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,7 +64,7 @@ class _ExampleCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           for (final reason in example.reasons)
             Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+              padding: AppSpacing.arenaGuideReasonPadding,
               child: Row(
                 children: [
                   Icon(
@@ -107,7 +107,7 @@ class _ConceptSection extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.lg,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.arenaPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -140,7 +140,7 @@ class _TipsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppModuleAccents.arena,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -210,8 +210,8 @@ class _TipsList extends StatelessWidget {
       children: [
         for (var index = 0; index < tips.length; index++)
           Padding(
-            padding: EdgeInsets.only(
-              bottom: index == tips.length - 1 ? 0 : AppSpacing.x2,
+            padding: AppSpacing.arenaGuideAccordionListPadding(
+              index == tips.length - 1,
             ),
             child: _AccordionCard(
               key: ArenaGuidePage.tipKey(tips[index].category),
@@ -260,7 +260,7 @@ class _ChecklistCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -284,23 +284,28 @@ class _ChecklistCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           for (var index = 0; index < items.length; index++)
             Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+              padding: AppSpacing.arenaGuideChecklistItemPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: AppSpacing.arenaGuideChecklistBox,
                     height: AppSpacing.arenaGuideChecklistBox,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.borderSolid),
-                      borderRadius: AppRadii.xsRadius,
-                    ),
-                    child: Text(
-                      '${index + 1}',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        height: AppSpacing.arenaGuideChecklistLineHeight,
+                    child: DecoratedBox(
+                      decoration: const ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(color: AppColors.borderSolid),
+                          borderRadius: AppRadii.xsRadius,
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${index + 1}',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                            height: AppSpacing.arenaGuideChecklistLineHeight,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -327,7 +332,7 @@ class _SafetyHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.buy,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -367,20 +372,24 @@ class _PointsOnlyBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.accent20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.arenaGuideFeatureIconBox,
             height: AppSpacing.arenaGuideFeatureIconBox,
-            decoration: BoxDecoration(
-              color: AppColors.accent12,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.info_outline,
-              color: AppColors.accent,
-              size: AppSpacing.arenaGuideFeatureGlyph,
+            child: const DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.accent12,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.info_outline,
+                  color: AppColors.accent,
+                  size: AppSpacing.arenaGuideFeatureGlyph,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -419,8 +428,8 @@ class _SafetyTipList extends StatelessWidget {
       children: [
         for (var index = 0; index < items.length; index++)
           Padding(
-            padding: EdgeInsets.only(
-              bottom: index == items.length - 1 ? 0 : AppSpacing.x3,
+            padding: AppSpacing.arenaGuideSafetyTipPadding(
+              index == items.length - 1,
             ),
             child: _SafetyTipCard(item: items[index]),
           ),
@@ -438,21 +447,27 @@ class _SafetyTipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(item.tone);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.arenaGuideSafetyTipIconBox,
             height: AppSpacing.arenaGuideSafetyTipIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              _iconFor(item.iconKey),
-              color: color,
-              size: AppSpacing.arenaGuideSafetyTipGlyph,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: .12),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Center(
+                child: Icon(
+                  _iconFor(item.iconKey),
+                  color: color,
+                  size: AppSpacing.arenaGuideSafetyTipGlyph,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),

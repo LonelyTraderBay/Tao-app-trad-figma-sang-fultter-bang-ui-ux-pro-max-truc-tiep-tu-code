@@ -7,18 +7,10 @@ class _QuickContactGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: SupportPage.quickLinksKey,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        AppSpacing.x4,
-        AppSpacing.contentPad,
-        AppSpacing.x4,
-      ),
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.supportQuickLinksPadding,
       child: Column(
         children: [
           Row(
@@ -99,10 +91,7 @@ class _QuickLinkCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.sm,
       borderColor: color.withValues(alpha: .28),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.supportQuickCardPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -125,7 +114,7 @@ class _QuickLinkCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.25,
+                    height: AppSpacing.supportLineHeightTight,
                   ),
                 ),
               ],
@@ -152,62 +141,28 @@ class _SupportTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _TabButton(
-            key: SupportPage.ticketsTabKey,
-            label: 'Tickets ($ticketCount)',
-            selected: !showFaq,
-            onTap: onShowTickets,
-          ),
+    return VitTabBar(
+      activeKey: showFaq ? 'faq' : 'tickets',
+      variant: VitTabBarVariant.segment,
+      tabs: [
+        VitTabItem(
+          key: 'tickets',
+          label: 'Tickets ($ticketCount)',
+          widgetKey: SupportPage.ticketsTabKey,
         ),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: _TabButton(
-            key: SupportPage.faqTabKey,
-            label: 'FAQ',
-            selected: showFaq,
-            onTap: onShowFaq,
-          ),
+        const VitTabItem(
+          key: 'faq',
+          label: 'FAQ',
+          widgetKey: SupportPage.faqTabKey,
         ),
       ],
-    );
-  }
-}
-
-class _TabButton extends StatelessWidget {
-  const _TabButton({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        height: 40,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: selected ? AppColors.primary : AppColors.surface,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.body.copyWith(
-            color: selected ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+      onChanged: (key) {
+        if (key == 'faq') {
+          onShowFaq();
+          return;
+        }
+        onShowTickets();
+      },
     );
   }
 }

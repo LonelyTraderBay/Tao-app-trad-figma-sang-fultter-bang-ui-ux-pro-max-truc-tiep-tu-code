@@ -9,9 +9,9 @@ class _EquityChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.tradeBotCardPadding,
       child: SizedBox(
-        height: 220,
+        height: AppSpacing.tradeBotAnalyticsChartHeight,
         child: CustomPaint(
           painter: _EquityChartPainter(points, strategies),
           size: Size.infinite,
@@ -29,9 +29,9 @@ class _RadarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.tradeBotCardPadding,
       child: SizedBox(
-        height: 280,
+        height: AppSpacing.tradeBotRadarChartHeight,
         child: CustomPaint(
           painter: _RadarPainter(strategies),
           size: Size.infinite,
@@ -60,7 +60,7 @@ class _MetricsTable extends StatelessWidget {
     ];
 
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.tradeBotCardPadding,
       child: Column(
         children: [
           _TableHeader(strategies: strategies),
@@ -94,36 +94,41 @@ class _TableHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 10),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.borderSolid)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              'Metric',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-          for (final strategy in strategies)
-            SizedBox(
-              width: 100,
-              child: Text(
-                strategy.name,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.micro.copyWith(
-                  color: Color(strategy.colorHex),
-                  fontWeight: AppTextStyles.bold,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.tradeBotMetricTableHeaderPadding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Metric',
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
-            ),
-        ],
-      ),
+              for (final strategy in strategies)
+                SizedBox(
+                  width: AppSpacing.tradeBotMetricTableColumnWidth,
+                  child: Text(
+                    strategy.name,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.micro.copyWith(
+                      color: Color(strategy.colorHex),
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        const Divider(
+          color: AppColors.borderSolid,
+          height: AppSpacing.tradeBotHairline,
+        ),
+      ],
     );
   }
 }
@@ -155,39 +160,43 @@ class _TableMetricRow extends StatelessWidget {
       _ => null,
     };
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        border: showDivider
-            ? const Border(bottom: BorderSide(color: AppColors.borderSolid))
-            : null,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              row.label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: 1,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.tradeBotMetricTableRowPadding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  row.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    height: AppSpacing.tradeBotLineHeightTight,
+                  ),
+                ),
               ),
-            ),
+              for (final strategy in strategies)
+                SizedBox(
+                  width: AppSpacing.tradeBotMetricTableColumnWidth,
+                  child: _TableValue(
+                    metricKey: row.key,
+                    strategy: strategy,
+                    value: _metricValue(strategy, row.key),
+                    suffix: row.suffix,
+                    isBest:
+                        bestValue != null &&
+                        _metricValue(strategy, row.key) == bestValue,
+                  ),
+                ),
+            ],
           ),
-          for (final strategy in strategies)
-            SizedBox(
-              width: 100,
-              child: _TableValue(
-                metricKey: row.key,
-                strategy: strategy,
-                value: _metricValue(strategy, row.key),
-                suffix: row.suffix,
-                isBest:
-                    bestValue != null &&
-                    _metricValue(strategy, row.key) == bestValue,
-              ),
-            ),
-        ],
-      ),
+        ),
+        if (showDivider)
+          const Divider(
+            color: AppColors.borderSolid,
+            height: AppSpacing.tradeBotHairline,
+          ),
+      ],
     );
   }
 }
@@ -224,13 +233,17 @@ class _TableValue extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ),
         if (isBest) ...[
-          const SizedBox(width: 2),
-          Icon(Icons.star_rounded, color: color, size: 10),
+          const Padding(padding: AppSpacing.tradeBotMetricTableStarGap),
+          Icon(
+            Icons.star_rounded,
+            color: color,
+            size: AppSpacing.tradeBotRowGap,
+          ),
         ],
       ],
     );

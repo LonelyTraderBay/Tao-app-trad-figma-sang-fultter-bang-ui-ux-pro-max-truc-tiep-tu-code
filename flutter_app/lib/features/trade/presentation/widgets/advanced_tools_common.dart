@@ -7,56 +7,13 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = complete ? AppColors.buy : AppColors.caution;
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
-      borderColor: color.withValues(alpha: .35),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: Text(
-        complete ? '✓ Complete' : '⏳ Pending',
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
-  }
-}
-
-class _TabButton extends StatelessWidget {
-  const _TabButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: VitCard(
-        alignment: Alignment.center,
-        variant: active ? VitCardVariant.standard : VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
-        borderColor: active ? _toolsPrimary : AppColors.transparent,
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitStatusPill(
+      label: complete ? 'Complete' : 'Pending',
+      status: complete
+          ? VitStatusPillStatus.success
+          : VitStatusPillStatus.warning,
+      icon: complete ? Icons.check_rounded : Icons.schedule_rounded,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -77,41 +34,17 @@ class _GradientButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        constraints: const BoxConstraints(minHeight: 52),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: colors),
-          borderRadius: AppRadii.inputRadius,
-          boxShadow: [
-            BoxShadow(
-              color: colors.first.withValues(alpha: .28),
-              blurRadius: 16,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: AppColors.onAccent, size: 17),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.onAccent,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ],
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: _ctaVariantFor(colors),
+      leading: Icon(icon),
+      child: Text(
+        label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: AppTextStyles.control.copyWith(
+          color: AppColors.onAccent,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -146,7 +79,7 @@ class _IconTile extends StatelessWidget {
 class _Panel extends StatelessWidget {
   const _Panel({
     required this.child,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = AppSpacing.tradeToolRiskIntroPadding,
     this.borderColor = AppColors.cardBorder,
   });
 
@@ -173,48 +106,9 @@ class _SheetFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.paddingOf(context).bottom;
-    return SafeArea(
-      top: false,
-      child: Container(
-        padding: EdgeInsets.fromLTRB(20, 12, 20, 20 + bottom),
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-          border: Border(top: BorderSide(color: AppColors.borderSolid)),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const _SheetHandle(),
-              const SizedBox(height: 18),
-              Text(title, style: AppTextStyles.sectionTitle),
-              const SizedBox(height: 12),
-              child,
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SheetHandle extends StatelessWidget {
-  const _SheetHandle();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 40,
-        height: 4,
-        decoration: BoxDecoration(
-          color: AppColors.borderSolid,
-          borderRadius: AppRadii.xsRadius,
-        ),
-      ),
+    return VitSheetPanel(
+      title: title,
+      child: SingleChildScrollView(child: child),
     );
   }
 }
@@ -228,7 +122,7 @@ class _SheetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7),
+      padding: AppSpacing.tradeToolSheetRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -264,28 +158,18 @@ class _SuccessToast extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.transparent,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        decoration: BoxDecoration(
-          color: AppColors.buy10,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: AppColors.buy.withValues(alpha: .38)),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.dynamicIslandBg.withValues(alpha: .22),
-              blurRadius: 20,
-              offset: const Offset(0, 12),
-            ),
-          ],
-        ),
+      child: VitCard(
+        padding: AppSpacing.tradeToolToastPadding,
+        variant: VitCardVariant.inner,
+        borderColor: AppColors.buy.withValues(alpha: .38),
         child: Row(
           children: [
             const Icon(
               Icons.check_circle_rounded,
               color: AppColors.buy,
-              size: 18,
+              size: AppSpacing.tradeToolBodyIcon,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: AppSpacing.tradeToolIconGap),
             Expanded(
               child: Text(
                 message,
@@ -295,23 +179,26 @@ class _SuccessToast extends StatelessWidget {
                 ),
               ),
             ),
-            InkWell(
-              onTap: onClose,
-              borderRadius: AppRadii.xsRadius,
-              child: const Padding(
-                padding: EdgeInsets.all(4),
-                child: Icon(
-                  Icons.close_rounded,
-                  color: AppColors.text2,
-                  size: 16,
-                ),
-              ),
+            VitIconButton(
+              icon: Icons.close_rounded,
+              tooltip: 'Close success message',
+              onPressed: onClose,
+              variant: VitIconButtonVariant.transparent,
+              size: VitIconButtonSize.sm,
             ),
           ],
         ),
       ),
     );
   }
+}
+
+VitCtaButtonVariant _ctaVariantFor(List<Color> colors) {
+  final first = colors.first;
+  if (first == AppColors.buy) return VitCtaButtonVariant.success;
+  if (first == AppColors.caution) return VitCtaButtonVariant.warning;
+  if (first == AppColors.sell) return VitCtaButtonVariant.danger;
+  return VitCtaButtonVariant.primary;
 }
 
 String _formatMoney(double value) {

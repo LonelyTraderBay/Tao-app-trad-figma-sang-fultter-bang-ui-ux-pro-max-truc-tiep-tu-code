@@ -88,12 +88,7 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
               if (snapshot.showOfflineBanner)
                 Padding(
                   key: UnifiedSearchPage.offlineKey,
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    AppSpacing.x2,
-                  ),
+                  padding: AppSpacing.discoveryOfflineBannerPadding,
                   child: VitOfflineBanner(
                     message: snapshot.staleMessage,
                     detail: snapshot.staleDetail,
@@ -107,10 +102,7 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
                   child: SingleChildScrollView(
                     key: UnifiedSearchPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x2,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.discoveryContentScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(

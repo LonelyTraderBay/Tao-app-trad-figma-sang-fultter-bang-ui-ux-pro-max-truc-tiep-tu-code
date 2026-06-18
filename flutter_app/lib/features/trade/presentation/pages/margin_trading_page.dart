@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -116,18 +117,23 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: MarginTradingPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      padding: AppSpacing.zeroInsets.copyWith(
+                        left: AppSpacing.contentPad,
+                        top: AppSpacing.rowPy,
+                        right: AppSpacing.contentPad,
+                        bottom: bottomInset,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 8,
+                        customGap: AppSpacing.x3,
                         children: [
                           _ClientCategoryCard(
                             category: snapshot.clientCategory,
                           ),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: EdgeInsets.all(12),
+                            padding: AppSpacing.cardPaddingCompact,
                             child: VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'Margin order review required',
@@ -139,8 +145,6 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                           _SegmentedTabs(
                             tabs: snapshot.modeTabs,
                             activeId: _mode,
-                            activeColor: _marginPrimary,
-                            height: 50,
                             onChanged: (id) => setState(() => _mode = id),
                             keyBuilder: MarginTradingPage.modeKey,
                           ),
@@ -159,8 +163,6 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                                 ),
                             ],
                             activeId: _tab,
-                            activeColor: _marginPrimary,
-                            height: 46,
                             onChanged: (id) => setState(() => _tab = id),
                             keyBuilder: MarginTradingPage.tabKey,
                           ),

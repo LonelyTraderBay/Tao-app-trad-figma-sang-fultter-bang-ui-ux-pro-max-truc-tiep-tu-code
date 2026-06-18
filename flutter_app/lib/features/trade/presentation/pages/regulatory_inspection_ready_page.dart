@@ -44,8 +44,10 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 58
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.regulatoryInspectionBottomInsetVisualExtra
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.regulatoryInspectionBottomInsetNativeExtra) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -72,10 +74,12 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.regulatoryInspectionScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 14,
+                    customGap: AppSpacing.regulatoryInspectionContentGap,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(

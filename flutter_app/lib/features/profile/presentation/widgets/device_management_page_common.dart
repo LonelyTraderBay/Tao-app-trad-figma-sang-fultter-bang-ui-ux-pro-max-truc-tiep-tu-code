@@ -11,12 +11,13 @@ class _MetaItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: _devicesMuted, size: 12),
-        const SizedBox(width: 4),
-        Text(
-          value,
-          style: AppTextStyles.micro.copyWith(color: _devicesMuted, height: 1),
+        Icon(
+          icon,
+          color: _devicesMuted,
+          size: AppSpacing.profileDevicesMetaIcon,
         ),
+        const SizedBox(width: AppSpacing.profileDevicesMetaIconGap),
+        Text(value, style: AppTextStyles.micro.copyWith(color: _devicesMuted)),
       ],
     );
   }
@@ -31,44 +32,19 @@ class _TrustButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final trusted = device.isTrusted;
-    final color = trusted ? _devicesGreen : _devicesAmber;
 
-    return GestureDetector(
+    return VitCtaButton(
       key: DeviceManagementPage.trustKey(device.id),
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: AppSpacing.buttonCompact,
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: .12),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              trusted ? Icons.shield_outlined : Icons.warning_amber_rounded,
-              color: color,
-              size: 14,
-            ),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                trusted
-                    ? 'Tin c\u1EADy'
-                    : '\u0110\u00E1nh d\u1EA5u tin c\u1EADy',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.heavy,
-                  height: 1,
-                ),
-              ),
-            ),
-          ],
-        ),
+      onPressed: onTap,
+      height: AppSpacing.buttonCompact,
+      variant: trusted
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.warning,
+      leading: Icon(
+        trusted ? Icons.shield_outlined : Icons.warning_amber_rounded,
+      ),
+      child: Text(
+        trusted ? 'Tin c\u1EADy' : '\u0110\u00E1nh d\u1EA5u tin c\u1EADy',
       ),
     );
   }
@@ -82,38 +58,15 @@ class _LogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCtaButton(
       key: DeviceManagementPage.logoutKey(deviceId),
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: AppSpacing.buttonCompact,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        decoration: BoxDecoration(
-          color: AppColors.sell10,
-          borderRadius: AppRadii.cardRadius,
-        ),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.delete_outline_rounded,
-              color: _devicesRed,
-              size: 15,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              '\u0110\u0103ng xu\u1EA5t',
-              style: AppTextStyles.micro.copyWith(
-                color: _devicesRed,
-                fontWeight: AppTextStyles.heavy,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
-      ),
+      onPressed: onTap,
+      height: AppSpacing.buttonCompact,
+      variant: VitCtaButtonVariant.danger,
+      fullWidth: false,
+      padding: AppSpacing.profileDevicesLogoutButtonPadding,
+      leading: const Icon(Icons.delete_outline_rounded),
+      child: const Text('\u0110\u0103ng xu\u1EA5t'),
     );
   }
 }
@@ -126,21 +79,7 @@ class _TinyPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(999),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.heavy,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

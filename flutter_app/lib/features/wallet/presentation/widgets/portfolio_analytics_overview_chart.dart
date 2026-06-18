@@ -49,26 +49,27 @@ class _PeriodSelector extends StatelessWidget {
       children: [
         for (final period in periods)
           Expanded(
-            child: GestureDetector(
+            child: Material(
               key: PortfolioAnalyticsPage.periodKey(period),
-              onTap: () => onChanged(period),
-              behavior: HitTestBehavior.opaque,
-              child: Container(
-                height: AppSpacing.walletAnalyticsPeriodHeight,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: active == period
-                      ? _analyticsPrimary.withValues(alpha: .20)
-                      : AppColors.transparent,
-                  borderRadius: AppRadii.inputRadius,
-                ),
-                child: Text(
-                  period,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active == period
-                        ? _analyticsPrimary
-                        : AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
+              color: active == period
+                  ? _analyticsPrimary.withValues(alpha: .20)
+                  : AppColors.transparent,
+              borderRadius: AppRadii.inputRadius,
+              child: InkWell(
+                onTap: () => onChanged(period),
+                borderRadius: AppRadii.inputRadius,
+                child: SizedBox(
+                  height: AppSpacing.walletAnalyticsPeriodHeight,
+                  child: Center(
+                    child: Text(
+                      period,
+                      style: AppTextStyles.caption.copyWith(
+                        color: active == period
+                            ? _analyticsPrimary
+                            : AppColors.text2,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),

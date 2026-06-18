@@ -18,14 +18,13 @@ class _FundingCard extends StatelessWidget {
             badge: '+${data.currentRatePct.toStringAsFixed(4)}%',
             badgeColor: liveMarketRed,
           ),
-          const SizedBox(height: 16),
-          Container(
-            height: 54,
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            decoration: BoxDecoration(
-              color: liveMarketSurface3,
-              borderRadius: AppRadii.cardRadius,
-            ),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          LiveMarketCard(
+            variant: VitCardVariant.ghost,
+            borderColor: AppColors.transparent,
+            height: AppSpacing.liveMarketFundingCountdownHeight,
+            padding: AppSpacing.liveMarketFundingCountdownPadding,
+            background: const ColoredBox(color: liveMarketSurface3),
             child: Row(
               children: [
                 Text(
@@ -41,13 +40,12 @@ class _FundingCard extends StatelessWidget {
                     color: liveMarketPrimary,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
-                    height: 1,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
           Row(
             children: [
               Expanded(
@@ -57,7 +55,7 @@ class _FundingCard extends StatelessWidget {
                   color: liveMarketRed,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.rowGap),
               Expanded(
                 child: LiveMarketMetricBox(
                   label: '24h Avg',
@@ -65,7 +63,7 @@ class _FundingCard extends StatelessWidget {
                   color: liveMarketGreen,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.rowGap),
               Expanded(
                 child: LiveMarketMetricBox(
                   label: 'Range',
@@ -74,19 +72,17 @@ class _FundingCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 13),
-          Container(
-            height: 67,
-            padding: const EdgeInsets.fromLTRB(0, 8, 0, 6),
-            decoration: BoxDecoration(
-              color: liveMarketPanel2,
-              borderRadius: AppRadii.cardRadius,
-            ),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          LiveMarketCard(
+            variant: VitCardVariant.inner,
+            borderColor: AppColors.transparent,
+            height: AppSpacing.liveMarketFundingChartHeight,
+            padding: AppSpacing.liveMarketFundingChartPadding,
             child: CustomPaint(
               painter: LiveMarketLinePainter(values: data.historyPct),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
           const LiveMarketInfoStrip(),
         ],
       ),

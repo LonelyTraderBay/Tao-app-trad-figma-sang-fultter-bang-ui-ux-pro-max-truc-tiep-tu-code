@@ -21,7 +21,7 @@ class _DynamicHero extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.hero,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -113,7 +113,7 @@ class _DynamicHero extends StatelessWidget {
           const SizedBox(height: AppSpacing.x5),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.dcaPaddingX4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -180,18 +180,19 @@ class _TinyPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: filled ? AppColors.portfolioBtnGhost : AppColors.hoverBg,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(
-          color: filled ? AppColors.portfolioBtnGhostBorder : AppColors.border,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(
+            color: filled
+                ? AppColors.portfolioBtnGhostBorder
+                : AppColors.border,
+          ),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
+        padding: AppSpacing.dcaButtonChipPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -275,16 +276,15 @@ class _StrategyChip extends StatelessWidget {
       key: DCADynamicAmount.strategyKey(option.strategy),
       onTap: onTap,
       child: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: ShapeDecoration(
           color: selected ? _accentSoft(option.accent) : AppColors.surface,
-          borderRadius: AppRadii.inputRadius,
-          border: Border.all(color: selected ? accent : AppColors.cardBorder),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
+            side: BorderSide(color: selected ? accent : AppColors.cardBorder),
+          ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.dcaPrimaryChipPadding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -305,12 +305,14 @@ class _StrategyChip extends StatelessWidget {
               ),
               if (selected) ...[
                 const SizedBox(width: AppSpacing.x2),
-                Container(
+                SizedBox(
                   width: AppSpacing.x2,
                   height: AppSpacing.x2,
-                  decoration: BoxDecoration(
-                    color: accent,
-                    borderRadius: AppRadii.deviceRadius,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: accent,
+                      shape: const CircleBorder(),
+                    ),
                   ),
                 ),
               ],
@@ -345,12 +347,7 @@ class _StrategyVisualization extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.x5,
-              AppSpacing.x5,
-              AppSpacing.x5,
-              AppSpacing.x3,
-            ),
+            padding: AppSpacing.dcaSectionHeaderPadding,
             child: _SectionHeader(
               icon: Icons.show_chart_rounded,
               title: 'Biến động & Hệ số',
@@ -359,12 +356,7 @@ class _StrategyVisualization extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.x3,
-              0,
-              AppSpacing.x3,
-              AppSpacing.x2,
-            ),
+            padding: AppSpacing.dcaChartPadding,
             child: SizedBox(
               height: AppSpacing.buttonHero * 2 + AppSpacing.x6,
               child: CustomPaint(
@@ -374,12 +366,7 @@ class _StrategyVisualization extends StatelessWidget {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.fromLTRB(
-              AppSpacing.x5,
-              0,
-              AppSpacing.x5,
-              AppSpacing.x4,
-            ),
+            padding: AppSpacing.dcaChartFooterPadding,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -416,7 +403,7 @@ class _GenericStrategyCard extends StatelessWidget {
     final accent = _accentColor(option.accent);
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -428,13 +415,15 @@ class _GenericStrategyCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x5),
           DecoratedBox(
-            decoration: BoxDecoration(
+            decoration: ShapeDecoration(
               color: _accentSoft(option.accent),
-              borderRadius: AppRadii.cardRadius,
-              border: Border.all(color: accent.withValues(alpha: .24)),
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.cardRadius,
+                side: BorderSide(color: accent.withValues(alpha: .24)),
+              ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.dcaPaddingX4,
               child: Text(
                 option.description,
                 style: AppTextStyles.base.copyWith(

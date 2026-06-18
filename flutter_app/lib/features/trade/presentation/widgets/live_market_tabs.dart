@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_common_widgets.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_interest_cards.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_liquidations.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_sentiment.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class LiveMarketUnderlineTabs extends StatelessWidget {
   const LiveMarketUnderlineTabs({
@@ -28,45 +28,22 @@ class LiveMarketUnderlineTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 53,
-      color: liveMarketPanel,
-      child: Row(
-        children: [
+    return LiveMarketCard(
+      variant: VitCardVariant.inner,
+      borderColor: liveMarketBorder,
+      padding: AppSpacing.zeroInsets,
+      child: VitTabBar(
+        tabs: [
           for (final tab in _tabs)
-            Expanded(
-              child: InkWell(
-                key: keyBuilder(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 28),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: activeId == tab.$1
-                            ? liveMarketPrimary
-                            : AppColors.transparent,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  child: Text(
-                    tab.$2,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.captionSm.copyWith(
-                      color: activeId == tab.$1
-                          ? liveMarketPrimary
-                          : AppColors.text3,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1,
-                    ),
-                  ),
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: keyBuilder(tab.$1),
             ),
         ],
+        activeKey: activeId,
+        onChanged: onChanged,
+        variant: VitTabBarVariant.underline,
       ),
     );
   }

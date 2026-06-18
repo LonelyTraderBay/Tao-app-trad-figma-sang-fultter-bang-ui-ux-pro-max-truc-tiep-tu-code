@@ -26,7 +26,7 @@ class _SmallMetric extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: alignEnd ? Alignment.centerRight : Alignment.centerLeft,
@@ -73,7 +73,7 @@ class _InnerMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: subtleBuy ? AppColors.buy20 : null,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -81,7 +81,7 @@ class _InnerMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
@@ -108,20 +108,17 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.15),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: color.withValues(alpha: 0.15),
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -138,7 +135,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingProofOfReservesPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,

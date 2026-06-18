@@ -10,7 +10,7 @@ class _DiversificationHero extends StatelessWidget {
     final color = _scoreColor(score.score);
     return VitCard(
       variant: VitCardVariant.hero,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketCorrelationsHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,7 +21,7 @@ class _DiversificationHero extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.marketCorrelationsHeroLabelGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -29,9 +29,9 @@ class _DiversificationHero extends StatelessWidget {
                 '${score.score}',
                 style: AppTextStyles.heroNumber.copyWith(color: color),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.marketCorrelationsHeroMetaGap),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: AppSpacing.marketCorrelationsHeroMetaPadding,
                 child: Text(
                   '/ 100',
                   style: AppTextStyles.caption.copyWith(
@@ -39,18 +39,18 @@ class _DiversificationHero extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.marketCorrelationsHeroPillGap),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: AppSpacing.marketCorrelationsHeroMetaPadding,
                 child: _SmallPill(label: score.label, color: color),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketCorrelationsHeroProgressGap),
           ClipRRect(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadii.smRadius,
             child: SizedBox(
-              height: 8,
+              height: AppSpacing.marketCorrelationsHeroProgressHeight,
               child: LinearProgressIndicator(
                 value: score.score / 100,
                 backgroundColor: AppColors.surface2,
@@ -58,7 +58,7 @@ class _DiversificationHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.marketCorrelationsHeroScaleGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -90,19 +90,10 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      semanticStatus: VitStatusPillStatus.info,
     );
   }
 }
@@ -118,7 +109,7 @@ class _DiversificationMetrics extends StatelessWidget {
       children: [
         Expanded(
           child: VitCard(
-            padding: const EdgeInsets.all(14),
+            padding: AppSpacing.marketCorrelationsMetricPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -126,7 +117,9 @@ class _DiversificationMetrics extends StatelessWidget {
                   'Tương quan TB',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(
+                  height: AppSpacing.marketCorrelationsMetricValueGap,
+                ),
                 Text(
                   score.avgCorrelation.toStringAsFixed(2),
                   style: AppTextStyles.base.copyWith(
@@ -140,10 +133,10 @@ class _DiversificationMetrics extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.marketCorrelationsMetricGap),
         Expanded(
           child: VitCard(
-            padding: const EdgeInsets.all(14),
+            padding: AppSpacing.marketCorrelationsMetricPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -151,7 +144,9 @@ class _DiversificationMetrics extends StatelessWidget {
                   'Cặp ít tương quan nhất',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(
+                  height: AppSpacing.marketCorrelationsMetricValueGap,
+                ),
                 Text(
                   score.lowestCorr.pair,
                   style: AppTextStyles.caption.copyWith(
@@ -185,12 +180,12 @@ class _TimeframeScoreCard extends StatelessWidget {
       MarketCorrelationTimeframe.d90,
     ];
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketCorrelationsScoreCardPadding,
       child: Column(
         children: [
           for (final timeframe in timeframes)
             Padding(
-              padding: const EdgeInsets.only(bottom: 12),
+              padding: AppSpacing.marketCorrelationsScoreRowPadding,
               child: _TimeframeScoreRow(
                 label: _timeframeLabel(timeframe),
                 score: repo
@@ -216,7 +211,7 @@ class _TimeframeScoreRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 30,
+          width: AppSpacing.marketCorrelationsScoreLabelWidth,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -224,18 +219,18 @@ class _TimeframeScoreRow extends StatelessWidget {
         ),
         Expanded(
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadii.smRadius,
             child: LinearProgressIndicator(
-              minHeight: 8,
+              minHeight: AppSpacing.marketCorrelationsScoreBarHeight,
               value: score.score / 100,
               backgroundColor: AppColors.surface2,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.marketCorrelationsScoreGap),
         SizedBox(
-          width: 30,
+          width: AppSpacing.marketCorrelationsScoreValueWidth,
           child: Text(
             '${score.score}',
             textAlign: TextAlign.right,
@@ -257,16 +252,16 @@ class _CorrelationDisclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.marketCorrelationsDisclaimerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            size: 12,
+            size: AppSpacing.marketCorrelationsDisclaimerIcon,
             color: AppColors.warn,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.marketCorrelationsDisclaimerIconGap),
           Expanded(
             child: Text(
               'Tương quan quá khứ không đảm bảo tương lai. Trong giai đoạn biến động mạnh, tương quan giữa crypto thường tăng cao (risk-on/risk-off). Chỉ mang tính tham khảo.',
@@ -287,25 +282,10 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 3,
-          height: 16,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      accentColor: accentColor,
+      variant: VitSectionHeaderVariant.accentBar,
     );
   }
 }

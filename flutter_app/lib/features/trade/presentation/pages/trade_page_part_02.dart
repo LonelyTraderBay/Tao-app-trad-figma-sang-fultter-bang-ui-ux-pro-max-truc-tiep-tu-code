@@ -8,21 +8,7 @@ class _PriceBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(color: color, borderRadius: AppRadii.xsRadius),
-      child: Padding(
-        padding: AppSpacing.tradePriceBadgePadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.onAccent,
-            fontFeatures: AppTextStyles.tabularFigures,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -76,7 +62,9 @@ class _BookRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.tradeBookRowTopGap),
+      padding: AppSpacing.zeroInsets.copyWith(
+        top: AppSpacing.tradeBookRowTopGap,
+      ),
       child: Row(
         children: [
           _BookCell(level.price.toStringAsFixed(2), color: color),
@@ -128,7 +116,7 @@ class _TradesPanel extends StatelessWidget {
         children: [
           for (final trade in trades)
             Padding(
-              padding: const EdgeInsets.only(
+              padding: AppSpacing.zeroInsets.copyWith(
                 bottom: AppSpacing.tradeTapeRowBottomGap,
               ),
               child: Row(
@@ -370,22 +358,19 @@ class _SideButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        key: active ? activeKey : null,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? color : AppColors.transparent,
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
+    return VitCtaButton(
+      key: active ? activeKey : null,
+      onPressed: onTap,
+      variant: active
+          ? (color == AppColors.buy
+                ? VitCtaButtonVariant.success
+                : VitCtaButtonVariant.danger)
+          : VitCtaButtonVariant.ghost,
+      height: AppSpacing.tradeSideSwitchHeight,
+      child: Text(
+        label,
+        style: AppTextStyles.baseMedium.copyWith(
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -420,14 +405,12 @@ class _OrderTypeRow extends StatelessWidget {
           onSelected: onSelected,
         ),
         const SizedBox(width: AppSpacing.tradePctGap),
-        Container(
+        VitCard(
           width: AppSpacing.tradeOrderTypeSize,
           height: AppSpacing.tradeOrderTypeSize,
-          decoration: BoxDecoration(
-            color: _fieldBackground,
-            border: Border.all(color: AppColors.borderSolid),
-            borderRadius: AppRadii.cardRadius,
-          ),
+          variant: VitCardVariant.inner,
+          alignment: Alignment.center,
+          borderColor: AppColors.borderSolid,
           child: const Icon(
             Icons.keyboard_arrow_down_rounded,
             color: AppColors.text3,
@@ -458,31 +441,21 @@ class _OrderTypeChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
+      child: VitCard(
         key: TradePage.orderTypeKey(type),
         onTap: () => onSelected(type),
-        borderRadius: AppRadii.cardRadius,
-        child: Container(
-          height: AppSpacing.tradeOrderTypeSize,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: active
-                ? AppColors.buy.withValues(alpha: .09)
-                : _fieldBackground,
-            border: Border.all(
-              color: active
-                  ? AppColors.buy.withValues(alpha: .75)
-                  : AppColors.borderSolid,
-            ),
-            borderRadius: AppRadii.cardRadius,
-          ),
-          child: Text(
-            label,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.buy : AppColors.text2,
-              fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-            ),
+        variant: active ? VitCardVariant.ghost : VitCardVariant.inner,
+        height: AppSpacing.tradeOrderTypeSize,
+        alignment: Alignment.center,
+        borderColor: active
+            ? AppColors.buy.withValues(alpha: .75)
+            : AppColors.borderSolid,
+        child: Text(
+          label,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.caption.copyWith(
+            color: active ? AppColors.buy : AppColors.text2,
+            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
           ),
         ),
       ),

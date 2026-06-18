@@ -14,10 +14,12 @@ class _IconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: background,
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: _borderFromColor(color)),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.mdRadius,
+          side: BorderSide(color: _borderFromColor(color)),
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.ctaHeight,
@@ -36,16 +38,15 @@ class _PreviewPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: _borderFromColor(color),
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(color: _borderFromColor(color)),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(color: _borderFromColor(color)),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
+        padding: AppSpacing.devChipPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -77,16 +78,15 @@ class _StateChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(color: AppColors.borderSolid),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(color: AppColors.borderSolid),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.devCompactChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

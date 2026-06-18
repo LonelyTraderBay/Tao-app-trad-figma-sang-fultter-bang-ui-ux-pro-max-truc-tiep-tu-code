@@ -8,16 +8,11 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
-      ),
+    return Material(
+      color: color.withValues(alpha: .14),
+      borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(label, style: _microBold.copyWith(color: color)),
       ),
     );
@@ -32,14 +27,13 @@ class _RoundIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.savingsLadderRoundIcon,
-      height: AppSpacing.savingsLadderRoundIcon,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.savingsLadderRoundIcon,
+      child: Material(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.mdRadius,
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconSm),
     );
   }
 }
@@ -54,7 +48,7 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+      padding: AppSpacing.earnVerticalPaddingX1,
       child: Row(
         children: [
           Expanded(
@@ -89,7 +83,7 @@ class _Disclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -125,7 +119,7 @@ class _EmptyTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.earnPaddingX6,
       child: Column(
         children: [
           Icon(icon, color: AppColors.text3, size: AppSpacing.iconLg),

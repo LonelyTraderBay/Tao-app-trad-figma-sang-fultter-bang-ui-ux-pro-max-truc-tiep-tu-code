@@ -35,29 +35,30 @@ class _MiniButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: color.withValues(alpha: .10),
-          borderRadius: AppRadii.mdRadius,
-          border: Border.all(color: color.withValues(alpha: .16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.mdRadius,
+            side: BorderSide(color: color.withValues(alpha: .16)),
+          ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: color, size: AppSpacing.iconSm),
-            const SizedBox(width: AppSpacing.x2),
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
+        child: Padding(
+          padding: AppSpacing.dcaButtonChipPadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: color, size: AppSpacing.iconSm),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

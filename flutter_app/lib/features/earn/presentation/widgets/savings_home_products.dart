@@ -79,10 +79,7 @@ class _SavingsFilterChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
+          padding: AppSpacing.earnCardPaddingX3X2,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -141,7 +138,7 @@ class _SavingsProductCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -269,7 +266,7 @@ class _SavingsProductCard extends StatelessWidget {
               VitCtaButton(
                 fullWidth: false,
                 height: AppSpacing.savingsConsumerActionHeight,
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+                padding: AppSpacing.earnHorizontalPaddingX4,
                 onPressed: () => HapticFeedback.selectionClick(),
                 child: const Text('Đăng ký'),
               ),

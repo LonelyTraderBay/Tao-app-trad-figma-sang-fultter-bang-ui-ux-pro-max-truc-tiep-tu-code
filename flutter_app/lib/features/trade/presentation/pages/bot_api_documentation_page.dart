@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -23,11 +23,8 @@ part '../widgets/bot_api_documentation_websocket_examples.dart';
 part '../widgets/bot_api_documentation_support_common.dart';
 
 const _apiBackground = AppColors.bg;
-const _apiPanel2 = AppColors.surface2;
 const _apiPrimary = AppColors.primary;
-const _apiGreen = AppColors.buy;
 const _apiRed = AppColors.sell;
-const _apiTabBackground = AppColors.surface2;
 
 class BotApiDocumentationPage extends ConsumerStatefulWidget {
   const BotApiDocumentationPage({super.key, this.shellRenderMode});
@@ -70,8 +67,8 @@ class _BotApiDocumentationPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.tradeBotBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -91,17 +88,19 @@ class _BotApiDocumentationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: BotApiDocumentationPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
                     customGap: 0,
                     children: [
                       const _IntroCard(),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.tradeBotCardGap),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -112,7 +111,7 @@ class _BotApiDocumentationPageState
                                   'Endpoints, authentication, rate limits, websocket events and support path are reviewed before bot integration.',
                               contractId: 'bot-api-documentation-review',
                             ),
-                            SizedBox(height: 8),
+                            SizedBox(height: AppSpacing.tradeBotSmallGap),
                             VitStatusPill(
                               label: 'Read-only documentation',
                               status: VitStatusPillStatus.info,
@@ -121,13 +120,13 @@ class _BotApiDocumentationPageState
                           ],
                         ),
                       ),
-                      const SizedBox(height: 33),
+                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       _Tabs(
                         tabs: snapshot.tabs,
                         active: _view,
                         onChanged: (view) => setState(() => _view = view),
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       VitPageSection(
                         customGap: 0,
                         children: [
@@ -153,11 +152,11 @@ class _BotApiDocumentationPageState
                             ),
                         ],
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       const _SectionLabel('Rate Limits'),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: AppSpacing.tradeBotRowGap),
                       _RateLimitsCard(items: snapshot.rateLimits),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       _AuthCard(header: snapshot.authenticationHeader),
                     ],
                   ),

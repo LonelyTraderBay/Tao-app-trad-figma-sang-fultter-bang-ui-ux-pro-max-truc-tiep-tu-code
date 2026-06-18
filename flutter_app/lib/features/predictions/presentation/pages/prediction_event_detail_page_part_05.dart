@@ -160,13 +160,13 @@ class _TinyBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionHomeBadgePadding,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.badgeRadius,
+    return Material(
+      color: background,
+      borderRadius: AppRadii.badgeRadius,
+      child: Padding(
+        padding: AppSpacing.predictionHomeBadgePadding,
+        child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
       ),
-      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
     );
   }
 }

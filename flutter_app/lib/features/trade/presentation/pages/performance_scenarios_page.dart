@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -22,7 +22,6 @@ part '../widgets/performance_scenarios_intro_widgets.dart';
 part '../widgets/performance_scenarios_outcome_widgets.dart';
 
 const _scenarioBackground = AppColors.bg;
-const _scenarioPanel2 = AppColors.surface2;
 const _scenarioBorder = AppColors.borderSolid;
 const _scenarioPrimary = AppColors.primary;
 const _scenarioRed = AppColors.sell;
@@ -79,7 +78,9 @@ class _PerformanceScenariosPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: PerformanceScenariosPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 12,
@@ -99,7 +100,11 @@ class _PerformanceScenariosPageState
                         onChanged: (value) =>
                             setState(() => _holdingPeriod = value),
                       ),
-                      const _SectionLabel('Potential Outcomes'),
+                      const VitSectionHeader(
+                        title: 'Potential Outcomes',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _scenarioPrimary,
+                      ),
                       for (final scenario in snapshot.scenarios)
                         _ScenarioCard(
                           scenario: scenario,

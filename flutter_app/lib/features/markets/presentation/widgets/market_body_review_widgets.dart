@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -36,21 +37,21 @@ class MarketBodyReviewSection extends StatelessWidget {
           detail: detail,
         ),
         VitCard(
-          padding: const EdgeInsets.all(12),
+          padding: AppSpacing.marketBodyReviewCardPadding,
           child: Text(
             primary,
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
         ),
         VitCard(
-          padding: const EdgeInsets.all(12),
+          padding: AppSpacing.marketBodyReviewCardPadding,
           child: Text(
             secondary,
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
         ),
         VitCard(
-          padding: const EdgeInsets.all(12),
+          padding: AppSpacing.marketBodyReviewCardPadding,
           child: Text(
             tertiary,
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),

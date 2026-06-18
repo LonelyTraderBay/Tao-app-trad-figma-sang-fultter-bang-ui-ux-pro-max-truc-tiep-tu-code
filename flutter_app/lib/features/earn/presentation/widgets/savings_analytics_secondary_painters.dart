@@ -32,7 +32,7 @@ class _SecondaryTabContent extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.cardPaddingHero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -243,7 +243,7 @@ class _MonthlyBarsPainter extends CustomPainter {
       final height = chart.height * (point.earned / 60).clamp(0, 1);
       final rect = RRect.fromRectAndRadius(
         Rect.fromLTWH(x, chart.bottom - height, barWidth, height),
-        const Radius.circular(AppRadii.xs),
+        AppRadii.xsCorner,
       );
       canvas.drawRRect(rect, paint);
     }

@@ -244,14 +244,14 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: ForgotPasswordPage.contentKey,
-                padding: const EdgeInsets.only(bottom: AppSpacing.x6),
+                padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
                   padding: VitContentPadding.relaxed,
                   gap: VitContentGap.relaxed,
                   children: [
                     if (_step == _ForgotPasswordStep.input)
                       VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _EmailStep(
                           controller: _emailController,
                           error: _emailError,
@@ -260,7 +260,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                       ),
                     if (_step == _ForgotPasswordStep.otp)
                       VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _OtpStep(
                           controller: _otpController,
                           email: _email,
@@ -270,7 +270,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                       ),
                     if (_step == _ForgotPasswordStep.reset)
                       VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _ResetStep(
                           newPasswordController: _newPasswordController,
                           confirmPasswordController: _confirmPasswordController,
@@ -284,11 +284,11 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                       ),
                     if (_step == _ForgotPasswordStep.success)
                       const VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _SuccessStep(),
                       ),
                     VitCard(
-                      padding: EdgeInsets.zero,
+                      padding: AppSpacing.zeroInsets,
                       child: VitCtaButton(
                         key: _step == _ForgotPasswordStep.success
                             ? ForgotPasswordPage.loginKey

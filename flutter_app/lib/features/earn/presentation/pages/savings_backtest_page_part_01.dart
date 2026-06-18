@@ -25,7 +25,7 @@ class _BacktestHero extends StatelessWidget {
       key: SavingsBacktestPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -129,7 +129,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -192,12 +192,14 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: AppSpacing.savingsBacktestSectionMarkerWidth,
-          height: AppSpacing.savingsBacktestSectionMarkerHeight,
-          decoration: const BoxDecoration(
+        DecoratedBox(
+          decoration: const ShapeDecoration(
             color: AppColors.primary,
-            borderRadius: AppRadii.xsRadius,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+          ),
+          child: const SizedBox(
+            width: AppSpacing.savingsBacktestSectionMarkerWidth,
+            height: AppSpacing.savingsBacktestSectionMarkerHeight,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -318,23 +320,26 @@ class _CompactChip extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-          decoration: BoxDecoration(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
             color: selected ? AppColors.primary12 : AppColors.transparent,
-            border: Border.all(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(
+                color: selected ? AppColors.primary30 : AppColors.cardBorder,
+              ),
             ),
-            borderRadius: AppRadii.inputRadius,
           ),
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: _captionBold.copyWith(
-              color: selected ? AppColors.primary : AppColors.text2,
+          child: Padding(
+            padding: AppSpacing.earnVerticalPaddingX2,
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: _captionBold.copyWith(
+                color: selected ? AppColors.primary : AppColors.text2,
+              ),
             ),
           ),
         ),
@@ -391,7 +396,7 @@ class _PresetCard extends StatelessWidget {
       radius: VitCardRadius.lg,
       borderColor: selected ? color : AppColors.cardBorder,
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
           _RoundIcon(icon: _iconFor(preset.iconKey), color: color),
@@ -449,7 +454,7 @@ class _AllocationCard extends StatelessWidget {
     return VitCard(
       key: SavingsBacktestPage.allocationKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
           Row(

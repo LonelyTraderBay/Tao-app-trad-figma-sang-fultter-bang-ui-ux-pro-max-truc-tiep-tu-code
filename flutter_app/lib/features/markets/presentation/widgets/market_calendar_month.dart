@@ -27,7 +27,7 @@ class MarketCalendarMonthGrid extends StatelessWidget {
     }
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.marketCalendarMonthPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,14 +38,14 @@ class MarketCalendarMonthGrid extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.marketCalendarMonthTitleGap),
           GridView.count(
-            crossAxisCount: 7,
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
+            crossAxisCount: AppSpacing.marketCalendarGridColumns,
+            mainAxisSpacing: AppSpacing.marketCalendarGridSpacing,
+            crossAxisSpacing: AppSpacing.marketCalendarGridSpacing,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: 1,
+            childAspectRatio: AppSpacing.marketCalendarGridAspect,
             children: [
               for (final label in ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'])
                 Center(
@@ -66,12 +66,15 @@ class MarketCalendarMonthGrid extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 14),
-          const Divider(height: 1, color: AppColors.divider),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketCalendarMonthDividerTopGap),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
+          const SizedBox(height: AppSpacing.marketCalendarMonthLegendTopGap),
           Wrap(
-            spacing: 12,
-            runSpacing: 8,
+            spacing: AppSpacing.marketCalendarLegendSpacing,
+            runSpacing: AppSpacing.marketCalendarLegendRunSpacing,
             children: [
               for (final type in [
                 MarketCalendarEventType.unlock,
@@ -112,22 +115,20 @@ class _CalendarDay extends StatelessWidget {
     return InkWell(
       onTap: hasEvents ? () => onEventDaySelected(events.first) : null,
       borderRadius: AppRadii.smRadius,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: isToday
-              ? marketCalendarPrimary.withValues(alpha: .12)
-              : hasEvents
-              ? AppColors.surface2
-              : AppColors.transparent,
-          border: Border.all(
+      child: Material(
+        color: isToday
+            ? marketCalendarPrimary.withValues(alpha: .12)
+            : hasEvents
+            ? AppColors.surface2
+            : AppColors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.smRadius,
+          side: BorderSide(
             color: isToday
                 ? marketCalendarPrimary.withValues(alpha: .35)
                 : AppColors.transparent,
-            width: 1.5,
+            width: AppSpacing.marketCalendarDayBorderWidth,
           ),
-          borderRadius: AppRadii.smRadius,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -140,21 +141,21 @@ class _CalendarDay extends StatelessWidget {
               ),
             ),
             if (hasEvents) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.marketCalendarGridSpacing),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   for (final event in events.take(3)) ...[
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: hasHigh
-                            ? AppColors.sell
-                            : marketCalendarEventTypeConfig(event.type).color,
-                        shape: BoxShape.circle,
+                    Material(
+                      color: hasHigh
+                          ? AppColors.sell
+                          : marketCalendarEventTypeConfig(event.type).color,
+                      shape: const CircleBorder(),
+                      child: const SizedBox.square(
+                        dimension: AppSpacing.marketCalendarEventDot,
                       ),
-                      child: const SizedBox(width: 4, height: 4),
                     ),
-                    const SizedBox(width: 2),
+                    const SizedBox(width: AppSpacing.marketCalendarEventDotGap),
                   ],
                 ],
               ),
@@ -176,14 +177,14 @@ class _LegendItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        DecoratedBox(
-          decoration: BoxDecoration(
-            color: config.color,
-            shape: BoxShape.circle,
+        Material(
+          color: config.color,
+          shape: const CircleBorder(),
+          child: const SizedBox.square(
+            dimension: AppSpacing.marketCalendarLegendDot,
           ),
-          child: const SizedBox(width: 8, height: 8),
         ),
-        const SizedBox(width: 5),
+        const SizedBox(width: AppSpacing.marketCalendarLegendGap),
         Text(
           config.label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),

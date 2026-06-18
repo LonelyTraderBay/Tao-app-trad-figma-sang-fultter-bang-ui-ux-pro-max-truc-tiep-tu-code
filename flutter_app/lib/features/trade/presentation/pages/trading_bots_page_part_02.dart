@@ -16,19 +16,14 @@ class _BotCard extends StatelessWidget {
     final color = Color(bot.colorHex);
     final running = bot.status == TradeBotStatus.running;
     final profitColor = bot.profit >= 0 ? AppColors.buy : AppColors.sell;
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPadding,
       child: Column(
         children: [
           Row(
             children: [
               _BotIcon(icon: bot.icon, color: color),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,48 +39,28 @@ class _BotCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: AppSpacing.x3),
                         _PairBadge(pair: bot.pair, color: color),
                       ],
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: AppSpacing.x2),
                     Row(
                       children: [
-                        Container(
-                          width: 7,
-                          height: 7,
-                          decoration: BoxDecoration(
-                            color: running ? AppColors.buy : AppColors.warn,
-                            borderRadius: AppRadii.xsRadius,
-                            boxShadow: running
-                                ? [
-                                    BoxShadow(
-                                      color: AppColors.buy.withValues(
-                                        alpha: .7,
-                                      ),
-                                      blurRadius: 8,
-                                    ),
-                                  ]
-                                : null,
-                          ),
+                        VitStatusPill(
+                          label: running ? 'Đang chạy' : 'Tạm dừng',
+                          status: running
+                              ? VitStatusPillStatus.success
+                              : VitStatusPillStatus.warning,
+                          size: VitStatusPillSize.sm,
                         ),
-                        const SizedBox(width: 6),
-                        Text(
-                          running ? 'Đang chạy' : 'Tạm dừng',
-                          style: AppTextStyles.caption.copyWith(
-                            color: running ? AppColors.buy : AppColors.warn,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
+                        const SizedBox(width: AppSpacing.x2),
                         Expanded(
                           child: Text(
                             '· ${bot.runtime}',
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
-                              height: 1,
+                              height: AppSpacing.tradeBotLineHeightTight,
                             ),
                           ),
                         ),
@@ -94,7 +69,7 @@ class _BotCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -103,34 +78,34 @@ class _BotCard extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: profitColor,
                       fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                   Text(
                     _formatSignedPct(bot.profitPct),
                     style: AppTextStyles.caption.copyWith(
                       color: profitColor,
-                      height: 1.15,
+                      height: AppSpacing.tradeBotLineHeightShort,
                     ),
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               _BotMiniStat(
                 label: 'Đầu tư',
                 value: '\$${_formatWholeNumber(bot.investment)}',
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _BotMiniStat(label: 'Lệnh', value: '${bot.trades}'),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _BotMiniStat(label: 'Từ', value: bot.startDate),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -144,7 +119,7 @@ class _BotCard extends StatelessWidget {
                   onTap: () => onToggle(bot.id),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _BotActionButton(
                 key: TradingBotsPage.botSettingsKey(bot.id),
                 label: 'Cài đặt',
@@ -153,7 +128,7 @@ class _BotCard extends StatelessWidget {
                 compact: true,
                 onTap: () {},
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _BotActionButton(
                 key: TradingBotsPage.botDeleteKey(bot.id),
                 label: 'Xóa',
@@ -185,14 +160,14 @@ class _BotIcon extends StatelessWidget {
       'target' => Icons.gps_fixed_rounded,
       _ => Icons.smart_toy_outlined,
     };
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .18),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Icon(iconData, color: color, size: 20),
+    return VitCard(
+      width: AppSpacing.launchpadBox40,
+      height: AppSpacing.launchpadBox40,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      alignment: Alignment.center,
+      borderColor: color.withValues(alpha: .22),
+      child: Icon(iconData, color: color, size: AppSpacing.tradeBotActionIcon),
     );
   }
 }
@@ -205,20 +180,10 @@ class _PairBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .18),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        pair,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitAccentPill(
+      label: pair,
+      accentColor: color,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -232,30 +197,25 @@ class _BotMiniStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        height: 56,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-        decoration: BoxDecoration(
-          color: _chipBackground,
-          borderRadius: AppRadii.cardRadius,
-        ),
+      child: VitCard(
+        height: AppSpacing.tradeBotMiniStatHeight,
+        padding: AppSpacing.tradeBotMiniStatPadding,
+        variant: VitCardVariant.inner,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            const SizedBox(height: 3),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               value,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
           ],
@@ -283,41 +243,26 @@ class _BotActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        width: compact ? 90 : null,
-        height: 42,
-        padding: EdgeInsets.symmetric(horizontal: compact ? 8 : 14),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: .10),
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: color.withValues(alpha: .24)),
-        ),
-        child: Center(
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(icon, color: color, size: 14),
-                const SizedBox(width: 6),
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+    return SizedBox(
+      width: compact ? AppSpacing.buttonHero : null,
+      child: VitCtaButton(
+        onPressed: onTap,
+        height: AppSpacing.buttonCompact + AppSpacing.x3,
+        variant: _botButtonVariant(color),
+        fullWidth: true,
+        padding: AppSpacing.tradeBotActionButtonPadding(compact),
+        leading: Icon(icon),
+        child: Text(label),
       ),
     );
   }
+}
+
+VitCtaButtonVariant _botButtonVariant(Color color) {
+  if (color == AppColors.buy) return VitCtaButtonVariant.success;
+  if (color == AppColors.sell) return VitCtaButtonVariant.danger;
+  if (color == AppColors.warn) return VitCtaButtonVariant.warning;
+  return VitCtaButtonVariant.primary;
 }
 
 class _StrategiesTab extends StatelessWidget {
@@ -332,10 +277,10 @@ class _StrategiesTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _PerformanceCard(strategies: strategies),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.x4),
         for (final strategy in strategies) ...[
           _StrategyCard(strategy: strategy, onCreate: () => onCreate(strategy)),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.x4),
         ],
         _BotInfoCard(),
       ],
@@ -350,19 +295,19 @@ class _PerformanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _botPrimary.withValues(alpha: .20)),
-      ),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPadding,
+      borderColor: _botPrimary.withValues(alpha: .20),
       child: Column(
         children: [
           Row(
             children: [
-              const Icon(Icons.bar_chart_rounded, color: _botPrimary, size: 17),
-              const SizedBox(width: 8),
+              const Icon(
+                Icons.bar_chart_rounded,
+                color: _botPrimary,
+                size: AppSpacing.tradeBotMediumIcon,
+              ),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
                   'Hiệu suất chiến lược (30 ngày gần đây)',
@@ -374,7 +319,7 @@ class _PerformanceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               _StrategyStat(
@@ -382,13 +327,13 @@ class _PerformanceCard extends StatelessWidget {
                 value: '+9.4%',
                 color: _botPrimary,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _StrategyStat(
                 label: 'Grid Bot',
                 value: '+27.1%',
                 color: AppColors.warn,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _StrategyStat(
                 label: 'Momentum',
                 value: '+18.3%',
@@ -416,12 +361,9 @@ class _StrategyStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: _chipBackground,
-          borderRadius: AppRadii.cardRadius,
-        ),
+      child: VitCard(
+        padding: AppSpacing.tradeBotInnerPanelPadding,
+        variant: VitCardVariant.inner,
         child: Column(
           children: [
             Text(
@@ -438,5 +380,3 @@ class _StrategyStat extends StatelessWidget {
     );
   }
 }
-
-

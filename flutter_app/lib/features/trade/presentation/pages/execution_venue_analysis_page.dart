@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -12,8 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -59,8 +59,10 @@ class _ExecutionVenueAnalysisPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.executionVenueBottomInsetVisualExtra
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.executionVenueBottomInsetNativeExtra) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -91,14 +93,18 @@ class _ExecutionVenueAnalysisPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: ExecutionVenueAnalysisPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                      padding: AppSpacing.executionVenueScrollPadding(
+                        bottomInset,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 0,
+                        customGap: AppSpacing.executionVenueContentGap,
                         children: [
                           _SummaryGrid(summary: snapshot.summary),
-                          const SizedBox(height: 16),
+                          const SizedBox(
+                            height: AppSpacing.executionVenueSectionGap,
+                          ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Execution venue review',
@@ -106,17 +112,23 @@ class _ExecutionVenueAnalysisPageState
                                 'Compare fill quality, total cost, speed, venue concentration, fee impact, and next-step export before changing routing decisions.',
                             contractId: 'SC-097 venue analysis review',
                           ),
-                          const SizedBox(height: 25),
+                          const SizedBox(
+                            height: AppSpacing.executionVenueControlGap,
+                          ),
                           _SortSelector(
                             activeId: _sort,
                             onChanged: (id) => setState(() => _sort = id),
                           ),
-                          const SizedBox(height: 25),
+                          const SizedBox(
+                            height: AppSpacing.executionVenueControlGap,
+                          ),
                           _Tabs(
                             activeId: _tab,
                             onChanged: (id) => setState(() => _tab = id),
                           ),
-                          const SizedBox(height: 26),
+                          const SizedBox(
+                            height: AppSpacing.executionVenueTabBodyGap,
+                          ),
                           if (_tab == 'comparison')
                             _ComparisonTab(venues: venues)
                           else if (_tab == 'costs')

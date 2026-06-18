@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -65,10 +66,16 @@ class _LiveMarketDataAnalyticsPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: LiveMarketDataAnalyticsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top:
+                        AppSpacing.x4 +
+                        AppSpacing.x1 -
+                        AppSpacing.hairlineStroke,
+                    bottom: bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 16,
+                    customGap: AppSpacing.x4 + AppSpacing.x1,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(

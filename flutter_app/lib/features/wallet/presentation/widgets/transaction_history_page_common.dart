@@ -54,7 +54,7 @@ class _EndOfList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
+      padding: AppSpacing.zeroInsets.copyWith(
         top: AppSpacing.walletHistoryEndListTopPad,
         bottom: AppSpacing.walletHistoryEndListBottomPad,
       ),

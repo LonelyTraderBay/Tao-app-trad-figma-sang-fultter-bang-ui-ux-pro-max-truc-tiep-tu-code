@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -21,7 +22,6 @@ part '../widgets/bot_suitability_result_score.dart';
 part '../widgets/bot_suitability_breakdown_common.dart';
 
 const _assessmentBackground = AppColors.bg;
-const _assessmentPanel = AppColors.surface;
 const _assessmentPanel2 = AppColors.surface2;
 const _assessmentPrimary = AppColors.primary;
 const _assessmentOptionBorder = AppColors.borderSolid;
@@ -60,8 +60,8 @@ class _BotSuitabilityAssessmentPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 104
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotFooterBottomInsetNative
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.tradeBotBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -83,10 +83,12 @@ class _BotSuitabilityAssessmentPageState
                   key: _showResult
                       ? BotSuitabilityAssessmentPage.resultContentKey
                       : BotSuitabilityAssessmentPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 18,
+                    customGap: AppSpacing.tradeBotContentGap,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(

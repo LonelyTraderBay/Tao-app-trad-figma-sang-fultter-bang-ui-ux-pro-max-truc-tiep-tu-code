@@ -77,7 +77,7 @@ class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
                 child: SingleChildScrollView(
                   key: CrossModuleAnalytics.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.crossModuleScrollPadding(bottomInset),
                   child: VitPageContent(
                     gap: VitContentGap.defaultGap,
                     children: [

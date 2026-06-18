@@ -13,8 +13,8 @@ class _ReturnBar extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: 41,
-      padding: const EdgeInsets.all(8),
+      height: AppSpacing.activeCopiesReturnHeight,
+      padding: AppSpacing.activeCopiesReturnPadding,
       child: Column(
         children: [
           Row(
@@ -23,7 +23,7 @@ class _ReturnBar extends StatelessWidget {
                 'Return',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppSpacing.activeCopiesLineHeightTight,
                 ),
               ),
               const Spacer(),
@@ -32,7 +32,7 @@ class _ReturnBar extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.activeCopiesLineHeightTight,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -40,9 +40,9 @@ class _ReturnBar extends StatelessWidget {
           ),
           const Spacer(),
           ClipRRect(
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
-              minHeight: 6,
+              minHeight: AppSpacing.x2,
               value: widthFactor,
               backgroundColor: AppColors.borderSolid,
               valueColor: AlwaysStoppedAnimation<Color>(color),
@@ -69,121 +69,125 @@ class _ExpandedCopyDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.cardBorder)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Performance (30 ngày)',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.medium,
+    return Column(
+      children: [
+        const Divider(
+          height: AppSpacing.dividerHairline,
+          thickness: AppSpacing.dividerHairline,
+          color: AppColors.cardBorder,
+        ),
+        Padding(
+          padding: AppSpacing.activeCopiesDetailsPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Performance (30 ngày)',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.medium,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            _MiniPerformanceStrip(points: copy.performanceHistory),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: _DetailStat(
-                    label: 'Số lượng trades',
-                    value: '${copy.trades}',
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _DetailStat(
-                    label: 'Win rate',
-                    value: '${copy.winRate.toStringAsFixed(1)}%',
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: _DetailStat(
-                    label: 'Copy mode',
-                    value: _copyModeLabel(copy),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _DetailStat(
-                    label: 'Stop-loss',
-                    value: copy.hasCustomStopLoss
-                        ? '-${copy.stopLossLevel?.toStringAsFixed(0)}%'
-                        : 'Provider',
-                  ),
-                ),
-              ],
-            ),
-            if (copy.recentTrades.isNotEmpty) ...[
-              const SizedBox(height: 14),
+              const SizedBox(height: AppSpacing.x3),
+              _MiniPerformanceStrip(points: copy.performanceHistory),
+              const SizedBox(height: AppSpacing.cardGap),
               Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      'Trades gần đây',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        fontWeight: AppTextStyles.bold,
-                      ),
+                    child: _DetailStat(
+                      label: 'Số lượng trades',
+                      value: '${copy.trades}',
                     ),
                   ),
-                  InkWell(
-                    key: ActiveCopiesPage.detailsKey(copy.id),
-                    onTap: onViewDetails,
-                    child: Text(
-                      'Xem tất cả',
-                      style: AppTextStyles.micro.copyWith(
-                        color: _copyPrimary,
-                        fontWeight: AppTextStyles.bold,
-                      ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: _DetailStat(
+                      label: 'Win rate',
+                      value: '${copy.winRate.toStringAsFixed(1)}%',
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-              for (final trade in copy.recentTrades.take(3)) ...[
-                _RecentTradeRow(trade: trade),
-                if (trade != copy.recentTrades.take(3).last)
-                  const SizedBox(height: 7),
+              const SizedBox(height: AppSpacing.x3),
+              Row(
+                children: [
+                  Expanded(
+                    child: _DetailStat(
+                      label: 'Copy mode',
+                      value: _copyModeLabel(copy),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: _DetailStat(
+                      label: 'Stop-loss',
+                      value: copy.hasCustomStopLoss
+                          ? '-${copy.stopLossLevel?.toStringAsFixed(0)}%'
+                          : 'Provider',
+                    ),
+                  ),
+                ],
+              ),
+              if (copy.recentTrades.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.rowPy),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Trades gần đây',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text2,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      key: ActiveCopiesPage.detailsKey(copy.id),
+                      onTap: onViewDetails,
+                      child: Text(
+                        'Xem tất cả',
+                        style: AppTextStyles.micro.copyWith(
+                          color: _copyPrimary,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                for (final trade in copy.recentTrades.take(3)) ...[
+                  _RecentTradeRow(trade: trade),
+                  if (trade != copy.recentTrades.take(3).last)
+                    const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                ],
               ],
+              const SizedBox(height: AppSpacing.rowPy),
+              Row(
+                children: [
+                  Expanded(
+                    child: _ActionButton(
+                      key: ActiveCopiesPage.configureKey(copy.id),
+                      label: 'Điều chỉnh',
+                      icon: Icons.settings_rounded,
+                      onTap: onConfigure,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: _ActionButton(
+                      key: ActiveCopiesPage.stopKey(copy.id),
+                      label: 'Dừng copy',
+                      icon: Icons.stop_rounded,
+                      danger: true,
+                      onTap: onStop,
+                    ),
+                  ),
+                ],
+              ),
             ],
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                Expanded(
-                  child: _ActionButton(
-                    key: ActiveCopiesPage.configureKey(copy.id),
-                    label: 'Điều chỉnh',
-                    icon: Icons.settings_rounded,
-                    onTap: onConfigure,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _ActionButton(
-                    key: ActiveCopiesPage.stopKey(copy.id),
-                    label: 'Dừng copy',
-                    icon: Icons.stop_rounded,
-                    danger: true,
-                    onTap: onStop,
-                  ),
-                ),
-              ],
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -199,48 +203,22 @@ class _MiniPerformanceStrip extends StatelessWidget {
     final last = points.isEmpty ? 0.0 : points.last.value;
     final positive = last >= first;
     final color = positive ? AppColors.buy : AppColors.sell;
+    final values = points.length < 2
+        ? const [0.0, 0.0]
+        : points.map((point) => point.value).toList(growable: false);
 
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: 54,
-      padding: const EdgeInsets.all(8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          for (var i = 0; i < points.length; i++) ...[
-            Expanded(
-              child: FractionallySizedBox(
-                alignment: Alignment.bottomCenter,
-                heightFactor: _barHeight(points, i),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: .72),
-                    borderRadius: AppRadii.xsRadius,
-                  ),
-                ),
-              ),
-            ),
-            if (i < points.length - 1) const SizedBox(width: 5),
-          ],
-        ],
+      height: AppSpacing.activeCopiesPerformanceHeight,
+      padding: AppSpacing.activeCopiesReturnPadding,
+      child: VitSparkline(
+        values: values,
+        color: color,
+        showFill: false,
+        strokeWidth: AppSpacing.dividerHairline,
       ),
     );
-  }
-
-  double _barHeight(List<TradeCopyPerformancePoint> points, int index) {
-    if (points.isEmpty) return .2;
-    final min = points
-        .map((point) => point.value)
-        .reduce((a, b) => a < b ? a : b);
-    final max = points
-        .map((point) => point.value)
-        .reduce((a, b) => a > b ? a : b);
-    final spread = max - min;
-    if (spread <= 0) return .28;
-    return (.24 + ((points[index].value - min) / spread) * .76)
-        .clamp(.24, 1.0)
-        .toDouble();
   }
 }
 
@@ -255,7 +233,7 @@ class _DetailStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(10),
+      padding: AppSpacing.activeCopiesSmallCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -265,10 +243,10 @@ class _DetailStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.activeCopiesLineHeightTight,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.formFieldLabelGap),
           Text(
             value,
             maxLines: 1,
@@ -276,7 +254,7 @@ class _DetailStat extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.activeCopiesLineHeightTight,
             ),
           ),
         ],
@@ -299,32 +277,21 @@ class _RecentTradeRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(9),
+      padding: AppSpacing.activeCopiesSmallCardPadding,
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-            decoration: BoxDecoration(
-              color: sideColor,
-              borderRadius: AppRadii.xsRadius,
-            ),
-            child: Text(
-              trade.side == TradeOrderSide.buy ? 'BUY' : 'SELL',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.onAccent,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
+          VitAccentPill(
+            label: trade.side == TradeOrderSide.buy ? 'BUY' : 'SELL',
+            accentColor: sideColor,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
               trade.pair,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.activeCopiesLineHeightTight,
               ),
             ),
           ),
@@ -333,7 +300,7 @@ class _RecentTradeRow extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: trade.pnl >= 0 ? AppColors.buy : AppColors.sell,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.activeCopiesLineHeightTight,
             ),
           ),
         ],
@@ -363,9 +330,9 @@ class _ActionButton extends StatelessWidget {
       variant: danger
           ? VitCtaButtonVariant.danger
           : VitCtaButtonVariant.secondary,
-      height: 42,
+      height: AppSpacing.activeCopiesActionHeight,
       leading: Icon(icon),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: AppSpacing.activeCopiesActionPadding,
       child: Text(label),
     );
   }

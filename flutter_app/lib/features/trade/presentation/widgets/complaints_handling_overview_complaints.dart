@@ -10,12 +10,20 @@ class _OverviewContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionLabel('Complaint Categories'),
-        const SizedBox(height: 13),
+        const VitSectionHeader(
+          title: 'Complaint Categories',
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: _complaintsPrimary,
+        ),
+        const SizedBox(height: AppSpacing.complaintsHandlingReviewGap),
         _CategoryGrid(categories: snapshot.categories),
-        const SizedBox(height: 26),
-        const _SectionLabel('Resolution Timeline'),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.complaintsHandlingPrimaryGap),
+        const VitSectionHeader(
+          title: 'Resolution Timeline',
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: _complaintsPrimary,
+        ),
+        const SizedBox(height: AppSpacing.complaintsHandlingReviewGap),
         _TimelineCard(timeline: snapshot.timeline),
       ],
     );
@@ -30,22 +38,22 @@ class _CategoryGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 12,
-      runSpacing: 12,
+      spacing: AppSpacing.complaintsHandlingGridGap,
+      runSpacing: AppSpacing.complaintsHandlingGridGap,
       children: [
         for (final category in categories)
           SizedBox(
-            width: 194,
-            height: 82,
+            width: AppSpacing.complaintsHandlingCategoryWidth,
+            height: AppSpacing.complaintsHandlingCategoryHeight,
             child: _Card(
-              padding: const EdgeInsets.fromLTRB(13, 18, 13, 13),
+              padding: AppSpacing.complaintsHandlingCategoryPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
                     _iconForCategory(category.icon),
                     color: _complaintsPrimary,
-                    size: 17,
+                    size: AppSpacing.complaintCaseSmallIcon,
                   ),
                   const Spacer(),
                   Text(
@@ -55,7 +63,7 @@ class _CategoryGrid extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
+                      height: AppSpacing.complaintCaseLineHeightTight,
                     ),
                   ),
                 ],
@@ -75,15 +83,15 @@ class _TimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
+      padding: AppSpacing.complaintsHandlingTimelinePadding,
       child: Column(
         children: [
           for (final item in timeline) ...[
             Row(
               children: [
                 VitCard(
-                  width: 32,
-                  height: 32,
+                  width: AppSpacing.complaintsHandlingTimelineStepSize,
+                  height: AppSpacing.complaintsHandlingTimelineStepSize,
                   variant: VitCardVariant.inner,
                   alignment: Alignment.center,
                   child: Text(
@@ -91,11 +99,11 @@ class _TimelineCard extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: _complaintsPrimary,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
+                      height: AppSpacing.complaintCaseLineHeightTight,
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.complaintsHandlingGridGap),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,15 +113,17 @@ class _TimelineCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
+                          height: AppSpacing.complaintCaseLineHeightTight,
                         ),
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(
+                        height: AppSpacing.complaintsHandlingTimelineLabelGap,
+                      ),
                       Text(
                         item.time,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1,
+                          height: AppSpacing.complaintCaseLineHeightTight,
                         ),
                       ),
                     ],
@@ -121,7 +131,10 @@ class _TimelineCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != timeline.last) const SizedBox(height: 16),
+            if (item != timeline.last)
+              const SizedBox(
+                height: AppSpacing.complaintsHandlingTimelineItemGap,
+              ),
           ],
         ],
       ),
@@ -139,11 +152,16 @@ class _MyComplaintsContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionLabel('Your Complaints'),
-        const SizedBox(height: 13),
+        const VitSectionHeader(
+          title: 'Your Complaints',
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: _complaintsPrimary,
+        ),
+        const SizedBox(height: AppSpacing.complaintsHandlingReviewGap),
         for (final complaint in complaints) ...[
           _ComplaintCard(complaint: complaint),
-          if (complaint != complaints.last) const SizedBox(height: 12),
+          if (complaint != complaints.last)
+            const SizedBox(height: AppSpacing.complaintsHandlingReviewGap),
         ],
       ],
     );
@@ -164,29 +182,29 @@ class _ComplaintCard extends StatelessWidget {
       onTap: () =>
           context.go(AppRoutePaths.tradeCopyComplaintTracking(complaint.id)),
       child: _Card(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        padding: AppSpacing.complaintCaseCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             VitCard(
-              width: 40,
-              height: 40,
+              width: AppSpacing.walletAddressIconSize,
+              height: AppSpacing.walletAddressIconSize,
               variant: VitCardVariant.ghost,
               borderColor: status.color.withValues(alpha: .24),
               alignment: Alignment.center,
               child: Icon(
                 Icons.chat_bubble_outline_rounded,
                 color: status.color,
-                size: 18,
+                size: AppSpacing.complaintCaseTrailingIcon,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.x4),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Wrap(
-                    spacing: 8,
+                    spacing: AppSpacing.x3,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Text(
@@ -194,33 +212,29 @@ class _ComplaintCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
+                          height: AppSpacing.complaintCaseLineHeightTight,
                         ),
                       ),
-                      Text(
-                        status.label,
-                        style: AppTextStyles.micro.copyWith(
-                          color: status.color,
-                          fontWeight: AppTextStyles.bold,
-                          height: 1,
-                        ),
+                      VitAccentPill(
+                        label: status.label,
+                        accentColor: status.color,
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.complaintsHandlingGridGap),
                   Text(
                     complaint.subject,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.2,
+                      height: AppSpacing.complaintCaseLineHeightBody,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: AppSpacing.formFieldLabelGap),
                   Text(
                     '${complaint.category} - Submitted ${complaint.submittedDate}',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
+                      height: AppSpacing.complaintCaseLineHeightTight,
                     ),
                   ),
                 ],
@@ -229,7 +243,7 @@ class _ComplaintCard extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: 17,
+              size: AppSpacing.complaintCaseSmallIcon,
             ),
           ],
         ),

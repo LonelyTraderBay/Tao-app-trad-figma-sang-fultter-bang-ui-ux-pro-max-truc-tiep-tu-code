@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
@@ -135,19 +134,33 @@ class AddressSaveFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSpacing.walletAddressAddFooterHeight,
-      padding: AppSpacing.walletAddressAddFooterPadding,
-      decoration: const BoxDecoration(
+      child: ColoredBox(
         color: AppColors.navBg,
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      child: AddressPrimaryActionButton(
+        child: Stack(
+          children: [
+            const Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: SizedBox(
+                height: AppSpacing.borderWidth,
+                child: ColoredBox(color: AppColors.divider),
+              ),
+            ),
+            Padding(
+              padding: AppSpacing.walletAddressAddFooterPadding,
+              child: AddressPrimaryActionButton(
         key: const Key('sc143_address_save'),
         enabled: enabled,
         semanticLabel: 'Save wallet address',
         label: 'Lưu địa chỉ',
         onTap: onTap,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -185,17 +198,15 @@ class AddressSavedState extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    VitCard(
                       width: AppSpacing.walletAddressAddSuccessIconSize,
                       height: AppSpacing.walletAddressAddSuccessIconSize,
-                      decoration: BoxDecoration(
-                        color: AppColors.buy10,
-                        borderRadius: AppRadii.cardLargeRadius,
-                        border: Border.all(
-                          color: AppColors.buy20,
-                          width: AppSpacing.borderWidth,
-                        ),
-                      ),
+                      radius: VitCardRadius.lg,
+                      variant: VitCardVariant.ghost,
+                      borderColor: AppColors.buy20,
+                      background: const ColoredBox(color: AppColors.buy10),
+                      alignment: Alignment.center,
+                      clip: true,
                       child: const Icon(
                         Icons.check_circle_outline_rounded,
                         color: addressAddGreen,
@@ -223,13 +234,12 @@ class AddressSavedState extends StatelessWidget {
                     const SizedBox(
                       height: AppSpacing.walletAddressAddSuccessPillGap,
                     ),
-                    Container(
+                    VitCard(
                       padding: AppSpacing.walletAddressAddStatusPadding,
-                      decoration: BoxDecoration(
-                        color: AppColors.buy10,
-                        borderRadius: AppRadii.cardRadius,
-                        border: Border.all(color: AppColors.buy15),
-                      ),
+                      variant: VitCardVariant.ghost,
+                      borderColor: AppColors.buy15,
+                      background: const ColoredBox(color: AppColors.buy10),
+                      clip: true,
                       child: Row(
                         children: [
                           const Icon(

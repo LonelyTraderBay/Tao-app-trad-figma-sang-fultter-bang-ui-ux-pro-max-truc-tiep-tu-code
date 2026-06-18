@@ -69,7 +69,7 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
               child: SingleChildScrollView(
                 key: DCASmartRulesPage.contentKey,
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: scrollBottom),
+                padding: AppSpacing.dcaBottomInsetPadding(scrollBottom),
                 child: VitPageContent(
                   customGap: AppSpacing.x5,
                   children: [

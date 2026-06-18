@@ -17,15 +17,15 @@ class _QuickLinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 45,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
+      height: AppSpacing.tradeBotClientQuickLinkHeight,
+      padding: AppSpacing.tradeBotClientQuickLinkPadding,
       variant: VitCardVariant.inner,
       borderColor: _clientBorder.withValues(alpha: .72),
       onTap: onTap,
       child: Row(
         children: [
-          Icon(icon, color: iconColor, size: 16),
-          const SizedBox(width: 10),
+          Icon(icon, color: iconColor, size: AppSpacing.tradeBotCheckboxIcon),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           Expanded(
             child: Text(
               label,
@@ -34,14 +34,14 @@ class _QuickLinkButton extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
           ),
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: 17,
+            size: AppSpacing.tradeBotMediumIcon,
           ),
         ],
       ),
@@ -58,9 +58,9 @@ class _MetricBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 49,
+      height: AppSpacing.tradeBotClientMetricHeight,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+      padding: AppSpacing.tradeBotClientMetricPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,7 +68,7 @@ class _MetricBox extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           const Spacer(),
@@ -79,7 +79,7 @@ class _MetricBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -101,17 +101,16 @@ class _CategoryIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: size,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: style.color.withValues(alpha: .13),
-          borderRadius: size >= 52
-              ? AppRadii.cardLargeRadius
-              : AppRadii.cardRadius,
-        ),
-        child: Icon(style.icon, color: style.color, size: iconSize),
-      ),
+    return VitCard(
+      width: size,
+      height: size,
+      radius: size >= AppSpacing.tradeBotClientCategoryHeroIcon
+          ? VitCardRadius.lg
+          : VitCardRadius.md,
+      variant: VitCardVariant.inner,
+      borderColor: style.color.withValues(alpha: .24),
+      alignment: Alignment.center,
+      child: Icon(style.icon, color: style.color, size: iconSize),
     );
   }
 }

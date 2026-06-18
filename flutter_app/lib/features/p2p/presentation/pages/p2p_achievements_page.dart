@@ -65,10 +65,7 @@ class P2PAchievementsPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x5,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pTrustProgressRelaxedScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(

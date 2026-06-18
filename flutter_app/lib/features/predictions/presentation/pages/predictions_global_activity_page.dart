@@ -90,11 +90,11 @@ class _PredictionsGlobalActivityPageState
                       customGap: AppSpacing.predictionActivityContentGap,
                       children: [
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: _LiveStats(snapshot: snapshot),
                         ),
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: _AmountFilters(
                             active: _minAmount,
                             onSelected: (value) => setState(() {
@@ -104,7 +104,7 @@ class _PredictionsGlobalActivityPageState
                         ),
                         if (snapshot.activities.isEmpty)
                           const VitCard(
-                            padding: EdgeInsets.zero,
+                            padding: AppSpacing.zeroInsets,
                             child: VitEmptyState(
                               title: 'No activity found',
                               message: 'Lower the minimum amount filter',
@@ -113,7 +113,7 @@ class _PredictionsGlobalActivityPageState
                           )
                         else
                           VitCard(
-                            padding: EdgeInsets.zero,
+                            padding: AppSpacing.zeroInsets,
                             child: _ActivityList(snapshot: snapshot),
                           ),
                       ],

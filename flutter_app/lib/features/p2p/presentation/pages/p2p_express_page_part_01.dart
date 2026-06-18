@@ -37,8 +37,9 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.p2pExpressBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                AppSpacing.p2pExpressBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -71,12 +72,7 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
                   child: SingleChildScrollView(
                     key: P2PExpressPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pExpressScrollPadding(bottomInset),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -240,7 +236,7 @@ class _TradeToggle extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: AppSpacing.p2pExpressTogglePadding,
       child: Row(
         children: [
           Expanded(
@@ -338,7 +334,7 @@ class _AssetCard extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pExpressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -363,17 +359,14 @@ class _AssetCard extends StatelessWidget {
                       child: Text('${asset.symbol} - ${asset.name}'),
                     ),
                 ],
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: AppColors.surface2,
-                    border: Border.all(color: AppColors.borderSolid),
+                child: Material(
+                  color: AppColors.surface2,
+                  shape: RoundedRectangleBorder(
                     borderRadius: AppRadii.inputRadius,
+                    side: const BorderSide(color: AppColors.borderSolid),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.x3,
-                      vertical: AppSpacing.x2,
-                    ),
+                    padding: AppSpacing.p2pExpressSelectorPadding,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -399,16 +392,13 @@ class _AssetCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
+          Material(
+            color: AppColors.surface2,
+            shape: RoundedRectangleBorder(
               borderRadius: AppRadii.inputRadius,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x2,
-              ),
+              padding: AppSpacing.p2pExpressSelectorPadding,
               child: Row(
                 children: [
                   const Icon(

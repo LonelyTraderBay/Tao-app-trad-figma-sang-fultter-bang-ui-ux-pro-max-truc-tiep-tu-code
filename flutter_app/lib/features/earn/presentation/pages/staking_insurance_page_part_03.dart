@@ -14,10 +14,10 @@ class _PlanSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _SheetTitle(title: plan.name),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.earnPaddingX4,
             child: Column(
               children: [
                 _SheetRow(
@@ -38,15 +38,15 @@ class _PlanSheet extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
           Text(
             'Tính năng',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           for (final feature in plan.features)
             Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+              padding: AppSpacing.earnBottomPaddingX2,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -67,17 +67,17 @@ class _PlanSheet extends StatelessWidget {
                 ],
               ),
             ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.earnPaddingX3,
             child: Text(
               'Ví dụ: Stake \$10,000 với plan này, phí bảo hiểm là \$${(10000 * plan.premium / 100).toStringAsFixed(0)}/năm. Nếu slashing mất \$1,000, khoản bồi thường dự kiến là \$${(1000 * plan.coverage / 100).toStringAsFixed(0)}.',
               style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
           VitCtaButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Chọn plan này'),
@@ -106,7 +106,7 @@ class _ClaimSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const _SheetTitle(title: 'File Claim'),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           _FieldGroup(
             label: 'Chọn vị thế',
             child: _StaticSelect(
@@ -115,17 +115,17 @@ class _ClaimSheet extends StatelessWidget {
                   : insuredPositions.first.product,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           _FieldGroup(
             label: 'Lý do claim',
             child: _StaticSelect(value: snapshot.claimReasons.first),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           _FieldGroup(
             label: 'Số lượng bị mất (USD)',
             child: const _TextInput(hint: '0.00', numeric: true),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           _FieldGroup(
             label: 'Mô tả chi tiết',
             child: const _TextInput(
@@ -133,16 +133,16 @@ class _ClaimSheet extends StatelessWidget {
               minLines: 4,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
           VitCtaButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Submit Claim'),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.primary20,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.earnPaddingX3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -200,7 +200,7 @@ class _SheetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.earnVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -242,7 +242,7 @@ class _FieldGroup extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         child,
       ],
     );
@@ -259,10 +259,7 @@ class _StaticSelect extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnStaticSelectPadding,
       child: Row(
         children: [
           Expanded(child: Text(value, style: AppTextStyles.body)),

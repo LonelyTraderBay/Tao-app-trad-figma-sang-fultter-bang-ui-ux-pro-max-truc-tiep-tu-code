@@ -122,12 +122,11 @@ class WithdrawNetworkSelector extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
         Row(
           children: [
-            Container(
+            const SizedBox(
               width: AppSpacing.x2,
               height: AppSpacing.x2,
-              decoration: const BoxDecoration(
-                color: withdrawGreen,
-                shape: BoxShape.circle,
+              child: ClipOval(
+                child: ColoredBox(color: withdrawGreen),
               ),
             ),
             const SizedBox(width: AppSpacing.x3 - AppSpacing.x1),

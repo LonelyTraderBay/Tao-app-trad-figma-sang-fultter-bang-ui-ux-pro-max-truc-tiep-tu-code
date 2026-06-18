@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -53,7 +54,9 @@ class _DerivativesOverviewPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.marketDerivativesVisualBottomExtra
+            : AppSpacing.marketDerivativesNativeBottomExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -80,10 +83,12 @@ class _DerivativesOverviewPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: DerivativesOverviewPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.marketDerivativesScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 10,
+                      customGap: AppSpacing.marketDerivativesPageGap,
                       children: [
                         if (_tab == 'overview') ...[
                           MarketDerivativesOpenInterestHero(

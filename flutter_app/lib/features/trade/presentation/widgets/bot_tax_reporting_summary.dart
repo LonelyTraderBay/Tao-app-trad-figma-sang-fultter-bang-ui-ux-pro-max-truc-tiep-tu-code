@@ -8,7 +8,7 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 18),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         children: [
           Row(
@@ -29,7 +29,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           Row(
             children: [
               Expanded(
@@ -48,9 +48,13 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 17),
-          const Divider(height: 1, thickness: 1, color: _taxOptionBorder),
-          const SizedBox(height: 19),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            thickness: AppSpacing.dividerHairline,
+            color: _taxOptionBorder,
+          ),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           Row(
             children: [
               Expanded(
@@ -59,7 +63,7 @@ class _SummaryCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                     fontWeight: FontWeight.w600,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
@@ -68,7 +72,7 @@ class _SummaryCard extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: _taxGreen,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
@@ -99,16 +103,16 @@ class _SummaryStat extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.tradeBotSmallGap),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ],
@@ -139,26 +143,19 @@ class _CostBasisPicker extends StatelessWidget {
               key: BotTaxReportingPage.methodKey(methods[i].$1),
               behavior: HitTestBehavior.opaque,
               onTap: () => onChanged(methods[i].$1),
-              child: Container(
-                height: 82,
-                padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
-                decoration: BoxDecoration(
-                  color: _taxPanel,
-                  border: Border.all(
-                    color: selectedMethod == methods[i].$1
-                        ? _taxPrimary
-                        : _taxOptionBorder,
-                    width: 2,
-                  ),
-                  borderRadius: AppRadii.cardRadius,
-                ),
+              child: VitCard(
+                height: AppSpacing.tradeBotControlTall,
+                padding: AppSpacing.tradeBotControlPadding,
+                borderColor: selectedMethod == methods[i].$1
+                    ? _taxPrimary
+                    : _taxOptionBorder,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
                         _RadioDot(selected: selectedMethod == methods[i].$1),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: AppSpacing.tradeBotSmallGap),
                         Text(
                           methods[i].$1,
                           style: AppTextStyles.caption.copyWith(
@@ -166,30 +163,37 @@ class _CostBasisPicker extends StatelessWidget {
                                 ? _taxPrimary
                                 : AppColors.text1,
                             fontWeight: AppTextStyles.bold,
-                            height: 1,
+                            height: AppSpacing.tradeBotLineHeightTight,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 25),
-                      child: Text(
-                        methods[i].$2,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                          height: 1.35,
+                    const SizedBox(height: AppSpacing.tradeBotRowGap),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: AppSpacing.tradeBotMethodTextIndent,
                         ),
-                      ),
+                        Expanded(
+                          child: Text(
+                            methods[i].$2,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                              height: AppSpacing.tradeBotLineHeightBody,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
             ),
           ),
-          if (i != methods.length - 1) const SizedBox(width: 12),
+          if (i != methods.length - 1)
+            const SizedBox(width: AppSpacing.tradeBotCardIconGap),
         ],
       ],
     );

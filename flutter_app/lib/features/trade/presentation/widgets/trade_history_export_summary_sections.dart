@@ -7,14 +7,9 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 120,
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
-      decoration: BoxDecoration(
-        color: _cardBackground,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      height: AppSpacing.tradeToolExportSummaryHeight,
+      padding: AppSpacing.tradeToolExportSummaryPadding,
       child: Column(
         children: [
           Expanded(
@@ -88,10 +83,9 @@ class _SummaryMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.tradeToolInlineGap),
         Text(
           value,
           maxLines: 1,
@@ -100,7 +94,6 @@ class _SummaryMetric extends StatelessWidget {
               .copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
         ),
@@ -120,28 +113,12 @@ class _Section extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            Container(
-              width: 4,
-              height: 14,
-              decoration: BoxDecoration(
-                color: _tradePrimary,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(width: 6),
-            Text(
-              title,
-              style: AppTextStyles.captionSm.copyWith(
-                color: AppColors.textMutedLight,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-          ],
+        VitSectionHeader(
+          title: title,
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: _tradePrimary,
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeToolSectionHeaderGap),
         child,
       ],
     );

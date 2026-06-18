@@ -65,7 +65,7 @@ class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -142,28 +142,32 @@ class _TermsHero extends StatelessWidget {
     return VitCard(
       key: StakingTermsPage.heroKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              const SizedBox(
                 width: AppSpacing.earnTermsHeroIconBox,
                 height: AppSpacing.earnTermsHeroIconBox,
-                decoration: BoxDecoration(
-                  color: AppColors.primary12,
-                  borderRadius: AppRadii.lgRadius,
-                  border: Border.all(
-                    color: AppColors.primary30,
-                    width: AppSpacing.earnTermsHeroBorderWidth,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.primary12,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: AppColors.primary30,
+                        width: AppSpacing.earnTermsHeroBorderWidth,
+                      ),
+                      borderRadius: AppRadii.lgRadius,
+                    ),
                   ),
-                ),
-                child: const Icon(
-                  Icons.description_outlined,
-                  color: AppColors.primary,
-                  size: AppSpacing.earnTermsHeroIcon,
+                  child: Icon(
+                    Icons.description_outlined,
+                    color: AppColors.primary,
+                    size: AppSpacing.earnTermsHeroIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -267,7 +271,7 @@ class _WarningCallout extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       borderColor: AppColors.warn15,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -328,7 +332,7 @@ class _TermsSectionCard extends StatelessWidget {
             child: InkWell(
               onTap: onTap,
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x4),
+                padding: AppSpacing.earnCardPaddingX4,
                 child: Row(
                   children: [
                     Expanded(
@@ -376,31 +380,34 @@ class _SectionContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.x4,
-        AppSpacing.x4,
-        AppSpacing.x4,
-        AppSpacing.x3,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (final paragraph in section.content) ...[
-            Text(
-              paragraph,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.earnTermsParagraphLineHeight,
-              ),
+          const Divider(
+            color: AppColors.divider,
+            height: AppSpacing.dividerHairline,
+          ),
+          Padding(
+            padding: AppSpacing.earnDisclosureDetailsPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (final paragraph in section.content) ...[
+                  Text(
+                    paragraph,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      height: AppSpacing.earnTermsParagraphLineHeight,
+                    ),
+                  ),
+                  if (paragraph != section.content.last)
+                    const SizedBox(height: AppSpacing.x3),
+                ],
+              ],
             ),
-            if (paragraph != section.content.last)
-              const SizedBox(height: AppSpacing.x3),
-          ],
+          ),
         ],
       ),
     );
@@ -422,32 +429,33 @@ class _AcceptanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             key: StakingTermsPage.acceptanceKey,
             width: AppSpacing.earnTermsAcceptanceBox,
             height: AppSpacing.earnTermsAcceptanceBox,
-            margin: const EdgeInsets.only(
-              top: AppSpacing.earnTermsAcceptanceTopMargin,
-            ),
-            decoration: BoxDecoration(
-              color: accepted ? AppColors.buy : AppColors.transparent,
-              borderRadius: AppRadii.smRadius,
-              border: Border.all(
-                color: accepted ? AppColors.buy : AppColors.borderSolid,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: accepted ? AppColors.buy : AppColors.transparent,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: accepted ? AppColors.buy : AppColors.borderSolid,
+                  ),
+                  borderRadius: AppRadii.smRadius,
+                ),
               ),
+              child: accepted
+                  ? const Icon(
+                      Icons.check_rounded,
+                      color: AppColors.onAccent,
+                      size: AppSpacing.earnTermsAcceptanceIcon,
+                    )
+                  : null,
             ),
-            child: accepted
-                ? const Icon(
-                    Icons.check_rounded,
-                    color: AppColors.onAccent,
-                    size: AppSpacing.earnTermsAcceptanceIcon,
-                  )
-                : null,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -483,7 +491,7 @@ class _FooterCard extends StatelessWidget {
       key: StakingTermsPage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,

@@ -69,12 +69,10 @@ void main() {
     expect(find.text('Complaint Details'), findsOneWidget);
     expect(find.text('Select category'), findsOneWidget);
     expect(find.text('Upload Evidence (Optional)'), findsOneWidget);
-    expect(
-      tester
-          .widget<FilledButton>(find.byKey(ComplaintSubmissionPage.submitKey))
-          .onPressed,
-      isNull,
-    );
+    expect(find.byKey(ComplaintSubmissionPage.submitKey), findsOneWidget);
+    await tester.tap(find.byKey(ComplaintSubmissionPage.submitKey));
+    await tester.pumpAndSettle();
+    expect(find.byType(ComplaintSubmissionPage), findsOneWidget);
   });
 
   testWidgets('SC-112 valid form opens SC-113 complaint tracking', (
@@ -102,13 +100,6 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(ComplaintSubmissionPage.acceptKey));
     await tester.pumpAndSettle();
-
-    expect(
-      tester
-          .widget<FilledButton>(find.byKey(ComplaintSubmissionPage.submitKey))
-          .onPressed,
-      isNotNull,
-    );
 
     await tester.tap(find.byKey(ComplaintSubmissionPage.submitKey));
     await tester.pumpAndSettle();

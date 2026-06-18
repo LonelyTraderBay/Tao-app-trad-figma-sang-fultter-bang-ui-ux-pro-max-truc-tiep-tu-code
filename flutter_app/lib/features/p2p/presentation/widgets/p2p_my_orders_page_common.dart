@@ -1,36 +1,5 @@
 part of '../pages/p2p_my_orders_page.dart';
 
-class _TypePill extends StatelessWidget {
-  const _TypePill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 final class _StatMeta {
   const _StatMeta(this.label, this.value, this.color);
 

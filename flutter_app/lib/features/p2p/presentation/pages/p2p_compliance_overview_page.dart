@@ -32,8 +32,10 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pComplianceBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pComplianceBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -58,12 +60,7 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -82,7 +79,7 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pComplianceCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Compliance checklist review',
@@ -111,60 +108,62 @@ class _ComplianceHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PComplianceOverviewPage.heroKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.buy,
+      color: AppColors.buy,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppColors.buy),
+        side: BorderSide(color: AppColors.buy),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
+      child: Padding(
+        padding: AppSpacing.p2pComplianceCardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Material(
               color: AppColors.onAccent.withValues(alpha: .20),
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: const SizedBox(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
-              child: Icon(
-                Icons.shield_outlined,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconMd,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+              ),
+              child: const SizedBox(
+                width: AppSpacing.p2pComplianceIconBox,
+                height: AppSpacing.p2pComplianceIconBox,
+                child: Icon(
+                  Icons.shield_outlined,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.iconMd,
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.heroTitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    color: AppColors.onAccent,
-                    fontWeight: AppTextStyles.bold,
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    snapshot.heroTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.sectionTitle.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  snapshot.heroSubtitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.onAccent.withValues(alpha: .90),
-                    fontWeight: AppTextStyles.bold,
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    snapshot.heroSubtitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.onAccent.withValues(alpha: .90),
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -187,7 +186,10 @@ class _ComplianceChecklist extends StatelessWidget {
           for (var index = 0; index < items.length; index++) ...[
             _ComplianceRow(item: items[index]),
             if (index != items.length - 1)
-              const Divider(height: 1, color: AppColors.borderSolid),
+              const Divider(
+                height: AppSpacing.p2pComplianceDividerHeight,
+                color: AppColors.borderSolid,
+              ),
           ],
         ],
       ),
@@ -211,17 +213,17 @@ class _ComplianceRow extends StatelessWidget {
           context.go(item.route);
         },
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pComplianceCardPadding,
           child: Row(
             children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.buy15,
+              Material(
+                color: AppColors.buy15,
+                shape: const RoundedRectangleBorder(
                   borderRadius: AppRadii.lgRadius,
                 ),
                 child: SizedBox(
-                  width: AppSpacing.inputHeight,
-                  height: AppSpacing.inputHeight,
+                  width: AppSpacing.p2pComplianceIconBox,
+                  height: AppSpacing.p2pComplianceIconBox,
                   child: Icon(
                     _iconFor(item.iconKey),
                     color: AppColors.buy,

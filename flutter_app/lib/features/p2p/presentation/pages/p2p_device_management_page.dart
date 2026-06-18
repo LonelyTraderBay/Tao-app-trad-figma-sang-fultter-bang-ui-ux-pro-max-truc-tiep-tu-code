@@ -103,10 +103,7 @@ class _P2PDeviceManagementPageState
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: BouncingScrollPhysics(),
                       ),
-                      padding: EdgeInsets.fromLTRB(
-                        AppSpacing.contentPad,
-                        AppSpacing.x4,
-                        AppSpacing.contentPad,
+                      padding: AppSpacing.p2pSecurityDetailsScrollPadding(
                         bottomInset,
                       ),
                       child: VitPageContent(
@@ -149,7 +146,7 @@ class _P2PDeviceManagementPageState
                           const SizedBox(height: AppSpacing.x3),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: EdgeInsets.all(AppSpacing.x3),
+                            padding: AppSpacing.p2pSecurityDetailsInnerPadding,
                             child: VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'Trusted device review',

@@ -8,7 +8,7 @@ class _WaterfallCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.adminCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -83,9 +83,7 @@ class _WaterfallStep extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x4,
-                  ),
+                  padding: AppSpacing.adminHorizontalCardPadding,
                   child: Text(
                     'hoàn thành',
                     style: AppTextStyles.caption.copyWith(
@@ -128,7 +126,7 @@ class _DropoutChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasDropout = funnel.steps.any((step) => step.reached > 0);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.adminCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -171,7 +169,7 @@ class _StepDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.adminCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -200,12 +198,12 @@ class _StepDetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.adminCompactPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

@@ -8,7 +8,7 @@ class _MatrixCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.marketCorrelationsMatrixPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -19,7 +19,7 @@ class _MatrixCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketCorrelationsMatrixGap),
           _CorrelationHeatmap(assets: snapshot.assets, matrix: snapshot.matrix),
         ],
       ),
@@ -37,7 +37,7 @@ class _CorrelationHeatmap extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        const labelSize = 28.0;
+        const labelSize = AppSpacing.marketCorrelationsHeatmapLabelSize;
         final n = assets.length;
         final cellSize = (constraints.maxWidth - labelSize) / n;
         final height = labelSize + cellSize * n;
@@ -181,15 +181,12 @@ class _CorrelationLegend extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 10,
-                height: 10,
-                decoration: BoxDecoration(
-                  color: item.color,
-                  borderRadius: BorderRadius.circular(5),
-                ),
+              Icon(
+                Icons.circle,
+                size: AppSpacing.marketCorrelationsLegendDot,
+                color: item.color,
               ),
-              const SizedBox(width: 4),
+              const SizedBox(width: AppSpacing.marketCorrelationsLegendGap),
               Text(
                 item.label,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -215,16 +212,16 @@ class _MatrixInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _marketPrimary.withValues(alpha: .20),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketCorrelationsInfoPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            size: 14,
+            size: AppSpacing.marketCorrelationsInfoIcon,
             color: _marketPrimary,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.marketCorrelationsInfoIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,12 +233,14 @@ class _MatrixInfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(
+                  height: AppSpacing.marketCorrelationsInfoTitleGap,
+                ),
                 Text(
                   'Giá trị 1.0 = hoàn toàn cùng chiều. Giá trị 0 = không liên quan. Tương quan cao có nghĩa 2 tài sản thường di chuyển cùng hướng. Để giảm rủi ro, nên giữ tài sản có tương quan thấp.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.55,
+                    height: AppSpacing.marketCorrelationsBodyLineHeight,
                   ),
                 ),
               ],
@@ -270,7 +269,7 @@ class _QuickInsights extends StatelessWidget {
             color: AppColors.sell,
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.marketCorrelationsInsightGap),
         Expanded(
           child: _InsightCard(
             label: 'Thấp nhất',
@@ -300,14 +299,14 @@ class _InsightCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.marketCorrelationsInsightPadding,
       child: Column(
         children: [
           Text(
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.marketCorrelationsInsightValueGap),
           Text(
             value,
             style: AppTextStyles.body.copyWith(
@@ -316,7 +315,7 @@ class _InsightCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: AppSpacing.marketCorrelationsInsightSubGap),
           Text(
             sub,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -336,12 +335,18 @@ class _RecommendationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _marketPrimary.withValues(alpha: .20),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketCorrelationsRecommendationPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, size: 16, color: _marketPrimary),
-          const SizedBox(width: 12),
+          const Icon(
+            Icons.shield_outlined,
+            size: AppSpacing.marketCorrelationsRecommendationIcon,
+            color: _marketPrimary,
+          ),
+          const SizedBox(
+            width: AppSpacing.marketCorrelationsRecommendationIconGap,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -353,12 +358,14 @@ class _RecommendationCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(
+                  height: AppSpacing.marketCorrelationsRecommendationTitleGap,
+                ),
                 Text(
                   recommendation,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.marketCorrelationsBodyLineHeight,
                   ),
                 ),
               ],

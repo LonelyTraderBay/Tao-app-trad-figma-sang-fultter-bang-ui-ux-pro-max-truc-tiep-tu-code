@@ -52,10 +52,7 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.referralHeroMetricPadding,
       child: Column(
         children: [
           Text(
@@ -66,7 +63,7 @@ class _StatCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             label,
             textAlign: TextAlign.center,
@@ -127,22 +124,31 @@ class _FilterChip extends StatelessWidget {
       key: ReferralHistoryPage.filterKey(item.filter),
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.referralHistoryFilterHeight,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? AppColors.primary12 : AppColors.surface2,
-          border: Border.all(
-            color: active ? AppColors.primary40 : AppColors.borderSolid,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: active ? AppColors.primary12 : AppColors.surface2,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: active ? AppColors.primary40 : AppColors.borderSolid,
+              ),
+              borderRadius: AppRadii.mdRadius,
+            ),
           ),
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Text(
-          '${item.label} (${item.count})',
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.primary : AppColors.text2,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+          child: Padding(
+            padding: AppSpacing.referralFilterChipPadding,
+            child: Center(
+              child: Text(
+                '${item.label} (${item.count})',
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? AppColors.primary : AppColors.text2,
+                  fontWeight: active
+                      ? AppTextStyles.bold
+                      : AppTextStyles.normal,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -210,19 +216,28 @@ class _SortChip extends StatelessWidget {
       key: ReferralHistoryPage.sortOptionKey(option.sort),
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.referralStepBox,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? AppColors.primary12 : AppColors.transparent,
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: Text(
-          option.label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? AppColors.primary : AppColors.text3,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: active ? AppColors.primary12 : AppColors.transparent,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+            ),
+          ),
+          child: Padding(
+            padding: AppSpacing.referralSortChipPadding,
+            child: Center(
+              child: Text(
+                option.label,
+                style: AppTextStyles.micro.copyWith(
+                  color: active ? AppColors.primary : AppColors.text3,
+                  fontWeight: active
+                      ? AppTextStyles.bold
+                      : AppTextStyles.normal,
+                ),
+              ),
+            ),
           ),
         ),
       ),

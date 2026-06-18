@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -74,7 +75,9 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 84 : 24);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.copyConfirmationBottomInsetVisual
+            : AppSpacing.copyConfirmationBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -95,34 +98,56 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyConfirmationPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
+                  padding: AppSpacing.copyConfirmationScrollPadding(
+                    bottomInset,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _CriticalWarning(snapshot: snapshot),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.copyConfirmationSectionGap,
+                      ),
                       _ProviderSummary(provider: snapshot.provider!),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.copyConfirmationSectionGap,
+                      ),
                       _SuitabilityReviewCard(snapshot: snapshot),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.copyConfirmationSectionGap,
+                      ),
                       _ConfigurationSummary(snapshot: snapshot),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.copyConfirmationSectionGap,
+                      ),
                       _FeeBreakdown(snapshot: snapshot),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.copyConfirmationSectionGap,
+                      ),
                       _ScenarioSection(scenarios: snapshot.scenarios),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.copyConfirmationSectionGap,
+                      ),
                       _MaxLossCard(snapshot: snapshot),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.copyConfirmationSectionGap,
+                      ),
                       _ConsentSection(
                         items: snapshot.consentItems,
                         acceptedIds: _acceptedConsentIds,
                         onToggle: _toggleConsent,
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.copyConfirmationSectionGap,
+                      ),
                       _CoolingOffCard(hours: snapshot.coolingOffHours),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.copyConfirmationSectionGap,
+                      ),
                       _NextStepsCard(snapshot: snapshot),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.copyConfirmationSectionGap,
+                      ),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Copy confirmation state review',
@@ -135,8 +160,8 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
-                  bottom: bottomChrome + MediaQuery.paddingOf(context).bottom,
+                padding: AppSpacing.copyConfirmationFooterPadding(
+                  bottomChrome + MediaQuery.paddingOf(context).bottom,
                 ),
                 child: VitStickyFooter(
                   child: Column(
@@ -152,7 +177,7 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                         child: const Text('Xác nhận & Bắt đầu Copy'),
                       ),
                       if (!allRequiredAccepted) ...[
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.x3),
                         Text(
                           'Bạn cần đồng ý với tất cả điều khoản để tiếp tục',
                           textAlign: TextAlign.center,

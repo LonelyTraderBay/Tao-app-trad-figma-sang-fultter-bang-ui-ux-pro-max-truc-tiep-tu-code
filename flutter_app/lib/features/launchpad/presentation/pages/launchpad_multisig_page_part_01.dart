@@ -205,12 +205,7 @@ class _SafeSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: LaunchpadMultisigPage.safeSelectorKey,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        AppSpacing.x3,
-        AppSpacing.contentPad,
-        AppSpacing.x2,
-      ),
+      padding: AppSpacing.launchpadHeaderStatsPadding,
       child: Row(
         children: [
           for (final safe in safes) ...[
@@ -223,7 +218,7 @@ class _SafeSelector extends StatelessWidget {
                 borderColor: selectedAddress == safe.address
                     ? safe.accent.withValues(alpha: .34)
                     : AppColors.cardBorder,
-                padding: const EdgeInsets.all(AppSpacing.x3),
+                padding: AppSpacing.launchpadPaddingX3,
                 onTap: () => onChanged(safe.address),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -298,12 +293,7 @@ class _StatsStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: LaunchpadMultisigPage.statsKey,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        0,
-        AppSpacing.contentPad,
-        AppSpacing.x2,
-      ),
+      padding: AppSpacing.launchpadStatsStripPadding,
       child: Row(
         children: [
           Expanded(
@@ -349,12 +339,12 @@ class _StatChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .08),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+        padding: AppSpacing.launchpadVerticalPaddingX2,
         child: Column(
           children: [
             Text(
@@ -383,19 +373,21 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: LaunchpadMultisigPage.tabsKey,
       color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
-      child: VitTabBar(
-        tabs: const [
-          VitTabItem(key: 'queue', label: 'queue'),
-          VitTabItem(key: 'history', label: 'history'),
-          VitTabItem(key: 'safes', label: 'safes'),
-        ],
-        activeKey: activeTab.name,
-        onChanged: (key) => onChanged(_MultisigTab.values.byName(key)),
-        variant: VitTabBarVariant.underline,
+      child: Padding(
+        padding: AppSpacing.launchpadHorizontalContentPadding,
+        child: VitTabBar(
+          tabs: const [
+            VitTabItem(key: 'queue', label: 'queue'),
+            VitTabItem(key: 'history', label: 'history'),
+            VitTabItem(key: 'safes', label: 'safes'),
+          ],
+          activeKey: activeTab.name,
+          onChanged: (key) => onChanged(_MultisigTab.values.byName(key)),
+          variant: VitTabBarVariant.underline,
+        ),
       ),
     );
   }
@@ -412,7 +404,7 @@ class _CreateTxCard extends StatelessWidget {
       key: LaunchpadMultisigPage.createKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent30,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       onTap: onTap,
       child: Row(
         children: [
@@ -467,7 +459,7 @@ class _QueueSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadMultisigPage.queueKey,
       child: VitPageSection(
         label: 'Hang doi giao dich',

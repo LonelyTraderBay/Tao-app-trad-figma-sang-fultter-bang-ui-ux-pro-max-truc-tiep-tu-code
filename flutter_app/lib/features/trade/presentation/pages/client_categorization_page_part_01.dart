@@ -38,11 +38,13 @@ class _ClientCategorizationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ClientCategorizationPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 16,
+                    customGap: AppSpacing.contentPad,
                     children: [
                       _CurrentCategoryCard(category: current),
                       const _InfoNotice(),
@@ -70,7 +72,7 @@ class _ClientCategorizationPageState
                       ),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -81,7 +83,7 @@ class _ClientCategorizationPageState
                                   'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',
                               contractId: 'client-categorization-review',
                             ),
-                            SizedBox(height: 8),
+                            SizedBox(height: AppSpacing.tradeBotSmallGap),
                             VitStatusPill(
                               label: 'Compliance gated',
                               status: VitStatusPillStatus.info,
@@ -160,16 +162,18 @@ class _ClientOptUpRequestPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ClientOptUpRequestPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 16,
+                    customGap: AppSpacing.contentPad,
                     children: [
                       if (_submitted) ...[
                         VitCard(
                           key: ClientOptUpRequestPage.successKey,
-                          padding: const EdgeInsets.all(16),
+                          padding: AppSpacing.tradeBotCardPadding,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -178,7 +182,7 @@ class _ClientOptUpRequestPageState
                                 color: _clientGreen,
                                 size: 24,
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: AppSpacing.tradeBotCardIconGap),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,12 +194,14 @@ class _ClientOptUpRequestPageState
                                         fontWeight: AppTextStyles.bold,
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
+                                    const SizedBox(
+                                      height: AppSpacing.tradeBotSmallGap,
+                                    ),
                                     Text(
                                       'Compliance review is required before any categorization change takes effect.',
                                       style: AppTextStyles.micro.copyWith(
                                         color: AppColors.text3,
-                                        height: 1.35,
+                                        height: AppSpacing.tradeBotLineHeightBody,
                                       ),
                                     ),
                                   ],
@@ -206,10 +212,10 @@ class _ClientOptUpRequestPageState
                         ),
                       ],
                       VitCard(
-                        padding: const EdgeInsets.all(16),
+                        padding: AppSpacing.tradeBotCardPadding,
                         child: VitPageSection(
                           label: 'Professional Status Criteria',
-                          customGap: 10,
+                          customGap: AppSpacing.tradeBotRowGap,
                           children: [
                             for (final requirement in professional.requirements)
                               Row(
@@ -220,13 +226,15 @@ class _ClientOptUpRequestPageState
                                     color: _clientPrimary,
                                     size: 14,
                                   ),
-                                  const SizedBox(width: 8),
+                                  const SizedBox(
+                                    width: AppSpacing.tradeBotSmallGap,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       requirement,
                                       style: AppTextStyles.micro.copyWith(
                                         color: AppColors.text2,
-                                        height: 1.35,
+                                        height: AppSpacing.tradeBotLineHeightBody,
                                       ),
                                     ),
                                   ),
@@ -236,7 +244,7 @@ class _ClientOptUpRequestPageState
                         ),
                       ),
                       VitPageSection(
-                        customGap: 10,
+                        customGap: AppSpacing.tradeBotRowGap,
                         children: [
                           _OptUpChecklistTile(
                             key: ClientOptUpRequestPage.criteriaKey,
@@ -263,12 +271,12 @@ class _ClientOptUpRequestPageState
                         onPressed: _canSubmit
                             ? () => setState(() => _submitted = true)
                             : null,
-                        height: 48,
+                        height: AppSpacing.searchBarCompactHeight,
                         child: const Text('Submit for Review'),
                       ),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -279,7 +287,7 @@ class _ClientOptUpRequestPageState
                                   'Criteria acknowledgement, protection waiver, compliance receipt and delayed-effect next step are reviewed before any category change.',
                               contractId: 'client-opt-up-review',
                             ),
-                            SizedBox(height: 8),
+                            SizedBox(height: AppSpacing.tradeBotSmallGap),
                             VitStatusPill(
                               label: 'No instant status change',
                               status: VitStatusPillStatus.warning,
@@ -317,7 +325,7 @@ class _OptUpChecklistTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: SwitchListTile(
         value: value,
         onChanged: onChanged,
@@ -347,17 +355,21 @@ class _CurrentCategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = _categoryStyle(category.id);
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tradeBotCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: 16,
+        customGap: AppSpacing.contentPad,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _CategoryIcon(style: style, size: 56, iconSize: 28),
-              const SizedBox(width: 13),
+              _CategoryIcon(
+                style: style,
+                size: AppSpacing.tradeBotClientCategoryHeroIcon,
+                iconSize: AppSpacing.tradeBotClientCategoryHeroIconGlyph,
+              ),
+              const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -372,11 +384,11 @@ class _CurrentCategoryCard extends StatelessWidget {
                             style: AppTextStyles.base.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              height: 1,
+                              height: AppSpacing.tradeBotLineHeightTight,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 9),
+                        const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
                         _CurrentPill(color: style.color),
                       ],
                     ),
@@ -386,39 +398,43 @@ class _CurrentCategoryCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: 1.35,
+                        height: AppSpacing.tradeBotLineHeightBody,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
-              Icon(Icons.check_circle_outline, color: style.color, size: 21),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              Icon(
+                Icons.check_circle_outline,
+                color: style.color,
+                size: AppSpacing.tradeBotClientCurrentIcon,
+              ),
             ],
           ),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.fromLTRB(12, 11, 12, 10),
+            padding: AppSpacing.tradeBotCompactCardPadding,
             child: Row(
               children: [
                 const Icon(
                   Icons.shield_outlined,
                   color: AppColors.text1,
-                  size: 17,
+                  size: AppSpacing.tradeBotMediumIcon,
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: AppSpacing.tradeBotRowGap),
                 Expanded(
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 6,
+                    customGap: AppSpacing.tradeBotNarrowIconGap,
                     children: [
                       Text(
                         'Maximum Protection Active',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
+                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
                       Text(
@@ -426,7 +442,7 @@ class _CurrentCategoryCard extends StatelessWidget {
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
+                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
                     ],
@@ -448,24 +464,28 @@ class _InfoNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.tradeBotInnerPanelPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.info_outline, color: AppColors.text1, size: 16),
-          const SizedBox(width: 10),
+          const Icon(
+            Icons.info_outline,
+            color: AppColors.text1,
+            size: AppSpacing.tradeBotCheckboxIcon,
+          ),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           Expanded(
             child: VitPageContent(
               padding: VitContentPadding.none,
               fullBleed: true,
-              customGap: 8,
+              customGap: AppSpacing.tradeBotSmallGap,
               children: [
                 Text(
                   'MiFID II Categorization',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
                 Text(
@@ -473,7 +493,7 @@ class _InfoNotice extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.38,
+                    height: AppSpacing.tradeBotLineHeightBody,
                   ),
                 ),
               ],
@@ -501,24 +521,19 @@ class _Tabs extends StatelessWidget {
     ];
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(6),
-      child: Row(
-        children: [
+      padding: AppSpacing.tradeBotCompactPanelPadding,
+      child: VitTabBar(
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: Center(
-                child: VitStatusPill(
-                  key: ClientCategorizationPage.tabKey(tab.$1),
-                  label: tab.$2,
-                  status: activeId == tab.$1
-                      ? VitStatusPillStatus.info
-                      : VitStatusPillStatus.neutral,
-                  size: VitStatusPillSize.md,
-                  onTap: () => onChanged(tab.$1),
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: ClientCategorizationPage.tabKey(tab.$1),
             ),
         ],
+        activeKey: activeId,
+        onChanged: onChanged,
+        variant: VitTabBarVariant.segment,
       ),
     );
   }

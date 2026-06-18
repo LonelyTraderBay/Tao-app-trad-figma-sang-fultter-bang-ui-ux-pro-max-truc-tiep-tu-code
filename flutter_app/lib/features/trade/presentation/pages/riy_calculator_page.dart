@@ -105,7 +105,9 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: RIYCalculatorPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 15, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 12,
@@ -117,7 +119,11 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
                         message:
                             'Confirm fees, risk assumptions, holding period, and next steps before using RIY projections for copy trading.',
                       ),
-                      const _SectionLabel('Investment Parameters'),
+                      const VitSectionHeader(
+                        title: 'Investment Parameters',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _riyPrimary,
+                      ),
                       _InputCard(
                         investment: _investment,
                         expectedReturn: _expectedReturn,
@@ -132,7 +138,11 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
                         onYearsChanged: (value) =>
                             setState(() => _years = value),
                       ),
-                      const _SectionLabel('Impact Analysis'),
+                      const VitSectionHeader(
+                        title: 'Impact Analysis',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _riyPrimary,
+                      ),
                       Row(
                         children: [
                           Expanded(
@@ -142,7 +152,7 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
                               color: _riyGreen,
                             ),
                           ),
-                          const SizedBox(width: 12),
+                          const SizedBox(width: AppSpacing.tradeBotCardGap),
                           Expanded(
                             child: _ResultMetric(
                               label: 'With Costs',
@@ -157,7 +167,11 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
                         difference: difference,
                         lossPct: lossPct,
                       ),
-                      const _SectionLabel('Growth Comparison'),
+                      const VitSectionHeader(
+                        title: 'Growth Comparison',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _riyPrimary,
+                      ),
                       _ChartCard(projections: projections),
                       const TradeBodyReviewSection(
                         title: 'RIY body review',

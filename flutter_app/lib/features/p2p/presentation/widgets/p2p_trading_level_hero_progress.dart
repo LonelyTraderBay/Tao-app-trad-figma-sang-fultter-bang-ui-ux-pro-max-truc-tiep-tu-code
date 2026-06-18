@@ -13,29 +13,21 @@ class _CurrentLevelHero extends StatelessWidget {
     final dailyRatio = user.dailyUsed / user.dailyLimit;
 
     return VitCard(
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.x5),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  accent.withValues(alpha: 0.18),
-                  accent.withValues(alpha: 0.07),
-                ],
-              ),
-              border: Border(
-                bottom: BorderSide(color: accent.withValues(alpha: 0.20)),
-              ),
-            ),
-            child: Row(
+          Material(
+            color: accent.withValues(alpha: 0.12),
+            child: Padding(
+              padding: AppSpacing.p2pTradingLevelHeroHeaderPadding,
+              child: Row(
               children: [
-                _LevelIconBadge(level: level, size: 56),
+                _LevelIconBadge(
+                  level: level,
+                  size: AppSpacing.p2pTradingLevelHeroBadgeSize,
+                ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Column(
@@ -50,7 +42,8 @@ class _CurrentLevelHero extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.pageTitle.copyWith(
                                 color: AppColors.text1,
-                                height: 1.15,
+                                height:
+                                    AppSpacing.p2pTradingLevelTitleLineHeight,
                               ),
                             ),
                           ),
@@ -88,10 +81,11 @@ class _CurrentLevelHero extends StatelessWidget {
                   ),
                 ),
               ],
+              ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x5),
+            padding: AppSpacing.p2pTradingLevelHeroBodyPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -118,7 +112,10 @@ class _CurrentLevelHero extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.x4),
-                const Divider(color: AppColors.divider, height: 1),
+                const Divider(
+                  color: AppColors.divider,
+                  height: AppSpacing.dividerHairline,
+                ),
                 const SizedBox(height: AppSpacing.x4),
                 Row(
                   children: [
@@ -139,7 +136,11 @@ class _CurrentLevelHero extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.x3),
-                _ProgressTrack(value: dailyRatio, color: accent, height: 9),
+                _ProgressTrack(
+                  value: dailyRatio,
+                  color: accent,
+                  height: AppSpacing.p2pTradingLevelDailyTrackHeight,
+                ),
                 const SizedBox(height: AppSpacing.x2),
                 Row(
                   children: [
@@ -197,28 +198,39 @@ class _HeroMetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 90),
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.08),
-        border: Border.all(color: color.withValues(alpha: 0.24)),
+    return Material(
+      color: color.withValues(alpha: 0.08),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
+        side: BorderSide(color: color.withValues(alpha: 0.24)),
       ),
-      child: Column(
+      clipBehavior: Clip.antiAlias,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minHeight: AppSpacing.p2pTradingLevelMetricMinHeight,
+        ),
+        child: Padding(
+          padding: AppSpacing.p2pTradingLevelMetricPadding,
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
+              SizedBox.square(
+                dimension: AppSpacing.p2pTradingLevelMetricIconSize,
+                child: Material(
                   color: color.withValues(alpha: 0.14),
-                  borderRadius: AppRadii.smRadius,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      icon,
+                      color: color,
+                      size: AppSpacing.p2pTradingLevelMetricGlyphSize,
+                    ),
+                  ),
                 ),
-                alignment: Alignment.center,
-                child: Icon(icon, color: color, size: 14),
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -229,7 +241,7 @@ class _HeroMetricCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.medium,
-                    height: 1.15,
+                    height: AppSpacing.p2pTradingLevelMicroLineHeight,
                   ),
                 ),
               ),
@@ -253,6 +265,8 @@ class _HeroMetricCard extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
         ],
+          ),
+        ),
       ),
     );
   }
@@ -270,7 +284,7 @@ class _NextLevelProgress extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: AppColors.accent30,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pTradingLevelNextCardPadding,
       child: Column(
         children: [
           Row(
@@ -278,7 +292,7 @@ class _NextLevelProgress extends StatelessWidget {
               const Icon(
                 Icons.trending_up_rounded,
                 color: AppColors.accent,
-                size: 15,
+                size: AppSpacing.p2pTradingLevelInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -300,7 +314,11 @@ class _NextLevelProgress extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
-          _ProgressTrack(value: progress, color: AppColors.accent, height: 6),
+          _ProgressTrack(
+            value: progress,
+            color: AppColors.accent,
+            height: AppSpacing.p2pTradingLevelNextTrackHeight,
+          ),
         ],
       ),
     );

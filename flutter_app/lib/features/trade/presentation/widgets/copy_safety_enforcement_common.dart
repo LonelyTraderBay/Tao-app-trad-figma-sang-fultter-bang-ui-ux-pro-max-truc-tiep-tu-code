@@ -14,12 +14,13 @@ class _EnforcementTab extends StatelessWidget {
           'Recent enforcement actions taken to protect users:',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.rowPy),
         for (final action in actions) ...[
           _EnforcementCard(action: action),
-          if (action != actions.last) const SizedBox(height: 10),
+          if (action != actions.last)
+            const SizedBox(height: AppSpacing.walletAssetPillGap),
         ],
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.rowPy),
         _SimpleCard(
           title: 'Transparent enforcement',
           body:
@@ -44,13 +45,17 @@ class _EnforcementCard extends StatelessWidget {
       _ => AppColors.buy,
     };
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.copySafetyActionCardPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.shield_outlined, color: color, size: 22),
-          const SizedBox(width: 12),
+          Icon(
+            Icons.shield_outlined,
+            color: color,
+            size: AppSpacing.sectionGapRegular,
+          ),
+          const SizedBox(width: AppSpacing.cardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +67,7 @@ class _EnforcementCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.walletAssetSmallGap),
                 Text(
                   action.providerName,
                   style: AppTextStyles.caption.copyWith(
@@ -70,7 +75,7 @@ class _EnforcementCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${action.date} - ${action.reason}',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -107,7 +112,7 @@ class _SectionPanel extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.walletAssetPillGap),
         child,
       ],
     );
@@ -130,11 +135,11 @@ class _IconTextRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(10),
+      padding: AppSpacing.copySafetyIconTextPadding,
       child: Row(
         children: [
-          Icon(icon, color: color, size: 14),
-          const SizedBox(width: 9),
+          Icon(icon, color: color, size: AppSpacing.copySafetyIconTextIcon),
+          const SizedBox(width: AppSpacing.copySafetyIconTextGap),
           Expanded(
             child: Text(
               text,
@@ -161,7 +166,7 @@ class _SimpleCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       width: double.infinity,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +178,7 @@ class _SimpleCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             body,
             style: AppTextStyles.micro.copyWith(
@@ -194,36 +199,42 @@ class _EmergencyPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
-      child: DecoratedBox(
-        decoration: const BoxDecoration(color: AppColors.modalScrim),
+      child: ColoredBox(
+        color: AppColors.modalScrim,
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: const BoxDecoration(
+          child: ClipRRect(
+            borderRadius: AppRadii.sheetTopLargeRadius,
+            child: ColoredBox(
               color: AppColors.bg,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Emergency stop activated',
-                  style: AppTextStyles.baseMedium,
+              child: Padding(
+                padding: AppSpacing.cardPadding,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const VitSheetHandle(),
+                    const SizedBox(height: AppSpacing.x4),
+                    Text(
+                      'Emergency stop activated',
+                      style: AppTextStyles.baseMedium,
+                    ),
+                    const SizedBox(height: AppSpacing.walletAssetPillGap),
+                    Text(
+                      'All copies would be stopped and positions queued for close in the backend flow.',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
+                    VitCtaButton(
+                      onPressed: onClose,
+                      height: AppSpacing.searchBarCompactHeight,
+                      child: const Text('Done'),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  'All copies would be stopped and positions queued for close in the backend flow.',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-                const SizedBox(height: 16),
-                VitCtaButton(
-                  onPressed: onClose,
-                  height: 44,
-                  child: const Text('Done'),
-                ),
-              ],
+              ),
             ),
           ),
         ),

@@ -158,10 +158,10 @@ void _drawBar(
   Color color,
 ) {
   final height = rect.height * ratio.clamp(0, 1);
-  final barRect = RRect.fromRectAndCorners(
+  final barRect = RRect.fromRectXY(
     Rect.fromLTWH(x, rect.bottom - height, width, height),
-    topLeft: const Radius.circular(AppSpacing.x2),
-    topRight: const Radius.circular(AppSpacing.x2),
+    AppSpacing.x2,
+    AppSpacing.x2,
   );
   canvas.drawRRect(barRect, Paint()..color = color);
 }

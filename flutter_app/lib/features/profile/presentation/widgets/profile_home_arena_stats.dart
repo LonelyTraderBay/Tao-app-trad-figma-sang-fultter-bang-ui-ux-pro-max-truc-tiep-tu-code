@@ -153,13 +153,6 @@ class _TinyTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.profileTinyTagPadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.pillRadius,
-      ),
-      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }

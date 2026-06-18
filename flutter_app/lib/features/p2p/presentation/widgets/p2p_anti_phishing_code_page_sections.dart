@@ -9,28 +9,27 @@ class _StatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = snapshot.hasCode ? AppColors.buy : AppColors.warn;
 
-    return DecoratedBox(
+    return Material(
       key: P2PAntiPhishingCodePage.statusKey,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
+      type: MaterialType.transparency,
+      color: color,
+      borderRadius: AppRadii.cardLargeRadius,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.p2pSecurityDetailsCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
-              decoration: BoxDecoration(
+            SizedBox.square(
+              dimension: AppSpacing.p2pSecurityDetailsIconBox,
+              child: Material(
+                type: MaterialType.transparency,
                 color: AppColors.onAccent.withValues(alpha: .18),
                 borderRadius: AppRadii.lgRadius,
-              ),
-              child: const Icon(
-                Icons.shield_outlined,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconMd,
+                child: const Icon(
+                  Icons.shield_outlined,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.iconMd,
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.x4),
@@ -42,7 +41,7 @@ class _StatusCard extends StatelessWidget {
                     snapshot.statusTitle,
                     style: AppTextStyles.sectionTitle.copyWith(
                       color: AppColors.onAccent,
-                      height: 1.12,
+                      height: AppSpacing.p2pSecurityDetailsHeroLineHeight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x2),
@@ -73,7 +72,7 @@ class _ExplainerCard extends StatelessWidget {
     return VitCard(
       key: P2PAntiPhishingCodePage.explainerKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pSecurityDetailsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -100,7 +99,7 @@ class _ExplainerCard extends StatelessWidget {
             snapshot.explainerBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.55,
+              height: AppSpacing.p2pSecurityDetailsBodyLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
@@ -149,7 +148,7 @@ class _EmailExampleCard extends StatelessWidget {
       key: P2PAntiPhishingCodePage.exampleKey(example.id),
       radius: VitCardRadius.lg,
       borderColor: color,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pSecurityDetailsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -173,7 +172,7 @@ class _EmailExampleCard extends StatelessWidget {
                         const Icon(
                           Icons.mail_outline_rounded,
                           color: AppColors.text3,
-                          size: 12,
+                          size: AppSpacing.p2pSecurityDetailsInlineIcon,
                         ),
                         const SizedBox(width: AppSpacing.x1),
                         Expanded(
@@ -194,12 +193,12 @@ class _EmailExampleCard extends StatelessWidget {
                       radius: VitCardRadius.sm,
                       variant: VitCardVariant.inner,
                       borderColor: AppColors.transparent,
-                      padding: const EdgeInsets.all(AppSpacing.x3),
+                      padding: AppSpacing.p2pSecurityDetailsInnerPadding,
                       child: Text(
                         example.preview,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
-                          height: 1.55,
+                          height: AppSpacing.p2pSecurityDetailsBodyLineHeight,
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
@@ -212,10 +211,13 @@ class _EmailExampleCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           Align(
             alignment: Alignment.centerLeft,
-            child: _SmallBadge(
+            child: VitStatusPill(
               label: example.isLegit ? 'Email chính thức' : 'Email lừa đảo',
               icon: example.isLegit ? Icons.check_rounded : Icons.close_rounded,
-              color: color,
+              status: example.isLegit
+                  ? VitStatusPillStatus.success
+                  : VitStatusPillStatus.error,
+              size: VitStatusPillSize.sm,
             ),
           ),
         ],
@@ -231,15 +233,16 @@ class _WarningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return Material(
       key: P2PAntiPhishingCodePage.warningKey,
-      decoration: BoxDecoration(
-        color: AppColors.sell10,
+      type: MaterialType.transparency,
+      color: AppColors.sell10,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppColors.sell20),
+        side: BorderSide(color: AppColors.sell20),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pSecurityDetailsInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -303,7 +306,7 @@ class _CheckRow extends StatelessWidget {
         const Icon(
           Icons.check_circle_outline_rounded,
           color: AppColors.buy,
-          size: 13,
+          size: AppSpacing.p2pSecurityDetailsCheckIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
@@ -311,7 +314,7 @@ class _CheckRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.p2pSecurityDetailsCaptionLineHeight,
             ),
           ),
         ),
@@ -330,13 +333,12 @@ class _BulletRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 4,
-          height: 4,
-          margin: const EdgeInsets.only(top: 7),
-          decoration: const BoxDecoration(
+        const Padding(
+          padding: AppSpacing.p2pSecurityDetailsBulletPadding,
+          child: Icon(
+            Icons.circle,
             color: AppColors.text3,
-            shape: BoxShape.circle,
+            size: AppSpacing.p2pSecurityDetailsSmallBullet,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -345,7 +347,7 @@ class _BulletRow extends StatelessWidget {
             text,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.p2pSecurityDetailsCaptionLineHeight,
             ),
           ),
         ),

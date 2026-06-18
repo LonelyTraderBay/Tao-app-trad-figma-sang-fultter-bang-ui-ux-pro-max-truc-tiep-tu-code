@@ -20,29 +20,31 @@ class PredictionSocialShareButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: AppSpacing.predictionSocialShareButtonHeight,
-      padding: AppSpacing.predictionSocialShareButtonPadding,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.share_rounded,
-            color: AppColors.onAccent,
-            size: AppSpacing.predictionSocialShareIcon,
+    return Material(
+      color: color,
+      borderRadius: AppRadii.cardRadius,
+      child: SizedBox(
+        height: AppSpacing.predictionSocialShareButtonHeight,
+        child: Padding(
+          padding: AppSpacing.predictionSocialShareButtonPadding,
+          child: Row(
+            children: [
+              const Icon(
+                Icons.share_rounded,
+                color: AppColors.onAccent,
+                size: AppSpacing.predictionSocialShareIcon,
+              ),
+              const SizedBox(width: AppSpacing.predictionSocialShareIconGap),
+              Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.onAccent,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.predictionSocialShareIconGap),
-          Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.onAccent,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -94,12 +96,11 @@ class PredictionSocialSentimentLegend extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: AppSpacing.predictionSocialLegendSwatch,
-              height: AppSpacing.predictionSocialLegendSwatch,
-              decoration: BoxDecoration(
-                color: item.color,
-                borderRadius: AppRadii.hairlineRadius,
+            Material(
+              color: item.color,
+              borderRadius: AppRadii.hairlineRadius,
+              child: const SizedBox.square(
+                dimension: AppSpacing.predictionSocialLegendSwatch,
               ),
             ),
             const SizedBox(width: AppSpacing.predictionSocialLegendGap),

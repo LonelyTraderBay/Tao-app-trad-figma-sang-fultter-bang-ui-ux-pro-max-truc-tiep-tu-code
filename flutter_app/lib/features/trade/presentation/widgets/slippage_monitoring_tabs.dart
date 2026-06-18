@@ -11,10 +11,10 @@ class _ProvidersTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionLabel('Provider Performance'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeToolSectionHeaderGap),
         for (final provider in providers) ...[
           _Card(
-            padding: const EdgeInsets.all(14),
+            padding: AppSpacing.tradeToolCardPadding,
             child: Column(
               children: [
                 Row(
@@ -39,7 +39,7 @@ class _ProvidersTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.tradeToolCardGap),
                 Row(
                   children: [
                     Expanded(
@@ -48,14 +48,14 @@ class _ProvidersTab extends StatelessWidget {
                         value: provider.eventCount.toString(),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.tradeToolInlineGap),
                     Expanded(
                       child: _EventMetric(
                         label: 'Max Slippage',
                         value: '${provider.maxSlippage.toStringAsFixed(1)} bps',
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.tradeToolInlineGap),
                     Expanded(
                       child: _EventMetric(
                         label: 'Cost Impact',
@@ -67,7 +67,8 @@ class _ProvidersTab extends StatelessWidget {
               ],
             ),
           ),
-          if (provider != providers.last) const SizedBox(height: 12),
+          if (provider != providers.last)
+            const SizedBox(height: AppSpacing.tradeToolCardGap),
         ],
       ],
     );
@@ -85,16 +86,16 @@ class _HistoryTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionLabel('Slippage Trends (Last 7 Days)'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeToolSectionHeaderGap),
         _Card(
-          padding: const EdgeInsets.all(14),
+          padding: AppSpacing.tradeToolCardPadding,
           child: Column(
             children: [
               for (final point in history) ...[
                 Row(
                   children: [
                     SizedBox(
-                      width: 46,
+                      width: AppSpacing.tradeToolDateColumnWidth,
                       child: Text(
                         point.date,
                         style: AppTextStyles.micro.copyWith(
@@ -103,25 +104,15 @@ class _HistoryTab extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(999),
-                        child: SizedBox(
-                          height: 8,
-                          child: Stack(
-                            children: [
-                              const ColoredBox(color: _slipPanel2),
-                              FractionallySizedBox(
-                                widthFactor: (point.max / 120)
-                                    .clamp(0, 1)
-                                    .toDouble(),
-                                child: const ColoredBox(color: _slipRed),
-                              ),
-                            ],
-                          ),
-                        ),
+                      child: LinearProgressIndicator(
+                        value: (point.max / 120).clamp(0, 1).toDouble(),
+                        minHeight: AppSpacing.tradeToolProgressHeight,
+                        color: _slipRed,
+                        backgroundColor: _slipPanel2,
+                        borderRadius: AppRadii.pillRadius,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.tradeToolInlineGap),
                     Text(
                       '${point.max.toStringAsFixed(1)} bps',
                       style: AppTextStyles.micro.copyWith(
@@ -130,7 +121,8 @@ class _HistoryTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (point != history.last) const SizedBox(height: 10),
+                if (point != history.last)
+                  const SizedBox(height: AppSpacing.tradeToolIconGap),
               ],
             ],
           ),
@@ -149,21 +141,21 @@ class _AlertsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SectionLabel('Alert Configuration'),
-        SizedBox(height: 12),
+        SizedBox(height: AppSpacing.tradeToolSectionHeaderGap),
         _AlertSetting(
           title: 'Critical Slippage Alert',
           subtitle: 'Notify when slippage exceeds 1%',
           value: 'Current Threshold: 100 bps (1.0%)',
           enabled: true,
         ),
-        SizedBox(height: 12),
+        SizedBox(height: AppSpacing.tradeToolCardGap),
         _AlertSetting(
           title: 'Warning Slippage Alert',
           subtitle: 'Notify when slippage exceeds 0.5%',
           value: 'Current Threshold: 50 bps (0.5%)',
           enabled: true,
         ),
-        SizedBox(height: 12),
+        SizedBox(height: AppSpacing.tradeToolCardGap),
         _AlertSetting(
           title: 'Daily Summary Email',
           subtitle: 'Receive daily slippage report at 9:00 AM',
@@ -191,7 +183,7 @@ class _AlertSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.tradeToolCardPadding,
       child: Column(
         children: [
           Row(
@@ -207,7 +199,7 @@ class _AlertSetting extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: AppSpacing.tradeToolTinyGap),
                     Text(
                       subtitle,
                       style: AppTextStyles.micro.copyWith(
@@ -220,14 +212,11 @@ class _AlertSetting extends StatelessWidget {
               _SwitchVisual(enabled: enabled),
             ],
           ),
-          const SizedBox(height: 12),
-          Container(
+          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          VitCard(
+            variant: VitCardVariant.inner,
             width: double.infinity,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: _slipPanel2,
-              borderRadius: AppRadii.mdRadius,
-            ),
+            padding: AppSpacing.tradeToolMetricRowPadding,
             child: Text(
               value,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),

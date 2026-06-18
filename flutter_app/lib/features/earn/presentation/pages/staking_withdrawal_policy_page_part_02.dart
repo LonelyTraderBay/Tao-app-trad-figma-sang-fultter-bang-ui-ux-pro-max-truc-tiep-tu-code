@@ -9,7 +9,7 @@ class _PenaltyExampleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -20,23 +20,23 @@ class _PenaltyExampleCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.x3),
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: Column(
-              children: [
-                for (final row in example.rows) ...[
-                  if (row.label.startsWith('Phí'))
-                    const Divider(color: AppColors.divider),
-                  _CalculationRow(row: row),
-                  if (row != example.rows.last)
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x3),
+          Material(
+            color: AppColors.surface2,
+            borderRadius: AppRadii.lgRadius,
+            child: Padding(
+              padding: AppSpacing.earnPaddingX3,
+              child: Column(
+                children: [
+                  for (final row in example.rows) ...[
+                    if (row.label.startsWith('Phí'))
+                      const Divider(color: AppColors.divider),
+                    _CalculationRow(row: row),
+                    if (row != example.rows.last)
+                      const SizedBox(height: AppSpacing.x2),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ],
@@ -99,27 +99,29 @@ class _EmergencyTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: AppSpacing.earnWithdrawalEmergencyIconBox,
                         height: AppSpacing.earnWithdrawalEmergencyIconBox,
-                        decoration: BoxDecoration(
+                        child: Material(
                           color: AppColors.sell10,
-                          border: Border.all(
-                            color: AppColors.sell20,
-                            width: AppSpacing.earnWithdrawalBorderWidth,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.cardRadius,
+                            side: const BorderSide(
+                              color: AppColors.sell20,
+                              width: AppSpacing.earnWithdrawalBorderWidth,
+                            ),
                           ),
-                          borderRadius: AppRadii.cardRadius,
-                        ),
-                        child: const Icon(
-                          Icons.emergency_rounded,
-                          color: AppColors.sell,
+                          child: const Icon(
+                            Icons.emergency_rounded,
+                            color: AppColors.sell,
+                          ),
                         ),
                       ),
                       const SizedBox(width: AppSpacing.x3),
@@ -134,9 +136,7 @@ class _EmergencyTab extends StatelessWidget {
                                 fontWeight: AppTextStyles.bold,
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: AppSpacing.x2),
-                            ),
+                            const Padding(padding: AppSpacing.earnTopPaddingX2),
                             Text(
                               snapshot.emergencyBody,
                               style: AppTextStyles.caption.copyWith(
@@ -149,47 +149,43 @@ class _EmergencyTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                  const SizedBox(height: AppSpacing.x4),
                   for (final reason in snapshot.emergencyReasons) ...[
                     _BulletLine(text: reason, color: AppColors.sell),
                     if (reason != snapshot.emergencyReasons.last)
-                      const Padding(
-                        padding: EdgeInsets.only(top: AppSpacing.x2),
-                      ),
+                      const Padding(padding: AppSpacing.earnTopPaddingX2),
                   ],
                 ],
               ),
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         VitPageSection(
           label: 'Quy trình Rút khẩn cấp',
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnPaddingX4,
               child: Column(
                 children: [
                   for (final step in snapshot.emergencySteps) ...[
                     _EmergencyStepRow(step: step),
                     if (step != snapshot.emergencySteps.last)
-                      const Padding(
-                        padding: EdgeInsets.only(top: AppSpacing.x4),
-                      ),
+                      const Padding(padding: AppSpacing.earnTopPaddingX4),
                   ],
                 ],
               ),
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         VitPageSection(
           label: 'Phí Rút khẩn cấp',
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -200,7 +196,7 @@ class _EmergencyTab extends StatelessWidget {
                       height: AppSpacing.earnWithdrawalInfoLineHeight,
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                  const SizedBox(height: AppSpacing.x3),
                   Wrap(
                     spacing: AppSpacing.x3,
                     runSpacing: AppSpacing.x3,
@@ -214,9 +210,9 @@ class _EmergencyTab extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _WarningBox(text: snapshot.emergencyWarning),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _SupportCard(contacts: snapshot.supportContacts),
       ],
     );
@@ -233,23 +229,25 @@ class _EmergencyStepRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.earnWithdrawalEmergencyStepBox,
           height: AppSpacing.earnWithdrawalEmergencyStepBox,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
+          child: Material(
             color: AppColors.primary12,
-            border: Border.all(
-              color: AppColors.primary20,
-              width: AppSpacing.earnWithdrawalBorderWidth,
+            shape: const CircleBorder(
+              side: BorderSide(
+                color: AppColors.primary20,
+                width: AppSpacing.earnWithdrawalBorderWidth,
+              ),
             ),
-            shape: BoxShape.circle,
-          ),
-          child: Text(
-            '${step.step}',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.primary,
-              fontWeight: AppTextStyles.bold,
+            child: Center(
+              child: Text(
+                '${step.step}',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -266,7 +264,7 @@ class _EmergencyStepRow extends StatelessWidget {
                   height: AppSpacing.earnWithdrawalEmergencyStepLineHeight,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+              const SizedBox(height: AppSpacing.x1),
               Row(
                 children: [
                   const Icon(
@@ -298,35 +296,37 @@ class _EmergencyFeeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: AppSpacing.earnWithdrawalFeeTileWidth,
-      child: Container(
+      child: ConstrainedBox(
         constraints: const BoxConstraints(
           minHeight: AppSpacing.earnWithdrawalFeeTileMinHeight,
         ),
-        padding: const EdgeInsets.all(AppSpacing.x3),
-        decoration: BoxDecoration(
+        child: Material(
           color: AppColors.surface2,
           borderRadius: AppRadii.lgRadius,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              fee.product,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          child: Padding(
+            padding: AppSpacing.earnPaddingX3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  fee.product,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  fee.fee,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.sell,
+                    fontWeight: AppTextStyles.bold,
+                    height: AppSpacing.earnWithdrawalFeeLineHeight,
+                  ),
+                ),
+              ],
             ),
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-            Text(
-              fee.fee,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.sell,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.earnWithdrawalFeeLineHeight,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -342,7 +342,7 @@ class _SupportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -353,11 +353,10 @@ class _SupportCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           for (final contact in contacts) ...[
             _SupportRow(contact: contact),
-            if (contact != contacts.last)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+            if (contact != contacts.last) const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),

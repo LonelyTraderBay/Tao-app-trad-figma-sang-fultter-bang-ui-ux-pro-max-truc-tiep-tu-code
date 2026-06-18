@@ -17,7 +17,7 @@ class _SuccessCallout extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -62,9 +62,7 @@ class _SuccessCallout extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               Padding(
-                padding: const EdgeInsets.only(
-                  bottom: AppSpacing.dcaMultiScoreSuffixBottom,
-                ),
+                padding: AppSpacing.dcaBottomPaddingX2,
                 child: Text(
                   '/ 10',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -190,12 +188,14 @@ class _LegendItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.dcaMultiDot,
           height: AppSpacing.dcaMultiDot,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: AppRadii.xsRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -284,9 +284,10 @@ class _StackedBarsPainter extends CustomPainter {
       ];
       for (final segment in segments) {
         final height = chartHeight * segment.$1 / maxTotal;
-        final rect = RRect.fromRectAndRadius(
+        final rect = RRect.fromRectXY(
           Rect.fromLTWH(x, top - height, barWidth, height),
-          const Radius.circular(AppRadii.xs),
+          AppRadii.xs,
+          AppRadii.xs,
         );
         canvas.drawRRect(rect, Paint()..color = segment.$2);
         top -= height;

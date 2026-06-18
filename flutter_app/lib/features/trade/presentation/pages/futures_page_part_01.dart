@@ -26,7 +26,7 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 34 : 20);
+        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -34,7 +34,12 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
       child: Material(
         type: MaterialType.transparency,
         child: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+          padding: AppSpacing.zeroInsets.copyWith(
+            left: AppSpacing.contentPad,
+            top: AppSpacing.rowPy,
+            right: AppSpacing.contentPad,
+            bottom: bottomInset,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -45,13 +50,13 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
                 onChart: () =>
                     context.go(AppRoutePaths.tradeAdvancedChart(widget.pairId)),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.contentPad),
               _FuturesTabs(
                 active: _tab,
                 positionCount: snapshot.positions.length,
                 onChanged: (tab) => setState(() => _tab = tab),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
               if (_tab == 'trade')
                 _TradeTab(
                   snapshot: snapshot,
@@ -140,19 +145,13 @@ class _FuturesHeader extends StatelessWidget {
       height: AppSpacing.buttonStandard,
       child: Row(
         children: [
-          InkWell(
+          VitIconButton(
             key: FuturesPage.closeKey,
-            onTap: onClose,
-            borderRadius: AppRadii.lgRadius,
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: AppColors.onAccent.withValues(alpha: .05),
-                borderRadius: AppRadii.lgRadius,
-              ),
-              child: const Icon(Icons.close_rounded, color: AppColors.text1),
-            ),
+            icon: Icons.close_rounded,
+            tooltip: 'Close futures',
+            onPressed: onClose,
+            variant: VitIconButtonVariant.ghost,
+            size: VitIconButtonSize.md,
           ),
           Expanded(
             child: Column(
@@ -167,54 +166,32 @@ class _FuturesHeader extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: _futuresRed.withValues(alpha: .16),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        'FUTURES',
-                        style: AppTextStyles.badge.copyWith(
-                          color: _futuresRed,
-                          height: 1,
-                        ),
-                      ),
+                    const SizedBox(width: AppSpacing.x3),
+                    const VitStatusPill(
+                      label: 'FUTURES',
+                      status: VitStatusPillStatus.error,
+                      size: VitStatusPillSize.sm,
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.formFieldLabelGap),
                 Text(
                   '${_formatMoney(pair.price)} (+${pair.changePct.toStringAsFixed(2)}%)',
                   style: AppTextStyles.numericCode.copyWith(
                     color: _futuresGreen,
-                    height: 1,
+                    height: AppSpacing.futuresPriceLineHeight,
                   ),
                 ),
               ],
             ),
           ),
-          InkWell(
+          VitIconButton(
             key: FuturesPage.chartKey,
-            onTap: onChart,
-            borderRadius: AppRadii.lgRadius,
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: AppColors.onAccent.withValues(alpha: .05),
-                borderRadius: AppRadii.lgRadius,
-              ),
-              child: const Icon(
-                Icons.trending_up_rounded,
-                color: AppColors.text2,
-                size: 20,
-              ),
-            ),
+            icon: Icons.trending_up_rounded,
+            tooltip: 'Open futures chart',
+            onPressed: onChart,
+            variant: VitIconButtonVariant.ghost,
+            size: VitIconButtonSize.md,
           ),
         ],
       ),
@@ -240,62 +217,19 @@ class _FuturesTabs extends StatelessWidget {
       ('positions', 'Vị thế ($positionCount)', Icons.bar_chart_rounded),
       ('orders', 'Lệnh', Icons.receipt_long_rounded),
     ];
-    return Container(
-      height: AppSpacing.inputHeight,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _chipBackground,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        children: [
-          for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: FuturesPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                borderRadius: AppRadii.inputRadius,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 160),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: active == tab.$1
-                        ? _tradePrimary
-                        : AppColors.transparent,
-                    borderRadius: AppRadii.inputRadius,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        tab.$3,
-                        color: active == tab.$1
-                            ? AppColors.onAccent
-                            : AppColors.text3,
-                        size: 14,
-                      ),
-                      const SizedBox(width: 6),
-                      Flexible(
-                        child: Text(
-                          tab.$2,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: active == tab.$1
-                                ? AppColors.onAccent
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: active,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            icon: tab.$3,
+            widgetKey: FuturesPage.tabKey(tab.$1),
+          ),
+      ],
     );
   }
 }
@@ -360,23 +294,23 @@ class _TradeTab extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _MarketStats(snapshot: snapshot),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         _SideSwitch(side: side, onChanged: onSideChanged),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         _OrderTypeAndLeverage(
           orderType: orderType,
           leverage: leverage,
           onOrderTypeChanged: onOrderTypeChanged,
           onLeverage: onLeverage,
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         _MarginInput(controller: marginController, onChanged: onChanged),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         _PercentRow(onPercent: onPercent),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         if (margin > 0) ...[
           _PreviewCard(pair: snapshot.pair, preview: preview),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         ],
         Row(
           children: [
@@ -390,7 +324,7 @@ class _TradeTab extends ConsumerWidget {
                 onTap: onTakeProfit,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: _ToggleChip(
                 key: FuturesPage.stopLossKey,
@@ -403,7 +337,7 @@ class _TradeTab extends ConsumerWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         _SubmitButton(
           side: side,
           enabled: preview.canOpen,
@@ -411,7 +345,7 @@ class _TradeTab extends ConsumerWidget {
           leverage: leverage,
           onTap: onSubmit,
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.rowPy),
         const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
           title: 'Futures margin review',
@@ -419,9 +353,9 @@ class _TradeTab extends ConsumerWidget {
               'Review leverage, margin, liquidation price, fees, TP/SL, and order side before opening a futures position.',
           contractId: 'SC-057',
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         const _RiskWarning(),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         const _FuturesSafetyChecklist(),
       ],
     );
@@ -444,16 +378,14 @@ class _MarketStats extends StatelessWidget {
       children: [
         for (var i = 0; i < stats.length; i++) ...[
           Expanded(
-            child: Container(
-              height: 70,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                color: _panelBackground,
-                border: Border.all(
-                  color: AppColors.onAccent.withValues(alpha: .06),
-                ),
-                borderRadius: AppRadii.inputRadius,
+            child: VitCard(
+              variant: VitCardVariant.inner,
+              height: AppSpacing.futuresMarketStatCardHeight,
+              padding: AppSpacing.zeroInsets.copyWith(
+                left: AppSpacing.x3,
+                right: AppSpacing.x3,
               ),
+              borderColor: AppColors.onAccent.withValues(alpha: .06),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -464,10 +396,10 @@ class _MarketStats extends StatelessWidget {
                     style: AppTextStyles.amountSm.copyWith(
                       color: stats[i].$3,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
+                      height: AppSpacing.futuresPriceLineHeight,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: AppSpacing.formFieldLabelGap),
                   Text(
                     stats[i].$1,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -476,7 +408,7 @@ class _MarketStats extends StatelessWidget {
               ),
             ),
           ),
-          if (i != stats.length - 1) const SizedBox(width: 8),
+          if (i != stats.length - 1) const SizedBox(width: AppSpacing.x3),
         ],
       ],
     );

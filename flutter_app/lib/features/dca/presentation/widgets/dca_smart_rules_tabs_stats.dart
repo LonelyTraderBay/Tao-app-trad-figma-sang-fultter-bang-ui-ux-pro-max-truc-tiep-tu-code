@@ -8,30 +8,37 @@ class _TopTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
-      child: Row(
+    return ColoredBox(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          _TopTab(
-            label: 'Luat cua toi',
-            tab: _RulesTab.mine,
-            active: activeTab == _RulesTab.mine,
-            onChanged: onChanged,
+          Row(
+            children: [
+              _TopTab(
+                label: 'Luat cua toi',
+                tab: _RulesTab.mine,
+                active: activeTab == _RulesTab.mine,
+                onChanged: onChanged,
+              ),
+              _TopTab(
+                label: 'Mau',
+                tab: _RulesTab.templates,
+                active: activeTab == _RulesTab.templates,
+                onChanged: onChanged,
+              ),
+              _TopTab(
+                label: 'Lich su',
+                tab: _RulesTab.history,
+                active: activeTab == _RulesTab.history,
+                onChanged: onChanged,
+              ),
+            ],
           ),
-          _TopTab(
-            label: 'Mau',
-            tab: _RulesTab.templates,
-            active: activeTab == _RulesTab.templates,
-            onChanged: onChanged,
-          ),
-          _TopTab(
-            label: 'Lich su',
-            tab: _RulesTab.history,
-            active: activeTab == _RulesTab.history,
-            onChanged: onChanged,
+          const Divider(
+            height: AppSpacing.hairlineStroke,
+            thickness: AppSpacing.hairlineStroke,
+            color: AppColors.border,
           ),
         ],
       ),
@@ -60,7 +67,7 @@ class _TopTab extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(tab),
         child: Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.x4),
+          padding: AppSpacing.dcaTopPaddingX4,
           child: Column(
             children: [
               Text(
@@ -71,13 +78,19 @@ class _TopTab extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),
-              AnimatedContainer(
+              AnimatedSize(
                 duration: const Duration(milliseconds: 160),
-                height: AppSpacing.dcaSmartTabIndicatorHeight,
-                width: active ? AppSpacing.dcaSmartTabIndicatorWidth : 0,
-                decoration: BoxDecoration(
-                  color: active ? AppColors.primary : AppColors.transparent,
-                  borderRadius: AppRadii.xsRadius,
+                child: SizedBox(
+                  height: AppSpacing.dcaSmartTabIndicatorHeight,
+                  width: active ? AppSpacing.dcaSmartTabIndicatorWidth : 0,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: active ? AppColors.primary : AppColors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.xsRadius,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -96,22 +109,26 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.dcaSmartStatsIconBox,
                 height: AppSpacing.dcaSmartStatsIconBox,
-                decoration: const BoxDecoration(
-                  color: AppColors.accent10,
-                  borderRadius: AppRadii.inputRadius,
-                ),
-                child: const Icon(
-                  Icons.bolt_rounded,
-                  color: AppColors.accent,
-                  size: AppSpacing.dcaSmartStatsIcon,
+                child: DecoratedBox(
+                  decoration: const ShapeDecoration(
+                    color: AppColors.accent10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.inputRadius,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.bolt_rounded,
+                    color: AppColors.accent,
+                    size: AppSpacing.dcaSmartStatsIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),

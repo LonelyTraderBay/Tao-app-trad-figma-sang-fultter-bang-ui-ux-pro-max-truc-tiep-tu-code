@@ -8,13 +8,15 @@ class _Disclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.warningBorder),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.earnPaddingX4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -49,9 +51,9 @@ class _RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -71,15 +73,12 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -100,23 +99,30 @@ class _SelectionDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 160),
+    return SizedBox(
       width: AppSpacing.savingsBacktestSelectionDot,
       height: AppSpacing.savingsBacktestSelectionDot,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: selected ? color : AppColors.borderSolid),
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          shape: CircleBorder(
+            side: BorderSide(color: selected ? color : AppColors.borderSolid),
+          ),
+        ),
+        child: selected
+            ? Center(
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: color,
+                    shape: const CircleBorder(),
+                  ),
+                  child: const SizedBox(
+                    width: AppSpacing.savingsBacktestSelectionDotInner,
+                    height: AppSpacing.savingsBacktestSelectionDotInner,
+                  ),
+                ),
+              )
+            : null,
       ),
-      child: selected
-          ? Center(
-              child: Container(
-                width: AppSpacing.savingsBacktestSelectionDotInner,
-                height: AppSpacing.savingsBacktestSelectionDotInner,
-                decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-              ),
-            )
-          : null,
     );
   }
 }

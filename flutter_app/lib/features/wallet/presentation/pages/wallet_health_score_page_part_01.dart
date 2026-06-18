@@ -119,57 +119,37 @@ class _HealthTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: AppSpacing.walletHealthTabsHeight,
-      decoration: const BoxDecoration(
-        color: _healthPanel,
-        border: Border(bottom: BorderSide(color: _healthBorder)),
-      ),
-      child: Row(
-        children: [
-          for (final tab in const [
-            _tabOverview,
-            _tabSecurity,
-            _tabDiversification,
-          ])
+    final tabs = [
+      for (final tab in const [_tabOverview, _tabSecurity, _tabDiversification])
+        VitTabItem(
+          key: tab,
+          label: tab,
+          widgetKey: WalletHealthScorePage.tabKey(tab),
+        ),
+    ];
+
+    return Material(
+      color: _healthPanel,
+      child: SizedBox(
+        height: AppSpacing.walletHealthTabsHeight,
+        child: Column(
+          children: [
             Expanded(
-              child: GestureDetector(
-                key: WalletHealthScorePage.tabKey(tab),
-                onTap: () => onChanged(tab),
-                behavior: HitTestBehavior.opaque,
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Text(
-                        tab,
-                        style: AppTextStyles.caption.copyWith(
-                          color: activeTab == tab
-                              ? _healthPrimary
-                              : AppColors.textDisabled,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: AppSpacing.walletHealthTabIndicatorInset,
-                      right: AppSpacing.walletHealthTabIndicatorInset,
-                      bottom: 0,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 180),
-                        height: AppSpacing.walletHealthTabIndicatorHeight,
-                        decoration: BoxDecoration(
-                          color: activeTab == tab
-                              ? _healthPrimary
-                              : AppColors.transparent,
-                          borderRadius: AppRadii.pillRadius,
-                        ),
-                      ),
-                    ),
-                  ],
+              child: Center(
+                child: VitTabBar(
+                  tabs: tabs,
+                  activeKey: activeTab,
+                  onChanged: onChanged,
+                  variant: VitTabBarVariant.underline,
                 ),
               ),
             ),
-        ],
+            const Divider(
+              height: AppSpacing.dividerHairline,
+              color: _healthBorder,
+            ),
+          ],
+        ),
       ),
     );
   }

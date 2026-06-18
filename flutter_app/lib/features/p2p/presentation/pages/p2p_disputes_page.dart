@@ -160,14 +160,14 @@ class _StatCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: AppSpacing.p2pDisputeStatIconBox,
-            height: AppSpacing.p2pDisputeStatIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              shape: BoxShape.circle,
+          Material(
+            color: color.withValues(alpha: .12),
+            shape: const CircleBorder(),
+            child: SizedBox(
+              width: AppSpacing.p2pDisputeStatIconBox,
+              height: AppSpacing.p2pDisputeStatIconBox,
+              child: Icon(icon, color: color, size: AppSpacing.iconSm),
             ),
-            child: Icon(icon, color: color, size: AppSpacing.iconSm),
           ),
           const SizedBox(height: AppSpacing.x2),
           Text(
@@ -196,45 +196,51 @@ class _SafetyNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.p2pDisputeNoticeMinHeight,
-      ),
-      padding: AppSpacing.p2pDisputeNoticePadding,
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p.withValues(alpha: .08),
-        border: Border.all(color: AppModuleAccents.p2p.withValues(alpha: .18)),
+    return Material(
+      color: AppModuleAccents.p2p.withValues(alpha: .08),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
+        side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .18)),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.verified_user_outlined,
-            color: AppModuleAccents.p2p,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.noticeTitle,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minHeight: AppSpacing.p2pDisputeNoticeMinHeight,
+        ),
+        child: Padding(
+          padding: AppSpacing.p2pDisputeNoticePadding,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.verified_user_outlined,
+                color: AppModuleAccents.p2p,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      snapshot.noticeTitle,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      snapshot.notice,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  snapshot.notice,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -262,13 +268,10 @@ class _ListHeader extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: AppSpacing.x2,
-                height: AppSpacing.x2,
-                decoration: const BoxDecoration(
-                  color: AppColors.warn,
-                  shape: BoxShape.circle,
-                ),
+              const Material(
+                color: AppColors.warn,
+                shape: CircleBorder(),
+                child: SizedBox(width: AppSpacing.x2, height: AppSpacing.x2),
               ),
               const SizedBox(width: AppSpacing.x1),
               Text(
@@ -338,14 +341,14 @@ class _DisputeListTile extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: AppSpacing.inputHeight,
-                height: AppSpacing.inputHeight,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: .12),
-                  shape: BoxShape.circle,
+              Material(
+                color: color.withValues(alpha: .12),
+                shape: const CircleBorder(),
+                child: SizedBox(
+                  width: AppSpacing.inputHeight,
+                  height: AppSpacing.inputHeight,
+                  child: Icon(_statusIcon(dispute.status), color: color),
                 ),
-                child: Icon(_statusIcon(dispute.status), color: color),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -414,22 +417,7 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: AppSpacing.p2pDisputePillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

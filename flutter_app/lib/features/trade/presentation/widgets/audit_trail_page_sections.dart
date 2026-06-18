@@ -10,33 +10,26 @@ class _ComplianceNotice extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(top: 2),
-          child: Icon(
-            Icons.description_outlined,
-            color: AppColors.text1,
-            size: 16,
-          ),
+        const Icon(
+          Icons.description_outlined,
+          color: AppColors.text1,
+          size: AppSpacing.tradeToolCloseIcon,
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.tradeToolIconGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 snapshot.noticeTitle,
-                style: AppTextStyles.badge.copyWith(
-                  color: AppColors.text1,
-                  height: 1.1,
-                ),
+                style: AppTextStyles.badge.copyWith(color: AppColors.text1),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 snapshot.noticeDescription,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.25,
                 ),
               ),
             ],
@@ -58,7 +51,8 @@ class _StatsRow extends StatelessWidget {
       children: [
         for (final stat in stats) ...[
           Expanded(child: _StatCard(stat: stat)),
-          if (stat != stats.last) const SizedBox(width: 13),
+          if (stat != stats.last)
+            const SizedBox(width: AppSpacing.tradeToolPageTopGap),
         ],
       ],
     );
@@ -73,8 +67,8 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 75,
-      padding: const EdgeInsets.fromLTRB(12, 15, 12, 11),
+      height: AppSpacing.tradeToolMetricHeight,
+      padding: AppSpacing.tradeToolMetricPadding,
       radius: VitCardRadius.sm,
       borderColor: _auditBorder.withValues(alpha: .76),
       child: Column(
@@ -84,10 +78,7 @@ class _StatCard extends StatelessWidget {
             stat.label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const Spacer(),
           Text(
@@ -95,7 +86,6 @@ class _StatCard extends StatelessWidget {
             style: AppTextStyles.sectionTitle.copyWith(
               color: stat.emphasized ? _auditGreen : AppColors.text1,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
             ),
           ),
         ],
@@ -122,26 +112,13 @@ class _SearchAndFilter extends StatelessWidget {
             onChanged: onChanged,
           ),
         ),
-        const SizedBox(width: 9),
-        SizedBox(
-          width: 39,
-          height: 39,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: _auditPanel2,
-              border: Border.all(color: _auditBorder.withValues(alpha: .82)),
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              onPressed: () {},
-              padding: EdgeInsets.zero,
-              icon: const Icon(
-                Icons.filter_alt_outlined,
-                color: AppColors.text3,
-                size: 18,
-              ),
-            ),
-          ),
+        const SizedBox(width: AppSpacing.tradeToolInlineGap),
+        VitIconButton(
+          icon: Icons.filter_alt_outlined,
+          tooltip: 'Filter audit trail',
+          onPressed: () {},
+          variant: VitIconButtonVariant.ghost,
+          size: VitIconButtonSize.md,
         ),
       ],
     );
@@ -161,48 +138,18 @@ class _AuditTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 53,
-      color: _auditTabsBackground,
-      child: Row(
-        children: [
-          for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: AuditTrailPage.tabKey(tab.id),
-                onTap: () => onChanged(tab.id),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.label,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: tab.id == activeId
-                                ? _auditPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: tab.id == activeId ? 70 : 0,
-                      height: 2,
-                      color: tab.id == activeId
-                          ? _auditPrimary
-                          : AppColors.transparent,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.underline,
+      activeKey: activeId,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.id,
+            label: tab.label,
+            widgetKey: AuditTrailPage.tabKey(tab.id),
+          ),
+      ],
     );
   }
 }
@@ -214,26 +161,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _auditPrimary,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _auditPrimary,
     );
   }
 }

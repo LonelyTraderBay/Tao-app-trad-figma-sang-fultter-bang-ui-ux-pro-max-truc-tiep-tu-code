@@ -44,14 +44,11 @@ class _FilterChip extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: VitCard(
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.sm,
+          borderColor: selected ? AppModuleAccents.p2p : AppColors.border,
           padding: AppSpacing.p2pDashboardFilterChipPadding,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected ? AppModuleAccents.p2p : AppColors.border,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
           child: Text(
             filter.label,
             style: AppTextStyles.micro.copyWith(
@@ -380,11 +377,9 @@ class _AssetLine extends StatelessWidget {
       padding: AppSpacing.p2pDashboardAssetLinePadding,
       child: Row(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: AppRadii.xsRadius,
-            ),
+          Material(
+            color: color,
+            borderRadius: AppRadii.xsRadius,
             child: const SizedBox(
               width: AppSpacing.p2pDashboardAssetSwatch,
               height: AppSpacing.p2pDashboardAssetSwatch,

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -19,7 +19,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import '../widgets/trade_body_review_widgets.dart';
 
 const _ombudsmanBackground = AppColors.bg;
-const _ombudsmanPanel2 = AppColors.surface3;
 const _ombudsmanBorder = AppColors.borderSolid;
 const _ombudsmanPrimary = AppColors.primary;
 const _ombudsmanGreen = AppColors.buy;
@@ -41,8 +40,8 @@ class OmbudsmanReferralPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 38
-            : DeviceMetrics.nativeBottomChrome + 24) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.complaintCaseBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.complaintCaseBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -63,10 +62,10 @@ class OmbudsmanReferralPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.ombudsmanScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 12,
+                    customGap: AppSpacing.ombudsmanSectionGap,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(
@@ -76,11 +75,23 @@ class OmbudsmanReferralPage extends ConsumerWidget {
                             'Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.',
                       ),
                       _IntroCard(snapshot: snapshot),
-                      const _SectionLabel('When Can You Refer?'),
+                      const VitSectionHeader(
+                        title: 'When Can You Refer?',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _ombudsmanPrimary,
+                      ),
                       _EligibilityCard(items: snapshot.eligibility),
-                      const _SectionLabel('Contact Information'),
+                      const VitSectionHeader(
+                        title: 'Contact Information',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _ombudsmanPrimary,
+                      ),
                       _ContactCard(contacts: snapshot.contacts),
-                      const _SectionLabel('How It Works'),
+                      const VitSectionHeader(
+                        title: 'How It Works',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _ombudsmanPrimary,
+                      ),
                       for (final step in snapshot.processSteps)
                         _ProcessStepCard(step: step),
                       _VisitButton(snapshot: snapshot),
@@ -116,27 +127,26 @@ class _IntroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.complaintCaseCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: _ombudsmanGreen.withValues(alpha: .14),
-              borderRadius: AppRadii.cardRadius,
-            ),
+          VitCard(
+            width: AppSpacing.x7 + AppSpacing.x1,
+            height: AppSpacing.x7 + AppSpacing.x1,
+            variant: VitCardVariant.ghost,
+            borderColor: _ombudsmanGreen.withValues(alpha: .24),
+            alignment: Alignment.center,
             child: const Icon(
               Icons.shield_outlined,
               color: _ombudsmanGreen,
-              size: 30,
+              size: AppSpacing.iconMd + AppSpacing.x3,
             ),
           ),
-          const SizedBox(width: 13),
+          const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 4),
+              padding: AppSpacing.complaintCaseTitleNudgePadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -146,12 +156,12 @@ class _IntroCard extends StatelessWidget {
                       color: AppColors.text1,
                     ),
                   ),
-                  const SizedBox(height: 7),
+                  const SizedBox(height: AppSpacing.x3),
                   Text(
                     snapshot.infoDescription,
                     style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text3,
-                      height: 1.4,
+                      height: AppSpacing.complaintCaseLineHeightReadable,
                     ),
                   ),
                 ],
@@ -172,12 +182,12 @@ class _EligibilityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 14),
+      padding: AppSpacing.ombudsmanEligibilityPadding,
       child: Column(
         children: [
           for (final item in items) ...[
             _EligibilityRow(item: item),
-            if (item != items.last) const SizedBox(height: 14),
+            if (item != items.last) const SizedBox(height: AppSpacing.rowPy),
           ],
         ],
       ),
@@ -196,14 +206,14 @@ class _EligibilityRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.only(top: 1),
+          padding: AppSpacing.complaintCaseIconNudgePadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: _ombudsmanGreen,
-            size: 17,
+            size: AppSpacing.inputPrefixIcon,
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.x4),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,15 +222,15 @@ class _EligibilityRow extends StatelessWidget {
                 item.title,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
-                  height: 1.1,
+                  height: AppSpacing.complaintCaseLineHeightSlight,
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 item.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.25,
+                  height: AppSpacing.complaintCaseLineHeightDense,
                 ),
               ),
             ],
@@ -239,12 +249,13 @@ class _ContactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.complaintCaseCardPadding,
       child: Column(
         children: [
           for (final contact in contacts) ...[
             _ContactRow(contact: contact),
-            if (contact != contacts.last) const SizedBox(height: 15),
+            if (contact != contacts.last)
+              const SizedBox(height: AppSpacing.sectionGapCompact),
           ],
         ],
       ),
@@ -273,16 +284,15 @@ class _ContactRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: .14),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Icon(icon, color: color, size: 19),
+        VitCard(
+          width: AppSpacing.buttonCompact + AppSpacing.formFieldLabelGap,
+          height: AppSpacing.ombudsmanContactIconBox,
+          variant: VitCardVariant.ghost,
+          borderColor: color.withValues(alpha: .24),
+          alignment: Alignment.center,
+          child: Icon(icon, color: color, size: AppSpacing.inputPrefixIcon),
         ),
-        const SizedBox(width: 14),
+        const SizedBox(width: AppSpacing.rowPy),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -291,10 +301,10 @@ class _ContactRow extends StatelessWidget {
                 contact.label,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppSpacing.complaintCaseLineHeightTight,
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 contact.value,
                 style:
@@ -304,19 +314,19 @@ class _ContactRow extends StatelessWidget {
                         .copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.medium,
-                          height:
-                              contact.icon == TradeOmbudsmanContactIcon.address
-                              ? 1.4
-                              : 1.1,
+                           height:
+                               contact.icon == TradeOmbudsmanContactIcon.address
+                               ? AppSpacing.complaintCaseLineHeightReadable
+                               : AppSpacing.complaintCaseLineHeightSlight,
                         ),
               ),
               if (contact.detail != null) ...[
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   contact.detail!,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.2,
+                    height: AppSpacing.complaintCaseLineHeightBody,
                   ),
                 ),
               ],
@@ -336,31 +346,29 @@ class _ProcessStepCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(13, 13, 13, 13),
+      padding: AppSpacing.ombudsmanProcessPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 32,
-            height: 32,
+          VitCard(
+            width: AppSpacing.statusPillHeightLg,
+            height: AppSpacing.statusPillHeightLg,
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: _ombudsmanPanel2,
-              borderRadius: AppRadii.mdRadius,
-            ),
             child: Text(
               '${step.step}',
               style: AppTextStyles.caption.copyWith(
                 color: _ombudsmanPrimary,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.complaintCaseLineHeightTight,
               ),
             ),
           ),
-          const SizedBox(width: 13),
+          const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 1),
+              padding: AppSpacing.complaintCaseIconNudgePadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -368,15 +376,15 @@ class _ProcessStepCard extends StatelessWidget {
                     step.title,
                     style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.text1,
-                      height: 1.1,
+                      height: AppSpacing.complaintCaseLineHeightSlight,
                     ),
                   ),
-                  const SizedBox(height: 7),
+                  const SizedBox(height: AppSpacing.x3),
                   Text(
                     step.description,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1.1,
+                      height: AppSpacing.complaintCaseLineHeightSlight,
                     ),
                   ),
                 ],
@@ -399,46 +407,18 @@ class _VisitButton extends StatelessWidget {
     return VitCtaButton(
       key: OmbudsmanReferralPage.ctaKey,
       onPressed: () {},
-      leading: const Icon(Icons.open_in_new_rounded, size: 18),
+      leading: const Icon(
+        Icons.open_in_new_rounded,
+        size: AppSpacing.complaintCaseTrailingIcon,
+      ),
       child: Text(
         snapshot.ctaLabel,
         style: AppTextStyles.control.copyWith(
           color: AppColors.onAccent,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.complaintCaseLineHeightTight,
         ),
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _ombudsmanPrimary,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
     );
   }
 }

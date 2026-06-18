@@ -67,12 +67,11 @@ class _NetworkSelector extends StatelessWidget {
         const SizedBox(height: AppSpacing.rowGap),
         Row(
           children: [
-            Container(
+            const SizedBox(
               width: AppSpacing.x1 + AppSpacing.x1,
               height: AppSpacing.x1 + AppSpacing.x1,
-              decoration: const BoxDecoration(
-                color: _depositGreen,
-                shape: BoxShape.circle,
+              child: ClipOval(
+                child: ColoredBox(color: _depositGreen),
               ),
             ),
             const SizedBox(width: AppSpacing.walletAssetSmallGap),
@@ -203,43 +202,19 @@ class _QrAddressCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.rowPy + AppSpacing.x5),
-          GestureDetector(
+          VitCtaButton(
             key: DepositPage.copyAddressKey,
-            onTap: onCopy,
-            behavior: HitTestBehavior.opaque,
-            child: Container(
-              width: double.infinity,
-              height: AppSpacing.walletDepositCopyButtonHeight,
-              padding: AppSpacing.walletDepositCopyButtonPadding,
-              decoration: BoxDecoration(
-                color: copied
-                    ? _depositGreen.withValues(alpha: .15)
-                    : _depositPrimary.withValues(alpha: .18),
-                borderRadius: AppRadii.cardRadius,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    copied ? Icons.check_circle_outline : Icons.copy_rounded,
-                    color: copied ? _depositGreen : _depositPrimary,
-                    size: AppSpacing.walletDepositCopyIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.rowGap),
-                  Flexible(
-                    child: Text(
-                      copied ? 'Đã sao chép địa chỉ!' : 'Sao chép địa chỉ',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        color: copied ? _depositGreen : _depositPrimary,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            onPressed: onCopy,
+            height: AppSpacing.walletDepositCopyButtonHeight,
+            variant: copied
+                ? VitCtaButtonVariant.success
+                : VitCtaButtonVariant.primary,
+            padding: AppSpacing.walletDepositCopyButtonPadding,
+            leading: Icon(
+              copied ? Icons.check_circle_outline : Icons.copy_rounded,
+              size: AppSpacing.walletDepositCopyIcon,
             ),
+            child: Text(copied ? 'Đã sao chép địa chỉ!' : 'Sao chép địa chỉ'),
           ),
         ],
       ),
@@ -254,22 +229,20 @@ class _QrCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.walletDepositQrCodeSize,
       height: AppSpacing.walletDepositQrCodeSize,
-      padding: AppSpacing.cardPadding,
-      decoration: BoxDecoration(
+      child: Material(
         color: AppColors.onAccent,
-        borderRadius: AppRadii.lgRadius,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.dynamicIslandBg.withValues(alpha: .32),
-            blurRadius: AppSpacing.walletDepositQrShadowBlur,
-            offset: const Offset(0, AppSpacing.walletDepositQrShadowOffsetY),
-          ),
-        ],
+        elevation: AppSpacing.walletDepositQrShadowOffsetY,
+        shadowColor: AppColors.dynamicIslandBg.withValues(alpha: .32),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+        clipBehavior: Clip.antiAlias,
+        child: Padding(
+          padding: AppSpacing.cardPadding,
+          child: CustomPaint(painter: _QrPainter(address)),
+        ),
       ),
-      child: CustomPaint(painter: _QrPainter(address)),
     );
   }
 }

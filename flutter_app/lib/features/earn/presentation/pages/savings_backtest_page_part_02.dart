@@ -10,13 +10,18 @@ class _AllocationRow extends StatelessWidget {
     final color = _slotColor(slot.colorKey);
     return Padding(
       key: SavingsBacktestPage.slotKey(slot.id),
-      padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+      padding: AppSpacing.earnBottomPaddingX1,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.savingsBacktestLegendDot,
-            height: AppSpacing.savingsBacktestLegendDot,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: const CircleBorder(),
+            ),
+            child: const SizedBox(
+              width: AppSpacing.savingsBacktestLegendDot,
+              height: AppSpacing.savingsBacktestLegendDot,
+            ),
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -69,7 +74,7 @@ class _ResultsTab extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.lg,
           borderColor: AppColors.buy20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -211,7 +216,7 @@ class _CompareTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -308,7 +313,7 @@ class _CompareCard extends StatelessWidget {
       borderColor: preset.id == SavingsBacktestPreset.aggressive
           ? AppColors.buy20
           : AppColors.cardBorder,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
           _RoundIcon(icon: _iconFor(preset.iconKey), color: color),
@@ -357,7 +362,7 @@ class _NoResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.earnPaddingX6,
       child: Column(
         children: [
           const Icon(
@@ -398,7 +403,7 @@ class _GrowthChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -451,7 +456,7 @@ class _ResultTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -489,7 +494,7 @@ class _SummaryTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

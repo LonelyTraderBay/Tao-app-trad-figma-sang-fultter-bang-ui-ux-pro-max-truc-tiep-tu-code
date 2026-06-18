@@ -25,7 +25,7 @@ use the MCP tools directly by their Codex names.
 If the index is stale, run:
 
 ```bash
-node .gitnexus/run.cjs analyze
+node .gitnexus/run.cjs analyze --skip-agents-md --skip-skills
 ```
 
 ## MCP Tools

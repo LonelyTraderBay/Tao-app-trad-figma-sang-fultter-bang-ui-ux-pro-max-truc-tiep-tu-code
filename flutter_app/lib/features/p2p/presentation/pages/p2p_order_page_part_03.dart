@@ -14,13 +14,11 @@ class _QuickActionButton extends StatelessWidget {
       child: InkWell(
         onTap: () => context.go(action.route),
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: VitCard(
+          variant: VitCardVariant.ghost,
+          borderColor: color.withValues(alpha: .18),
           height: AppSpacing.buttonCompact,
           padding: AppSpacing.p2pOrderQuickButtonPadding,
-          decoration: BoxDecoration(
-            border: Border.all(color: color.withValues(alpha: .18)),
-            borderRadius: AppRadii.inputRadius,
-          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -63,38 +61,44 @@ class _InfoLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.p2pOrderInfoLinePadding,
-      decoration: BoxDecoration(
-        border: isLast
-            ? null
-            : const Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Flexible(
-            child: Text(
-              value,
-              textAlign: TextAlign.right,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: emphasis
-                    ? AppTextStyles.bold
-                    : AppTextStyles.medium,
-                fontFeatures: emphasis ? AppTextStyles.tabularFigures : null,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.p2pOrderInfoLinePadding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                ),
               ),
-            ),
+              const SizedBox(width: AppSpacing.x3),
+              Flexible(
+                child: Text(
+                  value,
+                  textAlign: TextAlign.right,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: emphasis
+                        ? AppTextStyles.bold
+                        : AppTextStyles.medium,
+                    fontFeatures: emphasis
+                        ? AppTextStyles.tabularFigures
+                        : null,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        if (!isLast)
+          const Divider(
+            height: AppSpacing.p2pOrderDividerHeight,
+            color: AppColors.divider,
+          ),
+      ],
     );
   }
 }
@@ -112,11 +116,9 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return Material(
+      color: color.withValues(alpha: .10),
+      borderRadius: AppRadii.inputRadius,
       child: Padding(
         padding: AppSpacing.p2pOrderSmallPillPadding,
         child: Row(
@@ -163,27 +165,29 @@ class _SmallButton extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.buttonCompact,
-          padding: AppSpacing.p2pOrderSmallButtonPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: color,
-                size: AppSpacing.p2pOrderSmallButtonIcon,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                label,
-                style: AppTextStyles.micro.copyWith(
+          child: Padding(
+            padding: AppSpacing.p2pOrderSmallButtonPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
                   color: color,
-                  fontWeight: AppTextStyles.bold,
+                  size: AppSpacing.p2pOrderSmallButtonIcon,
                 ),
-              ),
-            ],
+                const SizedBox(width: AppSpacing.x1),
+                Text(
+                  label,
+                  style: AppTextStyles.micro.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -268,10 +272,10 @@ class _InlineWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
+    return Material(
+      color: AppColors.warningBg,
+      shape: const RoundedRectangleBorder(
+        side: BorderSide(color: AppColors.warningBorder),
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(

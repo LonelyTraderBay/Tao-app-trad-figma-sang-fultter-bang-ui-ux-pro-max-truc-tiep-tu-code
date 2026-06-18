@@ -69,7 +69,7 @@ class _AnalyticsDashboardState extends ConsumerState<AnalyticsDashboard> {
               child: SingleChildScrollView(
                 key: AnalyticsDashboard.contentKey,
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: scrollBottom),
+                padding: AppSpacing.adminScrollPadding(scrollBottom),
                 child: VitPageContent(
                   customGap: AppSpacing.x5,
                   children: [

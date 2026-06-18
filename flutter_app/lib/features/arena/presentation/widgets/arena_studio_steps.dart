@@ -44,21 +44,27 @@ class _StepBody extends StatelessWidget {
         VitModuleSectionHeader(title: title, accentColor: _arenaAccent),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaStudioCardPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.arenaStudioStepIconBox,
                 height: AppSpacing.arenaStudioStepIconBox,
-                decoration: BoxDecoration(
-                  color: AppColors.warn10,
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: Icon(
-                  _stepIcon(step),
-                  color: _arenaAccent,
-                  size: AppSpacing.iconMd,
+                child: DecoratedBox(
+                  decoration: const ShapeDecoration(
+                    color: AppColors.warn10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.mdRadius,
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      _stepIcon(step),
+                      color: _arenaAccent,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -159,22 +165,28 @@ class _TemplateCard extends StatelessWidget {
       key: ArenaStudioPage.templateKey(template.id),
       borderColor: selected ? _arenaAccent : null,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaStudioTemplatePadding,
       onTap: template.verifiedOnly ? null : onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.arenaStudioTemplateIconBox,
             height: AppSpacing.arenaStudioTemplateIconBox,
-            decoration: BoxDecoration(
-              color: _templateAccent(template.kind).withValues(alpha: .14),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              _templateIcon(template.kind),
-              color: _templateAccent(template.kind),
-              size: AppSpacing.arenaStudioTemplateGlyph,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: _templateAccent(template.kind).withValues(alpha: .14),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Center(
+                child: Icon(
+                  _templateIcon(template.kind),
+                  color: _templateAccent(template.kind),
+                  size: AppSpacing.arenaStudioTemplateGlyph,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -306,7 +318,7 @@ class _CommunityRulesFooter extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaStudioCardPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

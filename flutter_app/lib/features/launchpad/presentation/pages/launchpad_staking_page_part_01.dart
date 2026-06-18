@@ -77,49 +77,64 @@ class _StakingTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        key: LaunchpadStakingPage.tabsKey,
+    return ColoredBox(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          for (final tab in _StakingTab.values)
-            Expanded(
-              child: InkWell(
-                key: LaunchpadStakingPage.tabKey(tab.id),
-                onTap: () => onChanged(tab),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: AppSpacing.x4),
-                  child: Column(
-                    children: [
-                      Text(
-                        tab.label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: tab == activeTab
-                              ? AppColors.primary
-                              : AppColors.text3,
-                          fontWeight: AppTextStyles.bold,
-                        ),
+          Row(
+            key: LaunchpadStakingPage.tabsKey,
+            children: [
+              for (final tab in _StakingTab.values)
+                Expanded(
+                  child: InkWell(
+                    key: LaunchpadStakingPage.tabKey(tab.id),
+                    onTap: () => onChanged(tab),
+                    child: Padding(
+                      padding: AppSpacing.launchpadTopPaddingX4,
+                      child: Column(
+                        children: [
+                          Text(
+                            tab.label,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.caption.copyWith(
+                              color: tab == activeTab
+                                  ? AppColors.primary
+                                  : AppColors.text3,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.x4),
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 160),
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              height: AppSpacing.launchpadGapXxs,
+                              width: tab == activeTab
+                                  ? AppSpacing.launchpadTabIndicatorWidth
+                                  : 0,
+                              child: const DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: AppColors.primary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: AppRadii.xsRadius,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: AppSpacing.x4),
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 160),
-                        height: AppSpacing.launchpadGapXxs,
-                        width: tab == activeTab ? 116 : 0,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: AppRadii.xsRadius,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
+            ],
+          ),
+          const Divider(
+            height: AppSpacing.launchpadDividerHeight,
+            color: AppColors.divider,
+          ),
         ],
       ),
     );
@@ -138,25 +153,30 @@ class _StakingHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Container(
+              const SizedBox(
                 width: AppSpacing.x7,
                 height: AppSpacing.x7,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.buy15,
-                  border: Border.all(color: AppColors.buy20),
-                  borderRadius: AppRadii.lgRadius,
-                ),
-                child: const Icon(
-                  Icons.currency_exchange_rounded,
-                  color: AppColors.buy,
-                  size: AppSpacing.iconMd,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.buy15,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: AppColors.buy20),
+                      borderRadius: AppRadii.lgRadius,
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.currency_exchange_rounded,
+                      color: AppColors.buy,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -247,7 +267,7 @@ class _PoolCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadStakingPage.poolKey(pool.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.launchpadPaddingX5,
       onTap: () => context.go(detailRoute),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -377,7 +397,7 @@ class _PositionsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     if (snapshot.positions.isEmpty) {
       return VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x6),
+        padding: AppSpacing.launchpadPaddingX6,
         child: Column(
           children: [
             const Icon(
@@ -407,22 +427,27 @@ class _PositionsTab extends StatelessWidget {
           key: LaunchpadStakingPage.batchClaimKey,
           radius: VitCardRadius.lg,
           borderColor: AppColors.buy20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.launchpadPaddingX4,
           onTap: () => context.go(snapshot.batchClaimRoute),
           child: Row(
             children: [
-              Container(
+              const SizedBox(
                 width: AppSpacing.x7,
                 height: AppSpacing.x7,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.buy15,
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: const Icon(
-                  Icons.bolt_rounded,
-                  color: AppColors.buy,
-                  size: AppSpacing.iconMd,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.buy15,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.mdRadius,
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.bolt_rounded,
+                      color: AppColors.buy,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),

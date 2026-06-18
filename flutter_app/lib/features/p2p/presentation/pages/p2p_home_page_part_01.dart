@@ -25,8 +25,9 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.p2pHomeBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pHomeBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final showOfflineWithCache =
         snapshot.currentState == P2PScreenState.offline &&
@@ -47,12 +48,7 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
             children: [
               const SizedBox.shrink() /*
                 key: P2PHomePage.offlineKey,
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.contentPad,
-                  AppSpacing.x3,
-                  AppSpacing.contentPad,
-                  AppSpacing.x2,
-                ),
+                padding: AppSpacing.p2pHomeOfflinePadding,
                 child: const SizedBox.shrink(
                   message: 'Mất kết nối. Đang hiển thị dữ liệu gần nhất.',
                   detail: 'Cập nhật lần cuối: 2 phút trước',
@@ -93,12 +89,7 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                   child: SingleChildScrollView(
                     key: P2PHomePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pHomeScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -107,9 +98,7 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                         if (showOfflineWithCache) ...[
                           Padding(
                             key: P2PHomePage.offlineKey,
-                            padding: const EdgeInsets.only(
-                              bottom: AppSpacing.x4,
-                            ),
+                            padding: AppSpacing.p2pHomeOfflinePadding,
                             child: VitOfflineBanner(
                               message:
                                   'M\u1EA5t k\u1EBFt n\u1ED1i. \u0110ang hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u g\u1EA7n nh\u1EA5t.',
@@ -247,7 +236,7 @@ class _QuickHub extends StatelessWidget {
       key: P2PHomePage.quickHubKey,
       radius: VitCardRadius.lg,
       borderColor: AppModuleAccents.p2p.withValues(alpha: .22),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pHomeCardPadding,
       child: Column(
         children: [
           Row(
@@ -285,7 +274,10 @@ class _QuickHub extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
@@ -321,7 +313,10 @@ class _QuickHub extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
@@ -371,7 +366,7 @@ class _QuickActionCard extends StatelessWidget {
       radius: VitCardRadius.md,
       borderColor: color.withValues(alpha: .28),
       onTap: () => context.go(action.route),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pHomeCardPadding,
       child: Row(
         children: [
           _ActionIcon(icon: icon, color: color),
@@ -399,7 +394,11 @@ class _QuickActionCard extends StatelessWidget {
               ],
             ),
           ),
-          Icon(Icons.arrow_forward_rounded, color: color, size: 14),
+          Icon(
+            Icons.arrow_forward_rounded,
+            color: color,
+            size: AppSpacing.p2pHomeInlineIcon,
+          ),
         ],
       ),
     );
@@ -417,7 +416,7 @@ class _TradeTabs extends StatelessWidget {
     return VitCard(
       key: P2PHomePage.tradeTabsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: AppSpacing.p2pHomeTabsPadding,
       child: Row(
         children: [
           _TradeTab(
@@ -463,14 +462,14 @@ class _TradeTab extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.cardRadius,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+            padding: AppSpacing.p2pHomeTradeTabPadding,
             child: Text(
               label,
               textAlign: TextAlign.center,
               style: AppTextStyles.caption.copyWith(
                 color: active ? AppColors.onAccent : AppColors.text3,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.p2pHomeTextTightLineHeight,
               ),
             ),
           ),

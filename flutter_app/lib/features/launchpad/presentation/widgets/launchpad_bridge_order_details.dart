@@ -25,7 +25,7 @@ class _BridgeDetails extends StatelessWidget {
     return VitCard(
       key: LaunchpadBridgeOrderPage.detailsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -75,37 +75,39 @@ class _DetailsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              row.label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Flexible(
-            child: Text(
-              row.value,
-              textAlign: TextAlign.end,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                color: row.color ?? AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: row.monospace
-                    ? AppTextStyles.tabularFigures
-                    : null,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.launchpadVerticalPaddingX2,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  row.label,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
               ),
-            ),
+              const SizedBox(width: AppSpacing.x3),
+              Flexible(
+                child: Text(
+                  row.value,
+                  textAlign: TextAlign.end,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: row.color ?? AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: row.monospace
+                        ? AppTextStyles.tabularFigures
+                        : null,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        const Divider(height: AppSpacing.hairlineStroke),
+      ],
     );
   }
 }
@@ -115,30 +117,34 @@ class _SimulationDisclosure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: LaunchpadBridgeOrderPage.safetyKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.primary.withValues(alpha: .08),
-        border: Border.all(color: AppColors.primary.withValues(alpha: .16)),
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.primary.withValues(alpha: .16)),
+          borderRadius: AppRadii.lgRadius,
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.primary,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              'Đây là chế độ mô phỏng. Trạng thái được cập nhật tự động mỗi vài giây. Giao dịch không được gửi lên blockchain thật.',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX4,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.info_outline_rounded,
+              color: AppColors.primary,
+              size: AppSpacing.iconSm,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Text(
+                'Đây là chế độ mô phỏng. Trạng thái được cập nhật tự động mỗi vài giây. Giao dịch không được gửi lên blockchain thật.',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -156,7 +162,7 @@ class _BridgeSupportAction extends StatelessWidget {
       onTap: () => context.go(supportRoute),
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -188,7 +194,7 @@ class _BridgeSupportAction extends StatelessWidget {
           VitCtaButton(
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+            padding: AppSpacing.launchpadSupportButtonPadding,
             onPressed: () => context.go(supportRoute),
             trailing: const Icon(Icons.chevron_right_rounded),
             child: const Text('Support'),

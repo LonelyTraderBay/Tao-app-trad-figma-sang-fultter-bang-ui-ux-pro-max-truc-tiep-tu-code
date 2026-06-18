@@ -9,7 +9,7 @@ class _DateSeparator extends StatelessWidget {
       children: [
         const Expanded(child: Divider(color: AppColors.divider)),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+          padding: AppSpacing.p2pChatDatePadding,
           child: Text(
             'Hôm nay',
             style: AppTextStyles.micro.copyWith(
@@ -34,18 +34,20 @@ class _MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     if (message.sender == P2PChatSender.system) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.x4),
+        padding: AppSpacing.p2pChatMessageBottomPadding,
         child: Align(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 340),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: AppColors.primary08,
-                border: Border.all(color: AppColors.primary20),
+            constraints: const BoxConstraints(
+              maxWidth: AppSpacing.p2pChatSystemMessageMaxWidth,
+            ),
+            child: Material(
+              color: AppColors.primary08,
+              shape: RoundedRectangleBorder(
                 borderRadius: AppRadii.cardRadius,
+                side: const BorderSide(color: AppColors.primary20),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x3),
+                padding: AppSpacing.p2pChatSystemMessagePadding,
                 child: Column(
                   children: [
                     Text(
@@ -73,7 +75,7 @@ class _MessageBubble extends StatelessWidget {
 
     final isMe = message.sender == P2PChatSender.me;
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x4),
+      padding: AppSpacing.p2pChatMessageBottomPadding,
       child: Row(
         mainAxisAlignment: isMe
             ? MainAxisAlignment.end
@@ -82,7 +84,7 @@ class _MessageBubble extends StatelessWidget {
         children: [
           if (!isMe) ...[
             CircleAvatar(
-              radius: 14,
+              radius: AppSpacing.p2pChatMerchantAvatarRadius,
               backgroundColor: AppModuleAccents.p2p,
               child: Text(
                 merchantInitial,
@@ -96,27 +98,23 @@ class _MessageBubble extends StatelessWidget {
           ],
           Flexible(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 300),
+              constraints: const BoxConstraints(
+                maxWidth: AppSpacing.p2pChatMessageMaxWidth,
+              ),
               child: Column(
                 crossAxisAlignment: isMe
                     ? CrossAxisAlignment.end
                     : CrossAxisAlignment.start,
                 children: [
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: isMe ? AppModuleAccents.p2p : AppColors.surface2,
-                      borderRadius: BorderRadius.only(
-                        topLeft: const Radius.circular(AppRadii.lg),
-                        topRight: const Radius.circular(AppRadii.lg),
-                        bottomLeft: Radius.circular(isMe ? AppRadii.lg : 4),
-                        bottomRight: Radius.circular(isMe ? 4 : AppRadii.lg),
+                  Material(
+                    color: isMe ? AppModuleAccents.p2p : AppColors.surface2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.disputeMessageBubbleRadius(
+                        isUser: isMe,
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.x4,
-                        vertical: AppSpacing.x3,
-                      ),
+                      padding: AppSpacing.p2pChatMessagePadding,
                       child: Text(
                         message.text,
                         style: AppTextStyles.body.copyWith(
@@ -140,7 +138,7 @@ class _MessageBubble extends StatelessWidget {
                         const SizedBox(width: AppSpacing.x1),
                         Icon(
                           Icons.done_all_rounded,
-                          size: 12,
+                          size: AppSpacing.p2pChatReadIcon,
                           color: message.isRead
                               ? AppModuleAccents.p2p
                               : AppColors.text3,

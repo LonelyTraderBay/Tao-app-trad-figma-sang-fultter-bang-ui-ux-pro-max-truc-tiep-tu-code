@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -20,8 +21,6 @@ part '../widgets/bot_terms_of_service_page_sections.dart';
 part '../widgets/bot_terms_of_service_page_common.dart';
 
 const _termsBackground = AppColors.bg;
-const _termsPanel = AppColors.surface;
-const _termsPanel2 = AppColors.surface2;
 const _termsPrimary = AppColors.primary;
 const _termsAmber = AppColors.caution;
 const _termsRed = AppColors.sell;
@@ -89,11 +88,13 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: BotTermsOfServicePage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 14,
+                    customGap: AppSpacing.tradeBotPageTopGap,
                     children: [
                       _InfoBanner(snapshot: snapshot),
                       _TermsCard(
@@ -116,7 +117,7 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
                       _ComplianceNote(snapshot: snapshot),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Terms acceptance review',
@@ -140,7 +141,7 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
     if (_readToEnd || !_termsController.hasClients) return;
     final position = _termsController.position;
     if (position.pixels + position.viewportDimension >=
-        position.maxScrollExtent - 50) {
+        position.maxScrollExtent - AppSpacing.tradeBotTermsReadThreshold) {
       setState(() => _readToEnd = true);
     }
   }

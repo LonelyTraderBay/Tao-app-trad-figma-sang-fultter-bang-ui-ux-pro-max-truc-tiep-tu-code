@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -74,10 +75,15 @@ class _CopyEducationPageState extends ConsumerState<CopyEducationPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyEducationPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.x4,
+                    right: AppSpacing.contentPad,
+                    bottom: bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 24,
+                    customGap: AppSpacing.sectionGapRegular,
                     fullBleed: true,
                     children: [
                       _IntroBanner(snapshot: snapshot),

@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+
+class VitTogglePill extends StatelessWidget {
+  const VitTogglePill({
+    super.key,
+    required this.enabled,
+    this.width = AppSpacing.walletAddressSwitchWidth,
+    this.height = AppSpacing.walletAddressSwitchHeight,
+    this.knobSize = AppSpacing.walletAddressSwitchKnob,
+    this.knobMargin = AppSpacing.walletAddressSwitchKnobMargin,
+    this.activeColor = AppColors.buy,
+    this.inactiveColor = AppColors.surface2,
+    this.activeKnobColor = AppColors.onAccent,
+    this.inactiveKnobColor = AppColors.textDisabledBlue,
+    this.inactiveBorderColor = AppColors.borderSolid,
+    this.duration = const Duration(milliseconds: 160),
+  });
+
+  final bool enabled;
+  final double width;
+  final double height;
+  final double knobSize;
+  final EdgeInsetsGeometry knobMargin;
+  final Color activeColor;
+  final Color inactiveColor;
+  final Color activeKnobColor;
+  final Color inactiveKnobColor;
+  final Color inactiveBorderColor;
+  final Duration duration;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: enabled ? activeColor : inactiveColor,
+        borderRadius: AppRadii.inputRadius,
+        border: Border.all(color: enabled ? activeColor : inactiveBorderColor),
+      ),
+      child: AnimatedAlign(
+        alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
+        duration: duration,
+        child: Container(
+          width: knobSize,
+          height: knobSize,
+          margin: knobMargin,
+          decoration: BoxDecoration(
+            color: enabled ? activeKnobColor : inactiveKnobColor,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ),
+    );
+  }
+}

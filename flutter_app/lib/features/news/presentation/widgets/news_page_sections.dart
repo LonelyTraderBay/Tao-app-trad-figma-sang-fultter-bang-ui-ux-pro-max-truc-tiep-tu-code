@@ -14,15 +14,15 @@ class _NewsFilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
+        shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: SizedBox(
-        height: 60,
+        height: AppSpacing.newsFilterBarHeight,
         child: ListView(
           scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+          padding: AppSpacing.newsFilterBarPadding,
           children: [
             _FilterChipButton(
               key: NewsPage.filterAllKey,
@@ -31,7 +31,7 @@ class _NewsFilterBar extends StatelessWidget {
               selectedColor: _newsPrimary,
               onTap: () => onSelected(null),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.x3),
             for (final type in filters) ...[
               _FilterChipButton(
                 key: NewsPage.filterKey(type),
@@ -40,7 +40,7 @@ class _NewsFilterBar extends StatelessWidget {
                 selectedColor: type.color,
                 onTap: () => onSelected(type),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
             ],
           ],
         ),
@@ -74,20 +74,22 @@ class _FilterChipButton extends StatelessWidget {
     final textColor = selected ? selectedColor : AppColors.text2;
 
     return SizedBox(
-      height: 32,
+      height: AppSpacing.newsFilterChipHeight,
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
           onTap: onTap,
           borderRadius: AppRadii.mdRadius,
           child: DecoratedBox(
-            decoration: BoxDecoration(
+            decoration: ShapeDecoration(
               color: bg,
-              border: Border.all(color: border),
-              borderRadius: AppRadii.mdRadius,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: border),
+                borderRadius: AppRadii.mdRadius,
+              ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: AppSpacing.newsFilterChipPadding,
               child: Center(
                 child: Text(
                   label,
@@ -95,7 +97,7 @@ class _FilterChipButton extends StatelessWidget {
                   style: AppTextStyles.captionSm.copyWith(
                     color: textColor,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.newsLineHeightTight,
                   ),
                 ),
               ),
@@ -123,15 +125,15 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         if (icon != null) ...[
-          Icon(icon, size: 15, color: color),
-          const SizedBox(width: 8),
+          Icon(icon, size: AppSpacing.newsSectionIconSize, color: color),
+          const SizedBox(width: AppSpacing.x3),
         ],
         Text(
           label,
           style: AppTextStyles.captionSm.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            letterSpacing: .1,
+            letterSpacing: AppSpacing.zero,
           ),
         ),
       ],
@@ -160,7 +162,7 @@ class _NewsArticleCard extends StatelessWidget {
       borderColor: pinned
           ? _newsPrimary.withValues(alpha: .28)
           : AppColors.cardBorder,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.newsCardPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,49 +171,49 @@ class _NewsArticleCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _TypeAvatar(type: type),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.newsFeedGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _ArticleMeta(article: article, pinned: pinned),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.x3),
                     Text(
                       article.title,
                       style: AppTextStyles.body.copyWith(
-                        height: 1.25,
+                        height: AppSpacing.newsTitleLineHeight,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 7),
+                    const SizedBox(height: AppSpacing.walletAssetSmallGap),
                     Text(
                       article.summary,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.34,
+                        height: AppSpacing.newsSummaryLineHeight,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.x3 + 2),
               const Padding(
-                padding: EdgeInsets.only(top: 6),
+                padding: AppSpacing.newsChevronPadding,
                 child: Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: 22,
+                  size: AppSpacing.newsChevronIconSize,
                 ),
               ),
             ],
           ),
           if (article.tags.isNotEmpty) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.newsFeedGap),
             Wrap(
-              spacing: 8,
-              runSpacing: 6,
+              spacing: AppSpacing.x3,
+              runSpacing: AppSpacing.x2 + 1,
               children: [for (final tag in article.tags) _TagChip(label: tag)],
             ),
           ],
@@ -232,22 +234,31 @@ class _ArticleMeta extends StatelessWidget {
     final type = article.type;
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
-      spacing: 8,
-      runSpacing: 4,
+      spacing: AppSpacing.x3,
+      runSpacing: AppSpacing.x1 + 1,
       children: [
-        if (pinned) Icon(Icons.push_pin_rounded, size: 13, color: _newsPrimary),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-          decoration: BoxDecoration(
-            color: type.color.withValues(alpha: .18),
-            borderRadius: AppRadii.smRadius,
+        if (pinned)
+          Icon(
+            Icons.push_pin_rounded,
+            size: AppSpacing.newsSheetCalendarIconSize,
+            color: _newsPrimary,
           ),
-          child: Text(
-            type.label,
-            style: AppTextStyles.micro.copyWith(
-              color: type.color,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
+        DecoratedBox(
+          decoration: ShapeDecoration(
+            color: type.color.withValues(alpha: .18),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+            ),
+          ),
+          child: Padding(
+            padding: AppSpacing.newsBadgePadding,
+            child: Text(
+              type.label,
+              style: AppTextStyles.micro.copyWith(
+                color: type.color,
+                fontWeight: AppTextStyles.bold,
+                height: AppSpacing.newsLineHeightTight,
+              ),
             ),
           ),
         ),
@@ -256,15 +267,15 @@ class _ArticleMeta extends StatelessWidget {
           children: [
             const Icon(
               Icons.calendar_today_rounded,
-              size: 10,
+              size: AppSpacing.newsCalendarIconSize,
               color: AppColors.text3,
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: AppSpacing.x1 + 1),
             Text(
               article.publishedAtLabel,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1,
+                height: AppSpacing.newsLineHeightTight,
               ),
             ),
           ],
@@ -281,15 +292,17 @@ class _TypeAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 40,
-      height: 40,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: type.color.withValues(alpha: .18),
-        borderRadius: AppRadii.lgRadius,
+    return SizedBox.square(
+      dimension: AppSpacing.newsArticleAvatarSize,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: type.color.withValues(alpha: .18),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+        ),
+        child: Center(
+          child: Text(type.emoji, style: AppTextStyles.sectionTitleSm),
+        ),
       ),
-      child: Text(type.emoji, style: AppTextStyles.sectionTitleSm),
     );
   }
 }
@@ -301,25 +314,31 @@ class _TagChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface3,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.sell_outlined, color: AppColors.text2, size: 11),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
+      child: Padding(
+        padding: AppSpacing.newsTagPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.sell_outlined,
               color: AppColors.text2,
-              height: 1,
+              size: AppSpacing.newsTagIconSize,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x1 + 1),
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text2,
+                height: AppSpacing.newsLineHeightTight,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -331,11 +350,15 @@ class _NewsEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 80),
+      padding: AppSpacing.newsEmptyPadding,
       child: Column(
         children: [
-          Icon(Icons.newspaper_rounded, color: AppColors.borderSolid, size: 48),
-          SizedBox(height: 12),
+          Icon(
+            Icons.newspaper_rounded,
+            color: AppColors.borderSolid,
+            size: AppSpacing.newsEmptyIconSize,
+          ),
+          SizedBox(height: AppSpacing.newsFeedGap),
           Text('Không có tin tức nào', style: AppTextStyles.caption),
         ],
       ),

@@ -42,7 +42,7 @@ class _ProtectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -80,7 +80,7 @@ class _ProtectionCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.earnCardPaddingX3,
             child: Text(
               scheme.description,
               style: AppTextStyles.caption.copyWith(
@@ -120,7 +120,7 @@ class _ComplaintsTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -146,7 +146,7 @@ class _ComplaintsTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 children: [
                   for (final contact in snapshot.authorityContacts) ...[
@@ -179,9 +179,9 @@ class _ComplaintStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DecoratedBox(
-          decoration: const BoxDecoration(
+          decoration: const ShapeDecoration(
             color: AppColors.primary,
-            shape: BoxShape.circle,
+            shape: CircleBorder(),
           ),
           child: SizedBox(
             width: AppSpacing.x7,

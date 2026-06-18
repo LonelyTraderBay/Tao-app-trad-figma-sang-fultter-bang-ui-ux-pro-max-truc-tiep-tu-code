@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
@@ -25,28 +26,29 @@ class MarketSectorDistributionCard extends StatelessWidget {
         .toList();
 
     return VitCard(
-      height: 132,
-      padding: const EdgeInsets.all(16),
+      height: AppSpacing.marketSectorDistributionHeight,
+      padding: AppSpacing.marketSectorCardPadding,
       borderColor: marketSectorAccent.withValues(alpha: 0.20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: 26,
-                height: 26,
-                decoration: BoxDecoration(
-                  color: marketSectorAccent.withValues(alpha: 0.16),
-                  borderRadius: AppRadii.smRadius,
-                ),
-                child: const Icon(
-                  Icons.pie_chart_rounded,
-                  color: marketSectorAccent,
-                  size: 16,
+              Material(
+                color: marketSectorAccent.withValues(alpha: 0.16),
+                borderRadius: AppRadii.smRadius,
+                child: const SizedBox.square(
+                  dimension: AppSpacing.marketSectorDistributionIcon,
+                  child: Icon(
+                    Icons.pie_chart_rounded,
+                    color: marketSectorAccent,
+                    size: AppSpacing.marketSectorDistributionIconGlyph,
+                  ),
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(
+                width: AppSpacing.marketSectorDistributionHeaderGap,
+              ),
               Expanded(
                 child: Text(
                   'Phân bổ vốn hóa theo ngành',
@@ -54,18 +56,19 @@ class MarketSectorDistributionCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.marketSectorLineHeightTitle,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: Container(
-              height: 12,
-              color: AppColors.surface3,
+          const SizedBox(height: AppSpacing.marketSectorCardSectionGap),
+          Material(
+            color: AppColors.surface3,
+            borderRadius: AppRadii.pillRadius,
+            clipBehavior: Clip.antiAlias,
+            child: SizedBox(
+              height: AppSpacing.marketSectorDistributionBarHeight,
               child: Row(
                 children: [
                   for (final sector in visible)
@@ -74,17 +77,17 @@ class MarketSectorDistributionCard extends StatelessWidget {
                         1,
                         (_allocation(sector, total) * 10).round(),
                       ),
-                      child: Container(color: sector.color),
+                      child: ColoredBox(color: sector.color),
                     ),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.marketSectorDistributionBarGap),
           Expanded(
             child: Wrap(
-              spacing: 12,
-              runSpacing: 8,
+              spacing: AppSpacing.marketSectorCardHeaderGap,
+              runSpacing: AppSpacing.marketSectorChipGap,
               children: [
                 for (final sector in visible)
                   _LegendItem(
@@ -117,15 +120,14 @@ class _LegendItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(2),
+        Material(
+          color: color,
+          borderRadius: AppRadii.hairlineRadius,
+          child: const SizedBox.square(
+            dimension: AppSpacing.marketSectorLegendDot,
           ),
         ),
-        const SizedBox(width: 5),
+        const SizedBox(width: AppSpacing.marketSectorLegendGap),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),

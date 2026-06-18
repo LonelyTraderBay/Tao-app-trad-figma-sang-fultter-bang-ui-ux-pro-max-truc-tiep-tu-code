@@ -5,22 +5,24 @@ class _RiskWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
-      decoration: BoxDecoration(
-        color: _warningBackground,
-        border: Border.all(color: _warningBorder),
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetHeroTopGap,
+        top: AppSpacing.walletAssetHeroTopGap,
+        right: AppSpacing.walletAssetHeroTopGap,
+        bottom: AppSpacing.rowGapRegular,
       ),
+      borderColor: _warningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.primary,
-            size: 16,
+            size: AppSpacing.walletAssetSectionGap,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
               'Giao dịch hợp đồng tương lai có rủi ro cao. Bạn có thể mất toàn bộ ký quỹ. Chỉ giao dịch số tiền bạn có thể chấp nhận mất.',
@@ -45,13 +47,15 @@ class _FuturesSafetyChecklist extends StatelessWidget {
       'Leverage limit and margin are reviewed before confirmation.',
       'Liquidation price and fee preview are visible before opening risk.',
     ];
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 11),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        border: Border.all(color: _warningBorder),
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetHeroTopGap,
+        top: AppSpacing.walletAssetHeroTopGap,
+        right: AppSpacing.walletAssetHeroTopGap,
+        bottom: AppSpacing.rowGapRegular,
       ),
+      borderColor: _warningBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,10 +64,10 @@ class _FuturesSafetyChecklist extends StatelessWidget {
             style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.1,
+              height: AppSpacing.futuresSafetyTitleLineHeight,
             ),
           ),
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.transferCardGap),
           for (final item in items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,9 +75,9 @@ class _FuturesSafetyChecklist extends StatelessWidget {
                 const Icon(
                   Icons.check_circle_outline_rounded,
                   color: AppColors.primary,
-                  size: 14,
+                  size: AppSpacing.rowPy,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Text(
                     item,
@@ -85,7 +89,8 @@ class _FuturesSafetyChecklist extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: 7),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.transferTileGap),
           ],
         ],
       ),
@@ -104,7 +109,7 @@ class _PositionsTab extends StatelessWidget {
       children: [
         for (final position in snapshot.positions) ...[
           _PositionCard(position: position),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         ],
         _FuturesAccountCard(snapshot: snapshot),
       ],
@@ -122,13 +127,15 @@ class _PositionCard extends StatelessWidget {
     final color = position.side == TradeFuturesSide.long
         ? _futuresGreen
         : _futuresRed;
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        border: Border.all(color: color.withValues(alpha: .20)),
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowPy,
+        top: AppSpacing.rowPy,
+        right: AppSpacing.rowPy,
+        bottom: AppSpacing.rowPy,
       ),
+      borderColor: color.withValues(alpha: .20),
       child: Column(
         children: [
           Row(
@@ -139,9 +146,9 @@ class _PositionCard extends StatelessWidget {
                     : 'SHORT',
                 color: color,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Text(position.symbol, style: AppTextStyles.baseMedium),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _StatusPill(label: '${position.leverage}x', color: _tradePrimary),
               const Spacer(),
               Text(
@@ -153,7 +160,7 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.rowPy),
           Row(
             children: [
               _PositionMetric(
@@ -195,7 +202,7 @@ class _PositionMetric extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label, style: AppTextStyles.micro),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.hairlineStroke * 2),
           Text(
             value,
             style: AppTextStyles.numericMicro.copyWith(
@@ -216,18 +223,20 @@ class _FuturesAccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .06)),
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowPy,
+        top: AppSpacing.rowPy,
+        right: AppSpacing.rowPy,
+        bottom: AppSpacing.rowPy,
       ),
+      borderColor: AppColors.onAccent.withValues(alpha: .06),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Tài khoản Futures', style: AppTextStyles.caption),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
           _AccountRow(
             label: 'Số dư',
             value: _formatMoney(snapshot.accountBalance),
@@ -255,7 +264,7 @@ class _AccountRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: AppSpacing.zeroInsets.copyWith(bottom: AppSpacing.x3),
       child: Row(
         children: [
           Text(label, style: AppTextStyles.caption),
@@ -280,29 +289,31 @@ class _OrdersTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 34),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .06)),
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.ctaLoadingIcon,
+        top: AppSpacing.x6,
+        right: AppSpacing.ctaLoadingIcon,
+        bottom: AppSpacing.x6,
       ),
+      borderColor: AppColors.onAccent.withValues(alpha: .06),
       child: Column(
         children: [
           const Icon(
             Icons.receipt_long_rounded,
             color: AppColors.text3,
-            size: 38,
+            size: AppSpacing.walletAddressCopyHeight,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
           Text('Chưa có lệnh Futures', style: AppTextStyles.baseMedium),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.formFieldLabelGap),
           Text(
             'Lệnh chờ sẽ hiển thị tại đây.',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.walletAssetSectionGap),
           TextButton(
             onPressed: onTrade,
             child: const Text('Quay lại giao dịch'),
@@ -321,21 +332,7 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

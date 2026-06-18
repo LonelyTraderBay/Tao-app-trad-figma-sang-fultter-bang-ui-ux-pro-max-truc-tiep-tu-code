@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingTransactionReportingPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,7 +66,7 @@ class _Selectors extends StatelessWidget {
       children: [
         Expanded(
           child: VitCard(
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.cardPaddingCompact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -86,27 +86,30 @@ class _Selectors extends StatelessWidget {
                           (currentIndex + 1) % snapshot.years.length;
                       onYearChanged(snapshot.years[nextIndex]);
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: AppSpacing.ctaHeight,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.x4,
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              year,
-                              style: AppTextStyles.baseMedium.copyWith(
-                                fontWeight: AppTextStyles.bold,
+                      child: Padding(
+                        padding: AppSpacing.zeroInsets.copyWith(
+                          left: AppSpacing.x4,
+                          right: AppSpacing.x4,
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                year,
+                                style: AppTextStyles.baseMedium.copyWith(
+                                  fontWeight: AppTextStyles.bold,
+                                ),
                               ),
                             ),
-                          ),
-                          const Icon(
-                            Icons.expand_more_rounded,
-                            color: AppColors.text2,
-                            size: AppSpacing.iconSm,
-                          ),
-                        ],
+                            const Icon(
+                              Icons.expand_more_rounded,
+                              color: AppColors.text2,
+                              size: AppSpacing.iconSm,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -119,7 +122,7 @@ class _Selectors extends StatelessWidget {
         Expanded(
           child: VitCard(
             onTap: onOpenCostBasis,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.cardPaddingCompact,
             child: SizedBox(
               height: AppSpacing.stakingTransactionReportingCardMinHeight,
               child: Column(
@@ -165,9 +168,9 @@ class _ReportingTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: StakingTransactionReportingPage.tabsKey,
-      decoration: const BoxDecoration(color: AppColors.surface),
+      color: AppColors.surface,
       child: Row(
         children: [
           for (final tab in _ReportingTab.values)
@@ -178,7 +181,7 @@ class _ReportingTabs extends StatelessWidget {
                   key: StakingTransactionReportingPage.tabKey(tab.name),
                   onTap: () => onChanged(tab),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.x4),
+                    padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x4),
                     child: Column(
                       children: [
                         Text(
@@ -191,16 +194,19 @@ class _ReportingTabs extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x4),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 160),
-                          width: active == tab ? AppSpacing.buttonHero : 0,
+                        SizedBox(
+                          width: AppSpacing.buttonHero,
                           height: AppSpacing
                               .stakingTransactionReportingTabIndicatorHeight,
-                          decoration: BoxDecoration(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.transparent,
-                            borderRadius: AppRadii.xsRadius,
+                          child: AnimatedScale(
+                            duration: const Duration(milliseconds: 160),
+                            scale: active == tab ? 1 : 0,
+                            child: Material(
+                              color: active == tab
+                                  ? AppColors.primarySoft
+                                  : AppColors.transparent,
+                              borderRadius: AppRadii.xsRadius,
+                            ),
                           ),
                         ),
                       ],
@@ -234,7 +240,7 @@ class _SummaryTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.cardPadding,
               child: Column(
                 children: [
                   _SummaryPanel(
@@ -259,7 +265,7 @@ class _SummaryTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.cardPadding,
               child: Column(
                 children: [
                   for (final reward in summary.rewardsByAsset) ...[
@@ -293,7 +299,7 @@ class _SummaryPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -336,7 +342,7 @@ class _GainsPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -401,7 +407,7 @@ class _CostBasisPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

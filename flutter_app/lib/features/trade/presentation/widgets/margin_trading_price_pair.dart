@@ -8,7 +8,7 @@ class _PriceComparison extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -17,13 +17,19 @@ class _PriceComparison extends StatelessWidget {
             iconColor: _marginPrimary,
             title: 'Giá tham chiếu',
           ),
-          const SizedBox(height: 14),
-          Container(
-            padding: const EdgeInsets.fromLTRB(13, 12, 13, 13),
-            decoration: BoxDecoration(
-              color: _marginPrimary.withValues(alpha: .06),
-              borderRadius: AppRadii.cardRadius,
+          const SizedBox(height: AppSpacing.rowPy),
+          VitCard(
+            padding: AppSpacing.zeroInsets.copyWith(
+              left: AppSpacing.x4,
+              top: AppSpacing.walletAssetHeroTopGap,
+              right: AppSpacing.x4,
+              bottom: AppSpacing.x4,
             ),
+            variant: VitCardVariant.ghost,
+            background: ColoredBox(
+              color: _marginPrimary.withValues(alpha: .06),
+            ),
+            clip: true,
             child: Row(
               children: [
                 Expanded(
@@ -33,31 +39,15 @@ class _PriceComparison extends StatelessWidget {
                     large: true,
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _marginPrimary.withValues(alpha: .12),
-                    border: Border.all(
-                      color: _marginPrimary.withValues(alpha: .35),
-                    ),
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: Text(
-                    'Dùng cho thanh lý',
-                    style: AppTextStyles.micro.copyWith(
-                      color: _marginPrimary,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1,
-                    ),
-                  ),
+                const VitStatusPill(
+                  label: 'Dùng cho thanh lý',
+                  status: VitStatusPillStatus.info,
+                  size: VitStatusPillSize.md,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -73,7 +63,7 @@ class _PriceComparison extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -90,7 +80,7 @@ class _PriceComparison extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.x4),
           _InfoBanner(
             text:
                 'Mark Price được dùng để tính PnL và thanh lý, giúp tránh manipulation từ flash crash.',
@@ -116,6 +106,9 @@ class _PriceColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final valueStyle = large
+        ? AppTextStyles.amountSm
+        : AppTextStyles.numericCode;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -123,14 +116,12 @@ class _PriceColumn extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.hairlineStroke * 2),
         Text(
           value,
-          style: AppTextStyles.body.copyWith(
+          style: valueStyle.copyWith(
             color: dim ? AppColors.text2 : AppColors.onAccent,
             fontWeight: large ? AppTextStyles.bold : AppTextStyles.medium,
-            fontFeatures: AppTextStyles.tabularFigures,
-            height: 1.1,
           ),
         ),
       ],
@@ -147,7 +138,12 @@ class _PairCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Panel(
       minHeight: 104,
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 14),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.walletDepositCopyIcon,
+        right: AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.rowPy,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -159,33 +155,35 @@ class _PairCard extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _MiniBadge(
                 label: snapshot.defaultMode.toUpperCase(),
                 color: _marginPrimary,
               ),
               const Spacer(),
-              Container(
-                width: 14,
-                height: 8,
-                decoration: BoxDecoration(
+              VitCard(
+                width: AppSpacing.rowPy,
+                height: AppSpacing.x3,
+                radius: VitCardRadius.sm,
+                variant: VitCardVariant.ghost,
+                background: ColoredBox(
                   color: _marginRed.withValues(alpha: .06),
-                  borderRadius: BorderRadius.circular(8),
                 ),
+                clip: true,
+                child: const SizedBox.shrink(),
               ),
             ],
           ),
-          const SizedBox(height: 26),
+          const SizedBox(height: AppSpacing.walletAddressAddFormSectionGap),
           Row(
             children: [
               Text(
                 '--',
-                style: AppTextStyles.sectionTitle.copyWith(
+                style: AppTextStyles.amountXs.copyWith(
                   color: AppColors.onAccent,
-                  height: 1,
                 ),
               ),
-              const SizedBox(width: 9),
+              const SizedBox(width: AppSpacing.transferCardGap),
               Text(
                 snapshot.pair.quoteAsset,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -213,14 +211,13 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: iconColor, size: 18),
-        const SizedBox(width: 8),
+        Icon(icon, color: iconColor, size: AppSpacing.inputPrefixIcon),
+        const SizedBox(width: AppSpacing.x3),
         Text(
           title,
           style: AppTextStyles.body.copyWith(
             color: AppColors.onAccent,
             fontWeight: AppTextStyles.bold,
-            height: 1,
           ),
         ),
       ],

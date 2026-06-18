@@ -41,7 +41,7 @@ class _StressTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -59,22 +59,21 @@ class _StressTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               _StressBars(results: results),
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         const _SectionTitle(label: 'Xếp hạng theo ảnh hưởng'),
         for (final entry in results) ...[
           _StressRankCard(entry: entry),
-          if (entry != results.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          if (entry != results.last) const SizedBox(height: AppSpacing.x3),
         ],
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           borderColor: scoreColor.withValues(alpha: .35),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +92,7 @@ class _StressTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               Row(
                 children: [
                   _ScoreRing(score: score, color: scoreColor),
@@ -110,9 +109,7 @@ class _StressTab extends StatelessWidget {
                               : 'Rủi ro cao',
                           style: _captionBold.copyWith(color: AppColors.text1),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x1),
-                        ),
+                        const Padding(padding: AppSpacing.earnTopPaddingX1),
                         Text(
                           'Xấu nhất (${worst.scenario.label}): ${worst.result.differencePct.toStringAsFixed(1)}%. Tốt nhất (${best.scenario.label}): +${best.result.differencePct.toStringAsFixed(1)}%.',
                           style: AppTextStyles.caption.copyWith(
@@ -124,7 +121,7 @@ class _StressTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               Row(
                 children: [
                   Expanded(
@@ -158,7 +155,7 @@ class _StressTab extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         const _InfoCallout(
           icon: Icons.auto_awesome_rounded,
           color: AppColors.primary,
@@ -166,7 +163,7 @@ class _StressTab extends StatelessWidget {
           text:
               'Đa dạng hóa tài sản và pha trộn sản phẩm linh hoạt với cố định giúp giảm rủi ro trong kịch bản bất lợi. Cân nhắc tăng tỷ trọng stablecoin để đảm bảo ổn định.',
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         _Disclaimer(text: snapshot.stressDisclaimer, tone: AppColors.warn),
       ],
     );

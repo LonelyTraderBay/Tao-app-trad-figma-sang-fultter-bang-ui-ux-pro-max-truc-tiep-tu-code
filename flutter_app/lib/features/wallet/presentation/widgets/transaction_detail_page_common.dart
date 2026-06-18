@@ -7,37 +7,13 @@ class _SupportButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCtaButton(
       key: TransactionDetailPage.supportKey,
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: AppSpacing.inputHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _detailAmber.withValues(alpha: .08),
-          border: Border.all(color: _detailAmber.withValues(alpha: .24)),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.chat_bubble_outline_rounded,
-              color: _detailAmber,
-              size: AppSpacing.walletTransactionActionIcon,
-            ),
-            const SizedBox(width: AppSpacing.rowGapCompact),
-            Text(
-              'Liên hệ hỗ trợ',
-              style: AppTextStyles.caption.copyWith(
-                color: _detailAmber,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.warning,
+      height: AppSpacing.inputHeight,
+      leading: const Icon(Icons.chat_bubble_outline_rounded),
+      child: const Text('Liên hệ hỗ trợ'),
     );
   }
 }
@@ -52,13 +28,12 @@ class _MissingTransaction extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: AppSpacing.walletTransactionMissingTopPad),
-        Container(
+        VitCard(
+          variant: VitCardVariant.inner,
+          radius: VitCardRadius.sm,
           width: AppSpacing.walletTransactionMissingIcon,
           height: AppSpacing.walletTransactionMissingIcon,
-          decoration: BoxDecoration(
-            color: _detailPanel2,
-            borderRadius: AppRadii.cardRadius,
-          ),
+          alignment: Alignment.center,
           child: const Icon(Icons.error_outline_rounded, color: _detailRed),
         ),
         const SizedBox(height: AppSpacing.walletTransactionSummaryTopGap),
@@ -70,26 +45,12 @@ class _MissingTransaction extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.walletTransactionAfterHashGap),
-        GestureDetector(
-          onTap: onBack,
-          child: Container(
-            height: AppSpacing.walletTransactionMissingActionHeight,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.walletTransactionMissingActionPad,
-            ),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: _detailPrimary,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Text(
-              'Quay lại lịch sử',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.onAccent,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
+        VitCtaButton(
+          onPressed: onBack,
+          variant: VitCtaButtonVariant.primary,
+          fullWidth: false,
+          height: AppSpacing.walletTransactionMissingActionHeight,
+          child: const Text('Quay lại lịch sử'),
         ),
       ],
     );

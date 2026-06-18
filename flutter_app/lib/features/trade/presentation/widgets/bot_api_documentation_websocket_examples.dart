@@ -12,7 +12,7 @@ class _WebSocketView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionLabel('WebSocket Connection'),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         _InfoCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,14 +21,14 @@ class _WebSocketView extends StatelessWidget {
                 'Connect to real-time bot events:',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.tradeBotRowGap),
               _CodeBlock(text: url, compact: true),
             ],
           ),
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.tradeBotContentGap),
         const _SectionLabel('Event Types'),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         for (final event in events) ...[
           _InfoCard(
             child: Column(
@@ -39,30 +39,31 @@ class _WebSocketView extends StatelessWidget {
                     const Icon(
                       Icons.bolt_rounded,
                       color: _apiPrimary,
-                      size: 17,
+                      size: AppSpacing.iconSm,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.tradeBotSmallGap),
                     Text(
                       event.event,
                       style: AppTextStyles.caption.copyWith(
                         color: _apiPrimary,
                         fontWeight: AppTextStyles.bold,
-                        height: 1,
+                        height: AppSpacing.tradeBotLineHeightTight,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.tradeBotRowGap),
                 Text(
                   event.description,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.tradeBotRowGap),
                 _CodeBlock(text: event.payload),
               ],
             ),
           ),
-          if (event != events.last) const SizedBox(height: 12),
+          if (event != events.last)
+            const SizedBox(height: AppSpacing.tradeBotCardGap),
         ],
       ],
     );
@@ -103,10 +104,10 @@ class _ExamplesView extends StatelessWidget {
                 child: VitCard(
                   variant: selected.language == example.language
                       ? VitCardVariant.inner
-                      : VitCardVariant.ghost,
-                  height: 36,
-                  width: 86,
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  : VitCardVariant.ghost,
+                  height: AppSpacing.buttonCompact,
+                  width: AppSpacing.tradeBotLanguageTabWidth,
+                  padding: AppSpacing.tradeBotChipPadding,
                   alignment: Alignment.center,
                   borderColor: selected.language == example.language
                       ? _apiPrimary.withValues(alpha: .42)
@@ -118,18 +119,19 @@ class _ExamplesView extends StatelessWidget {
                           ? _apiPrimary
                           : AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
+                      height: AppSpacing.tradeBotLineHeightTight,
                     ),
                   ),
                 ),
               ),
-              if (example != examples.last) const SizedBox(width: 8),
+              if (example != examples.last)
+                const SizedBox(width: AppSpacing.tradeBotSmallGap),
             ],
           ],
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.tradeBotContentGap),
         const _SectionLabel('Quick Start'),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         _InfoCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -139,57 +141,34 @@ class _ExamplesView extends StatelessWidget {
                   const Icon(
                     Icons.menu_book_outlined,
                     color: _apiPrimary,
-                    size: 17,
+                    size: AppSpacing.iconSm,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.tradeBotSmallGap),
                   Expanded(
                     child: Text(
                       selected.title,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: 1,
+                        height: AppSpacing.tradeBotLineHeightTight,
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => onCopy(selected.source),
-                    child: Container(
-                      height: 30,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: copied
-                            ? _apiGreen.withValues(alpha: .12)
-                            : _apiPanel2,
-                        borderRadius: AppRadii.smRadius,
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            copied
-                                ? Icons.check_circle_outline_rounded
-                                : Icons.content_copy_rounded,
-                            color: copied ? _apiGreen : AppColors.text3,
-                            size: 15,
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            copied ? 'Copied!' : 'Copy',
-                            style: AppTextStyles.micro.copyWith(
-                              color: copied ? _apiGreen : AppColors.text3,
-                              fontWeight: copied
-                                  ? AppTextStyles.bold
-                                  : FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  VitIconButton(
+                    icon: copied
+                        ? Icons.check_circle_outline_rounded
+                        : Icons.content_copy_rounded,
+                    tooltip: copied ? 'Copied source' : 'Copy source',
+                    label: copied ? 'Copied!' : 'Copy',
+                    size: VitIconButtonSize.sm,
+                    variant: copied
+                        ? VitIconButtonVariant.success
+                        : VitIconButtonVariant.ghost,
+                    onPressed: () => onCopy(selected.source),
                   ),
                 ],
               ),
-              const SizedBox(height: 13),
+              const SizedBox(height: AppSpacing.x4),
               _CodeBlock(text: selected.source, example: true),
             ],
           ),

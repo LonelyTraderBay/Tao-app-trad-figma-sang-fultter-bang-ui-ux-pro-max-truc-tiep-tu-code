@@ -226,13 +226,12 @@ class _CategoryLegendItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: AppSpacing.predictionAnalyzerLegendSwatch,
-          height: AppSpacing.predictionAnalyzerLegendSwatch,
-          margin: AppSpacing.predictionAnalyzerLegendSwatchMargin,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: AppRadii.swatchRadius,
+        Padding(
+          padding: AppSpacing.predictionAnalyzerLegendSwatchMargin,
+          child: SizedBox(
+            width: AppSpacing.predictionAnalyzerLegendSwatch,
+            height: AppSpacing.predictionAnalyzerLegendSwatch,
+            child: Material(color: color, borderRadius: AppRadii.swatchRadius),
           ),
         ),
         const SizedBox(width: AppSpacing.predictionAnalyzerLegendItemGap),
@@ -278,9 +277,7 @@ class _RiskMetricRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSpacing.predictionAnalyzerRiskMetricVertical,
-      ),
+      padding: AppSpacing.predictionAnalyzerRiskMetricPadding,
       child: Row(
         children: [
           Icon(
@@ -317,17 +314,16 @@ class _CategoryRiskBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = 30 + category.invested.clamp(0, 95);
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.predictionAnalyzerRiskBarHorizontal,
-      ),
+      padding: AppSpacing.predictionAnalyzerRiskBarPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Container(
+          SizedBox(
             height: height.toDouble(),
-            decoration: BoxDecoration(
+            width: double.infinity,
+            child: const Material(
               color: _predictionPrimary,
-              borderRadius: const BorderRadius.vertical(top: AppRadii.smCorner),
+              borderRadius: BorderRadius.vertical(top: AppRadii.smCorner),
             ),
           ),
           const SizedBox(height: AppSpacing.predictionAnalyzerRiskBarLabelGap),

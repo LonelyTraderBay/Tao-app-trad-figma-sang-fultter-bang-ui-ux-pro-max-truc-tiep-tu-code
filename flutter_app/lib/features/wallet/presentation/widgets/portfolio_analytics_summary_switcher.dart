@@ -7,18 +7,12 @@ class _ValueSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: AppSpacing.walletAnalyticsSummaryHeight,
       padding: AppSpacing.walletAnalyticsSummaryPadding,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppColors.surface, AppColors.surface2],
-        ),
-        border: Border.all(color: _analyticsPrimary.withValues(alpha: .32)),
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.lg,
+      borderColor: _analyticsPrimary.withValues(alpha: .32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,37 +42,11 @@ class _ValueSummary extends StatelessWidget {
             children: [
               SizedBox(
                 width: AppSpacing.walletAnalyticsReturnPillWidth,
-                child: Container(
-                  height: AppSpacing.walletAnalyticsReturnPillHeight,
-                  padding: AppSpacing.walletAnalyticsReturnPillPadding,
-                  decoration: BoxDecoration(
-                    color: _analyticsGreen.withValues(alpha: .16),
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.trending_up_rounded,
-                        color: _analyticsGreen,
-                        size: AppSpacing.walletAnalyticsReturnPillIcon,
-                      ),
-                      const SizedBox(
-                        width: AppSpacing.walletAnalyticsReturnPillGap,
-                      ),
-                      Expanded(
-                        child: Text(
-                          '+${_formatUsd(snapshot.totalReturnUsd, symbol: false)} (+${snapshot.totalReturnPct.toStringAsFixed(2)}%)',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: _analyticsGreen,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                child: VitMetricDeltaPill(
+                  label:
+                      '+${_formatUsd(snapshot.totalReturnUsd, symbol: false)} (+${snapshot.totalReturnPct.toStringAsFixed(2)}%)',
+                  tone: VitMetricDeltaTone.positive,
+                  icon: Icons.trending_up_rounded,
                 ),
               ),
               const SizedBox(width: AppSpacing.walletAnalyticsReturnMetaGap),
@@ -145,13 +113,13 @@ class _QuickStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: AppSpacing.walletAnalyticsQuickStatHeight,
       padding: AppSpacing.walletAnalyticsQuickStatPadding,
-      decoration: BoxDecoration(
-        color: AppColors.onAccent.withValues(alpha: .055),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      background: ColoredBox(color: AppColors.onAccent.withValues(alpha: .055)),
+      clip: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -202,13 +170,11 @@ class _ViewSwitcher extends StatelessWidget {
       _ViewItem('pnl', 'L\u00E3i/L\u1ED7', Icons.trending_up_rounded),
     ];
 
-    return Container(
+    return VitCard(
       height: AppSpacing.walletAnalyticsSwitcherHeight,
       padding: AppSpacing.walletAnalyticsSwitcherPadding,
-      decoration: BoxDecoration(
-        color: _analyticsPanel2,
-        borderRadius: AppRadii.lgRadius,
-      ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
       child: Row(
         children: [
           for (final item in items)
@@ -217,14 +183,16 @@ class _ViewSwitcher extends StatelessWidget {
                 key: PortfolioAnalyticsPage.viewKey(item.id),
                 onTap: () => onChanged(item.id),
                 behavior: HitTestBehavior.opaque,
-                child: Container(
+                child: VitCard(
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
+                  variant: VitCardVariant.ghost,
+                  radius: VitCardRadius.md,
+                  background: ColoredBox(
                     color: active == item.id
                         ? _analyticsPrimary.withValues(alpha: .18)
                         : AppColors.transparent,
-                    borderRadius: AppRadii.cardRadius,
                   ),
+                  clip: true,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

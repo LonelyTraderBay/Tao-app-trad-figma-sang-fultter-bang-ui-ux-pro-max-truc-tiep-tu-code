@@ -39,7 +39,7 @@ class _StatsTab extends StatelessWidget {
     return Column(
       children: [
         _Panel(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.traderProfilePanelPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -48,17 +48,17 @@ class _StatsTab extends StatelessWidget {
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.traderProfileSectionGap),
               Row(
                 children: [
                   Expanded(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(999),
+                      borderRadius: AppRadii.pillRadius,
                       child: SizedBox(
-                        height: 12,
+                        height: AppSpacing.traderProfileWinLossBarHeight,
                         child: Row(
                           children: [
                             Expanded(
@@ -74,9 +74,9 @@ class _StatsTab extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.traderProfilePanelInnerGap),
                   SizedBox(
-                    width: 54,
+                    width: AppSpacing.traderProfileStatsValueWidth,
                     child: Text(
                       '${trader.winRate.toStringAsFixed(1)}%',
                       textAlign: TextAlign.right,
@@ -88,7 +88,7 @@ class _StatsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 11),
+              const SizedBox(height: AppSpacing.x4 - AppSpacing.x2),
               Row(
                 children: [
                   _LegendDot(color: _profileGreen, label: 'Thắng: $wins'),
@@ -99,9 +99,9 @@ class _StatsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.traderProfilePanelInnerGap),
         _Panel(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.traderProfilePanelPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -110,10 +110,10 @@ class _StatsTab extends StatelessWidget {
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(height: 9),
+              const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
               for (final row in rows) _StatsLine(row: row),
             ],
           ),
@@ -138,33 +138,39 @@ class _StatsLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 9),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              row.label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                height: 1,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.traderProfileStatsLinePadding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  row.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    height: AppSpacing.tradeBotLineHeightTight,
+                  ),
+                ),
               ),
-            ),
+              Text(
+                row.value,
+                style: AppTextStyles.caption.copyWith(
+                  color: row.color,
+                  fontWeight: AppTextStyles.medium,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                  height: AppSpacing.tradeBotLineHeightTight,
+                ),
+              ),
+            ],
           ),
-          Text(
-            row.value,
-            style: AppTextStyles.caption.copyWith(
-              color: row.color,
-              fontWeight: AppTextStyles.medium,
-              fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
-            ),
-          ),
-        ],
-      ),
+        ),
+        const Divider(
+          height: AppSpacing.hairlineStroke,
+          thickness: AppSpacing.hairlineStroke,
+          color: AppColors.divider,
+        ),
+      ],
     );
   }
 }
@@ -179,17 +185,13 @@ class _LegendDot extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        const SizedBox(width: 5),
+        Icon(Icons.circle, color: color, size: AppSpacing.x3),
+        const SizedBox(width: AppSpacing.x2),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ],
@@ -205,21 +207,7 @@ class _MiniBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

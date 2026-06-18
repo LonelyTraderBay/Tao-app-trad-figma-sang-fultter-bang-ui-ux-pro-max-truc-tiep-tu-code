@@ -66,18 +66,18 @@ class _MiniStatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionDataStatusPillPadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.predictionDataStatusPillLineHeight,
+    return Material(
+      color: color.withValues(alpha: .14),
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.predictionDataStatusPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.predictionDataStatusPillLineHeight,
+          ),
         ),
       ),
     );
@@ -91,15 +91,15 @@ class _NeutralChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionDataNeutralChipPadding,
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.predictionDataNeutralChipPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+        ),
       ),
     );
   }
@@ -124,7 +124,7 @@ class _InlineIconButton extends StatelessWidget {
       height: AppSpacing.predictionDataInlineButtonSize,
       child: IconButton(
         onPressed: onTap,
-        padding: EdgeInsets.zero,
+        padding: AppSpacing.zeroInsets,
         icon: Icon(
           icon,
           color: color,
@@ -148,17 +148,16 @@ class _IconBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.predictionDataIconBubble,
-      height: AppSpacing.predictionDataIconBubble,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Icon(
-        icon,
-        color: color,
-        size: AppSpacing.predictionDataIconBubbleIcon,
+    return Material(
+      color: background,
+      borderRadius: AppRadii.mdRadius,
+      child: SizedBox.square(
+        dimension: AppSpacing.predictionDataIconBubble,
+        child: Icon(
+          icon,
+          color: color,
+          size: AppSpacing.predictionDataIconBubbleIcon,
+        ),
       ),
     );
   }

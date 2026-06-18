@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingMultiChainPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +50,7 @@ class _TotalStats extends StatelessWidget {
     return VitCard(
       key: StakingMultiChainPage.totalStatsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -146,20 +146,19 @@ class _GainPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: const BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.buy15,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.buy,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.buy,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -176,7 +175,7 @@ class _AllocationCard extends StatelessWidget {
     return VitCard(
       key: StakingMultiChainPage.allocationKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -223,13 +222,12 @@ class _LegendItem extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: AppSpacing.x3,
-            height: AppSpacing.x3,
-            decoration: BoxDecoration(
+          DecoratedBox(
+            decoration: ShapeDecoration(
               color: _chainColor(position.chainId),
-              shape: BoxShape.circle,
+              shape: const CircleBorder(),
             ),
+            child: const SizedBox(width: AppSpacing.x3, height: AppSpacing.x3),
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

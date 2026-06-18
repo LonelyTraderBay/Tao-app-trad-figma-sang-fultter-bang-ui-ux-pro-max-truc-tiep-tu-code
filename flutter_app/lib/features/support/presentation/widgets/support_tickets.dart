@@ -39,30 +39,23 @@ class _CreateTicketButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: SupportPage.createTicketKey,
-      onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        height: AppSpacing.ctaHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.add_rounded, color: AppColors.onAccent, size: 20),
-            const SizedBox(width: AppSpacing.x3),
-            Text(
-              'Tạo ticket mới',
-              style: AppTextStyles.baseMedium.copyWith(
-                color: AppColors.onAccent,
-              ),
-            ),
-          ],
-        ),
+      onPressed: onTap,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.add_rounded,
+            color: AppColors.onAccent,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Text(
+            'Tạo ticket mới',
+            style: AppTextStyles.baseMedium.copyWith(color: AppColors.onAccent),
+          ),
+        ],
       ),
     );
   }
@@ -109,7 +102,7 @@ class _TicketCard extends StatelessWidget {
     return VitCard(
       key: SupportPage.ticketKey(ticket.id),
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.supportCardPadding,
       onTap: HapticFeedback.selectionClick,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -139,7 +132,7 @@ class _TicketCard extends StatelessWidget {
             ticket.subject,
             style: AppTextStyles.baseMedium.copyWith(
               fontWeight: AppTextStyles.bold,
-              height: 1.25,
+              height: AppSpacing.supportLineHeightTight,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -158,12 +151,10 @@ class _TicketCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.x4),
-            decoration: const BoxDecoration(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.mdRadius,
-            ),
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
+            padding: AppSpacing.supportCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -198,7 +189,7 @@ class _TicketCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
+                    height: AppSpacing.supportLineHeightReadable,
                   ),
                 ),
               ],

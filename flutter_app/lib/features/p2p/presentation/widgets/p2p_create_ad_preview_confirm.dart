@@ -15,7 +15,7 @@ class P2PCreateAdLivePreviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMerchantCommerceCardPadding,
       child: Column(
         children: [
           InkWell(
@@ -85,12 +85,12 @@ class P2PCreateAdConfirmRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.p2pMerchantCommerceSectionLabelPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 76,
+            width: AppSpacing.p2pMerchantCommerceConfirmLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -130,7 +130,7 @@ class P2PCreateAdInputBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+          padding: AppSpacing.p2pMerchantCommerceSectionLabelPadding,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),

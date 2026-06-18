@@ -8,7 +8,7 @@ class _RiskDisclosureTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -45,11 +45,11 @@ class _HistoryEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+      padding: AppSpacing.launchpadBottomPaddingX3,
       child: VitCard(
         key: LaunchpadClaimReceiptPage.historyKey(entry.id),
         radius: VitCardRadius.md,
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.launchpadPaddingX4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -107,7 +107,7 @@ class _SummaryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         children: [
           Text(
@@ -138,30 +138,35 @@ class _DetailLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              row.label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.launchpadVerticalPaddingX2,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  row.label,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ),
+              Text(
+                row.value,
+                textAlign: TextAlign.right,
+                style: AppTextStyles.caption.copyWith(
+                  color: row.color ?? AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
+            ],
           ),
-          Text(
-            row.value,
-            textAlign: TextAlign.right,
-            style: AppTextStyles.caption.copyWith(
-              color: row.color ?? AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-        ],
-      ),
+        ),
+        const Divider(
+          height: AppSpacing.launchpadDividerHeight,
+          color: AppColors.divider,
+        ),
+      ],
     );
   }
 }
@@ -174,20 +179,19 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadInlinePillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );

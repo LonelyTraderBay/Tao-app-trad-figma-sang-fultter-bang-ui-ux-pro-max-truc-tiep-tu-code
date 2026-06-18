@@ -10,13 +10,14 @@ class _PositionTile extends StatelessWidget {
     final isProfit = position.pnl >= 0;
     final pnlColor = isProfit ? AppColors.buy : AppColors.sell;
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 19),
-      decoration: BoxDecoration(
-        color: _cardBackground,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      margin: AppSpacing.pageHorizontal,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.walletDepositCopyIcon,
+        right: AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.walletTransactionAfterHashGap,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -24,7 +25,7 @@ class _PositionTile extends StatelessWidget {
           Row(
             children: [
               _TypeBadge(type: position.type),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
                   position.symbol,
@@ -36,7 +37,7 @@ class _PositionTile extends StatelessWidget {
                 ),
               ),
               _SideBadge(position: position),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Text(
                 _formatSignedMoney(position.pnl),
                 style: AppTextStyles.amountSm.copyWith(
@@ -47,7 +48,7 @@ class _PositionTile extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -79,28 +80,28 @@ class _PositionTile extends StatelessWidget {
             ],
           ),
           if (position.takeProfit != null || position.stopLoss != null) ...[
-            const SizedBox(height: 11),
+            const SizedBox(height: AppSpacing.rowGapRegular),
             Wrap(
-              spacing: 8,
-              runSpacing: 6,
+              spacing: AppSpacing.x3,
+              runSpacing: AppSpacing.formFieldLabelGap,
               children: [
                 if (position.takeProfit != null)
                   _RiskChip(
                     icon: Icons.my_location_rounded,
                     label: 'TP ${_formatMoney(position.takeProfit!)}',
-                    color: AppColors.buy,
+                    status: VitStatusPillStatus.success,
                   ),
                 if (position.stopLoss != null)
                   _RiskChip(
                     icon: Icons.shield_outlined,
                     label: 'SL ${_formatMoney(position.stopLoss!)}',
-                    color: AppColors.sell,
+                    status: VitStatusPillStatus.error,
                   ),
                 if (position.liquidPrice != null)
                   _RiskChip(
                     icon: Icons.warning_amber_rounded,
                     label: 'Liq ${_formatMoney(position.liquidPrice!)}',
-                    color: AppColors.warn,
+                    status: VitStatusPillStatus.warning,
                   ),
               ],
             ),
@@ -118,23 +119,20 @@ class _TypeBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = switch (type) {
-      TradePositionType.spot => _tradePrimary,
-      TradePositionType.futures => _futuresColor,
-      TradePositionType.margin => _marginColor,
-    };
     final label = switch (type) {
       TradePositionType.spot => 'Spot',
       TradePositionType.futures => 'Futures',
       TradePositionType.margin => 'Margin',
     };
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
+    final status = switch (type) {
+      TradePositionType.spot => VitStatusPillStatus.info,
+      TradePositionType.futures => VitStatusPillStatus.warning,
+      TradePositionType.margin => VitStatusPillStatus.purple,
+    };
+    return VitStatusPill(
+      label: label,
+      status: status,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -147,18 +145,11 @@ class _SideBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLong = position.side == TradePositionSide.long;
-    final color = isLong ? AppColors.buy : AppColors.sell;
     final leverage = position.leverage == null ? '' : ' ${position.leverage}x';
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        '${isLong ? 'LONG' : 'SHORT'}$leverage',
-        style: AppTextStyles.badge.copyWith(color: color),
-      ),
+    return VitStatusPill(
+      label: '${isLong ? 'LONG' : 'SHORT'}$leverage',
+      status: isLong ? VitStatusPillStatus.success : VitStatusPillStatus.error,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -187,7 +178,7 @@ class _PositionMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: AppSpacing.transferTileGap),
         Text(
           value,
           maxLines: 1,
@@ -203,29 +194,20 @@ class _RiskChip extends StatelessWidget {
   const _RiskChip({
     required this.icon,
     required this.label,
-    required this.color,
+    required this.status,
   });
 
   final IconData icon;
   final String label;
-  final Color color;
+  final VitStatusPillStatus status;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .07),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 10),
-          const SizedBox(width: 4),
-          Text(label, style: AppTextStyles.micro.copyWith(color: color)),
-        ],
-      ),
+    return VitStatusPill(
+      label: label,
+      status: status,
+      icon: icon,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -236,15 +218,18 @@ class _EmptyPositions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 72),
+      padding: AppSpacing.zeroInsets.copyWith(
+        top: AppSpacing.x7 + AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.x7 + AppSpacing.walletAssetSectionGap,
+      ),
       child: Column(
         children: [
           const Icon(
             Icons.bar_chart_rounded,
             color: AppColors.borderSolid,
-            size: 44,
+            size: AppSpacing.searchBarCompactHeight,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
           Text(
             'Không có vị thế nào',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),

@@ -116,19 +116,27 @@ class _CopyLinkCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: AppSpacing.predictionSocialCopyBoxHeight,
-                  alignment: Alignment.centerLeft,
-                  padding: AppSpacing.predictionSocialCopyBoxPadding,
-                  decoration: BoxDecoration(
+                  child: Material(
                     color: AppColors.bg,
-                    border: Border.all(color: AppColors.border),
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: Text(
-                    snapshot.shareUrl,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: AppColors.border),
+                      borderRadius: AppRadii.mdRadius,
+                    ),
+                    child: Padding(
+                      padding: AppSpacing.predictionSocialCopyBoxPadding,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          snapshot.shareUrl,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text2,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -209,19 +217,16 @@ class _SharePreviewCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: AppSpacing.predictionSocialPreviewImage,
-                height: AppSpacing.predictionSocialPreviewImage,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [_predictionPrimary, AppColors.accent],
+              Material(
+                color: _predictionPrimary,
+                borderRadius: AppRadii.mdRadius,
+                child: const SizedBox.square(
+                  dimension: AppSpacing.predictionSocialPreviewImage,
+                  child: Icon(
+                    Icons.bar_chart_rounded,
+                    color: AppColors.onAccent,
+                    size: AppSpacing.predictionSocialPreviewIcon,
                   ),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: const Icon(
-                  Icons.bar_chart_rounded,
-                  color: AppColors.onAccent,
-                  size: AppSpacing.predictionSocialPreviewIcon,
                 ),
               ),
               const SizedBox(width: AppSpacing.predictionSocialPreviewGap),

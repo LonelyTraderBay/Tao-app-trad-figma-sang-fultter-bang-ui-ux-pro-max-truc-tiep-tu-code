@@ -13,34 +13,41 @@ class _StrategyGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 10,
-      childAspectRatio: 4,
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      children: [
-        for (final strategy in strategies)
-          _StrategyButton(
-            key: BotBacktestingPage.strategyKey(strategy.id),
-            strategy: strategy,
-            selected: strategy.id == selectedId,
-            onTap: () => onChanged(strategy.id),
-          ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final itemWidth =
+            (constraints.maxWidth - AppSpacing.tradeBotRowGap) /
+            AppSpacing.tradeBotGridColumns;
+        return Wrap(
+          spacing: AppSpacing.tradeBotRowGap,
+          runSpacing: AppSpacing.tradeBotRowGap,
+          children: [
+            for (final strategy in strategies)
+              _StrategyButton(
+                width: itemWidth,
+                widgetKey: BotBacktestingPage.strategyKey(strategy.id),
+                strategy: strategy,
+                selected: strategy.id == selectedId,
+                onTap: () => onChanged(strategy.id),
+              ),
+          ],
+        );
+      },
     );
   }
 }
 
 class _StrategyButton extends StatelessWidget {
   const _StrategyButton({
-    super.key,
+    required this.widgetKey,
+    required this.width,
     required this.strategy,
     required this.selected,
     required this.onTap,
   });
 
+  final Key widgetKey;
+  final double width;
   final TradeBotBacktestStrategy strategy;
   final bool selected;
   final VoidCallback onTap;
@@ -48,40 +55,29 @@ class _StrategyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(strategy.colorHex);
-    return InkWell(
+    return VitCard(
+      key: widgetKey,
+      width: width,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        decoration: BoxDecoration(
-          color: selected ? color.withValues(alpha: .10) : _backtestPanel,
-          border: Border.all(
-            color: selected ? color : AppColors.borderSolid,
-            width: selected ? 2 : 1.5,
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-            ),
-            const SizedBox(width: 9),
-            Expanded(
-              child: Text(
-                strategy.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.captionSm.copyWith(
-                  color: selected ? color : AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
+      variant: selected ? VitCardVariant.ghost : VitCardVariant.inner,
+      borderColor: selected ? color : AppColors.borderSolid,
+      padding: AppSpacing.tradeBotChipPadding,
+      child: Row(
+        children: [
+          Icon(Icons.circle, color: color, size: AppSpacing.iconSm),
+          const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+          Expanded(
+            child: Text(
+              strategy.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.captionSm.copyWith(
+                color: selected ? color : AppColors.text1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -102,14 +98,14 @@ class _PairGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 8,
-      runSpacing: 10,
+      runSpacing: AppSpacing.tradeBotRowGap,
       children: [
         for (final pair in pairs)
           _ChoicePill(
-            key: BotBacktestingPage.pairKey(pair),
+            widgetKey: BotBacktestingPage.pairKey(pair),
             label: pair,
             selected: pair == selectedPair,
-            width: 128,
+            width: AppSpacing.buttonHero + AppSpacing.x6,
             onTap: () => onChanged(pair),
           ),
       ],
@@ -135,13 +131,14 @@ class _DateRangeGrid extends StatelessWidget {
         for (final range in ranges) ...[
           Expanded(
             child: _ChoicePill(
-              key: BotBacktestingPage.rangeKey(range.id),
+              widgetKey: BotBacktestingPage.rangeKey(range.id),
               label: range.label,
               selected: range.id == selectedId,
               onTap: () => onChanged(range.id),
             ),
           ),
-          if (range != ranges.last) const SizedBox(width: 8),
+          if (range != ranges.last)
+            const SizedBox(width: AppSpacing.tradeBotSmallGap),
         ],
       ],
     );
@@ -150,13 +147,14 @@ class _DateRangeGrid extends StatelessWidget {
 
 class _ChoicePill extends StatelessWidget {
   const _ChoicePill({
-    super.key,
+    required this.widgetKey,
     required this.label,
     required this.selected,
     required this.onTap,
     this.width,
   });
 
+  final Key widgetKey;
   final String label;
   final bool selected;
   final VoidCallback onTap;
@@ -164,26 +162,19 @@ class _ChoicePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      key: widgetKey,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        width: width,
-        height: 34,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: selected ? _backtestPrimary : _backtestPanel,
-          border: Border.all(
-            color: selected ? _backtestPrimary : AppColors.borderSolid,
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: selected ? AppColors.onAccent : AppColors.text1,
-            fontWeight: AppTextStyles.bold,
-          ),
+      width: width,
+      height: AppSpacing.buttonCompact,
+      alignment: Alignment.center,
+      variant: selected ? VitCardVariant.ghost : VitCardVariant.inner,
+      borderColor: selected ? _backtestPrimary : AppColors.borderSolid,
+      child: Text(
+        label,
+        style: AppTextStyles.captionSm.copyWith(
+          color: selected ? _backtestPrimary : AppColors.text1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -226,7 +217,7 @@ class _BacktestPeriodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
+      padding: AppSpacing.tradeBotCardPadding,
       borderColor: _backtestPrimary.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,7 +227,7 @@ class _BacktestPeriodCard extends StatelessWidget {
             color: _backtestPrimary,
             size: 18,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,12 +239,11 @@ class _BacktestPeriodCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
                 Text(
                   'Testing ${strategyId.toUpperCase()} strategy on $pair from ${range.periodLabel} with \$$capital initial capital.',
                   style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
-                    height: 1.6,
                   ),
                 ),
               ],
@@ -273,12 +263,12 @@ class _RunFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 80,
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+      height: AppSpacing.tradeBotControlTall,
+      padding: AppSpacing.tradeBotFooterPadding,
       child: VitCtaButton(
         key: BotBacktestingPage.runKey,
         onPressed: onRun,
-        height: 44,
+        height: AppSpacing.tradeBotFooterButtonHeight,
         leading: const Icon(Icons.play_arrow_outlined, size: 19),
         child: Text(
           'Run Backtest',
@@ -299,25 +289,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _backtestPrimary,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _backtestPrimary,
     );
   }
 }

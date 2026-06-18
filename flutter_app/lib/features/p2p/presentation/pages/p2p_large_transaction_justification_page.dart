@@ -97,10 +97,7 @@ class _P2PLargeTransactionJustificationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pFinancialSafetyScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -184,23 +181,21 @@ class _LargeTransactionHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pFinancialSafetyCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.warn15,
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: const SizedBox(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
-              child: Icon(
-                Icons.error_outline_rounded,
-                color: AppColors.warn,
-                size: AppSpacing.iconMd,
-              ),
+          VitCard(
+            width: AppSpacing.p2pFinancialSafetyIconBox,
+            height: AppSpacing.p2pFinancialSafetyIconBox,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            background: const ColoredBox(color: AppColors.warn15),
+            clip: true,
+            child: const Icon(
+              Icons.error_outline_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.iconMd,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -225,7 +220,7 @@ class _LargeTransactionHero extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pFinancialSafetyBodyLineHeight,
                   ),
                 ),
               ],
@@ -295,7 +290,7 @@ class _PurposeTile extends StatelessWidget {
           borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
           constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
           alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+          padding: AppSpacing.p2pFinancialSafetyTilePadding,
           child: Text(
             purpose,
             maxLines: 1,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_depth_common.dart';
@@ -19,24 +20,24 @@ class MarketDepthOrderBookView extends StatelessWidget {
     return Column(
       children: [
         _OrderBookHeader(pair: snapshot.pair),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.marketDepthSectionGap),
         const MarketDepthSectionHeader(
           label: 'Lệnh bán (Ask)',
           accentColor: AppColors.sell,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.marketDepthSectionGap),
         _OrderBookRows(
           levels: snapshot.depth.asks.take(15).toList().reversed,
           side: MarketOrderSide.sell,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.marketDepthSectionGap),
         _MidPriceStrip(depth: snapshot.depth),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.marketDepthSectionGap),
         const MarketDepthSectionHeader(
           label: 'Lệnh mua (Bid)',
           accentColor: AppColors.buy,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.marketDepthSectionGap),
         _OrderBookRows(
           levels: snapshot.depth.bids.take(15).toList(),
           side: MarketOrderSide.buy,
@@ -53,18 +54,18 @@ class _OrderBookHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Row(
-        children: [
-          _HeaderCell('Giá (${pair.quoteAsset})'),
-          _HeaderCell('Số lượng (${pair.baseAsset})', alignRight: true),
-          const _HeaderCell('Tích lũy', alignRight: true),
-        ],
+    return Material(
+      color: AppColors.surface2,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      child: Padding(
+        padding: AppSpacing.marketDepthHeaderPadding,
+        child: Row(
+          children: [
+            _HeaderCell('Giá (${pair.quoteAsset})'),
+            _HeaderCell('Số lượng (${pair.baseAsset})', alignRight: true),
+            const _HeaderCell('Tích lũy', alignRight: true),
+          ],
+        ),
       ),
     );
   }
@@ -85,6 +86,7 @@ class _HeaderCell extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
           fontWeight: AppTextStyles.bold,
+          height: AppSpacing.marketLineHeightTight,
         ),
       ),
     );
@@ -106,7 +108,7 @@ class _OrderBookRows extends StatelessWidget {
     );
     final color = side == MarketOrderSide.buy ? AppColors.buy : AppColors.sell;
     return VitCard(
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         children: [
@@ -137,7 +139,7 @@ class _OrderBookRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final barPct = maxCumulative == 0 ? 0.0 : level.cumulative / maxCumulative;
     return SizedBox(
-      height: 28,
+      height: AppSpacing.marketDepthOrderRowHeight,
       child: Stack(
         children: [
           Align(
@@ -149,7 +151,7 @@ class _OrderBookRow extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: AppSpacing.marketDepthOrderRowPadding,
             child: Row(
               children: [
                 _BookCell(formatMarketDepthPrice(level.price), color: color),
@@ -187,6 +189,7 @@ class _BookCell extends StatelessWidget {
         style: AppTextStyles.captionSm.copyWith(
           color: color ?? AppColors.text1,
           fontFeatures: AppTextStyles.tabularFigures,
+          height: AppSpacing.marketLineHeightTight,
         ),
       ),
     );
@@ -200,28 +203,35 @@ class _MidPriceStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: RichText(
-        text: TextSpan(
-          style: AppTextStyles.caption,
-          children: [
-            TextSpan(
-              text: '\$${formatMarketDepthPrice(depth.midPrice)}',
-              style: AppTextStyles.baseMedium.copyWith(
-                fontWeight: AppTextStyles.bold,
-              ),
+    return Material(
+      color: AppColors.surface2,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      child: Padding(
+        padding: AppSpacing.marketDepthMidPricePadding,
+        child: Center(
+          child: RichText(
+            text: TextSpan(
+              style: AppTextStyles.caption,
+              children: [
+                TextSpan(
+                  text: '\$${formatMarketDepthPrice(depth.midPrice)}',
+                  style: AppTextStyles.baseMedium.copyWith(
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                    height: AppSpacing.marketLineHeightCaption,
+                  ),
+                ),
+                TextSpan(
+                  text: '   Spread: ${depth.spreadPct.toStringAsFixed(4)}%',
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                    height: AppSpacing.marketLineHeightTight,
+                  ),
+                ),
+              ],
             ),
-            TextSpan(
-              text: '   Spread: ${depth.spreadPct.toStringAsFixed(4)}%',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ],
+          ),
         ),
       ),
     );

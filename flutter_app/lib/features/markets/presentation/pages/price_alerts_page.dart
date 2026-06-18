@@ -117,7 +117,9 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 48 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.priceAlertsVisualBottomExtra
+            : AppSpacing.priceAlertsNativeBottomExtra);
     final activeCount = _alerts.where((alert) => alert.isActive).length;
     final triggeredCount = _alerts
         .where((alert) => !alert.isActive && alert.triggeredAt != null)
@@ -149,7 +151,7 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PriceAlertsPage.contentKey,
-                    padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
+                    padding: AppSpacing.priceAlertsScrollPadding(bottomInset),
                     child: Column(
                       children: [
                         _StatsSummary(
@@ -157,7 +159,9 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                           active: activeCount,
                           triggered: triggeredCount,
                         ),
-                        const SizedBox(height: 13),
+                        const SizedBox(
+                          height: AppSpacing.priceAlertsSectionGap,
+                        ),
                         if (_filteredAlerts.isEmpty)
                           const _EmptyAlertsCard()
                         else
@@ -172,15 +176,21 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                               onDelete: () => _deleteAlert(alert.id),
                             ),
                             if (alert != _filteredAlerts.last)
-                              const SizedBox(height: 12),
+                              const SizedBox(
+                                height: AppSpacing.priceAlertsCardGap,
+                              ),
                           ],
-                        const SizedBox(height: 28),
+                        const SizedBox(height: AppSpacing.sectionGap),
                         _AddAlertButton(onTap: _showAddPlaceholder),
                         if (_showAddNotice) ...[
-                          const SizedBox(height: 10),
+                          const SizedBox(
+                            height: AppSpacing.priceAlertsAddNoticeGap,
+                          ),
                           const _AddAlertNotice(),
                         ],
-                        const SizedBox(height: 16),
+                        const SizedBox(
+                          height: AppSpacing.priceAlertsBottomReviewGap,
+                        ),
                         const MarketBodyReviewSection(
                           title: 'Price alert state review',
                           message: 'Price alert data reviewed',

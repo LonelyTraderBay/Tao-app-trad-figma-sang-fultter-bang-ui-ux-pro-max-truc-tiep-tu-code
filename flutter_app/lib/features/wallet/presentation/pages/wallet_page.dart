@@ -130,7 +130,7 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                 VitCard(
                   variant: VitCardVariant.standard,
                   radius: VitCardRadius.md,
-                  padding: const EdgeInsets.all(AppSpacing.x3),
+                  padding: AppSpacing.cardPaddingCompact,
                   child: _tab == 'assets'
                       ? WalletAssetSection(
                           controller: _searchController,

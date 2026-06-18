@@ -18,14 +18,14 @@ class _TopTradersCard extends StatelessWidget {
             title: 'Top Traders',
             badge: 'Long',
           ),
-          const SizedBox(height: 16),
-          Container(
-            height: 113,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          LiveMarketCard(
+            variant: VitCardVariant.ghost,
+            borderColor: liveMarketGreen.withValues(alpha: .2),
+            height: AppSpacing.liveMarketTopTraderHighlightHeight,
+            padding: AppSpacing.cardPadding,
+            background: ColoredBox(
               color: liveMarketGreen.withValues(alpha: .09),
-              border: Border.all(color: liveMarketGreen.withValues(alpha: .2)),
-              borderRadius: AppRadii.cardRadius,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -34,15 +34,14 @@ class _TopTradersCard extends StatelessWidget {
                   'Top traders dang Long',
                   align: TextAlign.center,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.rowGap),
                 Text(
                   '${data.longPct.toStringAsFixed(1)}%',
                   style: AppTextStyles.amountLg.copyWith(
                     color: liveMarketGreen,
-                    height: 1,
                   ),
                 ),
-                const SizedBox(height: 9),
+                const SizedBox(height: AppSpacing.rowGapRegular),
                 const LiveMarketMutedLabel(
                   'of top traders are long',
                   align: TextAlign.center,
@@ -50,15 +49,13 @@ class _TopTradersCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
           LiveMarketRatioBar(longPct: data.longPct),
-          const SizedBox(height: 12),
-          Container(
-            padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
-            decoration: BoxDecoration(
-              color: liveMarketPanel2,
-              borderRadius: AppRadii.cardRadius,
-            ),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          LiveMarketCard(
+            variant: VitCardVariant.inner,
+            borderColor: AppColors.transparent,
+            padding: AppSpacing.liveMarketRowPadding,
             child: Row(
               children: [
                 Expanded(
@@ -66,38 +63,37 @@ class _TopTradersCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const LiveMarketMutedLabel('24h Change'),
-                      const SizedBox(height: 7),
+                      const SizedBox(height: AppSpacing.rowGapCompact),
                       Text(
                         'Shifted ${data.change24h.abs().toStringAsFixed(1)}% to ${shortShift ? 'Short' : 'Long'}',
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1.2,
                         ),
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
+                ClipOval(
+                  child: ColoredBox(
                     color: (shortShift ? liveMarketRed : liveMarketGreen)
                         .withValues(alpha: .12),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    shortShift
-                        ? Icons.trending_down_rounded
-                        : Icons.trending_up_rounded,
-                    color: shortShift ? liveMarketRed : liveMarketGreen,
-                    size: 23,
+                    child: SizedBox.square(
+                      dimension: AppSpacing.liveMarketTrendActionBox,
+                      child: Icon(
+                        shortShift
+                            ? Icons.trending_down_rounded
+                            : Icons.trending_up_rounded,
+                        color: shortShift ? liveMarketRed : liveMarketGreen,
+                        size: AppSpacing.liveMarketTrendActionIcon,
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
           LiveMarketInfoStrip(
             bg: liveMarketAmber.withValues(alpha: .06),
             color: liveMarketAmber,

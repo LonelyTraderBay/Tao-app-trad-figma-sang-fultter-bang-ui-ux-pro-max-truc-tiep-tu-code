@@ -65,7 +65,7 @@ class _HandoffCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -76,12 +76,12 @@ class _HandoffCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             subtitle,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           for (final child in children) ...[
             child,
             if (child != children.last)
@@ -126,7 +126,7 @@ class _HandoffRow extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 subtitle,
                 style: AppTextStyles.micro.copyWith(
@@ -164,7 +164,7 @@ class _SummaryMetric extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             label,
             maxLines: 1,
@@ -231,7 +231,7 @@ class _SmallTextAction extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          padding: AppSpacing.arenaVerticalPaddingX2,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -276,23 +276,24 @@ class _MiniPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ConstrainedBox(
       constraints: const BoxConstraints(
         minHeight: AppSpacing.arenaEcosystemPillMinHeight,
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        ),
+        child: Padding(
+          padding: AppSpacing.arenaPresetPillPadding,
+          child: Text(
+            label,
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -315,20 +316,24 @@ class _TintIcon extends StatelessWidget {
     final size = small
         ? AppSpacing.arenaEcosystemTintIconBoxSmall
         : AppSpacing.arenaEcosystemTintIconBox;
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        border: Border.all(color: color.withValues(alpha: .20)),
-        borderRadius: small ? AppRadii.inputRadius : AppRadii.mdRadius,
-      ),
-      child: Icon(
-        icon,
-        color: color,
-        size: small
-            ? AppSpacing.arenaEcosystemTintGlyphSmall
-            : AppSpacing.arenaEcosystemTintGlyph,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            borderRadius: small ? AppRadii.inputRadius : AppRadii.mdRadius,
+            side: BorderSide(color: color.withValues(alpha: .20)),
+          ),
+        ),
+        child: Icon(
+          icon,
+          color: color,
+          size: small
+              ? AppSpacing.arenaEcosystemTintGlyphSmall
+              : AppSpacing.arenaEcosystemTintGlyph,
+        ),
       ),
     );
   }
@@ -343,7 +348,7 @@ class _EcosystemFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

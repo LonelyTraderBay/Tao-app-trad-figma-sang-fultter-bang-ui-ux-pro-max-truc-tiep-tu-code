@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -56,8 +57,10 @@ class _RegulatoryDisclosuresPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                AppSpacing.regulatoryDisclosuresBottomInsetVisualExtra
+            : DeviceMetrics.nativeBottomChrome +
+                AppSpacing.regulatoryDisclosuresBottomInsetNativeExtra) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -79,11 +82,13 @@ class _RegulatoryDisclosuresPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: RegulatoryDisclosuresPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      padding: AppSpacing.regulatoryDisclosuresScrollPadding(
+                        bottomInset,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 24,
+                        customGap: AppSpacing.regulatoryDisclosuresContentGap,
                         children: [
                           _LegalHero(snapshot: snapshot),
                           _LegalTabs(
@@ -99,15 +104,17 @@ class _RegulatoryDisclosuresPageState
                                 setState(() => _notice = notice),
                           ),
                           const VitPageSection(
-                            customGap: 0,
+                            customGap:
+                                AppSpacing.regulatoryDisclosuresReviewGap,
                             children: [
                               VitCard(
                                 variant: VitCardVariant.inner,
-                                padding: EdgeInsets.all(12),
+                                padding: AppSpacing.cardPaddingCompact,
                                 child: VitPageContent(
                                   padding: VitContentPadding.none,
                                   fullBleed: true,
-                                  customGap: 8,
+                                  customGap: AppSpacing
+                                      .regulatoryDisclosuresReviewInnerGap,
                                   children: [
                                     VitHighRiskStatePanel(
                                       state: VitHighRiskUiState.riskReview,

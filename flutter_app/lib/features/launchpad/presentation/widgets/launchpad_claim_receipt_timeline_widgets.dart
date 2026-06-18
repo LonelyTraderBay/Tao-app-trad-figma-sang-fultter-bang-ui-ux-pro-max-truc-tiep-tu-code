@@ -10,7 +10,7 @@ class _VestingTimelineCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -63,7 +63,7 @@ class _ClaimHistoryCard extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.launchpadPaddingX4,
           child: Row(
             children: [
               Expanded(
@@ -110,54 +110,64 @@ class _VestingMiniRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _vestingColor(entry.status);
-    return Container(
+    return Column(
       key: LaunchpadClaimReceiptPage.vestingKey(entry.id),
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            _vestingIcon(entry.status),
-            color: color,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  entry.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                Text(
-                  entry.unlockDate,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Padding(
+          padding: AppSpacing.launchpadVerticalPaddingX3,
+          child: Row(
             children: [
-              Text(
-                '${_formatNumber(entry.amount)} ${entry.token}',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
+              Icon(
+                _vestingIcon(entry.status),
+                color: color,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      entry.label,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    Text(
+                      entry.unlockDate,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              _StatusBadge(label: _vestingLabel(entry.status), color: color),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '${_formatNumber(entry.amount)} ${entry.token}',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                  _StatusBadge(
+                    label: _vestingLabel(entry.status),
+                    color: color,
+                  ),
+                ],
+              ),
             ],
           ),
-        ],
-      ),
+        ),
+        const Divider(
+          height: AppSpacing.launchpadDividerHeight,
+          color: AppColors.divider,
+        ),
+      ],
     );
   }
 }
@@ -175,11 +185,11 @@ class _VestingTimelineRow extends StatelessWidget {
         entry.status == LaunchpadVestingEntryStatus.unlocking;
     return Padding(
       key: LaunchpadClaimReceiptPage.vestingKey(entry.id),
-      padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+      padding: AppSpacing.launchpadBottomPaddingX3,
       child: VitCard(
         variant: claimable ? VitCardVariant.inner : VitCardVariant.standard,
         radius: VitCardRadius.md,
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.launchpadPaddingX3,
         child: Row(
           children: [
             Icon(
@@ -212,7 +222,7 @@ class _VestingTimelineRow extends StatelessWidget {
                 variant: VitCtaButtonVariant.success,
                 fullWidth: false,
                 height: AppSpacing.buttonCompact,
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+                padding: AppSpacing.launchpadHorizontalPaddingX3,
                 child: const Text('Nhận'),
               )
             else

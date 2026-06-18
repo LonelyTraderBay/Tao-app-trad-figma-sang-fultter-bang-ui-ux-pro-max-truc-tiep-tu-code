@@ -16,38 +16,22 @@ class _SettingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 24),
+      padding: AppSpacing.copySettingsSectionPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              if (showAccent) ...[
-                Container(
-                  width: 4,
-                  height: 14,
-                  decoration: BoxDecoration(
-                    color: accent,
-                    borderRadius: AppRadii.xlRadius,
-                  ),
-                ),
-                const SizedBox(width: 7),
-              ] else
-                const SizedBox(width: 10),
-              Text(
-                label,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1.1,
-                ),
-              ),
-            ],
+          VitSectionHeader(
+            title: label,
+            variant: showAccent
+                ? VitSectionHeaderVariant.accentBar
+                : VitSectionHeaderVariant.plain,
+            accentColor: accent,
           ),
-          const SizedBox(height: 11),
+          const SizedBox(height: AppSpacing.rowGapRegular),
           for (final child in children) ...[
             child,
-            if (child != children.last) const SizedBox(height: 12),
+            if (child != children.last)
+              const SizedBox(height: AppSpacing.cardGap),
           ],
         ],
       ),
@@ -64,7 +48,7 @@ class _ModeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SettingsCard(
-      height: 84,
+      height: AppSpacing.copySettingsModeCardHeight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -81,7 +65,7 @@ class _ModeCard extends StatelessWidget {
                   ),
                 ),
                 if (mode != TradeCopySettingsMode.values.last)
-                  const SizedBox(width: 9),
+                  const SizedBox(width: AppSpacing.walletAssetPillGap),
               ],
             ],
           ),
@@ -104,26 +88,18 @@ class _ModeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: CopySettingsPage.modeKey(mode),
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 34,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _settingsPrimary
-              : AppColors.bg.withValues(alpha: .56),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          _modeLabel(mode),
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1.1,
-          ),
+      onPressed: onTap,
+      variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
+      height: AppSpacing.buttonCompact,
+      padding: AppSpacing.copySettingsModeButtonPadding,
+      child: Text(
+        _modeLabel(mode),
+        style: AppTextStyles.caption.copyWith(
+          color: active ? AppColors.onAccent : AppColors.text2,
+          fontWeight: AppTextStyles.bold,
+          height: AppSpacing.copySettingsLineHeightTight,
         ),
       ),
     );
@@ -160,7 +136,9 @@ class _SliderCard extends StatelessWidget {
     final hasSubtext = subtitle != null || caption != null;
 
     return _SettingsCard(
-      height: hasSubtext ? 93 : 76,
+      height: hasSubtext
+          ? AppSpacing.copySettingsSliderCardWithSubtextHeight
+          : AppSpacing.copySettingsSliderCardHeight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -173,27 +151,27 @@ class _SliderCard extends StatelessWidget {
                   children: [
                     Text(title, style: _cardTitleStyle()),
                     if (subtitle != null) ...[
-                      const SizedBox(height: 3),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         subtitle!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1.4,
+                          height: AppSpacing.copySettingsLineHeightBody,
                         ),
                       ),
                     ],
                   ],
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.walletAssetPillGap),
               Text(
                 valueLabel,
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.1,
+                  height: AppSpacing.copySettingsLineHeightTight,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
@@ -209,14 +187,14 @@ class _SliderCard extends StatelessWidget {
             onChanged: onChanged,
           ),
           if (caption != null) ...[
-            const SizedBox(height: 6),
+            const SizedBox(height: AppSpacing.formFieldLabelGap),
             Text(
               caption!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.4,
+                height: AppSpacing.copySettingsLineHeightBody,
               ),
             ),
           ],

@@ -26,50 +26,68 @@ class _DetailTabs extends StatelessWidget {
         PredictionEventDetailPage.activityTabKey,
       ),
     ];
-    return Container(
-      padding: AppSpacing.predictionDetailTabsPadding,
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            for (final tab in tabs)
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: AppSpacing.predictionDetailTabsGap,
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.cardRadius,
+      child: Padding(
+        padding: AppSpacing.predictionDetailTabsPadding,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              for (var index = 0; index < tabs.length; index += 1) ...[
+                if (index > 0)
+                  const SizedBox(width: AppSpacing.predictionDetailTabsGap),
+                _DetailTabButton(
+                  tab: tabs[index],
+                  active: activeTab == tabs[index].$1,
+                  onChanged: onChanged,
                 ),
-                child: InkWell(
-                  key: tab.$3,
-                  onTap: () => onChanged(tab.$1),
-                  borderRadius: AppRadii.smRadius,
-                  child: Container(
-                    height: AppSpacing.predictionDetailTabHeight,
-                    padding: AppSpacing.predictionDetailTabPadding,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: activeTab == tab.$1
-                          ? AppColors.surface
-                          : AppColors.transparent,
-                      borderRadius: AppRadii.smRadius,
-                    ),
-                    child: Text(
-                      tab.$2,
-                      style: AppTextStyles.caption.copyWith(
-                        color: activeTab == tab.$1
-                            ? AppColors.text1
-                            : AppColors.text3,
-                        fontWeight: activeTab == tab.$1
-                            ? AppTextStyles.bold
-                            : AppTextStyles.normal,
-                      ),
-                    ),
-                  ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DetailTabButton extends StatelessWidget {
+  const _DetailTabButton({
+    required this.tab,
+    required this.active,
+    required this.onChanged,
+  });
+
+  final (_DetailTab, String, Key) tab;
+  final bool active;
+  final ValueChanged<_DetailTab> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: active ? AppColors.surface : AppColors.transparent,
+      borderRadius: AppRadii.smRadius,
+      child: InkWell(
+        key: tab.$3,
+        onTap: () => onChanged(tab.$1),
+        borderRadius: AppRadii.smRadius,
+        child: SizedBox(
+          height: AppSpacing.predictionDetailTabHeight,
+          child: Padding(
+            padding: AppSpacing.predictionDetailTabPadding,
+            child: Center(
+              child: Text(
+                tab.$2,
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? AppColors.text1 : AppColors.text3,
+                  fontWeight: active
+                      ? AppTextStyles.bold
+                      : AppTextStyles.normal,
                 ),
               ),
-          ],
+            ),
+          ),
         ),
       ),
     );
@@ -135,33 +153,43 @@ class _RulesContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.predictionDetailTabTitleGap),
-        for (var index = 0; index < snapshot.rules.length; index += 1)
-          Padding(
-            padding: const EdgeInsets.only(
-              bottom: AppSpacing.predictionDetailRuleBottomGap,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: AppSpacing.predictionDetailRuleNumberWidth,
-                  child: Text(
-                    '${index + 1}.',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    snapshot.rules[index],
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-                  ),
-                ),
-              ],
+        for (var index = 0; index < snapshot.rules.length; index += 1) ...[
+          _RuleRow(index: index, text: snapshot.rules[index]),
+          if (index != snapshot.rules.length - 1)
+            const SizedBox(height: AppSpacing.predictionDetailRuleBottomGap),
+        ],
+      ],
+    );
+  }
+}
+
+class _RuleRow extends StatelessWidget {
+  const _RuleRow({required this.index, required this.text});
+
+  final int index;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: AppSpacing.predictionDetailRuleNumberWidth,
+          child: Text(
+            '${index + 1}.',
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
+        ),
+        Expanded(
+          child: Text(
+            text,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+          ),
+        ),
       ],
     );
   }
@@ -225,40 +253,43 @@ class _InfoBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionDetailInfoBoxPadding,
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            icon,
-            color: color,
-            size: AppSpacing.predictionDetailInfoBoxIcon,
-          ),
-          const SizedBox(width: AppSpacing.predictionDetailInfoBoxGap),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: AppSpacing.predictionDetailInfoBoxTextGap,
-                ),
-                Text(text, style: AppTextStyles.caption.copyWith(color: color)),
-              ],
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.mdRadius,
+      child: Padding(
+        padding: AppSpacing.predictionDetailInfoBoxPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              icon,
+              color: color,
+              size: AppSpacing.predictionDetailInfoBoxIcon,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.predictionDetailInfoBoxGap),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.predictionDetailInfoBoxTextGap,
+                  ),
+                  Text(
+                    text,
+                    style: AppTextStyles.caption.copyWith(color: color),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

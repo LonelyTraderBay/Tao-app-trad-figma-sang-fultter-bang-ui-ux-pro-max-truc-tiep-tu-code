@@ -35,7 +35,7 @@ class _SwapTab extends StatelessWidget {
         VitCard(
           key: StakingLiquidStakingPage.swapCardKey,
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.cardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -54,8 +54,9 @@ class _SwapTab extends StatelessWidget {
                   variant: VitCtaButtonVariant.secondary,
                   fullWidth: false,
                   height: AppSpacing.buttonCompact,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x4,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.x4,
+                    right: AppSpacing.x4,
                   ),
                   onPressed: onReverse,
                   child: const Icon(Icons.swap_vert_rounded),
@@ -93,7 +94,7 @@ class _SwapTab extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.primary20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.cardPadding,
           child: Text.rich(
             TextSpan(
               children: [
@@ -196,10 +197,7 @@ class _ReceiveRow extends StatelessWidget {
             child: VitCard(
               variant: VitCardVariant.inner,
               radius: VitCardRadius.md,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x4,
-                vertical: AppSpacing.x4,
-              ),
+              padding: AppSpacing.cardPadding,
               child: Align(
                 alignment: Alignment.centerRight,
                 child: FittedBox(
@@ -258,7 +256,10 @@ class _AssetSelector extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.x3,
+        right: AppSpacing.x3,
+      ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: options.contains(selected) ? selected : options.first,
@@ -330,7 +331,7 @@ class _SwapSummary extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Column(
         children: [
           _SheetRow(
@@ -367,7 +368,7 @@ class _HoldingsTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.cardPaddingHero,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -391,21 +392,23 @@ class _HoldingsTab extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    width: AppSpacing.buttonHero,
-                    height: AppSpacing.buttonHero,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary12,
+                  Material(
+                    color: AppColors.primary12,
+                    shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.xlRadius,
-                      border: Border.all(
+                      side: const BorderSide(
                         color: AppColors.primary30,
                         width: AppSpacing.stakingProductIconBorderWidth,
                       ),
                     ),
-                    child: const Icon(
-                      Icons.water_drop_rounded,
-                      color: AppColors.primarySoft,
-                      size: AppSpacing.iconLg,
+                    child: const SizedBox(
+                      width: AppSpacing.buttonHero,
+                      height: AppSpacing.buttonHero,
+                      child: Icon(
+                        Icons.water_drop_rounded,
+                        color: AppColors.primarySoft,
+                        size: AppSpacing.iconLg,
+                      ),
                     ),
                   ),
                 ],
@@ -438,7 +441,7 @@ class _HoldingMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

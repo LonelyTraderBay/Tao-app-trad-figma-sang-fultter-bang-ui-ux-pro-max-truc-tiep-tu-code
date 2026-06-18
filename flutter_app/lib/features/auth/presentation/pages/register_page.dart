@@ -179,20 +179,20 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: RegisterPage.contentKey,
-                padding: const EdgeInsets.only(bottom: AppSpacing.x6),
+                padding: AppSpacing.authScrollBottomPadding,
                 child: AutofillGroup(
                   child: VitPageContent(
-                    customGap: 16,
+                    customGap: AppSpacing.authPageContentGap,
                     children: [
                       VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _RegisterSegmentedControl(
                           contactType: _contactType,
                           onChanged: _setContactType,
                         ),
                       ),
                       VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: VitInput(
                           controller: _nameController,
                           fieldKey: RegisterPage.nameFieldKey,
@@ -207,7 +207,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
                       ),
                       VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: VitInput(
                           controller: _contactController,
                           fieldKey: RegisterPage.contactFieldKey,
@@ -262,9 +262,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                           ),
                           if (_passwordController.text.isNotEmpty)
                             Padding(
-                              padding: const EdgeInsets.only(
-                                top: AppSpacing.x3,
-                              ),
+                              padding: AppSpacing.authTopGapX3,
                               child: _PasswordStrength(
                                 password: _passwordController.text,
                               ),
@@ -338,10 +336,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 : () => context.go(AppRoutePaths.authLogin),
                             style: TextButton.styleFrom(
                               foregroundColor: _authPrimary,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4,
+                              padding: AppSpacing.authInlineTextButtonPadding,
+                              minimumSize: const Size(
+                                AppSpacing.zero,
+                                AppSpacing.authTextButtonHeight,
                               ),
-                              minimumSize: const Size(0, 32),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             child: Text(

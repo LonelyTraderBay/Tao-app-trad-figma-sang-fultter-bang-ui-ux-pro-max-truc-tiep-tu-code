@@ -12,8 +12,8 @@ class _FearGreedHistory extends StatelessWidget {
       accentColor: AppColors.primarySoft,
       children: [
         VitCard(
-          height: 128,
-          padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
+          height: AppSpacing.marketOverviewHistoryHeight,
+          padding: AppSpacing.marketOverviewHistoryPadding,
           child: Column(
             children: [
               Expanded(
@@ -27,12 +27,15 @@ class _FearGreedHistory extends StatelessWidget {
                           active: i == points.length - 1,
                         ),
                       ),
-                      if (i < points.length - 1) const SizedBox(width: 4),
+                      if (i < points.length - 1)
+                        const SizedBox(
+                          width: AppSpacing.marketAnalyticsMicroGap,
+                        ),
                     ],
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.marketAnalyticsMediumGap),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -40,14 +43,14 @@ class _FearGreedHistory extends StatelessWidget {
                     '7 ngày trước',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
+                      height: AppSpacing.marketLineHeightTight,
                     ),
                   ),
                   Text(
                     'Hôm nay',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
+                      height: AppSpacing.marketLineHeightTight,
                     ),
                   ),
                 ],
@@ -68,7 +71,8 @@ class _HistoryBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = point.value / 100 * 64;
+    final height =
+        point.value / 100 * AppSpacing.marketOverviewHistoryBarMaxHeight;
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -79,17 +83,20 @@ class _HistoryBar extends StatelessWidget {
             // T3.3 exception: compact chart-axis label for Fear&Greed bars.
             // Keep 8px equivalent spacing to prevent overlap on mini chart points.
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1,
+            height: AppSpacing.marketLineHeightTight,
           ),
         ),
-        const SizedBox(height: 6),
-        Container(
-          height: height,
-          decoration: BoxDecoration(
-            color: _fearGreedColor(
-              point.value,
-            ).withValues(alpha: active ? 1 : 0.62),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
+        const SizedBox(height: AppSpacing.marketAnalyticsSmallGap),
+        ClipRRect(
+          borderRadius: AppRadii.smRadius,
+          child: SizedBox(
+            height: height,
+            width: double.infinity,
+            child: ColoredBox(
+              color: _fearGreedColor(
+                point.value,
+              ).withValues(alpha: active ? 1 : 0.62),
+            ),
           ),
         ),
       ],
@@ -142,15 +149,15 @@ class _MarketTools extends StatelessWidget {
             Row(
               children: [
                 Expanded(child: tools[0]),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
                 Expanded(child: tools[1]),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.marketAnalyticsCompactGap),
             Row(
               children: [
                 Expanded(child: tools[2]),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
                 Expanded(child: tools[3]),
               ],
             ),
@@ -179,13 +186,13 @@ class _MarketTool extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 60,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      height: AppSpacing.marketOverviewToolHeight,
+      padding: AppSpacing.marketOverviewToolPadding,
       onTap: () => context.go(route),
       child: Row(
         children: [
-          Icon(icon, color: color, size: 22),
-          const SizedBox(width: 12),
+          Icon(icon, color: color, size: AppSpacing.marketOverviewToolIcon),
+          const SizedBox(width: AppSpacing.marketAnalyticsGap),
           Expanded(
             child: Text(
               label,
@@ -193,7 +200,7 @@ class _MarketTool extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.body.copyWith(
                 fontWeight: AppTextStyles.bold,
-                height: 1.15,
+                height: AppSpacing.marketLineHeightShort,
               ),
             ),
           ),
@@ -218,8 +225,8 @@ class _MiniHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: color, size: 14),
-        const SizedBox(width: 7),
+        Icon(icon, color: color, size: AppSpacing.marketOverviewMiniHeaderIcon),
+        const SizedBox(width: AppSpacing.marketOverviewMiniHeaderGap),
         Expanded(
           child: Text(
             label,
@@ -228,7 +235,7 @@ class _MiniHeader extends StatelessWidget {
             style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.marketLineHeightTight,
             ),
           ),
         ),
@@ -252,15 +259,15 @@ class _IconBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.13),
-        borderRadius: BorderRadius.circular(size / 3.2),
+    return Material(
+      color: color.withValues(alpha: 0.13),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+      child: SizedBox.square(
+        dimension: size,
+        child: Center(
+          child: Icon(icon, color: color, size: iconSize),
+        ),
       ),
-      alignment: Alignment.center,
-      child: Icon(icon, color: color, size: iconSize),
     );
   }
 }
@@ -273,21 +280,13 @@ class _ChangePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final positive = value >= 0;
-    final color = positive ? AppColors.buy : AppColors.sell;
-    return Container(
-      margin: const EdgeInsets.only(bottom: 2),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.15),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        '${positive ? '▲' : '▼'} ${value.abs().toStringAsFixed(2)}%',
-        style: AppTextStyles.caption.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
+    return Padding(
+      padding: AppSpacing.marketMetricDeltaPillPadding,
+      child: VitMetricDeltaPill(
+        label: '${value.abs().toStringAsFixed(2)}%',
+        tone: positive
+            ? VitMetricDeltaTone.positive
+            : VitMetricDeltaTone.negative,
       ),
     );
   }

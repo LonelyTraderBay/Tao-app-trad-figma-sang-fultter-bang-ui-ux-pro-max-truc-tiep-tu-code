@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/p2p/domain/entities/p2p_entities.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class P2PDisputeSmallPill extends StatelessWidget {
   const P2PDisputeSmallPill({
@@ -19,22 +20,7 @@ class P2PDisputeSmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Padding(
-        padding: AppSpacing.p2pDisputePillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -60,22 +46,24 @@ class P2PDisputeSmallButton extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.buttonCompact,
-          padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: color, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                label,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, color: color, size: AppSpacing.iconSm),
+                const SizedBox(width: AppSpacing.x1),
+                Text(
+                  label,
+                  style: AppTextStyles.micro.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

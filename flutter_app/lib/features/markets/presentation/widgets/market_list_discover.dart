@@ -24,7 +24,7 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.marketDiscoverLabelGap),
         VitCard(
           clip: true,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               _DiscoverRow(
@@ -64,25 +64,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: AppSpacing.marketDiscoverAccentWidth,
-          height: AppSpacing.marketDiscoverAccentHeight,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: AppRadii.hairlineRadius,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.marketDiscoverLabelTextGap),
-        Text(
-          title,
-          style: AppTextStyles.body.copyWith(
-            color: AppColors.text1,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: title,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: accentColor,
     );
   }
 }
@@ -112,17 +97,19 @@ class _DiscoverRow extends StatelessWidget {
         padding: AppSpacing.marketDiscoverRowPadding,
         child: Row(
           children: [
-            Container(
-              width: AppSpacing.marketDiscoverIconBox,
-              height: AppSpacing.marketDiscoverIconBox,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.12),
+            Material(
+              color: color.withValues(alpha: 0.12),
+              shape: const RoundedRectangleBorder(
                 borderRadius: AppRadii.mdRadius,
               ),
-              child: Icon(
-                icon,
-                color: color,
-                size: AppSpacing.marketDiscoverIcon,
+              child: SizedBox(
+                width: AppSpacing.marketDiscoverIconBox,
+                height: AppSpacing.marketDiscoverIconBox,
+                child: Icon(
+                  icon,
+                  color: color,
+                  size: AppSpacing.marketDiscoverIcon,
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.marketDiscoverRowGap),
@@ -145,20 +132,7 @@ class _DiscoverRow extends StatelessWidget {
                       const SizedBox(
                         width: AppSpacing.marketDiscoverTitleBadgeGap,
                       ),
-                      Container(
-                        padding: AppSpacing.marketDiscoverBadgePadding,
-                        decoration: BoxDecoration(
-                          color: color.withValues(alpha: 0.10),
-                          borderRadius: AppRadii.xsRadius,
-                        ),
-                        child: Text(
-                          badge,
-                          style: AppTextStyles.micro.copyWith(
-                            color: color,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                      ),
+                      VitAccentPill(label: badge, accentColor: color),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.marketDiscoverSubtitleGap),

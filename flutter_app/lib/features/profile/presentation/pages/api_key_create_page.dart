@@ -71,8 +71,10 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 120
-            : DeviceMetrics.nativeBottomChrome + 32) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.profileApiCreateBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.profileApiCreateBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return switch (_step) {
@@ -101,10 +103,12 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(20, 17, 20, bottomInset),
+                  padding: AppSpacing.profileApiCreateScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 24,
+                    customGap: AppSpacing.profileApiCreateContentGap,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(

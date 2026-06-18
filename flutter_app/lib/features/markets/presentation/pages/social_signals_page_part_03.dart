@@ -18,7 +18,10 @@ class _ProviderMetric extends StatelessWidget {
         Text(
           label,
           textAlign: TextAlign.center,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            height: AppSpacing.marketLineHeightTight,
+          ),
         ),
         Text(
           value,
@@ -26,6 +29,8 @@ class _ProviderMetric extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
+            height: AppSpacing.marketLineHeightTight,
           ),
         ),
       ],
@@ -42,7 +47,7 @@ class _PerformanceSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketSocialCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -51,9 +56,10 @@ class _PerformanceSummary extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.portfolioTextMuted,
               fontWeight: AppTextStyles.medium,
+              height: AppSpacing.marketLineHeightTight,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketSocialSectionGap),
           Row(
             children: [
               Expanded(
@@ -104,12 +110,14 @@ class _HeroMetric extends StatelessWidget {
           style: AppTextStyles.sectionTitleSm.copyWith(
             color: color,
             fontFeatures: AppTextStyles.tabularFigures,
+            height: AppSpacing.marketLineHeightCaption,
           ),
         ),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.portfolioTextMuted,
+            height: AppSpacing.marketLineHeightTight,
           ),
         ),
       ],
@@ -132,7 +140,7 @@ class _StatusBreakdown extends StatelessWidget {
     };
 
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketSocialCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -141,13 +149,14 @@ class _StatusBreakdown extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
+              height: AppSpacing.marketLineHeightTight,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketSocialSectionGap),
           ClipRRect(
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
-              height: 12,
+              height: AppSpacing.marketSocialStatusBarHeight,
               child: Row(
                 children: [
                   for (final entry in counts.entries)
@@ -162,10 +171,10 @@ class _StatusBreakdown extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.marketSocialMediumGap),
           Wrap(
-            spacing: 12,
-            runSpacing: 6,
+            spacing: AppSpacing.marketSocialSectionGap,
+            runSpacing: AppSpacing.marketSocialCompactGap,
             children: [
               for (final entry in counts.entries)
                 if (entry.value > 0)
@@ -193,18 +202,20 @@ class _LegendItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: AppRadii.xsRadius,
+        Material(
+          color: color,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+          child: const SizedBox.square(
+            dimension: AppSpacing.marketSocialLegendDot,
           ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: AppSpacing.marketSocialCompactGap),
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            height: AppSpacing.marketLineHeightTight,
+          ),
         ),
       ],
     );
@@ -220,65 +231,70 @@ class _SignalResultRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final positive = signal.pnlPct >= 0;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Row(
-        children: [
-          Icon(
-            positive ? Icons.check_circle_rounded : Icons.cancel_rounded,
-            color: positive ? AppColors.buy : AppColors.sell,
-            size: 16,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      signal.pair,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    _TinyBadge(
-                      label: signal.direction == TradingSignalDirection.long
-                          ? 'LONG'
-                          : 'SHORT',
-                      color: signal.direction == TradingSignalDirection.long
-                          ? AppColors.buy
-                          : AppColors.sell,
-                      background:
-                          signal.direction == TradingSignalDirection.long
-                          ? AppColors.buy10
-                          : AppColors.sell10,
-                      height: 17,
-                    ),
-                  ],
-                ),
-                Text(
-                  '${signal.providerName} · ${signal.timeAgo}',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            _formatPercent(signal.pnlPct),
-            style: AppTextStyles.caption.copyWith(
+    return Material(
+      color: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      child: Padding(
+        padding: AppSpacing.marketSocialResultPadding,
+        child: Row(
+          children: [
+            Icon(
+              positive ? Icons.check_circle_rounded : Icons.cancel_rounded,
               color: positive ? AppColors.buy : AppColors.sell,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
+              size: AppSpacing.marketSocialResultIcon,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.marketSocialSectionGap),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        signal.pair,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                          height: AppSpacing.marketLineHeightTight,
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.marketSocialGap),
+                      _TinyBadge(
+                        label: signal.direction == TradingSignalDirection.long
+                            ? 'LONG'
+                            : 'SHORT',
+                        color: signal.direction == TradingSignalDirection.long
+                            ? AppColors.buy
+                            : AppColors.sell,
+                        background:
+                            signal.direction == TradingSignalDirection.long
+                            ? AppColors.buy10
+                            : AppColors.sell10,
+                        height: AppSpacing.marketSocialTinyBadgeHeightMd,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '${signal.providerName} · ${signal.timeAgo}',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      height: AppSpacing.marketLineHeightTight,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              _formatPercent(signal.pnlPct),
+              style: AppTextStyles.caption.copyWith(
+                color: positive ? AppColors.buy : AppColors.sell,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+                height: AppSpacing.marketLineHeightTight,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -292,25 +308,10 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 3,
-          height: 16,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: accentColor,
     );
   }
 }
@@ -321,20 +322,23 @@ class _SignalsEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 180,
+      height: AppSpacing.marketSocialEmptyHeight,
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               Icons.track_changes_rounded,
-              size: 32,
+              size: AppSpacing.marketSocialEmptyIcon,
               color: AppColors.text3.withValues(alpha: .35),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.marketSocialSectionGap),
             Text(
               'Không có tín hiệu phù hợp',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text3,
+                height: AppSpacing.marketLineHeightTight,
+              ),
             ),
           ],
         ),

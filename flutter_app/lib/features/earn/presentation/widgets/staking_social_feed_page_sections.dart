@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingSocialFeedPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,7 +53,7 @@ class _Composer extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.composerKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           const _Avatar(label: 'Me', icon: Icons.person_rounded),
@@ -89,7 +89,7 @@ class _FeedTabs extends StatelessWidget {
       key: StakingSocialFeedPage.tabsKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+      padding: AppSpacing.earnHorizontalPaddingX4,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
         activeKey: activeTabId,
@@ -130,7 +130,7 @@ class _PostCard extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.postKey(post.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -240,20 +240,23 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.x6,
       height: AppSpacing.x6,
-      decoration: const BoxDecoration(
-        color: AppColors.primary12,
-        borderRadius: AppRadii.lgRadius,
-      ),
-      alignment: Alignment.center,
-      child: Semantics(
-        label: label,
-        child: Icon(
-          icon,
-          color: AppColors.primarySoft,
-          size: AppSpacing.iconMd,
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.primary12,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+        ),
+        child: Center(
+          child: Semantics(
+            label: label,
+            child: Icon(
+              icon,
+              color: AppColors.primarySoft,
+              size: AppSpacing.iconMd,
+            ),
+          ),
         ),
       ),
     );
@@ -267,29 +270,30 @@ class _TypeChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: meta.background,
-        borderRadius: AppRadii.smRadius,
-        border: Border.all(color: meta.border),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: meta.border),
+          borderRadius: AppRadii.smRadius,
+        ),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(meta.icon, color: meta.color, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.x1),
-          Text(
-            meta.label,
-            style: AppTextStyles.micro.copyWith(
-              color: meta.color,
-              height: AppSpacing.stakingCommunityPillLineHeight,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(meta.icon, color: meta.color, size: AppSpacing.iconSm),
+            const SizedBox(width: AppSpacing.x1),
+            Text(
+              meta.label,
+              style: AppTextStyles.micro.copyWith(
+                color: meta.color,
+                height: AppSpacing.stakingCommunityPillLineHeight,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -330,7 +334,7 @@ class _CommunityStats extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.statsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

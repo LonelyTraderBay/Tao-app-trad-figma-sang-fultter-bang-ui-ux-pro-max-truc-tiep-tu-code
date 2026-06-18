@@ -8,29 +8,28 @@ class _HopChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Column(
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadInlinePillPadding,
+        child: Column(
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-          Text(
-            subtitle,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
+            Text(
+              subtitle,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -44,29 +43,34 @@ class _DetailsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.launchpadVerticalPaddingX2,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ),
+              Text(
+                value,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
+            ],
           ),
-          Text(
-            value,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-        ],
-      ),
+        ),
+        const Divider(
+          height: AppSpacing.launchpadDividerHeight,
+          color: AppColors.divider,
+        ),
+      ],
     );
   }
 }
@@ -76,38 +80,42 @@ class _RiskDisclosure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: LaunchpadBridgeComparePage.riskKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.warn08,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.lgRadius,
+          side: BorderSide(color: AppColors.warningBorder),
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              'Lưu ý rủi ro đầu tư',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.warn,
-                fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX4,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.iconSm,
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Text(
+                'Lưu ý rủi ro đầu tư',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.warn,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
-          ),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.text3,
-            size: AppSpacing.iconSm,
-          ),
-        ],
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.text3,
+              size: AppSpacing.iconSm,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -197,135 +205,146 @@ class _RouteConfirmOverlay extends StatelessWidget {
         color: AppColors.dynamicIslandBg.withValues(alpha: .74),
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
+          child: ConstrainedBox(
             key: LaunchpadBridgeComparePage.confirmKey,
-            width: double.infinity,
             constraints: const BoxConstraints(maxHeight: 620),
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.x5,
-              AppSpacing.x4,
-              AppSpacing.x5,
-              AppSpacing.x6,
-            ),
-            decoration: const BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(AppRadii.xl),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: AppSpacing.launchpadBox40,
-                  height: AppSpacing.launchpadSheetHandleHeight,
-                  decoration: BoxDecoration(
-                    color: AppColors.borderSolid,
-                    borderRadius: AppRadii.inputRadius,
+            child: SizedBox(
+              width: double.infinity,
+              child: DecoratedBox(
+                decoration: const ShapeDecoration(
+                  color: AppColors.surface,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.sheetTopLargeRadius,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x4),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Xác nhận route',
-                        style: AppTextStyles.sectionTitle.copyWith(
+                child: Padding(
+                  padding: AppSpacing.launchpadConfirmSheetPadding,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(
+                        width: AppSpacing.launchpadBox40,
+                        height: AppSpacing.launchpadSheetHandleHeight,
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: AppColors.borderSolid,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadii.inputRadius,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x4),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Xác nhận route',
+                              style: AppTextStyles.sectionTitle.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: onClose,
+                            icon: const Icon(
+                              Icons.close_rounded,
+                              color: AppColors.text2,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.x3),
+                      _ProviderBadge(
+                        label: route.providerIcon,
+                        accent: route.accent,
+                        size: AppSpacing.launchpadBox56,
+                      ),
+                      const SizedBox(height: AppSpacing.x3),
+                      Text(
+                        route.provider,
+                        style: AppTextStyles.baseMedium.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: onClose,
-                      icon: const Icon(
-                        Icons.close_rounded,
-                        color: AppColors.text2,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.x3),
-                _ProviderBadge(
-                  label: route.providerIcon,
-                  accent: route.accent,
-                  size: AppSpacing.launchpadBox56,
-                ),
-                const SizedBox(height: AppSpacing.x3),
-                Text(
-                  route.provider,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                Text(
-                  '${route.hops} hops · ${route.estimatedTime}',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-                const SizedBox(height: AppSpacing.x4),
-                VitCard(
-                  variant: VitCardVariant.inner,
-                  radius: VitCardRadius.lg,
-                  padding: const EdgeInsets.all(AppSpacing.x4),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: _ConfirmAmount(
-                          label: 'Bạn gửi',
-                          value: _formatNumber(comparison.inputAmount),
-                          token: comparison.inputToken,
-                          chain: comparison.sourceChain,
+                      Text(
+                        '${route.hops} hops · ${route.estimatedTime}',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text3,
                         ),
                       ),
-                      const Icon(
-                        Icons.arrow_forward_rounded,
-                        color: AppColors.text3,
-                        size: AppSpacing.iconSm,
-                      ),
-                      Expanded(
-                        child: _ConfirmAmount(
-                          label: 'Nhận',
-                          value: _formatNumber(route.outputAmount),
-                          token: comparison.outputToken,
-                          chain: comparison.targetChain,
-                          color: AppColors.buy,
+                      const SizedBox(height: AppSpacing.x4),
+                      VitCard(
+                        variant: VitCardVariant.inner,
+                        radius: VitCardRadius.lg,
+                        padding: AppSpacing.launchpadPaddingX4,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: _ConfirmAmount(
+                                label: 'Bạn gửi',
+                                value: _formatNumber(comparison.inputAmount),
+                                token: comparison.inputToken,
+                                chain: comparison.sourceChain,
+                              ),
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_rounded,
+                              color: AppColors.text3,
+                              size: AppSpacing.iconSm,
+                            ),
+                            Expanded(
+                              child: _ConfirmAmount(
+                                label: 'Nhận',
+                                value: _formatNumber(route.outputAmount),
+                                token: comparison.outputToken,
+                                chain: comparison.targetChain,
+                                color: AppColors.buy,
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      const SizedBox(height: AppSpacing.x3),
+                      _DetailsRow(
+                        label: 'Price impact',
+                        value: '${_trimDouble(route.priceImpact)}%',
+                      ),
+                      _DetailsRow(label: 'Tổng phí', value: route.totalFeeUsd),
+                      _DetailsRow(
+                        label: 'Security',
+                        value: '${route.securityScore}/100',
+                      ),
+                      const SizedBox(height: AppSpacing.x4),
+                      DecoratedBox(
+                        decoration: const ShapeDecoration(
+                          color: AppColors.primary08,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.mdRadius,
+                            side: BorderSide(color: AppColors.primary12),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: AppSpacing.launchpadPaddingX3,
+                          child: Text(
+                            'Đây là chế độ mô phỏng. Kết quả thực tế có thể khác theo điều kiện thị trường.',
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text2,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x4),
+                      VitCtaButton(
+                        onPressed: onExecute,
+                        child: Text('Xác nhận Bridge qua ${route.provider}'),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
-                _DetailsRow(
-                  label: 'Price impact',
-                  value: '${_trimDouble(route.priceImpact)}%',
-                ),
-                _DetailsRow(label: 'Tổng phí', value: route.totalFeeUsd),
-                _DetailsRow(
-                  label: 'Security',
-                  value: '${route.securityScore}/100',
-                ),
-                const SizedBox(height: AppSpacing.x4),
-                Container(
-                  padding: const EdgeInsets.all(AppSpacing.x3),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary08,
-                    border: Border.all(color: AppColors.primary12),
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: Text(
-                    'Đây là chế độ mô phỏng. Kết quả thực tế có thể khác theo điều kiện thị trường.',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text2,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x4),
-                VitCtaButton(
-                  onPressed: onExecute,
-                  child: Text('Xác nhận Bridge qua ${route.provider}'),
-                ),
-              ],
+              ),
             ),
           ),
         ),

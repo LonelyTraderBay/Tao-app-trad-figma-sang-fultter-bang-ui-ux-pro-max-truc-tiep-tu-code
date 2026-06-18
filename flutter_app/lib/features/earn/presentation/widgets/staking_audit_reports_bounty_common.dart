@@ -15,7 +15,7 @@ class _BugBountySection extends StatelessWidget {
         VitCard(
           key: StakingAuditReportsPage.bugBountyKey,
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -55,7 +55,7 @@ class _BugBountySection extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: const EdgeInsets.all(AppSpacing.x3),
+                padding: AppSpacing.earnCardPaddingX3,
                 child: GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -141,10 +141,7 @@ class _ActionButton extends StatelessWidget {
           borderRadius: AppRadii.lgRadius,
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x3,
-            ),
+            padding: AppSpacing.earnCardPaddingX3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -181,7 +178,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingAuditReportsPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -203,15 +200,12 @@ class _SmallPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           maxLines: 1,
@@ -235,10 +229,12 @@ class _RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: 0.25)),
+          borderRadius: AppRadii.xlRadius,
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.stakingAuditRoundIconBox,

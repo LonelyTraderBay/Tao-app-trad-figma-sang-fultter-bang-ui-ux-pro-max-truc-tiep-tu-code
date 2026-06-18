@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/profile/presentation/pages/settings_p
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
 
 void main() {
   Future<void> pumpSettings(WidgetTester tester) async {
@@ -107,22 +108,23 @@ void main() {
 
     expect(find.byType(SettingsPage), findsOneWidget);
 
-    final vndChip = tester.widget<Container>(
+    final vndChip = tester.widget<Material>(
       find
           .descendant(
             of: find.byKey(SettingsPage.currencyKey('VND')),
-            matching: find.byType(Container),
+            matching: find.byType(Material),
           )
           .first,
     );
-    expect((vndChip.decoration! as BoxDecoration).color, AppColors.primary);
+    expect(vndChip.color, AppColors.primary);
 
-    final biometricTrack = tester.widget<AnimatedContainer>(
+    final biometricTrack = tester.widget<VitTogglePill>(
       find.descendant(
         of: find.byKey(SettingsPage.toggleKey('biometric')),
-        matching: find.byType(AnimatedContainer),
+        matching: find.byType(VitTogglePill),
       ),
     );
-    expect((biometricTrack.decoration! as BoxDecoration).color, AppColors.buy);
+    expect(biometricTrack.enabled, isTrue);
+    expect(biometricTrack.activeColor, AppColors.buy);
   });
 }

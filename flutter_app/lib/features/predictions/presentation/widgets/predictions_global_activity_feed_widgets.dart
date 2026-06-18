@@ -41,107 +41,130 @@ class _ActivityRow extends StatelessWidget {
     final sideColor = isBuy ? AppColors.buy : AppColors.sell;
     return InkWell(
       onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
-      child: Container(
-        constraints: const BoxConstraints(
-          minHeight: AppSpacing.predictionActivityRowMinHeight,
-        ),
-        padding: AppSpacing.predictionActivityRowPadding,
-        decoration: BoxDecoration(
-          border: last
-              ? null
-              : const Border(bottom: BorderSide(color: AppColors.divider)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: AppSpacing.predictionActivityAvatarBox,
-              height: AppSpacing.predictionActivityAvatarBox,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                color: AppColors.surface3,
-                shape: BoxShape.circle,
-              ),
-              child: Text(activity.avatar, style: AppTextStyles.avatarMd),
+      child: Stack(
+        children: [
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: AppSpacing.predictionActivityRowMinHeight,
             ),
-            const SizedBox(width: AppSpacing.predictionActivityRowGap),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            child: Padding(
+              padding: AppSpacing.predictionActivityRowPadding,
+              child: Row(
                 children: [
-                  Wrap(
-                    spacing: AppSpacing.predictionActivityActorSpacing,
-                    runSpacing: AppSpacing.predictionActivityActorRunSpacing,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Text(
-                        activity.user,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
+                  Material(
+                    color: AppColors.surface3,
+                    shape: const CircleBorder(),
+                    child: SizedBox.square(
+                      dimension: AppSpacing.predictionActivityAvatarBox,
+                      child: Center(
+                        child: Text(
+                          activity.avatar,
+                          style: AppTextStyles.avatarMd,
                         ),
                       ),
-                      Text(
-                        isBuy ? 'bought' : 'sold',
-                        style: AppTextStyles.caption.copyWith(
-                          color: sideColor,
-                          fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.predictionActivityRowGap),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          spacing: AppSpacing.predictionActivityActorSpacing,
+                          runSpacing:
+                              AppSpacing.predictionActivityActorRunSpacing,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Text(
+                              activity.user,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                            Text(
+                              isBuy ? 'bought' : 'sold',
+                              style: AppTextStyles.caption.copyWith(
+                                color: sideColor,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                            _OutcomeBadge(
+                              label: activity.outcome,
+                              color: activity.outcome == 'Yes'
+                                  ? AppColors.buy
+                                  : AppColors.sell,
+                            ),
+                          ],
                         ),
-                      ),
-                      _OutcomeBadge(
-                        label: activity.outcome,
-                        color: activity.outcome == 'Yes'
-                            ? AppColors.buy
-                            : AppColors.sell,
-                      ),
-                    ],
+                        const Padding(
+                          padding: AppSpacing.predictionActivityEventGap,
+                        ),
+                        Text(
+                          event.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                        const Padding(
+                          padding: AppSpacing.predictionActivityOrderGap,
+                        ),
+                        Text(
+                          '${_formatWhole(activity.shares)} shares @ \$${activity.price.toStringAsFixed(2)}',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text2,
+                            fontFeatures: AppTextStyles.tabularFigures,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const Padding(padding: AppSpacing.predictionActivityEventGap),
-                  Text(
-                    event.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                  const Padding(padding: AppSpacing.predictionActivityOrderGap),
-                  Text(
-                    '${_formatWhole(activity.shares)} shares @ \$${activity.price.toStringAsFixed(2)}',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontFeatures: AppTextStyles.tabularFigures,
+                  const SizedBox(width: AppSpacing.predictionActivityAmountGap),
+                  SizedBox(
+                    width: AppSpacing.predictionActivityAmountWidth,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          _formatAmount(activity.amount),
+                          textAlign: TextAlign.right,
+                          style: AppTextStyles.caption.copyWith(
+                            color: sideColor,
+                            fontWeight: AppTextStyles.bold,
+                            fontFeatures: AppTextStyles.tabularFigures,
+                          ),
+                        ),
+                        const Padding(
+                          padding: AppSpacing.predictionActivityTimestampGap,
+                        ),
+                        Text(
+                          activity.timestamp,
+                          textAlign: TextAlign.right,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: AppSpacing.predictionActivityAmountGap),
-            SizedBox(
-              width: AppSpacing.predictionActivityAmountWidth,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    _formatAmount(activity.amount),
-                    textAlign: TextAlign.right,
-                    style: AppTextStyles.caption.copyWith(
-                      color: sideColor,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
-                  ),
-                  const Padding(
-                    padding: AppSpacing.predictionActivityTimestampGap,
-                  ),
-                  Text(
-                    activity.timestamp,
-                    textAlign: TextAlign.right,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
+          ),
+          if (!last)
+            const Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SizedBox(
+                height: AppSpacing.dividerHairline,
+                child: ColoredBox(color: AppColors.divider),
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -155,18 +178,18 @@ class _OutcomeBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionActivityOutcomePadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          height: AppSpacing.predictionActivityOutcomeLineHeight,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: color.withValues(alpha: .14),
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.predictionActivityOutcomePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            height: AppSpacing.predictionActivityOutcomeLineHeight,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );

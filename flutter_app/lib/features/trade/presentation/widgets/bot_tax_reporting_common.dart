@@ -7,32 +7,12 @@ class _RadioDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 16,
-      height: 16,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: selected ? _taxPrimary : _taxOptionBorder,
-            width: 2,
-          ),
-        ),
-        child: Center(
-          child: selected
-              ? const SizedBox(
-                  width: 8,
-                  height: 8,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: _taxPrimary,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                )
-              : null,
-        ),
-      ),
+    return Icon(
+      selected
+          ? Icons.radio_button_checked_rounded
+          : Icons.radio_button_unchecked_rounded,
+      color: selected ? _taxPrimary : _taxOptionBorder,
+      size: AppSpacing.tradeBotSelectionDot,
     );
   }
 }
@@ -46,8 +26,8 @@ class _CheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      width: 24,
-      height: 24,
+      width: AppSpacing.tradeBotCheckbox,
+      height: AppSpacing.tradeBotCheckbox,
       alignment: Alignment.center,
       borderColor: selected ? _taxPrimary : _taxOptionBorder,
       child: selected
@@ -99,28 +79,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 4,
-          height: 15,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: _taxPrimary,
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _taxPrimary,
     );
   }
 }

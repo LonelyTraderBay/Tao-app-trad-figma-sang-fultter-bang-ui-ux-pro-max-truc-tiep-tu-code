@@ -51,8 +51,9 @@ class _P2PIdentityVerificationPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.p2pKycBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pKycBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final selectedDocument = _selectedTypeId == null
         ? null
@@ -83,16 +84,11 @@ class _P2PIdentityVerificationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pKycScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      customGap: AppSpacing.p2pKycContentGap,
                       children: [
                         _IdentityHero(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x5),
@@ -151,7 +147,7 @@ class _P2PIdentityVerificationPageState
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pKycNoticePadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Identity document review',

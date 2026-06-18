@@ -54,36 +54,38 @@ class P2PDisputeEvidenceCard extends StatelessWidget {
             runSpacing: AppSpacing.x2,
             children: [
               for (final item in evidence)
-                Container(
-                  width: AppSpacing.p2pDisputeEvidenceThumb,
-                  height: AppSpacing.p2pDisputeEvidenceThumb,
-                  decoration: BoxDecoration(
-                    color: AppColors.surface2,
-                    border: Border.all(color: AppColors.borderSolid),
+                Material(
+                  color: AppColors.surface2,
+                  shape: const RoundedRectangleBorder(
                     borderRadius: AppRadii.inputRadius,
+                    side: BorderSide(color: AppColors.borderSolid),
                   ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      const Icon(
-                        Icons.image_outlined,
-                        color: AppColors.text3,
-                        size: AppSpacing.iconMd,
-                      ),
-                      Positioned(
-                        left: AppSpacing.x1,
-                        right: AppSpacing.x1,
-                        bottom: AppSpacing.x1,
-                        child: Text(
-                          item.fileName,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
+                  child: SizedBox(
+                    width: AppSpacing.p2pDisputeEvidenceThumb,
+                    height: AppSpacing.p2pDisputeEvidenceThumb,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        const Icon(
+                          Icons.image_outlined,
+                          color: AppColors.text3,
+                          size: AppSpacing.iconMd,
+                        ),
+                        Positioned(
+                          left: AppSpacing.x1,
+                          right: AppSpacing.x1,
+                          bottom: AppSpacing.x1,
+                          child: Text(
+                            item.fileName,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
             ],

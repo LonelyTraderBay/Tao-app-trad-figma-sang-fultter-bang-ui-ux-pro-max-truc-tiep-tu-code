@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -65,10 +64,7 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pFinancialSafetyScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -82,7 +78,7 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pFinancialSafetyInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Fund lock history review',
@@ -111,30 +107,29 @@ class _FundLockHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return VitCard(
       key: P2PFundLockHistoryPage.heroKey,
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p,
-        borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppModuleAccents.p2p),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
-        child: Row(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      borderColor: AppModuleAccents.p2p,
+      background: const ColoredBox(color: AppModuleAccents.p2p),
+      padding: AppSpacing.p2pFinancialSafetyCardPadding,
+      clip: true,
+      child: Row(
           children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
+            VitCard(
+              width: AppSpacing.p2pFinancialSafetyIconBox,
+              height: AppSpacing.p2pFinancialSafetyIconBox,
+              variant: VitCardVariant.ghost,
+              radius: VitCardRadius.lg,
+              background: ColoredBox(
                 color: AppColors.onAccent.withValues(alpha: .20),
-                borderRadius: AppRadii.lgRadius,
               ),
-              child: const SizedBox(
-                width: AppSpacing.inputHeight,
-                height: AppSpacing.inputHeight,
-                child: Icon(
-                  Icons.lock_outline_rounded,
-                  color: AppColors.onAccent,
-                  size: AppSpacing.iconMd,
-                ),
+              clip: true,
+              child: const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.onAccent,
+                size: AppSpacing.iconMd,
               ),
             ),
             const SizedBox(width: AppSpacing.x4),
@@ -161,7 +156,6 @@ class _FundLockHero extends StatelessWidget {
               ),
             ),
           ],
-        ),
       ),
     );
   }
@@ -201,23 +195,21 @@ class _FundLockRecordCard extends StatelessWidget {
     return VitCard(
       key: P2PFundLockHistoryPage.recordKey(record.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pFinancialSafetyCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: SizedBox(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
-              child: Icon(
-                isLock ? Icons.lock_outline_rounded : Icons.lock_open_rounded,
-                color: color,
-                size: AppSpacing.iconSm,
-              ),
+          VitCard(
+            width: AppSpacing.p2pFinancialSafetyIconBox,
+            height: AppSpacing.p2pFinancialSafetyIconBox,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            background: ColoredBox(color: color.withValues(alpha: .14)),
+            clip: true,
+            child: Icon(
+              isLock ? Icons.lock_outline_rounded : Icons.lock_open_rounded,
+              color: color,
+              size: AppSpacing.iconSm,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -239,7 +231,13 @@ class _FundLockRecordCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x2),
-                    _StatusPill(label: isLock ? 'Khóa' : 'Mở', color: color),
+                    VitAccentPill(
+                      label: isLock ? 'Khóa' : 'Mở',
+                      accentColor: color,
+                      semanticStatus: isLock
+                          ? VitStatusPillStatus.warning
+                          : VitStatusPillStatus.success,
+                    ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -253,7 +251,7 @@ class _FundLockRecordCard extends StatelessWidget {
                     const Icon(
                       Icons.access_time_rounded,
                       color: AppColors.text3,
-                      size: 12,
+                      size: AppSpacing.p2pFinancialSafetyTinyIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(
@@ -275,36 +273,6 @@ class _FundLockRecordCard extends StatelessWidget {
             size: AppSpacing.iconSm,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
       ),
     );
   }

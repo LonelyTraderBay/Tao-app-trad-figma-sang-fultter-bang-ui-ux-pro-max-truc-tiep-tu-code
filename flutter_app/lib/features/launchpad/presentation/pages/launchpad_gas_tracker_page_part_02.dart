@@ -9,7 +9,7 @@ class _EstimateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadGasTrackerPage.estimateKey(estimate.operation),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,28 +64,28 @@ class _EstimateCostRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                cost.chain,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.launchpadVerticalPaddingX2,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  cost.chain,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+                ),
               ),
-            ),
-            _CostText(cost.slow, AppColors.buy),
-            const SizedBox(width: AppSpacing.x3),
-            _CostText(cost.standard, AppColors.primary),
-            const SizedBox(width: AppSpacing.x3),
-            _CostText(cost.fast, AppColors.warn),
-          ],
+              _CostText(cost.slow, AppColors.buy),
+              const SizedBox(width: AppSpacing.x3),
+              _CostText(cost.standard, AppColors.primary),
+              const SizedBox(width: AppSpacing.x3),
+              _CostText(cost.fast, AppColors.warn),
+            ],
+          ),
         ),
-      ),
+        const Divider(height: AppSpacing.hairlineStroke),
+      ],
     );
   }
 }
@@ -110,7 +110,7 @@ class _AlertsTab extends StatelessWidget {
       children: [
         _AddAlertCard(onTap: onAdd),
         const SizedBox(height: AppSpacing.x4),
-        Container(
+        KeyedSubtree(
           key: LaunchpadGasTrackerPage.alertsKey,
           child: alerts.isEmpty
               ? const _EmptyAlerts()
@@ -143,18 +143,22 @@ class _AddAlertCard extends StatelessWidget {
       key: LaunchpadGasTrackerPage.addAlertKey,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       onTap: onTap,
       child: Row(
         children: [
-          Container(
+          const SizedBox(
             width: AppSpacing.launchpadBox40,
             height: AppSpacing.launchpadBox40,
-            decoration: const BoxDecoration(
-              color: AppColors.primary15,
-              borderRadius: AppRadii.cardRadius,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.primary15,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.cardRadius,
+                ),
+              ),
+              child: Icon(Icons.add_rounded, color: AppColors.primary),
             ),
-            child: const Icon(Icons.add_rounded, color: AppColors.primary),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -200,20 +204,24 @@ class _AlertCard extends StatelessWidget {
 
     return VitCard(
       key: LaunchpadGasTrackerPage.alertKey(alert.id),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.launchpadBox34,
             height: AppSpacing.launchpadBox34,
-            decoration: BoxDecoration(
-              color: alert.accent.withValues(alpha: .12),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              trendIcon,
-              color: alert.accent,
-              size: AppSpacing.launchpadIconXl + AppSpacing.hairlineStroke,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: alert.accent.withValues(alpha: .12),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Icon(
+                trendIcon,
+                color: alert.accent,
+                size: AppSpacing.launchpadIconXl + AppSpacing.hairlineStroke,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -313,151 +321,154 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
       child: SafeArea(
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
+          child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: DeviceMetrics.width),
-            decoration: const BoxDecoration(
-              color: AppColors.bg,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(AppRadii.cardLarge),
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.bg,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.sheetTopLargeRadius,
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.contentPad,
-                AppSpacing.x3,
-                AppSpacing.contentPad,
-                AppSpacing.x6,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Center(
-                    child: Container(
-                      width: AppSpacing.launchpadBox40,
-                      height: AppSpacing.launchpadSheetHandleHeight,
-                      decoration: const BoxDecoration(
-                        color: AppColors.borderSolid,
-                        borderRadius: AppRadii.xsRadius,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.x4),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Them canh bao gas',
-                          style: AppTextStyles.base.copyWith(
-                            fontWeight: AppTextStyles.bold,
+              child: Padding(
+                padding: AppSpacing.launchpadCreateSheetPadding,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Center(
+                      child: SizedBox(
+                        width: AppSpacing.launchpadBox40,
+                        height: AppSpacing.launchpadSheetHandleHeight,
+                        child: DecoratedBox(
+                          decoration: const ShapeDecoration(
+                            color: AppColors.borderSolid,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadii.xsRadius,
+                            ),
                           ),
                         ),
                       ),
-                      IconButton(
-                        key: LaunchpadGasTrackerPage.addCloseKey,
-                        onPressed: widget.onClose,
-                        icon: const Icon(
-                          Icons.close_rounded,
-                          color: AppColors.text3,
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Them canh bao gas',
+                            style: AppTextStyles.base.copyWith(
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
                         ),
+                        IconButton(
+                          key: LaunchpadGasTrackerPage.addCloseKey,
+                          onPressed: widget.onClose,
+                          icon: const Icon(
+                            Icons.close_rounded,
+                            color: AppColors.text3,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    Text(
+                      'Chain',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontWeight: AppTextStyles.bold,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.x4),
-                  Text(
-                    'Chain',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.x2),
-                  Wrap(
-                    spacing: AppSpacing.x2,
-                    runSpacing: AppSpacing.x2,
-                    children: [
-                      for (final price in widget.prices)
-                        _SelectablePill(
-                          key: LaunchpadGasTrackerPage.sheetChainKey(
-                            price.chain,
+                    const SizedBox(height: AppSpacing.x2),
+                    Wrap(
+                      spacing: AppSpacing.x2,
+                      runSpacing: AppSpacing.x2,
+                      children: [
+                        for (final price in widget.prices)
+                          _SelectablePill(
+                            key: LaunchpadGasTrackerPage.sheetChainKey(
+                              price.chain,
+                            ),
+                            label: price.chain,
+                            color: price.accent,
+                            active: _chain == price.chain,
+                            onTap: () => setState(() => _chain = price.chain),
                           ),
-                          label: price.chain,
-                          color: price.accent,
-                          active: _chain == price.chain,
-                          onTap: () => setState(() => _chain = price.chain),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.x4),
-                  Text(
-                    'Dieu kien',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.x2),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _SelectablePill(
-                          key: LaunchpadGasTrackerPage.sheetDirectionKey(
-                            'below',
-                          ),
-                          label: 'Thap hon',
-                          color: AppColors.buy,
-                          active:
-                              _direction == LaunchpadGasAlertDirection.below,
-                          onTap: () => setState(
-                            () => _direction = LaunchpadGasAlertDirection.below,
-                          ),
-                        ),
+                    const SizedBox(height: AppSpacing.x4),
+                    Text(
+                      'Dieu kien',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontWeight: AppTextStyles.bold,
                       ),
-                      const SizedBox(width: AppSpacing.x2),
-                      Expanded(
-                        child: _SelectablePill(
-                          key: LaunchpadGasTrackerPage.sheetDirectionKey(
-                            'above',
-                          ),
-                          label: 'Cao hon',
-                          color: AppColors.sell,
-                          active:
-                              _direction == LaunchpadGasAlertDirection.above,
-                          onTap: () => setState(
-                            () => _direction = LaunchpadGasAlertDirection.above,
+                    ),
+                    const SizedBox(height: AppSpacing.x2),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _SelectablePill(
+                            key: LaunchpadGasTrackerPage.sheetDirectionKey(
+                              'below',
+                            ),
+                            label: 'Thap hon',
+                            color: AppColors.buy,
+                            active:
+                                _direction == LaunchpadGasAlertDirection.below,
+                            onTap: () => setState(
+                              () =>
+                                  _direction = LaunchpadGasAlertDirection.below,
+                            ),
                           ),
                         ),
+                        const SizedBox(width: AppSpacing.x2),
+                        Expanded(
+                          child: _SelectablePill(
+                            key: LaunchpadGasTrackerPage.sheetDirectionKey(
+                              'above',
+                            ),
+                            label: 'Cao hon',
+                            color: AppColors.sell,
+                            active:
+                                _direction == LaunchpadGasAlertDirection.above,
+                            onTap: () => setState(
+                              () =>
+                                  _direction = LaunchpadGasAlertDirection.above,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    Text(
+                      'Nguong (${selected.unit})',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontWeight: AppTextStyles.bold,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.x4),
-                  Text(
-                    'Nguong (${selected.unit})',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.x2),
-                  VitInput(
-                    controller: _thresholdController,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
+                    const SizedBox(height: AppSpacing.x2),
+                    VitInput(
+                      controller: _thresholdController,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      onChanged: (_) => setState(() {}),
+                      semanticLabel: 'Gas alert threshold',
+                      hintText: 'VD: 15',
+                      textStyle: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                      ),
                     ),
-                    onChanged: (_) => setState(() {}),
-                    semanticLabel: 'Gas alert threshold',
-                    hintText: 'VD: 15',
-                    textStyle: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
+                    const SizedBox(height: AppSpacing.x5),
+                    VitCtaButton(
+                      key: LaunchpadGasTrackerPage.addSubmitKey,
+                      onPressed: _canSubmit ? () => _submit(selected) : null,
+                      child: const Text('Them canh bao'),
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.x5),
-                  VitCtaButton(
-                    key: LaunchpadGasTrackerPage.addSubmitKey,
-                    onPressed: _canSubmit ? () => _submit(selected) : null,
-                    child: const Text('Them canh bao'),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

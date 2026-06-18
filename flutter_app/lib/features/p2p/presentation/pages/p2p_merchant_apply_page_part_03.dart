@@ -40,22 +40,20 @@ class _ChoiceChipButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      type: MaterialType.transparency,
+      color: selected ? AppColors.primary12 : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(
+          color: selected ? AppColors.primary30 : AppColors.cardBorder,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Ink(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            color: selected ? AppColors.primary12 : AppColors.surface2,
-            border: Border.all(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
+        customBorder: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+        ),
+        child: Padding(
+          padding: AppSpacing.p2pMerchantApplyChoicePadding,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
@@ -94,28 +92,36 @@ class _MultilineInput extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         const SizedBox(height: AppSpacing.x2),
-        Container(
-          constraints: const BoxConstraints(minHeight: AppSpacing.buttonHero),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
-          decoration: BoxDecoration(
-            color: AppColors.surface2,
-            border: Border.all(color: AppColors.borderSolid, width: 1.5),
+        Material(
+          color: AppColors.surface2,
+          shape: RoundedRectangleBorder(
             borderRadius: AppRadii.inputRadius,
+            side: const BorderSide(
+              color: AppColors.borderSolid,
+              width: AppSpacing.borderWidth,
+            ),
           ),
-          child: TextField(
-            key: fieldKey,
-            controller: controller,
-            minLines: 3,
-            maxLines: 3,
-            cursorColor: AppColors.primary,
-            style: AppTextStyles.body,
-            onChanged: (_) => onChanged(),
-            decoration: InputDecoration.collapsed(
-              hintText: hintText,
-              hintStyle: AppTextStyles.body.copyWith(color: AppColors.text3),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: AppSpacing.buttonHero,
+            ),
+            child: Padding(
+              padding: AppSpacing.p2pMerchantApplyInputPadding,
+              child: TextField(
+                key: fieldKey,
+                controller: controller,
+                minLines: 3,
+                maxLines: 3,
+                cursorColor: AppColors.primary,
+                style: AppTextStyles.body,
+                onChanged: (_) => onChanged(),
+                decoration: InputDecoration.collapsed(
+                  hintText: hintText,
+                  hintStyle: AppTextStyles.body.copyWith(
+                    color: AppColors.text3,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -136,30 +142,33 @@ class _AgreementCard extends StatelessWidget {
       key: P2PMerchantApplyPage.agreementKey,
       variant: VitCardVariant.inner,
       borderColor: accepted ? AppColors.buy20 : AppColors.borderSolid,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMerchantApplyCardPadding,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.iconMd,
-            height: AppSpacing.iconMd,
-            margin: const EdgeInsets.only(top: AppSpacing.x1),
-            decoration: BoxDecoration(
-              color: accepted ? AppColors.buy : AppColors.transparent,
-              border: Border.all(
-                color: accepted ? AppColors.buy : AppColors.text3,
-                width: 1.5,
+          Padding(
+            padding: AppSpacing.p2pMerchantApplyCheckboxMargin,
+            child: SizedBox.square(
+              dimension: AppSpacing.iconMd,
+              child: Material(
+                color: accepted ? AppColors.buy : AppColors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.smRadius,
+                  side: BorderSide(
+                    color: accepted ? AppColors.buy : AppColors.text3,
+                    width: AppSpacing.borderWidth,
+                  ),
+                ),
+                child: accepted
+                    ? const Icon(
+                        Icons.check_rounded,
+                        color: AppColors.onAccent,
+                        size: AppSpacing.iconSm,
+                      )
+                    : null,
               ),
-              borderRadius: AppRadii.smRadius,
             ),
-            child: accepted
-                ? const Icon(
-                    Icons.check_rounded,
-                    color: AppColors.onAccent,
-                    size: AppSpacing.iconSm,
-                  )
-                : null,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -167,7 +176,7 @@ class _AgreementCard extends StatelessWidget {
               'Tôi xác nhận thông tin là chính xác, đồng ý với Điều khoản Merchant và Chính sách P2P của VitTrade. Tôi hiểu rằng vi phạm có thể dẫn đến thu hồi tư cách Merchant.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.55,
+                height: AppSpacing.p2pMerchantApplyReadableLineHeight,
               ),
             ),
           ),
@@ -190,14 +199,14 @@ class _InfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .08),
-        border: Border.all(color: color.withValues(alpha: .22)),
+    return Material(
+      color: color.withValues(alpha: .08),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
+        side: BorderSide(color: color.withValues(alpha: .22)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pMerchantApplyInfoPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -208,7 +217,7 @@ class _InfoBanner extends StatelessWidget {
                 text,
                 style: AppTextStyles.micro.copyWith(
                   color: color,
-                  height: 1.55,
+                  height: AppSpacing.p2pMerchantApplyReadableLineHeight,
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
@@ -242,7 +251,7 @@ class _MetricRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.p2pMerchantApplyRowPadding,
       child: Row(
         children: [
           _IconBadge(icon: data.icon, color: data.color),
@@ -283,7 +292,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.p2pMerchantApplyRowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -321,12 +330,14 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = large ? 48.0 : 32.0;
+    final size = large
+        ? AppSpacing.p2pMerchantApplyLargeIconBadgeSize
+        : AppSpacing.p2pMerchantApplyIconBadgeSize;
     return SizedBox.square(
       dimension: size,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: .12),
+      child: Material(
+        color: color.withValues(alpha: .12),
+        shape: RoundedRectangleBorder(
           borderRadius: large ? AppRadii.mdRadius : AppRadii.smRadius,
         ),
         child: Icon(
@@ -347,12 +358,10 @@ class _CircleStatusIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: 28,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: (met ? AppColors.buy : AppColors.sell).withValues(alpha: .12),
-          shape: BoxShape.circle,
-        ),
+      dimension: AppSpacing.p2pMerchantApplyStatusIconSize,
+      child: Material(
+        color: (met ? AppColors.buy : AppColors.sell).withValues(alpha: .12),
+        shape: const CircleBorder(),
         child: Icon(
           met ? Icons.check_circle_rounded : Icons.cancel_rounded,
           color: met ? AppColors.buy : AppColors.sell,
@@ -372,11 +381,9 @@ class _TinyStatusDot extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox.square(
       dimension: AppSpacing.iconMd,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: active ? AppColors.buy : AppColors.surface2,
-          shape: BoxShape.circle,
-        ),
+      child: Material(
+        color: active ? AppColors.buy : AppColors.surface2,
+        shape: const CircleBorder(),
         child: Icon(
           active ? Icons.check_rounded : Icons.radio_button_checked_rounded,
           color: active ? AppColors.onAccent : AppColors.text3,

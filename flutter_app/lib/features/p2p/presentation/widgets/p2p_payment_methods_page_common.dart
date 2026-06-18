@@ -54,17 +54,19 @@ class _DeleteConfirmation extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Container(
-                          width: AppSpacing.buttonCompact,
-                          height: AppSpacing.buttonCompact,
-                          decoration: BoxDecoration(
-                            color: AppColors.sell15,
+                        const Material(
+                          color: AppColors.sell15,
+                          shape: RoundedRectangleBorder(
                             borderRadius: AppRadii.mdRadius,
                           ),
-                          child: const Icon(
-                            Icons.delete_outline_rounded,
-                            color: AppColors.sell,
-                            size: AppSpacing.iconMd,
+                          child: SizedBox(
+                            width: AppSpacing.buttonCompact,
+                            height: AppSpacing.buttonCompact,
+                            child: Icon(
+                              Icons.delete_outline_rounded,
+                              color: AppColors.sell,
+                              size: AppSpacing.iconMd,
+                            ),
                           ),
                         ),
                         const SizedBox(width: AppSpacing.x3),

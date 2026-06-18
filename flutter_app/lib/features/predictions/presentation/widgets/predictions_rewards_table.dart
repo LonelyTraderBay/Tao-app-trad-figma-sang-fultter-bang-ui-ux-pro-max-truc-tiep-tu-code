@@ -44,32 +44,40 @@ class _TableHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSpacing.predictionRewardsHeaderHeight,
-      padding: AppSpacing.predictionRewardsTablePadding,
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
+      child: Stack(
         children: [
-          Expanded(child: _HeaderText('MARKET')),
-          const SizedBox(width: AppSpacing.predictionRewardsMarketColumnGap),
-          const SizedBox(
-            width: AppSpacing.predictionRewardsSpreadWidth,
-            child: Center(child: _HeaderText('SPREAD')),
-          ),
-          const SizedBox(
-            width: AppSpacing.predictionRewardsMinWidth,
-            child: Center(child: _HeaderText('MIN')),
-          ),
-          const SizedBox(
-            width: AppSpacing.predictionRewardsRewardWidth,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: _HeaderText('REWARD'),
+          Padding(
+            padding: AppSpacing.predictionRewardsTablePadding,
+            child: Row(
+              children: [
+                Expanded(child: _HeaderText('MARKET')),
+                const SizedBox(
+                  width: AppSpacing.predictionRewardsMarketColumnGap,
+                ),
+                const SizedBox(
+                  width: AppSpacing.predictionRewardsSpreadWidth,
+                  child: Center(child: _HeaderText('SPREAD')),
+                ),
+                const SizedBox(
+                  width: AppSpacing.predictionRewardsMinWidth,
+                  child: Center(child: _HeaderText('MIN')),
+                ),
+                const SizedBox(
+                  width: AppSpacing.predictionRewardsRewardWidth,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: _HeaderText('REWARD'),
+                  ),
+                ),
+                const SizedBox(
+                  width: AppSpacing.predictionRewardsHeaderTrailingGap,
+                ),
+              ],
             ),
           ),
-          const SizedBox(width: AppSpacing.predictionRewardsHeaderTrailingGap),
+          const _RewardsDivider(),
         ],
       ),
     );
@@ -115,132 +123,159 @@ class _RewardRow extends StatelessWidget {
 
     return InkWell(
       onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.predictionRewardsRowHeight,
-        padding: AppSpacing.predictionRewardsTablePadding,
-        decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: AppColors.divider)),
-        ),
-        child: Row(
+        child: Stack(
           children: [
-            InkWell(
-              key: PredictionsRewardsPage.favoriteKey(reward.id),
-              onTap: onFavoriteToggle,
-              borderRadius: AppRadii.mdRadius,
-              child: SizedBox(
-                width: AppSpacing.predictionRewardsFavoriteWidth,
-                child: Icon(
-                  favorite ? Icons.star_rounded : Icons.star_border_rounded,
-                  color: favorite ? AppColors.warn : AppColors.text3,
-                  size: AppSpacing.predictionRewardsFavoriteIcon,
-                ),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.predictionRewardsFavoriteGap),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            Padding(
+              padding: AppSpacing.predictionRewardsTablePadding,
+              child: Row(
                 children: [
-                  Text(
-                    event.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
+                  InkWell(
+                    key: PredictionsRewardsPage.favoriteKey(reward.id),
+                    onTap: onFavoriteToggle,
+                    borderRadius: AppRadii.mdRadius,
+                    child: SizedBox(
+                      width: AppSpacing.predictionRewardsFavoriteWidth,
+                      child: Icon(
+                        favorite
+                            ? Icons.star_rounded
+                            : Icons.star_border_rounded,
+                        color: favorite ? AppColors.warn : AppColors.text3,
+                        size: AppSpacing.predictionRewardsFavoriteIcon,
+                      ),
                     ),
                   ),
-                  const Padding(
-                    padding: AppSpacing.predictionRewardsRowMetaGap,
+                  const SizedBox(
+                    width: AppSpacing.predictionRewardsFavoriteGap,
                   ),
-                  Row(
-                    children: [
-                      Flexible(
-                        child: _TinyBadge(
-                          label: reward.category,
-                          color: _predictionPrimary,
-                          background: _predictionPrimary.withValues(alpha: .14),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: AppSpacing.predictionRewardsMetaGap,
-                      ),
-                      Icon(
-                        reward.priceChange24h >= 0
-                            ? Icons.arrow_outward_rounded
-                            : Icons.south_east_rounded,
-                        color: changeColor,
-                        size: AppSpacing.predictionRewardsChangeIcon,
-                      ),
-                      Text(
-                        _formatPercent(reward.priceChange24h),
-                        style: AppTextStyles.micro.copyWith(
-                          color: changeColor,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: AppSpacing.predictionRewardsMetaGap,
-                      ),
-                      Flexible(
-                        child: Text(
-                          '${reward.earningsPct.toStringAsFixed(reward.earningsPct == reward.earningsPct.round() ? 0 : 1)}% APY',
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          event.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
                           ),
                         ),
+                        const Padding(
+                          padding: AppSpacing.predictionRewardsRowMetaGap,
+                        ),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: _TinyBadge(
+                                label: reward.category,
+                                color: _predictionPrimary,
+                                background: _predictionPrimary.withValues(
+                                  alpha: .14,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: AppSpacing.predictionRewardsMetaGap,
+                            ),
+                            Icon(
+                              reward.priceChange24h >= 0
+                                  ? Icons.arrow_outward_rounded
+                                  : Icons.south_east_rounded,
+                              color: changeColor,
+                              size: AppSpacing.predictionRewardsChangeIcon,
+                            ),
+                            Text(
+                              _formatPercent(reward.priceChange24h),
+                              style: AppTextStyles.micro.copyWith(
+                                color: changeColor,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: AppSpacing.predictionRewardsMetaGap,
+                            ),
+                            Flexible(
+                              child: Text(
+                                '${reward.earningsPct.toStringAsFixed(reward.earningsPct == reward.earningsPct.round() ? 0 : 1)}% APY',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.micro.copyWith(
+                                  color: AppColors.text3,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: AppSpacing.predictionRewardsMarketColumnGap,
+                  ),
+                  SizedBox(
+                    width: AppSpacing.predictionRewardsSpreadWidth,
+                    child: Text(
+                      '${(reward.maxSpread * 100).toStringAsFixed(0)}%',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
-                    ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: AppSpacing.predictionRewardsMinWidth,
+                    child: Text(
+                      '${reward.minShares}',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: AppSpacing.predictionRewardsRewardWidth,
+                    child: Text(
+                      '\$${reward.dailyReward.toStringAsFixed(0)}',
+                      textAlign: TextAlign.right,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.buy,
+                        fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.predictionRewardsChevronGap),
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppColors.text3,
+                    size: AppSpacing.predictionRewardsChevron,
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: AppSpacing.predictionRewardsMarketColumnGap),
-            SizedBox(
-              width: AppSpacing.predictionRewardsSpreadWidth,
-              child: Text(
-                '${(reward.maxSpread * 100).toStringAsFixed(0)}%',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-            ),
-            SizedBox(
-              width: AppSpacing.predictionRewardsMinWidth,
-              child: Text(
-                '${reward.minShares}',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-            ),
-            SizedBox(
-              width: AppSpacing.predictionRewardsRewardWidth,
-              child: Text(
-                '\$${reward.dailyReward.toStringAsFixed(0)}',
-                textAlign: TextAlign.right,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.buy,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.predictionRewardsChevronGap),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.predictionRewardsChevron,
-            ),
+            const _RewardsDivider(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _RewardsDivider extends StatelessWidget {
+  const _RewardsDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Align(
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+        height: AppSpacing.hairlineStroke,
+        child: ColoredBox(color: AppColors.divider),
       ),
     );
   }

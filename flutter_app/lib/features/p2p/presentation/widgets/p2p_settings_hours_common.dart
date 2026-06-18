@@ -20,16 +20,17 @@ class _HoursSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pSettingsCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                padding: const EdgeInsets.all(AppSpacing.x1),
-                decoration: BoxDecoration(
-                  color: AppColors.surface2,
+              Material(
+                color: AppColors.surface2,
+                shape: RoundedRectangleBorder(
                   borderRadius: AppRadii.inputRadius,
                 ),
+                child: Padding(
+                  padding: AppSpacing.p2pSettingsSegmentRailPadding,
                 child: Row(
                   children: [
                     Expanded(
@@ -47,6 +48,7 @@ class _HoursSection extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
                 ),
               ),
               const SizedBox(height: AppSpacing.x3),
@@ -89,7 +91,7 @@ class _AutoReplySection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pSettingsCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -131,12 +133,12 @@ class _AutoReplySection extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  padding: const EdgeInsets.all(AppSpacing.x3),
+                  padding: AppSpacing.p2pSettingsCompactCardPadding,
                   child: Text(
                     autoReply.buyTemplate,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.45,
+                      height: AppSpacing.p2pSettingsAutoReplyLineHeight,
                     ),
                   ),
                 ),
@@ -183,14 +185,13 @@ class _SettingIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.buttonCompact,
-      height: AppSpacing.buttonCompact,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.buttonCompact,
+      child: Material(
         color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconSm),
     );
   }
 }
@@ -211,23 +212,29 @@ class _SwitchButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        width: 44,
-        height: 24,
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
+      child: SizedBox(
+        width: AppSpacing.p2pSettingsSwitchWidth,
+        height: AppSpacing.p2pSettingsSwitchHeight,
+        child: Material(
           color: value ? color : AppColors.surface2,
-          border: Border.all(color: value ? color : AppColors.borderSolid),
-          borderRadius: AppRadii.mdRadius,
-        ),
-        alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-        child: const DecoratedBox(
-          decoration: BoxDecoration(
-            color: AppColors.onAccent,
-            shape: BoxShape.circle,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.mdRadius,
+            side: BorderSide(color: value ? color : AppColors.borderSolid),
           ),
-          child: SizedBox(width: 18, height: 18),
+          child: Padding(
+            padding: AppSpacing.p2pSettingsSwitchPadding,
+            child: AnimatedAlign(
+              duration: const Duration(milliseconds: 180),
+              alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+              child: const SizedBox.square(
+                dimension: AppSpacing.p2pSettingsSwitchThumbSize,
+                child: Material(
+                  color: AppColors.onAccent,
+                  shape: CircleBorder(),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -254,7 +261,7 @@ class _SegmentButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+          padding: AppSpacing.p2pSettingsSegmentButtonPadding,
           child: Text(
             label,
             textAlign: TextAlign.center,

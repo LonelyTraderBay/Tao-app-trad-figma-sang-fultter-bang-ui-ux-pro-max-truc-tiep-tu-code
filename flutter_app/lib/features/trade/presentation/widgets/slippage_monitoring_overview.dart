@@ -9,16 +9,16 @@ class _CriticalAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      padding: AppSpacing.tradeToolAlertPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.text1,
-            size: 17,
+            size: AppSpacing.tradeToolAlertIcon,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.tradeToolIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,16 +28,14 @@ class _CriticalAlert extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.formFieldLabelGap),
                 Text(
                   'Slippage exceeded 1% threshold. Review affected trades and consider provider adjustments.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.4,
                   ),
                 ),
               ],
@@ -95,7 +93,8 @@ class _StatsGrid extends StatelessWidget {
       children: [
         for (final card in cards) ...[
           Expanded(child: _StatCard(card: card)),
-          if (card != cards.last) const SizedBox(width: 12),
+          if (card != cards.last)
+            const SizedBox(width: AppSpacing.tradeToolCardGap),
         ],
       ],
     );
@@ -110,8 +109,8 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 140,
-      padding: const EdgeInsets.fromLTRB(10, 13, 10, 11),
+      height: AppSpacing.tradeToolStatCardHeight,
+      padding: AppSpacing.tradeBotControlPadding,
       borderColor: _slipBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,8 +118,8 @@ class _StatCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(card.$1, color: card.$2, size: 15),
-              const SizedBox(width: 6),
+              Icon(card.$1, color: card.$2, size: AppSpacing.iconSm),
+              const SizedBox(width: AppSpacing.formFieldLabelGap),
               Expanded(
                 child: Text(
                   card.$3,
@@ -128,15 +127,14 @@ class _StatCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.15,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeToolInlineGap),
           SizedBox(
-            height: 52,
+            height: AppSpacing.tradeToolStatValueHeight,
             child: Align(
               alignment: Alignment.centerLeft,
               child: FittedBox(
@@ -148,7 +146,6 @@ class _StatCard extends StatelessWidget {
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
-                    height: 1.22,
                   ),
                 ),
               ),
@@ -157,7 +154,10 @@ class _StatCard extends StatelessWidget {
           const Spacer(),
           Text(
             card.$5,
-            style: AppTextStyles.micro.copyWith(color: card.$6, height: 1),
+            style: AppTextStyles.micro.copyWith(
+              color: card.$6,
+              height: AppSpacing.tradeBotLineHeightTight,
+            ),
           ),
         ],
       ),
@@ -179,49 +179,35 @@ class _Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tabs = [
-      ('realtime', 'Real-time (${summary.total})'),
-      ('providers', 'By Provider'),
-      ('history', 'History'),
-      ('alerts', 'Alerts (${summary.critical + summary.warning})'),
+      VitTabItem(
+        key: 'realtime',
+        label: 'Real-time (${summary.total})',
+        widgetKey: SlippageMonitoringPage.tabKey('realtime'),
+      ),
+      VitTabItem(
+        key: 'providers',
+        label: 'By Provider',
+        widgetKey: SlippageMonitoringPage.tabKey('providers'),
+      ),
+      VitTabItem(
+        key: 'history',
+        label: 'History',
+        widgetKey: SlippageMonitoringPage.tabKey('history'),
+      ),
+      VitTabItem(
+        key: 'alerts',
+        label: 'Alerts (${summary.critical + summary.warning})',
+        widgetKey: SlippageMonitoringPage.tabKey('alerts'),
+      ),
     ];
     return VitCard(
-      height: 53,
-      padding: EdgeInsets.zero,
-      child: Row(
-        children: [
-          for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: SlippageMonitoringPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeId == tab.$1
-                                ? _slipPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: activeId == tab.$1 ? 72 : 0,
-                      height: 2,
-                      color: _slipPrimary,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
+      height: AppSpacing.tradeToolTabHeight,
+      padding: AppSpacing.tradeSegmentedPadding,
+      child: VitTabBar(
+        tabs: tabs,
+        activeKey: activeId,
+        onChanged: onChanged,
+        variant: VitTabBarVariant.segment,
       ),
     );
   }

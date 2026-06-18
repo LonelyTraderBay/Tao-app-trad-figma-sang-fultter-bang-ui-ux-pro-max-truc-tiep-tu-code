@@ -11,10 +11,11 @@ class _EndpointsView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionLabel('REST API Endpoints'),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         for (final endpoint in endpoints) ...[
           _EndpointCard(endpoint: endpoint),
-          if (endpoint != endpoints.last) const SizedBox(height: 12),
+          if (endpoint != endpoints.last)
+            const SizedBox(height: AppSpacing.tradeBotCardGap),
         ],
       ],
     );
@@ -30,14 +31,14 @@ class _EndpointCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: BotApiDocumentationPage.endpointKey(endpoint.method, endpoint.path),
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               _MethodBadge(method: endpoint.method),
-              const SizedBox(width: 9),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
                   endpoint.path,
@@ -46,25 +47,25 @@ class _EndpointCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           Text(
             endpoint.description,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           if (endpoint.params.isNotEmpty) ...[
-            const SizedBox(height: 17),
+            const SizedBox(height: AppSpacing.tradeBotContentGap),
             _Parameters(params: endpoint.params),
           ],
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           _ResponseBlock(response: endpoint.response),
         ],
       ),
@@ -87,13 +88,13 @@ class _Parameters extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.x3),
         for (final param in params) ...[
           _ParameterRow(param: param),
-          if (param != params.last) const SizedBox(height: 9),
+          if (param != params.last) const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -115,15 +116,15 @@ class _ParameterRow extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: _apiPrimary,
             fontWeight: FontWeight.w600,
-            height: 1.2,
+            height: AppSpacing.tradeBotLineHeightCaption,
           ),
         ),
-        const SizedBox(width: 7),
+        const SizedBox(width: AppSpacing.x3),
         Text(
           '(${param.type})',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1.2,
+            height: AppSpacing.tradeBotLineHeightCaption,
           ),
         ),
         if (param.required)
@@ -132,10 +133,10 @@ class _ParameterRow extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: _apiRed,
               fontWeight: AppTextStyles.bold,
-              height: 1.2,
+              height: AppSpacing.tradeBotLineHeightCaption,
             ),
           ),
-        const SizedBox(width: 7),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Text(
             '- ${param.description}',
@@ -143,7 +144,7 @@ class _ParameterRow extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.3,
+              height: AppSpacing.tradeBotLineHeightBody,
             ),
           ),
         ),
@@ -168,23 +169,21 @@ class _ResponseBlock extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
             const Spacer(),
-            GestureDetector(
+            VitIconButton(
               key: BotApiDocumentationPage.copyKey,
-              behavior: HitTestBehavior.opaque,
-              onTap: () => Clipboard.setData(ClipboardData(text: response)),
-              child: const Icon(
-                Icons.content_copy_rounded,
-                color: AppColors.text3,
-                size: 16,
-              ),
+              icon: Icons.content_copy_rounded,
+              tooltip: 'Copy response',
+              size: VitIconButtonSize.sm,
+              variant: VitIconButtonVariant.transparent,
+              onPressed: () => Clipboard.setData(ClipboardData(text: response)),
             ),
           ],
         ),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.x3),
         _CodeBlock(text: response),
       ],
     );

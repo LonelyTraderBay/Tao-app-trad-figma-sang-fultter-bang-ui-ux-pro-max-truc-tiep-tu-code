@@ -77,7 +77,7 @@ class _SmartAlertCenterState extends ConsumerState<SmartAlertCenter> {
                 child: SingleChildScrollView(
                   key: SmartAlertCenter.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.crossModuleScrollPadding(bottomInset),
                   child: VitPageContent(
                     gap: VitContentGap.defaultGap,
                     children: [

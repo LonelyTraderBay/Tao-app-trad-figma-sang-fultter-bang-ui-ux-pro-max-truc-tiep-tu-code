@@ -15,10 +15,10 @@ class _InputCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Panel(
       minHeight: 90,
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.cardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 18,
+        customGap: AppSpacing.transferSectionGap,
         children: [
           Row(
             children: [
@@ -68,10 +68,15 @@ class _AmountInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Panel(
       minHeight: 97,
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.walletAssetSectionGap,
+        right: AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.walletDepositCopyIcon,
+      ),
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 18,
+        customGap: AppSpacing.transferSectionGap,
         children: [
           Row(
             children: [

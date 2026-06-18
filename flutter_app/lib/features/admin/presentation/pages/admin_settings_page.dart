@@ -51,13 +51,13 @@ class AdminSettingsPage extends ConsumerWidget {
               child: SingleChildScrollView(
                 key: contentKey,
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: bottomInset),
+                padding: AppSpacing.adminScrollPadding(bottomInset),
                 child: VitPageContent(
                   customGap: AppSpacing.x5,
                   children: [
                     VitCard(
                       key: routingKey,
-                      padding: const EdgeInsets.all(AppSpacing.x4),
+                      padding: AppSpacing.adminCardPadding,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -65,9 +65,7 @@ class AdminSettingsPage extends ConsumerWidget {
                             icon: Icons.route_outlined,
                             title: 'Dashboard routing',
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: AppSpacing.x4),
-                          ),
+                          const SizedBox(height: AppSpacing.x4),
                           for (final dashboard in snapshot.dashboards) ...[
                             _AdminSettingsRow(
                               icon: _settingsMetricIcon(dashboard.icon),
@@ -83,7 +81,7 @@ class AdminSettingsPage extends ConsumerWidget {
                       ),
                     ),
                     VitCard(
-                      padding: const EdgeInsets.all(AppSpacing.x4),
+                      padding: AppSpacing.adminCardPadding,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -91,9 +89,7 @@ class AdminSettingsPage extends ConsumerWidget {
                             icon: Icons.health_and_safety_outlined,
                             title: 'Operational health',
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: AppSpacing.x4),
-                          ),
+                          const SizedBox(height: AppSpacing.x4),
                           _AdminSettingsRow(
                             icon: Icons.bolt_rounded,
                             title: 'Event stream',
@@ -105,7 +101,7 @@ class AdminSettingsPage extends ConsumerWidget {
                       ),
                     ),
                     VitCard(
-                      padding: const EdgeInsets.all(AppSpacing.x4),
+                      padding: AppSpacing.adminCardPadding,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -113,9 +109,7 @@ class AdminSettingsPage extends ConsumerWidget {
                             icon: Icons.verified_outlined,
                             title: 'System health',
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: AppSpacing.x4),
-                          ),
+                          const SizedBox(height: AppSpacing.x4),
                           _AdminSettingsRow(
                             icon: Icons.verified_outlined,
                             title: 'System health',
@@ -157,7 +151,7 @@ class _AdminSettingsRow extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.inputRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+        padding: AppSpacing.adminRowPadding,
         child: Row(
           children: [
             Icon(icon, color: AppColors.primary, size: AppSpacing.adminIconLg),
@@ -175,7 +169,7 @@ class _AdminSettingsRow extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     subtitle,
                     maxLines: 2,

@@ -17,9 +17,9 @@ class _LongShortCard extends StatelessWidget {
             title: 'Long/Short Ratio',
             badge: 'Long',
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
           const _ToggleBar(),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
           Row(
             children: [
               _TrendLabel(
@@ -36,18 +36,15 @@ class _LongShortCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.rowGapRegular),
           LiveMarketRatioBar(longPct: data.longPct),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.statusPillHorizontalPaddingMd),
           Text(
             'Long/Short Ratio',
             textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.formFieldLabelGap),
           Text(
             data.ratio.toStringAsFixed(2),
             textAlign: TextAlign.center,
@@ -55,10 +52,9 @@ class _LongShortCard extends StatelessWidget {
               color: liveMarketGreen,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppSpacing.sectionGap),
           Row(
             children: [
               Expanded(
@@ -69,7 +65,7 @@ class _LongShortCard extends StatelessWidget {
                   bg: liveMarketGreen.withValues(alpha: .09),
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.statusPillHorizontalPaddingMd),
               Expanded(
                 child: LiveMarketMetricBox(
                   label: 'Short Accounts',
@@ -91,28 +87,26 @@ class _ToggleBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 42,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: liveMarketPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return LiveMarketCard(
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.transparent,
+      height: AppSpacing.liveMarketToggleHeight,
+      padding: AppSpacing.liveMarketTogglePadding,
       child: Row(
         children: [
           Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
+            child: ClipRRect(
+              borderRadius: AppRadii.inputRadius,
+              child: ColoredBox(
                 color: liveMarketPrimary,
-                borderRadius: AppRadii.inputRadius,
-              ),
-              child: Text(
-                'By Accounts',
-                style: AppTextStyles.captionSm.copyWith(
-                  color: AppColors.onAccent,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
+                child: Center(
+                  child: Text(
+                    'By Accounts',
+                    style: AppTextStyles.captionSm.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -124,7 +118,6 @@ class _ToggleBar extends StatelessWidget {
                 style: AppTextStyles.captionSm.copyWith(
                   color: AppColors.text3,
                   fontWeight: AppTextStyles.medium,
-                  height: 1,
                 ),
               ),
             ),
@@ -151,14 +144,13 @@ class _TrendLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widgets = <Widget>[
-      Icon(icon, color: color, size: 15),
-      const SizedBox(width: 4),
+      Icon(icon, color: color, size: AppSpacing.liveMarketTrendIcon),
+      const SizedBox(width: AppSpacing.statusPillGapMd),
       Text(
         text,
         style: AppTextStyles.captionSm.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1,
         ),
       ),
     ];

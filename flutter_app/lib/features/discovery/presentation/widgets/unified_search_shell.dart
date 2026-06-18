@@ -13,26 +13,26 @@ class _SearchBand extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.contentPad,
-          AppSpacing.x4,
-          AppSpacing.contentPad,
-          AppSpacing.x4,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: AppSpacing.discoverySearchBandPadding,
+          child: VitSearchBar(
+            key: UnifiedSearchPage.searchKey,
+            controller: controller,
+            placeholder: hint,
+            autofocus: true,
+            variant: VitSearchBarVariant.defaultSearch,
+            onChanged: (_) => onChanged(),
+          ),
         ),
-        child: VitSearchBar(
-          key: UnifiedSearchPage.searchKey,
-          controller: controller,
-          placeholder: hint,
-          autofocus: true,
-          variant: VitSearchBarVariant.defaultSearch,
-          onChanged: (_) => onChanged(),
+        const Divider(
+          height: AppSpacing.dividerHairline,
+          thickness: AppSpacing.dividerHairline,
+          color: AppColors.divider,
         ),
-      ),
+      ],
     );
   }
 }
@@ -53,7 +53,7 @@ class _NoQueryState extends StatelessWidget {
           iconColor: AppModuleAccents.predictions,
           label: 'Trending',
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         Wrap(
           key: UnifiedSearchPage.trendingKey,
           spacing: AppSpacing.x3,
@@ -69,7 +69,7 @@ class _NoQueryState extends StatelessWidget {
               ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         Text(
           'Khám phá theo module',
           style: AppTextStyles.micro.copyWith(
@@ -77,10 +77,10 @@ class _NoQueryState extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         for (final module in snapshot.modules) ...[
           _ModuleCard(module: module),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -99,31 +99,37 @@ class _TrendingChip extends StatelessWidget {
       key: UnifiedSearchPage.trendingQueryKey(query.label),
       onTap: onTap,
       borderRadius: AppRadii.lgRadius,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.buttonCompact,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          border: Border.all(color: AppColors.borderSolid),
-          borderRadius: AppRadii.lgRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              _iconForKey(query.iconKey),
-              color: _accentForKey(query.iconKey),
-              size: 13,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: AppColors.surface2,
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: AppColors.borderSolid),
+              borderRadius: AppRadii.lgRadius,
             ),
-            const SizedBox(width: AppSpacing.x2),
-            Text(
-              query.label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.medium,
-              ),
+          ),
+          child: Padding(
+            padding: AppSpacing.discoveryChipHorizontalPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  _iconForKey(query.iconKey),
+                  color: _accentForKey(query.iconKey),
+                  size: 13,
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Text(
+                  query.label,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.medium,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -144,7 +150,7 @@ class _ModuleCard extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(module.route);
       },
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       borderColor: accent.withValues(alpha: .12),
       child: Row(
         children: [
@@ -161,7 +167,7 @@ class _ModuleCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   module.subtitle,
                   maxLines: 1,

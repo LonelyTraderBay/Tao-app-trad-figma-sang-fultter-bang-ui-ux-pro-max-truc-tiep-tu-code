@@ -105,10 +105,7 @@ class _P2PAntiPhishingCodePageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pSecurityDetailsScrollPadding(
                       bottomInset,
                     ),
                     child: Column(
@@ -160,7 +157,7 @@ class _P2PAntiPhishingCodePageState
     return VitCard(
       key: P2PAntiPhishingCodePage.codeCardKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pSecurityDetailsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -192,10 +189,7 @@ class _P2PAntiPhishingCodePageState
             radius: VitCardRadius.md,
             variant: VitCardVariant.inner,
             borderColor: AppColors.borderSolid,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x5,
-            ),
+            padding: AppSpacing.p2pSecurityDetailsCodePadding,
             child: Center(
               child: Text(
                 _showCode ? code : List.filled(code.length, '•').join(),
@@ -246,7 +240,7 @@ class _P2PAntiPhishingCodePageState
     return VitCard(
       key: P2PAntiPhishingCodePage.codeCardKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pSecurityDetailsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

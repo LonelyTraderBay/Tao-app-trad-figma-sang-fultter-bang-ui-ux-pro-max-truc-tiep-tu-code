@@ -9,7 +9,7 @@ class _CompareRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.earnVerticalPaddingX2,
       child: Row(
         children: [
           SizedBox(
@@ -47,7 +47,7 @@ class _SettingsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.earnVerticalPaddingX2,
       child: Row(
         children: [
           Icon(
@@ -83,7 +83,7 @@ class _PreviewRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.earnVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -161,7 +161,7 @@ class _DriftTrackPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final radius = Radius.circular(size.height / 2);
+    final radius = Radius.elliptical(size.height / 2, size.height / 2);
     final track = RRect.fromRectAndRadius(Offset.zero & size, radius);
     canvas.drawRRect(track, Paint()..color = AppColors.surface2);
     final left = size.width * (math.min(current, target) / 100);
@@ -219,7 +219,7 @@ class _DriftBarPainter extends CustomPainter {
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromLTWH(x, chart.bottom - height, barWidth, height),
-          const Radius.circular(AppRadii.xs),
+          const Radius.elliptical(AppRadii.xs, AppRadii.xs),
         ),
         Paint()..color = color,
       );

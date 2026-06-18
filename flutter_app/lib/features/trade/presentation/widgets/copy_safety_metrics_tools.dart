@@ -8,7 +8,7 @@ class _WarningCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _safetyWarningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -16,16 +16,16 @@ class _WarningCard extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 14,
+            size: AppSpacing.rowPy,
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: AppSpacing.walletAssetPillGap),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
                 fontWeight: AppTextStyles.bold,
-                height: 1.35,
+                height: AppSpacing.copySafetyBodyLineHeight,
               ),
             ),
           ),
@@ -55,14 +55,15 @@ class _MetricsTab extends StatelessWidget {
           'Understanding trust metrics:',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: 13),
+        const SizedBox(height: AppSpacing.x4),
         for (final metric in metrics) ...[
           _MetricCard(
             metric: metric,
             expanded: expandedMetric == metric.name,
             onTap: () => onMetricToggle(metric.name),
           ),
-          if (metric != metrics.last) const SizedBox(height: 10),
+          if (metric != metrics.last)
+            const SizedBox(height: AppSpacing.walletAssetPillGap),
         ],
       ],
     );
@@ -90,7 +91,7 @@ class _MetricCard extends StatelessWidget {
             key: CopySafetyCenterPage.metricKey(metric.name),
             onTap: onTap,
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: AppSpacing.cardPadding,
               child: Row(
                 children: [
                   Expanded(
@@ -104,7 +105,7 @@ class _MetricCard extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: 3),
+                        const SizedBox(height: AppSpacing.x1),
                         Text(
                           metric.description,
                           style: AppTextStyles.micro.copyWith(
@@ -119,7 +120,7 @@ class _MetricCard extends StatelessWidget {
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
                     color: AppColors.text3,
-                    size: 18,
+                    size: AppSpacing.ctaLoadingIcon,
                   ),
                 ],
               ),
@@ -127,7 +128,7 @@ class _MetricCard extends StatelessWidget {
           ),
           if (expanded)
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              padding: AppSpacing.copySafetyMetricExpandedPadding,
               child: Column(
                 children: [
                   _MetricInfo(
@@ -135,13 +136,13 @@ class _MetricCard extends StatelessWidget {
                     text: metric.goodRange,
                     color: AppColors.buy,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.x3),
                   _MetricInfo(
                     label: 'Bad Range',
                     text: metric.badRange,
                     color: AppColors.sell,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.x3),
                   _MetricInfo(
                     label: 'Why It Matters',
                     text: metric.whyMatters,
@@ -169,19 +170,18 @@ class _MetricInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: AppRadii.smRadius,
-      ),
+      padding: AppSpacing.copySafetyMetricInfoPadding,
+      borderColor: color,
       child: Text(
         '$label\n$text',
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: 1.35,
+          height: AppSpacing.copySafetyBodyLineHeight,
         ),
       ),
     );
@@ -203,14 +203,14 @@ class _GuidelinesTab extends StatelessWidget {
           items: snapshot.prohibitedBehaviors,
           icon: Icons.cancel_outlined,
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.transferSectionGap),
         _GuidelineList(
           title: 'Follower Responsibilities',
           color: _safetyPrimary,
           items: snapshot.followerResponsibilities,
           icon: Icons.check_circle_outline_rounded,
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.transferSectionGap),
         _ReportingSteps(steps: snapshot.reportingSteps),
       ],
     );
@@ -239,7 +239,7 @@ class _GuidelineList extends StatelessWidget {
         children: [
           for (final item in items) ...[
             _IconTextRow(icon: icon, color: color, text: item),
-            if (item != items.last) const SizedBox(height: 8),
+            if (item != items.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -261,7 +261,7 @@ class _ReportingSteps extends StatelessWidget {
         children: [
           for (final step in steps) ...[
             _SimpleCard(title: step.title, body: step.description),
-            if (step != steps.last) const SizedBox(height: 8),
+            if (step != steps.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -284,7 +284,8 @@ class _ToolsTab extends StatelessWidget {
         children: [
           for (final tool in tools) ...[
             _ToolButton(tool: tool, onEmergency: onEmergency),
-            if (tool != tools.last) const SizedBox(height: 10),
+            if (tool != tools.last)
+              const SizedBox(height: AppSpacing.walletAssetPillGap),
           ],
         ],
       ),
@@ -304,7 +305,7 @@ class _ToolButton extends StatelessWidget {
     return VitCard(
       key: CopySafetyCenterPage.toolKey(tool.id),
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.copySafetyActionCardPadding,
       borderColor: AppColors.cardBorder,
       onTap: () {
         if (tool.routePath != null) {
@@ -322,9 +323,9 @@ class _ToolButton extends StatelessWidget {
                 ? Icons.flag_outlined
                 : Icons.warning_amber_rounded,
             color: color,
-            size: 20,
+            size: AppSpacing.homeNextActionIconSize,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.cardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,7 +337,7 @@ class _ToolButton extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   tool.description,
                   style: AppTextStyles.micro.copyWith(
@@ -346,7 +347,11 @@ class _ToolButton extends StatelessWidget {
               ],
             ),
           ),
-          Icon(Icons.chevron_right_rounded, color: color, size: 18),
+          Icon(
+            Icons.chevron_right_rounded,
+            color: color,
+            size: AppSpacing.ctaLoadingIcon,
+          ),
         ],
       ),
     );

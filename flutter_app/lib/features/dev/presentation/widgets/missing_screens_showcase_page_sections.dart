@@ -110,7 +110,7 @@ class _V2ScreensSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.devCardPadding,
           radius: VitCardRadius.md,
           borderColor: AppColors.primary20,
           child: Text(
@@ -135,7 +135,7 @@ class _NewScreenCard extends StatelessWidget {
 
     return VitCard(
       key: MissingScreensShowcasePage.screenKey(screen.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.devCardPadding,
       radius: VitCardRadius.lg,
       borderColor: _borderForId(screen.id),
       onTap: onTap,
@@ -207,7 +207,7 @@ class _V2PageCard extends StatelessWidget {
 
     return VitCard(
       key: MissingScreensShowcasePage.v2PageKey(page.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.devCardPadding,
       radius: VitCardRadius.lg,
       onTap: onTap,
       child: Column(
@@ -278,26 +278,26 @@ class _FlowRow extends StatelessWidget {
       key: MissingScreensShowcasePage.flowKey(flow.id),
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.devCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               children: [
                 DecoratedBox(
-                  decoration: BoxDecoration(
+                  decoration: ShapeDecoration(
                     color: accent,
-                    shape: BoxShape.circle,
+                    shape: const CircleBorder(),
                   ),
                   child: const SizedBox(
                     width: AppSpacing.x3,
                     height: AppSpacing.x3,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: AppSpacing.x1,
                   height: AppSpacing.x4,
-                  color: _backgroundForId(flow.id),
+                  child: ColoredBox(color: _backgroundForId(flow.id)),
                 ),
                 Icon(
                   Icons.arrow_forward_rounded,

@@ -16,7 +16,7 @@ class _TransactionDetailCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -70,7 +70,7 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x2),
+      padding: AppSpacing.earnTopPaddingX2,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -149,7 +149,7 @@ class _TransactionCard extends StatelessWidget {
 
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           _TypeIcon(type: tx.type),
@@ -221,9 +221,9 @@ class _TypeIcon extends StatelessWidget {
     final color = _typeColor(type);
 
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.lgRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
       child: SizedBox(
         width: AppSpacing.stakingHistoryIconBox,
@@ -247,15 +247,12 @@ class _StatusPill extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _statusColor(status);
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.stakingHistoryPillPadV,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           _statusLabel(status),
           style: AppTextStyles.micro.copyWith(
@@ -278,7 +275,7 @@ class _FooterNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,

@@ -62,12 +62,7 @@ class _MissingScreensShowcasePageState
           header: VitHeader(
             variant: VitHeaderVariant.custom,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.contentPad,
-                AppSpacing.x4,
-                AppSpacing.contentPad,
-                AppSpacing.x3,
-              ),
+              padding: AppSpacing.devHeaderPadding,
               child: _ShowcaseTitle(snapshot: snapshot),
             ),
           ),
@@ -78,7 +73,7 @@ class _MissingScreensShowcasePageState
                 child: SingleChildScrollView(
                   key: MissingScreensShowcasePage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.devScrollPadding(bottomInset),
                   child: VitPageContent(
                     gap: VitContentGap.defaultGap,
                     children: [

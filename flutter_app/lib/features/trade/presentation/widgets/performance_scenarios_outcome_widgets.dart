@@ -19,20 +19,24 @@ class _ScenarioCard extends StatelessWidget {
 
     return _Card(
       key: PerformanceScenariosPage.scenarioKey(scenario.label),
-      padding: const EdgeInsets.fromLTRB(16, 16, 17, 16),
+      padding: AppSpacing.tradeBotCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .11),
-              borderRadius: AppRadii.cardLargeRadius,
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            width: AppSpacing.tradeBotClientCategoryIcon,
+            height: AppSpacing.tradeBotClientCategoryIcon,
+            alignment: Alignment.center,
+            borderColor: color.withValues(alpha: .18),
+            child: Icon(
+              _iconForType(scenario.type),
+              color: color,
+              size: AppSpacing.tradeBotClientCategoryIconGlyph,
             ),
-            child: Icon(_iconForType(scenario.type), color: color, size: 23),
           ),
-          const SizedBox(width: 13),
+          const SizedBox(width: AppSpacing.tradeBotCardGap),
           Expanded(
             child: Column(
               children: [
@@ -46,23 +50,23 @@ class _ScenarioCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.baseMedium.copyWith(
                           color: AppColors.text1,
-                          height: 1.2,
+                          height: AppSpacing.tradeBotLineHeightCaption,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.tradeBotSmallGap),
                     Text(
                       _formatReturn(scenario.annualReturnPct),
                       style: AppTextStyles.baseMedium.copyWith(
                         color: color,
                         fontWeight: AppTextStyles.bold,
-                        height: 1.1,
+                        height: AppSpacing.tradeBotLineHeightShort,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.tradeBotRowGap),
                 Row(
                   children: [
                     Expanded(
@@ -72,7 +76,7 @@ class _ScenarioCard extends StatelessWidget {
                         valueColor: AppColors.text1,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.tradeBotSmallGap),
                     Expanded(
                       child: _MetricBox(
                         label: 'Profit/Loss',
@@ -104,13 +108,10 @@ class _MetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.fromLTRB(8, 7, 8, 7),
-      decoration: BoxDecoration(
-        color: _scenarioPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      height: AppSpacing.tradeBotClientMoneyMetricHeight,
+      padding: AppSpacing.tradeBotMetricBoxPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -121,10 +122,10 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.05,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.tradeBotTinyGap),
           Text(
             value,
             maxLines: 1,
@@ -132,7 +133,7 @@ class _MetricBox extends StatelessWidget {
             style: AppTextStyles.numericCode.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -147,19 +148,19 @@ class _InfoNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+      padding: AppSpacing.tradeBotClientMoneyNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 1),
+            padding: AppSpacing.tradeBotNoticeIconTopPadding,
             child: Icon(
               Icons.info_outline_rounded,
               color: AppColors.text1,
-              size: 16,
+              size: AppSpacing.tradeBotSmallIcon,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           Expanded(
             child: Text(
               'Scenarios calculated using statistical models based on '
@@ -168,7 +169,7 @@ class _InfoNote extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1.3,
+                height: AppSpacing.tradeBotLineHeightCompact,
               ),
             ),
           ),

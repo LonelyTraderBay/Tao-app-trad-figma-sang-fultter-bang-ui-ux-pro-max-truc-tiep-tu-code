@@ -10,7 +10,7 @@ class _MultiSigCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.multisigKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pEscrowDetailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -70,7 +70,7 @@ class _SignatureRing extends StatelessWidget {
         children: [
           CircularProgressIndicator(
             value: progress,
-            strokeWidth: 4,
+            strokeWidth: AppSpacing.p2pEscrowDetailSignatureStroke,
             color: AppColors.buy,
             backgroundColor: AppColors.surface3,
           ),
@@ -101,22 +101,21 @@ class _SignerRow extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: signer.hasSigned ? AppColors.buy20 : AppColors.borderSolid,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pEscrowDetailInnerPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.buttonCompact,
-            height: AppSpacing.buttonCompact,
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.buttonCompact,
+            child: Material(
               color: signer.hasSigned ? AppColors.buy15 : AppColors.surface3,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              signer.hasSigned
-                  ? Icons.check_circle_outline_rounded
-                  : Icons.schedule_rounded,
-              color: signer.hasSigned ? AppColors.buy : AppColors.text3,
-              size: AppSpacing.iconSm,
+              shape: const CircleBorder(),
+              child: Icon(
+                signer.hasSigned
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.schedule_rounded,
+                color: signer.hasSigned ? AppColors.buy : AppColors.text3,
+                size: AppSpacing.iconSm,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -191,7 +190,7 @@ class _OrderInfoCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.orderInfoKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pEscrowDetailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -205,7 +204,10 @@ class _OrderInfoCard extends StatelessWidget {
           for (final row in rows) ...[
             _InfoRow(label: row.$1, value: row.$2, emphasis: row.$3),
             if (row != rows.last)
-              const Divider(height: 1, color: AppColors.divider),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
           ],
         ],
       ),
@@ -227,7 +229,7 @@ class _InfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.p2pEscrowDetailInfoRowPadding,
       child: Row(
         children: [
           Expanded(

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -84,14 +85,16 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
         .getDisputeResolution();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final activeBottomInset = mode.usesVisualQaFrame
-        ? DeviceMetrics.nativeBottomChrome + 18
+        ? DeviceMetrics.nativeBottomChrome +
+              AppSpacing.tradeBotDisputeFooterNativeGap
         : DeviceMetrics.nativeBottomChrome +
               MediaQuery.paddingOf(context).bottom +
-              18;
+              AppSpacing.tradeBotDisputeFooterNativeGap;
     final footerBottomOffset = mode.usesVisualQaFrame
         ? DeviceMetrics.height > 956
               ? DeviceMetrics.height - 956
-              : DeviceMetrics.nativeBottomChrome + 17
+              : DeviceMetrics.nativeBottomChrome +
+                    AppSpacing.tradeBotDisputeFooterVisualGap
         : activeBottomInset;
 
     return VitPageLayout(
@@ -119,11 +122,14 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: DisputeResolutionPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(
-                        20,
-                        _activeTabId == 'file' ? 13 : 18,
-                        20,
-                        _activeTabId == 'file' ? 24 : activeBottomInset + 20,
+                      padding: AppSpacing.tradeBotDisputeScrollPadding(
+                        _activeTabId == 'file'
+                            ? AppSpacing.tradeBotDisputeFileTopGap
+                            : AppSpacing.tradeBotDisputeCasesTopGap,
+                        _activeTabId == 'file'
+                            ? AppSpacing.tradeBotDisputeFileBottomGap
+                            : activeBottomInset +
+                                  AppSpacing.tradeBotDisputeCasesBottomGap,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class ExecutionQualitySlippageSheet extends StatefulWidget {
   const ExecutionQualitySlippageSheet({required this.settings, super.key});
@@ -42,10 +43,11 @@ class ExecutionQualityExecutionSheet extends StatelessWidget {
             label: 'Savings',
             value: '\$${report.savingsVsSingleVenue.toStringAsFixed(2)}',
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.tradeToolIconGap),
           for (final fill in report.fills) ...[
             _FillTile(fill: fill),
-            if (fill != report.fills.last) const SizedBox(height: 8),
+            if (fill != report.fills.last)
+              const SizedBox(height: AppSpacing.tradeToolInlineGap),
           ],
         ],
       ),
@@ -75,7 +77,7 @@ class ExecutionQualityAmendmentSheet extends StatelessWidget {
             label: 'Queue position',
             value: '#${order.queuePosition} / ${order.totalInQueue}',
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.x4),
           ExecutionQualityGradientButton(
             key: executionQualityAmendmentSaveKey,
             label: 'Modify Order',
@@ -104,7 +106,7 @@ class _ExecutionQualitySlippageSheetState
             'Set max slippage tolerance before the order is rejected.',
             style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeToolPageTopGap),
           Row(
             children: [
               for (final value in const [.1, .5, 1.0]) ...[
@@ -115,11 +117,12 @@ class _ExecutionQualitySlippageSheetState
                     onTap: () => setState(() => _tolerance = value),
                   ),
                 ),
-                if (value != 1.0) const SizedBox(width: 8),
+                if (value != 1.0)
+                  const SizedBox(width: AppSpacing.tradeToolInlineGap),
               ],
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.x4),
           ExecutionQualityGradientButton(
             key: executionQualitySlippageSaveKey,
             label: 'Save Slippage Settings',
@@ -148,30 +151,9 @@ class _SheetFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.paddingOf(context).bottom;
-    return SafeArea(
-      top: false,
-      child: Container(
-        padding: EdgeInsets.fromLTRB(20, 12, 20, 20 + bottom),
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-          border: Border(top: BorderSide(color: AppColors.borderSolid)),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const _SheetHandle(),
-              const SizedBox(height: 18),
-              Text(title, style: AppTextStyles.sectionTitleSm),
-              const SizedBox(height: 12),
-              child,
-            ],
-          ),
-        ),
-      ),
+    return VitSheetPanel(
+      title: title,
+      child: SingleChildScrollView(child: child),
     );
   }
 }
@@ -189,28 +171,18 @@ class _ToleranceChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: executionQualityToleranceKey(value),
+      height: AppSpacing.tradeToolRiskTabHeight,
+      alignment: Alignment.center,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Container(
-        height: 40,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? AppColors.buy.withValues(alpha: .16)
-              : executionQualityChipBackground,
-          border: Border.all(
-            color: active ? AppColors.buy : AppColors.cardBorder,
-          ),
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: Text(
-          '${value.toStringAsFixed(1)}%',
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.buy : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
+      variant: active ? VitCardVariant.standard : VitCardVariant.inner,
+      borderColor: active ? AppColors.buy : AppColors.cardBorder,
+      child: Text(
+        '${value.toStringAsFixed(1)}%',
+        style: AppTextStyles.caption.copyWith(
+          color: active ? AppColors.buy : AppColors.text2,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -224,12 +196,9 @@ class _FillTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: executionQualityChipBackground,
-        borderRadius: AppRadii.smRadius,
-      ),
+    return VitCard(
+      padding: AppSpacing.tradeToolMetricRowPadding,
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           Expanded(
@@ -253,24 +222,6 @@ class _FillTile extends StatelessWidget {
   }
 }
 
-class _SheetHandle extends StatelessWidget {
-  const _SheetHandle();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 40,
-        height: 4,
-        decoration: BoxDecoration(
-          color: AppColors.borderSolid,
-          borderRadius: AppRadii.xsRadius,
-        ),
-      ),
-    );
-  }
-}
-
 class _SheetRow extends StatelessWidget {
   const _SheetRow({
     required this.label,
@@ -285,7 +236,7 @@ class _SheetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7),
+      padding: AppSpacing.tradeToolSheetRowPadding,
       child: Row(
         children: [
           Expanded(

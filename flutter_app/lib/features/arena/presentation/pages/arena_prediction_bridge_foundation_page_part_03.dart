@@ -12,7 +12,7 @@ class _ExampleCard extends StatelessWidget {
     final color = _toneColor(tone);
     return VitCard(
       borderColor: color.withValues(alpha: .25),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,7 +33,7 @@ class _ExampleCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             example.title,
             style: AppTextStyles.body.copyWith(
@@ -41,7 +41,7 @@ class _ExampleCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             example.description,
             style: AppTextStyles.micro.copyWith(
@@ -49,17 +49,17 @@ class _ExampleCard extends StatelessWidget {
               height: AppSpacing.arenaBridgeBodyLineHeight,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           _DemoFrame(
             title: example.frameTitle,
             meta: example.evidenceRows.first,
             tone: tone,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           for (final row in example.evidenceRows) ...[
             _InfoRow(text: row, tone: tone),
             if (row != example.evidenceRows.last)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+              const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -81,49 +81,53 @@ class _DemoFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _toneColor(tone);
-    return Container(
+    return ConstrainedBox(
       constraints: const BoxConstraints(
         minHeight: AppSpacing.arenaBridgeDemoMinHeight,
       ),
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+      child: Material(
         color: AppColors.surface2,
-        border: Border.all(color: color.withValues(alpha: .18)),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Row(
-        children: [
-          _ToneIcon(tone: tone, small: true),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaBridgeTitleLineHeight,
-                  ),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .18)),
+          borderRadius: AppRadii.mdRadius,
+        ),
+        child: Padding(
+          padding: AppSpacing.arenaPaddingX3,
+          child: Row(
+            children: [
+              _ToneIcon(tone: tone, small: true),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                        height: AppSpacing.arenaBridgeTitleLineHeight,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      meta,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        height: AppSpacing.arenaBridgeMetricLineHeight,
+                      ),
+                    ),
+                  ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-                Text(
-                  meta,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.arenaBridgeMetricLineHeight,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -205,36 +209,37 @@ class _BridgeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _toneColor(tone);
-    return Container(
+    return ConstrainedBox(
       constraints: const BoxConstraints(
         minHeight: AppSpacing.arenaBridgeBadgeMinHeight,
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+      child: Material(
         color: color.withValues(alpha: .12),
-        border: Border.all(color: color.withValues(alpha: .22)),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            _toneIcon(tone),
-            color: color,
-            size: AppSpacing.arenaBridgeBadgeIcon,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .22)),
+          borderRadius: AppRadii.smRadius,
+        ),
+        child: Padding(
+          padding: AppSpacing.arenaPresetPillPadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                _toneIcon(tone),
+                color: color,
+                size: AppSpacing.arenaBridgeBadgeIcon,
+              ),
+              const SizedBox(width: AppSpacing.x1),
+              Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.x1),
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -284,20 +289,22 @@ class _ToneIcon extends StatelessWidget {
     final size = small
         ? AppSpacing.arenaBridgeCompactIconBox
         : AppSpacing.arenaBridgeIconBox;
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
-      decoration: BoxDecoration(
+      child: Material(
         color: color.withValues(alpha: .12),
-        border: Border.all(color: color.withValues(alpha: .20)),
-        borderRadius: small ? AppRadii.inputRadius : AppRadii.mdRadius,
-      ),
-      child: Icon(
-        _toneIcon(tone),
-        color: color,
-        size: small
-            ? AppSpacing.arenaBridgeCompactGlyph
-            : AppSpacing.arenaBridgeGlyph,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .20)),
+          borderRadius: small ? AppRadii.inputRadius : AppRadii.mdRadius,
+        ),
+        child: Icon(
+          _toneIcon(tone),
+          color: color,
+          size: small
+              ? AppSpacing.arenaBridgeCompactGlyph
+              : AppSpacing.arenaBridgeGlyph,
+        ),
       ),
     );
   }
@@ -312,7 +319,7 @@ class _DisclosureFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

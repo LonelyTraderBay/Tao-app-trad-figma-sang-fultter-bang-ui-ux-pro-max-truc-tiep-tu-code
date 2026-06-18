@@ -31,7 +31,7 @@ class MarketDerivativesSortChips extends StatelessWidget {
               active: active == sort,
               onTap: () => onSelected(sort),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.marketDerivativesSortGap),
           ],
         ],
       ),
@@ -53,29 +53,15 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
-        padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
-        decoration: BoxDecoration(
-          color: active
-              ? marketDerivativesPrimary.withValues(alpha: .18)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? marketDerivativesPrimary.withValues(alpha: .55)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          marketDerivativesSortLabel(sort),
-          style: AppTextStyles.caption.copyWith(
-            color: active ? marketDerivativesPrimary : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
-          ),
+    return Material(
+      type: MaterialType.transparency,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.cardRadius,
+        child: VitAccentPill(
+          label: marketDerivativesSortLabel(sort),
+          accentColor: active ? marketDerivativesPrimary : AppColors.text3,
+          size: VitStatusPillSize.md,
         ),
       ),
     );
@@ -90,13 +76,16 @@ class MarketDerivativesPerpetualPairCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.marketDerivativesPairCardPadding,
       child: Column(
         children: [
           Row(
             children: [
-              MarketDerivativesPairLogo(pair: pair, size: 34),
-              const SizedBox(width: 12),
+              MarketDerivativesPairLogo(
+                pair: pair,
+                size: AppSpacing.marketDerivativesPairAvatarMd,
+              ),
+              const SizedBox(width: AppSpacing.marketDerivativesPairGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +98,9 @@ class MarketDerivativesPerpetualPairCard extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(width: 7),
+                        const SizedBox(
+                          width: AppSpacing.marketDerivativesLeverageGap,
+                        ),
                         MarketDerivativesTinyPill('${pair.maxLeverage}x'),
                       ],
                     ),
@@ -145,7 +136,7 @@ class MarketDerivativesPerpetualPairCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.marketDerivativesPerpetualMetaGap),
           Row(
             children: [
               Expanded(
@@ -175,7 +166,7 @@ class MarketDerivativesPerpetualPairCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketDerivativesPerpetualSplitGap),
           MarketDerivativesSplitBar(
             leftPercent: pair.longRatio,
             leftLabel: 'Long ${pair.longRatio.toStringAsFixed(1)}%',

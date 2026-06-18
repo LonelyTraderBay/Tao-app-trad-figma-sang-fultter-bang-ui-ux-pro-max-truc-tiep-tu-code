@@ -21,7 +21,7 @@ class _MetricCard extends StatelessWidget {
       radius: VitCardRadius.lg,
       variant: toneBg == null ? VitCardVariant.standard : VitCardVariant.inner,
       borderColor: toneBg == null ? null : tone.withValues(alpha: .18),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDocumentCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +30,7 @@ class _MetricCard extends StatelessWidget {
               Icon(
                 icon,
                 color: tone == AppColors.text1 ? AppColors.text3 : tone,
-                size: 16,
+                size: AppSpacing.p2pDocumentInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -99,17 +99,16 @@ class _TaxDocumentRow extends StatelessWidget {
     final color = _toneColor(document.toneKey);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDocumentCardPadding,
       child: Row(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.p2pDocumentIconBox,
+            child: Material(
               color: color.withValues(alpha: .14),
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: SizedBox(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+              ),
               child: Icon(
                 Icons.description_outlined,
                 color: color,
@@ -143,21 +142,22 @@ class _TaxDocumentRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.x3),
           Material(
             color: color,
-            borderRadius: AppRadii.inputRadius,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+            ),
             child: InkWell(
               onTap: () => HapticFeedback.selectionClick(),
-              borderRadius: AppRadii.inputRadius,
+              customBorder: const RoundedRectangleBorder(
+                borderRadius: AppRadii.inputRadius,
+              ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.x3,
-                  vertical: AppSpacing.x2,
-                ),
+                padding: AppSpacing.p2pDocumentDownloadPadding,
                 child: Row(
                   children: [
                     const Icon(
                       Icons.download_rounded,
                       color: AppColors.onAccent,
-                      size: 14,
+                      size: AppSpacing.p2pDocumentDownloadIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(
@@ -185,44 +185,46 @@ class _TaxDisclaimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PTaxReportingPage.disclaimerKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.sell10,
+      color: AppColors.sell10,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppColors.sell20),
+        side: BorderSide(color: AppColors.sell20),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.error_outline_rounded,
-            color: AppColors.sell,
-            size: 16,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  height: 1.55,
-                ),
-                children: [
-                  TextSpan(
-                    text: 'Tax Disclaimer: ',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.sell,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      child: Padding(
+        padding: AppSpacing.p2pDocumentCardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.error_outline_rounded,
+              color: AppColors.sell,
+              size: AppSpacing.p2pDocumentInlineIcon,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text2,
+                    height: AppSpacing.p2pDocumentNoticeLineHeight,
                   ),
-                  TextSpan(text: snapshot.disclaimer),
-                ],
+                  children: [
+                    TextSpan(
+                      text: 'Tax Disclaimer: ',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.sell,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    TextSpan(text: snapshot.disclaimer),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

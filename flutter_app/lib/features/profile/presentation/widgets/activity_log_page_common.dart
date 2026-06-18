@@ -15,23 +15,24 @@ class _DetailBlock extends StatelessWidget {
         Row(
           children: [
             if (icon != null) ...[
-              Icon(icon, color: _activityMuted, size: 12),
-              const SizedBox(width: 5),
+              Icon(
+                icon,
+                color: _activityMuted,
+                size: AppSpacing.profileActivityDetailIcon,
+              ),
+              const SizedBox(width: AppSpacing.profileActivityDetailIconGap),
             ],
             Flexible(
               child: Text(
                 label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: _activityMuted,
-                  height: 1,
-                ),
+                style: AppTextStyles.micro.copyWith(color: _activityMuted),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.profileActivityDetailValueGap),
         Text(
           value,
           maxLines: 1,
@@ -39,7 +40,6 @@ class _DetailBlock extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.bold,
-            height: 1,
           ),
         ),
       ],
@@ -67,14 +67,18 @@ class _ActivityFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 64,
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+      height: AppSpacing.profileActivityFooterHeight,
+      padding: AppSpacing.profileActivityFooterPadding,
       borderColor: _activityDivider,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: _activityPrimary, size: 14),
-          const SizedBox(width: 8),
+          const Icon(
+            Icons.shield_outlined,
+            color: _activityPrimary,
+            size: AppSpacing.profileActivityFooterIcon,
+          ),
+          const SizedBox(width: AppSpacing.profileActivityFooterGap),
           Expanded(
             child: Text(
               'Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng gi\u00FAp b\u1EA1n theo d\u00F5i t\u1EA5t c\u1EA3 thao t\u00E1c tr\u00EAn t\u00E0i kho\u1EA3n. N\u1EBFu\n'

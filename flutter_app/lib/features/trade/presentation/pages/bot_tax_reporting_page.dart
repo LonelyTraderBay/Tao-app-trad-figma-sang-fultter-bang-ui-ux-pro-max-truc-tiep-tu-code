@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -22,7 +22,6 @@ part '../widgets/bot_tax_reporting_reports.dart';
 part '../widgets/bot_tax_reporting_common.dart';
 
 const _taxBackground = AppColors.bg;
-const _taxPanel = AppColors.surface;
 const _taxPanel2 = AppColors.surface2;
 const _taxPrimary = AppColors.primary;
 const _taxGreen = AppColors.buy;
@@ -74,8 +73,8 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 128
-            : DeviceMetrics.nativeBottomChrome + 96) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotFooterBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.tradeBotFooterBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -97,16 +96,18 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: BotTaxReportingPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                        bottomInset,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
                         customGap: 0,
                         children: [
                           const _TaxNotice(),
-                          const SizedBox(height: 31),
+                          const SizedBox(height: AppSpacing.tradeBotContentGap),
                           const _SectionLabel('Select Tax Year'),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: AppSpacing.tradeBotRowGap),
                           VitPageSection(
                             customGap: 0,
                             children: [
@@ -119,22 +120,22 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 18),
+                          const SizedBox(height: AppSpacing.tradeBotContentGap),
                           _SectionLabel('Summary for $_selectedYear'),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: AppSpacing.tradeBotRowGap),
                           _SummaryCard(summary: snapshot.summary),
-                          const SizedBox(height: 18),
+                          const SizedBox(height: AppSpacing.tradeBotContentGap),
                           const _SectionLabel('Cost Basis Method'),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: AppSpacing.tradeBotRowGap),
                           _CostBasisPicker(
                             selectedMethod: _costBasisMethod,
                             onChanged: (method) {
                               setState(() => _costBasisMethod = method);
                             },
                           ),
-                          const SizedBox(height: 18),
+                          const SizedBox(height: AppSpacing.tradeBotContentGap),
                           const _SectionLabel('Select Report Types'),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: AppSpacing.tradeBotRowGap),
                           for (final report in snapshot.reportTypes) ...[
                             _ReportTypeCard(
                               report: report,
@@ -142,21 +143,21 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                               onTap: () => _toggleReport(report.id),
                             ),
                             if (report != snapshot.reportTypes.last)
-                              const SizedBox(height: 10),
+                              const SizedBox(height: AppSpacing.tradeBotRowGap),
                           ],
-                          const SizedBox(height: 18),
+                          const SizedBox(height: AppSpacing.tradeBotContentGap),
                           const _SectionLabel('Capital Gains Breakdown'),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: AppSpacing.tradeBotRowGap),
                           _BreakdownCard(
                             summary: snapshot.summary,
                             breakdown: snapshot.breakdown,
                           ),
-                          const SizedBox(height: 17),
+                          const SizedBox(height: AppSpacing.tradeBotContentGap),
                           _TaxNotesCard(notes: snapshot.taxNotes),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: AppSpacing.tradeBotCardGap),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: EdgeInsets.all(12),
+                            padding: AppSpacing.tradeBotInnerPanelPadding,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -167,7 +168,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                                       'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
                                   contractId: 'bot-tax-reporting-review',
                                 ),
-                                SizedBox(height: 8),
+                                SizedBox(height: AppSpacing.tradeBotSmallGap),
                                 VitStatusPill(
                                   label: 'Report preview before export',
                                   status: VitStatusPillStatus.info,

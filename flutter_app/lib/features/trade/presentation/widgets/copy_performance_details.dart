@@ -13,17 +13,17 @@ class _TradesTab extends StatelessWidget {
           title: 'So sánh từng giao dịch',
           lines: const ['Chênh lệch chủ yếu do slippage và execution delay.'],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.cardGap),
         for (final trade in snapshot.tradeComparisons) ...[
           VitCard(
-            padding: const EdgeInsets.all(14),
+            padding: AppSpacing.copyPerformanceTradeCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     _SidePill(side: trade.side),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.x3),
                     Expanded(
                       child: Text(
                         trade.pair,
@@ -40,7 +40,7 @@ class _TradesTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.cardGap),
                 Row(
                   children: [
                     Expanded(
@@ -52,7 +52,7 @@ class _TradesTab extends StatelessWidget {
                         pnl: trade.providerPnl,
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: AppSpacing.walletAssetPillGap),
                     Expanded(
                       child: _TradeColumn(
                         title: 'Bạn',
@@ -64,7 +64,7 @@ class _TradesTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.walletAssetPillGap),
                 Row(
                   children: [
                     Expanded(
@@ -84,7 +84,7 @@ class _TradesTab extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.cardGap),
         ],
       ],
     );
@@ -102,17 +102,17 @@ class _CostsTab extends StatelessWidget {
       children: [
         for (final item in snapshot.costAttribution)
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: AppSpacing.copyPerformanceCostItemPadding,
             child: VitCard(
               variant: VitCardVariant.inner,
-              padding: const EdgeInsets.all(12),
+              padding: AppSpacing.cardPaddingCompact,
               child: Row(
                 children: [
                   CircleAvatar(
                     radius: 6,
                     backgroundColor: Color(item.colorHex),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: AppSpacing.walletAssetPillGap),
                   Expanded(
                     child: Text(
                       item.name,
@@ -132,7 +132,10 @@ class _CostsTab extends StatelessWidget {
               ),
             ),
           ),
-        const Divider(color: AppColors.divider, height: 22),
+        const Divider(
+          color: AppColors.divider,
+          height: AppSpacing.sectionGapRegular,
+        ),
         _SmallMetricCard(
           label: 'Tổng chi phí',
           value: '\$${snapshot.totalCosts.toStringAsFixed(0)}',
@@ -154,10 +157,10 @@ class _MetricsTab extends StatelessWidget {
       children: [
         for (final metric in snapshot.metrics)
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: AppSpacing.copyPerformanceMetricItemPadding,
             child: VitCard(
               variant: VitCardVariant.inner,
-              padding: const EdgeInsets.all(14),
+              padding: AppSpacing.copyPerformanceTradeCardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -168,7 +171,7 @@ class _MetricsTab extends StatelessWidget {
                       fontWeight: AppTextStyles.extraBold,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: AppSpacing.walletAssetPillGap),
                   Row(
                     children: [
                       Expanded(
@@ -178,7 +181,7 @@ class _MetricsTab extends StatelessWidget {
                               '${metric.you.toStringAsFixed(2)}${metric.suffix}',
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: AppSpacing.walletAssetPillGap),
                       Expanded(
                         child: _SmallMetricCard(
                           label: 'Provider',
@@ -207,7 +210,7 @@ class _InfoBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: const EdgeInsets.all(13),
+      padding: AppSpacing.copyPerformanceInfoBoxPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -216,24 +219,24 @@ class _InfoBox extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.text3,
-                size: 13,
+                size: AppSpacing.x4,
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: AppSpacing.formFieldLabelGap),
               Text(
                 title,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.x3),
           for (final line in lines)
             Padding(
-              padding: const EdgeInsets.only(bottom: 4),
+              padding: AppSpacing.copyPerformanceInfoLinePadding,
               child: Text(
                 '• $line',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: 1.25,
+                  height: AppSpacing.copyPerformanceInfoLineHeight,
                 ),
               ),
             ),
@@ -258,7 +261,7 @@ class _SmallMetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -266,7 +269,7 @@ class _SmallMetricCard extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             style: AppTextStyles.baseMedium.copyWith(

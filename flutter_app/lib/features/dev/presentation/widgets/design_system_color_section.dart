@@ -53,10 +53,12 @@ class _Swatch extends StatelessWidget {
       child: Column(
         children: [
           DecoratedBox(
-            decoration: BoxDecoration(
+            decoration: ShapeDecoration(
               color: color,
-              borderRadius: AppRadii.cardRadius,
-              border: Border.all(color: AppColors.borderSolid),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.cardRadius,
+                side: BorderSide(color: AppColors.borderSolid),
+              ),
             ),
             child: const SizedBox(
               width: AppSpacing.buttonStandard,

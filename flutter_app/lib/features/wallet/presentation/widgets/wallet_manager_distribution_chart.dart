@@ -3,11 +3,11 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class WalletManagerDistributionCard extends StatelessWidget {
   const WalletManagerDistributionCard({super.key, required this.snapshot});
@@ -16,14 +16,13 @@ class WalletManagerDistributionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: AppSpacing.walletManagerDistributionHeight,
       padding: AppSpacing.walletManagerDistributionPadding,
-      decoration: BoxDecoration(
-        color: walletManagerPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: walletManagerBorder),
-      ),
+      variant: VitCardVariant.ghost,
+      borderColor: walletManagerBorder,
+      background: const ColoredBox(color: walletManagerPanel),
+      clip: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -31,7 +30,7 @@ class WalletManagerDistributionCard extends StatelessWidget {
             'Portfolio Distribution',
             style: AppTextStyles.baseMedium.copyWith(
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           const SizedBox(height: AppSpacing.walletManagerDistributionTitleGap),

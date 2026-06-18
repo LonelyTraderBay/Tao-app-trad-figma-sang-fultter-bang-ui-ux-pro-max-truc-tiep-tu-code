@@ -21,14 +21,18 @@ class _InfoPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.standard,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       borderColor: borderColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, color: iconColor, size: 18),
+              Icon(
+                icon,
+                color: iconColor,
+                size: AppSpacing.tradeBotClientMoneyDocumentGlyph,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
@@ -66,37 +70,34 @@ class _ScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _statusColor(status);
     return Expanded(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: _statusTintColor(status),
-          border: selected ? Border.all(color: color) : null,
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x3),
-          child: Column(
-            children: [
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.md,
+        padding: AppSpacing.tradeBotCopyDemoCompactPadding,
+        borderColor: selected ? color : null,
+        background: ColoredBox(color: _statusTintColor(status)),
+        child: Column(
+          children: [
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text2,
+                fontWeight: AppTextStyles.bold,
               ),
-              const SizedBox(height: AppSpacing.x2),
-              Text(
-                '$score',
-                style: AppTextStyles.sectionTitle.copyWith(color: color),
-              ),
-              Text(
-                '/100',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: AppSpacing.x2),
+            Text(
+              '$score',
+              style: AppTextStyles.sectionTitle.copyWith(color: color),
+            ),
+            Text(
+              '/100',
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ],
         ),
       ),
     );
@@ -133,7 +134,13 @@ class _ComplianceIcon extends StatelessWidget {
       TradeCopyCardCompliance.warn => Icons.error_outline_rounded,
       TradeCopyCardCompliance.fail => Icons.cancel_outlined,
     };
-    return Center(child: Icon(icon, color: _statusColor(status), size: 17));
+    return Center(
+      child: Icon(
+        icon,
+        color: _statusColor(status),
+        size: AppSpacing.tradeBotMediumIcon,
+      ),
+    );
   }
 }
 
@@ -168,9 +175,11 @@ class _BulletLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: compact ? AppSpacing.x1 : AppSpacing.x2),
+      padding: compact
+          ? AppSpacing.tradeBotCopyDemoCompactLinePadding
+          : AppSpacing.tradeBotCopyDemoLinePadding,
       child: Text(
-        '• $text',
+        '- $text',
         style: AppTextStyles.caption.copyWith(color: AppColors.text2),
       ),
     );
@@ -186,11 +195,15 @@ class _IconLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.tradeBotCopyDemoLinePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.buy, size: 15),
+          Icon(
+            icon,
+            color: AppColors.buy,
+            size: AppSpacing.tradeBotSmallIcon + AppSpacing.hairlineStroke,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(

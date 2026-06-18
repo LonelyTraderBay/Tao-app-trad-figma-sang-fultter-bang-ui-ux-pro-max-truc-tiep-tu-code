@@ -19,7 +19,7 @@ class _FriendCard extends StatelessWidget {
     return VitCard(
       key: ReferralHistoryPage.friendKey(friend.id),
       onTap: onOpen,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         children: [
           Row(
@@ -52,7 +52,7 @@ class _FriendCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Tham gia: ${friend.joinedDate}',
                       style: AppTextStyles.micro.copyWith(
@@ -86,7 +86,7 @@ class _FriendCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -120,38 +120,16 @@ class _FriendCard extends StatelessWidget {
             ],
           ),
           if (friend.canRemindKyc) ...[
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
-            InkWell(
+            const SizedBox(height: AppSpacing.x3),
+            VitCtaButton(
               key: ReferralHistoryPage.remindKey(friend.id),
-              onTap: onRemind,
-              borderRadius: AppRadii.mdRadius,
-              child: Container(
-                height: AppSpacing.referralHistoryFilterHeight,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.primary08,
-                  border: Border.all(color: AppColors.primary20),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      reminded ? Icons.check_rounded : Icons.send_rounded,
-                      color: AppColors.primary,
-                      size: AppSpacing.referralHistoryIconMd,
-                    ),
-                    const SizedBox(width: AppSpacing.x3),
-                    Text(
-                      reminded ? 'Đã nhắc KYC' : 'Nhắc hoàn tất KYC',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ],
-                ),
+              onPressed: onRemind,
+              variant: VitCtaButtonVariant.secondary,
+              height: AppSpacing.referralHistoryFilterHeight,
+              leading: Icon(
+                reminded ? Icons.check_rounded : Icons.send_rounded,
               ),
+              child: Text(reminded ? 'Đã nhắc KYC' : 'Nhắc hoàn tất KYC'),
             ),
           ],
         ],
@@ -167,18 +145,23 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.referralHistoryAvatarBox,
       height: AppSpacing.referralHistoryFilterHeight,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        border: Border.all(color: AppColors.borderSolid),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Text(
-        initial,
-        style: AppTextStyles.baseMedium.copyWith(color: AppColors.text2),
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.surface2,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: AppColors.borderSolid),
+            borderRadius: AppRadii.lgRadius,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            initial,
+            style: AppTextStyles.baseMedium.copyWith(color: AppColors.text2),
+          ),
+        ),
       ),
     );
   }
@@ -197,20 +180,19 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: background,
-        borderRadius: AppRadii.lgRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.referralTinyPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -232,47 +214,49 @@ class _FriendMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-          Row(
-            children: [
-              if (icon != null) ...[
-                Icon(
-                  icon,
-                  color: color,
-                  size: AppSpacing.referralHistoryIconSm,
-                ),
-                const SizedBox(width: AppSpacing.x1),
-              ],
-              Flexible(
-                child: Text(
-                  value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
+      child: Padding(
+        padding: AppSpacing.referralInnerPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+            const SizedBox(height: AppSpacing.x1),
+            Row(
+              children: [
+                if (icon != null) ...[
+                  Icon(
+                    icon,
                     color: color,
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
+                    size: AppSpacing.referralHistoryIconSm,
+                  ),
+                  const SizedBox(width: AppSpacing.x1),
+                ],
+                Flexible(
+                  child: Text(
+                    value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -15,7 +15,7 @@ class _ValidationSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -43,43 +43,49 @@ class _ValidationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _toneColor(item.tone);
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.borderSolid)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.x3),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    item.title,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: AppSpacing.earnBottomPaddingX3,
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      item.title,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    item.dateLabel,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      item.dateLabel,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Icon(
-              item.tone == 'success'
-                  ? Icons.check_circle_outline_rounded
-                  : Icons.warning_amber_rounded,
-              color: color,
-              size: AppSpacing.iconMd,
-            ),
-          ],
+              Icon(
+                item.tone == 'success'
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.warning_amber_rounded,
+                color: color,
+                size: AppSpacing.iconMd,
+              ),
+            ],
+          ),
         ),
-      ),
+        const Divider(
+          color: AppColors.borderSolid,
+          height: AppSpacing.dividerHairline,
+        ),
+      ],
     );
   }
 }
@@ -111,7 +117,7 @@ class _DocumentRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           const Icon(
@@ -161,7 +167,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingContingencyPlanPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,
@@ -187,20 +193,26 @@ class _Pill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: emphasis ? 0.16 : 0.08),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: emphasis ? AppTextStyles.bold : AppTextStyles.normal,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: color,
+                fontWeight: emphasis
+                    ? AppTextStyles.bold
+                    : AppTextStyles.normal,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -12,7 +12,7 @@ class _VerifiedTeaser extends StatelessWidget {
       child: VitCard(
         key: ArenaHomePage.verifiedTeaserKey,
         onTap: onTap,
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.arenaPaddingX4,
         child: Row(
           children: [
             _ActionIcon(
@@ -43,7 +43,7 @@ class _VerifiedTeaser extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                  const SizedBox(height: AppSpacing.x2),
                   Text(
                     'Sẽ mở trong tương lai cho challenge xác thực cao hơn',
                     maxLines: 2,
@@ -86,9 +86,9 @@ class _ArenaFooter extends StatelessWidget {
             ),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -162,13 +162,13 @@ class _SearchResults extends StatelessWidget {
               : '$total kết quả cho "$query"',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         if (modes.isNotEmpty) ...[
           VitModuleSectionHeader(
             title: 'Modes (${modes.length})',
             accentColor: AppColors.primary,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           for (final mode in modes) ...[
             _SearchRow(
               icon: _templateIcon(_kindForMode(mode.templateId)),
@@ -177,7 +177,7 @@ class _SearchResults extends StatelessWidget {
               color: AppColors.primary,
               onTap: () => onMode(mode.id),
             ),
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
           ],
         ],
         if (rooms.isNotEmpty) ...[
@@ -185,7 +185,7 @@ class _SearchResults extends StatelessWidget {
             title: 'Phòng (${rooms.length})',
             accentColor: AppColors.warn,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           for (final room in rooms) ...[
             _SearchRow(
               icon: Icons.groups_2_outlined,
@@ -195,7 +195,7 @@ class _SearchResults extends StatelessWidget {
               color: _challengeStateColor(room.state),
               onTap: () => onRoom(room.id),
             ),
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
           ],
         ],
         if (creators.isNotEmpty) ...[
@@ -203,7 +203,7 @@ class _SearchResults extends StatelessWidget {
             title: 'Creators (${creators.length})',
             accentColor: AppColors.buy,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           for (final creator in creators) ...[
             _SearchRow(
               icon: Icons.person_rounded,
@@ -213,7 +213,7 @@ class _SearchResults extends StatelessWidget {
               color: AppColors.buy,
               onTap: () => onCreator(creator.id),
             ),
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
           ],
         ],
         if (total == 0)
@@ -246,7 +246,7 @@ class _SearchRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         children: [
           _ActionIcon(icon: icon, color: color),
@@ -263,7 +263,7 @@ class _SearchRow extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   subtitle,
                   maxLines: 1,
@@ -292,15 +292,19 @@ class _ActionIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.arenaHomeActionIconBox,
       height: AppSpacing.arenaHomeActionIconBox,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: color.withValues(alpha: .18)),
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.mdRadius,
+            side: BorderSide(color: color.withValues(alpha: .18)),
+          ),
+        ),
+        child: Icon(icon, color: color, size: AppSpacing.arenaHomeActionIcon),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.arenaHomeActionIcon),
     );
   }
 }
@@ -312,23 +316,30 @@ class _MiniCountBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ConstrainedBox(
       constraints: const BoxConstraints(
         minWidth: AppSpacing.arenaHomeCountBadgeMinWidth,
       ),
-      height: AppSpacing.arenaHomeCountBadgeHeight,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x1),
-      decoration: BoxDecoration(
-        color: AppColors.sell,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        count > 99 ? '99+' : '$count',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.onAccent,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.arenaHomeCountBadgeLineHeight,
+      child: SizedBox(
+        height: AppSpacing.arenaHomeCountBadgeHeight,
+        child: DecoratedBox(
+          decoration: const ShapeDecoration(
+            color: AppColors.sell,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+          ),
+          child: Padding(
+            padding: AppSpacing.arenaHomeCountBadgePadding,
+            child: Center(
+              child: Text(
+                count > 99 ? '99+' : '$count',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.onAccent,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.arenaHomeCountBadgeLineHeight,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

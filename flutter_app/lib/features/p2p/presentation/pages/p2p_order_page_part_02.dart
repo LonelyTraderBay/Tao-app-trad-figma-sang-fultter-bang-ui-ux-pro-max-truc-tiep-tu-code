@@ -117,56 +117,49 @@ class _QrPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        border: Border.all(color: AppColors.borderSolid),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Padding(
-        padding: AppSpacing.p2pOrderQrPanelPadding,
-        child: Column(
-          children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: AppColors.onAccent,
-                borderRadius: AppRadii.mdRadius,
-              ),
-              child: Padding(
-                padding: AppSpacing.p2pOrderQrInnerPadding,
-                child: CustomPaint(
-                  painter: _QrPatternPainter(
-                    data:
-                        '${order.bankName}|${order.accountNumber}|${order.accountName}|${order.totalVnd}|${order.transferContent}',
-                  ),
-                  size: const Size(
-                    AppSpacing.p2pOrderQrSize,
-                    AppSpacing.p2pOrderQrSize,
-                  ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.borderSolid,
+      padding: AppSpacing.p2pOrderQrPanelPadding,
+      child: Column(
+        children: [
+          Material(
+            color: AppColors.onAccent,
+            borderRadius: AppRadii.mdRadius,
+            child: Padding(
+              padding: AppSpacing.p2pOrderQrInnerPadding,
+              child: CustomPaint(
+                painter: _QrPatternPainter(
+                  data:
+                      '${order.bankName}|${order.accountNumber}|${order.accountName}|${order.totalVnd}|${order.transferContent}',
+                ),
+                size: const Size(
+                  AppSpacing.p2pOrderQrSize,
+                  AppSpacing.p2pOrderQrSize,
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.x3),
-            Text(
-              'Quét mã bằng app ngân hàng',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-              ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            'Quét mã bằng app ngân hàng',
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
             ),
-            const SizedBox(height: AppSpacing.x1),
-            Text(
-              '${order.bankName} - ${order.accountName}',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-            const SizedBox(height: AppSpacing.x3),
-            _SmallPill(
-              icon: Icons.open_in_new_rounded,
-              label: 'Mở app ngân hàng',
-              color: AppModuleAccents.p2p,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            '${order.bankName} - ${order.accountName}',
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          _SmallPill(
+            icon: Icons.open_in_new_rounded,
+            label: 'Mở app ngân hàng',
+            color: AppModuleAccents.p2p,
+          ),
+        ],
       ),
     );
   }
@@ -338,25 +331,26 @@ class _TimelineItem extends StatelessWidget {
       children: [
         Column(
           children: [
-            Container(
-              width: AppSpacing.x6,
-              height: AppSpacing.x6,
-              decoration: BoxDecoration(
-                color: _stepBackground(item.status),
-                shape: BoxShape.circle,
-                border: Border.all(color: color),
-              ),
-              child: Icon(
-                _timelineIcon(item.iconKey),
-                color: color,
-                size: AppSpacing.p2pOrderTimelineIcon,
+            Material(
+              color: _stepBackground(item.status),
+              shape: CircleBorder(side: BorderSide(color: color)),
+              child: SizedBox(
+                width: AppSpacing.x6,
+                height: AppSpacing.x6,
+                child: Center(
+                  child: Icon(
+                    _timelineIcon(item.iconKey),
+                    color: color,
+                    size: AppSpacing.p2pOrderTimelineIcon,
+                  ),
+                ),
               ),
             ),
             if (!isLast)
-              Container(
-                width: 2,
+              SizedBox(
+                width: AppSpacing.p2pOrderTimelineConnectorWidth,
                 height: AppSpacing.x6,
-                color: color.withValues(alpha: .35),
+                child: ColoredBox(color: color.withValues(alpha: .35)),
               ),
           ],
         ),

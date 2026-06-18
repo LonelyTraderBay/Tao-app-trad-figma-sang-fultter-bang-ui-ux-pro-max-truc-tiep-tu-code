@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_common.dart';
 
@@ -16,13 +17,10 @@ class MarketDerivativesTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
+    return Material(
+      color: AppColors.surface,
       child: SizedBox(
-        height: 54,
+        height: AppSpacing.marketDerivativesTabsHeight,
         child: Row(
           children: [
             _UnderlinedTab(
@@ -87,7 +85,7 @@ class _UnderlinedTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 2,
+              height: AppSpacing.marketDerivativesTabIndicatorHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: marketDerivativesPrimary),

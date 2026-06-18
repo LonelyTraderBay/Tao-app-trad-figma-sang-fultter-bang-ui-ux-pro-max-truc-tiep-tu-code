@@ -15,7 +15,7 @@ class _LinkedRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.arenaPointsEntryRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -31,10 +31,7 @@ class _LinkedRow extends StatelessWidget {
             },
             borderRadius: AppRadii.smRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x1,
-                vertical: AppSpacing.x1,
-              ),
+              padding: AppSpacing.arenaPointsEntryLinkPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

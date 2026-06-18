@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -82,11 +81,9 @@ class _TransactionHistoryPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: TransactionHistoryPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.pageHorizontalPadding,
-                    AppSpacing.rowPy,
-                    AppSpacing.pageHorizontalPadding,
-                    bottomInset,
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.rowPy,
+                    bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,

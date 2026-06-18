@@ -18,9 +18,9 @@ class _RewardAnalyticsSection extends StatelessWidget {
           title: 'Phân tích phần thưởng',
           accentColor: AppColors.warn,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -43,7 +43,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               Row(
                 children: [
                   Expanded(
@@ -71,7 +71,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+              const SizedBox(height: AppSpacing.x5),
               Text(
                 'TỈ LỆ THẮNG THEO LOẠI CHIA THƯỞNG',
                 style: AppTextStyles.micro.copyWith(
@@ -79,21 +79,21 @@ class _RewardAnalyticsSection extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+              const SizedBox(height: AppSpacing.x3),
               for (var i = 0; i < history.distribution.length; i++) ...[
                 _DistributionRow(
                   item: history.distribution[i],
                   color: _distributionColor(i),
                 ),
                 if (i < history.distribution.length - 1)
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                  const SizedBox(height: AppSpacing.x3),
               ],
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+              const SizedBox(height: AppSpacing.x5),
               InkWell(
                 onTap: onViewChallenge,
                 borderRadius: AppRadii.smRadius,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+                  padding: AppSpacing.arenaVerticalPaddingX2,
                   child: Row(
                     children: [
                       Expanded(
@@ -135,39 +135,38 @@ class _RewardMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x4,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
-      child: Column(
-        children: [
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.base.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.heavy,
-              fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.myArenaRewardMetricLineHeight,
+      child: Padding(
+        padding: AppSpacing.arenaPresetSectionChipPadding,
+        child: Column(
+          children: [
+            Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.base.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.heavy,
+                fontFeatures: AppTextStyles.tabularFigures,
+                height: AppSpacing.myArenaRewardMetricLineHeight,
+              ),
             ),
-          ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.myArenaRewardMetricLineHeight,
+            const SizedBox(height: AppSpacing.x2),
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                height: AppSpacing.myArenaRewardMetricLineHeight,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -247,7 +246,7 @@ class _SafetySection extends StatelessWidget {
           title: 'An toàn & quản lý',
           accentColor: AppColors.buy,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         _SafetyActionCard(
           key: MyArenaPage.reportsKey,
           icon: Icons.outlined_flag_rounded,
@@ -256,7 +255,7 @@ class _SafetySection extends StatelessWidget {
           color: AppColors.sell,
           onTap: onReports,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         _SafetyActionCard(
           key: MyArenaPage.blockedKey,
           icon: Icons.block_rounded,
@@ -265,7 +264,7 @@ class _SafetySection extends StatelessWidget {
           color: AppColors.warn,
           onTap: onBlocked,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         _SafetyActionCard(
           key: MyArenaPage.safetyKey,
           icon: Icons.shield_outlined,
@@ -299,7 +298,7 @@ class _SafetyActionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         children: [
           _ActionIcon(icon: icon, color: color),
@@ -317,7 +316,7 @@ class _SafetyActionCard extends StatelessWidget {
                     height: AppSpacing.myArenaTextLineHeight,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   subtitle,
                   maxLines: 1,
@@ -356,10 +355,7 @@ class _ArenaFooter extends StatelessWidget {
             onTap: onRules,
             borderRadius: AppRadii.smRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x2,
-              ),
+              padding: AppSpacing.arenaPresetChipPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -381,9 +377,9 @@ class _ArenaFooter extends StatelessWidget {
             ),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -426,11 +422,11 @@ class _EmptyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaPaddingX5,
       child: Column(
         children: [
           Icon(icon, color: _arenaAccent, size: AppSpacing.myArenaEmptyIcon),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             title,
             style: AppTextStyles.body.copyWith(
@@ -438,7 +434,7 @@ class _EmptyCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           _AccentPillButton(
             icon: Icons.add_rounded,
             label: actionLabel,
@@ -459,14 +455,16 @@ class _ActionIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.myArenaActionIconBox,
       height: AppSpacing.myArenaActionIconBox,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.mdRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Icon(icon, color: color, size: AppSpacing.myArenaActionIcon),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.myArenaActionIcon),
     );
   }
 }
@@ -479,24 +477,25 @@ class _ArenaStatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .14),
-        border: Border.all(color: color.withValues(alpha: .22)),
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.smRadius,
+          side: BorderSide(color: color.withValues(alpha: .22)),
+        ),
       ),
-      child: Text(
-        label,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.myArenaStatusPillLineHeight,
+      child: Padding(
+        padding: AppSpacing.arenaPresetChipPadding,
+        child: Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.myArenaStatusPillLineHeight,
+          ),
         ),
       ),
     );

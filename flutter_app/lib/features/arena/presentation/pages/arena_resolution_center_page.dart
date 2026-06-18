@@ -62,12 +62,12 @@ class ArenaResolutionCenterPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       children: [
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: Align(
                             alignment: Alignment.topCenter,
                             child: VitEmptyState(
@@ -153,7 +153,7 @@ class _ResolutionStatusContent extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+              const Padding(padding: AppSpacing.arenaTopPaddingX1),
               Text(
                 body,
                 style: AppTextStyles.caption.copyWith(

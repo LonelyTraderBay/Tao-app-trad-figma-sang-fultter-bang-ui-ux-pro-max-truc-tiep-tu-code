@@ -31,8 +31,13 @@ class _LeverageHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 178,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
+      height: AppSpacing.leverageHeroHeight,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.x5,
+        top: AppSpacing.x5,
+        right: AppSpacing.x5,
+        bottom: AppSpacing.x5,
+      ),
       radius: VitCardRadius.lg,
       borderColor: riskColor.withValues(alpha: .32),
       child: Column(
@@ -41,37 +46,30 @@ class _LeverageHero extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.bolt_rounded, color: riskColor, size: 21),
-              const SizedBox(width: 8),
+              Icon(
+                Icons.bolt_rounded,
+                color: riskColor,
+                size: AppSpacing.iconMd,
+              ),
+              const SizedBox(width: AppSpacing.x3),
               Text('\u0110\u00F2n b\u1EA9y', style: AppTextStyles.captionSm),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             '${preview.leverage}x',
             style: AppTextStyles.jumbo.copyWith(
               color: riskColor,
-              height: 1,
+              height: AppSpacing.leverageHeroValueLineHeight,
               fontWeight: AppTextStyles.heavy,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: 14),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-            decoration: BoxDecoration(
-              color: riskColor.withValues(alpha: .13),
-              borderRadius: AppRadii.xlRadius,
-              border: Border.all(color: riskColor.withValues(alpha: .32)),
-            ),
-            child: Text(
-              'R\u1EE7i ro: ${preview.riskLabel}',
-              style: AppTextStyles.captionSm.copyWith(
-                color: riskColor,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
+          const SizedBox(height: AppSpacing.rowPy),
+          VitAccentPill(
+            label: 'R\u1EE7i ro: ${preview.riskLabel}',
+            accentColor: riskColor,
+            size: VitStatusPillSize.md,
           ),
         ],
       ),
@@ -88,7 +86,12 @@ class _RiskMeter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowPy,
+        top: AppSpacing.rowPy,
+        right: AppSpacing.rowPy,
+        bottom: AppSpacing.rowPy,
+      ),
       borderColor: riskColor.withValues(alpha: .18),
       child: Column(
         children: [
@@ -108,22 +111,24 @@ class _RiskMeter extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               for (var level = 1; level <= 6; level++) ...[
                 Expanded(
-                  child: Container(
-                    height: 7,
-                    decoration: BoxDecoration(
-                      color: level <= preview.riskLevel
-                          ? _segmentColor(level)
-                          : _chipBackground,
-                      borderRadius: AppRadii.xsRadius,
+                  child: ClipRRect(
+                    borderRadius: AppRadii.xsRadius,
+                    child: SizedBox(
+                      height: AppSpacing.transferTileGap,
+                      child: ColoredBox(
+                        color: level <= preview.riskLevel
+                            ? _segmentColor(level)
+                            : _chipBackground,
+                      ),
                     ),
                   ),
                 ),
-                if (level != 6) const SizedBox(width: 5),
+                if (level != 6) const SizedBox(width: AppSpacing.x2),
               ],
             ],
           ),

@@ -11,7 +11,7 @@ class _HeroBanner extends StatelessWidget {
       key: StakingGuidePage.heroKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,30 +48,27 @@ class _DifficultyTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: StakingGuidePage.tabsKey,
       color: AppColors.surface,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        AppSpacing.x4,
-        AppSpacing.contentPad,
-        0,
-      ),
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: active.name,
-        onChanged: (key) => onChanged(
-          StakingGuideDifficulty.values.firstWhere(
-            (difficulty) => difficulty.name == key,
-          ),
-        ),
-        tabs: [
-          for (final difficulty in StakingGuideDifficulty.values)
-            VitTabItem(
-              key: difficulty.name,
-              label: _difficultyTabLabel(difficulty),
+      child: Padding(
+        padding: AppSpacing.earnSurfaceTabsPadding,
+        child: VitTabBar(
+          variant: VitTabBarVariant.underline,
+          activeKey: active.name,
+          onChanged: (key) => onChanged(
+            StakingGuideDifficulty.values.firstWhere(
+              (difficulty) => difficulty.name == key,
             ),
-        ],
+          ),
+          tabs: [
+            for (final difficulty in StakingGuideDifficulty.values)
+              VitTabItem(
+                key: difficulty.name,
+                label: _difficultyTabLabel(difficulty),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -88,10 +85,10 @@ class _TutorialCard extends StatelessWidget {
     return VitCard(
       key: StakingGuidePage.tutorialKey(tutorial.id),
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.earnCardPaddingX4,
         child: Row(
           children: [
             _RoundIcon(
@@ -178,7 +175,7 @@ class _QuickTipCard extends StatelessWidget {
     final color = _toneColor(tip.tone);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -220,7 +217,7 @@ class _CommonMistakes extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             children: [
               for (var i = 0; i < snapshot.mistakes.length; i++) ...[
@@ -246,7 +243,7 @@ class _MistakeRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -293,7 +290,7 @@ class _StartStakingCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

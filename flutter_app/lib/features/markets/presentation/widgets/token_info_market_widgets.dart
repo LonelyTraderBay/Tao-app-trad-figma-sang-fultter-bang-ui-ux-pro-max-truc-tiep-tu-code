@@ -9,7 +9,7 @@ class _SupplyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tokenInfoSupplyCardPadding,
       child: Column(
         children: [
           _MetricLine(
@@ -18,14 +18,14 @@ class _SupplyCard extends StatelessWidget {
                 '${_formatCompact(fundamentals.circulatingSupply)} ${fundamentals.symbol}',
           ),
           if (supplyPct != null) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.tokenInfoMetricGap),
             Row(
               children: [
                 Expanded(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(3),
+                    borderRadius: AppRadii.swatchRadius,
                     child: LinearProgressIndicator(
-                      minHeight: 6,
+                      minHeight: AppSpacing.tokenInfoSupplyProgressHeight,
                       value: (supplyPct! / 100).clamp(0, 1).toDouble(),
                       backgroundColor: AppColors.surface3,
                       valueColor: const AlwaysStoppedAnimation(
@@ -34,7 +34,7 @@ class _SupplyCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.tokenInfoSupplyProgressGap),
                 Text(
                   '${supplyPct!.toStringAsFixed(1)}%',
                   style: AppTextStyles.micro.copyWith(
@@ -45,7 +45,7 @@ class _SupplyCard extends StatelessWidget {
               ],
             ),
           ],
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tokenInfoMetricGap),
           _MetricLine(
             label: 'Tong cung',
             value:
@@ -85,7 +85,7 @@ class _MetricLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: AppSpacing.tokenInfoMetricLinePadding,
       child: Row(
         children: [
           Expanded(
@@ -116,31 +116,30 @@ class _DistributionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tokenInfoSupplyCardPadding,
       child: Row(
         children: [
           CustomPaint(
-            size: const Size.square(80),
+            size: const Size.square(AppSpacing.tokenInfoDonutSize),
             painter: _DonutPainter(distribution),
           ),
-          const SizedBox(width: 18),
+          const SizedBox(width: AppSpacing.tokenInfoDistributionGap),
           Expanded(
             child: Column(
               children: [
                 for (final item in distribution)
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    padding: AppSpacing.tokenInfoMetricLinePadding,
                     child: Row(
                       children: [
-                        Container(
-                          width: 10,
-                          height: 10,
-                          decoration: BoxDecoration(
-                            color: item.color,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
+                        Icon(
+                          Icons.circle,
+                          size: AppSpacing.tokenInfoDistributionDot,
+                          color: item.color,
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(
+                          width: AppSpacing.tokenInfoDistributionDotGap,
+                        ),
                         Expanded(
                           child: Text(
                             item.label,
@@ -179,12 +178,12 @@ class _DonutPainter extends CustomPainter {
     var start = -math.pi / 2;
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 18
+      ..strokeWidth = AppSpacing.tokenInfoDonutStroke
       ..strokeCap = StrokeCap.butt;
     for (final item in distribution) {
       final sweep = math.pi * 2 * (item.percentage / 100);
       canvas.drawArc(
-        rect.deflate(9),
+        rect.deflate(AppSpacing.tokenInfoDonutInset),
         start,
         sweep,
         false,
@@ -226,7 +225,7 @@ class _AthAtlCards extends StatelessWidget {
             deltaColor: AppColors.sell,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.tokenInfoRecordCardGap),
         Expanded(
           child: _PriceRecordCard(
             label: 'ATL',
@@ -265,15 +264,15 @@ class _PriceRecordCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.tokenInfoRecordCardPadding,
       borderColor: color.withValues(alpha: 0.18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, size: 13, color: color),
-              const SizedBox(width: 6),
+              Icon(icon, size: AppSpacing.tokenInfoRecordIcon, color: color),
+              const SizedBox(width: AppSpacing.tokenInfoRecordIconGap),
               Text(
                 label,
                 style: AppTextStyles.micro.copyWith(
@@ -283,7 +282,7 @@ class _PriceRecordCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.tokenInfoRecordValueGap),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(
@@ -296,7 +295,7 @@ class _PriceRecordCard extends StatelessWidget {
             date,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tokenInfoRecordDeltaGap),
           Text(
             delta,
             maxLines: 1,
@@ -322,19 +321,19 @@ class _ChartLink extends StatelessWidget {
     return VitCard(
       key: TokenInfoPage.chartButtonKey,
       onTap: () => context.go(AppRoutePaths.pairDetail(pairId)),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tokenInfoChartCardPadding,
       child: Row(
         children: [
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
+          SizedBox(
+            width: AppSpacing.tokenInfoChartIconBox,
+            height: AppSpacing.tokenInfoChartIconBox,
+            child: Material(
               color: _marketPrimary.withValues(alpha: 0.12),
               borderRadius: AppRadii.cardRadius,
+              child: const Icon(Icons.bar_chart_rounded, color: _marketPrimary),
             ),
-            child: const Icon(Icons.bar_chart_rounded, color: _marketPrimary),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tokenInfoChartIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,7 +344,7 @@ class _ChartLink extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.tokenInfoChartSubtitleGap),
                 Text(
                   'Chart, so lenh, giao dich gan day',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),

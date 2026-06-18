@@ -11,13 +11,13 @@ class _FeedbackBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDocumentCardPadding,
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: 18,
+            size: AppSpacing.p2pDocumentCalloutIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -45,14 +45,14 @@ class _DisclosureCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDocumentCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.text3,
-            size: 16,
+            size: AppSpacing.p2pDocumentInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -60,7 +60,7 @@ class _DisclosureCard extends StatelessWidget {
               snapshot.disclosure,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.p2pDocumentBodyLineHeight,
               ),
             ),
           ),
@@ -88,11 +88,11 @@ class _CertificateInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: bottomGap),
+      padding: AppSpacing.p2pDocumentInfoRowPadding(bottomGap),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.text3, size: 17),
+          Icon(icon, color: AppColors.text3, size: AppSpacing.p2pDocumentRowIcon),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
@@ -126,7 +126,7 @@ class _CoverageLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x3),
+      padding: AppSpacing.p2pDocumentBulletTopPadding,
       child: Row(
         children: [
           Expanded(

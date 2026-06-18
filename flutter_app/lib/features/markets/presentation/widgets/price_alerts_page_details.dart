@@ -21,264 +21,219 @@ class _AlertCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final progress = (alert.currentPrice / alert.targetPrice).clamp(0.0, 1.0);
     final conditionColor = _isAbove ? AppColors.buy : AppColors.sell;
+    final avatarColor = pair?.logoColor ?? _marketPrimary;
+    final avatarLabel = alert.symbol.split('/').first;
 
     return VitCard(
       key: PriceAlertsPage.cardKey(alert.id),
-      padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
+      padding: AppSpacing.priceAlertsCardPadding,
       borderColor: _isTriggered
           ? AppColors.buy.withValues(alpha: .24)
           : AppColors.cardBorder,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: _isTriggered
-              ? AppColors.buy.withValues(alpha: .04)
-              : AppColors.transparent,
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                _AssetAvatar(alert: alert, pair: pair),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        alert.symbol,
-                        style: AppTextStyles.baseMedium.copyWith(
-                          fontWeight: AppTextStyles.bold,
-                          height: 1.1,
-                        ),
+      clip: _isTriggered,
+      background: _isTriggered
+          ? ColoredBox(color: AppColors.buy.withValues(alpha: .04))
+          : null,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              VitAssetAvatar(
+                label: avatarLabel,
+                accentColor: avatarColor,
+                size: AppSpacing.priceAlertsAvatar,
+                radius: AppRadii.pillRadius,
+              ),
+              const SizedBox(width: AppSpacing.priceAlertsHeaderGap),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      alert.symbol,
+                      style: AppTextStyles.baseMedium.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                        height: AppSpacing.marketLineHeightShort,
                       ),
-                      const SizedBox(height: 5),
-                      Row(
-                        children: [
-                          Icon(
-                            _isAbove
-                                ? Icons.trending_up_rounded
-                                : Icons.trending_down_rounded,
-                            color: conditionColor,
-                            size: 14,
-                          ),
-                          const SizedBox(width: 4),
-                          Flexible(
-                            child: Text(
-                              '${_isAbove ? 'Trên' : 'Dưới'} ${_formatUsd(alert.targetPrice)}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.caption.copyWith(
-                                color: conditionColor,
-                                fontWeight: AppTextStyles.bold,
-                                fontFeatures: AppTextStyles.tabularFigures,
-                                height: 1,
-                              ),
+                    ),
+                    const SizedBox(height: AppSpacing.marketPairPriceGap),
+                    Row(
+                      children: [
+                        Icon(
+                          _isAbove
+                              ? Icons.trending_up_rounded
+                              : Icons.trending_down_rounded,
+                          color: conditionColor,
+                          size: AppSpacing.priceAlertsTrendIcon,
+                        ),
+                        const SizedBox(width: AppSpacing.priceAlertsTrendGap),
+                        Flexible(
+                          child: Text(
+                            '${_isAbove ? 'Tr\u00EAn' : 'D\u01B0\u1EDBi'} ${_formatUsd(alert.targetPrice)}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.caption.copyWith(
+                              color: conditionColor,
+                              fontWeight: AppTextStyles.bold,
+                              fontFeatures: AppTextStyles.tabularFigures,
+                              height: AppSpacing.marketLineHeightTight,
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                if (_isTriggered)
-                  const _TriggeredPill()
-                else
-                  InkWell(
-                    key: PriceAlertsPage.toggleKey(alert.id),
-                    onTap: onToggle,
-                    borderRadius: AppRadii.cardRadius,
-                    child: Icon(
-                      alert.isActive
-                          ? Icons.toggle_on_rounded
-                          : Icons.toggle_off_rounded,
-                      color: alert.isActive ? AppColors.buy : AppColors.text3,
-                      size: 34,
+                        ),
+                      ],
                     ),
-                  ),
-                const SizedBox(width: 8),
+                  ],
+                ),
+              ),
+              if (_isTriggered)
+                const VitAccentPill(
+                  label: '\u0110\u00E3 k\u00EDch ho\u1EA1t',
+                  accentColor: AppColors.buy,
+                  size: VitStatusPillSize.md,
+                  semanticStatus: VitStatusPillStatus.success,
+                )
+              else
                 InkWell(
-                  key: PriceAlertsPage.deleteKey(alert.id),
-                  onTap: onDelete,
-                  borderRadius: AppRadii.smRadius,
-                  child: Container(
-                    width: 28,
-                    height: 28,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppColors.sell10,
-                      borderRadius: AppRadii.smRadius,
-                    ),
-                    child: const Icon(
-                      Icons.delete_outline_rounded,
-                      color: AppColors.sell,
-                      size: 16,
-                    ),
+                  key: PriceAlertsPage.toggleKey(alert.id),
+                  onTap: onToggle,
+                  borderRadius: AppRadii.cardRadius,
+                  child: Icon(
+                    alert.isActive
+                        ? Icons.toggle_on_rounded
+                        : Icons.toggle_off_rounded,
+                    color: alert.isActive ? AppColors.buy : AppColors.text3,
+                    size: AppSpacing.priceAlertsToggleIcon,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Giá hiện tại',
+              const SizedBox(width: AppSpacing.priceAlertsActionGap),
+              VitIconButton(
+                key: PriceAlertsPage.deleteKey(alert.id),
+                icon: Icons.delete_outline_rounded,
+                tooltip: 'Delete price alert',
+                variant: VitIconButtonVariant.danger,
+                size: VitIconButtonSize.sm,
+                onPressed: onDelete,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.marketSocialLargeGap),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Gi\u00E1 hi\u1EC7n t\u1EA1i',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
-                              height: 1,
+                              height: AppSpacing.marketLineHeightTight,
                             ),
                           ),
-                          const Spacer(),
-                          Text(
+                        ),
+                        const SizedBox(width: AppSpacing.marketPairMicroGap),
+                        Flexible(
+                          child: Text(
                             _formatUsd(alert.currentPrice),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.end,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
                               fontFeatures: AppTextStyles.tabularFigures,
-                              height: 1,
+                              height: AppSpacing.marketLineHeightTight,
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 9),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(999),
-                        child: SizedBox(
-                          height: 7,
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              const ColoredBox(color: AppColors.surface3),
-                              FractionallySizedBox(
-                                alignment: Alignment.centerLeft,
-                                widthFactor: progress,
-                                child: ColoredBox(
-                                  color: _progressColor(alert, progress),
-                                ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.priceAlertsProgressGap),
+                    ClipRRect(
+                      borderRadius: AppRadii.pillRadius,
+                      child: SizedBox(
+                        height: AppSpacing.priceAlertsProgressHeight,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            const ColoredBox(color: AppColors.surface3),
+                            FractionallySizedBox(
+                              alignment: Alignment.centerLeft,
+                              widthFactor: progress,
+                              child: ColoredBox(
+                                color: _progressColor(alert, progress),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 17),
-                SizedBox(
-                  width: 60,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Mục tiêu',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                          height: 1,
-                        ),
+              ),
+              const SizedBox(width: AppSpacing.priceAlertsTargetGap),
+              SizedBox(
+                width: AppSpacing.priceAlertsTargetWidth,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'M\u1EE5c ti\u00EAu',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        height: AppSpacing.marketLineHeightTight,
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        _formatUsd(alert.targetPrice),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: conditionColor,
-                          fontWeight: AppTextStyles.bold,
-                          fontFeatures: AppTextStyles.tabularFigures,
-                          height: 1,
-                        ),
+                    ),
+                    const SizedBox(height: AppSpacing.priceAlertsActionGap),
+                    Text(
+                      _formatUsd(alert.targetPrice),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: conditionColor,
+                        fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                        height: AppSpacing.marketLineHeightTight,
                       ),
-                    ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (_isTriggered) ...[
+            const SizedBox(height: AppSpacing.priceAlertsTriggeredGap),
+            const Divider(
+              height: AppSpacing.hairlineStroke,
+              thickness: AppSpacing.hairlineStroke,
+              color: AppColors.divider,
+            ),
+            const SizedBox(height: AppSpacing.priceAlertsTriggeredDividerGap),
+            Row(
+              children: [
+                const Icon(
+                  Icons.notifications_none_rounded,
+                  color: AppColors.buy,
+                  size: AppSpacing.priceAlertsTriggeredIcon,
+                ),
+                const SizedBox(width: AppSpacing.priceAlertsTriggeredIconGap),
+                Expanded(
+                  child: Text(
+                    'K\u00EDch ho\u1EA1t l\u00FAc 11:30:00 17/2/2024',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text3,
+                      height: AppSpacing.marketLineHeightTight,
+                    ),
                   ),
                 ),
               ],
             ),
-            if (_isTriggered) ...[
-              const SizedBox(height: 13),
-              const Divider(height: 1, color: AppColors.divider),
-              const SizedBox(height: 11),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.notifications_none_rounded,
-                    color: AppColors.buy,
-                    size: 15,
-                  ),
-                  const SizedBox(width: 7),
-                  Expanded(
-                    child: Text(
-                      'Kích hoạt lúc 11:30:00 17/2/2024',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                        height: 1,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AssetAvatar extends StatelessWidget {
-  const _AssetAvatar({required this.alert, required this.pair});
-
-  final MarketPriceAlert alert;
-  final MarketPair? pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = pair?.logoColor ?? _marketPrimary;
-    final symbol = alert.symbol.split('/').first;
-    return Container(
-      width: 36,
-      height: 36,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .16),
-        shape: BoxShape.circle,
-      ),
-      child: Text(
-        symbol.length <= 3 ? symbol : symbol.substring(0, 3),
-        style: AppTextStyles.caption.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
-  }
-}
-
-class _TriggeredPill extends StatelessWidget {
-  const _TriggeredPill();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 36,
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Text(
-        'Đã kích hoạt',
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.buy,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
+        ],
       ),
     );
   }
@@ -290,17 +245,17 @@ class _EmptyAlertsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 18),
+      padding: AppSpacing.priceAlertsEmptyPadding,
       child: Column(
         children: [
           const Icon(
             Icons.notifications_none_rounded,
             color: AppColors.text3,
-            size: 34,
+            size: AppSpacing.priceAlertsEmptyIcon,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.priceAlertsEmptyGap),
           Text(
-            'Chưa có cảnh báo nào',
+            'Ch\u01B0a c\u00F3 c\u1EA3nh b\u00E1o n\u00E0o',
             style: AppTextStyles.body.copyWith(color: AppColors.text3),
           ),
         ],
@@ -308,4 +263,3 @@ class _EmptyAlertsCard extends StatelessWidget {
     );
   }
 }
-

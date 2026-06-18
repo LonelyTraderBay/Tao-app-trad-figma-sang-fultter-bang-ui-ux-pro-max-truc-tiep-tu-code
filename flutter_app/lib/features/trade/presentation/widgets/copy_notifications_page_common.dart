@@ -7,33 +7,11 @@ class _EmptyNotifications extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 64),
-      child: Column(
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: const BoxDecoration(
-              color: _notificationChip,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.notifications_none_rounded,
-              color: AppColors.text3,
-              size: 34,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            activeTab == 'unread'
-                ? 'Không có thông báo chưa đọc'
-                : 'Chưa có thông báo nào',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
+    return VitEmptyState(
+      icon: Icons.notifications_none_rounded,
+      title: activeTab == 'unread'
+          ? 'Không có thông báo chưa đọc'
+          : 'Chưa có thông báo nào',
     );
   }
 }

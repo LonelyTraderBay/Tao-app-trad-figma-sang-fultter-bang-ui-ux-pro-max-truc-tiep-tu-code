@@ -13,28 +13,13 @@ class _AdIdentityCard extends StatelessWidget {
     final typeLabel = snapshot.tradeType == P2PTradeType.sell ? 'BÁN' : 'MUA';
 
     return VitCard(
-      height: AppSpacing.x7 + AppSpacing.x3,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+      height: AppSpacing.p2pMarketplaceAnalyticsIdentityHeight,
+      padding: AppSpacing.p2pMarketplaceAnalyticsIdentityPadding,
       child: Row(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: typeColor.withValues(alpha: .12),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x2,
-              ),
-              child: Text(
-                '$typeLabel ${snapshot.asset}',
-                style: AppTextStyles.micro.copyWith(
-                  color: typeColor,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
+          VitAccentPill(
+            label: '$typeLabel ${snapshot.asset}',
+            accentColor: typeColor,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -60,34 +45,10 @@ class _AdIdentityCard extends StatelessWidget {
               ],
             ),
           ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.warn10,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x2,
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.emoji_events_outlined,
-                    color: AppColors.warn,
-                    size: AppSpacing.iconSm,
-                  ),
-                  const SizedBox(width: AppSpacing.x1),
-                  Text(
-                    '#${snapshot.ranking}/${snapshot.totalActiveAds}',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.warn,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          VitMetricDeltaPill(
+            label: '#${snapshot.ranking}/${snapshot.totalActiveAds}',
+            tone: VitMetricDeltaTone.warning,
+            icon: Icons.emoji_events_outlined,
           ),
         ],
       ),
@@ -189,24 +150,24 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.buttonHero + AppSpacing.x4 + AppSpacing.x3,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      height: AppSpacing.p2pMarketplaceAnalyticsMetricCardHeight,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.x6,
-                height: AppSpacing.x6,
-                decoration: BoxDecoration(
-                  color: item.color.withValues(alpha: .12),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: Icon(
-                  item.icon,
-                  color: item.color,
-                  size: AppSpacing.iconSm,
+              Material(
+                color: item.color.withValues(alpha: .12),
+                borderRadius: AppRadii.mdRadius,
+                child: SizedBox(
+                  width: AppSpacing.x6,
+                  height: AppSpacing.x6,
+                  child: Icon(
+                    item.icon,
+                    color: item.color,
+                    size: AppSpacing.iconSm,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -278,11 +239,8 @@ class _QuickStats extends StatelessWidget {
     ];
 
     return VitCard(
-      height: AppSpacing.x7 + AppSpacing.x6,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      height: AppSpacing.p2pMarketplaceAnalyticsQuickStatsHeight,
+      padding: AppSpacing.p2pMarketplaceAnalyticsSelectorPadding,
       child: Row(
         children: [
           for (var i = 0; i < items.length; i++) ...[
@@ -369,7 +327,7 @@ class _ConversionFunnel extends StatelessWidget {
 
     return VitCard(
       key: P2PAdAnalyticsPage.funnelKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -384,7 +342,10 @@ class _ConversionFunnel extends StatelessWidget {
             if (i < stages.length - 1) const SizedBox(height: AppSpacing.x3),
           ],
           const SizedBox(height: AppSpacing.x4),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.p2pMarketplaceAnalyticsDividerHeight,
+            color: AppColors.divider,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
@@ -483,7 +444,7 @@ class _PerformanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -498,7 +459,7 @@ class _PerformanceCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: AppSpacing.buttonHero * 2,
+            height: AppSpacing.p2pMarketplaceAnalyticsChartLargeHeight,
             child: CustomPaint(
               painter: _PerformanceLinePainter(snapshot.dailyPerformance),
               child: const SizedBox.expand(),

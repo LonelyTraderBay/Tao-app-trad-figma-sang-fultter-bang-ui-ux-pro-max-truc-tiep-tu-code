@@ -9,7 +9,7 @@ class _FlowHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.accent,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaFlowMapHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,10 +66,7 @@ class _StatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.arenaFlowMapStatPadding,
       child: Column(
         children: [
           Text(
@@ -125,7 +122,7 @@ class _CollapsibleSection extends StatelessWidget {
             onTap: onTap,
             borderRadius: AppRadii.smRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+              padding: AppSpacing.arenaFlowMapSectionTogglePadding,
               child: Row(
                 children: [
                   Icon(
@@ -206,34 +203,33 @@ class _RouteRegistry extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         VitCard(
           clip: true,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
-              Container(
+              ColoredBox(
                 color: AppColors.surface2,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.x4,
-                  vertical: AppSpacing.x3,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'ROUTE',
+                child: Padding(
+                  padding: AppSpacing.arenaFlowMapRouteHeaderPadding,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'ROUTE',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'STATUS',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                    ),
-                    Text(
-                      'STATUS',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               for (final route in routes) ...[
@@ -261,10 +257,7 @@ class _RouteRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final live = route.status == 'Live';
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.arenaFlowMapRouteRowPadding,
       child: Row(
         children: [
           Expanded(

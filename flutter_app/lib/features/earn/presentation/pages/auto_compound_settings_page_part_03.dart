@@ -25,7 +25,7 @@ class _InfoSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.cardPaddingHero,
           child: Column(
             children: [
               const Icon(
@@ -71,11 +71,9 @@ class _InfoItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DecoratedBox(
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.12),
-            borderRadius: AppRadii.mdRadius,
-          ),
+        Material(
+          color: color.withValues(alpha: 0.12),
+          borderRadius: AppRadii.mdRadius,
           child: SizedBox(
             width: AppSpacing.x7,
             height: AppSpacing.x7,
@@ -123,7 +121,7 @@ class _SuccessToast extends StatelessWidget {
     return VitCard(
       key: AutoCompoundSettingsPage.successToastKey,
       borderColor: AppColors.buy,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Row(
         children: [
           const Icon(
@@ -165,27 +163,29 @@ class _ToggleSwitch extends StatelessWidget {
     return Semantics(
       button: true,
       toggled: on,
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          width: AppSpacing.autoCompoundSettingsSwitchWidth,
-          height: AppSpacing.autoCompoundSettingsSwitchHeight,
-          padding: const EdgeInsets.all(AppSpacing.x1),
-          decoration: BoxDecoration(
-            color: on ? AppColors.buy : AppColors.borderSolid,
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: AnimatedAlign(
-            duration: const Duration(milliseconds: 180),
-            alignment: on ? Alignment.centerRight : Alignment.centerLeft,
-            child: const SizedBox(
-              width: AppSpacing.x4,
-              height: AppSpacing.x4,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
+      child: Material(
+        color: on ? AppColors.buy : AppColors.borderSolid,
+        borderRadius: AppRadii.mdRadius,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadii.mdRadius,
+          child: SizedBox(
+            width: AppSpacing.autoCompoundSettingsSwitchWidth,
+            height: AppSpacing.autoCompoundSettingsSwitchHeight,
+            child: Padding(
+              padding: AppSpacing.zeroInsets.copyWith(
+                left: AppSpacing.x1,
+                top: AppSpacing.x1,
+                right: AppSpacing.x1,
+                bottom: AppSpacing.x1,
+              ),
+              child: AnimatedAlign(
+                duration: const Duration(milliseconds: 180),
+                alignment: on ? Alignment.centerRight : Alignment.centerLeft,
+                child: const Material(
                   color: AppColors.onAccent,
-                  shape: BoxShape.circle,
+                  shape: CircleBorder(),
+                  child: SizedBox(width: AppSpacing.x4, height: AppSpacing.x4),
                 ),
               ),
             ),
@@ -204,11 +204,11 @@ class _AssetBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
+    return Material(
+      color: color.withValues(alpha: 0.12),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.xlRadius,
+        side: BorderSide(color: color.withValues(alpha: 0.25)),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -236,25 +236,7 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

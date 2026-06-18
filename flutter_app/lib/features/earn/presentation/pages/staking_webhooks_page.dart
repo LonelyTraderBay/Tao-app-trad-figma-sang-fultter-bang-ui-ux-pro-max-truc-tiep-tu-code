@@ -59,7 +59,7 @@ class StakingWebhooksPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.defaultPadding,
                     gap: VitContentGap.defaultGap,
@@ -110,7 +110,7 @@ class _WebhooksHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.accent30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -160,10 +160,7 @@ class _WebhookCard extends StatelessWidget {
     return VitCard(
       key: StakingWebhooksPage.webhookKey(webhook.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnCardPaddingX3X4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -217,7 +214,7 @@ class _WebhookCard extends StatelessWidget {
                   borderRadius: AppRadii.smRadius,
                   onTap: () {},
                   child: const Padding(
-                    padding: EdgeInsets.all(AppSpacing.x1),
+                    padding: AppSpacing.earnSmallPillPadding,
                     child: Icon(
                       Icons.delete_outline_rounded,
                       color: AppColors.sell,
@@ -260,7 +257,7 @@ class _AvailableEvents extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -302,10 +299,7 @@ class _EventChip extends StatelessWidget {
         borderRadius: AppRadii.smRadius,
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x1,
-          ),
+          padding: AppSpacing.earnSmallPillPadding,
           child: Text(
             label,
             maxLines: 1,
@@ -327,17 +321,22 @@ class _SheetFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Container(
-        margin: const EdgeInsets.all(AppSpacing.contentPad),
-        padding: const EdgeInsets.all(AppSpacing.x5),
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.sizeOf(context).height * 0.88,
+      child: Padding(
+        padding: AppSpacing.earnContentMargin,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.sizeOf(context).height * 0.88,
+          ),
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
+              color: AppColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.cardLargeRadius,
+              ),
+            ),
+            child: Padding(padding: AppSpacing.earnCardPaddingX5, child: child),
+          ),
         ),
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadii.cardLargeRadius,
-        ),
-        child: child,
       ),
     );
   }

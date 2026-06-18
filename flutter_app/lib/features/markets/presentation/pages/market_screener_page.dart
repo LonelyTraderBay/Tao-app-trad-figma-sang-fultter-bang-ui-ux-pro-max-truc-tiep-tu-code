@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -18,7 +19,6 @@ import '../widgets/market_body_review_widgets.dart';
 part '../widgets/market_screener_filters.dart';
 part '../widgets/market_screener_results.dart';
 part '../widgets/market_screener_row_common.dart';
-part '../widgets/market_screener_sparkline.dart';
 
 const _marketPrimary = AppColors.primary;
 
@@ -159,7 +159,9 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.marketScreenerVisualBottomExtra
+            : AppSpacing.marketScreenerNativeBottomExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -182,10 +184,12 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketScreenerPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.marketScreenerScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 16,
+                      customGap: AppSpacing.marketScreenerPageGap,
                       children: [
                         VitSearchBar(
                           key: MarketScreenerPage.searchKey,

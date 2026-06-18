@@ -1,17 +1,5 @@
 part of '../pages/bot_guide_page.dart';
 
-class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
-
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(padding: padding, child: child);
-  }
-}
-
 IconData _strategyIcon(String key) => switch (key) {
   'grid' => Icons.grid_view_rounded,
   'bolt' => Icons.bolt_rounded,

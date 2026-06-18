@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_common_widgets.dart';
@@ -13,22 +13,11 @@ class LiveMarketPairCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 119,
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            liveMarketGreen.withValues(alpha: .08),
-            liveMarketPrimary.withValues(alpha: .08),
-          ],
-        ),
-        border: Border.all(
-          color: liveMarketGreen.withValues(alpha: .22),
-          width: 1.5,
-        ),
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return LiveMarketCard(
+      height: AppSpacing.liveMarketPairCardHeight,
+      padding: AppSpacing.liveMarketPairCardPadding,
+      borderColor: liveMarketGreen.withValues(alpha: .22),
+      background: ColoredBox(color: liveMarketGreen.withValues(alpha: .08)),
       child: Column(
         children: [
           const Row(
@@ -84,19 +73,15 @@ class _PairValue extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: AppColors.text3,
-            height: 1,
-          ),
+          style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.liveMarketPairValueGap),
         Text(
           value,
           style: AppTextStyles.sectionTitleSm.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1,
           ),
         ),
       ],

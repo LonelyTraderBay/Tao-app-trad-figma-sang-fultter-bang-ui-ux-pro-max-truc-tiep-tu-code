@@ -9,7 +9,7 @@ class _WarningBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      padding: AppSpacing.authTwoFaBannerPadding,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
       child: Row(
@@ -17,7 +17,7 @@ class _WarningBanner extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 16,
+            size: AppSpacing.authTwoFaWarningIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -58,19 +58,19 @@ class _VerifyStep extends StatelessWidget {
       child: Column(
         children: [
           const _ShieldHero(),
-          const Padding(padding: EdgeInsets.only(top: 18)),
+          const Padding(padding: AppSpacing.authTwoFaHeroTopPadding),
           Text(
             'Bước 2: Xác minh mã',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const Padding(padding: AppSpacing.authTopGapX3),
           Text(
             'Nhập mã 6 chữ số từ ứng dụng xác thực của bạn',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const Padding(padding: EdgeInsets.only(top: 28)),
+          const Padding(padding: AppSpacing.authTwoFaVerifyCodeTopPadding),
           Stack(
             alignment: Alignment.center,
             children: [
@@ -78,7 +78,8 @@ class _VerifyStep extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   for (var index = 0; index < 6; index++) ...[
-                    if (index > 0) const SizedBox(width: 10),
+                    if (index > 0)
+                      const SizedBox(width: AppSpacing.authTwoFaCodeDigitGap),
                     _CodeDigitBox(
                       digit: index < code.length ? code[index] : '',
                       hasError: error.isNotEmpty,
@@ -87,8 +88,8 @@ class _VerifyStep extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                width: 1,
-                height: 1,
+                width: AppSpacing.authTwoFaHiddenInputSize,
+                height: AppSpacing.authTwoFaHiddenInputSize,
                 child: Opacity(
                   opacity: 0,
                   child: VitInput(
@@ -108,14 +109,14 @@ class _VerifyStep extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const Padding(padding: AppSpacing.authTopGapX4),
           Text(
             'Chạm vào đây để nhập mã',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: _authPrimary),
           ),
           if (error.isNotEmpty) ...[
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+            const Padding(padding: AppSpacing.authTopGapX4),
             _ErrorBanner(error: error),
           ],
         ],
@@ -139,19 +140,22 @@ class _CodeDigitBox extends StatelessWidget {
         ? _authPrimary
         : AppColors.borderSolid;
 
-    return Container(
-      width: 44,
-      height: 56,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
+    return SizedBox(
+      width: AppSpacing.authTwoFaCodeDigitWidth,
+      height: AppSpacing.authTwoFaCodeDigitHeight,
+      child: Material(
         color: filled ? _authPrimary10 : AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(color: borderColor, width: 1.5),
-      ),
-      child: Text(
-        digit,
-        style: AppTextStyles.sectionTitle.copyWith(
-          fontWeight: AppTextStyles.bold,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(color: borderColor, width: AppSpacing.borderWidth),
+        ),
+        child: Center(
+          child: Text(
+            digit,
+            style: AppTextStyles.sectionTitle.copyWith(
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -167,7 +171,7 @@ class _ErrorBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: AppSpacing.authErrorBannerPadding,
       variant: VitCardVariant.inner,
       borderColor: AppColors.sell20,
       child: Text(

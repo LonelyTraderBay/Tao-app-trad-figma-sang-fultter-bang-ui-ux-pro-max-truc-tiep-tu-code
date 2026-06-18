@@ -24,12 +24,11 @@ class _LiveStats extends StatelessWidget {
                   Positioned(
                     right: AppSpacing.predictionActivityLiveDotOffset,
                     top: AppSpacing.predictionActivityLiveDotOffset,
-                    child: Container(
-                      width: AppSpacing.predictionActivityLiveDotSize,
-                      height: AppSpacing.predictionActivityLiveDotSize,
-                      decoration: const BoxDecoration(
-                        color: AppColors.buy,
-                        shape: BoxShape.circle,
+                    child: const Material(
+                      color: AppColors.buy,
+                      shape: CircleBorder(),
+                      child: SizedBox.square(
+                        dimension: AppSpacing.predictionActivityLiveDotSize,
                       ),
                     ),
                   ),
@@ -100,30 +99,29 @@ class _StatBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: AppSpacing.predictionActivityStatHeight,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const Padding(padding: AppSpacing.predictionActivityStatValueGap),
-          Text(
-            value,
-            style: AppTextStyles.caption.copyWith(
-              color: valueColor,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.cardRadius,
+      child: SizedBox(
+        height: AppSpacing.predictionActivityStatHeight,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-          ),
-        ],
+            const Padding(padding: AppSpacing.predictionActivityStatValueGap),
+            Text(
+              value,
+              style: AppTextStyles.caption.copyWith(
+                color: valueColor,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -197,29 +195,36 @@ class _AmountChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: AppSpacing.predictionActivityAmountChipHeight,
-        padding: AppSpacing.predictionActivityAmountChipPadding,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
+    return Material(
+      color: active
+          ? _predictionPrimary.withValues(alpha: .14)
+          : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
           color: active
-              ? _predictionPrimary.withValues(alpha: .14)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? _predictionPrimary.withValues(alpha: .4)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.mdRadius,
+              ? _predictionPrimary.withValues(alpha: .4)
+              : AppColors.transparent,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? _predictionPrimary : AppColors.text3,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+        borderRadius: AppRadii.mdRadius,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: SizedBox(
+          height: AppSpacing.predictionActivityAmountChipHeight,
+          child: Padding(
+            padding: AppSpacing.predictionActivityAmountChipPadding,
+            child: Center(
+              child: Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: active ? _predictionPrimary : AppColors.text3,
+                  fontWeight: active
+                      ? AppTextStyles.bold
+                      : AppTextStyles.normal,
+                ),
+              ),
+            ),
           ),
         ),
       ),

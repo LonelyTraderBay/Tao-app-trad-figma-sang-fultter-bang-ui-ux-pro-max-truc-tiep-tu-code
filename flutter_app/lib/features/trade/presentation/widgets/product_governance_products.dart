@@ -9,7 +9,7 @@ class _ProductsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Copy Trading Products',
-      customGap: 12,
+      customGap: AppSpacing.productGovernanceContentGap,
       children: [
         for (final product in products) _ProductCard(product: product),
       ],
@@ -28,7 +28,7 @@ class _ProductCard extends StatelessWidget {
     final risk = _riskStyle(product.riskLevel);
     return _Card(
       key: ProductGovernancePage.productKey(product.id),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.productGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,48 +46,50 @@ class _ProductCard extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: 1,
+                        height: AppSpacing.productGovernanceLineHeightTight,
                       ),
                     ),
-                    const SizedBox(height: 9),
+                    const SizedBox(
+                      height: AppSpacing.productGovernanceReviewTextGap,
+                    ),
                     Row(
                       children: [
-                        _Pill(label: status.label, color: status.color),
-                        const SizedBox(width: 8),
-                        _Pill(label: risk.label, color: risk.color),
+                        VitAccentPill(
+                          label: status.label,
+                          accentColor: status.color,
+                        ),
+                        const SizedBox(
+                          width: AppSpacing.productGovernancePillGap,
+                        ),
+                        VitAccentPill(
+                          label: risk.label,
+                          accentColor: risk.color,
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 10),
-              InkWell(
+              const SizedBox(width: AppSpacing.productGovernanceInlineGap),
+              VitIconButton(
                 key: ProductGovernancePage.targetMarketKey(product.id),
-                onTap: () => context.go(
+                onPressed: () => context.go(
                   AppRoutePaths.tradeCopyTargetMarketDefinitionForProduct(
                     product.id,
                   ),
                 ),
-                borderRadius: AppRadii.cardRadius,
-                child: VitCard(
-                  width: 34,
-                  height: 34,
-                  variant: VitCardVariant.inner,
-                  alignment: Alignment.center,
-                  child: const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.text3,
-                    size: 18,
-                  ),
-                ),
+                icon: Icons.chevron_right_rounded,
+                tooltip: 'Open target market definition',
+                variant: VitIconButtonVariant.ghost,
+                size: VitIconButtonSize.sm,
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppSpacing.x5),
           _TagSection(label: 'Target Market:', tags: product.targetMarket),
-          const SizedBox(height: 15),
+          const SizedBox(height: AppSpacing.productGovernanceTargetGap),
           _NegativeTarget(tags: product.negativeTarget),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.productGovernanceDateSectionGap),
           Row(
             children: [
               Expanded(
@@ -96,7 +98,7 @@ class _ProductCard extends StatelessWidget {
                   value: product.lastReview,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.productGovernanceInlineGap),
               Expanded(
                 child: _DateBox(
                   label: 'Next Review',
@@ -126,27 +128,16 @@ class _TagSection extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.productGovernanceLineHeightTight,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.productGovernancePillGap),
         Wrap(
-          spacing: 6,
-          runSpacing: 6,
+          spacing: AppSpacing.productGovernanceTagGap,
+          runSpacing: AppSpacing.productGovernanceTagGap,
           children: [
             for (final tag in tags)
-              VitCard(
-                variant: VitCardVariant.inner,
-                radius: VitCardRadius.sm,
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                child: Text(
-                  tag,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    height: 1,
-                  ),
-                ),
-              ),
+              VitAccentPill(label: tag, accentColor: AppColors.text2),
           ],
         ),
       ],
@@ -168,13 +159,13 @@ class _NegativeTarget extends StatelessWidget {
           'Negative Target:',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.productGovernanceLineHeightTight,
           ),
         ),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.productGovernanceReviewTextGap),
         Wrap(
-          spacing: 18,
-          runSpacing: 7,
+          spacing: AppSpacing.productGovernanceNegativeTagGap,
+          runSpacing: AppSpacing.productGovernanceReviewTextGap,
           children: [
             for (final tag in tags)
               Text(
@@ -182,7 +173,7 @@ class _NegativeTarget extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.productGovernanceLineHeightTight,
                 ),
               ),
           ],
@@ -203,8 +194,8 @@ class _DateBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: 47,
-      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+      height: AppSpacing.productGovernanceDateBoxHeight,
+      padding: AppSpacing.productGovernanceDateBoxPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -212,7 +203,7 @@ class _DateBox extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.productGovernanceLineHeightTight,
             ),
           ),
           const Spacer(),
@@ -221,7 +212,7 @@ class _DateBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.productGovernanceLineHeightTight,
             ),
           ),
         ],

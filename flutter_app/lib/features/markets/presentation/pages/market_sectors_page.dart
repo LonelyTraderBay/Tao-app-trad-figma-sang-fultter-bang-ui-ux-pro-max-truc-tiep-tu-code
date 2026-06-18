@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_card.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
@@ -58,7 +59,9 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 52 : 22);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.marketSectorsVisualBottomExtra
+            : AppSpacing.marketSectorsNativeBottomExtra);
     final selectedSector = findMarketSector(
       snapshot.sectors,
       widget.selectedSectorId,
@@ -100,7 +103,7 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
                     key: selectedSector == null
                         ? MarketSectorsPage.contentKey
                         : MarketSectorsPage.detailContentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.marketSectorsScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.defaultPadding,
                       gap: VitContentGap.defaultGap,

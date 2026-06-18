@@ -10,7 +10,7 @@ class _BridgeTimeline extends StatelessWidget {
     return VitCard(
       key: LaunchpadBridgeOrderPage.timelineKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -41,9 +41,9 @@ class _BridgeTimeline extends StatelessWidget {
                 left: 15,
                 top: AppSpacing.x3,
                 bottom: AppSpacing.x3,
-                child: Container(
+                child: const SizedBox(
                   width: AppSpacing.launchpadDividerWidth,
-                  color: AppColors.borderSolid,
+                  child: ColoredBox(color: AppColors.borderSolid),
                 ),
               ),
               Column(
@@ -80,14 +80,14 @@ class _BridgeTimelineStep extends StatelessWidget {
 
     return Padding(
       key: LaunchpadBridgeOrderPage.stepKey(step.id),
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.launchpadBottomPaddingX2,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             width: AppSpacing.launchpadBox31,
             child: Padding(
-              padding: const EdgeInsets.only(top: AppSpacing.x3),
+              padding: AppSpacing.launchpadTopPaddingX3,
               child: Icon(
                 isDone
                     ? Icons.check_circle_outline_rounded
@@ -103,51 +103,55 @@ class _BridgeTimelineStep extends StatelessWidget {
           Expanded(
             child: Opacity(
               opacity: opacity,
-              child: Container(
-                padding: const EdgeInsets.all(AppSpacing.x3),
-                decoration: BoxDecoration(
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
                   color: isActive
                       ? _statusColor(step.status).withValues(alpha: .08)
                       : AppColors.surface2,
-                  border: Border.all(
-                    color: isActive
-                        ? _statusColor(step.status).withValues(alpha: .25)
-                        : AppColors.transparent,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: isActive
+                          ? _statusColor(step.status).withValues(alpha: .25)
+                          : AppColors.transparent,
+                    ),
+                    borderRadius: AppRadii.smRadius,
                   ),
-                  borderRadius: AppRadii.smRadius,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            step.label,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text1,
-                              fontWeight: AppTextStyles.bold,
+                child: Padding(
+                  padding: AppSpacing.launchpadPaddingX3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              step.label,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        if (step.timestamp != null)
-                          Text(
-                            step.timestamp!,
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                              fontFeatures: AppTextStyles.tabularFigures,
+                          if (step.timestamp != null)
+                            Text(
+                              step.timestamp!,
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                                fontFeatures: AppTextStyles.tabularFigures,
+                              ),
                             ),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      step.detail,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
+                        ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        step.detail,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -163,34 +167,35 @@ class _LiveBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: 2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: AppColors.primary.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(AppRadii.xl),
+        shape: const StadiumBorder(),
       ),
-      child: Row(
-        children: [
-          Container(
-            width: AppSpacing.launchpadDotSm,
-            height: AppSpacing.launchpadDotSm,
-            decoration: const BoxDecoration(
-              color: AppColors.primary,
-              shape: BoxShape.circle,
+      child: Padding(
+        padding: AppSpacing.launchpadLiveBadgePadding,
+        child: Row(
+          children: [
+            const SizedBox(
+              width: AppSpacing.launchpadDotSm,
+              height: AppSpacing.launchpadDotSm,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: AppColors.primary,
+                  shape: CircleBorder(),
+                ),
+              ),
             ),
-          ),
-          const SizedBox(width: AppSpacing.x1),
-          Text(
-            'LIVE',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.primary,
-              fontWeight: AppTextStyles.bold,
+            const SizedBox(width: AppSpacing.x1),
+            Text(
+              'LIVE',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.primary,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

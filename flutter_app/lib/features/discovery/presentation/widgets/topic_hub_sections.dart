@@ -148,16 +148,13 @@ class _SectionShell extends StatelessWidget {
                 onTap: onAction,
                 borderRadius: AppRadii.smRadius,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x2,
-                    vertical: AppSpacing.x1,
-                  ),
+                  padding: AppSpacing.discoveryInlineActionPadding,
                   child: _InlineCta(label: actionLabel!, color: color),
                 ),
               ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         ..._withSectionGaps(children),
       ],
     );

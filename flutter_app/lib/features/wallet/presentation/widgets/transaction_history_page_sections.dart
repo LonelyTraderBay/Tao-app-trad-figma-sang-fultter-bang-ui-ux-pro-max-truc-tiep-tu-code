@@ -11,9 +11,11 @@ class _ExportBar extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.walletHistoryExportBarPadH,
-        vertical: AppSpacing.walletHistoryExportBarPadV,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletHistoryExportBarPadH,
+        top: AppSpacing.walletHistoryExportBarPadV,
+        right: AppSpacing.walletHistoryExportBarPadH,
+        bottom: AppSpacing.walletHistoryExportBarPadV,
       ),
       child: Row(
         children: [
@@ -120,8 +122,8 @@ class _TransactionGroup extends StatelessWidget {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.only(
-                left: AppSpacing.walletAssetHeroPaddingBottom,
+              padding: AppSpacing.zeroInsets.copyWith(
+                left: AppSpacing.walletHistorySectionPadLeft,
               ),
               child: Text(
                 _formatDate(group.date),
@@ -208,37 +210,28 @@ class _TransactionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (meta.isTrade) {
-      return Container(
+      return VitCard(
+        variant: VitCardVariant.inner,
+        radius: VitCardRadius.sm,
         width: AppSpacing.walletAssetActionIcon,
         height: AppSpacing.walletAssetActionIcon,
-        decoration: BoxDecoration(
-          color: meta.color.withValues(alpha: .12),
-          shape: BoxShape.circle,
-        ),
         alignment: Alignment.center,
-        child: Container(
-          width: AppSpacing.walletHistoryTradeIcon,
-          height: AppSpacing.walletHistoryTradeIcon,
-          decoration: BoxDecoration(
-            color: _historyPrimary,
-            borderRadius: AppRadii.walletHistoryTradeBadgeRadius,
-          ),
-          child: const Icon(
-            Icons.currency_exchange_rounded,
-            color: AppColors.onAccent,
-            size: AppSpacing.walletHistoryTradeIconGlyph,
-          ),
+        borderColor: meta.color.withValues(alpha: .22),
+        child: const Icon(
+          Icons.currency_exchange_rounded,
+          color: _historyPrimary,
+          size: AppSpacing.walletHistoryTradeIconGlyph,
         ),
       );
     }
 
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       width: AppSpacing.walletAssetActionIcon,
       height: AppSpacing.walletAssetActionIcon,
-      decoration: BoxDecoration(
-        color: meta.color.withValues(alpha: .12),
-        shape: BoxShape.circle,
-      ),
+      alignment: Alignment.center,
+      borderColor: meta.color.withValues(alpha: .22),
       child: Icon(meta.icon, color: AppColors.text1, size: AppSpacing.iconMd),
     );
   }

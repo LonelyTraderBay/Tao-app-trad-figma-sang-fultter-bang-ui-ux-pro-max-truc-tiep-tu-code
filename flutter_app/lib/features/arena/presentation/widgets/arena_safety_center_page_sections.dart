@@ -9,7 +9,7 @@ class _SafetyHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.buy,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaSafetyCardPadding,
       child: Row(
         children: [
           const _ToneIcon(icon: Icons.shield_outlined, color: AppColors.buy),
@@ -60,12 +60,16 @@ class _SafetySection extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.arenaSafetyMarkerWidth,
               height: AppSpacing.arenaSafetyMarkerHeight,
-              decoration: BoxDecoration(
-                color: accentColor,
-                borderRadius: AppRadii.xsRadius,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: accentColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.xsRadius,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -102,7 +106,7 @@ class _RuleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _kindColor(rule.kind);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaSafetyCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -144,7 +148,7 @@ class _BannedContentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaSafetyCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -185,7 +189,7 @@ class _ViolationProcessCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaSafetyCardPadding,
       child: Column(
         children: [
           for (final item in items)
@@ -196,28 +200,32 @@ class _ViolationProcessCard extends StatelessWidget {
                   width: AppSpacing.arenaSafetyProcessColumnWidth,
                   child: Column(
                     children: [
-                      Container(
-                        width: AppSpacing.arenaSafetyProcessStepBox,
-                        height: AppSpacing.arenaSafetyProcessStepBox,
-                        decoration: BoxDecoration(
-                          color: AppColors.buy10,
-                          borderRadius: AppRadii.xlRadius,
-                          border: Border.all(color: AppColors.buy20),
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          '${item.step}',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.buy,
-                            fontWeight: AppTextStyles.bold,
+                      SizedBox.square(
+                        dimension: AppSpacing.arenaSafetyProcessStepBox,
+                        child: DecoratedBox(
+                          decoration: const ShapeDecoration(
+                            color: AppColors.buy10,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadii.xlRadius,
+                              side: BorderSide(color: AppColors.buy20),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${item.step}',
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.buy,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                       if (item != items.last)
-                        Container(
+                        const SizedBox(
                           width: AppSpacing.arenaSafetyProcessLineWidth,
                           height: AppSpacing.arenaSafetyProcessLineHeight,
-                          color: AppColors.buy20,
+                          child: ColoredBox(color: AppColors.buy20),
                         ),
                     ],
                   ),
@@ -225,8 +233,8 @@ class _ViolationProcessCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(
-                      bottom: item == items.last ? 0 : AppSpacing.x3,
+                    padding: AppSpacing.arenaSafetyProcessBodyPadding(
+                      isLast: item == items.last,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,7 +275,7 @@ class _InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _kindColor(info.kind);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaSafetyCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

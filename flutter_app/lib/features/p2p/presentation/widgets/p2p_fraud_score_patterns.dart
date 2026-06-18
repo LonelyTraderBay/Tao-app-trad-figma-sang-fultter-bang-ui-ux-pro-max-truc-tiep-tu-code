@@ -18,13 +18,17 @@ class _SafetyScoreCard extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.scoreKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Icon(Icons.verified_user_outlined, color: color, size: 20),
+              Icon(
+                Icons.verified_user_outlined,
+                color: color,
+                size: AppSpacing.p2pFraudHeaderIcon,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
@@ -48,7 +52,7 @@ class _SafetyScoreCard extends StatelessWidget {
             borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
               value: score / 100,
-              minHeight: 8,
+              minHeight: AppSpacing.p2pFraudProgressHeight,
               color: color,
               backgroundColor: AppColors.surface3,
             ),
@@ -60,13 +64,11 @@ class _SafetyScoreCard extends StatelessWidget {
           ),
           if (score < 100) ...[
             const SizedBox(height: AppSpacing.x3),
-            DecoratedBox(
-              decoration: BoxDecoration(
+            Material(
                 color: AppColors.warn10,
                 borderRadius: AppRadii.lgRadius,
-              ),
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x3),
+                padding: AppSpacing.p2pFraudInnerPadding,
                 child: Row(
                   children: [
                     const Icon(
@@ -163,24 +165,23 @@ class _PatternCard extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.patternKey(pattern.id),
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.p2pFraudPatternPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: AppSpacing.inputHeight,
-                  height: AppSpacing.inputHeight,
-                  decoration: BoxDecoration(
+                SizedBox.square(
+                  dimension: AppSpacing.inputHeight,
+                  child: Material(
                     color: color.withValues(alpha: .12),
                     borderRadius: AppRadii.lgRadius,
+                    child: Icon(_patternIcon(pattern.iconKey), color: color),
                   ),
-                  child: Icon(_patternIcon(pattern.iconKey), color: color),
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
@@ -211,7 +212,7 @@ class _PatternCard extends StatelessWidget {
                         overflow: expanded ? null : TextOverflow.ellipsis,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          height: 1.45,
+                          height: AppSpacing.p2pFraudBodyLineHeight,
                         ),
                       ),
                     ],
@@ -244,12 +245,14 @@ class _ExpandedPattern extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+    return Column(
+      children: [
+        const SizedBox(
+          height: AppSpacing.dividerHairline,
+          child: ColoredBox(color: AppColors.divider),
+        ),
+        Padding(
+          padding: AppSpacing.p2pFraudPatternPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -276,6 +279,7 @@ class _ExpandedPattern extends StatelessWidget {
           ],
         ),
       ),
+      ],
     );
   }
 }
@@ -313,31 +317,31 @@ class _DetailList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (numbered)
-                Container(
-                  width: 22,
-                  height: 22,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
+                SizedBox.square(
+                  dimension: AppSpacing.p2pFraudChecklistBox,
+                  child: Material(
                     color: AppColors.surface2,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    '${index + 1}',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontWeight: AppTextStyles.bold,
+                    shape: const CircleBorder(),
+                    child: Center(
+                      child: Text(
+                        '${index + 1}',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
                     ),
                   ),
                 )
               else
-                Icon(icon, color: color, size: 13),
+                Icon(icon, color: color, size: AppSpacing.p2pFraudDetailIcon),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   items[index],
                   style: AppTextStyles.caption.copyWith(
                     color: color == AppColors.text2 ? AppColors.text2 : color,
-                    height: 1.45,
+                    height: AppSpacing.p2pFraudBodyLineHeight,
                   ),
                 ),
               ),

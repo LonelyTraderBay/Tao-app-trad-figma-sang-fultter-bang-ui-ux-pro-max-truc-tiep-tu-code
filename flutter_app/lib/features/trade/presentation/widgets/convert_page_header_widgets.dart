@@ -33,91 +33,40 @@ class _ModeTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 50,
-      padding: const EdgeInsets.all(5),
+      height: AppSpacing.inputHeight,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.x2,
+        top: AppSpacing.x2,
+        right: AppSpacing.x2,
+        bottom: AppSpacing.x2,
+      ),
       borderColor: _tradePrimary.withValues(alpha: .18),
-      child: Row(
-        children: [
-          _ModeTab(
-            key: ConvertPage.modeKey('market'),
+      child: VitTabBar(
+        variant: VitTabBarVariant.segment,
+        activeKey: mode.name,
+        onChanged: (key) => onChanged(
+          _ConvertMode.values.firstWhere((mode) => mode.name == key),
+        ),
+        tabs: [
+          VitTabItem(
+            key: _ConvertMode.market.name,
             label: 'Market',
             icon: Icons.bolt_rounded,
-            active: mode == _ConvertMode.market,
-            onTap: () => onChanged(_ConvertMode.market),
+            widgetKey: ConvertPage.modeKey('market'),
           ),
-          _ModeTab(
-            key: ConvertPage.modeKey('limit'),
+          VitTabItem(
+            key: _ConvertMode.limit.name,
             label: 'Limit',
             icon: Icons.gps_fixed_rounded,
-            active: mode == _ConvertMode.limit,
-            onTap: () => onChanged(_ConvertMode.limit),
+            widgetKey: ConvertPage.modeKey('limit'),
           ),
-          _ModeTab(
-            key: ConvertPage.modeKey('schedule'),
+          VitTabItem(
+            key: _ConvertMode.schedule.name,
             label: 'Tự động',
             icon: Icons.calendar_today_rounded,
-            active: mode == _ConvertMode.schedule,
-            onTap: () => onChanged(_ConvertMode.schedule),
+            widgetKey: ConvertPage.modeKey('schedule'),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ModeTab extends StatelessWidget {
-  const _ModeTab({
-    super.key,
-    required this.label,
-    required this.icon,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          decoration: BoxDecoration(
-            color: active
-                ? AppColors.bg.withValues(alpha: .52)
-                : AppColors.transparent,
-            borderRadius: AppRadii.inputRadius,
-          ),
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: active ? AppColors.text1 : AppColors.text3,
-                size: 15,
-              ),
-              const SizedBox(width: 6),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? AppColors.text1 : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -138,8 +87,12 @@ class _FavoriteHeader extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        const Icon(Icons.star_rounded, color: AppColors.primary, size: 15),
-        const SizedBox(width: 4),
+        const Icon(
+          Icons.star_rounded,
+          color: AppColors.primary,
+          size: AppSpacing.iconSm,
+        ),
+        const SizedBox(width: AppSpacing.x1),
         Text(
           'Đã lưu',
           style: AppTextStyles.micro.copyWith(
@@ -168,37 +121,33 @@ class _FavoritePairs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36,
+      height: AppSpacing.buttonCompact,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: pairs.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 9),
+        separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.rowGap),
         itemBuilder: (context, index) {
           final pair = pairs[index];
           final active =
               pair.fromSymbol == activeFrom && pair.toSymbol == activeTo;
-          return InkWell(
+          return VitCard(
             key: ConvertPage.favoriteKey(pair.label),
             onTap: () => onSelected(pair),
-            borderRadius: AppRadii.cardRadius,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: active ? AppColors.transparent : _chipBackground,
-                border: Border.all(
-                  color: active
-                      ? _tradePrimary
-                      : _tradePrimary.withValues(alpha: .20),
-                ),
-                borderRadius: AppRadii.cardRadius,
-              ),
-              child: Text(
-                pair.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? _tradePrimary : AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
+            variant: active ? VitCardVariant.ghost : VitCardVariant.inner,
+            height: AppSpacing.buttonCompact,
+            padding: AppSpacing.zeroInsets.copyWith(
+              left: AppSpacing.rowPy,
+              right: AppSpacing.rowPy,
+            ),
+            alignment: Alignment.center,
+            borderColor: active
+                ? _tradePrimary
+                : _tradePrimary.withValues(alpha: .20),
+            child: Text(
+              pair.label,
+              style: AppTextStyles.micro.copyWith(
+                color: active ? _tradePrimary : AppColors.text1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           );
@@ -217,15 +166,26 @@ class _RateBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 44,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
+      height: AppSpacing.buttonStandard - AppSpacing.rowGapRegular,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowPy,
+        right: AppSpacing.rowPy,
+      ),
       borderColor: _tradePrimary.withValues(alpha: .22),
       child: Row(
         children: [
-          const Icon(Icons.sync_rounded, color: _tradePrimary, size: 16),
-          const SizedBox(width: 8),
-          const Icon(Icons.swap_vert_rounded, color: AppColors.text3, size: 16),
-          const SizedBox(width: 7),
+          const Icon(
+            Icons.sync_rounded,
+            color: _tradePrimary,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: AppSpacing.rowGap),
+          const Icon(
+            Icons.swap_vert_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
               label,
@@ -237,7 +197,7 @@ class _RateBar extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.rowGap),
           Text(
             countdown,
             style: AppTextStyles.micro.copyWith(
@@ -245,8 +205,12 @@ class _RateBar extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(width: 8),
-          const Icon(Icons.refresh_rounded, color: _tradePrimary, size: 15),
+          const SizedBox(width: AppSpacing.rowGap),
+          const Icon(
+            Icons.refresh_rounded,
+            color: _tradePrimary,
+            size: AppSpacing.iconSm,
+          ),
         ],
       ),
     );

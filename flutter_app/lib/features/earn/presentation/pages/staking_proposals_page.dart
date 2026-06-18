@@ -54,7 +54,7 @@ class StakingProposalsPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -62,7 +62,7 @@ class StakingProposalsPage extends ConsumerWidget {
                       VitCard(
                         variant: VitCardVariant.standard,
                         radius: VitCardRadius.md,
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _ProposalList(proposals: snapshot.proposals),
                       ),
                       VitCtaButton(
@@ -115,7 +115,7 @@ class _ProposalCard extends StatelessWidget {
     return VitCard(
       key: StakingProposalsPage.proposalKey(proposal.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       onTap: onVote,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -183,7 +183,7 @@ class _ProposalCard extends StatelessWidget {
                 onPressed: onVote,
                 fullWidth: false,
                 height: AppSpacing.buttonCompact,
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+                padding: AppSpacing.earnHorizontalPaddingX4,
                 child: const Text('Vote Now'),
               ),
             ],
@@ -201,20 +201,19 @@ class _CategoryPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: const BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          height: AppSpacing.stakingCommunityPillLineHeight,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            height: AppSpacing.stakingCommunityPillLineHeight,
+          ),
         ),
       ),
     );
@@ -232,16 +231,14 @@ class _VoteRatioBar extends StatelessWidget {
       borderRadius: AppRadii.smRadius,
       child: SizedBox(
         height: AppSpacing.x2,
-        child: DecoratedBox(
-          decoration: const BoxDecoration(color: AppColors.surface2),
+        child: ColoredBox(
+          color: AppColors.surface2,
           child: Align(
             alignment: Alignment.centerLeft,
             child: FractionallySizedBox(
               widthFactor: yesPercent.clamp(0, 100) / 100,
               child: const SizedBox.expand(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(color: AppColors.buy),
-                ),
+                child: ColoredBox(color: AppColors.buy),
               ),
             ),
           ),

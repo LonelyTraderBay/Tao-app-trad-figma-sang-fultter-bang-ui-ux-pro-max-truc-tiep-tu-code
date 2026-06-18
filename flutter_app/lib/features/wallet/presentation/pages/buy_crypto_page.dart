@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_buy_crypto_sections.dart';
@@ -102,7 +104,10 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: BuyCryptoPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.rowPy,
+                    bottom: bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 0,
@@ -116,11 +121,13 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
                               'Confirm amount, received asset, payment method, fee, and next step before submitting.',
                           contractId: '${crypto.symbol} / ${payment.name}',
                         ),
-                        const SizedBox(height: 14),
+                        const SizedBox(
+                          height: AppSpacing.walletWithdrawSectionGap,
+                        ),
                         VitCard(
                           variant: VitCardVariant.standard,
                           radius: VitCardRadius.md,
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: BuyConfirmContent(
                             crypto: crypto,
                             payment: payment,
@@ -134,7 +141,7 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
                         VitCard(
                           variant: VitCardVariant.standard,
                           radius: VitCardRadius.md,
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: BuyInputContent(
                             snapshot: snapshot,
                             selectedCrypto: crypto,
@@ -189,19 +196,19 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
       context: context,
       backgroundColor: _buyPanel,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+            padding: AppSpacing.transferSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text('Chọn loại Crypto', style: AppTextStyles.sectionTitleSm),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.transferInputGap),
                 for (final option in snapshot.cryptoOptions)
                   BuyCryptoOptionRow(
                     option: option,

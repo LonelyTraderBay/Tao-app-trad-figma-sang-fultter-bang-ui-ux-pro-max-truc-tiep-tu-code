@@ -24,7 +24,6 @@ part '../widgets/portfolio_analytics_metrics_assets.dart';
 part '../widgets/portfolio_analytics_common.dart';
 
 const _analyticsBackground = AppColors.bg;
-const _analyticsPanel2 = AppColors.surface2;
 const _analyticsPrimary = AppColors.primary;
 const _analyticsGreen = AppColors.buy;
 const _analyticsRed = AppColors.sell;

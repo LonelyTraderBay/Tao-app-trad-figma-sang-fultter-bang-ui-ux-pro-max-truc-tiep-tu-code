@@ -47,34 +47,16 @@ class _RecommendationCard extends StatelessWidget {
               height: 1.45,
             ),
           ),
-          GestureDetector(
+          VitCtaButton(
             key: WalletHealthScorePage.recommendationKey(recommendation.id),
-            onTap: onTap,
-            behavior: HitTestBehavior.opaque,
-            child: Container(
-              height: AppSpacing.walletHealthActionHeight,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: _healthPrimary,
-                borderRadius: AppRadii.cardRadius,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    recommendation.actionLabel,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.onAccent,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.walletHealthInlineGap),
-                  const Icon(
-                    Icons.arrow_forward_rounded,
-                    color: AppColors.onAccent,
-                    size: AppSpacing.walletHealthActionIcon,
-                  ),
-                ],
+            onPressed: onTap,
+            height: AppSpacing.walletHealthActionHeight,
+            trailing: const Icon(Icons.arrow_forward_rounded),
+            child: Text(
+              recommendation.actionLabel,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.onAccent,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ),
@@ -178,14 +160,11 @@ class _ScoreSummaryCard extends StatelessWidget {
       borderColor: _healthBorder,
       child: Row(
         children: [
-          Container(
+          VitCard(
             width: AppSpacing.walletHealthSummaryIconBox,
             height: AppSpacing.walletHealthSummaryIconBox,
-            decoration: BoxDecoration(
-              color: iconColor.withValues(alpha: .08),
-              borderRadius: AppRadii.inputRadius,
-            ),
             alignment: Alignment.center,
+            borderColor: iconColor.withValues(alpha: .20),
             child: Icon(
               icon,
               color: iconColor,
@@ -240,14 +219,12 @@ class _ChecklistCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          VitCard(
             width: AppSpacing.walletHealthChecklistIconBox,
             height: AppSpacing.walletHealthChecklistIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .10),
-              borderRadius: AppRadii.xsRadius,
-            ),
             alignment: Alignment.center,
+            radius: VitCardRadius.sm,
+            borderColor: color.withValues(alpha: .20),
             child: Icon(
               item.enabled
                   ? Icons.check_circle_outline_rounded
@@ -366,13 +343,14 @@ class _AssetDistributionCard extends StatelessWidget {
                   width: AppSpacing.walletHealthLegendWidth,
                   child: Row(
                     children: [
-                      Container(
+                      VitCard(
                         width: AppSpacing.walletHealthLegendSwatch,
                         height: AppSpacing.walletHealthLegendSwatch,
-                        decoration: BoxDecoration(
-                          color: Color(slice.colorHex),
-                          borderRadius: AppRadii.xsRadius,
-                        ),
+                        radius: VitCardRadius.sm,
+                        borderColor: Color(slice.colorHex),
+                        background: ColoredBox(color: Color(slice.colorHex)),
+                        clip: true,
+                        child: const SizedBox.expand(),
                       ),
                       const SizedBox(width: AppSpacing.walletHealthInlineGap),
                       Text(

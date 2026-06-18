@@ -3,10 +3,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class TransactionReportingStatsGrid extends StatelessWidget {
   const TransactionReportingStatsGrid({required this.stats, super.key});
@@ -26,7 +27,7 @@ class TransactionReportingStatsGrid extends StatelessWidget {
             icon: Icons.description_outlined,
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.rowGapRegular),
         Expanded(
           child: _StatCard(
             label: 'Avg Latency',
@@ -36,7 +37,7 @@ class TransactionReportingStatsGrid extends StatelessWidget {
             icon: Icons.bolt_rounded,
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.rowGapRegular),
         Expanded(
           child: _StatCard(
             label: 'SLA Compliance',
@@ -65,19 +66,15 @@ class TransactionReportingStatsTab extends StatelessWidget {
           'Reporting Statistics',
           style: AppTextStyles.badge.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.transactionReportingLineHeightTight,
           ),
         ),
-        const SizedBox(height: 12),
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: transactionReportPanel,
-            border: Border.all(
-              color: transactionReportBorder.withValues(alpha: .7),
-            ),
-            borderRadius: AppRadii.cardRadius,
-          ),
+        const SizedBox(height: AppSpacing.x4),
+        VitCard(
+          variant: VitCardVariant.inner,
+          radius: VitCardRadius.md,
+          padding: AppSpacing.transactionReportingStatsPanelPadding,
+          borderColor: transactionReportBorder.withValues(alpha: .7),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -94,7 +91,7 @@ class TransactionReportingStatsTab extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 18),
+              const SizedBox(width: AppSpacing.ctaLoadingIcon),
               Expanded(
                 child: _StatColumn(
                   title: 'ARM Providers',
@@ -106,21 +103,14 @@ class TransactionReportingStatsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
-        SizedBox(
-          height: 44,
-          child: FilledButton.icon(
-            key: transactionReportingActionKey('dashboard-primary'),
-            onPressed: () =>
-                context.go(AppRoutePaths.tradeCopyRegulatoryReportsDashboard),
-            style: FilledButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: AppColors.onAccent,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-            ),
-            icon: const Icon(Icons.bar_chart_rounded, size: 17),
-            label: const Text('View Full Dashboard'),
-          ),
+        const SizedBox(height: AppSpacing.x4),
+        VitCtaButton(
+          key: transactionReportingActionKey('dashboard-primary'),
+          onPressed: () =>
+              context.go(AppRoutePaths.tradeCopyRegulatoryReportsDashboard),
+          height: AppSpacing.searchBarCompactHeight,
+          leading: const Icon(Icons.bar_chart_rounded),
+          child: const Text('View Full Dashboard'),
         ),
       ],
     );
@@ -144,16 +134,12 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 94,
-      padding: const EdgeInsets.fromLTRB(12, 12, 10, 11),
-      decoration: BoxDecoration(
-        color: transactionReportPanel,
-        border: Border.all(
-          color: transactionReportBorder.withValues(alpha: .65),
-        ),
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      height: AppSpacing.buttonHero + AppSpacing.x2,
+      padding: AppSpacing.transactionReportingStatCardPadding,
+      borderColor: transactionReportBorder.withValues(alpha: .65),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -167,15 +153,17 @@ class _StatCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.transactionReportingLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 9),
+                const SizedBox(
+                  height: AppSpacing.rowGapRegular + AppSpacing.x1,
+                ),
                 Text(
                   value,
                   style: AppTextStyles.amountSm.copyWith(
                     color: AppColors.text1,
-                    height: 1,
+                    height: AppSpacing.transactionReportingLineHeightTight,
                   ),
                 ),
                 const Spacer(),
@@ -183,19 +171,26 @@ class _StatCard extends StatelessWidget {
                   caption,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: color, height: 1),
+                  style: AppTextStyles.micro.copyWith(
+                    color: color,
+                    height: AppSpacing.transactionReportingLineHeightTight,
+                  ),
                 ),
               ],
             ),
           ),
-          Container(
-            width: 34,
-            height: 34,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.smRadius,
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
+            width: AppSpacing.iconLg,
+            height: AppSpacing.iconLg,
+            borderColor: color.withValues(alpha: .24),
+            alignment: Alignment.center,
+            child: Icon(
+              icon,
+              color: color,
+              size: AppSpacing.transactionReportingStatIcon,
             ),
-            child: Icon(icon, color: color, size: 17),
           ),
         ],
       ),
@@ -218,10 +213,10 @@ class _StatColumn extends StatelessWidget {
           title,
           style: AppTextStyles.badge.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.transactionReportingLineHeightTight,
           ),
         ),
-        const SizedBox(height: 11),
+        const SizedBox(height: AppSpacing.rowGapRegular + AppSpacing.x1),
         for (final row in rows) ...[
           Row(
             children: [
@@ -232,7 +227,7 @@ class _StatColumn extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text2,
-                    height: 1,
+                    height: AppSpacing.transactionReportingLineHeightTight,
                   ),
                 ),
               ),
@@ -241,12 +236,12 @@ class _StatColumn extends StatelessWidget {
                 style: AppTextStyles.numericCode.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.transactionReportingLineHeightTight,
                 ),
               ),
             ],
           ),
-          if (row != rows.last) const SizedBox(height: 12),
+          if (row != rows.last) const SizedBox(height: AppSpacing.x4),
         ],
       ],
     );

@@ -11,7 +11,8 @@ class _TrendingList extends StatelessWidget {
       children: [
         for (final token in tokens) ...[
           _SentimentRow(token: token),
-          if (token != tokens.last) const SizedBox(height: 4),
+          if (token != tokens.last)
+            const SizedBox(height: AppSpacing.socialSentimentListGap),
         ],
       ],
     );
@@ -26,17 +27,12 @@ class _SentimentRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: AppSpacing.socialSentimentRowPadding,
       child: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: token.color.withValues(alpha: .16),
-              shape: BoxShape.circle,
-            ),
+          CircleAvatar(
+            radius: AppSpacing.socialSentimentAvatarLg / 2,
+            backgroundColor: token.color.withValues(alpha: .16),
             child: Text(
               token.symbol.substring(0, math.min(2, token.symbol.length)),
               style: AppTextStyles.caption.copyWith(
@@ -45,7 +41,7 @@ class _SentimentRow extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.socialSentimentRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,21 +82,10 @@ class _SentimentRow extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              Container(
-                width: 10,
-                height: 10,
-                decoration: BoxDecoration(
-                  color: _sentimentColor(token.sentimentScore),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: _sentimentColor(
-                        token.sentimentScore,
-                      ).withValues(alpha: .35),
-                      blurRadius: 8,
-                    ),
-                  ],
-                ),
+              Icon(
+                Icons.circle,
+                color: _sentimentColor(token.sentimentScore),
+                size: AppSpacing.socialSentimentStatusDot,
               ),
             ],
           ),
@@ -134,7 +119,8 @@ class _SentimentSortChips extends StatelessWidget {
               active: active == entry.key,
               onTap: () => onSelected(entry.key),
             ),
-            if (entry.key != chips.keys.last) const SizedBox(width: 8),
+            if (entry.key != chips.keys.last)
+              const SizedBox(width: AppSpacing.socialSentimentSortGap),
           ],
         ],
       ),
@@ -156,23 +142,20 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
+    return Material(
+      color: active ? AppColors.primary15 : AppColors.surface2,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color: active ? AppColors.primary15 : AppColors.surface2,
-          border: Border.all(
-            color: active ? AppColors.primary30 : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.primarySoft : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.cardRadius,
+        child: Padding(
+          padding: AppSpacing.socialSentimentSortChipPadding,
+          child: Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: active ? AppColors.primarySoft : AppColors.text3,
+              fontWeight: AppTextStyles.medium,
+            ),
           ),
         ),
       ),
@@ -188,19 +171,14 @@ class _TokenDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.socialSentimentTokenDetailPadding,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
-                width: 36,
-                height: 36,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: token.color.withValues(alpha: .16),
-                  shape: BoxShape.circle,
-                ),
+              CircleAvatar(
+                radius: AppSpacing.socialSentimentAvatarMd / 2,
+                backgroundColor: token.color.withValues(alpha: .16),
                 child: Text(
                   token.symbol.substring(0, math.min(2, token.symbol.length)),
                   style: AppTextStyles.caption.copyWith(
@@ -209,7 +187,7 @@ class _TokenDetailCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.socialSentimentRowGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -238,12 +216,12 @@ class _TokenDetailCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.socialSentimentRowGap),
           ClipRRect(
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
               width: double.infinity,
-              height: 6,
+              height: AppSpacing.socialSentimentSplitBarHeight,
               child: Row(
                 children: [
                   Expanded(
@@ -262,7 +240,7 @@ class _TokenDetailCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.socialSentimentTokenMetricGap),
           Row(
             children: [
               _TokenMetric('Đề cập 24h', _formatCompact(token.mentions24h)),

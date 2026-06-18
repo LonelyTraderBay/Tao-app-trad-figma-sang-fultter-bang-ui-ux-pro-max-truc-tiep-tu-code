@@ -77,7 +77,7 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
                   child: SingleChildScrollView(
                     key: ArenaFlowMapPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x5,

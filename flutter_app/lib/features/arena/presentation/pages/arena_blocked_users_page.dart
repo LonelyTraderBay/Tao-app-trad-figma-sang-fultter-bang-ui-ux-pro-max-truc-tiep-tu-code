@@ -83,7 +83,7 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                   child: SingleChildScrollView(
                     key: ArenaBlockedUsersPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: _blockedUsers.isEmpty
                         ? VitPageContent(
                             key: ArenaBlockedUsersPage.emptyKey,
@@ -100,7 +100,7 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                             padding: VitContentPadding.defaultPadding,
                             children: [
                               VitCard(
-                                padding: EdgeInsets.zero,
+                                padding: AppSpacing.zeroInsets,
                                 child: _BlockInfoBanner(snapshot: snapshot),
                               ),
                               _BlockedUsersCard(
@@ -165,7 +165,7 @@ class _BlockInfoBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaBlockedCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +183,7 @@ class _BlockInfoBanner extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   snapshot.bannerDescription,
                   style: AppTextStyles.caption.copyWith(
@@ -215,7 +215,7 @@ class _BlockedUsersCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       clip: true,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           for (var index = 0; index < users.length; index++)
@@ -248,81 +248,74 @@ class _BlockedUserRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: isLast ? AppColors.transparent : AppColors.divider,
-          ),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x4,
-          vertical: AppSpacing.x3,
-        ),
-        child: Row(
-          children: [
-            _BlockedAvatar(user: user),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.arenaBlockedRowPadding,
+          child: Row(
+            children: [
+              _BlockedAvatar(user: user),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.arenaBlockedTinyGap),
+                    Text(
+                      user.reason,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.arenaBlockedTinyGap),
+                    Text(
+                      '${user.blockedAt} · ${_sourceLabel(user.source)}',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    user.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.body.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+                  _SmallActionButton(
+                    key: ArenaBlockedUsersPage.unblockKey(user.id),
+                    label: 'Bỏ chặn',
+                    accentColor: AppColors.warn,
+                    onTap: onUnblock,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      top: AppSpacing.arenaBlockedTinyGap,
-                    ),
-                  ),
-                  Text(
-                    user.reason,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      top: AppSpacing.arenaBlockedTinyGap,
-                    ),
-                  ),
-                  Text(
-                    '${user.blockedAt} · ${_sourceLabel(user.source)}',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  const SizedBox(height: AppSpacing.x2),
+                  _SmallActionButton(
+                    key: ArenaBlockedUsersPage.viewProfileKey(user.id),
+                    label: 'Xem hồ sơ',
+                    accentColor: AppColors.text2,
+                    onTap: onViewProfile,
                   ),
                 ],
               ),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                _SmallActionButton(
-                  key: ArenaBlockedUsersPage.unblockKey(user.id),
-                  label: 'Bỏ chặn',
-                  accentColor: AppColors.warn,
-                  onTap: onUnblock,
-                ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-                _SmallActionButton(
-                  key: ArenaBlockedUsersPage.viewProfileKey(user.id),
-                  label: 'Xem hồ sơ',
-                  accentColor: AppColors.text2,
-                  onTap: onViewProfile,
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        if (!isLast)
+          const Divider(
+            height: AppSpacing.arenaPointsDividerHeight,
+            color: AppColors.divider,
+          ),
+      ],
     );
   }
 }
@@ -341,17 +334,20 @@ class _BlockedAvatar extends StatelessWidget {
         ? Icons.person_off_outlined
         : Icons.smart_toy_outlined;
 
-    return Container(
-      width: AppSpacing.arenaBlockedAvatarBox,
-      height: AppSpacing.arenaBlockedAvatarBox,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Icon(
-        icon,
-        color: color.withValues(alpha: 0.78),
-        size: AppSpacing.arenaBlockedAvatarIcon,
+    return SizedBox.square(
+      dimension: AppSpacing.arenaBlockedAvatarBox,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: 0.12),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(
+          child: Icon(
+            icon,
+            color: color.withValues(alpha: 0.78),
+            size: AppSpacing.arenaBlockedAvatarIcon,
+          ),
+        ),
       ),
     );
   }
@@ -376,23 +372,32 @@ class _SmallActionButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
-        child: Container(
-          height: AppSpacing.arenaBlockedActionHeight,
+        child: ConstrainedBox(
           constraints: const BoxConstraints(
             minWidth: AppSpacing.arenaBlockedActionMinWidth,
           ),
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
-          decoration: BoxDecoration(
-            color: accentColor.withValues(alpha: 0.12),
-            border: Border.all(color: accentColor.withValues(alpha: 0.24)),
-            borderRadius: AppRadii.xlRadius,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: accentColor,
-              fontWeight: AppTextStyles.bold,
+          child: SizedBox(
+            height: AppSpacing.arenaBlockedActionHeight,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: accentColor.withValues(alpha: 0.12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.xlRadius,
+                  side: BorderSide(color: accentColor.withValues(alpha: 0.24)),
+                ),
+              ),
+              child: Padding(
+                padding: AppSpacing.arenaBlockedActionPadding,
+                child: Center(
+                  child: Text(
+                    label,
+                    style: AppTextStyles.micro.copyWith(
+                      color: accentColor,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -455,14 +460,21 @@ class _ToneIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.arenaBlockedToneIconBox,
-      height: AppSpacing.arenaBlockedToneIconBox,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadii.mdRadius,
+    return SizedBox.square(
+      dimension: AppSpacing.arenaBlockedToneIconBox,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: 0.12),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(
+          child: Icon(
+            icon,
+            color: color,
+            size: AppSpacing.arenaBlockedToneIcon,
+          ),
+        ),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.arenaBlockedToneIcon),
     );
   }
 }

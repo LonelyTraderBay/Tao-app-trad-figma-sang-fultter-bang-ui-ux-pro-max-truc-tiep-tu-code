@@ -16,7 +16,7 @@ class _StrategyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       borderColor: strategy.recommended ? AppColors.primary : null,
       onTap: onTap,
       child: Column(
@@ -139,8 +139,8 @@ class _AllocationBar extends StatelessWidget {
           for (final item in allocation)
             Expanded(
               flex: item.percentage,
-              child: DecoratedBox(
-                decoration: BoxDecoration(color: _assetColor(item.asset)),
+              child: ColoredBox(
+                color: _assetColor(item.asset),
                 child: const SizedBox(height: AppSpacing.x2),
               ),
             ),
@@ -158,15 +158,12 @@ class _AllocationChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           '${item.asset} ${item.percentage}%',
           style: AppTextStyles.micro.copyWith(
@@ -189,7 +186,7 @@ class _InsightCard extends StatelessWidget {
     final color = _insightColor(insight.tone);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -274,7 +271,7 @@ class _Disclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -346,7 +343,7 @@ class _StrategyDetailSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.earnPaddingX3,
           child: Column(
             children: [
               _SheetMetric(

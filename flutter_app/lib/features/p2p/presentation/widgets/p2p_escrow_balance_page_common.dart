@@ -10,7 +10,7 @@ class _EscrowHelpCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowBalancePage.helpKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pFinancialSafetyCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -55,16 +55,14 @@ class _EscrowEmptyState extends StatelessWidget {
     return VitCard(
       key: P2PEscrowBalancePage.emptyKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pFinancialSafetyLargePadding,
       child: Column(
         children: [
-          Container(
-            width: AppSpacing.x7,
-            height: AppSpacing.x7,
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.lgRadius,
-            ),
+          VitCard(
+            width: AppSpacing.p2pFinancialSafetyEmptyIconBox,
+            height: AppSpacing.p2pFinancialSafetyEmptyIconBox,
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.lg,
             child: const Icon(
               Icons.lock_open_rounded,
               color: AppColors.text3,

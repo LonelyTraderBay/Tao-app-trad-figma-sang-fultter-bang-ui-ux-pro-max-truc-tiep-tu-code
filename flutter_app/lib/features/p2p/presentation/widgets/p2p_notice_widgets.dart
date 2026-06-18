@@ -18,7 +18,7 @@ class P2PNoticeCard extends StatelessWidget {
     this.borderColor,
     this.variant = VitCardVariant.inner,
     this.radius = VitCardRadius.md,
-    this.padding = const EdgeInsets.all(AppSpacing.x4),
+    this.padding = AppSpacing.p2pDisputeCardPadding,
     this.iconSize = AppSpacing.iconSm,
     this.titleStyle,
     this.messageStyle,
@@ -74,7 +74,7 @@ class P2PNoticeCard extends StatelessWidget {
                       messageStyle ??
                       AppTextStyles.micro.copyWith(
                         color: messageColor,
-                        height: 1.45,
+                        height: AppSpacing.p2pDisputeReadableLineHeight,
                       ),
                 ),
               ],
@@ -104,11 +104,11 @@ class P2PHelpBullet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 3),
+          padding: AppSpacing.p2pDisputeNoticeIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: iconColor,
-            size: 12,
+            size: AppSpacing.p2pDisputeNoticeBulletIcon,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

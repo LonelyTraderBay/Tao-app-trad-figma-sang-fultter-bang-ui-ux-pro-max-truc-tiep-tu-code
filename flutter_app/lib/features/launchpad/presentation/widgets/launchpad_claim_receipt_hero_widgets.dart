@@ -15,7 +15,7 @@ class _RewardHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
       borderColor: receipt.accent.withValues(alpha: .22),
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -51,7 +51,7 @@ class _RewardHero extends StatelessWidget {
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+                          padding: AppSpacing.launchpadBottomPaddingX1,
                           child: Text(
                             receipt.rewardToken,
                             style: AppTextStyles.caption.copyWith(
@@ -179,20 +179,25 @@ class _TokenAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.launchpadBox48,
       height: AppSpacing.launchpadBox48,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: receipt.accent.withValues(alpha: .12),
-        border: Border.all(color: receipt.accent.withValues(alpha: .38)),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Text(
-        receipt.projectSymbol.substring(0, 2),
-        style: AppTextStyles.caption.copyWith(
-          color: receipt.accent,
-          fontWeight: AppTextStyles.bold,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: receipt.accent.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: receipt.accent.withValues(alpha: .38)),
+            borderRadius: AppRadii.lgRadius,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            receipt.projectSymbol.substring(0, 2),
+            style: AppTextStyles.caption.copyWith(
+              color: receipt.accent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -213,7 +218,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

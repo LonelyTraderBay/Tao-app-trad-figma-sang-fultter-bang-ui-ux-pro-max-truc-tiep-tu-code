@@ -14,7 +14,7 @@ class _MoverTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 38,
+      height: AppSpacing.marketCategoryHeight,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
@@ -27,7 +27,8 @@ class _MoverTabs extends StatelessWidget {
                 active: tab == activeTab,
                 onTap: () => onSelected(tab),
               ),
-              if (tab != tabs.last) const SizedBox(width: 8),
+              if (tab != tabs.last)
+                const SizedBox(width: AppSpacing.marketFilterGap),
             ],
           ],
         ),
@@ -63,20 +64,18 @@ class _TimeframeSelector extends StatelessWidget {
       children: [
         Text(
           'Khung thời gian:',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            height: 1,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.marketTimeframeLabelGap),
         Expanded(
           child: SizedBox(
-            height: 32,
+            height: AppSpacing.marketTimeframeSelectorHeight,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               clipBehavior: Clip.none,
               itemCount: timeframes.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 8),
+              separatorBuilder: (_, _) =>
+                  const SizedBox(width: AppSpacing.marketFilterGap),
               itemBuilder: (context, index) {
                 final timeframe = timeframes[index];
                 return _FilterChipButton(
@@ -85,7 +84,7 @@ class _TimeframeSelector extends StatelessWidget {
                       : Key('sc010_timeframe_$timeframe'),
                   label: timeframe,
                   active: timeframe == activeTimeframe,
-                  minHeight: 32,
+                  minHeight: AppSpacing.marketTimeframeSelectorHeight,
                   onTap: () => onSelected(timeframe),
                 );
               },
@@ -110,40 +109,43 @@ class _CategoryDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      key: MarketMoversPage.categoryDropdownKey,
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 44,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          border: Border.all(color: AppColors.borderSolid),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                'Danh mục: $category',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.medium,
-                  height: 1,
+    return Material(
+      color: AppColors.surface2,
+      shape: const RoundedRectangleBorder(
+        borderRadius: AppRadii.cardRadius,
+        side: BorderSide(color: AppColors.borderSolid),
+      ),
+      child: InkWell(
+        key: MarketMoversPage.categoryDropdownKey,
+        onTap: onTap,
+        borderRadius: AppRadii.cardRadius,
+        child: SizedBox(
+          height: AppSpacing.marketCategoryDropdownHeight,
+          child: Padding(
+            padding: AppSpacing.marketCategoryDropdownPadding,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Danh mục: $category',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.medium,
+                    ),
+                  ),
                 ),
-              ),
+                Icon(
+                  expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.text2,
+                  size: AppSpacing.iconSm,
+                ),
+              ],
             ),
-            Icon(
-              expanded
-                  ? Icons.keyboard_arrow_up_rounded
-                  : Icons.keyboard_arrow_down_rounded,
-              color: AppColors.text2,
-              size: 20,
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -164,10 +166,10 @@ class _CategoryPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.marketFilterSheetPadding,
       child: Wrap(
-        spacing: 8,
-        runSpacing: 8,
+        spacing: AppSpacing.marketFilterGap,
+        runSpacing: AppSpacing.marketFilterGap,
         children: [
           for (final category in categories)
             _FilterChipButton(
@@ -196,8 +198,8 @@ class _SortSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 8,
-      runSpacing: 8,
+      spacing: AppSpacing.marketFilterGap,
+      runSpacing: AppSpacing.marketFilterGap,
       children: [
         for (final option in options)
           _FilterChipButton(
@@ -240,25 +242,10 @@ class _ResultSummary extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.medium,
-            height: 1,
           ),
         ),
-        const SizedBox(width: 8),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-          decoration: BoxDecoration(
-            color: AppColors.buy10,
-            borderRadius: BorderRadius.circular(7),
-          ),
-          child: Text(
-            'LIVE',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.buy,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
-        ),
+        const SizedBox(width: AppSpacing.marketFilterGap),
+        const VitAccentPill(label: 'LIVE', accentColor: AppColors.buy),
         const Spacer(),
         Flexible(
           child: Text(
@@ -266,10 +253,7 @@ class _ResultSummary extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.right,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
       ],
@@ -297,30 +281,34 @@ class _FilterChipButton extends StatelessWidget {
       button: true,
       selected: active,
       label: label,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          constraints: BoxConstraints(minHeight: minHeight),
-          padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
-          decoration: BoxDecoration(
+      child: Material(
+        color: active
+            ? _marketPrimary.withValues(alpha: 0.18)
+            : AppColors.surface2,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(
             color: active
-                ? _marketPrimary.withValues(alpha: 0.18)
-                : AppColors.surface2,
-            border: Border.all(
-              color: active
-                  ? _marketPrimary.withValues(alpha: 0.55)
-                  : AppColors.borderSolid,
-            ),
-            borderRadius: AppRadii.cardRadius,
+                ? _marketPrimary.withValues(alpha: 0.55)
+                : AppColors.borderSolid,
           ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? _marketPrimary : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadii.cardRadius,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: minHeight),
+            child: Padding(
+              padding: AppSpacing.marketFilterChipPadding,
+              child: Center(
+                child: Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: active ? _marketPrimary : AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
             ),
           ),
         ),

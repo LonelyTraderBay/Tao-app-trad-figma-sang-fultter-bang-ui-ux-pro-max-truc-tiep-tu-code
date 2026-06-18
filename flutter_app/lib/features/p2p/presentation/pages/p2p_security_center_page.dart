@@ -77,10 +77,7 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pSecurityCenterScrollPadding(
                       bottomInset,
                     ),
                     child: Column(
@@ -109,16 +106,13 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                           key: P2PSecurityCenterPage.viewAllKey,
                           radius: VitCardRadius.lg,
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           onTap: () {
                             HapticFeedback.selectionClick();
                             context.go(snapshot.loginHistoryRoute);
                           },
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: AppSpacing.x3,
-                              horizontal: AppSpacing.x4,
-                            ),
+                            padding: AppSpacing.p2pSecurityCenterViewAllPadding,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -209,10 +203,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
+                  padding: AppSpacing.p2pSecurityCenterScrollPadding(
                     bottomInset,
                   ),
                   child: Column(
@@ -220,7 +211,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                     children: [
                       VitCard(
                         radius: VitCardRadius.lg,
-                        padding: const EdgeInsets.all(AppSpacing.x5),
+                        padding: AppSpacing.p2pSecurityCenterCardPadding,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -238,7 +229,8 @@ class P2PWhitelistModePage extends ConsumerWidget {
                               'Only reviewed devices and protected payment sessions can continue sensitive P2P actions.',
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height: 1.45,
+                                height:
+                                    AppSpacing.p2pSecurityCenterBodyLineHeight,
                               ),
                             ),
                           ],

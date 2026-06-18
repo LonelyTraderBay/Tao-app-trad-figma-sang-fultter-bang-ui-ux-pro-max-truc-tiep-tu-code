@@ -12,7 +12,7 @@ class _MetricTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -22,7 +22,7 @@ class _MetricTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
@@ -49,16 +49,11 @@ class _ImpactBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = value >= 0;
     final color = positive ? AppColors.buy : AppColors.sell;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
+    return Material(
+      color: color.withValues(alpha: .12),
+      borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -93,10 +88,10 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: AppSpacing.savingsWhatIfSectionMarkerWidth,
           height: AppSpacing.savingsWhatIfSectionMarkerHeight,
-          decoration: const BoxDecoration(
+          child: Material(
             color: AppColors.primary,
             borderRadius: AppRadii.xsRadius,
           ),
@@ -121,16 +116,11 @@ class _RiskPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _riskColor(level);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
-      ),
+    return Material(
+      color: color.withValues(alpha: .14),
+      borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.savingsWhatIfRiskPillPadV,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           _riskLabel(level),
           style: _microBold.copyWith(
@@ -169,14 +159,17 @@ class _RoundIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.savingsWhatIfRoundIconBox,
-      height: AppSpacing.savingsWhatIfRoundIconBox,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
+    return SizedBox.square(
+      dimension: AppSpacing.savingsWhatIfRoundIconBox,
+      child: Material(
+        color: color.withValues(alpha: .12),
         borderRadius: AppRadii.lgRadius,
+        child: Icon(
+          icon,
+          color: color,
+          size: AppSpacing.savingsWhatIfInlineIcon,
+        ),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.savingsWhatIfInlineIcon),
     );
   }
 }
@@ -191,7 +184,7 @@ class _Disclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       borderColor: tone.withValues(alpha: .25),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,7 +225,7 @@ class _InfoCallout extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       borderColor: color.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -247,7 +240,7 @@ class _InfoCallout extends StatelessWidget {
                   title,
                   style: _captionBold.copyWith(color: AppColors.text1),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   text,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -299,10 +292,9 @@ class _LegendDot extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: AppSpacing.savingsWhatIfLegendDot,
-          height: AppSpacing.savingsWhatIfLegendDot,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        SizedBox.square(
+          dimension: AppSpacing.savingsWhatIfLegendDot,
+          child: Material(color: color, shape: const CircleBorder()),
         ),
         const SizedBox(width: AppSpacing.x2),
         Text(

@@ -81,14 +81,14 @@ class _WalletIcon extends StatelessWidget {
       'futures' => Icons.account_balance_outlined,
       _ => Icons.bar_chart_rounded,
     };
-    return Container(
+    return VitCard(
       width: AppSpacing.transferIcon,
       height: AppSpacing.transferIcon,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      background: ColoredBox(color: color.withValues(alpha: .13)),
       alignment: Alignment.center,
+      clip: true,
       child: Icon(icon, color: color, size: AppSpacing.transferActionIcon),
     );
   }
@@ -106,25 +106,19 @@ class TransferSwapButton extends StatelessWidget {
         key: const Key('sc146_transfer_swap'),
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
-        child: Container(
+        child: SizedBox(
           width: AppSpacing.transferSwapButton,
           height: AppSpacing.transferSwapButton,
-          decoration: BoxDecoration(
+          child: Material(
             color: _transferPrimary,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: _transferPrimary.withValues(alpha: .38),
-                blurRadius: AppSpacing.transferSwapButtonShadow,
-                offset: Offset(0, AppSpacing.transferSwapButtonShadowOffset),
-              ),
-            ],
-          ),
-          alignment: Alignment.center,
-          child: Icon(
-            Icons.swap_vert_rounded,
-            color: AppColors.onAccent,
-            size: AppSpacing.transferActionIcon + AppSpacing.x1,
+            elevation: AppSpacing.transferSwapButtonShadowOffset,
+            shadowColor: _transferPrimary.withValues(alpha: .38),
+            shape: const CircleBorder(),
+            child: Icon(
+              Icons.swap_vert_rounded,
+              color: AppColors.onAccent,
+              size: AppSpacing.transferActionIcon + AppSpacing.x1,
+            ),
           ),
         ),
       ),

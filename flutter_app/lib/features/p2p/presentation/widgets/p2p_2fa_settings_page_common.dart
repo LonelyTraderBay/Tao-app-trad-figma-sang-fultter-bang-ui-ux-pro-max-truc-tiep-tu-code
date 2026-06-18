@@ -12,7 +12,7 @@ class _SecurityRecommendation extends StatelessWidget {
       radius: VitCardRadius.md,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pSecurityDetailsInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,7 +38,7 @@ class _SecurityRecommendation extends StatelessWidget {
                   text,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pSecurityDetailsCaptionLineHeight,
                   ),
                 ),
               ],
@@ -72,14 +72,14 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.p2pSecurityDetailsMethodIconBox,
+      child: Material(
+        type: MaterialType.transparency,
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.lgRadius,
+        child: Icon(icon, color: color, size: AppSpacing.iconMd),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconMd),
     );
   }
 }
@@ -92,24 +92,10 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -122,26 +108,26 @@ class _InlineNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .1),
-        borderRadius: AppRadii.lgRadius,
-      ),
+    return Material(
+      type: MaterialType.transparency,
+      color: color.withValues(alpha: .1),
+      borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x3,
-        ),
+        padding: AppSpacing.p2pSecurityDetailsActionPadding,
         child: Row(
           children: [
-            Icon(Icons.info_outline_rounded, color: color, size: 12),
+            Icon(
+              Icons.info_outline_rounded,
+              color: color,
+              size: AppSpacing.p2pSecurityDetailsInlineIcon,
+            ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Text(
                 text,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: 1.35,
+                  height: AppSpacing.p2pSecurityDetailsNoticeLineHeight,
                 ),
               ),
             ),

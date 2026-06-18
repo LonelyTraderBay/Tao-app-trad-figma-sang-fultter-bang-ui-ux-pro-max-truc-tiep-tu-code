@@ -32,7 +32,7 @@ class _InlineStudioActions extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaStudioCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -92,7 +92,7 @@ class _InlineStudioActions extends StatelessWidget {
                     variant: VitCtaButtonVariant.secondary,
                     fullWidth: false,
                     height: AppSpacing.arenaStudioFooterButton,
-                    padding: EdgeInsets.zero,
+                    padding: AppSpacing.zeroInsets,
                     child: const Icon(Icons.chevron_left_rounded),
                   ),
                 ),
@@ -106,9 +106,7 @@ class _InlineStudioActions extends StatelessWidget {
                   onPressed: canContinue ? onContinue : null,
                   fullWidth: true,
                   height: AppSpacing.arenaStudioFooterButton,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x4,
-                  ),
+                  padding: AppSpacing.arenaStudioFooterCtaPadding,
                   trailing: Icon(
                     isLastStep
                         ? Icons.send_outlined

@@ -26,15 +26,15 @@ class _CategorySection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x4),
         GridView.builder(
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: categories.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.supportCategoryGridColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            childAspectRatio: 1.9,
+            childAspectRatio: AppSpacing.supportCategoryGridAspectRatio,
           ),
           itemBuilder: (context, index) {
             final category = categories[index];
@@ -68,13 +68,17 @@ class _CategoryTile extends StatelessWidget {
       key: HelpCenterPage.categoryKey(category.id),
       radius: VitCardRadius.sm,
       borderColor: selected ? AppColors.primary40 : null,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.supportCardPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(_categoryIcon(category.id), color: iconColor, size: 24),
+          Icon(
+            _categoryIcon(category.id),
+            color: iconColor,
+            size: AppSpacing.supportCategoryIcon,
+          ),
           const SizedBox(height: AppSpacing.x3),
           Text(
             category.name,
@@ -173,15 +177,16 @@ class _ArticleTile extends StatelessWidget {
     return VitCard(
       key: HelpCenterPage.articleKey(article.id),
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.supportQuickCardPadding,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(_categoryIcon(category.id), color: iconColor, size: 21),
+          Icon(
+            _categoryIcon(category.id),
+            color: iconColor,
+            size: AppSpacing.supportArticleIcon,
+          ),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
@@ -218,7 +223,7 @@ class _ArticleTile extends StatelessWidget {
                     article.summary,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.45,
+                      height: AppSpacing.supportLineHeightBody,
                     ),
                   ),
                 ],

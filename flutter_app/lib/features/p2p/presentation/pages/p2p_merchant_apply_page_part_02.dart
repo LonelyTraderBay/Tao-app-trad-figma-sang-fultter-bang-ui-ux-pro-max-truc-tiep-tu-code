@@ -31,7 +31,7 @@ class _BusinessInfoStep extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x5),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pMerchantApplyCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -137,7 +137,7 @@ class _DocumentCard extends StatelessWidget {
       key: P2PMerchantApplyPage.documentKey(document.id),
       onTap: onTap,
       borderColor: uploaded ? AppColors.buy20 : null,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMerchantApplyCardPadding,
       child: Row(
         children: [
           _IconBadge(
@@ -255,7 +255,7 @@ class _HistoryStep extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x5),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pMerchantApplyCardPadding,
           child: Column(
             children: [
               for (final row in rows) ...[
@@ -322,7 +322,7 @@ class _FinalStep extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x5),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pMerchantApplyCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -383,7 +383,7 @@ class _SuccessState extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x5),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pMerchantApplyCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

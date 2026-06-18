@@ -73,7 +73,7 @@ class _UnifiedPortfolioDashboardState
                 child: SingleChildScrollView(
                   key: UnifiedPortfolioDashboard.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.crossModuleScrollPadding(bottomInset),
                   child: VitPageContent(
                     gap: VitContentGap.defaultGap,
                     children: [

@@ -42,8 +42,10 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pMarketplaceAnalyticsBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pMarketplaceAnalyticsBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -69,10 +71,7 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PAdAnalyticsPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x5,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pMarketplaceAnalyticsScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -95,7 +94,8 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
                           children: [
                             VitCard(
                               variant: VitCardVariant.inner,
-                              padding: EdgeInsets.all(AppSpacing.x3),
+                              padding: AppSpacing
+                                  .p2pMarketplaceAnalyticsCompactPadding,
                               child: VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'Ad performance review',

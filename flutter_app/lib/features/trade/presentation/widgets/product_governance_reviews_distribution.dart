@@ -11,12 +11,13 @@ class _ReviewsTab extends StatelessWidget {
       label: 'Review Schedule',
       children: [
         _Card(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.productGovernanceCardPadding,
           child: Column(
             children: [
               for (final product in products) ...[
                 _ReviewRow(product: product),
-                if (product != products.last) const SizedBox(height: 12),
+                if (product != products.last)
+                  const SizedBox(height: AppSpacing.productGovernanceReviewGap),
               ],
             ],
           ),
@@ -37,7 +38,7 @@ class _ReviewRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.productGovernanceReviewRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -49,15 +50,17 @@ class _ReviewRow extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.productGovernanceLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(
+                  height: AppSpacing.productGovernanceReviewTextGap,
+                ),
                 Text(
                   'Due: ${product.nextReview}',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.productGovernanceLineHeightTight,
                   ),
                 ),
               ],
@@ -71,16 +74,18 @@ class _ReviewRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: urgent ? _govAmber : AppColors.text2,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.productGovernanceLineHeightTight,
                 ),
               ),
               if (urgent) ...[
-                const SizedBox(height: 6),
+                const SizedBox(
+                  height: AppSpacing.productGovernanceReviewActionGap,
+                ),
                 Text(
                   'Action needed',
                   style: AppTextStyles.micro.copyWith(
                     color: _govAmber,
-                    height: 1,
+                    height: AppSpacing.productGovernanceLineHeightTight,
                   ),
                 ),
               ],
@@ -102,26 +107,26 @@ class _DistributionTab extends StatelessWidget {
     const channels = ['App', 'Web Platform', 'API'];
     return VitPageSection(
       label: 'Distribution Channels',
-      customGap: 12,
+      customGap: AppSpacing.productGovernanceContentGap,
       children: [
         for (final channel in channels)
           _Card(
-            padding: const EdgeInsets.all(13),
+            padding: AppSpacing.productGovernanceDistributionCardPadding,
             child: Row(
               children: [
                 VitCard(
-                  width: 40,
-                  height: 40,
+                  width: AppSpacing.productGovernanceChannelIconBox,
+                  height: AppSpacing.productGovernanceChannelIconBox,
                   variant: VitCardVariant.inner,
                   alignment: Alignment.center,
                   borderColor: _govPrimary.withValues(alpha: .35),
                   child: const Icon(
                     Icons.monitor_heart_outlined,
                     color: _govPrimary,
-                    size: 18,
+                    size: AppSpacing.productGovernanceActionIcon,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.productGovernanceReviewGap),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,15 +136,17 @@ class _DistributionTab extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
+                          height: AppSpacing.productGovernanceLineHeightTight,
                         ),
                       ),
-                      const SizedBox(height: 7),
+                      const SizedBox(
+                        height: AppSpacing.productGovernanceReviewTextGap,
+                      ),
                       Text(
                         '${_productCountForChannel(products, channel)} products',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1,
+                          height: AppSpacing.productGovernanceLineHeightTight,
                         ),
                       ),
                     ],
@@ -148,37 +155,12 @@ class _DistributionTab extends StatelessWidget {
                 const Icon(
                   Icons.check_circle_outline,
                   color: _govGreen,
-                  size: 19,
+                  size: AppSpacing.productGovernanceChannelStatusIcon,
                 ),
               ],
             ),
           ),
       ],
-    );
-  }
-}
-
-class _Pill extends StatelessWidget {
-  const _Pill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
-      borderColor: color.withValues(alpha: .35),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
     );
   }
 }

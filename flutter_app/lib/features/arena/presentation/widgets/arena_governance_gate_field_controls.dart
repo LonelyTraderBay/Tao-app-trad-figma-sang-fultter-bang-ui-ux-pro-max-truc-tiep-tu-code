@@ -64,10 +64,7 @@ class _MiniOptionChip extends StatelessWidget {
       variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: selected ? AppColors.warn : AppColors.borderSolid,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.arenaGovernanceOptionChipPadding,
       onTap: onTap,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -150,7 +147,7 @@ class _EdgeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x3),
+      padding: AppSpacing.arenaGovernanceEdgeFieldPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -194,10 +191,7 @@ class _DropdownCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: hasValue ? AppColors.accent20 : AppColors.borderSolid,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.arenaGovernanceDropdownPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -241,7 +235,7 @@ class _SwitchRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x2),
+      padding: AppSpacing.arenaGovernanceSwitchRowPadding,
       child: Row(
         children: [
           Expanded(

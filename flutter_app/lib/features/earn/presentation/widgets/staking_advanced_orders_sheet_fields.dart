@@ -9,17 +9,22 @@ class _SheetFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Container(
-        margin: const EdgeInsets.all(AppSpacing.contentPad),
-        padding: const EdgeInsets.all(AppSpacing.x5),
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.sizeOf(context).height * 0.88,
+      child: Padding(
+        padding: AppSpacing.earnContentMargin,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.sizeOf(context).height * 0.88,
+          ),
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
+              color: AppColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.cardLargeRadius,
+              ),
+            ),
+            child: Padding(padding: AppSpacing.earnPaddingX5, child: child),
+          ),
         ),
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadii.cardLargeRadius,
-        ),
-        child: child,
       ),
     );
   }
@@ -68,9 +73,7 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
                 )
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(
-                        left: i == 0 ? 0 : AppSpacing.x2,
-                      ),
+                      padding: AppSpacing.earnLeftPaddingX2(i > 0),
                       child: _TypeButton(
                         type: widget.snapshot.orderTypeOptions[i],
                         selected:
@@ -123,7 +126,7 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.earnPaddingX3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -175,11 +178,13 @@ class _TypeButton extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
         child: Ink(
           height: AppSpacing.inputHeight,
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: selected ? AppColors.primary : AppColors.surface2,
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(
-              color: selected ? AppColors.primarySoft : AppColors.borderSolid,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(
+                color: selected ? AppColors.primarySoft : AppColors.borderSolid,
+              ),
             ),
           ),
           child: Center(
@@ -231,10 +236,7 @@ class _StaticField extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnStaticSelectPadding,
       child: Row(
         children: [
           Expanded(child: Text(value, style: AppTextStyles.body)),
@@ -257,10 +259,7 @@ class _InputPreview extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.earnCardPaddingX4X3,
       child: Row(
         children: [
           Expanded(
@@ -270,20 +269,19 @@ class _InputPreview extends StatelessWidget {
             ),
           ),
           if (isMax)
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x1,
-              ),
-              decoration: const BoxDecoration(
+            DecoratedBox(
+              decoration: const ShapeDecoration(
                 color: AppColors.primary,
-                borderRadius: AppRadii.smRadius,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
               ),
-              child: Text(
-                suffix,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.onAccent,
-                  fontWeight: AppTextStyles.bold,
+              child: Padding(
+                padding: AppSpacing.earnPillPadding,
+                child: Text(
+                  suffix,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.onAccent,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
             )

@@ -1,42 +1,17 @@
 part of '../pages/p2p_login_history_page.dart';
 
 class _StatusBadge extends StatelessWidget {
-  const _StatusBadge({required this.event, required this.color});
+  const _StatusBadge({required this.event});
 
   final P2PLoginEventDraft event;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xlRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(_statusIcon(event.status), color: color, size: 11),
-            const SizedBox(width: AppSpacing.x1),
-            Flexible(
-              child: Text(
-                event.statusLabel,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+    return VitStatusPill(
+      label: event.statusLabel,
+      status: _statusPillStatus(event.status),
+      icon: _statusIcon(event.status),
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -83,7 +58,11 @@ class _InlineMeta extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: AppColors.text3, size: 11),
+        Icon(
+          icon,
+          color: AppColors.text3,
+          size: AppSpacing.p2pLoginHistoryMetaIcon,
+        ),
         const SizedBox(width: AppSpacing.x1),
         Text(
           text,
@@ -105,24 +84,10 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -134,14 +99,13 @@ class _SecurityInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return Material(
       key: P2PLoginHistoryPage.infoKey,
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p.withValues(alpha: .10),
-        borderRadius: AppRadii.lgRadius,
-      ),
+      type: MaterialType.transparency,
+      color: AppModuleAccents.p2p.withValues(alpha: .10),
+      borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pLoginHistoryNoticePadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -168,7 +132,7 @@ class _SecurityInfo extends StatelessWidget {
                       tip,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: 1.55,
+                        height: AppSpacing.p2pLoginHistoryInfoLineHeight,
                       ),
                     ),
                     if (tip != snapshot.securityTips.last)
@@ -193,7 +157,7 @@ class _EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: P2PLoginHistoryPage.emptyKey,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x7),
+      padding: AppSpacing.p2pLoginHistoryEmptyPadding,
       child: Column(
         children: [
           const Icon(
@@ -220,6 +184,14 @@ Color _statusColor(String status) {
     'failed' => AppColors.sell,
     'suspicious' => AppColors.warn,
     _ => AppColors.buy,
+  };
+}
+
+VitStatusPillStatus _statusPillStatus(String status) {
+  return switch (status) {
+    'failed' => VitStatusPillStatus.error,
+    'suspicious' => VitStatusPillStatus.warning,
+    _ => VitStatusPillStatus.success,
   };
 }
 

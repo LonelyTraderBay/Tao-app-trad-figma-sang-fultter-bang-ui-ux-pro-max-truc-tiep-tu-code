@@ -112,7 +112,10 @@ class _RiyChartPainter extends CustomPainter {
     final painter = TextPainter(
       text: TextSpan(
         text: text,
-        style: AppTextStyles.micro.copyWith(color: AppColors.text3, height: 1),
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.text3,
+          height: AppSpacing.tradeBotLineHeightTight,
+        ),
       ),
       textDirection: TextDirection.ltr,
     )..layout();
@@ -127,37 +130,6 @@ class _RiyChartPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _RiyChartPainter oldDelegate) {
     return oldDelegate.projections != projections;
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 14,
-          decoration: BoxDecoration(
-            color: _riyPrimary,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          text,
-          style: AppTextStyles.navLabel.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
-    );
   }
 }
 
@@ -220,5 +192,5 @@ String _formatEur(double value) {
     buffer.write(absolute[index]);
   }
   final sign = rounded < 0 ? '-' : '';
-  return '$sign€${buffer.toString()}';
+  return '$sign\u20ac${buffer.toString()}';
 }

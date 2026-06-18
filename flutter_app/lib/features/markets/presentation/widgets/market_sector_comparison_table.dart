@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
@@ -25,11 +26,13 @@ class MarketSectorComparisonTable extends StatelessWidget {
       accentColor: marketSectorPrimary,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(14),
+          padding: AppSpacing.marketSectorComparisonPadding,
           child: Column(
             children: [
               const _ComparisonHeader(),
-              const SizedBox(height: 10),
+              const SizedBox(
+                height: AppSpacing.marketSectorComparisonHeaderGap,
+              ),
               for (final sector in sectors) ...[
                 _ComparisonRow(
                   sector: sector,
@@ -58,7 +61,7 @@ class MarketSectorDataRefreshFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 2),
+      padding: AppSpacing.marketSectorRefreshFooterPadding,
       child: Text(
         '$count ngành · $label',
         textAlign: TextAlign.center,
@@ -73,7 +76,10 @@ class TableDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(height: 1, color: AppColors.divider);
+    return const Divider(
+      height: AppSpacing.dividerHairline,
+      color: AppColors.divider,
+    );
   }
 }
 
@@ -95,7 +101,7 @@ class _ComparisonHeader extends StatelessWidget {
         ),
         for (final label in const ['24h', '7d', '30d'])
           SizedBox(
-            width: 54,
+            width: AppSpacing.marketSectorComparisonCellWidth,
             child: Text(
               label,
               textAlign: TextAlign.right,
@@ -118,49 +124,52 @@ class _ComparisonRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 34,
-      padding: const EdgeInsets.symmetric(horizontal: 2),
-      decoration: BoxDecoration(
-        color: highlighted
-            ? sector.color.withValues(alpha: 0.10)
-            : AppColors.transparent,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: sector.color,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    sector.nameVi,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: highlighted
-                          ? AppTextStyles.bold
-                          : AppTextStyles.medium,
+    return Material(
+      color: highlighted
+          ? sector.color.withValues(alpha: 0.10)
+          : AppColors.transparent,
+      borderRadius: AppRadii.smRadius,
+      child: SizedBox(
+        height: AppSpacing.marketSectorComparisonRowHeight,
+        child: Padding(
+          padding: AppSpacing.marketSectorComparisonRowPadding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Material(
+                      color: sector.color,
+                      shape: const CircleBorder(),
+                      child: const SizedBox.square(
+                        dimension: AppSpacing.marketSectorComparisonMarker,
+                      ),
                     ),
-                  ),
+                    const SizedBox(
+                      width: AppSpacing.marketSectorComparisonMarkerGap,
+                    ),
+                    Expanded(
+                      child: Text(
+                        sector.nameVi,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: highlighted
+                              ? AppTextStyles.bold
+                              : AppTextStyles.medium,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              _PercentCell(value: sector.change24h),
+              _PercentCell(value: sector.change7d),
+              _PercentCell(value: sector.change30d),
+            ],
           ),
-          _PercentCell(value: sector.change24h),
-          _PercentCell(value: sector.change7d),
-          _PercentCell(value: sector.change30d),
-        ],
+        ),
       ),
     );
   }
@@ -175,7 +184,7 @@ class _PercentCell extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = value >= 0 ? AppColors.buy : AppColors.sell;
     return SizedBox(
-      width: 54,
+      width: AppSpacing.marketSectorComparisonCellWidth,
       child: Text(
         formatMarketSectorPercent(value),
         maxLines: 1,

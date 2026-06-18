@@ -6,26 +6,25 @@ class _ApiDocsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 96,
-      padding: const EdgeInsets.fromLTRB(16, 16, 14, 16),
+      height: AppSpacing.profileApiDocsHeight,
+      padding: AppSpacing.profileApiDocsPadding,
       borderColor: _apiBorder,
       child: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
+          SizedBox(
+            width: AppSpacing.profileApiDocsIconBox,
+            height: AppSpacing.profileApiDocsIconBox,
+            child: Material(
               color: _apiPrimary.withValues(alpha: .1),
-              borderRadius: AppRadii.cardRadius,
-            ),
-            alignment: Alignment.center,
-            child: const Icon(
-              Icons.info_outline_rounded,
-              color: _apiPrimary,
-              size: 21,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+              child: const Icon(
+                Icons.info_outline_rounded,
+                color: _apiPrimary,
+                size: AppSpacing.profileApiDocsIcon,
+              ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.profileApiDocsGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -35,23 +34,23 @@ class _ApiDocsCard extends StatelessWidget {
                   'T\u00E0i li\u1EC7u API',
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.extraBold,
-                    height: 1.1,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: 5)),
+                const SizedBox(height: AppSpacing.profileApiDocsTitleGap),
                 Text(
                   'Xem h\u01B0\u1EDBng d\u1EABn t\u00EDch h\u1EE3p v\u00E0 endpoint',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: _apiMuted,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: _apiMuted),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.chevron_right_rounded, color: _apiMuted, size: 18),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: _apiMuted,
+            size: AppSpacing.profileApiDocsChevron,
+          ),
         ],
       ),
     );

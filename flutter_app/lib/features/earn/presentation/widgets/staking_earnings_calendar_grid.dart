@@ -30,7 +30,7 @@ class _CalendarCard extends StatelessWidget {
     return VitCard(
       key: StakingEarningsCalendarPage.calendarCardKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
           Row(
@@ -159,10 +159,12 @@ class _DayCell extends StatelessWidget {
         : AppColors.transparent;
 
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: bgColor,
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: borderColor),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: borderColor),
+          borderRadius: AppRadii.lgRadius,
+        ),
       ),
       child: Center(
         child: Column(
@@ -205,7 +207,7 @@ class _LegendCard extends StatelessWidget {
     return VitCard(
       key: StakingEarningsCalendarPage.legendKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -277,10 +279,12 @@ class _EventDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.x2,
       height: AppSpacing.x2,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      child: DecoratedBox(
+        decoration: ShapeDecoration(color: color, shape: const CircleBorder()),
+      ),
     );
   }
 }

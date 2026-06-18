@@ -76,3 +76,27 @@ class VitSheetPanel extends StatelessWidget {
     );
   }
 }
+
+class VitSheetSurface extends StatelessWidget {
+  const VitSheetSurface({
+    super.key,
+    required this.child,
+    this.padding = AppSpacing.homeMoreProductsSheetPadding,
+    this.color = AppColors.bg,
+    this.borderRadius = AppRadii.sheetTopLargeRadius,
+  });
+
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final Color color;
+  final BorderRadiusGeometry borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: padding,
+      decoration: BoxDecoration(color: color, borderRadius: borderRadius),
+      child: child,
+    );
+  }
+}

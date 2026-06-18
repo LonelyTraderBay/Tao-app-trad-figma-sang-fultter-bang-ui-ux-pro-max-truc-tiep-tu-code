@@ -23,7 +23,7 @@ class _ChecklistCard extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.checklistKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -99,10 +99,7 @@ class _CategoryTab extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.p2pFraudCategoryTabPadding,
           child: Column(
             children: [
               Text(
@@ -146,28 +143,30 @@ class _ChecklistItem extends StatelessWidget {
         onTap: () => onTap(item.id),
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          padding: AppSpacing.p2pFraudChecklistItemPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 22,
-                height: 22,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
+              SizedBox.square(
+                dimension: AppSpacing.p2pFraudChecklistBox,
+                child: Material(
                   color: item.checked ? AppColors.buy : AppColors.transparent,
-                  borderRadius: AppRadii.smRadius,
-                  border: Border.all(
-                    color: item.checked ? AppColors.buy : AppColors.borderSolid,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                    side: BorderSide(
+                      color: item.checked
+                          ? AppColors.buy
+                          : AppColors.borderSolid,
+                    ),
                   ),
+                  child: item.checked
+                      ? const Icon(
+                          Icons.check_rounded,
+                          color: AppColors.onAccent,
+                          size: AppSpacing.p2pFraudChecklistCheckIcon,
+                        )
+                      : null,
                 ),
-                child: item.checked
-                    ? const Icon(
-                        Icons.check_rounded,
-                        color: AppColors.onAccent,
-                        size: 14,
-                      )
-                    : null,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -212,7 +211,7 @@ class _EmergencyActions extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.emergencyKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -268,10 +267,14 @@ class _EmergencyButton extends StatelessWidget {
         },
         borderRadius: AppRadii.lgRadius,
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.p2pFraudInnerPadding,
           child: Row(
             children: [
-              Icon(_actionIcon(action.iconKey), color: color, size: 18),
+              Icon(
+                _actionIcon(action.iconKey),
+                color: color,
+                size: AppSpacing.p2pFraudActionIcon,
+              ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
@@ -282,7 +285,11 @@ class _EmergencyButton extends StatelessWidget {
                   ),
                 ),
               ),
-              Icon(Icons.chevron_right_rounded, color: color, size: 18),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: color,
+                size: AppSpacing.p2pFraudActionIcon,
+              ),
             ],
           ),
         ),

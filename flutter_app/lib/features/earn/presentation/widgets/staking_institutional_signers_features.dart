@@ -14,7 +14,7 @@ class _AuthorizedSigners extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: Column(
             children: [
               for (var i = 0; i < snapshot.signers.length; i++) ...[
@@ -38,7 +38,7 @@ class _SignerRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final approved = signer.status == StakingInstitutionalSignerStatus.approved;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+      padding: AppSpacing.earnVerticalPaddingX1,
       child: Row(
         children: [
           Expanded(
@@ -107,7 +107,7 @@ class _FeatureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -148,7 +148,7 @@ class _ComplianceNote extends StatelessWidget {
       key: StakingInstitutionalPage.complianceKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

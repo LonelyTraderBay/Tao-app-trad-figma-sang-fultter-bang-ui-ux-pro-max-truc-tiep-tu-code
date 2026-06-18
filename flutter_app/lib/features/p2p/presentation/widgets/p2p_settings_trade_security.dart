@@ -28,7 +28,7 @@ class _TradeOptionsCard extends StatelessWidget {
     return VitCard(
       key: P2PSettingsPage.tradeOptionsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pSettingsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -157,21 +157,17 @@ class _OptionChip extends StatelessWidget {
     return Material(
       key: P2PSettingsPage.optionKey(group, value),
       color: selected ? AppColors.primary12 : AppColors.surface,
-      borderRadius: AppRadii.inputRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(
+          color: selected ? AppColors.primary40 : AppColors.transparent,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected ? AppColors.primary40 : AppColors.transparent,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
+        child: Padding(
+          padding: AppSpacing.p2pSettingsOptionChipPadding,
           child: Center(
             child: Text(
               label,
@@ -214,7 +210,7 @@ class _ToggleSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+          padding: AppSpacing.p2pSettingsHorizontalCardPadding,
           child: Column(
             children: [
               for (var index = 0; index < toggles.length; index++)
@@ -257,7 +253,7 @@ class _SecuritySection extends StatelessWidget {
         VitCard(
           key: P2PSettingsPage.securityKey,
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+          padding: AppSpacing.p2pSettingsHorizontalCardPadding,
           child: Column(
             children: [
               for (final toggle in snapshot.securityToggles)
@@ -307,47 +303,53 @@ class _SettingToggleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _toneColor(toggle.toneKey);
-    return Container(
-      decoration: BoxDecoration(
-        border: last
-            ? null
-            : const Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-      child: Row(
-        children: [
-          _SettingIcon(icon: _settingsIcon(toggle.iconKey), color: color),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  toggle.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                  ),
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.p2pSettingsRowPadding,
+          child: Row(
+            children: [
+              _SettingIcon(icon: _settingsIcon(toggle.iconKey), color: color),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      toggle.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      toggle.description,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  toggle.description,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
+              ),
+              _SwitchButton(
+                key: P2PSettingsPage.toggleKey(toggle.id),
+                value: value,
+                color: color,
+                onTap: onToggle,
+              ),
+            ],
           ),
-          _SwitchButton(
-            key: P2PSettingsPage.toggleKey(toggle.id),
-            value: value,
-            color: color,
-            onTap: onToggle,
+        ),
+        if (!last)
+          const SizedBox(
+            height: AppSpacing.dividerHairline,
+            child: ColoredBox(color: AppColors.divider),
           ),
-        ],
-      ),
+      ],
     );
   }
 }
@@ -377,42 +379,48 @@ class _NavigationRow extends StatelessWidget {
         HapticFeedback.selectionClick();
         onTap();
       },
-      child: Container(
-        decoration: BoxDecoration(
-          border: last
-              ? null
-              : const Border(bottom: BorderSide(color: AppColors.divider)),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-        child: Row(
-          children: [
-            _SettingIcon(icon: icon, color: color),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: AppTextStyles.caption.copyWith(
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      child: Column(
+        children: [
+          Padding(
+            padding: AppSpacing.p2pSettingsRowPadding,
+            child: Row(
+              children: [
+                _SettingIcon(icon: icon, color: color),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        label,
+                        style: AppTextStyles.caption.copyWith(
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        description,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    description,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
+                ),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconMd,
+                ),
+              ],
             ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.iconMd,
+          ),
+          if (!last)
+            const SizedBox(
+              height: AppSpacing.dividerHairline,
+              child: ColoredBox(color: AppColors.divider),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

@@ -17,6 +17,10 @@ flutter_app/*.log
 .DS_Store
 Thumbs.db
 
+# Agent-specific generated files
+.claude/
+CLAUDE.md
+
 # Retired web tooling / generated artifacts
 node_modules/
 dist/

@@ -68,7 +68,7 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: snapshot.creator == null
                         ? VitPageContent(
                             padding: VitContentPadding.none,
@@ -130,20 +130,24 @@ class _TrustBreakdownCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: AppSpacing.arenaTrustScoreBox,
-                height: AppSpacing.arenaTrustScoreBox,
-                decoration: BoxDecoration(
-                  color: AppColors.buy10,
-                  borderRadius: AppRadii.cardRadius,
-                  border: Border.all(color: AppColors.buy20),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  '${creator.trustScore}',
-                  style: AppTextStyles.pageTitle.copyWith(
-                    color: AppColors.buy,
-                    fontFeatures: AppTextStyles.tabularFigures,
+              SizedBox.square(
+                dimension: AppSpacing.arenaTrustScoreBox,
+                child: DecoratedBox(
+                  decoration: const ShapeDecoration(
+                    color: AppColors.buy10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.cardRadius,
+                      side: BorderSide(color: AppColors.buy20),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${creator.trustScore}',
+                      style: AppTextStyles.pageTitle.copyWith(
+                        color: AppColors.buy,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -217,17 +221,22 @@ class _TrustMetricRow extends StatelessWidget {
     final color = _metricColor(metric.kind);
     return Row(
       children: [
-        Container(
-          width: AppSpacing.arenaTrustMetricIconBox,
-          height: AppSpacing.arenaTrustMetricIconBox,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: .14),
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Icon(
-            _metricIcon(metric.kind),
-            color: color,
-            size: AppSpacing.arenaTrustMetricGlyph,
+        SizedBox.square(
+          dimension: AppSpacing.arenaTrustMetricIconBox,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color.withValues(alpha: .14),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.mdRadius,
+              ),
+            ),
+            child: Center(
+              child: Icon(
+                _metricIcon(metric.kind),
+                color: color,
+                size: AppSpacing.arenaTrustMetricGlyph,
+              ),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -266,22 +275,24 @@ class _CreatorProfileLink extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.arenaCreator(creator.id));
       },
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaTrustCardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.arenaTrustCreatorAvatar,
-            height: AppSpacing.arenaTrustCreatorAvatar,
-            decoration: const BoxDecoration(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              'CM',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: AppTextStyles.bold,
+          SizedBox.square(
+            dimension: AppSpacing.arenaTrustCreatorAvatar,
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.surface2,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Center(
+                child: Text(
+                  'CM',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
               ),
             ),
           ),
@@ -328,7 +339,7 @@ class _SafetyLink extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.arenaSafety);
       },
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaTrustCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

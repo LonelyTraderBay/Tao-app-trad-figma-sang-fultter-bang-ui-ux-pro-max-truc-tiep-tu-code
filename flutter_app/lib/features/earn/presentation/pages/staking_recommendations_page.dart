@@ -75,7 +75,7 @@ class _StakingRecommendationsPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -83,7 +83,7 @@ class _StakingRecommendationsPageState
                       VitCard(
                         variant: VitCardVariant.standard,
                         radius: VitCardRadius.md,
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: StakingRecommendationsHeroCard(
                           snapshot: snapshot,
                         ),
@@ -163,22 +163,17 @@ class _StakingRecommendationsPageState
         return FractionallySizedBox(
           heightFactor: 0.86,
           child: DecoratedBox(
-            decoration: const BoxDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(AppRadii.xl),
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.sheetTopRadius,
               ),
             ),
             child: SafeArea(
               top: false,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.contentPad,
-                  AppSpacing.x5,
-                  AppSpacing.contentPad,
-                  AppSpacing.x6,
-                ),
+                padding: AppSpacing.earnSheetContentPadding,
                 child: StakingRecommendationsStrategyDetailSheet(
                   strategy: strategy,
                   amount: _amount,

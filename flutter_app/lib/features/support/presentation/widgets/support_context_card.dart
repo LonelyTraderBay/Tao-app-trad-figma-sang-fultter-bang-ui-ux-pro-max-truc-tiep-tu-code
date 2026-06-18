@@ -11,26 +11,27 @@ class _SupportContextCard extends StatelessWidget {
       key: SupportPage.contextKey,
       radius: VitCardRadius.sm,
       borderColor: AppModuleAccents.support.withValues(alpha: .28),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.supportCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Container(
-                width: 34,
-                height: 34,
-                decoration: BoxDecoration(
+              SizedBox.square(
+                dimension: AppSpacing.supportContextIconBox,
+                child: Material(
                   color: AppModuleAccents.support.withValues(alpha: .12),
-                  borderRadius: AppRadii.mdRadius,
-                  border: Border.all(
-                    color: AppModuleAccents.support.withValues(alpha: .24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.mdRadius,
+                    side: BorderSide(
+                      color: AppModuleAccents.support.withValues(alpha: .24),
+                    ),
                   ),
-                ),
-                child: const Icon(
-                  Icons.assignment_outlined,
-                  color: AppModuleAccents.support,
-                  size: 19,
+                  child: const Icon(
+                    Icons.assignment_outlined,
+                    color: AppModuleAccents.support,
+                    size: AppSpacing.supportContextIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -47,14 +48,14 @@ class _SupportContextCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: AppSpacing.supportTinyGap),
                     Text(
                       supportContext.issueLabel,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.25,
+                        height: AppSpacing.supportLineHeightTight,
                       ),
                     ),
                   ],
@@ -101,25 +102,10 @@ class _ContextChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.xsRadius,
-        border: Border.all(color: color.withValues(alpha: .22)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -142,28 +128,31 @@ class _TimelineRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            width: 24,
+            width: AppSpacing.supportTimelineRailWidth,
             child: Column(
               children: [
-                Container(
-                  width: 18,
-                  height: 18,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
+                SizedBox.square(
+                  dimension: AppSpacing.supportTimelineDotSize,
+                  child: Material(
                     color: AppColors.primary15,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    '$index',
-                    style: AppTextStyles.numericMicro.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: AppTextStyles.bold,
+                    shape: const CircleBorder(),
+                    child: Center(
+                      child: Text(
+                        '$index',
+                        style: AppTextStyles.numericMicro.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 if (!isLast)
                   Expanded(
-                    child: Container(width: 1, color: AppColors.divider),
+                    child: SizedBox(
+                      width: AppSpacing.supportTimelineLineWidth,
+                      child: ColoredBox(color: AppColors.divider),
+                    ),
                   ),
               ],
             ),
@@ -171,14 +160,14 @@ class _TimelineRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(bottom: isLast ? 0 : AppSpacing.x3),
+              padding: AppSpacing.supportTimelineLabelPadding(isLast),
               child: Text(
                 label,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.25,
+                  height: AppSpacing.supportLineHeightTight,
                 ),
               ),
             ),

@@ -138,35 +138,36 @@ class _MultiOutcomeRow extends StatelessWidget {
       runSpacing: AppSpacing.predictionHomeOutcomeGap,
       children: [
         for (final outcome in event.outcomes.take(3))
-          Container(
-            padding: AppSpacing.predictionHomeOutcomeChipPadding,
-            decoration: BoxDecoration(
-              color: outcome.color.withValues(alpha: .12),
-              border: Border.all(color: outcome.color.withValues(alpha: .25)),
+          Material(
+            color: outcome.color.withValues(alpha: .12),
+            shape: RoundedRectangleBorder(
               borderRadius: AppRadii.smRadius,
+              side: BorderSide(color: outcome.color.withValues(alpha: .25)),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: AppSpacing.predictionHomeOutcomeDot,
-                  height: AppSpacing.predictionHomeOutcomeDot,
-                  decoration: BoxDecoration(
-                    color: outcome.color,
-                    shape: BoxShape.circle,
+            child: Padding(
+              padding: AppSpacing.predictionHomeOutcomeChipPadding,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox.square(
+                    dimension: AppSpacing.predictionHomeOutcomeDot,
+                    child: Material(
+                      color: outcome.color,
+                      shape: const CircleBorder(),
+                    ),
                   ),
-                ),
-                const SizedBox(width: AppSpacing.predictionHomeOutcomeGap),
-                Text(
-                  outcome.label,
-                  style: AppTextStyles.badge.copyWith(color: AppColors.text1),
-                ),
-                const SizedBox(width: AppSpacing.predictionHomeOutcomeGap),
-                Text(
-                  '${outcome.chance}%',
-                  style: AppTextStyles.badge.copyWith(color: outcome.color),
-                ),
-              ],
+                  const SizedBox(width: AppSpacing.predictionHomeOutcomeGap),
+                  Text(
+                    outcome.label,
+                    style: AppTextStyles.badge.copyWith(color: AppColors.text1),
+                  ),
+                  const SizedBox(width: AppSpacing.predictionHomeOutcomeGap),
+                  Text(
+                    '${outcome.chance}%',
+                    style: AppTextStyles.badge.copyWith(color: outcome.color),
+                  ),
+                ],
+              ),
             ),
           ),
         if (event.outcomes.length > 3)
@@ -263,19 +264,22 @@ class _OutcomeActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSpacing.predictionHomeActionHeight,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
+      child: Material(
         color: outcome.color.withValues(alpha: .12),
-        border: Border.all(color: outcome.color.withValues(alpha: .25)),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Text(
-        '${outcome.label} ${outcome.chance}%',
-        style: AppTextStyles.caption.copyWith(
-          color: outcome.color,
-          fontWeight: AppTextStyles.bold,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.mdRadius,
+          side: BorderSide(color: outcome.color.withValues(alpha: .25)),
+        ),
+        child: Center(
+          child: Text(
+            '${outcome.label} ${outcome.chance}%',
+            style: AppTextStyles.caption.copyWith(
+              color: outcome.color,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -295,17 +299,17 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionHomeBadgePadding,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.badgeRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: background,
+      shape: RoundedRectangleBorder(borderRadius: AppRadii.badgeRadius),
+      child: Padding(
+        padding: AppSpacing.predictionHomeBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );

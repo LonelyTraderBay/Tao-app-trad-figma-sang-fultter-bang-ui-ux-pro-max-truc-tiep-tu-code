@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -18,7 +19,6 @@ import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dar
 
 const _editBackground = AppColors.bg;
 const _editPrimary = AppColors.primary;
-const _editPurple = AppColors.primaryDark;
 const _editMuted = AppColors.text3;
 
 class EditProfilePage extends ConsumerStatefulWidget {
@@ -66,8 +66,10 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 42
-            : DeviceMetrics.nativeBottomChrome + 24) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.profileEditBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.profileEditBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -89,14 +91,14 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                 child: SingleChildScrollView(
                   key: EditProfilePage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(20, 36, 20, bottomInset),
+                  padding: AppSpacing.profileEditScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    customGap: AppSpacing.zero,
                     fullBleed: true,
                     children: [
                       VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _AvatarEditor(
                           initial: snapshot.user.fullName.substring(0, 1),
                           selected: _cameraSelected,
@@ -106,9 +108,11 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           },
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 52)),
+                      const SizedBox(
+                        height: AppSpacing.profileEditAvatarFormGap,
+                      ),
                       VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -118,7 +122,9 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                               keyValue: EditProfilePage.fullNameFieldKey,
                               onChanged: (_) => setState(() {}),
                             ),
-                            const Padding(padding: EdgeInsets.only(top: 18)),
+                            const SizedBox(
+                              height: AppSpacing.profileEditFieldGap,
+                            ),
                             _EditProfileField(
                               label: 'EMAIL',
                               controller: _emailController,
@@ -127,7 +133,9 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                                   'Email kh\u00F4ng th\u1EC3 thay \u0111\u1ED5i',
                               muted: true,
                             ),
-                            const Padding(padding: EdgeInsets.only(top: 18)),
+                            const SizedBox(
+                              height: AppSpacing.profileEditFieldGap,
+                            ),
                             _EditProfileField(
                               label: 'S\u1ED0 \u0110I\u1EC6N THO\u1EA0I',
                               controller: _phoneController,
@@ -138,7 +146,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           ],
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 18)),
+                      const SizedBox(height: AppSpacing.profileEditFieldGap),
                       KeyedSubtree(
                         key: EditProfilePage.saveKey,
                         child: VitCtaButton(
@@ -153,9 +161,9 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           ),
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 14)),
+                      const SizedBox(height: AppSpacing.profileEditRiskGap),
                       const VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Review profile changes',
@@ -213,60 +221,39 @@ class _AvatarEditor extends StatelessWidget {
         Stack(
           clipBehavior: Clip.none,
           children: [
-            Container(
-              width: 96,
-              height: 96,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: AppRadii.cardLargeRadius,
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [_editPrimary, _editPurple],
-                ),
-              ),
-              child: Text(
-                initial,
-                style: AppTextStyles.sectionTitle.copyWith(
-                  color: AppColors.onAccent,
-                  fontWeight: AppTextStyles.heavy,
-                  height: 1,
-                ),
-              ),
+            VitAssetAvatar(
+              label: initial,
+              accentColor: _editPrimary,
+              size: AppSpacing.profileEditAvatarSize,
+              radius: AppRadii.cardLargeRadius,
+              border: true,
             ),
             Positioned(
-              right: -1,
-              bottom: 1,
-              child: GestureDetector(
+              right: AppSpacing.profileEditCameraOffsetEnd,
+              bottom: AppSpacing.profileEditCameraOffsetBottom,
+              child: VitIconButton(
                 key: EditProfilePage.cameraKey,
-                onTap: onTap,
-                behavior: HitTestBehavior.opaque,
-                child: Container(
-                  width: 31,
-                  height: 31,
-                  decoration: BoxDecoration(
-                    color: selected ? AppColors.buy : _editPrimary,
-                    borderRadius: AppRadii.mdRadius,
-                    border: Border.all(color: _editBackground, width: 2),
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(
-                    selected
-                        ? Icons.check_rounded
-                        : Icons.photo_camera_outlined,
-                    color: AppColors.onAccent,
-                    size: 15,
-                  ),
-                ),
+                icon: selected
+                    ? Icons.check_rounded
+                    : Icons.photo_camera_outlined,
+                tooltip: 'Change avatar',
+                onPressed: onTap,
+                variant: selected
+                    ? VitIconButtonVariant.success
+                    : VitIconButtonVariant.primary,
+                size: VitIconButtonSize.sm,
               ),
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: 10)),
+        const SizedBox(height: AppSpacing.profileEditAvatarCaptionGap),
         Text(
           'Nh\u1EA5n v\u00E0o bi\u1EC3u t\u01B0\u1EE3ng camera \u0111\u1EC3 thay \u0111\u1ED5i',
           textAlign: TextAlign.center,
-          style: AppTextStyles.micro.copyWith(color: _editMuted, height: 1.1),
+          style: AppTextStyles.micro.copyWith(
+            color: _editMuted,
+            height: AppSpacing.profileEditAvatarCaptionLineHeight,
+          ),
         ),
       ],
     );
@@ -304,10 +291,10 @@ class _EditProfileField extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.heavy,
-            height: 1,
+            height: AppSpacing.profileEditTightLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: 10)),
+        const SizedBox(height: AppSpacing.profileEditFieldLabelGap),
         VitInput(
           fieldKey: keyValue,
           controller: controller,
@@ -317,10 +304,13 @@ class _EditProfileField extends StatelessWidget {
           onChanged: onChanged,
         ),
         if (note != null) ...[
-          const Padding(padding: EdgeInsets.only(top: 7)),
+          const SizedBox(height: AppSpacing.profileEditFieldNoteGap),
           Text(
             note!,
-            style: AppTextStyles.micro.copyWith(color: _editMuted, height: 1),
+            style: AppTextStyles.micro.copyWith(
+              color: _editMuted,
+              height: AppSpacing.profileEditTightLineHeight,
+            ),
           ),
         ],
       ],

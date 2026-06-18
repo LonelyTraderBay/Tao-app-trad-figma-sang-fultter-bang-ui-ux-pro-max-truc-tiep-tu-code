@@ -9,8 +9,15 @@ class _RiskWarningCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(minHeight: 72),
-      padding: const EdgeInsets.fromLTRB(12, 12, 14, 12),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotSecurityCardMinHeight,
+      ),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetHeroTopGap,
+        top: AppSpacing.walletAssetHeroTopGap,
+        right: AppSpacing.rowPy,
+        bottom: AppSpacing.walletAssetHeroTopGap,
+      ),
       variant: VitCardVariant.inner,
       borderColor: AppColors.warningBorder,
       child: VitHighRiskStatePanel(
@@ -48,7 +55,7 @@ class _SortChips extends StatelessWidget {
               active: selected == option,
               onTap: () => onChanged(option),
             ),
-            if (option != options.last) const SizedBox(width: 8),
+            if (option != options.last) const SizedBox(width: AppSpacing.x3),
           ],
         ],
       ),
@@ -75,9 +82,12 @@ class _SortChip extends StatelessWidget {
       borderRadius: AppRadii.xlRadius,
       child: VitCard(
         width: _sortChipWidth(label),
-        height: 32,
+        height: AppSpacing.copyTradingV2SortChipHeight,
         alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: AppSpacing.zeroInsets.copyWith(
+          left: AppSpacing.walletAssetChartBottomGap,
+          right: AppSpacing.walletAssetChartBottomGap,
+        ),
         variant: active ? VitCardVariant.standard : VitCardVariant.inner,
         borderColor: active ? _copyPrimary : AppColors.cardBorder,
         child: FittedBox(
@@ -87,7 +97,6 @@ class _SortChip extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: active ? AppColors.onAccent : AppColors.text2,
               fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-              height: 1,
             ),
           ),
         ),
@@ -107,8 +116,13 @@ class _TraderCard extends StatelessWidget {
     final tier = _tierFor(trader.copiers);
     return VitCard(
       key: CopyTradingV2Page.traderKey(trader.id),
-      height: 145,
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      height: AppSpacing.copyTradingV2TraderCardHeight,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.rowPy,
+        right: AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.rowPy,
+      ),
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -116,10 +130,12 @@ class _TraderCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _AvatarBadge(trader: trader, tier: tier),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 1),
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    top: AppSpacing.dividerHairline,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -133,24 +149,23 @@ class _TraderCard extends StatelessWidget {
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text1,
                                 fontWeight: AppTextStyles.bold,
-                                height: 1.2,
                               ),
                             ),
                           ),
                           if (trader.isFollowing) ...[
-                            const SizedBox(width: 6),
+                            const SizedBox(width: AppSpacing.formFieldLabelGap),
                             const Icon(
                               Icons.star_rounded,
                               color: AppColors.warn,
-                              size: 13,
+                              size: AppSpacing.iconSm,
                             ),
                           ],
                         ],
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: AppSpacing.x3),
                       Wrap(
-                        spacing: 6,
-                        runSpacing: 6,
+                        spacing: AppSpacing.formFieldLabelGap,
+                        runSpacing: AppSpacing.formFieldLabelGap,
                         children: [
                           _MiniBadge(label: tier.label, color: tier.color),
                           for (final tag in trader.tags.take(2))
@@ -161,7 +176,7 @@ class _TraderCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
               _RoiBlock(trader: trader),
             ],
           ),
@@ -182,23 +197,20 @@ class _AvatarBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 48,
-      height: 52,
+      width: AppSpacing.copyTradingV2TraderAvatarStackWidth,
+      height: AppSpacing.copyTradingV2TraderAvatarStackHeight,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Container(
-            width: 48,
-            height: 48,
+          VitCard(
+            width: AppSpacing.copyTradingV2TraderAvatarSize,
+            height: AppSpacing.copyTradingV2TraderAvatarSize,
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: _copyPrimary.withValues(alpha: .13),
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: _copyPrimary.withValues(alpha: .27),
-                width: 2,
-              ),
-            ),
+            radius: VitCardRadius.lg,
+            variant: VitCardVariant.ghost,
+            borderColor: _copyPrimary.withValues(alpha: .27),
+            background: ColoredBox(color: _copyPrimary.withValues(alpha: .13)),
+            clip: true,
             child: Text(
               trader.avatar,
               style: AppTextStyles.baseMedium.copyWith(
@@ -208,18 +220,19 @@ class _AvatarBadge extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: -1,
-            bottom: 2,
-            child: Container(
-              width: 20,
-              height: 20,
+            right: -AppSpacing.dividerHairline,
+            bottom: AppSpacing.hairlineStroke,
+            child: VitCard(
+              width: AppSpacing.copyTradingV2TraderTierBadgeSize,
+              height: AppSpacing.copyTradingV2TraderTierBadgeSize,
               alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                shape: BoxShape.circle,
-                border: Border.all(color: tier.color, width: 1.5),
+              radius: VitCardRadius.lg,
+              borderColor: tier.color,
+              child: Icon(
+                tier.icon,
+                color: tier.color,
+                size: AppSpacing.copyTradingV2TraderTierBadgeIcon,
               ),
-              child: Icon(tier.icon, color: tier.color, size: 11),
             ),
           ),
         ],
@@ -236,7 +249,9 @@ class _RoiBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 106),
+      constraints: const BoxConstraints(
+        maxWidth: AppSpacing.copyTradingV2RoiMaxWidth,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -246,21 +261,17 @@ class _RoiBlock extends StatelessWidget {
               '+${trader.totalPnlPct.toStringAsFixed(1)}%',
               style: AppTextStyles.sectionTitle.copyWith(
                 color: AppColors.buy,
-                height: 1.15,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Tổng ROI',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.right,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -281,7 +292,7 @@ class _DetailsButton extends StatelessWidget {
       onTap: onOpen,
       borderRadius: AppRadii.inputRadius,
       child: VitCard(
-        height: 40,
+        height: AppSpacing.copyTradingV2DetailsButtonHeight,
         alignment: Alignment.center,
         variant: VitCardVariant.inner,
         child: Row(
@@ -292,14 +303,13 @@ class _DetailsButton extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.x3),
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text1,
-              size: 16,
+              size: AppSpacing.walletAssetSectionGap,
             ),
           ],
         ),

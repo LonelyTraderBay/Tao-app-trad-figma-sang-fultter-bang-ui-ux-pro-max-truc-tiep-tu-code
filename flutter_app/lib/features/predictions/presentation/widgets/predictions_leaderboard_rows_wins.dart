@@ -14,81 +14,83 @@ class _RankingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSpacing.predictionLeaderboardRankingRowHeight,
-      padding: AppSpacing.predictionLeaderboardRankingPadding,
-      decoration: BoxDecoration(
-        border: last
-            ? null
-            : const Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
+      child: Stack(
         children: [
-          SizedBox(
-            width: AppSpacing.predictionLeaderboardRankWidth,
-            child: _RankBadge(rank: trader.rank),
-          ),
-          Expanded(
+          Padding(
+            padding: AppSpacing.predictionLeaderboardRankingPadding,
             child: Row(
               children: [
-                Text(trader.avatar, style: AppTextStyles.avatarMd),
-                const SizedBox(
-                  width: AppSpacing.predictionLeaderboardTraderGap,
+                SizedBox(
+                  width: AppSpacing.predictionLeaderboardRankWidth,
+                  child: _RankBadge(rank: trader.rank),
                 ),
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Text(
-                        trader.user,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
+                      Text(trader.avatar, style: AppTextStyles.avatarMd),
+                      const SizedBox(
+                        width: AppSpacing.predictionLeaderboardTraderGap,
                       ),
-                      Text(
-                        '${trader.trades} trades',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              trader.user,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                            Text(
+                              '${trader.trades} trades',
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
+                SizedBox(
+                  width: AppSpacing.predictionLeaderboardMetricWidth,
+                  child: Text(
+                    metric == PredictionLeaderboardMetric.pnl
+                        ? _formatSignedCompact(trader.pnl)
+                        : _formatCurrencyCompact(trader.volume),
+                    textAlign: TextAlign.right,
+                    style: AppTextStyles.caption.copyWith(
+                      color: metric == PredictionLeaderboardMetric.pnl
+                          ? AppColors.buy
+                          : AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: AppSpacing.predictionLeaderboardWinRateWidth,
+                  child: Text(
+                    '${trader.winRate}%',
+                    textAlign: TextAlign.right,
+                    style: AppTextStyles.caption.copyWith(
+                      color: _winRateColor(trader.winRate),
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          SizedBox(
-            width: AppSpacing.predictionLeaderboardMetricWidth,
-            child: Text(
-              metric == PredictionLeaderboardMetric.pnl
-                  ? _formatSignedCompact(trader.pnl)
-                  : _formatCurrencyCompact(trader.volume),
-              textAlign: TextAlign.right,
-              style: AppTextStyles.caption.copyWith(
-                color: metric == PredictionLeaderboardMetric.pnl
-                    ? AppColors.buy
-                    : AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: AppTextStyles.tabularFigures,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: AppSpacing.predictionLeaderboardWinRateWidth,
-            child: Text(
-              '${trader.winRate}%',
-              textAlign: TextAlign.right,
-              style: AppTextStyles.caption.copyWith(
-                color: _winRateColor(trader.winRate),
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: AppTextStyles.tabularFigures,
-              ),
-            ),
-          ),
+          if (!last) const _LeaderboardDivider(),
         ],
       ),
     );
@@ -116,20 +118,35 @@ class _RankBadge extends StatelessWidget {
         : rank == 2
         ? AppColors.medalSilver
         : AppColors.medalBronze;
-    return Container(
-      width: AppSpacing.predictionLeaderboardRankBadge,
-      height: AppSpacing.predictionLeaderboardRankBadge,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        shape: BoxShape.circle,
-      ),
-      child: Text(
-        '$rank',
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: color.withValues(alpha: .15),
+      shape: const CircleBorder(),
+      child: SizedBox.square(
+        dimension: AppSpacing.predictionLeaderboardRankBadge,
+        child: Center(
+          child: Text(
+            '$rank',
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class _LeaderboardDivider extends StatelessWidget {
+  const _LeaderboardDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Align(
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+        height: AppSpacing.hairlineStroke,
+        child: ColoredBox(color: AppColors.divider),
       ),
     );
   }
@@ -177,17 +194,16 @@ class _BiggestWinCard extends StatelessWidget {
       padding: AppSpacing.predictionLeaderboardWinCardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.predictionLeaderboardWinIconBox,
-            height: AppSpacing.predictionLeaderboardWinIconBox,
-            decoration: BoxDecoration(
-              color: AppColors.buy10,
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: const Icon(
-              Icons.emoji_events_outlined,
-              color: AppColors.buy,
-              size: AppSpacing.predictionLeaderboardWinIcon,
+          Material(
+            color: AppColors.buy10,
+            borderRadius: AppRadii.cardRadius,
+            child: const SizedBox.square(
+              dimension: AppSpacing.predictionLeaderboardWinIconBox,
+              child: Icon(
+                Icons.emoji_events_outlined,
+                color: AppColors.buy,
+                size: AppSpacing.predictionLeaderboardWinIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.predictionLeaderboardWinGap),

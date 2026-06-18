@@ -8,15 +8,16 @@ class _TinySectionIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.x6,
       height: AppSpacing.x6,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .14),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(child: Icon(icon, color: color, size: 16)),
       ),
-      child: Icon(icon, color: color, size: 16),
     );
   }
 }
@@ -29,15 +30,18 @@ class _SmallAccentIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: AppRadii.cardRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .13),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
+        ),
+        child: Center(child: Icon(icon, color: color, size: 18)),
       ),
-      child: Icon(icon, color: color, size: 18),
     );
   }
 }
@@ -46,7 +50,7 @@ List<Widget> _withSectionGaps(List<Widget> children) {
   if (children.isEmpty) return const [];
   return [
     for (var i = 0; i < children.length; i++) ...[
-      if (i > 0) const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+      if (i > 0) const SizedBox(height: AppSpacing.x3),
       children[i],
     ],
   ];
@@ -65,29 +69,30 @@ class _ModuleBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        border: Border.all(color: color.withValues(alpha: .24)),
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .24)),
+          borderRadius: AppRadii.smRadius,
+        ),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 10),
-          const SizedBox(width: AppSpacing.x1),
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.discoveryBadgePadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: color, size: 10),
+            const SizedBox(width: AppSpacing.x1),
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -101,20 +106,19 @@ class _StatusMini extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.discoveryMiniBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -128,20 +132,19 @@ class _CountPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: const BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        '$count',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.discoveryMiniBadgePadding,
+        child: Text(
+          '$count',
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -180,19 +183,22 @@ class _CreatorAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 24,
-      height: 24,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppModuleAccents.arena.withValues(alpha: .16),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        initials,
-        style: AppTextStyles.micro.copyWith(
-          color: AppModuleAccents.arena,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox(
+      width: AppSpacing.discoveryCreatorAvatarBox,
+      height: AppSpacing.discoveryCreatorAvatarBox,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: AppModuleAccents.arena.withValues(alpha: .16),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        ),
+        child: Center(
+          child: Text(
+            initials,
+            style: AppTextStyles.micro.copyWith(
+              color: AppModuleAccents.arena,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );

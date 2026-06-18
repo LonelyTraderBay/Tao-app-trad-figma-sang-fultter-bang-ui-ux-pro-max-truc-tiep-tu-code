@@ -13,21 +13,22 @@ class _BridgeStatusHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
       borderColor: order.accent.withValues(alpha: .22),
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.launchpadBox64,
             height: AppSpacing.launchpadBox64,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              _statusIcon(order.status),
-              color: color,
-              size: AppSpacing.launchpadBox30,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: .14),
+                shape: const CircleBorder(),
+              ),
+              child: Icon(
+                _statusIcon(order.status),
+                color: color,
+                size: AppSpacing.launchpadBox30,
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
@@ -69,38 +70,37 @@ class _BridgeStatusHero extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
-            ),
-            decoration: BoxDecoration(
+          DecoratedBox(
+            decoration: ShapeDecoration(
               color: AppColors.surface3.withValues(alpha: .72),
-              borderRadius: BorderRadius.circular(AppRadii.xl),
+              shape: const StadiumBorder(),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.schedule_rounded,
-                  color: AppColors.text2,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  'ETA ~${order.etaSeconds}s',
-                  style: AppTextStyles.micro.copyWith(
+            child: Padding(
+              padding: AppSpacing.launchpadPillPadding,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.schedule_rounded,
                     color: AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
+                    size: AppSpacing.iconSm,
                   ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  'Poll #${order.pollCount}',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
+                  const SizedBox(width: AppSpacing.x2),
+                  Text(
+                    'ETA ~${order.etaSeconds}s',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Text(
+                    'Poll #${order.pollCount}',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

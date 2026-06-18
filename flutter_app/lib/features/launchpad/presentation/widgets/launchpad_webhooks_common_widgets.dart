@@ -10,12 +10,12 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+        padding: AppSpacing.launchpadCompactChipPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -47,12 +47,12 @@ class _MiniPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+        padding: AppSpacing.launchpadCompactChipPadding,
         child: Text(
           label,
           style: AppTextStyles.chartLabelXs.copyWith(
@@ -83,7 +83,7 @@ class _CopyButton extends StatelessWidget {
     return IconButton(
       visualDensity: VisualDensity.compact,
       constraints: BoxConstraints.tightFor(width: size, height: size),
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       onPressed: onTap,
       icon: Icon(
         active ? Icons.check_rounded : Icons.copy_rounded,
@@ -100,7 +100,7 @@ class _EmptySubscriptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.launchpadPaddingX6,
       child: Column(
         children: [
           const Icon(

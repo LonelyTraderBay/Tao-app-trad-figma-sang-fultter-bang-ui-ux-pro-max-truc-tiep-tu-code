@@ -13,7 +13,6 @@ class _MetricGrid extends StatelessWidget {
           children: [
             Expanded(
               child: _MetricCard(
-                height: 109,
                 icon: Icons.trending_down_rounded,
                 iconColor: _drawdownRed,
                 label: 'Max Drawdown',
@@ -21,10 +20,9 @@ class _MetricGrid extends StatelessWidget {
                 valueColor: _drawdownRed,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.tradeBotCardGap),
             Expanded(
               child: _MetricCard(
-                height: 109,
                 icon: Icons.bar_chart_rounded,
                 iconColor: _drawdownAmber,
                 label: 'Avg Drawdown',
@@ -34,12 +32,11 @@ class _MetricGrid extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         Row(
           children: [
             Expanded(
               child: _MetricCard(
-                height: 124,
                 icon: Icons.schedule_rounded,
                 iconColor: _drawdownPrimary,
                 label: 'Drawdown Days',
@@ -47,10 +44,9 @@ class _MetricGrid extends StatelessWidget {
                 caption: 'of ${summary.totalDays} days',
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.tradeBotCardGap),
             Expanded(
               child: _MetricCard(
-                height: 124,
                 icon: Icons.report_problem_outlined,
                 iconColor: _drawdownGreen,
                 label: 'DD Frequency',
@@ -67,7 +63,6 @@ class _MetricGrid extends StatelessWidget {
 
 class _MetricCard extends StatelessWidget {
   const _MetricCard({
-    required this.height,
     required this.icon,
     required this.iconColor,
     required this.label,
@@ -76,7 +71,6 @@ class _MetricCard extends StatelessWidget {
     this.caption,
   });
 
-  final double height;
   final IconData icon;
   final Color iconColor;
   final String label;
@@ -87,44 +81,34 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: height - 32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: iconColor, size: 21),
-            const SizedBox(height: 12),
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                height: 1,
-              ),
+      padding: AppSpacing.tradeBotCardPadding,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: iconColor, size: AppSpacing.iconMd),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.formFieldLabelGap),
+          Text(
+            value,
+            style: AppTextStyles.baseMedium.copyWith(
+              color: valueColor,
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
-            const SizedBox(height: 6),
+          ),
+          if (caption != null) ...[
+            const SizedBox(height: AppSpacing.tradeBotTinyGap),
             Text(
-              value,
-              style: AppTextStyles.baseMedium.copyWith(
-                color: valueColor,
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: AppTextStyles.tabularFigures,
-                height: 1,
-              ),
+              caption!,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            if (caption != null) ...[
-              const SizedBox(height: 5),
-              Text(
-                caption!,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: 1,
-                ),
-              ),
-            ],
           ],
-        ),
+        ],
       ),
     );
   }
@@ -138,24 +122,21 @@ class _UnderwaterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
+      padding: AppSpacing.tradeBotCardPadding,
       child: Column(
         children: [
           SizedBox(
-            height: 200,
+            height: AppSpacing.botDrawdownUnderwaterChartHeight,
             child: CustomPaint(
               painter: _UnderwaterPainter(points),
               size: Size.infinite,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Text(
             'Below zero = in drawdown (underwater)',
             textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -171,9 +152,9 @@ class _DurationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
+      padding: AppSpacing.tradeBotCardPadding,
       child: SizedBox(
-        height: 160,
+        height: AppSpacing.botDrawdownDurationChartHeight,
         child: CustomPaint(
           painter: _DurationPainter(buckets),
           size: Size.infinite,
@@ -194,7 +175,8 @@ class _EventsList extends StatelessWidget {
       children: [
         for (final event in events) ...[
           _EventCard(event: event),
-          if (event != events.last) const SizedBox(height: 10),
+          if (event != events.last)
+            const SizedBox(height: AppSpacing.tradeBotRowGap),
         ],
       ],
     );
@@ -209,7 +191,7 @@ class _EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 17),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Column(
         children: [
           Row(
@@ -217,30 +199,14 @@ class _EventCard extends StatelessWidget {
             children: [
               Text(
                 'Event #${event.id}',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  height: 1,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
               if (event.severe) ...[
-                const SizedBox(width: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _drawdownRed.withValues(alpha: .12),
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Text(
-                    'Severe',
-                    style: AppTextStyles.micro.copyWith(
-                      color: _drawdownRed,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1,
-                    ),
-                  ),
+                const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                VitAccentPill(
+                  label: 'Severe',
+                  accentColor: _drawdownRed,
+                  size: VitStatusPillSize.sm,
                 ),
               ],
               const Spacer(),
@@ -249,22 +215,21 @@ class _EventCard extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: _drawdownRed,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           Row(
             children: [
               Expanded(
                 child: _EventStat(label: 'Start', value: event.startLabel),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: _EventStat(label: 'Duration', value: event.duration),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: _EventStat(
                   label: 'Recovery',
@@ -297,7 +262,7 @@ class _EventStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(10, 8, 10, 12),
+      padding: AppSpacing.tradeBotControlPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -305,12 +270,9 @@ class _EventStat extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.formFieldLabelGap),
           Text(
             value,
             maxLines: 1,
@@ -318,7 +280,6 @@ class _EventStat extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
         ],

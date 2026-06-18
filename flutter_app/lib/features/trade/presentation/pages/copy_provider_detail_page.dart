@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -21,7 +22,6 @@ import '../widgets/trade_body_review_widgets.dart';
 const _providerPrimary = AppColors.primary;
 const _providerGreen = AppColors.buy;
 const _providerRed = AppColors.sell;
-const _providerPanel = AppColors.surface2;
 
 class CopyProviderDetailPage extends ConsumerWidget {
   const CopyProviderDetailPage({
@@ -63,7 +63,9 @@ class CopyProviderDetailPage extends ConsumerWidget {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 104 : 28);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.copyProviderDetailBottomInsetVisualExtra
+            : AppSpacing.copyProviderDetailBottomInsetNativeExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,15 +85,17 @@ class CopyProviderDetailPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.copyProviderDetailScrollPadding(
+                    bottomInset,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const _RiskWarning(),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.cardGap),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.cardPaddingCompact,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Provider detail review required',
@@ -100,25 +104,19 @@ class CopyProviderDetailPage extends ConsumerWidget {
                           contractId: 'copy-provider-detail-review',
                         ),
                       ),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: AppSpacing.rowPy),
                       _ProviderCard(provider: provider),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: AppSpacing.rowPy),
                       _MetricGrid(provider: provider),
-                      const SizedBox(height: 18),
-                      FilledButton.icon(
+                      const SizedBox(height: AppSpacing.transferSectionGap),
+                      VitCtaButton(
                         key: assessmentKey,
                         onPressed: () => context.go(
                           AppRoutePaths.tradeCopyProviderAssessment(providerId),
                         ),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: _providerPrimary,
-                          minimumSize: const Size.fromHeight(48),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: AppRadii.inputRadius,
-                          ),
-                        ),
-                        icon: const Icon(Icons.chevron_right_rounded, size: 18),
-                        label: Text(
+                        height: AppSpacing.walletTransactionExplorerHeight,
+                        trailing: const Icon(Icons.chevron_right_rounded),
+                        child: Text(
                           'ÄÃ¡nh giÃ¡ rá»§i ro',
                           style: AppTextStyles.baseMedium.copyWith(
                             color: AppColors.onAccent,
@@ -126,16 +124,17 @@ class CopyProviderDetailPage extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.cardGap),
                       Text(
                         'Hiá»‡u suáº¥t quÃ¡ khá»© khÃ´ng Ä‘áº£m báº£o káº¿t quáº£ tÆ°Æ¡ng lai. Copy Trading cÃ³ rá»§i ro cao.',
                         textAlign: TextAlign.center,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1.45,
+                          height:
+                              AppSpacing.copyProviderDetailDisclaimerLineHeight,
                         ),
                       ),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: AppSpacing.rowPy),
                       const TradeBodyReviewSection(
                         title: 'Provider detail body review',
                         message: 'Copy provider detail body reviewed',
@@ -185,15 +184,15 @@ class _ProviderNotFound extends StatelessWidget {
               Expanded(
                 child: Padding(
                   key: CopyProviderDetailPage.notFoundKey,
-                  padding: const EdgeInsets.only(top: 64),
+                  padding: AppSpacing.copyProviderDetailNotFoundPadding,
                   child: Column(
                     children: [
                       const Icon(
                         Icons.warning_amber_rounded,
                         color: AppColors.text3,
-                        size: 48,
+                        size: AppSpacing.walletTokenHeroIcon,
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.cardGap),
                       Text(
                         message,
                         style: AppTextStyles.base.copyWith(
@@ -217,28 +216,25 @@ class _RiskWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorderDark),
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.cardPaddingCompact,
+      borderColor: AppColors.warningBorderDark,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.caution,
-            size: 18,
+            size: AppSpacing.ctaLoadingIcon,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.walletAssetPillGap),
           Expanded(
             child: Text(
               'Hiá»‡u suáº¥t quÃ¡ khá»© khÃ´ng Ä‘áº£m báº£o lá»£i nhuáº­n tÆ°Æ¡ng lai. Báº¡n cÃ³ thá»ƒ máº¥t toÃ n bá»™ vá»‘n Ä‘áº§u tÆ°.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.caution,
-                height: 1.4,
+                height: AppSpacing.copyProviderDetailRiskLineHeight,
               ),
             ),
           ),
@@ -255,25 +251,18 @@ class _ProviderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      padding: AppSpacing.cardPadding,
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: _providerPrimary.withValues(alpha: .16),
-            child: Text(
-              provider.avatar,
-              style: AppTextStyles.sectionTitleSm.copyWith(
-                color: _providerPrimary,
-              ),
-            ),
+          VitAssetAvatar(
+            label: provider.avatar,
+            accentColor: _providerPrimary,
+            size: AppSpacing.x7,
+            radius: AppRadii.avatarRadius,
+            border: true,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.cardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,10 +273,10 @@ class _ProviderCard extends StatelessWidget {
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.formFieldLabelGap),
                 Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
+                  spacing: AppSpacing.formFieldLabelGap,
+                  runSpacing: AppSpacing.formFieldLabelGap,
                   children: [
                     for (final tag in provider.tags)
                       _Pill(label: tag, color: AppColors.text2),
@@ -297,7 +286,7 @@ class _ProviderCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   '${provider.totalTrades} trades Â· ${provider.avgHoldingTime} avg hold',
                   style: AppTextStyles.captionSm.copyWith(
@@ -338,19 +327,17 @@ class _MetricGrid extends StatelessWidget {
     ];
 
     return GridView.count(
-      crossAxisCount: 3,
+      crossAxisCount: AppSpacing.copyProviderDetailMetricColumns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 10,
-      childAspectRatio: 1.22,
+      crossAxisSpacing: AppSpacing.x3,
+      mainAxisSpacing: AppSpacing.x3,
+      childAspectRatio: AppSpacing.copyProviderDetailMetricAspectRatio,
       children: [
         for (final metric in metrics)
-          Container(
-            decoration: BoxDecoration(
-              color: _providerPanel,
-              borderRadius: AppRadii.inputRadius,
-            ),
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -361,7 +348,7 @@ class _MetricGrid extends StatelessWidget {
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   metric.$1,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -382,22 +369,7 @@ class _Pill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

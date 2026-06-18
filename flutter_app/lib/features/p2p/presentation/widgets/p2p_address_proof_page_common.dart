@@ -10,7 +10,7 @@ class _AddressConfirmCard extends StatelessWidget {
     return VitCard(
       key: P2PAddressProofPage.addressConfirmKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -41,7 +41,7 @@ class _AddressConfirmCard extends StatelessWidget {
                   'Địa chỉ này phải khớp với địa chỉ trên tài liệu và CMND/CCCD của bạn.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pAddressProofReadableLineHeight,
                   ),
                 ),
               ),
@@ -63,7 +63,7 @@ class _SecurityCard extends StatelessWidget {
     return VitCard(
       key: P2PAddressProofPage.securityKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -126,11 +126,11 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 2),
+          padding: AppSpacing.p2pAddressProofChecklistIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: color,
-            size: 13,
+            size: AppSpacing.p2pAddressProofChecklistIcon,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -139,7 +139,7 @@ class _ChecklistRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.p2pAddressProofReadableLineHeight,
             ),
           ),
         ),

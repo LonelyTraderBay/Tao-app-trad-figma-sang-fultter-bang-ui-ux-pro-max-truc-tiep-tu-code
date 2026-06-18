@@ -13,12 +13,7 @@ class _AmountHistoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.fromLTRB(
-              AppSpacing.x5,
-              AppSpacing.x5,
-              AppSpacing.x5,
-              AppSpacing.x3,
-            ),
+            padding: AppSpacing.dcaSectionHeaderPadding,
             child: _SectionHeader(
               icon: Icons.bar_chart_rounded,
               title: 'Lịch sử điều chỉnh',
@@ -27,12 +22,7 @@ class _AmountHistoryCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.x3,
-              0,
-              AppSpacing.x3,
-              AppSpacing.x2,
-            ),
+            padding: AppSpacing.dcaChartPadding,
             child: SizedBox(
               height: AppSpacing.buttonHero * 2 + AppSpacing.x5,
               child: CustomPaint(
@@ -42,12 +32,7 @@ class _AmountHistoryCard extends StatelessWidget {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.fromLTRB(
-              AppSpacing.x5,
-              0,
-              AppSpacing.x5,
-              AppSpacing.x4,
-            ),
+            padding: AppSpacing.dcaChartFooterPadding,
             child: Wrap(
               spacing: AppSpacing.x5,
               children: [
@@ -78,7 +63,7 @@ class _RecentDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -115,33 +100,37 @@ class _HistoryRow extends StatelessWidget {
         : AppColors.text3;
 
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.dcaPaddingX3,
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.x7 - AppSpacing.x5,
               height: AppSpacing.x7 - AppSpacing.x5,
-              decoration: BoxDecoration(
-                color: change > 0
-                    ? AppColors.buy10
-                    : change < 0
-                    ? AppColors.warn10
-                    : AppColors.hoverBg,
-                borderRadius: AppRadii.mdRadius,
-              ),
-              child: Icon(
-                change > 0
-                    ? Icons.trending_up_rounded
-                    : change < 0
-                    ? Icons.trending_down_rounded
-                    : Icons.lock_outline_rounded,
-                color: color,
-                size: AppSpacing.iconMd,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: change > 0
+                      ? AppColors.buy10
+                      : change < 0
+                      ? AppColors.warn10
+                      : AppColors.hoverBg,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.mdRadius,
+                  ),
+                ),
+                child: Icon(
+                  change > 0
+                      ? Icons.trending_up_rounded
+                      : change < 0
+                      ? Icons.trending_down_rounded
+                      : Icons.lock_outline_rounded,
+                  color: color,
+                  size: AppSpacing.iconMd,
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -205,19 +194,16 @@ class _ChangeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: change > 0
             ? AppColors.buy10
             : change < 0
             ? AppColors.warn10
             : AppColors.hoverBg,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.dcaTinyChipPadding,
         child: Text(
           '${change > 0 ? '+' : ''}${change.toStringAsFixed(0)}%',
           style: AppTextStyles.micro.copyWith(
@@ -244,9 +230,12 @@ class _ConfigSection extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          Container(height: AppSpacing.x1, color: accent),
+          SizedBox(
+            height: AppSpacing.x1,
+            child: ColoredBox(color: accent),
+          ),
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x5),
+            padding: AppSpacing.dcaPaddingX5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -297,7 +286,7 @@ class _ConfigItemCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.dcaPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -343,21 +332,23 @@ class _StrategyExplainer extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.x7 - AppSpacing.x5,
             height: AppSpacing.x7 - AppSpacing.x5,
-            decoration: BoxDecoration(
-              color: _accentSoft(option.accent),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              Icons.auto_awesome_rounded,
-              color: accent,
-              size: AppSpacing.iconSm,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: _accentSoft(option.accent),
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Icon(
+                Icons.auto_awesome_rounded,
+                color: accent,
+                size: AppSpacing.iconSm,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -395,13 +386,15 @@ class _DynamicDisclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.primary08,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.primary20),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: const BorderSide(color: AppColors.primary20),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.dcaPaddingX4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -466,14 +459,16 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.x6,
           height: AppSpacing.x6,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: .14),
-            borderRadius: AppRadii.mdRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color.withValues(alpha: .14),
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+            ),
+            child: Icon(icon, color: color, size: AppSpacing.iconMd),
           ),
-          child: Icon(icon, color: color, size: AppSpacing.iconMd),
         ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(

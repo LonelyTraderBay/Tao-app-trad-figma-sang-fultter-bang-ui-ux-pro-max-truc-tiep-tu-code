@@ -80,10 +80,7 @@ class _ContractProjectNotFound extends StatelessWidget {
     return VitCard(
       key: LaunchpadContractPage.notFoundKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x5,
-        vertical: AppSpacing.x6,
-      ),
+      padding: AppSpacing.launchpadEmptyStatePadding,
       child: Column(
         children: [
           const Icon(
@@ -116,25 +113,30 @@ class _ContractProjectSummary extends StatelessWidget {
     final project = snapshot.project!;
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.x7,
                 height: AppSpacing.x7,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: project.accent.withValues(alpha: .12),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: Text(
-                  project.logo,
-                  style: AppTextStyles.caption.copyWith(
-                    color: project.accent,
-                    fontWeight: AppTextStyles.extraBold,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: project.accent.withValues(alpha: .12),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.mdRadius,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      project.logo,
+                      style: AppTextStyles.caption.copyWith(
+                        color: project.accent,
+                        fontWeight: AppTextStyles.extraBold,
+                      ),
+                    ),
                   ),
                 ),
               ),

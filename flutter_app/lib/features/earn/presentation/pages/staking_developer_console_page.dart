@@ -79,7 +79,7 @@ class _StakingDeveloperConsolePageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.defaultPadding,
                     gap: VitContentGap.defaultGap,
@@ -90,7 +90,7 @@ class _StakingDeveloperConsolePageState
                         key: StakingDeveloperConsolePage.tabsKey,
                         variant: VitCardVariant.inner,
                         radius: VitCardRadius.sm,
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: VitTabBar(
                           tabs: [
                             for (final tab in snapshot.tabs)
@@ -138,7 +138,7 @@ class _ConsoleHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.accent30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -170,7 +170,7 @@ class _StatsCard extends StatelessWidget {
     return VitCard(
       key: StakingDeveloperConsolePage.statsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           for (final stat in stats) ...[
@@ -194,10 +194,7 @@ class _StatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnCardPaddingX3X4,
       borderColor: stat.tone == 'success' ? AppColors.buy20 : null,
       child: Column(
         children: [
@@ -266,7 +263,7 @@ class _ApiKeyCard extends StatelessWidget {
     return VitCard(
       key: StakingDeveloperConsolePage.apiKeyCardKey(apiKey.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -361,7 +358,7 @@ class _RequestCard extends StatelessWidget {
     return VitCard(
       key: StakingDeveloperConsolePage.requestKey(index),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           SizedBox(
@@ -423,7 +420,7 @@ class _DocCard extends StatelessWidget {
     return VitCard(
       key: StakingDeveloperConsolePage.docKey(doc.title),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       onTap: () {},
       child: Row(
         children: [

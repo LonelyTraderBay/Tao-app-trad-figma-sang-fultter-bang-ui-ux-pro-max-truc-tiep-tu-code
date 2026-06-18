@@ -9,7 +9,7 @@ class _SafetySnapshotCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,10 +32,10 @@ class _SafetySnapshotCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           for (final row in rows)
             _SummaryRow(label: row.label, value: row.value),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           _InlineAction(
             label: 'An toàn & báo cáo',
             icon: Icons.flag_outlined,
@@ -87,7 +87,7 @@ class _ActionStack extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         Row(
           children: [
             Expanded(
@@ -168,9 +168,9 @@ class _RowsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         VitModuleSectionHeader(title: title, accentColor: accentColor),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Column(
             children: [
               for (final row in rows)
@@ -192,7 +192,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.arenaVerticalPaddingX2,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -237,7 +237,7 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -254,7 +254,7 @@ class _InfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   text,
                   style: AppTextStyles.caption.copyWith(
@@ -286,7 +286,7 @@ class _InfoBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: color.withValues(alpha: .22),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -327,7 +327,7 @@ class _SecondaryAction extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       borderColor: color.withValues(alpha: .22),
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      padding: AppSpacing.arenaVerticalPaddingX3,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -376,7 +376,7 @@ class _InlineAction extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+          padding: AppSpacing.arenaVerticalPaddingX1,
           child: Row(
             children: [
               Flexible(
@@ -427,7 +427,7 @@ class _StatColumn extends StatelessWidget {
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -442,13 +442,10 @@ class _LiveDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.arenaChallengeLiveDot,
       height: AppSpacing.arenaChallengeLiveDot,
-      decoration: const BoxDecoration(
-        color: AppColors.buy,
-        shape: BoxShape.circle,
-      ),
+      child: const Material(color: AppColors.buy, shape: CircleBorder()),
     );
   }
 }
@@ -473,18 +470,20 @@ class _IconBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.arenaChallengeIconBubble,
       height: AppSpacing.arenaChallengeIconBubble,
-      decoration: BoxDecoration(
+      child: Material(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: color.withValues(alpha: .22)),
-      ),
-      child: Icon(
-        icon,
-        color: color,
-        size: AppSpacing.arenaChallengeIconBubbleIcon,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .22)),
+          borderRadius: AppRadii.mdRadius,
+        ),
+        child: Icon(
+          icon,
+          color: color,
+          size: AppSpacing.arenaChallengeIconBubbleIcon,
+        ),
       ),
     );
   }
@@ -499,20 +498,21 @@ class _InitialBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final initial = name.trim().isEmpty ? '?' : name.trim()[0].toUpperCase();
-    return Container(
+    return SizedBox(
       width: AppSpacing.arenaChallengeInitialBadge,
       height: AppSpacing.arenaChallengeInitialBadge,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
+      child: Material(
         color: color.withValues(alpha: .16),
         borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        initial,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.arenaChallengeInitialLineHeight,
+        child: Center(
+          child: Text(
+            initial,
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+              height: AppSpacing.arenaChallengeInitialLineHeight,
+            ),
+          ),
         ),
       ),
     );

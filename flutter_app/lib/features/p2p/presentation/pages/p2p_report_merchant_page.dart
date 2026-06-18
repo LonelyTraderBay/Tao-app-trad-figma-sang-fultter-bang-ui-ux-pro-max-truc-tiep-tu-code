@@ -91,10 +91,7 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                   child: SingleChildScrollView(
                     key: P2PReportMerchantPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x5,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pRiskControlsReportScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -143,7 +140,7 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                           'Chọn lý do báo cáo. Đội ngũ VitTrade sẽ xem xét trong 24-48h.',
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text3,
-                            height: 1.45,
+                            height: AppSpacing.p2pRiskControlsBodyLineHeight,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x4),
@@ -160,9 +157,8 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                           child: selectedReason.isEmpty
                               ? const SizedBox.shrink()
                               : Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: AppSpacing.x4,
-                                  ),
+                                  padding: AppSpacing
+                                      .p2pRiskControlsDetailBottomPadding,
                                   child: _DetailField(
                                     controller: _detailController,
                                     hintText: snapshot.detailPrompt,

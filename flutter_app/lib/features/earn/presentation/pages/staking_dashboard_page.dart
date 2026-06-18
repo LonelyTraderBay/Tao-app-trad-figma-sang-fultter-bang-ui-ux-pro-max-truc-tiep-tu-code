@@ -72,7 +72,7 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -80,7 +80,7 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
                       VitCard(
                         variant: VitCardVariant.standard,
                         radius: VitCardRadius.md,
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: StakingDashboardSummaryCard(
                           key: StakingDashboardPage.summaryKey,
                           snapshot: snapshot,

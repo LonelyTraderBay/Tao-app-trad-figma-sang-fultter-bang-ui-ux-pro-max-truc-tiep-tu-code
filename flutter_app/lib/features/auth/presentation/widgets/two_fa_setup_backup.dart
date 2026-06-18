@@ -15,43 +15,44 @@ class _BackupCodesStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: 64,
-          height: 64,
-          decoration: BoxDecoration(
+        SizedBox.square(
+          dimension: AppSpacing.authHeroIconBoxSm,
+          child: Material(
             color: AppColors.buy10,
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(color: AppColors.buy20),
-          ),
-          child: const Icon(
-            Icons.file_download_outlined,
-            color: AppColors.buy,
-            size: 34,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.cardRadius,
+              side: BorderSide(color: AppColors.buy20),
+            ),
+            child: const Icon(
+              Icons.file_download_outlined,
+              color: AppColors.buy,
+              size: AppSpacing.authHeroIconMd,
+            ),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: 18)),
+        const Padding(padding: AppSpacing.authTwoFaHeroTopPadding),
         Text(
           'Bước 3: Mã dự phòng',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const Padding(padding: AppSpacing.authTopGapX3),
         Text(
           'Lưu các mã này ở nơi an toàn. Dùng khi mất thiết bị xác thực.',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: 1.5,
+            height: AppSpacing.authFooterLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: 20)),
+        const Padding(padding: AppSpacing.authTwoFaSectionTopPadding),
         _BackupCodeList(codes: _backupCodes),
-        const Padding(padding: EdgeInsets.only(top: 20)),
+        const Padding(padding: AppSpacing.authTwoFaSectionTopPadding),
         const _WarningBanner(text: 'Mỗi mã chỉ dùng được 1 lần.'),
-        const Padding(padding: EdgeInsets.only(top: 16)),
+        const Padding(padding: AppSpacing.authTwoFaBackupActionTopPadding),
         _BackupSavedRow(saved: saved, onTap: onSavedChanged),
         if (error.isNotEmpty) ...[
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const Padding(padding: AppSpacing.authTopGapX4),
           _ErrorBanner(error: error),
         ],
       ],
@@ -68,29 +69,28 @@ class _BackupCodeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       variant: VitCardVariant.inner,
       borderColor: AppColors.borderSolid,
       child: Column(
         children: [
           for (var index = 0; index < codes.length; index++) ...[
-            if (index > 0)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            if (index > 0) const Padding(padding: AppSpacing.authTopGapX3),
             Row(
               children: [
-                Container(
-                  width: 24,
-                  height: 24,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
+                SizedBox.square(
+                  dimension: AppSpacing.authTwoFaBackupIndexSize,
+                  child: Material(
                     color: _authPrimary20,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    '${index + 1}',
-                    style: AppTextStyles.micro.copyWith(
-                      color: _authPrimary,
-                      fontWeight: AppTextStyles.bold,
+                    shape: const CircleBorder(),
+                    child: Center(
+                      child: Text(
+                        '${index + 1}',
+                        style: AppTextStyles.micro.copyWith(
+                          color: _authPrimary,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -133,25 +133,27 @@ class _BackupSavedRow extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 22,
-              height: 22,
-              margin: const EdgeInsets.only(top: 1),
-              decoration: BoxDecoration(
-                color: saved ? _authPrimary : AppColors.transparent,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: saved ? _authPrimary : AppColors.borderSolid,
-                  width: 1.4,
+            Padding(
+              padding: AppSpacing.authTwoFaBackupCheckMargin,
+              child: SizedBox.square(
+                dimension: AppSpacing.authTwoFaBackupCheckSize,
+                child: Material(
+                  color: saved ? _authPrimary : AppColors.transparent,
+                  shape: CircleBorder(
+                    side: BorderSide(
+                      color: saved ? _authPrimary : AppColors.borderSolid,
+                      width: AppSpacing.authTwoFaBackupCheckBorder,
+                    ),
+                  ),
+                  child: saved
+                      ? const Icon(
+                          Icons.check_rounded,
+                          color: AppColors.onAccent,
+                          size: AppSpacing.authTwoFaBackupCheckIcon,
+                        )
+                      : null,
                 ),
               ),
-              child: saved
-                  ? const Icon(
-                      Icons.check_rounded,
-                      color: AppColors.onAccent,
-                      size: 15,
-                    )
-                  : null,
             ),
             const SizedBox(width: AppSpacing.x4),
             Expanded(

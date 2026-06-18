@@ -33,7 +33,7 @@ class _MethodSheet extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.cardPaddingCompact,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -79,7 +79,7 @@ class _MethodOption extends StatelessWidget {
       key: StakingTransactionReportingPage.methodKey(method.value),
       onTap: onTap,
       borderColor: selected ? AppColors.primary : null,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -159,7 +159,7 @@ class _ExportGroup extends StatelessWidget {
           VitCard(
             key: StakingTransactionReportingPage.exportOptionKey(option.name),
             onTap: () => Navigator.of(context).pop(),
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.cardPaddingCompact,
             child: Row(
               children: [
                 Expanded(
@@ -199,17 +199,24 @@ class _SheetFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Container(
-        margin: const EdgeInsets.all(AppSpacing.contentPad),
-        padding: const EdgeInsets.all(AppSpacing.x5),
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.sizeOf(context).height * 0.86,
+      child: Padding(
+        padding: AppSpacing.zeroInsets.copyWith(
+          left: AppSpacing.contentPad,
+          top: AppSpacing.contentPad,
+          right: AppSpacing.contentPad,
+          bottom: AppSpacing.contentPad,
         ),
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadii.cardLargeRadius,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.sizeOf(context).height * 0.86,
+          ),
+          child: VitSheetSurface(
+            color: AppColors.surface,
+            borderRadius: AppRadii.cardLargeRadius,
+            padding: AppSpacing.cardPaddingHero,
+            child: child,
+          ),
         ),
-        child: child,
       ),
     );
   }
@@ -242,23 +249,7 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.15),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -272,7 +263,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingTransactionReportingPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Text(
         note,
         textAlign: TextAlign.center,

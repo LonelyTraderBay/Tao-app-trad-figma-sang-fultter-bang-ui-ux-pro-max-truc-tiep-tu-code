@@ -100,29 +100,34 @@ class _FilterChipButton extends StatelessWidget {
       button: true,
       selected: active,
       label: label,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          constraints: BoxConstraints(minHeight: minHeight),
-          padding: AppSpacing.marketFilterChipPadding,
-          decoration: BoxDecoration(
+      child: Material(
+        color: active
+            ? activeColor.withValues(alpha: 0.16)
+            : AppColors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(
             color: active
-                ? activeColor.withValues(alpha: 0.16)
+                ? activeColor.withValues(alpha: 0.42)
                 : AppColors.transparent,
-            border: Border.all(
-              color: active
-                  ? activeColor.withValues(alpha: 0.42)
-                  : AppColors.transparent,
-            ),
-            borderRadius: AppRadii.cardRadius,
           ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? activeColor : AppColors.text2,
-              fontWeight: AppTextStyles.medium,
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadii.cardRadius,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: minHeight),
+            child: Padding(
+              padding: AppSpacing.marketFilterChipPadding,
+              child: Center(
+                child: Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: active ? activeColor : AppColors.text2,
+                    fontWeight: AppTextStyles.medium,
+                  ),
+                ),
+              ),
             ),
           ),
         ),

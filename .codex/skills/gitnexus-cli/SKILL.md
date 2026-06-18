@@ -16,7 +16,7 @@ for the current machine. If `.gitnexus/run.cjs` is missing in a fresh clone,
 bootstrap it once from the repository root:
 
 ```bash
-npx gitnexus analyze
+npx gitnexus analyze --skip-agents-md --skip-skills
 ```
 
 ## Commands
@@ -26,11 +26,12 @@ npx gitnexus analyze
 Build or refresh the GitNexus index:
 
 ```bash
-node .gitnexus/run.cjs analyze
+node .gitnexus/run.cjs analyze --skip-agents-md --skip-skills
 ```
 
 Run after major code changes, after a stale-index warning, or when the MCP
-server cannot answer graph questions accurately.
+server cannot answer graph questions accurately. Keep the skip flags so
+GitNexus refreshes the graph without generating `CLAUDE.md` or `.claude/skills`.
 
 Useful flags:
 

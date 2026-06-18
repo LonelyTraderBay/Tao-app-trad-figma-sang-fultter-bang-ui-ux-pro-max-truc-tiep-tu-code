@@ -9,22 +9,25 @@ class _AuditEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _eventColor(event);
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.cardPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 40,
-            height: 40,
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.lg,
+            width: AppSpacing.walletAddressIconSize,
+            height: AppSpacing.walletAddressIconSize,
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .18),
-              shape: BoxShape.circle,
+            borderColor: color,
+            child: Icon(
+              _eventIcon(event),
+              color: color,
+              size: AppSpacing.iconMd,
             ),
-            child: Icon(_eventIcon(event), color: color, size: 21),
           ),
-          const SizedBox(width: 13),
+          const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,10 +36,10 @@ class _AuditEventCard extends StatelessWidget {
                   event.title,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.medium,
-                    height: 1.18,
+                    height: AppSpacing.copyAuditEventTitleLineHeight,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   event.description,
                   maxLines: 2,
@@ -44,13 +47,13 @@ class _AuditEventCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.medium,
-                    height: 1.25,
+                    height: AppSpacing.copyAuditEventDescriptionLineHeight,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.cardGap),
                 _EventMetaRow(event: event, color: color),
                 if (_hasVisibleMetadata(event)) ...[
-                  const SizedBox(height: 13),
+                  const SizedBox(height: AppSpacing.x4),
                   _EventMetadataPanel(event: event),
                 ],
               ],
@@ -72,27 +75,31 @@ class _EventMetaRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(Icons.access_time_rounded, color: AppColors.text3, size: 11),
-        const SizedBox(width: 5),
+        const Icon(
+          Icons.access_time_rounded,
+          color: AppColors.text3,
+          size: AppSpacing.rowGapRegular,
+        ),
+        const SizedBox(width: AppSpacing.x2),
         Text(
           event.timestamp,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.copyAuditMetaLineHeight,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.x3),
         Text(
           '•',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.copyAuditMetaLineHeight,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.x3),
         _TypeBadge(type: event.type, color: color),
       ],
     );
@@ -107,21 +114,7 @@ class _TypeBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .18),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        _eventTypeLabel(type),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: _eventTypeLabel(type), accentColor: color);
   }
 }
 
@@ -137,15 +130,15 @@ class _EventMetadataPanel extends StatelessWidget {
       return VitCard(
         variant: VitCardVariant.inner,
         radius: VitCardRadius.sm,
-        height: 29,
+        height: AppSpacing.copyAuditMetadataConfigHeight,
         width: double.infinity,
         alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: AppSpacing.copyAuditMetadataConfigPadding,
         child: Text(
           '${metadata.oldValue} → ${metadata.newValue}',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.copyAuditMetaLineHeight,
           ),
         ),
       );
@@ -155,7 +148,7 @@ class _EventMetadataPanel extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(9, 9, 9, 10),
+      padding: AppSpacing.copyAuditMetadataPanelPadding,
       child: Column(
         children: [
           Row(
@@ -174,7 +167,7 @@ class _EventMetadataPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.walletAssetPillGap),
           Row(
             children: [
               Expanded(
@@ -224,10 +217,10 @@ class _MetadataValue extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.copyAuditMetaLineHeight,
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.formFieldLabelGap),
         Text(
           value,
           style: AppTextStyles.numericMicro.copyWith(

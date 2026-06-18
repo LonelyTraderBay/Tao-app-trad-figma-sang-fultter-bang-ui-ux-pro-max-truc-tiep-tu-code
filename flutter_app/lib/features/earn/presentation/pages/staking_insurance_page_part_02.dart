@@ -11,7 +11,7 @@ class _PlanCard extends StatelessWidget {
     return VitCard(
       key: StakingInsurancePage.planKey(plan.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -24,7 +24,7 @@ class _PlanCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(plan.name, style: AppTextStyles.baseMedium),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                    const SizedBox(height: AppSpacing.x2),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x2,
@@ -60,7 +60,7 @@ class _PlanCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -92,20 +92,17 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: color == AppColors.buy ? AppColors.buy15 : AppColors.primary15,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: color == AppColors.buy ? AppColors.buy15 : AppColors.primary15,
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.earnPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -123,7 +120,7 @@ class _PlanMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -131,7 +128,7 @@ class _PlanMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
@@ -189,7 +186,7 @@ class _PositionCard extends StatelessWidget {
     return VitCard(
       key: StakingInsurancePage.positionKey(position.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -201,7 +198,7 @@ class _PositionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(position.product, style: AppTextStyles.baseMedium),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${_formatAmount(position.amount)} ${position.asset} · ${_formatUsd(position.usdValue)}',
                       style: AppTextStyles.caption.copyWith(
@@ -231,11 +228,11 @@ class _PositionCard extends StatelessWidget {
             ],
           ),
           if (position.insured && plan != null) ...[
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+            const SizedBox(height: AppSpacing.x4),
             VitCard(
               variant: VitCardVariant.inner,
               radius: VitCardRadius.md,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnPaddingX4,
               child: Column(
                 children: [
                   _SheetRow(label: 'Plan:', value: plan!.name),
@@ -254,7 +251,7 @@ class _PositionCard extends StatelessWidget {
             ),
           ],
           if (!position.insured) ...[
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+            const SizedBox(height: AppSpacing.x4),
             VitCtaButton(
               key: StakingInsurancePage.addInsuranceKey(position.id),
               height: AppSpacing.buttonCompact,
@@ -275,20 +272,17 @@ class _NeutralPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: const BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.earnPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -315,16 +309,16 @@ class _ClaimsTab extends StatelessWidget {
             VitCtaButton(
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              padding: AppSpacing.earnHorizontalPaddingX4,
               onPressed: onFileClaim,
               child: const Text('File Claim'),
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         for (final claim in snapshot.claims) ...[
           _ClaimCard(claim: claim),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -341,7 +335,7 @@ class _ClaimCard extends StatelessWidget {
     return VitCard(
       key: StakingInsurancePage.claimKey(claim.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
           Row(
@@ -352,7 +346,7 @@ class _ClaimCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(claim.position, style: AppTextStyles.baseMedium),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${claim.date} · ${claim.reason}',
                       style: AppTextStyles.micro.copyWith(
@@ -366,7 +360,7 @@ class _ClaimCard extends StatelessWidget {
               const _StatusPill(label: 'Approved', color: AppColors.buy),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -415,7 +409,7 @@ class _ClaimMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x2),
+      padding: AppSpacing.earnPaddingX2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -423,7 +417,7 @@ class _ClaimMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
@@ -451,17 +445,18 @@ class _SheetFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Container(
-        margin: const EdgeInsets.all(AppSpacing.contentPad),
-        padding: const EdgeInsets.all(AppSpacing.x5),
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.sizeOf(context).height * 0.86,
+      child: Padding(
+        padding: AppSpacing.earnContentMargin,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.sizeOf(context).height * 0.86,
+          ),
+          child: Material(
+            color: AppColors.surface,
+            borderRadius: AppRadii.cardLargeRadius,
+            child: Padding(padding: AppSpacing.earnPaddingX5, child: child),
+          ),
         ),
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadii.cardLargeRadius,
-        ),
-        child: child,
       ),
     );
   }

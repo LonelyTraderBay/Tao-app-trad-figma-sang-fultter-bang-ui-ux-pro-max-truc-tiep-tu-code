@@ -13,51 +13,66 @@ class _SmartAlertTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
-        child: Row(
-          children: [
-            for (final tab in tabs)
-              Expanded(
-                child: InkWell(
-                  key: SmartAlertCenter.tabKey(tab.tab),
-                  onTap: () => onChanged(tab.tab),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: AppSpacing.x4,
-                        ),
-                        child: Text(
-                          tab.label,
-                          style: AppTextStyles.caption.copyWith(
-                            color: tab.tab == active
-                                ? AppColors.primary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
+    return ColoredBox(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: AppSpacing.crossModuleTabBarPadding,
+            child: Row(
+              children: [
+                for (final tab in tabs)
+                  Expanded(
+                    child: InkWell(
+                      key: SmartAlertCenter.tabKey(tab.tab),
+                      onTap: () => onChanged(tab.tab),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: AppSpacing.crossModuleTabLabelPadding,
+                            child: Text(
+                              tab.label,
+                              style: AppTextStyles.caption.copyWith(
+                                color: tab.tab == active
+                                    ? AppColors.primary
+                                    : AppColors.text3,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
                           ),
-                        ),
+                          SizedBox(
+                            width: AppSpacing.buttonHero,
+                            height: AppSpacing.x1,
+                            child: TweenAnimationBuilder<double>(
+                              tween: Tween<double>(
+                                end: tab.tab == active ? 1 : 0,
+                              ),
+                              duration: const Duration(milliseconds: 160),
+                              builder: (context, value, child) =>
+                                  Transform.scale(scaleX: value, child: child),
+                              child: const DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: AppColors.primary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: AppRadii.xlRadius,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 160),
-                        height: AppSpacing.x1,
-                        width: tab.tab == active ? AppSpacing.buttonHero : 0,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: AppRadii.xlRadius,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-          ],
-        ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: AppSpacing.dividerHairline,
+            child: ColoredBox(color: AppColors.divider),
+          ),
+        ],
       ),
     );
   }
@@ -105,7 +120,7 @@ class _SmartAlertSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

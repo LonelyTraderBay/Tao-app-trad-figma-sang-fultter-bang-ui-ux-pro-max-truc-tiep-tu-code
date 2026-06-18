@@ -10,7 +10,7 @@ class _ThresholdCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.contentPad),
+      padding: AppSpacing.dcaContentPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
         customGap: AppSpacing.x4,
@@ -81,7 +81,7 @@ class _FrequencyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.contentPad),
+      padding: AppSpacing.dcaContentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -95,9 +95,7 @@ class _FrequencyCard extends StatelessWidget {
                 .map(
                   (option) => Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.x1,
-                      ),
+                      padding: AppSpacing.dcaHorizontalPaddingX1,
                       child: _FrequencyOptionTile(
                         option: option,
                         selected: active == option.frequency,
@@ -133,39 +131,39 @@ class _FrequencyOptionTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          decoration: BoxDecoration(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
             color: selected ? AppColors.accent10 : AppColors.surface2,
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(
-              color: selected ? AppColors.accent : AppColors.transparent,
-              width: AppSpacing.dcaRebalanceConnectorWidth,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(
+                color: selected ? AppColors.accent : AppColors.transparent,
+                width: AppSpacing.dcaRebalanceConnectorWidth,
+              ),
             ),
           ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x4,
-          ),
-          child: Column(
-            children: [
-              Text(
-                option.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.accent : AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.dcaFrequencyTilePadding,
+            child: Column(
+              children: [
+                Text(
+                  option.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: selected ? AppColors.accent : AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.x1),
-              Text(
-                option.subtitle,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ],
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  option.subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -202,7 +200,7 @@ class _AdvancedSettings extends StatelessWidget {
             onTap: onToggleExpanded,
             borderRadius: AppRadii.inputRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+              padding: AppSpacing.dcaVerticalPaddingX3,
               child: Row(
                 children: [
                   const Icon(
@@ -244,7 +242,7 @@ class _AdvancedSettings extends StatelessWidget {
             children: [
               VitCard(
                 radius: VitCardRadius.lg,
-                padding: const EdgeInsets.all(AppSpacing.contentPad),
+                padding: AppSpacing.dcaContentPadding,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -259,19 +257,20 @@ class _AdvancedSettings extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
+                        DecoratedBox(
+                          decoration: ShapeDecoration(
                             color: AppColors.surface2,
-                            borderRadius: AppRadii.smRadius,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadii.smRadius,
+                            ),
                           ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.x4,
-                            vertical: AppSpacing.x2,
-                          ),
-                          child: Text(
-                            '\$${minTradeAmountUsd.toStringAsFixed(0)}',
-                            style: AppTextStyles.baseMedium.copyWith(
-                              color: AppColors.text1,
+                          child: Padding(
+                            padding: AppSpacing.dcaScoreChipPadding,
+                            child: Text(
+                              '\$${minTradeAmountUsd.toStringAsFixed(0)}',
+                              style: AppTextStyles.baseMedium.copyWith(
+                                color: AppColors.text1,
+                              ),
                             ),
                           ),
                         ),
@@ -295,7 +294,7 @@ class _AdvancedSettings extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
               VitCard(
                 radius: VitCardRadius.lg,
-                padding: const EdgeInsets.all(AppSpacing.contentPad),
+                padding: AppSpacing.dcaContentPadding,
                 child: Column(
                   children: [
                     Row(
@@ -335,32 +334,39 @@ class _AdvancedSettings extends StatelessWidget {
                     ),
                     if (autoExecute) ...[
                       const SizedBox(height: AppSpacing.x4),
-                      Container(
-                        decoration: BoxDecoration(
+                      DecoratedBox(
+                        decoration: ShapeDecoration(
                           color: AppColors.warningBg,
-                          borderRadius: AppRadii.inputRadius,
-                          border: Border.all(color: AppColors.warningBorder),
-                        ),
-                        padding: const EdgeInsets.all(AppSpacing.x4),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Icon(
-                              Icons.error_outline_rounded,
-                              color: AppColors.warn,
-                              size: AppSpacing.dcaRebalanceIconSm,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.inputRadius,
+                            side: const BorderSide(
+                              color: AppColors.warningBorder,
                             ),
-                            const SizedBox(width: AppSpacing.x3),
-                            Expanded(
-                              child: Text(
-                                'Hệ thống sẽ tự động thực hiện giao dịch khi danh mục lệch. Bạn có thể tắt bất kỳ lúc nào.',
-                                style: AppTextStyles.micro.copyWith(
-                                  color: AppColors.warningText,
-                                  height: AppSpacing.dcaRebalanceBodyLineHeight,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: AppSpacing.dcaPaddingX4,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.error_outline_rounded,
+                                color: AppColors.warn,
+                                size: AppSpacing.dcaRebalanceIconSm,
+                              ),
+                              const SizedBox(width: AppSpacing.x3),
+                              Expanded(
+                                child: Text(
+                                  'Hệ thống sẽ tự động thực hiện giao dịch khi danh mục lệch. Bạn có thể tắt bất kỳ lúc nào.',
+                                  style: AppTextStyles.micro.copyWith(
+                                    color: AppColors.warningText,
+                                    height:
+                                        AppSpacing.dcaRebalanceBodyLineHeight,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -390,7 +396,7 @@ class _InlineRebalanceActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.contentPad),
+      padding: AppSpacing.dcaContentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -469,16 +475,13 @@ class _PreviewSheet extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              0,
-              AppSpacing.contentPad,
+            padding: AppSpacing.dcaBottomSheetPadding(
               DeviceMetrics.nativeBottomChrome + AppSpacing.x5,
             ),
             child: VitCard(
               key: DCARebalanceConfig.previewSheetKey,
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.contentPad),
+              padding: AppSpacing.dcaContentPadding,
               child: SafeArea(
                 top: false,
                 child: Column(
@@ -508,7 +511,7 @@ class _PreviewSheet extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x5),
                     ...previews.map(
                       (preview) => Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+                        padding: AppSpacing.dcaBottomPaddingX3,
                         child: _PreviewRow(preview: preview),
                       ),
                     ),

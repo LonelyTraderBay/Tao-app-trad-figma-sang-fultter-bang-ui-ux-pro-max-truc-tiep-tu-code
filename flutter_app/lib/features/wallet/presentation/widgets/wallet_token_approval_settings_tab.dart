@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
 
 class WalletTokenApprovalSettingsTab extends StatelessWidget {
   const WalletTokenApprovalSettingsTab({
@@ -103,28 +103,16 @@ class WalletTokenApprovalSettingsRow extends StatelessWidget {
             child: GestureDetector(
               onTap: onTap,
               behavior: HitTestBehavior.opaque,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 150),
+              child: VitTogglePill(
+                enabled: enabled,
                 width: AppSpacing.walletAddressSwitchWidth,
                 height: AppSpacing.walletAddressSwitchHeight,
-                padding: AppSpacing.walletTokenSwitchPadding,
-                alignment: enabled
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  color: enabled
-                      ? walletTokenApprovalPrimary
-                      : AppColors.surface3,
-                  borderRadius: AppRadii.inputRadius,
-                ),
-                child: Container(
-                  width: AppSpacing.walletTokenSwitchKnob,
-                  height: AppSpacing.walletTokenSwitchKnob,
-                  decoration: const BoxDecoration(
-                    color: AppColors.onAccent,
-                    shape: BoxShape.circle,
-                  ),
-                ),
+                knobSize: AppSpacing.walletTokenSwitchKnob,
+                knobMargin: AppSpacing.walletTokenSwitchPadding,
+                activeColor: walletTokenApprovalPrimary,
+                inactiveColor: AppColors.surface3,
+                inactiveKnobColor: AppColors.onAccent,
+                duration: const Duration(milliseconds: 150),
               ),
             ),
           ),
@@ -158,28 +146,27 @@ class WalletTokenApprovalBestPracticesCard extends StatelessWidget {
             'Revoke unused or old approvals',
             'Avoid unlimited approvals when possible',
             'Only approve verified contracts',
-          ])
-            Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.rowGap),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.check_circle_outline_rounded,
-                    color: walletTokenApprovalGreen,
-                    size: AppSpacing.walletTokenNoticeIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.rowGap),
-                  Expanded(
-                    child: Text(
-                      tip,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                      ),
+          ]) ...[
+            Row(
+              children: [
+                const Icon(
+                  Icons.check_circle_outline_rounded,
+                  color: walletTokenApprovalGreen,
+                  size: AppSpacing.walletTokenNoticeIcon,
+                ),
+                const SizedBox(width: AppSpacing.rowGap),
+                Expanded(
+                  child: Text(
+                    tip,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+            const SizedBox(height: AppSpacing.rowGap),
+          ],
         ],
       ),
     );

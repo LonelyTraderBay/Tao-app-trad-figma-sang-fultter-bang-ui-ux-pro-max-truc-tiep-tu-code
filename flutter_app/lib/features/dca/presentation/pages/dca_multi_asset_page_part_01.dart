@@ -58,7 +58,7 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
               child: SingleChildScrollView(
                 key: DCAMultiAssetPage.contentKey,
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: scrollBottom),
+                padding: AppSpacing.dcaBottomInsetPadding(scrollBottom),
                 child: VitPageContent(
                   customGap: AppSpacing.x4,
                   children: [
@@ -221,30 +221,37 @@ class _TopTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
-      child: Row(
+    return ColoredBox(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          _TopTab(
-            label: 'Cai dat',
-            tab: _MultiAssetTab.setup,
-            active: activeTab == _MultiAssetTab.setup,
-            onChanged: onChanged,
+          Row(
+            children: [
+              _TopTab(
+                label: 'Cai dat',
+                tab: _MultiAssetTab.setup,
+                active: activeTab == _MultiAssetTab.setup,
+                onChanged: onChanged,
+              ),
+              _TopTab(
+                label: 'Tai san',
+                tab: _MultiAssetTab.assets,
+                active: activeTab == _MultiAssetTab.assets,
+                onChanged: onChanged,
+              ),
+              _TopTab(
+                label: 'Hieu suat',
+                tab: _MultiAssetTab.performance,
+                active: activeTab == _MultiAssetTab.performance,
+                onChanged: onChanged,
+              ),
+            ],
           ),
-          _TopTab(
-            label: 'Tai san',
-            tab: _MultiAssetTab.assets,
-            active: activeTab == _MultiAssetTab.assets,
-            onChanged: onChanged,
-          ),
-          _TopTab(
-            label: 'Hieu suat',
-            tab: _MultiAssetTab.performance,
-            active: activeTab == _MultiAssetTab.performance,
-            onChanged: onChanged,
+          const Divider(
+            height: AppSpacing.hairlineStroke,
+            thickness: AppSpacing.hairlineStroke,
+            color: AppColors.border,
           ),
         ],
       ),
@@ -273,7 +280,7 @@ class _TopTab extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(tab),
         child: Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.x4),
+          padding: AppSpacing.dcaTopPaddingX4,
           child: Column(
             children: [
               Text(
@@ -284,13 +291,16 @@ class _TopTab extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 160),
+              SizedBox(
                 height: AppSpacing.dcaMultiTabIndicatorHeight,
                 width: active ? AppSpacing.dcaMultiTabIndicatorWidth : 0,
-                decoration: BoxDecoration(
-                  color: active ? AppColors.primary : AppColors.transparent,
-                  borderRadius: AppRadii.xsRadius,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: active ? AppColors.primary : AppColors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.xsRadius,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -315,7 +325,7 @@ class _BudgetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -379,11 +389,13 @@ class _FrequencyButton extends StatelessWidget {
         color: AppColors.transparent,
         borderRadius: AppRadii.inputRadius,
         child: Ink(
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: active ? AppColors.primary : AppColors.surface2,
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(
-              color: active ? AppColors.primary : AppColors.borderSolid,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(
+                color: active ? AppColors.primary : AppColors.borderSolid,
+              ),
             ),
           ),
           child: InkWell(
@@ -420,7 +432,7 @@ class _AllocationSetupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -492,13 +504,13 @@ class _DeleteButton extends StatelessWidget {
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
       child: DecoratedBox(
-        decoration: const BoxDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.sell10,
-          borderRadius: AppRadii.mdRadius,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
         child: IconButton(
           onPressed: onPressed,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           icon: const Icon(
             Icons.delete_outline_rounded,
             size: AppSpacing.dcaMultiIcon,

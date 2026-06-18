@@ -49,7 +49,7 @@ class _ProgressCard extends StatelessWidget {
     final progress = totalCount == 0 ? 0.0 : testedCount / totalCount;
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.devCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -157,10 +157,7 @@ class _PhaseChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.devWideChipPadding,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
@@ -217,7 +214,7 @@ class _RouteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: RouteChecker.routeKey(route.path),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.devCardPadding,
       radius: VitCardRadius.lg,
       borderColor: tested ? AppColors.buy20 : AppColors.borderSolid,
       onTap: onTap,
@@ -229,12 +226,14 @@ class _RouteCard extends StatelessWidget {
                   color: AppColors.buy,
                   size: AppSpacing.iconMd,
                 )
-              : Container(
-                  width: AppSpacing.iconMd,
-                  height: AppSpacing.iconMd,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.primary40),
+              : const SizedBox.square(
+                  dimension: AppSpacing.iconMd,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      shape: CircleBorder(
+                        side: BorderSide(color: AppColors.primary40),
+                      ),
+                    ),
                   ),
                 ),
           const SizedBox(width: AppSpacing.x4),
@@ -287,15 +286,12 @@ class _FeaturedBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.warn10,
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.devInlinePillPadding,
         child: Text(
           'FEATURED',
           style: AppTextStyles.chartLabelTiny.copyWith(
@@ -316,15 +312,12 @@ class _PhaseBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
+        padding: AppSpacing.devChipPadding,
         child: Text(
           'Phase $phase',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),

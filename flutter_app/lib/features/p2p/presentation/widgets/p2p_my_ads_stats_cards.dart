@@ -59,8 +59,8 @@ class _StatCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      height: AppSpacing.buttonHero + AppSpacing.x5,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      height: AppSpacing.p2pMerchantCommerceStatCardHeight,
+      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -110,7 +110,7 @@ class _MyAdCard extends StatelessWidget {
     return Opacity(
       opacity: active ? 1 : .72,
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pMerchantCommerceCompactPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -119,14 +119,20 @@ class _MyAdCard extends StatelessWidget {
               runSpacing: AppSpacing.x2,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                _MiniBadge(
+                VitAccentPill(
                   label:
                       '${ad.type == P2PTradeType.sell ? 'BÁN' : 'MUA'} ${ad.asset}',
-                  color: typeColor,
+                  accentColor: typeColor,
                 ),
-                _MiniBadge(label: _statusLabel(ad.status), color: statusColor),
+                VitAccentPill(
+                  label: _statusLabel(ad.status),
+                  accentColor: statusColor,
+                ),
                 if (ad.priceType == 'floating')
-                  _MiniBadge(label: 'Thả nổi', color: AppModuleAccents.p2p),
+                  const VitAccentPill(
+                    label: 'Thả nổi',
+                    accentColor: AppModuleAccents.p2p,
+                  ),
               ],
             ),
             const SizedBox(height: AppSpacing.x3),
@@ -206,7 +212,10 @@ class _MyAdCard extends StatelessWidget {
               ),
             ],
             const SizedBox(height: AppSpacing.x3),
-            const Divider(color: AppColors.divider, height: 1),
+            const Divider(
+              color: AppColors.divider,
+              height: AppSpacing.p2pMerchantCommerceDividerHeight,
+            ),
             const SizedBox(height: AppSpacing.x2),
             Row(
               children: [
@@ -255,36 +264,6 @@ class _MyAdCard extends StatelessWidget {
   }
 }
 
-class _MiniBadge extends StatelessWidget {
-  const _MiniBadge({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _DetailColumn extends StatelessWidget {
   const _DetailColumn({required this.label, required this.value});
 
@@ -294,7 +273,7 @@ class _DetailColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: AppSpacing.x2),
+      padding: AppSpacing.p2pMerchantCommerceDetailRightPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -335,37 +314,31 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Ink(
-          height: AppSpacing.inputHeight - AppSpacing.x2,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: .08),
-            border: Border.all(color: color.withValues(alpha: .18)),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
+    return VitCard(
+      height: AppSpacing.p2pMerchantCommerceActionButtonHeight,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .18),
+      background: ColoredBox(color: color.withValues(alpha: .08)),
+      onTap: onTap,
+      clip: true,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: color, size: AppSpacing.iconSm),
+          const SizedBox(width: AppSpacing.x2),
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -379,7 +352,7 @@ class _DeleteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.inputHeight - AppSpacing.x2,
+      width: AppSpacing.p2pMerchantCommerceActionButtonHeight,
       child: _ActionButton(
         icon: Icons.delete_outline_rounded,
         label: '',

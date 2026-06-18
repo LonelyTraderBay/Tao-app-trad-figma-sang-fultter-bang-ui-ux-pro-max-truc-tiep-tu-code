@@ -12,7 +12,7 @@ class _CalculatorPreview extends StatelessWidget {
         VitCard(
           key: AutoCompoundSettingsPage.calculatorKey,
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.cardPadding,
           child: Column(
             children: [
               Row(
@@ -81,7 +81,7 @@ class _CalculatorStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Text(label, textAlign: TextAlign.center, style: AppTextStyles.micro),
@@ -114,7 +114,7 @@ class _NoteCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -148,22 +148,16 @@ class _SheetFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       heightFactor: 0.86,
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(AppRadii.xl),
-          ),
-        ),
+      child: VitSheetSurface(
+        color: AppColors.surface,
+        borderRadius: AppRadii.sheetTopRadius,
+        padding: AppSpacing.zeroInsets,
         child: SafeArea(
           top: false,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x5,
-              AppSpacing.contentPad,
-              AppSpacing.x6,
+            padding: AppSpacing.transferSheetPadding.copyWith(
+              top: AppSpacing.x5,
             ),
             child: child,
           ),
@@ -219,7 +213,7 @@ class _SettingsSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.cardPadding,
           child: Row(
             children: [
               Icon(
@@ -289,7 +283,7 @@ class _SettingsSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.x5),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.cardPadding,
           child: Column(
             children: [
               _SheetMetric(label: 'APY cơ bản', value: '${position.apy}%'),
@@ -366,7 +360,7 @@ class _FrequencyTile extends StatelessWidget {
       key: AutoCompoundSettingsPage.frequencyKey(frequency.id),
       variant: VitCardVariant.inner,
       borderColor: selected ? AppColors.buy : null,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -424,7 +418,10 @@ class _ThresholdChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          padding: AppSpacing.zeroInsets.copyWith(
+            top: AppSpacing.x2,
+            bottom: AppSpacing.x2,
+          ),
           child: Text(
             _formatAmount(value),
             textAlign: TextAlign.center,
@@ -454,7 +451,10 @@ class _SheetMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.zeroInsets.copyWith(
+        top: AppSpacing.x2,
+        bottom: AppSpacing.x2,
+      ),
       child: Row(
         children: [
           Expanded(

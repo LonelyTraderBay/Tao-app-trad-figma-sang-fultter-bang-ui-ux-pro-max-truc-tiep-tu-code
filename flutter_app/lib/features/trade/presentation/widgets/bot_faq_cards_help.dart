@@ -26,19 +26,16 @@ class _FaqCard extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             onTap: onTap,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+              padding: AppSpacing.tradeBotCardPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 1),
-                    child: Icon(
-                      Icons.help_outline_rounded,
-                      color: _faqPrimary,
-                      size: 20,
-                    ),
+                  const Icon(
+                    Icons.help_outline_rounded,
+                    color: _faqPrimary,
+                    size: AppSpacing.tradeBotQuestionIcon,
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.tradeBotCardIconGap),
                   Expanded(
                     child: Text(
                       item.question,
@@ -46,40 +43,44 @@ class _FaqCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
-
-                        height: 1.45,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: AppSpacing.tradeBotRowGap),
                   Icon(
                     expanded
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
                     color: AppColors.text3,
-                    size: 22,
+                    size: AppSpacing.iconMd,
                   ),
                 ],
               ),
             ),
           ),
           if (expanded)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(56, 0, 16, 16),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: _faqPanel2,
-                  borderRadius: AppRadii.inputRadius,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  width:
+                      AppSpacing.tradeBotQuestionIconBox +
+                      AppSpacing.tradeBotCardIconGap,
                 ),
-                child: Text(
-                  item.answer,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1.65,
+                Expanded(
+                  child: VitCard(
+                    variant: VitCardVariant.inner,
+                    padding: AppSpacing.tradeBotInnerPanelPadding,
+                    child: Text(
+                      item.answer,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                const SizedBox(width: AppSpacing.tradeBotCardGap),
+              ],
             ),
         ],
       ),
@@ -100,7 +101,7 @@ class _StatsRow extends StatelessWidget {
         Expanded(
           child: _StatCard(label: 'Total FAQs', value: totalFaqs.toString()),
         ),
-        const SizedBox(width: 13),
+        const SizedBox(width: AppSpacing.tradeBotCardIconGap),
         Expanded(
           child: _StatCard(label: 'Categories', value: categories.toString()),
         ),
@@ -118,7 +119,9 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 86,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotControlTall,
+      ),
       alignment: Alignment.center,
       borderColor: AppColors.cardBorder,
       child: Column(
@@ -126,18 +129,14 @@ class _StatCard extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.tradeBotRowGap),
           Text(
             value,
             style: AppTextStyles.amountSm.copyWith(
               color: AppColors.text1,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
             ),
           ),
         ],
@@ -152,7 +151,7 @@ class _HelpCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       borderColor: _faqPrimary.withValues(alpha: .25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -162,33 +161,27 @@ class _HelpCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           Text(
             "Can't find your answer? Our support team is here to help 24/7.",
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1.45,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.tradeBotRowGap),
           Row(
             children: [
               Expanded(
                 child: _HelpButton(
                   label: 'Live Chat',
-                  background: _faqPanel2,
-                  foreground: AppColors.text1,
+                  variant: VitCtaButtonVariant.secondary,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               const Expanded(
                 child: _HelpButton(
                   label: 'Contact Support',
-                  background: _faqPrimary,
-                  foreground: AppColors.onAccent,
+                  variant: VitCtaButtonVariant.primary,
                 ),
               ),
             ],
@@ -202,31 +195,20 @@ class _HelpCard extends StatelessWidget {
 class _HelpButton extends StatelessWidget {
   const _HelpButton({
     required this.label,
-    required this.background,
-    required this.foreground,
+    required this.variant,
   });
 
   final String label;
-  final Color background;
-  final Color foreground;
+  final VitCtaButtonVariant variant;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 32,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.caption.copyWith(
-          color: foreground,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitCtaButton(
+      height: AppSpacing.buttonCompact,
+      variant: variant,
+      onPressed: () {},
+      padding: AppSpacing.tradeBotChipPadding,
+      child: Text(label),
     );
   }
 }
@@ -236,53 +218,9 @@ class _EmptyFaqs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      child: Column(
-        children: [
-          const Icon(
-            Icons.help_outline_rounded,
-            color: AppColors.text3,
-            size: 48,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'No FAQs found',
-            style: AppTextStyles.body.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _faqPrimary,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return const VitEmptyState(
+      title: 'No FAQs found',
+      icon: Icons.help_outline_rounded,
     );
   }
 }

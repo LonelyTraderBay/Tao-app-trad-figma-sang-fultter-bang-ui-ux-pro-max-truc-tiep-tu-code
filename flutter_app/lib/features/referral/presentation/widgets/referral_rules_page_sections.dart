@@ -16,13 +16,19 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: AppSpacing.x1,
-          height: subtitle == null ? AppSpacing.x5 : AppSpacing.x6,
-          margin: const EdgeInsets.only(top: AppSpacing.x1),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: AppRadii.xsRadius,
+        Padding(
+          padding: AppSpacing.referralSectionMarkerMargin,
+          child: SizedBox(
+            width: AppSpacing.x1,
+            height: subtitle == null ? AppSpacing.x5 : AppSpacing.x6,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.xsRadius,
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -84,13 +90,10 @@ class _TierHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(color: AppColors.surface2),
+    return ColoredBox(
+      color: AppColors.surface2,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x4,
-          vertical: AppSpacing.x3,
-        ),
+        padding: AppSpacing.referralLedgerHeaderPadding,
         child: Row(
           children: [
             Expanded(
@@ -159,93 +162,96 @@ class _TierRow extends StatelessWidget {
       _ => Icons.auto_awesome_rounded,
     };
 
-    return Container(
+    return ColoredBox(
       key: ReferralRulesPage.tierKey(tier.id),
       color: current ? AppColors.primary08 : AppColors.transparent,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Row(
-              children: [
-                Icon(
-                  icon,
-                  color: current ? AppColors.primary : AppColors.text2,
-                  size: AppSpacing.iconMd,
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        tier.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.body.copyWith(
-                          color: current ? AppColors.primary : AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      Text(
-                        tier.nameEn,
-                        style: AppTextStyles.micro.copyWith(
-                          color: current ? AppColors.primary : AppColors.text3,
-                        ),
-                      ),
-                      if (current)
+      child: Padding(
+        padding: AppSpacing.referralLedgerHeaderPadding,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Row(
+                children: [
+                  Icon(
+                    icon,
+                    color: current ? AppColors.primary : AppColors.text2,
+                    size: AppSpacing.iconMd,
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
-                          'Hiện tại',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.primary,
+                          tier.name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.body.copyWith(
+                            color: current
+                                ? AppColors.primary
+                                : AppColors.text1,
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                    ],
+                        Text(
+                          tier.nameEn,
+                          style: AppTextStyles.micro.copyWith(
+                            color: current
+                                ? AppColors.primary
+                                : AppColors.text3,
+                          ),
+                        ),
+                        if (current)
+                          Text(
+                            'Hiện tại',
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Text(
+                tier.minFriends == 0 ? '0' : '≥ ${tier.minFriends}',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              tier.minFriends == 0 ? '0' : '≥ ${tier.minFriends}',
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              '${tier.commissionPercent}%',
-              textAlign: TextAlign.center,
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.buy,
-                fontWeight: AppTextStyles.bold,
+            Expanded(
+              flex: 2,
+              child: Text(
+                '${tier.commissionPercent}%',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.buy,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              _formatUsd(tier.kycBonus),
-              textAlign: TextAlign.end,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: AppTextStyles.tabularFigures,
+            Expanded(
+              flex: 2,
+              child: Text(
+                _formatUsd(tier.kycBonus),
+                textAlign: TextAlign.end,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -264,7 +270,7 @@ class _RewardTypes extends StatelessWidget {
         for (var i = 0; i < snapshot.rewardTypes.length; i++) ...[
           _RewardTypeCard(rule: snapshot.rewardTypes[i]),
           if (i < snapshot.rewardTypes.length - 1)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -282,22 +288,28 @@ class _RewardTypeCard extends StatelessWidget {
     final color = isKyc ? AppColors.primary : AppColors.buy;
     return VitCard(
       key: ReferralRulesPage.rewardTypeKey(rule.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.iconLg + AppSpacing.x3,
-            height: AppSpacing.iconLg + AppSpacing.x3,
-            decoration: BoxDecoration(
-              color: isKyc ? AppColors.primary12 : AppColors.buy10,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            alignment: Alignment.center,
-            child: Icon(
-              isKyc ? Icons.card_giftcard_rounded : Icons.trending_up_rounded,
-              color: color,
-              size: AppSpacing.iconMd,
+          SizedBox.square(
+            dimension: AppSpacing.iconLg + AppSpacing.x3,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: isKyc ? AppColors.primary12 : AppColors.buy10,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Center(
+                child: Icon(
+                  isKyc
+                      ? Icons.card_giftcard_rounded
+                      : Icons.trending_up_rounded,
+                  color: color,
+                  size: AppSpacing.iconMd,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -311,22 +323,21 @@ class _RewardTypeCard extends StatelessWidget {
                     color: AppColors.text1,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   rule.body,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 DecoratedBox(
-                  decoration: BoxDecoration(
+                  decoration: ShapeDecoration(
                     color: isKyc ? AppColors.primary12 : AppColors.buy10,
-                    borderRadius: AppRadii.xlRadius,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.xlRadius,
+                    ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.x3,
-                      vertical: AppSpacing.x2,
-                    ),
+                    padding: AppSpacing.referralCompactPillPadding,
                     child: Text(
                       rule.highlight,
                       style: AppTextStyles.micro.copyWith(

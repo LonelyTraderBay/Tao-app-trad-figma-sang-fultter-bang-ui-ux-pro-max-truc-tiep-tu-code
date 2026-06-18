@@ -12,10 +12,7 @@ class _CommunityRulesButton extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       onTap: onTap,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.arenaPointsLedgerRulesPadding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

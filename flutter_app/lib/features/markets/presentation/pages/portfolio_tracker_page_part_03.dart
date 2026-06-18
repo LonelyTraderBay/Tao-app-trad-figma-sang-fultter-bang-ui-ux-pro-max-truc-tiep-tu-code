@@ -16,73 +16,71 @@ class _PnlBreakdown extends StatelessWidget {
     return Column(
       children: [
         for (final holding in sorted) ...[
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: Row(
-              children: [
-                _TokenBadge(holding: holding, size: 28),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            holding.symbol,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text1,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                          const Spacer(),
-                          Text(
-                            _mask(
-                              '${holding.pnl >= 0 ? '+' : ''}${_formatUsd(holding.pnl)}',
-                              hidden,
-                            ),
-                            style: AppTextStyles.caption.copyWith(
-                              color: holding.pnl >= 0
-                                  ? AppColors.buy
-                                  : AppColors.sell,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      ClipRRect(
-                        borderRadius: AppRadii.xlRadius,
-                        child: SizedBox(
-                          height: 4,
-                          child: Stack(
-                            children: [
-                              Container(color: AppColors.surface2),
-                              FractionallySizedBox(
-                                alignment: Alignment.centerLeft,
-                                widthFactor: maxPnl == 0
-                                    ? 0
-                                    : holding.pnl.abs() / maxPnl,
-                                child: Container(
-                                  color: holding.pnl >= 0
-                                      ? AppColors.buy
-                                      : AppColors.sell,
-                                ),
+          Material(
+            color: AppColors.surface,
+            borderRadius: AppRadii.cardRadius,
+            child: Padding(
+              padding: AppSpacing.portfolioTrackerPnlRowPadding,
+              child: Row(
+                children: [
+                  _TokenBadge(
+                    holding: holding,
+                    size: AppSpacing.portfolioTrackerHoldingAvatarSm,
+                  ),
+                  const SizedBox(
+                    width: AppSpacing.portfolioTrackerPnlAvatarGap,
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              holding.symbol,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
                               ),
-                            ],
+                            ),
+                            const Spacer(),
+                            Text(
+                              _mask(
+                                '${holding.pnl >= 0 ? '+' : ''}${_formatUsd(holding.pnl)}',
+                                hidden,
+                              ),
+                              style: AppTextStyles.caption.copyWith(
+                                color: holding.pnl >= 0
+                                    ? AppColors.buy
+                                    : AppColors.sell,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: AppSpacing.portfolioTrackerPnlProgressGap,
+                        ),
+                        ClipRRect(
+                          borderRadius: AppRadii.xlRadius,
+                          child: LinearProgressIndicator(
+                            minHeight:
+                                AppSpacing.portfolioTrackerPnlProgressHeight,
+                            value: maxPnl == 0 ? 0 : holding.pnl.abs() / maxPnl,
+                            backgroundColor: AppColors.surface2,
+                            valueColor: AlwaysStoppedAnimation(
+                              holding.pnl >= 0 ? AppColors.buy : AppColors.sell,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          if (holding != sorted.last) const SizedBox(height: 4),
+          if (holding != sorted.last)
+            const SizedBox(height: AppSpacing.portfolioTrackerPnlRowGap),
         ],
       ],
     );
@@ -101,7 +99,7 @@ class _SummaryStats extends StatelessWidget {
       children: [
         Expanded(
           child: VitCard(
-            padding: const EdgeInsets.all(12),
+            padding: AppSpacing.portfolioTrackerSummaryPadding,
             child: _SummaryStat(
               label: 'Tổng lãi/lỗ',
               value: _mask(
@@ -112,10 +110,10 @@ class _SummaryStats extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.portfolioTrackerSummaryGap),
         Expanded(
           child: VitCard(
-            padding: const EdgeInsets.all(12),
+            padding: AppSpacing.portfolioTrackerSummaryPadding,
             child: _SummaryStat(
               label: 'ROI tổng',
               value: _formatSignedPercent(stats.totalPnlPct),
@@ -148,7 +146,7 @@ class _SummaryStat extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.portfolioTrackerSummaryValueGap),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
@@ -173,14 +171,9 @@ class _TokenBadge extends StatelessWidget {
         ? AppTextStyles.numericMicro
         : AppTextStyles.captionSm;
 
-    return Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: holding.color.withValues(alpha: .14),
-        shape: BoxShape.circle,
-      ),
+    return CircleAvatar(
+      radius: size / 2,
+      backgroundColor: holding.color.withValues(alpha: .14),
       child: Text(
         holding.symbol.substring(0, math.min(2, holding.symbol.length)),
         style: textStyle.copyWith(
@@ -202,12 +195,14 @@ class _AllocationDonutPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final rect = Rect.fromCircle(
       center: center,
-      radius: size.shortestSide / 2 - 8,
+      radius:
+          size.shortestSide / 2 -
+          AppSpacing.portfolioTrackerAllocationDonutInset,
     );
     var start = -math.pi / 2;
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 16
+      ..strokeWidth = AppSpacing.portfolioTrackerAllocationDonutStroke
       ..strokeCap = StrokeCap.butt;
 
     for (final holding in holdings) {
@@ -224,46 +219,6 @@ class _AllocationDonutPainter extends CustomPainter {
   }
 }
 
-class _SparklinePainter extends CustomPainter {
-  const _SparklinePainter({required this.values, required this.color});
-
-  final List<double> values;
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (values.length < 2) return;
-    final minValue = values.reduce(math.min);
-    final maxValue = values.reduce(math.max);
-    final range = maxValue - minValue;
-    final path = Path();
-    for (var index = 0; index < values.length; index += 1) {
-      final x = values.length == 1
-          ? 0.0
-          : index / (values.length - 1) * size.width;
-      final normalized = range == 0 ? .5 : (values[index] - minValue) / range;
-      final y = size.height - normalized * size.height;
-      if (index == 0) {
-        path.moveTo(x, y);
-      } else {
-        path.lineTo(x, y);
-      }
-    }
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.4
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant _SparklinePainter oldDelegate) {
-    return oldDelegate.values != values || oldDelegate.color != color;
-  }
-}
-
 class _PerformancePainter extends CustomPainter {
   const _PerformancePainter({required this.points});
 
@@ -276,8 +231,8 @@ class _PerformancePainter extends CustomPainter {
     final minValue = values.reduce(math.min) * .995;
     final maxValue = values.reduce(math.max) * 1.005;
     final range = maxValue - minValue;
-    const topPadding = 8.0;
-    const bottomPadding = 24.0;
+    const topPadding = AppSpacing.portfolioTrackerPerformanceTopPadding;
+    const bottomPadding = AppSpacing.portfolioTrackerPerformanceBottomPadding;
     final chartHeight = size.height - topPadding - bottomPadding;
     final linePath = Path();
 
@@ -312,15 +267,23 @@ class _PerformancePainter extends CustomPainter {
     final linePaint = Paint()
       ..color = AppColors.buy
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
+      ..strokeWidth = AppSpacing.portfolioTrackerPerformanceLineStroke
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
     canvas.drawPath(linePath, linePaint);
 
     final last = pointAt(points.length - 1);
     canvas
-      ..drawCircle(last, 4, Paint()..color = AppColors.buy)
-      ..drawCircle(last, 2, Paint()..color = AppColors.text1);
+      ..drawCircle(
+        last,
+        AppSpacing.portfolioTrackerPerformanceLastPoint,
+        Paint()..color = AppColors.buy,
+      )
+      ..drawCircle(
+        last,
+        AppSpacing.portfolioTrackerPerformanceInnerPoint,
+        Paint()..color = AppColors.text1,
+      );
 
     final textPainter = TextPainter(
       textDirection: TextDirection.ltr,
@@ -338,7 +301,10 @@ class _PerformancePainter extends CustomPainter {
       );
       textPainter.paint(
         canvas,
-        Offset(x - textPainter.width / 2, size.height - 16),
+        Offset(
+          x - textPainter.width / 2,
+          size.height - AppSpacing.portfolioTrackerPerformanceDateBottom,
+        ),
       );
     }
   }

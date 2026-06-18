@@ -23,7 +23,7 @@ class _ProgressSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -109,7 +109,7 @@ class _LeaderboardRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      padding: AppSpacing.arenaPointsLeaderboardRowPadding,
       child: Row(
         children: [
           SizedBox(
@@ -149,7 +149,7 @@ class _RewardsDisclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -258,13 +258,17 @@ class _ProgressBar extends StatelessWidget {
     final safeValue = value.clamp(0.0, 1.0).toDouble();
     return ClipRRect(
       borderRadius: AppRadii.xsRadius,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.x3,
-        color: trackColor,
-        alignment: Alignment.centerLeft,
-        child: FractionallySizedBox(
-          widthFactor: safeValue,
-          child: Container(color: color),
+        child: ColoredBox(
+          color: trackColor,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: FractionallySizedBox(
+              widthFactor: safeValue,
+              child: ColoredBox(color: color),
+            ),
+          ),
         ),
       ),
     );
@@ -327,10 +331,15 @@ class _Legend extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.x2,
           height: AppSpacing.x2,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: const CircleBorder(),
+            ),
+          ),
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(
@@ -350,15 +359,20 @@ class _MiniBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x1),
-      decoration: BoxDecoration(color: color, borderRadius: AppRadii.xsRadius),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.bg,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.arenaPointsBadgeLineHeight,
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: color,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+      ),
+      child: Padding(
+        padding: AppSpacing.arenaPointsMiniBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.bg,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.arenaPointsBadgeLineHeight,
+          ),
         ),
       ),
     );
@@ -373,15 +387,21 @@ class _AccentIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        border: Border.all(color: color.withValues(alpha: .24)),
-        borderRadius: AppRadii.mdRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .14),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: color.withValues(alpha: .24)),
+            borderRadius: AppRadii.mdRadius,
+          ),
+        ),
+        child: Center(
+          child: Icon(icon, color: color, size: AppSpacing.iconMd),
+        ),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconMd),
     );
   }
 }

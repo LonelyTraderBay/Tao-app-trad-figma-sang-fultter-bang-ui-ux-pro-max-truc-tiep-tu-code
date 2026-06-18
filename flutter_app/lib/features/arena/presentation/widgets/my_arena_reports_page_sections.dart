@@ -51,10 +51,7 @@ class _SummaryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.myArenaReportsSummaryTilePadding,
       child: Column(
         children: [
           Text(
@@ -132,54 +129,68 @@ class _FilterChip extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.myArenaReportsFilterHeight,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
-          decoration: BoxDecoration(
-            color: active ? AppColors.primary12 : AppColors.cardBg,
-            border: Border.all(
-              color: active ? AppColors.primary : AppColors.cardBorder,
-              width: active ? 1.5 : 1,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            children: [
-              Text(
-                filter.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? AppColors.primary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: active ? AppColors.primary12 : AppColors.cardBg,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.inputRadius,
+                side: BorderSide(
+                  color: active ? AppColors.primary : AppColors.cardBorder,
+                  width: active ? 1.5 : 1,
                 ),
               ),
-              if (filter.count > 0) ...[
-                const SizedBox(width: AppSpacing.x2),
-                Container(
-                  height: AppSpacing.myArenaReportsBadgeHeight,
-                  constraints: const BoxConstraints(
-                    minWidth: AppSpacing.myArenaReportsBadgeMinWidth,
-                  ),
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.myArenaReportsBadgePaddingHorizontal,
-                  ),
-                  decoration: BoxDecoration(
-                    color: active
-                        ? accentColor.withValues(alpha: 0.18)
-                        : AppColors.surface2,
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Text(
-                    '${filter.count}',
-                    style: AppTextStyles.micro.copyWith(
-                      color: active ? accentColor : AppColors.text3,
+            ),
+            child: Padding(
+              padding: AppSpacing.myArenaReportsFilterPadding,
+              child: Row(
+                children: [
+                  Text(
+                    filter.label,
+                    style: AppTextStyles.caption.copyWith(
+                      color: active ? AppColors.primary : AppColors.text2,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.myArenaReportsCompactLineHeight,
                     ),
                   ),
-                ),
-              ],
-            ],
+                  if (filter.count > 0) ...[
+                    const SizedBox(width: AppSpacing.x2),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minWidth: AppSpacing.myArenaReportsBadgeMinWidth,
+                      ),
+                      child: SizedBox(
+                        height: AppSpacing.myArenaReportsBadgeHeight,
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: active
+                                ? accentColor.withValues(alpha: 0.18)
+                                : AppColors.surface2,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: AppRadii.smRadius,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: AppSpacing.myArenaReportsBadgePadding,
+                            child: Center(
+                              child: Text(
+                                '${filter.count}',
+                                style: AppTextStyles.micro.copyWith(
+                                  color: active ? accentColor : AppColors.text3,
+                                  fontWeight: AppTextStyles.bold,
+                                  height: AppSpacing
+                                      .myArenaReportsCompactLineHeight,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -195,7 +206,7 @@ class _ProcessBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.myArenaReportsCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,7 +250,7 @@ class _ReportsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       clip: true,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           for (var index = 0; index < reports.length; index++)
@@ -265,96 +276,96 @@ class _ReportRow extends StatelessWidget {
     final accentColor = _targetColor(report.targetType);
     return Material(
       color: AppColors.transparent,
-      child: InkWell(
-        onTap: () {
-          HapticFeedback.selectionClick();
-          context.go(AppRoutePaths.arenaReportCase(report.id));
-        },
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: isLast ? AppColors.transparent : AppColors.divider,
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () {
+              HapticFeedback.selectionClick();
+              context.go(AppRoutePaths.arenaReportCase(report.id));
+            },
+            child: Padding(
+              padding: AppSpacing.myArenaReportsCardPadding,
+              child: Row(
+                children: [
+                  _ReportIcon(
+                    icon: _targetIcon(report.targetType),
+                    color: accentColor,
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                report.targetName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.body.copyWith(
+                                  color: AppColors.text1,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: AppSpacing.x2),
+                            _ReportStatusPill(status: report.status),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          report.reason,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text2,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.x1),
+                        Wrap(
+                          spacing: AppSpacing.x2,
+                          runSpacing: AppSpacing.myArenaReportsWrapRunSpacing,
+                          children: [
+                            Text(
+                              _targetLabel(report.targetType),
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                            Text(
+                              '· Gửi ${report.createdAt}',
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                            Text(
+                              '· Cập nhật ${report.updatedAt}',
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  const Icon(
+                    Icons.chevron_right,
+                    color: AppColors.text3,
+                    size: AppSpacing.myArenaReportsChevron,
+                  ),
+                ],
               ),
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.x4),
-            child: Row(
-              children: [
-                _ReportIcon(
-                  icon: _targetIcon(report.targetType),
-                  color: accentColor,
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              report.targetName,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.body.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: AppSpacing.x2),
-                          _ReportStatusPill(status: report.status),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        report.reason,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text2,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Wrap(
-                        spacing: AppSpacing.x2,
-                        runSpacing: AppSpacing.myArenaReportsWrapRunSpacing,
-                        children: [
-                          Text(
-                            _targetLabel(report.targetType),
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                            ),
-                          ),
-                          Text(
-                            '· Gửi ${report.createdAt}',
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                            ),
-                          ),
-                          Text(
-                            '· Cập nhật ${report.updatedAt}',
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                const Icon(
-                  Icons.chevron_right,
-                  color: AppColors.text3,
-                  size: AppSpacing.myArenaReportsChevron,
-                ),
-              ],
+          if (!isLast)
+            const Divider(
+              height: AppSpacing.myArenaReportsDividerHeight,
+              color: AppColors.divider,
             ),
-          ),
-        ),
+        ],
       ),
     );
   }
@@ -368,14 +379,17 @@ class _ReportIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.myArenaReportsIconBox,
-      height: AppSpacing.myArenaReportsIconBox,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.mdRadius,
+    return SizedBox.square(
+      dimension: AppSpacing.myArenaReportsIconBox,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: 0.14),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(
+          child: Icon(icon, color: color, size: AppSpacing.myArenaReportsIcon),
+        ),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.myArenaReportsIcon),
     );
   }
 }

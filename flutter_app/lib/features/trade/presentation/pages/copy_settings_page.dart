@@ -70,7 +70,9 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 112 : 28);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.copySettingsBottomInsetVisual
+            : AppSpacing.copySettingsBottomInsetNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,7 +91,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopySettingsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.copySettingsScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 0,
@@ -104,7 +106,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                             ? 'Circuit breaker: on'
                             : 'Circuit breaker: off',
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.cardGap),
                       _SettingsSection(
                         label: 'Cài đặt mặc định',
                         accent: _settingsPrimary,
@@ -269,7 +271,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: AppSpacing.x3),
                               Expanded(
                                 child: _ChannelButton(
                                   key: CopySettingsPage.pushChannelKey,
@@ -316,7 +318,7 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: AppSpacing.x1),
                       _SaveButton(
                         saved: _saved,
                         onTap: () {

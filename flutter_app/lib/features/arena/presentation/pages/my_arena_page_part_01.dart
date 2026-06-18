@@ -15,17 +15,12 @@ class _PointsHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: _arenaAccent,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.contentPad,
-              AppSpacing.contentPad,
-              AppSpacing.x4,
-            ),
+            padding: AppSpacing.arenaPaddingX5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,7 +44,7 @@ class _PointsHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -82,12 +77,7 @@ class _PointsHero extends StatelessWidget {
             color: AppColors.divider,
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x4,
-              AppSpacing.contentPad,
-              AppSpacing.contentPad,
-            ),
+            padding: AppSpacing.arenaPaddingX5,
             child: Row(
               children: [
                 Expanded(
@@ -145,10 +135,15 @@ class _PointsDelta extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
+            SizedBox(
               height: AppSpacing.myArenaDeltaDot,
               width: AppSpacing.myArenaDeltaDot,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color,
+                  shape: const CircleBorder(),
+                ),
+              ),
             ),
             const SizedBox(width: AppSpacing.x2),
             Flexible(
@@ -164,7 +159,7 @@ class _PointsDelta extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           value,
           style: AppTextStyles.base.copyWith(
@@ -226,7 +221,7 @@ class _StatsGrid extends StatelessWidget {
             Expanded(child: _ArenaStatCard(item: items[1])),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Row(
           children: [
             Expanded(child: _ArenaStatCard(item: items[2])),
@@ -264,7 +259,7 @@ class _ArenaStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       constraints: const BoxConstraints(
         minHeight: AppSpacing.myArenaStatCardMinHeight,
       ),
@@ -273,17 +268,21 @@ class _ArenaStatCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 height: AppSpacing.myArenaStatIconBox,
                 width: AppSpacing.myArenaStatIconBox,
-                decoration: BoxDecoration(
-                  color: item.color.withValues(alpha: .14),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: Icon(
-                  item.icon,
-                  color: item.color,
-                  size: AppSpacing.myArenaStatIcon,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: item.color.withValues(alpha: .14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.mdRadius,
+                    ),
+                  ),
+                  child: Icon(
+                    item.icon,
+                    color: item.color,
+                    size: AppSpacing.myArenaStatIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -300,7 +299,7 @@ class _ArenaStatCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           Text(
             item.value,
             maxLines: 1,
@@ -312,7 +311,7 @@ class _ArenaStatCard extends StatelessWidget {
               height: AppSpacing.myArenaBalanceLineHeight,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             item.subtitle,
             maxLines: 2,
@@ -377,34 +376,36 @@ class _QuickLinkButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.myArenaQuickLinkHeight,
-          decoration: BoxDecoration(
+          child: Material(
             color: AppColors.surface2,
-            border: Border.all(color: AppColors.cardBorder),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: AppColors.text2,
-                size: AppSpacing.myArenaQuickLinkIcon,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: const BorderSide(color: AppColors.cardBorder),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  color: AppColors.text2,
+                  size: AppSpacing.myArenaQuickLinkIcon,
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Flexible(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -508,31 +509,38 @@ class _ArenaTabPill extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
+        child: SizedBox(
           height: AppSpacing.myArenaTabHeight,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-          decoration: BoxDecoration(
+          child: Material(
             color: active ? AppColors.warn08 : AppColors.surface2,
-            border: Border.all(
-              color: active ? AppColors.warningBorder : AppColors.cardBorder,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(config.icon, color: color, size: AppSpacing.myArenaTabIcon),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                config.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.myArenaBalanceLineHeight,
-                ),
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(
+                color: active ? AppColors.warningBorder : AppColors.cardBorder,
               ),
-            ],
+            ),
+            child: Padding(
+              padding: AppSpacing.arenaHorizontalPaddingX4,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    config.icon,
+                    color: color,
+                    size: AppSpacing.myArenaTabIcon,
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Text(
+                    config.label,
+                    style: AppTextStyles.micro.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                      height: AppSpacing.myArenaBalanceLineHeight,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

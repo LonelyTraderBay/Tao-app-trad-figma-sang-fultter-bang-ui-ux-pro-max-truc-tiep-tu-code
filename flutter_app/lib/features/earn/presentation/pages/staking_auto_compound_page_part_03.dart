@@ -11,7 +11,7 @@ class _SuccessToast extends StatelessWidget {
       key: StakingAutoCompoundPage.successToastKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -47,25 +47,25 @@ class _CheckBoxIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 160),
-      width: AppSpacing.x5,
-      height: AppSpacing.x5,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.x5,
+      child: Material(
         color: checked ? AppColors.buy : AppColors.transparent,
-        borderRadius: AppRadii.smRadius,
-        border: Border.all(
-          color: checked ? AppColors.buy : AppColors.borderSolid,
-          width: AppSpacing.stakingAutoCompoundCheckBorderWidth,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.smRadius,
+          side: BorderSide(
+            color: checked ? AppColors.buy : AppColors.borderSolid,
+            width: AppSpacing.stakingAutoCompoundCheckBorderWidth,
+          ),
         ),
+        child: checked
+            ? const Icon(
+                Icons.check_rounded,
+                color: AppColors.onAccent,
+                size: AppSpacing.iconSm,
+              )
+            : null,
       ),
-      child: checked
-          ? const Icon(
-              Icons.check_rounded,
-              color: AppColors.onAccent,
-              size: AppSpacing.iconSm,
-            )
-          : null,
     );
   }
 }
@@ -83,25 +83,27 @@ class _ToggleSwitch extends StatelessWidget {
       toggled: enabled,
       child: GestureDetector(
         onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
+        child: SizedBox(
           width: AppSpacing.stakingAutoCompoundToggleWidth,
           height: AppSpacing.stakingAutoCompoundToggleHeight,
-          padding: const EdgeInsets.all(AppSpacing.x1),
-          decoration: BoxDecoration(
+          child: Material(
             color: enabled ? AppColors.buy : AppColors.surface3,
             borderRadius: AppRadii.xlRadius,
-          ),
-          child: AnimatedAlign(
-            duration: const Duration(milliseconds: 180),
-            curve: Curves.easeOut,
-            alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-            child: Container(
-              width: AppSpacing.x5,
-              height: AppSpacing.x5,
-              decoration: const BoxDecoration(
-                color: AppColors.onAccent,
-                shape: BoxShape.circle,
+            child: Padding(
+              padding: AppSpacing.earnPaddingX1,
+              child: AnimatedAlign(
+                duration: const Duration(milliseconds: 180),
+                curve: Curves.easeOut,
+                alignment: enabled
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
+                child: const SizedBox.square(
+                  dimension: AppSpacing.x5,
+                  child: Material(
+                    color: AppColors.onAccent,
+                    shape: CircleBorder(),
+                  ),
+                ),
               ),
             ),
           ),

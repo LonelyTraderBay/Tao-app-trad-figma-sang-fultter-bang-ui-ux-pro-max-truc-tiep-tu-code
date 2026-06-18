@@ -91,11 +91,11 @@ class _BenefitRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 2),
+          padding: AppSpacing.p2pKycChecklistIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: color,
-            size: 14,
+            size: AppSpacing.p2pKycChecklistIcon,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -104,7 +104,7 @@ class _BenefitRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              height: 1.45,
+              height: AppSpacing.p2pKycReadableLineHeight,
             ),
           ),
         ),
@@ -123,7 +123,7 @@ class _KycSupportCard extends StatelessWidget {
     return VitCard(
       key: P2PKycRequirementsPage.supportKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pKycCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -148,7 +148,7 @@ class _KycSupportCard extends StatelessWidget {
                   snapshot.supportBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pKycReadableLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x3),

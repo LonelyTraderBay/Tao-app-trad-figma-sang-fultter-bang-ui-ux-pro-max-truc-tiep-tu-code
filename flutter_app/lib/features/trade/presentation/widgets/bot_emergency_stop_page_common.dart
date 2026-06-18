@@ -17,19 +17,15 @@ class _StickyActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomPadding),
-      decoration: BoxDecoration(
-        color: _stopBackground.withValues(alpha: .94),
-        border: Border(
-          top: BorderSide(color: AppColors.cardBorder.withValues(alpha: .7)),
-        ),
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.tradeBotFooterPadding.copyWith(bottom: bottomPadding),
       child: Row(
         children: [
           Expanded(
             child: SizedBox(
-              height: 44,
+              height: AppSpacing.tradeBotFooterButtonHeight,
               child: FilledButton(
                 key: BotEmergencyStopPage.cancelKey,
                 onPressed: onCancel,
@@ -44,16 +40,15 @@ class _StickyActions extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tradeBotCardGap),
           Expanded(
             child: SizedBox(
-              height: 44,
+              height: AppSpacing.tradeBotFooterButtonHeight,
               child: FilledButton.icon(
                 key: BotEmergencyStopPage.submitKey,
                 onPressed: canSubmit ? onSubmit : null,
@@ -70,8 +65,8 @@ class _StickyActions extends StatelessWidget {
                 ),
                 icon: stopping
                     ? const SizedBox(
-                        width: 15,
-                        height: 15,
+                        width: AppSpacing.iconSm,
+                        height: AppSpacing.iconSm,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
                           valueColor: AlwaysStoppedAnimation<Color>(
@@ -81,7 +76,7 @@ class _StickyActions extends StatelessWidget {
                       )
                     : Icon(
                         Icons.pause_rounded,
-                        size: 16,
+                        size: AppSpacing.iconSm,
                         color: canSubmit
                             ? AppColors.onAccent
                             : AppColors.text3.withValues(alpha: .32),
@@ -95,7 +90,6 @@ class _StickyActions extends StatelessWidget {
                         ? AppColors.onAccent
                         : AppColors.text3.withValues(alpha: .32),
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
               ),
@@ -114,26 +108,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _stopPrimary,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _stopPrimary,
     );
   }
 }
@@ -147,21 +125,12 @@ class _RadioMark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = danger ? _stopRed : _stopOptionBorder;
-    return Container(
-      width: 20,
-      height: 20,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: color, width: 2),
-      ),
-      child: selected
-          ? Container(
-              width: 10,
-              height: 10,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-            )
-          : null,
+    return Icon(
+      selected
+          ? Icons.radio_button_checked_rounded
+          : Icons.radio_button_unchecked_rounded,
+      color: color,
+      size: AppSpacing.contentPad,
     );
   }
 }
@@ -174,22 +143,12 @@ class _CheckboxMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 24,
-      height: 24,
-      margin: const EdgeInsets.only(top: 1),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: selected ? color : AppColors.transparent,
-        border: Border.all(
-          color: selected ? color : _stopOptionBorder,
-          width: 2,
-        ),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: selected
-          ? const Icon(Icons.check_rounded, color: AppColors.onAccent, size: 16)
-          : null,
+    return Icon(
+      selected
+          ? Icons.check_box_rounded
+          : Icons.check_box_outline_blank_rounded,
+      color: selected ? color : _stopOptionBorder,
+      size: AppSpacing.tradeBotCheckbox,
     );
   }
 }

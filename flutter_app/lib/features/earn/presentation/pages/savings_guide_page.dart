@@ -78,7 +78,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.defaultPadding,
                     gap: VitContentGap.defaultGap,
@@ -87,7 +87,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                         VitCard(
                           variant: VitCardVariant.standard,
                           radius: VitCardRadius.md,
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: SavingsGuideTutorialsTab(
                             snapshot: snapshot,
                             completedTutorials: _completedTutorials,
@@ -98,7 +98,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                         VitCard(
                           variant: VitCardVariant.standard,
                           radius: VitCardRadius.md,
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: SavingsGuideGlossaryTab(snapshot: snapshot),
                         ),
                     ],
@@ -127,22 +127,17 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
             return FractionallySizedBox(
               heightFactor: 0.82,
               child: DecoratedBox(
-                decoration: const BoxDecoration(
+                decoration: const ShapeDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(AppRadii.xl),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.sheetTopRadius,
                   ),
                 ),
                 child: SafeArea(
                   top: false,
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x5,
-                      AppSpacing.contentPad,
-                      AppSpacing.x6,
-                    ),
+                    padding: AppSpacing.earnSheetContentPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

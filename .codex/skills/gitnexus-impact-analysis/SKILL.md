@@ -19,7 +19,7 @@ shared utility changes, and pre-commit reviews.
 If the index is stale, run:
 
 ```bash
-node .gitnexus/run.cjs analyze
+node .gitnexus/run.cjs analyze --skip-agents-md --skip-skills
 ```
 
 ## Direction

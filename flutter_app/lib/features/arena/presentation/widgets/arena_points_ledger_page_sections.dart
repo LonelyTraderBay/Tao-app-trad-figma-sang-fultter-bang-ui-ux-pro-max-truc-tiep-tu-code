@@ -8,7 +8,7 @@ class _BalanceSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPointsLedgerCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -133,28 +133,32 @@ class _FilterButton extends StatelessWidget {
         key: ArenaPointsLedgerPage.filterKey(filter.id),
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
+        child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.buttonCompact,
           ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            color: active ? AppColors.primary12 : AppColors.surface2,
-            border: Border.all(
-              color: active ? AppColors.primary30 : AppColors.borderSolid,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: active ? AppColors.primary12 : AppColors.surface2,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.smRadius,
+                side: BorderSide(
+                  color: active ? AppColors.primary30 : AppColors.borderSolid,
+                ),
+              ),
             ),
-            borderRadius: AppRadii.smRadius,
-          ),
-          child: Text(
-            filter.label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.primary : AppColors.text2,
-              fontWeight: AppTextStyles.medium,
-              height: AppSpacing.arenaPointsCompactLineHeight,
+            child: Padding(
+              padding: AppSpacing.arenaPointsLedgerFilterPadding,
+              child: Center(
+                child: Text(
+                  filter.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: active ? AppColors.primary : AppColors.text2,
+                    fontWeight: AppTextStyles.medium,
+                    height: AppSpacing.arenaPointsCompactLineHeight,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -171,7 +175,7 @@ class _LedgerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         children: [
@@ -207,10 +211,7 @@ class _LedgerRow extends StatelessWidget {
           context.go(AppRoutePaths.arenaLedgerEntry(entry.id));
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.rowPy,
-          ),
+          padding: AppSpacing.arenaPointsLedgerRowPadding,
           child: Row(
             children: [
               _LedgerIcon(typeId: entry.typeId, color: color),
@@ -302,17 +303,20 @@ class _LedgerIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.arenaPointsLedgerIconBox,
-      height: AppSpacing.arenaPointsLedgerIconBox,
-      decoration: BoxDecoration(
-        color: _entryTint(typeId),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Icon(
-        _entryIcon(typeId),
-        color: color,
-        size: AppSpacing.arenaPointsLedgerGlyph,
+    return SizedBox.square(
+      dimension: AppSpacing.arenaPointsLedgerIconBox,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: _entryTint(typeId),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(
+          child: Icon(
+            _entryIcon(typeId),
+            color: color,
+            size: AppSpacing.arenaPointsLedgerGlyph,
+          ),
+        ),
       ),
     );
   }
@@ -326,21 +330,20 @@ class _TypeBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.arenaPointsTypeBadgeVerticalPadding,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.arenaPointsCompactLineHeight,
+      child: Padding(
+        padding: AppSpacing.arenaPointsLedgerBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.arenaPointsCompactLineHeight,
+          ),
         ),
       ),
     );
@@ -355,7 +358,7 @@ class _AuditNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPointsLedgerNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

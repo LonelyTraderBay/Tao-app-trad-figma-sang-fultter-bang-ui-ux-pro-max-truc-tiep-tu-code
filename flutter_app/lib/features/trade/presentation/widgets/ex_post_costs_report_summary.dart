@@ -8,16 +8,16 @@ class _ComplianceNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
+      padding: AppSpacing.exPostCostsReportNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.text1,
-            size: 16,
+            size: AppSpacing.exPostCostsReportNoticeIcon,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.exPostCostsReportNoticeIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +29,7 @@ class _ComplianceNotice extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.exPostCostsReportNoticeBodyGap),
                 Text(
                   'This report shows the actual costs you paid in $year. '
                   'Required by PRIIPs regulation.',
@@ -61,9 +61,9 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(12, 15, 12, 13),
+      padding: AppSpacing.exPostCostsReportSummaryPadding,
       child: SizedBox(
-        height: 46,
+        height: AppSpacing.exPostCostsReportSummaryHeight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -71,7 +71,7 @@ class _SummaryCard extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.2,
+                height: AppSpacing.exPostCostsReportSummaryLineHeight,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -104,38 +104,18 @@ class _YearTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 53,
-      padding: EdgeInsets.zero,
-      child: Row(
-        children: [
+      height: AppSpacing.x7,
+      padding: AppSpacing.zeroInsets,
+      child: VitTabBar(
+        activeKey: '$activeYear',
+        onChanged: (year) => onChanged(int.parse(year)),
+        variant: VitTabBarVariant.underline,
+        tabs: [
           for (final report in reports)
-            Expanded(
-              child: InkWell(
-                key: ExPostCostsReportPage.tabKey(report.year),
-                onTap: () => onChanged(report.year),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          '${report.year}',
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeYear == report.year
-                                ? _reportPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: activeYear == report.year ? 100 : 0,
-                      height: 2,
-                      color: _reportPrimary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: '${report.year}',
+              label: '${report.year}',
+              widgetKey: ExPostCostsReportPage.tabKey(report.year),
             ),
         ],
       ),
@@ -159,7 +139,7 @@ class _CostBreakdownCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
+      padding: AppSpacing.exPostCostsReportBreakdownPadding,
       child: Column(
         children: [
           Row(
@@ -167,7 +147,7 @@ class _CostBreakdownCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: AppSpacing.exPostCostsReportBreakdownTitlePadding,
                   child: Text(
                     title,
                     style: AppTextStyles.caption.copyWith(
@@ -186,7 +166,9 @@ class _CostBreakdownCard extends StatelessWidget {
                       color: AppColors.text1,
                     ),
                   ),
-                  const SizedBox(height: 9),
+                  const SizedBox(
+                    height: AppSpacing.exPostCostsReportBreakdownEstimateGap,
+                  ),
                   Text(
                     'Est: ${_formatEur(estimate)}',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -196,7 +178,9 @@ class _CostBreakdownCard extends StatelessWidget {
             ],
           ),
           if (note != null) ...[
-            const SizedBox(height: 22),
+            const SizedBox(
+              height: AppSpacing.exPostCostsReportBreakdownNoteGap,
+            ),
             _VarianceNoteView(note: note!),
           ],
         ],

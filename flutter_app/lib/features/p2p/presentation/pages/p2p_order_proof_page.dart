@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -79,15 +78,16 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                   child: SingleChildScrollView(
                     key: P2POrderProofPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.p2pFinancialSafetyBottomPadding(
+                      bottomInset,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _OrderProofSummary(order: snapshot.order),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.contentPad,
-                          ),
+                          padding:
+                              AppSpacing.p2pFinancialSafetyHorizontalPadding,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [

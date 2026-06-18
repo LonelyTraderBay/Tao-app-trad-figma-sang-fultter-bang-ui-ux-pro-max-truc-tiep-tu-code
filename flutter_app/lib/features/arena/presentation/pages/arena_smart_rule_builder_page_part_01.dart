@@ -42,15 +42,21 @@ class _SmartStepper extends StatelessWidget {
             child: _SmartStepMarker(item: steps[i], activeStep: step),
           ),
           if (i != steps.length - 1)
-            Container(
-              width: AppSpacing.x5,
-              height: AppSpacing.arenaSmartRuleStepperLineHeight,
-              margin: const EdgeInsets.only(bottom: AppSpacing.x5),
-              decoration: BoxDecoration(
-                color: steps[i].index < step
-                    ? AppColors.buy
-                    : AppColors.surface3,
-                borderRadius: AppRadii.xsRadius,
+            Padding(
+              padding: AppSpacing.arenaSmartRuleStepperLineMargin,
+              child: SizedBox(
+                width: AppSpacing.x5,
+                height: AppSpacing.arenaSmartRuleStepperLineHeight,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: steps[i].index < step
+                        ? AppColors.buy
+                        : AppColors.surface3,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.xsRadius,
+                    ),
+                  ),
+                ),
               ),
             ),
         ],
@@ -77,30 +83,36 @@ class _SmartStepMarker extends StatelessWidget {
 
     return Column(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.arenaSmartRuleStepDot,
           height: AppSpacing.arenaSmartRuleStepDot,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: active ? AppColors.accent20 : AppColors.borderSolid,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: active ? AppColors.accent20 : AppColors.borderSolid,
+                ),
+              ),
+            ),
+            child: Center(
+              child: done
+                  ? const Icon(
+                      Icons.check_rounded,
+                      color: AppColors.navCenterIcon,
+                      size: AppSpacing.arenaSmartRuleStepIcon,
+                    )
+                  : Text(
+                      '${item.index}',
+                      style: AppTextStyles.micro.copyWith(
+                        color: active
+                            ? AppColors.navCenterIcon
+                            : AppColors.text3,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
             ),
           ),
-          alignment: Alignment.center,
-          child: done
-              ? const Icon(
-                  Icons.check_rounded,
-                  color: AppColors.navCenterIcon,
-                  size: AppSpacing.arenaSmartRuleStepIcon,
-                )
-              : Text(
-                  '${item.index}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: active ? AppColors.navCenterIcon : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
         ),
         const SizedBox(height: AppSpacing.x1),
         Text(
@@ -153,7 +165,7 @@ class _ClarityScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final result = _ClarityResult(score);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaSmartRuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -233,10 +245,7 @@ class _GuidanceLink extends StatelessWidget {
       key: ArenaSmartRuleBuilderPage.guidanceKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.arenaSmartRuleLinkPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -332,10 +341,7 @@ class _DomainField extends StatelessWidget {
         borderColor: domain == null
             ? AppColors.borderSolid
             : AppColors.accent20,
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x4,
-          vertical: AppSpacing.x4,
-        ),
+        padding: AppSpacing.arenaSmartRuleSelectorPadding,
         onTap: onTap,
         child: Row(
           children: [
@@ -417,7 +423,7 @@ class _ChallengeTypeTile extends StatelessWidget {
       },
       borderRadius: AppRadii.mdRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+        padding: AppSpacing.arenaSmartRuleTilePadding,
         child: Row(
           children: [
             Icon(

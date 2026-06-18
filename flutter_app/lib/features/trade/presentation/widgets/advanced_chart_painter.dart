@@ -71,7 +71,7 @@ class _AdvancedTradeChartPainter extends CustomPainter {
     double Function(double value) yFor,
     double step,
   ) {
-    final paint = Paint()..strokeWidth = 1;
+    final paint = Paint()..strokeWidth = AppSpacing.dividerHairline;
     final bodyWidth = math.max(2.6, step * .48);
 
     for (var i = 0; i < source.length; i++) {
@@ -90,7 +90,7 @@ class _AdvancedTradeChartPainter extends CustomPainter {
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromLTWH(x - bodyWidth / 2, top, bodyWidth, height),
-          const Radius.circular(.8),
+          AppRadii.hairlineCorner,
         ),
         paint..color = color.withValues(alpha: .88),
       );
@@ -202,7 +202,7 @@ class _AdvancedTradeChartPainter extends CustomPainter {
         text: 'VOL',
         style: AppTextStyles.chartLabelXs.copyWith(
           color: AppColors.sell,
-          height: 1,
+          height: AppSpacing.tradeBotLineHeightTight,
         ),
       ),
       textDirection: TextDirection.ltr,

@@ -16,14 +16,13 @@ class _SummaryBanner extends StatelessWidget {
       borderColor: _pendingBorder,
       child: Row(
         children: [
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             width: AppSpacing.walletPendingSummaryIconBox,
             height: AppSpacing.walletPendingSummaryIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.cardRadius,
-            ),
             alignment: Alignment.center,
+            borderColor: color.withValues(alpha: .22),
             child: Icon(
               hasPending
                   ? Icons.access_time_rounded
@@ -62,24 +61,12 @@ class _SummaryBanner extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.walletPendingRowGap),
-          GestureDetector(
+          VitIconButton(
             key: PendingDepositsPage.refreshKey,
-            onTap: onRefresh,
-            behavior: HitTestBehavior.opaque,
-            child: Container(
-              width: AppSpacing.walletPendingRefreshButton,
-              height: AppSpacing.walletPendingRefreshButton,
-              decoration: BoxDecoration(
-                color: AppColors.surface3,
-                borderRadius: AppRadii.cardRadius,
-              ),
-              alignment: Alignment.center,
-              child: const Icon(
-                Icons.refresh_rounded,
-                color: AppColors.text2,
-                size: AppSpacing.walletPendingRefreshGlyph,
-              ),
-            ),
+            icon: Icons.refresh_rounded,
+            tooltip: 'Refresh pending deposits',
+            size: VitIconButtonSize.sm,
+            onPressed: onRefresh,
           ),
         ],
       ),
@@ -110,33 +97,15 @@ class _FilterChips extends StatelessWidget {
       runSpacing: AppSpacing.walletPendingChipGap,
       children: [
         for (final item in items)
-          GestureDetector(
+          VitStatusPill(
             key: PendingDepositsPage.filterKey(item.$1.name),
+            label: item.$2,
+            status: active == item.$1
+                ? VitStatusPillStatus.info
+                : VitStatusPillStatus.neutral,
+            size: VitStatusPillSize.md,
+            outline: active != item.$1,
             onTap: () => onChanged(item.$1),
-            behavior: HitTestBehavior.opaque,
-            child: Container(
-              height: AppSpacing.walletPendingChipHeight,
-              padding: AppSpacing.walletPendingChipPadding,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: active == item.$1
-                    ? _pendingPrimary.withValues(alpha: .14)
-                    : AppColors.transparent,
-                borderRadius: AppRadii.inputRadius,
-                border: Border.all(
-                  color: active == item.$1
-                      ? _pendingPrimary.withValues(alpha: .45)
-                      : AppColors.transparent,
-                ),
-              ),
-              child: Text(
-                item.$2,
-                style: AppTextStyles.micro.copyWith(
-                  color: active == item.$1 ? _pendingPrimary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
           ),
       ],
     );
@@ -166,14 +135,13 @@ class _DepositCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              VitCard(
+                variant: VitCardVariant.inner,
+                radius: VitCardRadius.sm,
                 width: AppSpacing.walletPendingAssetIconBox,
                 height: AppSpacing.walletPendingAssetIconBox,
-                decoration: BoxDecoration(
-                  color: config.color.withValues(alpha: .12),
-                  borderRadius: AppRadii.cardRadius,
-                ),
                 alignment: Alignment.center,
+                borderColor: config.color.withValues(alpha: .22),
                 child: Icon(
                   Icons.south_west_rounded,
                   color: config.color,
@@ -277,19 +245,10 @@ class _DepositStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.walletPendingBadgePadding,
-      decoration: BoxDecoration(
-        color: config.color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        config.label,
-        style: AppTextStyles.micro.copyWith(
-          color: config.color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
+    return VitAccentPill(
+      label: config.label,
+      accentColor: config.color,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -339,12 +298,16 @@ class _ConfirmationProgress extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             for (var i = 0; i < dotCount; i++)
-              Container(
-                width: AppSpacing.walletPendingProgressDot,
-                height: AppSpacing.walletPendingProgressDot,
-                decoration: BoxDecoration(
-                  color: i < deposit.confirmations ? color : AppColors.surface3,
-                  borderRadius: AppRadii.pillRadius,
+              ClipRRect(
+                borderRadius: AppRadii.pillRadius,
+                child: SizedBox(
+                  width: AppSpacing.walletPendingProgressDot,
+                  height: AppSpacing.walletPendingProgressDot,
+                  child: ColoredBox(
+                    color: i < deposit.confirmations
+                        ? color
+                        : AppColors.surface3,
+                  ),
                 ),
               ),
           ],

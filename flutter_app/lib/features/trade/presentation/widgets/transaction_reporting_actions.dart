@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class TransactionReportingQuickActions extends StatelessWidget {
   const TransactionReportingQuickActions({
@@ -29,7 +30,7 @@ class TransactionReportingQuickActions extends StatelessWidget {
             onTap: onDashboard,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.x4),
         Expanded(
           child: _QuickActionCard(
             key: transactionReportingActionKey('arm-status'),
@@ -63,42 +64,37 @@ class _QuickActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      height: AppSpacing.buttonHero,
+      padding: AppSpacing.transactionReportingQuickActionCardPadding,
+      borderColor: transactionReportBorder,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 88,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: transactionReportPanel2,
-          border: Border.all(color: transactionReportBorder),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: 19),
-            const Spacer(),
-            Text(
-              title,
-              style: AppTextStyles.captionSm.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: color, size: AppSpacing.ctaLoadingIcon + 1),
+          const Spacer(),
+          Text(
+            title,
+            style: AppTextStyles.captionSm.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+              height: AppSpacing.transactionReportingLineHeightTight,
             ),
-            const SizedBox(height: 5),
-            Text(
-              subtitle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: 1,
-              ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            subtitle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: AppSpacing.transactionReportingLineHeightTight,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

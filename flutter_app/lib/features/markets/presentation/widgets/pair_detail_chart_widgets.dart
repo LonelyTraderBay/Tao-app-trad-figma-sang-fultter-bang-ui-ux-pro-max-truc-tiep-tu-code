@@ -72,42 +72,43 @@ class _ViewTab extends StatelessWidget {
       color: selected
           ? _marketPrimary.withValues(alpha: .2)
           : AppColors.transparent,
-      borderRadius: AppRadii.cardRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.cardRadius,
+        side: BorderSide(
+          color: selected
+              ? _marketPrimary.withValues(alpha: .45)
+              : AppColors.transparent,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.pairViewTabHeight,
-          padding: AppSpacing.pairViewTabPadding,
-          decoration: BoxDecoration(
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(
-              color: selected
-                  ? _marketPrimary.withValues(alpha: .45)
-                  : AppColors.transparent,
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: selected ? _marketPrimary : AppColors.text3,
-                size: AppSpacing.pairViewTabIcon,
-              ),
-              const SizedBox(width: AppSpacing.pairViewTabIconGap),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: selected ? _marketPrimary : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.pairViewTabPadding,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  color: selected ? _marketPrimary : AppColors.text3,
+                  size: AppSpacing.pairViewTabIcon,
+                ),
+                const SizedBox(width: AppSpacing.pairViewTabIconGap),
+                Flexible(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: selected ? _marketPrimary : AppColors.text3,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -133,20 +134,25 @@ class _TimeframeRow extends StatelessWidget {
               child: InkWell(
                 onTap: () => onChanged(item),
                 borderRadius: AppRadii.cardRadius,
-                child: Container(
-                  height: AppSpacing.pairTimeframeHeight,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
+                child: Center(
+                  child: Material(
                     color: active == item
                         ? _marketPrimary.withValues(alpha: .2)
                         : AppColors.transparent,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    item,
-                    style: AppTextStyles.badge.copyWith(
-                      color: active == item ? _marketPrimary : AppColors.text3,
-                      fontWeight: AppTextStyles.bold,
+                    shape: const CircleBorder(),
+                    child: SizedBox.square(
+                      dimension: AppSpacing.pairTimeframeHeight,
+                      child: Center(
+                        child: Text(
+                          item,
+                          style: AppTextStyles.badge.copyWith(
+                            color: active == item
+                                ? _marketPrimary
+                                : AppColors.text3,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -210,27 +216,29 @@ class _IndicatorChip extends StatelessWidget {
       color: selected
           ? _marketPrimary.withValues(alpha: .2)
           : AppColors.surface2,
-      borderRadius: AppRadii.cardRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.cardRadius,
+        side: BorderSide(
+          color: selected
+              ? _marketPrimary.withValues(alpha: .5)
+              : AppColors.borderSolid,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.pairIndicatorChipHeight,
-          padding: AppSpacing.pairIndicatorChipPadding,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected
-                  ? _marketPrimary.withValues(alpha: .5)
-                  : AppColors.borderSolid,
-            ),
-            borderRadius: AppRadii.cardRadius,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.badge.copyWith(
-              color: selected ? _marketPrimary : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.pairIndicatorChipPadding,
+            child: Center(
+              child: Text(
+                label,
+                style: AppTextStyles.badge.copyWith(
+                  color: selected ? _marketPrimary : AppColors.text3,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -248,23 +256,25 @@ class _AdvancedChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.warn.withValues(alpha: .12),
-      borderRadius: AppRadii.cardRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.cardRadius,
+        side: BorderSide(color: AppColors.warn.withValues(alpha: .32)),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.pairIndicatorChipHeight,
-          padding: AppSpacing.pairIndicatorChipPadding,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.warn.withValues(alpha: .32)),
-            borderRadius: AppRadii.cardRadius,
-          ),
-          child: Text(
-            'Nang cao',
-            style: AppTextStyles.badge.copyWith(
-              color: AppColors.warn,
-              fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.pairIndicatorChipPadding,
+            child: Center(
+              child: Text(
+                'Nang cao',
+                style: AppTextStyles.badge.copyWith(
+                  color: AppColors.warn,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -295,30 +305,34 @@ class _RiskWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: AppSpacing.pairRiskMargin,
-      padding: AppSpacing.pairRiskPadding,
-      decoration: BoxDecoration(
+    return Padding(
+      padding: AppSpacing.pairRiskMargin,
+      child: Material(
         color: AppColors.warn.withValues(alpha: .08),
-        border: Border.all(color: AppColors.warn.withValues(alpha: .24)),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.pairRiskIcon,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.warn.withValues(alpha: .24)),
+        ),
+        child: Padding(
+          padding: AppSpacing.pairRiskPadding,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.warning_amber_rounded,
+                color: AppColors.warn,
+                size: AppSpacing.pairRiskIcon,
+              ),
+              const SizedBox(width: AppSpacing.pairRiskGap),
+              Expanded(
+                child: Text(
+                  'Giao dich crypto co rui ro cao. Chi dau tu so tien ban co the chiu mat.',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.warn),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.pairRiskGap),
-          Expanded(
-            child: Text(
-              'Giao dich crypto co rui ro cao. Chi dau tu so tien ban co the chiu mat.',
-              style: AppTextStyles.micro.copyWith(color: AppColors.warn),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -352,17 +366,19 @@ class _LinkCard extends StatelessWidget {
           padding: AppSpacing.pairLinkPadding,
           child: Row(
             children: [
-              Container(
-                width: AppSpacing.pairLinkIconBox,
-                height: AppSpacing.pairLinkIconBox,
-                decoration: BoxDecoration(
-                  color: iconColor.withValues(alpha: .12),
+              Material(
+                color: iconColor.withValues(alpha: .12),
+                shape: const RoundedRectangleBorder(
                   borderRadius: AppRadii.mdRadius,
                 ),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: AppSpacing.pairLinkIcon,
+                child: SizedBox(
+                  width: AppSpacing.pairLinkIconBox,
+                  height: AppSpacing.pairLinkIconBox,
+                  child: Icon(
+                    icon,
+                    color: iconColor,
+                    size: AppSpacing.pairLinkIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.pairLinkGap),

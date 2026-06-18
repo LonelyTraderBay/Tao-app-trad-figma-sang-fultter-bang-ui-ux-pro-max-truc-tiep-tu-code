@@ -53,14 +53,13 @@ class _SummaryCard extends StatelessWidget {
       padding: AppSpacing.walletTransactionSummaryPadding,
       child: Column(
         children: [
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             width: AppSpacing.walletTransactionSummaryIconSize,
             height: AppSpacing.walletTransactionSummaryIconSize,
-            decoration: BoxDecoration(
-              color: type.color.withValues(alpha: .13),
-              borderRadius: AppRadii.cardRadius,
-            ),
             alignment: Alignment.center,
+            borderColor: type.color.withValues(alpha: .22),
             child: Icon(
               type.icon,
               color: AppColors.text1,
@@ -161,25 +160,33 @@ class _ProgressRow extends StatelessWidget {
       children: [
         Column(
           children: [
-            Container(
-              width: AppSpacing.walletTransactionProgressDotSize,
-              height: AppSpacing.walletTransactionProgressDotSize,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            ClipRRect(
+              borderRadius: AppRadii.pillRadius,
+              child: SizedBox(
+                width: AppSpacing.walletTransactionProgressDotSize,
+                height: AppSpacing.walletTransactionProgressDotSize,
+                child: ColoredBox(color: color),
+              ),
             ),
             if (!isLast)
-              Container(
-                width: AppSpacing.walletTransactionProgressLineWidth,
-                height: AppSpacing.walletTransactionStepLineHeight,
-                margin: const EdgeInsets.symmetric(
-                  vertical: AppSpacing.walletTransactionProgressLineSpacing,
+              Padding(
+                padding: AppSpacing.zeroInsets.copyWith(
+                  top: AppSpacing.walletTransactionProgressLineSpacing,
+                  bottom: AppSpacing.walletTransactionProgressLineSpacing,
                 ),
-                color: step.done ? _detailGreen : AppColors.borderSolid,
+                child: SizedBox(
+                  width: AppSpacing.walletTransactionProgressLineWidth,
+                  height: AppSpacing.walletTransactionStepLineHeight,
+                  child: ColoredBox(
+                    color: step.done ? _detailGreen : AppColors.borderSolid,
+                  ),
+                ),
               ),
           ],
         ),
         const SizedBox(width: AppSpacing.walletTransactionSummarySectionVPad),
         Padding(
-          padding: EdgeInsets.only(
+          padding: AppSpacing.zeroInsets.copyWith(
             bottom: isLast ? 0 : AppSpacing.walletTransactionSummarySectionVPad,
           ),
           child: Column(
@@ -289,23 +296,12 @@ class _DetailInfoRow extends StatelessWidget {
                 ),
                 if (row.copyable) ...[
                   const SizedBox(width: AppSpacing.walletHistoryEndListGap),
-                  GestureDetector(
+                  VitIconButton(
                     key: TransactionDetailPage.copyTxIdKey,
-                    onTap: onCopy,
-                    behavior: HitTestBehavior.opaque,
-                    child: Container(
-                      width: AppSpacing.walletTransactionCopyIconSize,
-                      height: AppSpacing.walletTransactionCopyIconSize,
-                      decoration: BoxDecoration(
-                        color: AppColors.hoverBg,
-                        borderRadius: AppRadii.smRadius,
-                      ),
-                      child: const Icon(
-                        Icons.copy_rounded,
-                        color: AppColors.text2,
-                        size: AppSpacing.walletTransactionCopyIconGlyph,
-                      ),
-                    ),
+                    icon: Icons.copy_rounded,
+                    tooltip: 'Copy transaction field',
+                    size: VitIconButtonSize.sm,
+                    onPressed: onCopy,
                   ),
                 ],
               ],

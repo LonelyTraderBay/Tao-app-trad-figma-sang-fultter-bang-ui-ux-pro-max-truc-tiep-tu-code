@@ -10,12 +10,13 @@ class _MilestoneDot extends StatelessWidget {
   Widget build(BuildContext context) {
     final unlocked = milestone.unlocked;
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: unlocked ? color : AppColors.surface3,
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: unlocked ? color : AppColors.borderSolid,
-          width: AppSpacing.savingsGoalMilestoneBorderWidth,
+        shape: CircleBorder(
+          side: BorderSide(
+            color: unlocked ? color : AppColors.borderSolid,
+            width: AppSpacing.savingsGoalMilestoneBorderWidth,
+          ),
         ),
       ),
       child: SizedBox(
@@ -52,7 +53,7 @@ class _TipCard extends StatelessWidget {
     return VitCard(
       key: SavingsGoalPage.tipKey(tip.title),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           _GoalIcon(iconKey: tip.iconKey, color: color),
@@ -138,7 +139,7 @@ class _CreateGoalSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.x5),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -190,7 +191,7 @@ class _TemplateTile extends StatelessWidget {
       key: SavingsGoalPage.templateKey(template.id),
       variant: VitCardVariant.inner,
       borderColor: selected ? color : null,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Row(
         children: [
@@ -306,7 +307,7 @@ class _GoalDetailSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             children: [
               _SheetMetric(
@@ -366,7 +367,7 @@ class _MilestoneRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      padding: AppSpacing.earnVerticalPaddingX3,
       child: Row(
         children: [
           _MilestoneDot(milestone: milestone, color: color),
@@ -412,7 +413,7 @@ class _ContributionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final automatic = contribution.source == 'Tự động';
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.earnVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -455,22 +456,17 @@ class _SheetFrame extends StatelessWidget {
     return FractionallySizedBox(
       heightFactor: heightFactor,
       child: DecoratedBox(
-        decoration: const BoxDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(AppRadii.xl),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.sheetTopLargeRadius,
           ),
         ),
         child: SafeArea(
           top: false,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x5,
-              AppSpacing.contentPad,
-              AppSpacing.x6,
-            ),
+            padding: AppSpacing.earnSheetContentPadding,
             child: child,
           ),
         ),

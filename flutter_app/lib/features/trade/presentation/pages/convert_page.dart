@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -19,11 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/convert_page_widgets.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part 'convert_page_part_01.dart';
 part 'convert_page_part_02.dart';
@@ -31,9 +26,6 @@ part '../widgets/convert_page_header_widgets.dart';
 part '../widgets/convert_page_amount_widgets.dart';
 
 const _tradePrimary = AppColors.primary;
-const _tradePrimaryDark = AppColors.primaryDark;
-const _chipBackground = AppColors.surface2;
-const _disabledPrimary = AppColors.surface3;
 
 enum _ConvertMode { market, limit, schedule }
 
@@ -107,7 +99,7 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 34 : 20);
+        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -124,7 +116,12 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
           ),
           child: SingleChildScrollView(
             key: ConvertPage.contentKey,
-            padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+            padding: AppSpacing.zeroInsets.copyWith(
+              left: AppSpacing.contentPad,
+              top: AppSpacing.rowPy,
+              right: AppSpacing.contentPad,
+              bottom: bottomInset,
+            ),
             child: VitPageContent(
               padding: VitContentPadding.none,
               fullBleed: true,
@@ -134,21 +131,21 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
                   mode: _mode,
                   onChanged: (value) => setState(() => _mode = value),
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: AppSpacing.x5),
                 _FavoriteHeader(),
-                const SizedBox(height: 9),
+                const SizedBox(height: AppSpacing.rowGap),
                 _FavoritePairs(
                   pairs: snapshot.favoritePairs,
                   activeFrom: fromAsset.symbol,
                   activeTo: toAsset.symbol,
                   onSelected: _selectFavoritePair,
                 ),
-                const SizedBox(height: 22),
+                const SizedBox(height: AppSpacing.x5),
                 _RateBar(
                   label: quote.quoteLabel,
                   countdown: '${quote.validSeconds}s',
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.x4),
                 _AmountCard(
                   label: 'Từ',
                   asset: fromAsset,
@@ -171,14 +168,14 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
                     onAssetTap: () => _showAssetPicker('to', snapshot.assets),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.x4),
                 const _ToolRow(),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.x4),
                 _PairMiniCard(
                   fromSymbol: fromAsset.symbol,
                   toSymbol: toAsset.symbol,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.x4),
                 _SlippageCard(
                   options: snapshot.slippageOptions,
                   active: _slippage,
@@ -187,22 +184,22 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
                     _receipt = null;
                   }),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.x4),
                 _ConvertRiskReviewPanel(
                   quote: quote,
                   fromSymbol: fromAsset.symbol,
                   toSymbol: toAsset.symbol,
                   slippage: _slippage,
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: AppSpacing.x5),
                 _SubmitButton(
                   enabled: quote.canSubmit,
                   receipt: _receipt,
                   onPressed: () => _submit(request),
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: AppSpacing.x5),
                 _HistoryHeader(),
-                const SizedBox(height: 9),
+                const SizedBox(height: AppSpacing.rowGap),
                 _HistoryList(records: snapshot.history),
               ],
             ),

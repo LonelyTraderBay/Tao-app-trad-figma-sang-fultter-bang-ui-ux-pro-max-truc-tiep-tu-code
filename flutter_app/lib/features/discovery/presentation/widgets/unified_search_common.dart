@@ -10,7 +10,7 @@ class _BoundaryDisclosure extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.disclosureKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       child: Text(
         'Lưu ý: Prediction Markets sử dụng USDT thật. Arena Challenges chỉ dùng Arena Points (không liên quan ví). Đây là trang khám phá, không phải trang giao dịch.\n$notes',
         textAlign: TextAlign.center,
@@ -57,15 +57,18 @@ class _AccentIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 42,
-      height: 42,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: AppRadii.cardRadius,
+    return SizedBox(
+      width: AppSpacing.discoveryAccentIconBox,
+      height: AppSpacing.discoveryAccentIconBox,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .13),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
+        ),
+        child: Center(child: Icon(icon, color: color, size: 19)),
       ),
-      child: Icon(icon, color: color, size: 19),
     );
   }
 }
@@ -83,29 +86,30 @@ class _ModuleBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        border: Border.all(color: color.withValues(alpha: .24)),
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .24)),
+          borderRadius: AppRadii.smRadius,
+        ),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 10),
-          const SizedBox(width: AppSpacing.x1),
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.discoveryBadgePadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: color, size: 10),
+            const SizedBox(width: AppSpacing.x1),
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -118,20 +122,19 @@ class _CountBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: const BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        '$count',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.discoveryBadgePadding,
+        child: Text(
+          '$count',
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -170,19 +173,24 @@ class _InitialsAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.ctaHeight,
       height: AppSpacing.ctaHeight,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppModuleAccents.arena.withValues(alpha: .12),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Text(
-        initials,
-        style: AppTextStyles.body.copyWith(
-          color: AppModuleAccents.arena,
-          fontWeight: AppTextStyles.bold,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: AppModuleAccents.arena.withValues(alpha: .12),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            initials,
+            style: AppTextStyles.body.copyWith(
+              color: AppModuleAccents.arena,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );

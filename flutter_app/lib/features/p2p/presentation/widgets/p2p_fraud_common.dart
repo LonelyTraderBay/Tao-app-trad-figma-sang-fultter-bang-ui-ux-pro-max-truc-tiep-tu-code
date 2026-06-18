@@ -7,35 +7,31 @@ class _Disclosure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return VitCard(
       key: P2PFraudPreventionPage.disclosureKey,
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppColors.divider),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.info_outline_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: 1.5,
-                ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      borderColor: AppColors.divider,
+      padding: AppSpacing.p2pFraudInnerPadding,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.info_outline_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                height: AppSpacing.p2pFraudDisclosureLineHeight,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -48,26 +44,9 @@ class _SeverityBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = _severityColor(severity);
-
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          _severityLabel(severity),
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: _severityLabel(severity),
+      accentColor: _severityColor(severity),
     );
   }
 }

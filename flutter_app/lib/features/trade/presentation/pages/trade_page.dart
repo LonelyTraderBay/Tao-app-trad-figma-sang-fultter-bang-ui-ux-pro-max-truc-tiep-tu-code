@@ -24,7 +24,6 @@ part 'trade_page_part_02.dart';
 part 'trade_page_part_03.dart';
 
 const _tradePrimary = AppColors.primary;
-const _fieldBackground = AppColors.surface2;
 
 enum TradeChartVariant { defaultRoute, pairRoute }
 

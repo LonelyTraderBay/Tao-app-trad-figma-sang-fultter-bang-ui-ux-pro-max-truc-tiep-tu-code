@@ -13,65 +13,46 @@ class _AcknowledgmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: BotRiskDisclosurePage.acknowledgmentKey,
       onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        constraints: const BoxConstraints(minHeight: 101),
-        padding: const EdgeInsets.fromLTRB(12, 14, 12, 14),
-        decoration: BoxDecoration(
-          color: _botRiskPanel2,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 24,
-              height: 24,
-              margin: const EdgeInsets.only(top: 2),
-              decoration: BoxDecoration(
-                color: acknowledged ? _botRiskRed : AppColors.transparent,
-                border: Border.all(
-                  color: acknowledged ? _botRiskRed : AppColors.borderSolid,
+      variant: VitCardVariant.inner,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotApiKeyCardMinHeight,
+      ),
+      padding: AppSpacing.tradeBotCardPadding,
+      borderColor: acknowledged ? _botRiskRed : AppColors.borderSolid,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            acknowledged
+                ? Icons.check_box_rounded
+                : Icons.check_box_outline_blank_rounded,
+            color: acknowledged ? _botRiskRed : AppColors.text3,
+            size: AppSpacing.tradeBotCheckbox,
+          ),
+          const SizedBox(width: AppSpacing.tradeBotCardGap),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  snapshot.acknowledgmentTitle,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-                borderRadius: AppRadii.mdRadius,
-              ),
-              child: acknowledged
-                  ? const Icon(
-                      Icons.check_circle_outline_rounded,
-                      color: AppColors.onAccent,
-                      size: 16,
-                    )
-                  : null,
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                Text(
+                  snapshot.acknowledgmentDescription,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    snapshot.acknowledgmentTitle,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1.28,
-                    ),
-                  ),
-                  const SizedBox(height: 7),
-                  Text(
-                    snapshot.acknowledgmentDescription,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                      height: 1.38,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -90,26 +71,12 @@ class _RiskCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCtaButton(
       key: BotRiskDisclosurePage.ctaKey,
-      height: 44,
-      child: FilledButton(
-        onPressed: acknowledged ? onPressed : null,
-        style: FilledButton.styleFrom(
-          backgroundColor: acknowledged ? _botRiskRed : _botRiskPanel2,
-          disabledBackgroundColor: _botRiskPanel2,
-          disabledForegroundColor: AppColors.text3,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-        ),
-        child: Text(
-          acknowledged ? snapshot.enabledCta : snapshot.disabledCta,
-          style: AppTextStyles.body.copyWith(
-            color: acknowledged ? AppColors.onAccent : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ),
+      height: AppSpacing.tradeBotSheetActionHeight,
+      variant: VitCtaButtonVariant.danger,
+      onPressed: acknowledged ? onPressed : null,
+      child: Text(acknowledged ? snapshot.enabledCta : snapshot.disabledCta),
     );
   }
 }
@@ -123,7 +90,7 @@ class _HelpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
+      padding: AppSpacing.tradeBotCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -132,24 +99,19 @@ class _HelpCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.2,
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Text(
             snapshot.helpDescription,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              height: 1.45,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.tradeBotRowGap),
           Text(
             snapshot.helpCta,
             style: AppTextStyles.caption.copyWith(
               color: _botRiskPrimary,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
         ],
@@ -165,28 +127,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 4,
-          height: 15,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: _botRiskPrimary,
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _botRiskPrimary,
     );
   }
 }
@@ -202,31 +146,16 @@ class _BulletText extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '•',
-          style: AppTextStyles.caption.copyWith(color: color, height: 1.45),
-        ),
-        const SizedBox(width: 9),
+        Text('â€¢', style: AppTextStyles.caption.copyWith(color: color)),
+        const SizedBox(width: AppSpacing.tradeBotRowGap),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(color: color, height: 1.45),
+            style: AppTextStyles.caption.copyWith(color: color),
           ),
         ),
       ],
     );
-  }
-}
-
-class _Card extends StatelessWidget {
-  const _Card({super.key, required this.child, required this.padding});
-
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(padding: padding, child: child);
   }
 }
 

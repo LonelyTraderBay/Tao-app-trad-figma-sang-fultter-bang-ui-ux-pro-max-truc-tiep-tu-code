@@ -8,7 +8,7 @@ class _SocialDominanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.socialSentimentDominancePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -19,12 +19,12 @@ class _SocialDominanceCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.socialSentimentDominanceTitleGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: SizedBox(
               width: double.infinity,
-              height: 20,
+              height: AppSpacing.socialSentimentDominanceBarHeight,
               child: Row(
                 children: [
                   Expanded(
@@ -43,19 +43,23 @@ class _SocialDominanceCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.socialSentimentDominanceTitleGap),
           Row(
             children: [
               _DominanceLegend(
                 label: 'BTC ${global.socialDominanceBtc}%',
                 color: AppAssetColors.btc,
               ),
-              const SizedBox(width: 16),
+              const SizedBox(
+                width: AppSpacing.socialSentimentDominanceLegendGap,
+              ),
               _DominanceLegend(
                 label: 'ETH ${global.socialDominanceEth}%',
                 color: AppAssetColors.eth,
               ),
-              const SizedBox(width: 16),
+              const SizedBox(
+                width: AppSpacing.socialSentimentDominanceLegendGap,
+              ),
               _DominanceLegend(
                 label: 'Khác ${global.socialDominanceOther}%',
                 color: AppAssetColors.other,
@@ -79,12 +83,12 @@ class _DominanceLegend extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        Icon(
+          Icons.circle,
+          color: color,
+          size: AppSpacing.socialSentimentLegendDot,
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: AppSpacing.socialSentimentLegendGap),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -102,16 +106,16 @@ class _TimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      padding: AppSpacing.socialSentimentTimelinePadding,
       child: Column(
         children: [
           for (final point in points)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3),
+              padding: AppSpacing.socialSentimentTimelineRowPadding,
               child: Row(
                 children: [
                   SizedBox(
-                    width: 56,
+                    width: AppSpacing.socialSentimentTimelineTimeWidth,
                     child: Text(
                       point.time,
                       textAlign: TextAlign.right,
@@ -120,12 +124,14 @@ class _TimelineCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(
+                    width: AppSpacing.socialSentimentTimelineTimeGap,
+                  ),
                   Expanded(
                     child: ClipRRect(
                       borderRadius: AppRadii.xlRadius,
                       child: SizedBox(
-                        height: 6,
+                        height: AppSpacing.socialSentimentTimelineBarHeight,
                         child: Stack(
                           children: [
                             const ColoredBox(
@@ -147,9 +153,11 @@ class _TimelineCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(
+                    width: AppSpacing.socialSentimentTimelineScoreGap,
+                  ),
                   SizedBox(
-                    width: 24,
+                    width: AppSpacing.socialSentimentTimelineScoreWidth,
                     child: Text(
                       '${point.score}',
                       textAlign: TextAlign.right,
@@ -176,25 +184,10 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 16,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: AppRadii.xlRadius,
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: accentColor,
     );
   }
 }

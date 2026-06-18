@@ -11,22 +11,26 @@ class _IdentityHero extends StatelessWidget {
       key: P2PIdentityVerificationPage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pKycCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.inputHeight,
             height: AppSpacing.inputHeight,
-            decoration: BoxDecoration(
+            child: Material(
               color: AppColors.primary15,
-              borderRadius: AppRadii.lgRadius,
-              border: Border.all(color: AppColors.primary20),
-            ),
-            child: const Icon(
-              Icons.description_outlined,
-              color: AppModuleAccents.p2p,
-              size: AppSpacing.iconMd,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+                side: const BorderSide(color: AppColors.primary20),
+              ),
+              child: const Center(
+                child: Icon(
+                  Icons.description_outlined,
+                  color: AppModuleAccents.p2p,
+                  size: AppSpacing.iconMd,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -45,7 +49,7 @@ class _IdentityHero extends StatelessWidget {
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pKycReadableLineHeight,
                   ),
                 ),
               ],
@@ -83,21 +87,21 @@ class _DocumentTypePicker extends StatelessWidget {
           VitCard(
             key: P2PIdentityVerificationPage.documentTypeKey(document.id),
             radius: VitCardRadius.lg,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.p2pKycCardPadding,
             onTap: () => onSelected(document),
             child: Row(
               children: [
-                Container(
+                SizedBox(
                   width: AppSpacing.buttonCompact,
                   height: AppSpacing.buttonCompact,
-                  decoration: BoxDecoration(
+                  child: Material(
                     color: AppColors.primary12,
                     borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Icon(
-                    _documentIcon(document.iconKey),
-                    color: AppModuleAccents.p2p,
-                    size: AppSpacing.iconSm,
+                    child: Icon(
+                      _documentIcon(document.iconKey),
+                      color: AppModuleAccents.p2p,
+                      size: AppSpacing.iconSm,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x4),
@@ -146,7 +150,7 @@ class _GuidelinesCard extends StatelessWidget {
     return VitCard(
       key: P2PIdentityVerificationPage.guidelinesKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pKycCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -267,22 +271,22 @@ class _UploadCard extends StatelessWidget {
               : enabled
               ? AppColors.borderSolid
               : AppColors.cardBorder,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pKycCardPadding,
           onTap: enabled && !uploaded ? onUpload : null,
           child: uploaded
               ? Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: AppSpacing.inputHeight,
                       height: AppSpacing.inputHeight,
-                      decoration: BoxDecoration(
+                      child: Material(
                         color: AppColors.buy10,
                         borderRadius: AppRadii.lgRadius,
-                      ),
-                      child: const Icon(
-                        Icons.check_circle_outline_rounded,
-                        color: AppColors.buy,
-                        size: AppSpacing.iconMd,
+                        child: const Icon(
+                          Icons.check_circle_outline_rounded,
+                          color: AppColors.buy,
+                          size: AppSpacing.iconMd,
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x4),
@@ -316,21 +320,21 @@ class _UploadCard extends StatelessWidget {
               : Opacity(
                   opacity: enabled ? 1 : .52,
                   child: SizedBox(
-                    height: 154,
+                    height: AppSpacing.p2pKycUploadDropHeight,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: AppSpacing.x7,
                           height: AppSpacing.x7,
-                          decoration: BoxDecoration(
+                          child: Material(
                             color: AppColors.primary12,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.photo_camera_outlined,
-                            color: AppModuleAccents.p2p,
-                            size: AppSpacing.iconMd,
+                            shape: const CircleBorder(),
+                            child: const Icon(
+                              Icons.photo_camera_outlined,
+                              color: AppModuleAccents.p2p,
+                              size: AppSpacing.iconMd,
+                            ),
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x3),

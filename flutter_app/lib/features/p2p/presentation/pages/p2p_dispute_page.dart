@@ -193,17 +193,19 @@ class _DisputeHero extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.p2pDisputeHeroIconBox,
-            height: AppSpacing.p2pDisputeHeroIconBox,
-            decoration: BoxDecoration(
-              color: AppColors.sell.withValues(alpha: .18),
+          Material(
+            color: AppColors.sell.withValues(alpha: .18),
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.inputRadius,
             ),
-            child: const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.sell,
-              size: AppSpacing.iconMd,
+            child: const SizedBox(
+              width: AppSpacing.p2pDisputeHeroIconBox,
+              height: AppSpacing.p2pDisputeHeroIconBox,
+              child: Icon(
+                Icons.warning_amber_rounded,
+                color: AppColors.sell,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),

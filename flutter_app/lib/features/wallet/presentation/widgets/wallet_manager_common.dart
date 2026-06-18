@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 const walletManagerBackground = AppColors.bg;
 const walletManagerPanel = AppColors.surface;
@@ -26,12 +27,12 @@ class WalletManagerSectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.walletManagerSectionMarkerWidth,
           height: AppSpacing.walletManagerSectionMarkerHeight,
-          decoration: BoxDecoration(
-            color: walletManagerPrimary,
+          child: ClipRRect(
             borderRadius: AppRadii.hairlineRadius,
+            child: const ColoredBox(color: walletManagerPrimary),
           ),
         ),
         const SizedBox(width: AppSpacing.walletManagerSectionLabelGap),
@@ -40,7 +41,7 @@ class WalletManagerSectionLabel extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.textMutedDense,
             fontWeight: AppTextStyles.medium,
-            height: 1,
+            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ],
@@ -82,22 +83,13 @@ class WalletManagerDefaultBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return _WalletManagerCompactPill(
       height: AppSpacing.walletManagerDefaultBadgeHeight,
+      label: 'DEFAULT',
+      textColor: walletManagerGreen,
+      backgroundColor: walletManagerGreen.withValues(alpha: .13),
       padding: AppSpacing.walletManagerCompactBadgePadding,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: walletManagerGreen.withValues(alpha: .13),
-        borderRadius: AppRadii.walletHistoryStatusBadgeRadius,
-      ),
-      child: Text(
-        'DEFAULT',
-        style: AppTextStyles.micro.copyWith(
-          color: walletManagerGreen,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+      borderRadius: AppRadii.walletHistoryStatusBadgeRadius,
     );
   }
 }
@@ -109,22 +101,13 @@ class WalletManagerAssetChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return _WalletManagerCompactPill(
       height: AppSpacing.walletManagerAssetChipHeight,
+      label: symbol,
+      textColor: AppColors.textSoftBlue,
+      backgroundColor: AppColors.overlaySubtle,
       padding: AppSpacing.walletManagerBadgePadding,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.overlaySubtle,
-        borderRadius: AppRadii.badgeRadius,
-      ),
-      child: Text(
-        symbol,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.textSoftBlue,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+      borderRadius: AppRadii.badgeRadius,
     );
   }
 }
@@ -141,20 +124,57 @@ class WalletManagerTypeBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return _WalletManagerCompactPill(
       height: AppSpacing.walletManagerTypeBadgeHeight,
+      label: label,
+      textColor: color,
+      backgroundColor: color.withValues(alpha: .15),
       padding: AppSpacing.walletManagerBadgePadding,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: AppRadii.pillRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
+      borderRadius: AppRadii.pillRadius,
+    );
+  }
+}
+
+class _WalletManagerCompactPill extends StatelessWidget {
+  const _WalletManagerCompactPill({
+    required this.height,
+    required this.label,
+    required this.textColor,
+    required this.backgroundColor,
+    required this.padding,
+    required this.borderRadius,
+  });
+
+  final double height;
+  final String label;
+  final Color textColor;
+  final Color backgroundColor;
+  final EdgeInsetsGeometry padding;
+  final BorderRadius borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      child: ClipRRect(
+        borderRadius: borderRadius,
+        child: ColoredBox(
+          color: backgroundColor,
+          child: Padding(
+            padding: padding,
+            child: Center(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: textColor,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.tradeBotLineHeightTight,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -166,37 +186,12 @@ class WalletManagerAddWalletButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCtaButton(
       key: const Key('sc148_multi_manager_add_wallet'),
-      onTap: () {},
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: AppSpacing.inputHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: walletManagerPrimary,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.add_rounded,
-              color: AppColors.onAccent,
-              size: AppSpacing.walletManagerButtonIcon,
-            ),
-            const SizedBox(width: AppSpacing.walletManagerButtonIconGap),
-            Text(
-              'Add Wallet',
-              style: AppTextStyles.baseMedium.copyWith(
-                color: AppColors.onAccent,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
-      ),
+      onPressed: () {},
+      height: AppSpacing.inputHeight,
+      leading: const Icon(Icons.add_rounded),
+      child: const Text('Add Wallet'),
     );
   }
 }
@@ -206,29 +201,23 @@ class WalletManagerSecurityNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: const Key('sc148_multi_manager_security_note'),
       constraints: const BoxConstraints(
         minHeight: AppSpacing.walletManagerSecurityMinHeight,
       ),
       padding: AppSpacing.walletManagerSecurityPadding,
-      decoration: BoxDecoration(
-        color: walletManagerPrimary.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: walletManagerPrimary.withValues(alpha: .20)),
-      ),
+      variant: VitCardVariant.ghost,
+      borderColor: walletManagerPrimary.withValues(alpha: .20),
+      background: ColoredBox(color: walletManagerPrimary.withValues(alpha: .08)),
+      clip: true,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(
-              top: AppSpacing.walletManagerSecurityIconTop,
-            ),
-            child: Icon(
-              Icons.shield_outlined,
-              color: walletManagerPrimary,
-              size: AppSpacing.walletManagerSecurityIcon,
-            ),
+          const Icon(
+            Icons.shield_outlined,
+            color: walletManagerPrimary,
+            size: AppSpacing.walletManagerSecurityIcon,
           ),
           const SizedBox(width: AppSpacing.walletManagerSecurityGap),
           Expanded(
@@ -237,7 +226,7 @@ class WalletManagerSecurityNotice extends StatelessWidget {
               'Never share your private keys.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.48,
+                height: AppSpacing.tradeBotLineHeightReadable,
               ),
             ),
           ),

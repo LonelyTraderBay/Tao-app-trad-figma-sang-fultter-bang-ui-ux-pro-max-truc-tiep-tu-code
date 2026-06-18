@@ -136,12 +136,10 @@ class _ConfirmNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: AppSpacing.transferNoticePadding,
-      decoration: BoxDecoration(
-        color: _transferPrimary.withValues(alpha: .08),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      borderColor: _transferPrimary.withValues(alpha: .20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

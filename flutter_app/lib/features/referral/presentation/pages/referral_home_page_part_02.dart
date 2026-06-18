@@ -19,7 +19,7 @@ class _EarningCalculator extends StatelessWidget {
 
     return VitCard(
       key: ReferralHomePage.calculatorKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -27,7 +27,7 @@ class _EarningCalculator extends StatelessWidget {
             title: 'Thu nhập nháp ước tính',
             color: AppColors.primary,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             'Kéo để ước tính thêm bạn mới trong tháng',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -90,10 +90,10 @@ class _PendingCommissionSection extends StatelessWidget {
           trailing: '~${_formatUsd(total)}',
           color: AppColors.warn,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         for (final item in items) ...[
           _PendingCommissionCard(item: item),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -112,7 +112,7 @@ class _RewardHighlights extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionTitle(title: 'Thưởng của bạn', color: AppColors.buy),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         Row(
           children: [
             Expanded(
@@ -150,7 +150,7 @@ class _LeaderboardSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -159,13 +159,12 @@ class _LeaderboardSection extends StatelessWidget {
             trailing: 'Tháng 3/2026',
             color: AppColors.accent,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           for (final item in items) ...[
             _LeaderboardRow(item: item),
-            if (item != items.last)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            if (item != items.last) const SizedBox(height: AppSpacing.x3),
           ],
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           const _NoticeCard(
             icon: Icons.info_outline_rounded,
             text:
@@ -231,7 +230,7 @@ class _HowItWorksSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -239,7 +238,7 @@ class _HowItWorksSection extends StatelessWidget {
             title: 'Cách thức hoạt động',
             color: AppColors.primary,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           for (final step in steps) ...[
             _StepRow(step: step),
             if (step != steps.last) const Divider(color: AppColors.divider),
@@ -261,7 +260,7 @@ class _MonthStats extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionTitle(title: 'Tháng này', color: AppColors.warn),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         Row(
           children: [
             Expanded(
@@ -301,10 +300,10 @@ class _CampaignHistorySection extends StatelessWidget {
           trailing: '${items.length} sự kiện',
           color: AppColors.accent,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         for (final item in items) ...[
           _CampaignHistoryCard(item: item),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -328,10 +327,7 @@ class _HeroMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.referralHeroMetricPadding,
       child: Column(
         children: [
           Text(
@@ -344,7 +340,7 @@ class _HeroMetric extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             label,
             textAlign: TextAlign.center,
@@ -405,38 +401,39 @@ class _SocialProofPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .08),
-        border: Border.all(color: color.withValues(alpha: .15)),
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .15)),
+          borderRadius: AppRadii.mdRadius,
+        ),
       ),
-      child: Row(
-        children: [
-          Icon(Icons.insights_rounded, color: color, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.x2),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                item.value,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
+      child: Padding(
+        padding: AppSpacing.referralCompactPillPadding,
+        child: Row(
+          children: [
+            Icon(Icons.insights_rounded, color: color, size: AppSpacing.iconSm),
+            const SizedBox(width: AppSpacing.x2),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.value,
+                  style: AppTextStyles.caption.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
-              ),
-              Text(
-                item.label,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ],
-          ),
-        ],
+                Text(
+                  item.label,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -464,7 +461,7 @@ class _MilestoneCard extends StatelessWidget {
       width: AppSpacing.referralLeaderboardWidth,
       child: VitCard(
         borderColor: color.withValues(alpha: .24),
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.referralInnerPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -487,7 +484,7 @@ class _MilestoneCard extends StatelessWidget {
                 ),
               ],
             ),
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
             Text(
               '${item.friends} bạn bè',
               style: AppTextStyles.caption.copyWith(
@@ -495,7 +492,7 @@ class _MilestoneCard extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               item.reward,
               maxLines: 2,

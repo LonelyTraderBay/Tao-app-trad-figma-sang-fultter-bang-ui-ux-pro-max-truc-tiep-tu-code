@@ -6,23 +6,25 @@ class _DisputeInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.iconLg + AppSpacing.x2,
-            height: AppSpacing.iconLg + AppSpacing.x2,
-            decoration: BoxDecoration(
-              color: AppColors.primary12,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            alignment: Alignment.center,
-            child: const Icon(
-              Icons.chat_bubble_outline_rounded,
-              color: AppColors.primary,
-              size: AppSpacing.iconMd,
+          const SizedBox.square(
+            dimension: AppSpacing.iconLg + AppSpacing.x2,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.primary12,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.chat_bubble_outline_rounded,
+                  color: AppColors.primary,
+                  size: AppSpacing.iconMd,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -37,7 +39,7 @@ class _DisputeInfo extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Bấm vào biểu tượng cảnh báo bên cạnh mỗi giao dịch để báo lỗi. Đội ngũ hỗ trợ sẽ xử lý trong 24-48 giờ.',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -60,7 +62,7 @@ class _SheetRecord extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.referralInnerPadding,
       child: Row(
         children: [
           _RecordIcon(type: record.type),
@@ -105,7 +107,7 @@ class _DisputeTypeRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.referralInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -116,7 +118,7 @@ class _DisputeTypeRow extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             type.description,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -136,7 +138,7 @@ class _DisputeHistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -155,13 +157,13 @@ class _DisputeHistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             dispute.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           if (dispute.resolution != null) ...[
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
             Text(
               dispute.resolution!,
               style: AppTextStyles.caption.copyWith(color: AppColors.text1),
@@ -181,16 +183,15 @@ class _TinyPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        border: Border.all(color: AppColors.borderSolid),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.borderSolid),
+          borderRadius: AppRadii.xlRadius,
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
+        padding: AppSpacing.referralCompactPillPadding,
         child: Text(
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),

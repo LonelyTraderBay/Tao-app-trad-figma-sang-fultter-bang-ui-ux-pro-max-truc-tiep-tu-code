@@ -8,11 +8,17 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 enum VitTabBarVariant { pill, segment, underline }
 
 class VitTabItem {
-  const VitTabItem({required this.key, required this.label, this.icon});
+  const VitTabItem({
+    required this.key,
+    required this.label,
+    this.icon,
+    this.widgetKey,
+  });
 
   final String key;
   final String label;
   final IconData? icon;
+  final Key? widgetKey;
 }
 
 class VitTabBar extends StatelessWidget {
@@ -134,6 +140,7 @@ class _PillTab extends StatelessWidget {
     );
 
     final button = Material(
+      key: tab.widgetKey,
       type: MaterialType.transparency,
       child: InkWell(
         onTap: () => onChanged(tab.key),
@@ -181,6 +188,7 @@ class _UnderlineTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      key: tab.widgetKey,
       type: MaterialType.transparency,
       child: InkWell(
         onTap: () => onChanged(tab.key),

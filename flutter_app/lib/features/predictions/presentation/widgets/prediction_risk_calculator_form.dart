@@ -26,11 +26,9 @@ class _RiskTabBar extends StatelessWidget {
       ),
     ];
 
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
+    return Material(
+      color: AppColors.surface,
+      shape: const Border(bottom: BorderSide(color: AppColors.border)),
       child: SizedBox(
         height: AppSpacing.predictionRiskTabsHeight,
         child: Row(
@@ -60,15 +58,20 @@ class _RiskTabBar extends StatelessWidget {
                             ),
                           ),
                         ),
-                        AnimatedContainer(
+                        AnimatedSize(
                           duration: const Duration(milliseconds: 160),
-                          height: AppSpacing.predictionRiskTabIndicatorHeight,
-                          width: activeTab == item.tab
-                              ? AppSpacing.predictionRiskTabIndicatorWidth
-                              : 0,
-                          decoration: BoxDecoration(
-                            color: _predictionPrimary,
+                          child: ClipRRect(
                             borderRadius: AppRadii.hairlineRadius,
+                            child: SizedBox(
+                              height:
+                                  AppSpacing.predictionRiskTabIndicatorHeight,
+                              width: activeTab == item.tab
+                                  ? AppSpacing.predictionRiskTabIndicatorWidth
+                                  : 0,
+                              child: const ColoredBox(
+                                color: _predictionPrimary,
+                              ),
+                            ),
                           ),
                         ),
                       ],

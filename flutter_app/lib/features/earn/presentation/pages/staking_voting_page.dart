@@ -114,7 +114,7 @@ class _ProposalSummary extends StatelessWidget {
     return VitCard(
       key: StakingVotingPage.proposalKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -123,7 +123,12 @@ class _ProposalSummary extends StatelessWidget {
           Text(snapshot.proposalTitle, style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.x2),
           Padding(
-            padding: const EdgeInsets.only(right: AppSpacing.x6),
+            padding: AppSpacing.earnContentHorizontalPadding.copyWith(
+              left: AppSpacing.zero,
+              top: AppSpacing.zero,
+              right: AppSpacing.x6,
+              bottom: AppSpacing.zero,
+            ),
             child: Text(
               snapshot.proposalBody,
               style: AppTextStyles.caption.copyWith(
@@ -136,10 +141,7 @@ class _ProposalSummary extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.lg,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x4,
-            ),
+            padding: AppSpacing.earnCardPaddingX3X4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -176,9 +178,9 @@ class _ResultsSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x5,
+          padding: AppSpacing.earnContentHorizontalPadding.copyWith(
+            top: AppSpacing.x5,
+            bottom: AppSpacing.x5,
           ),
           child: Column(
             children: [
@@ -233,9 +235,7 @@ class _ResultRow extends StatelessWidget {
                 widthFactor: result.id == 'yes'
                     ? 1
                     : result.percent.clamp(0, 100) / 100,
-                child: SizedBox.expand(
-                  child: DecoratedBox(decoration: BoxDecoration(color: color)),
-                ),
+                child: SizedBox.expand(child: ColoredBox(color: color)),
               ),
             ),
           ),
@@ -301,9 +301,9 @@ class _VoteOptionCard extends StatelessWidget {
     return VitCard(
       key: StakingVotingPage.optionKey(option.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x5,
+      padding: AppSpacing.earnContentHorizontalPadding.copyWith(
+        top: AppSpacing.x5,
+        bottom: AppSpacing.x5,
       ),
       borderColor: selected ? color : AppColors.cardBorder,
       onTap: onTap,
@@ -342,7 +342,7 @@ class _VotingPowerNote extends StatelessWidget {
     return VitCard(
       key: StakingVotingPage.noteKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -386,15 +386,12 @@ class _Pill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),

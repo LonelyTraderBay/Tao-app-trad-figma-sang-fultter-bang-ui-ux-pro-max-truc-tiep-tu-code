@@ -13,8 +13,8 @@ class _RelatedReports extends StatelessWidget {
       children: [
         for (final report in reports)
           Padding(
-            padding: EdgeInsets.only(
-              bottom: report == reports.last ? 0 : AppSpacing.x2,
+            padding: AppSpacing.arenaReportRelatedItemPadding(
+              isLast: report == reports.last,
             ),
             child: VitCard(
               key: ArenaReportCasePage.relatedReportKey(report.id),
@@ -22,7 +22,7 @@ class _RelatedReports extends StatelessWidget {
                 HapticFeedback.selectionClick();
                 context.go(AppRoutePaths.arenaReportCase(report.id));
               },
-              padding: const EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.arenaReportInnerPadding,
               child: Row(
                 children: [
                   Expanded(
@@ -71,7 +71,7 @@ class _DisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaReportInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -114,12 +114,16 @@ class _SectionBlock extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.arenaReportMarkerWidth,
               height: AppSpacing.arenaReportMarkerHeight,
-              decoration: BoxDecoration(
-                color: accentColor,
-                borderRadius: AppRadii.xsRadius,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: accentColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.xsRadius,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.x2),
@@ -147,15 +151,21 @@ class _ToneIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.arenaReportToneIconBox,
       height: AppSpacing.arenaReportToneIconBox,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.22)),
-        borderRadius: AppRadii.mdRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: 0.12),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.mdRadius,
+            side: BorderSide(color: color.withValues(alpha: 0.22)),
+          ),
+        ),
+        child: Center(
+          child: Icon(icon, color: color, size: AppSpacing.arenaReportToneIcon),
+        ),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.arenaReportToneIcon),
     );
   }
 }

@@ -15,25 +15,27 @@ class _TimeFilters extends StatelessWidget {
       (PredictionLeaderboardTimeFilter.allTime, 'All Time'),
     ];
 
-    return Container(
-      height: AppSpacing.predictionLeaderboardTimeFilterHeight,
-      padding: AppSpacing.predictionLeaderboardTimeFilterPadding,
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Row(
-        children: [
-          for (final item in filters)
-            Expanded(
-              child: _TimeFilterButton(
-                key: _timeFilterKey(item.$1),
-                label: item.$2,
-                active: active == item.$1,
-                onTap: () => onSelected(item.$1),
-              ),
-            ),
-        ],
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.lgRadius,
+      child: SizedBox(
+        height: AppSpacing.predictionLeaderboardTimeFilterHeight,
+        child: Padding(
+          padding: AppSpacing.predictionLeaderboardTimeFilterPadding,
+          child: Row(
+            children: [
+              for (final item in filters)
+                Expanded(
+                  child: _TimeFilterButton(
+                    key: _timeFilterKey(item.$1),
+                    label: item.$2,
+                    active: active == item.$1,
+                    onTap: () => onSelected(item.$1),
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -53,22 +55,21 @@ class _TimeFilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
+    return Material(
+      color: active ? AppColors.surface : AppColors.transparent,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? AppColors.surface : AppColors.transparent,
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.text1 : AppColors.text3,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.cardRadius,
+        child: Center(
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: active ? AppColors.text1 : AppColors.text3,
+              fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+            ),
           ),
         ),
       ),
@@ -142,43 +143,49 @@ class _MetricTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: AppSpacing.predictionLeaderboardMetricHeight,
-        padding: AppSpacing.predictionLeaderboardMetricPadding,
-        decoration: BoxDecoration(
+    return Material(
+      color: active
+          ? _predictionPrimary.withValues(alpha: .14)
+          : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.mdRadius,
+        side: BorderSide(
           color: active
-              ? _predictionPrimary.withValues(alpha: .14)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? _predictionPrimary.withValues(alpha: .38)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.mdRadius,
+              ? _predictionPrimary.withValues(alpha: .38)
+              : AppColors.transparent,
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: active ? _predictionPrimary : AppColors.text3,
-              size: AppSpacing.predictionLeaderboardMetricIcon,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: SizedBox(
+          height: AppSpacing.predictionLeaderboardMetricHeight,
+          child: Padding(
+            padding: AppSpacing.predictionLeaderboardMetricPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  color: active ? _predictionPrimary : AppColors.text3,
+                  size: AppSpacing.predictionLeaderboardMetricIcon,
+                ),
+                const SizedBox(
+                  width: AppSpacing.predictionLeaderboardMetricIconGap,
+                ),
+                Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: active ? _predictionPrimary : AppColors.text3,
+                    fontWeight: active
+                        ? AppTextStyles.bold
+                        : AppTextStyles.normal,
+                  ),
+                ),
+                ?trailing,
+              ],
             ),
-            const SizedBox(
-              width: AppSpacing.predictionLeaderboardMetricIconGap,
-            ),
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? _predictionPrimary : AppColors.text3,
-                fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
-              ),
-            ),
-            ?trailing,
-          ],
+          ),
         ),
       ),
     );

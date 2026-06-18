@@ -11,27 +11,26 @@ class _TwoFactorStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return Material(
       key: P2P2FASettingsPage.statusKey,
-      decoration: BoxDecoration(
-        color: AppColors.buy.withValues(alpha: .9),
-        borderRadius: AppRadii.lgRadius,
-      ),
+      type: MaterialType.transparency,
+      color: AppColors.buy.withValues(alpha: .9),
+      borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.p2pSecurityDetailsCardPadding,
         child: Row(
           children: [
-            Container(
-              width: 52,
-              height: 52,
-              decoration: BoxDecoration(
+            SizedBox.square(
+              dimension: AppSpacing.p2pSecurityDetailsHeroIconBox,
+              child: Material(
+                type: MaterialType.transparency,
                 color: AppColors.onAccent.withValues(alpha: .18),
                 borderRadius: AppRadii.lgRadius,
-              ),
-              child: const Icon(
-                Icons.shield_outlined,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconLg,
+                child: const Icon(
+                  Icons.shield_outlined,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.iconLg,
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.x4),
@@ -84,7 +83,7 @@ class _MethodSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               for (var index = 0; index < methods.length; index++) ...[
@@ -94,7 +93,10 @@ class _MethodSection extends StatelessWidget {
                   onSetPrimary: () => onSetPrimary(methods[index].id),
                 ),
                 if (index != methods.length - 1)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),
@@ -121,10 +123,7 @@ class _MethodRow extends StatelessWidget {
 
     return Padding(
       key: P2P2FASettingsPage.methodKey(method.id),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.p2pSecurityDetailsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -190,10 +189,7 @@ class _MethodRow extends StatelessWidget {
             VitCard(
               radius: VitCardRadius.md,
               variant: VitCardVariant.inner,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x3,
-              ),
+              padding: AppSpacing.p2pSecurityDetailsActionPadding,
               onTap: onSetPrimary,
               child: Center(
                 child: Text(
@@ -237,7 +233,7 @@ class _ThresholdSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               for (var index = 0; index < thresholds.length; index++) ...[
@@ -246,7 +242,10 @@ class _ThresholdSection extends StatelessWidget {
                   onToggle: () => onToggle(thresholds[index].id),
                 ),
                 if (index != thresholds.length - 1)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),
@@ -266,7 +265,7 @@ class _ThresholdRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: P2P2FASettingsPage.thresholdKey(threshold.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pSecurityDetailsCardPadding,
       child: Row(
         children: [
           _IconBadge(
@@ -306,10 +305,7 @@ class _ThresholdRow extends StatelessWidget {
             VitCard(
               radius: VitCardRadius.md,
               variant: VitCardVariant.inner,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x2,
-              ),
+              padding: AppSpacing.p2pSecurityDetailsEditPadding,
               child: Text(
                 'Sửa',
                 style: AppTextStyles.caption.copyWith(

@@ -23,7 +23,7 @@ class _CategoriesTab extends StatelessWidget {
             onTap: () => onToggle(category.id),
           ),
           if (category != snapshot.categories.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -55,25 +55,27 @@ class _RiskCategoryCard extends StatelessWidget {
             child: InkWell(
               onTap: onTap,
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x4),
+                padding: AppSpacing.earnPaddingX4,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: AppSpacing.stakingRiskDisclosureCategoryIconBox,
-                      height: AppSpacing.stakingRiskDisclosureCategoryIconBox,
-                      decoration: BoxDecoration(
+                    SizedBox.square(
+                      dimension:
+                          AppSpacing.stakingRiskDisclosureCategoryIconBox,
+                      child: Material(
                         color: _riskTint(category.level),
-                        border: Border.all(
-                          color: color.withValues(alpha: .28),
-                          width: AppSpacing.stakingRiskDisclosureBorderWidth,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: AppRadii.lgRadius,
+                          side: BorderSide(
+                            color: color.withValues(alpha: .28),
+                            width: AppSpacing.stakingRiskDisclosureBorderWidth,
+                          ),
                         ),
-                        borderRadius: AppRadii.lgRadius,
-                      ),
-                      child: Icon(
-                        _categoryIcon(category.id),
-                        color: color,
-                        size: AppSpacing.stakingRiskDisclosureCategoryIcon,
+                        child: Icon(
+                          _categoryIcon(category.id),
+                          color: color,
+                          size: AppSpacing.stakingRiskDisclosureCategoryIcon,
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x3),
@@ -96,9 +98,7 @@ class _RiskCategoryCard extends StatelessWidget {
                               _RiskLevelBadge(level: category.level),
                             ],
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: AppSpacing.x2),
-                          ),
+                          const Padding(padding: AppSpacing.earnTopPaddingX2),
                           Text(
                             category.description,
                             style: AppTextStyles.caption.copyWith(
@@ -145,27 +145,27 @@ class _RiskCategoryDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.x4,
-        AppSpacing.x4,
-        AppSpacing.x4,
-        AppSpacing.x3,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _DetailGroup(label: 'Chi tiết:', items: category.details),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
-          _DetailGroup(label: 'Ví dụ thực tế:', items: category.examples),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
-          _DetailGroup(label: 'Cách giảm thiểu:', items: category.mitigation),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Divider(color: AppColors.divider, height: AppSpacing.x1),
+        Padding(
+          padding: AppSpacing.earnDisclosureDetailsPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _DetailGroup(label: 'Chi tiết:', items: category.details),
+              const SizedBox(height: AppSpacing.x4),
+              _DetailGroup(label: 'Ví dụ thực tế:', items: category.examples),
+              const SizedBox(height: AppSpacing.x4),
+              _DetailGroup(
+                label: 'Cách giảm thiểu:',
+                items: category.mitigation,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -188,23 +188,19 @@ class _DetailGroup extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         for (final item in items) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
-                padding: EdgeInsets.only(
-                  top: AppSpacing.stakingRiskDisclosureDetailBulletTop,
-                ),
+                padding: AppSpacing.stakingRiskDisclosureDetailBulletPadding,
                 child: SizedBox(
                   width: AppSpacing.stakingRiskDisclosureDetailBullet,
                   height: AppSpacing.stakingRiskDisclosureDetailBullet,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: AppColors.text3,
-                      shape: BoxShape.circle,
-                    ),
+                  child: Material(
+                    color: AppColors.text3,
+                    shape: CircleBorder(),
                   ),
                 ),
               ),
@@ -220,8 +216,7 @@ class _DetailGroup extends StatelessWidget {
               ),
             ],
           ),
-          if (item != items.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          if (item != items.last) const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );

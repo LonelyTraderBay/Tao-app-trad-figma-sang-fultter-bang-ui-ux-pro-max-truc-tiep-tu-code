@@ -9,7 +9,7 @@ class _PriceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ad = snapshot.ad;
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pAdDetailCardPadding,
       child: Column(
         children: [
           Row(
@@ -113,7 +113,7 @@ class _AmountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ad = snapshot.ad;
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pAdDetailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -185,35 +185,39 @@ class _InputShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSpacing.inputHeight,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-      decoration: BoxDecoration(
+      child: Material(
         color: AppColors.surface2,
-        border: Border.all(color: AppColors.accent20),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.base.copyWith(
-                color: muted ? AppColors.text3 : AppColors.text1,
-                fontFeatures: AppTextStyles.tabularFigures,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: const BorderSide(color: AppColors.accent20),
+        ),
+        child: Padding(
+          padding: AppSpacing.p2pAdDetailInputPadding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.base.copyWith(
+                    color: muted ? AppColors.text3 : AppColors.text1,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
+                ),
               ),
-            ),
+              Text(
+                suffix,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
           ),
-          Text(
-            suffix,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -235,18 +239,19 @@ class _PercentButton extends StatelessWidget {
     return GestureDetector(
       key: P2PAdDetailPage.percentKey(percent),
       onTap: onTap,
-      child: Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-        decoration: BoxDecoration(
-          color: selected ? AppColors.primary12 : AppColors.transparent,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
-          '$percent%',
-          style: AppTextStyles.micro.copyWith(
-            color: selected ? AppModuleAccents.p2p : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
+      child: Material(
+        color: selected ? AppColors.primary12 : AppColors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
+        child: Padding(
+          padding: AppSpacing.p2pAdDetailPercentPadding,
+          child: Center(
+            child: Text(
+              '$percent%',
+              style: AppTextStyles.micro.copyWith(
+                color: selected ? AppModuleAccents.p2p : AppColors.text2,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
           ),
         ),
       ),
@@ -261,14 +266,14 @@ class _RequirementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.accent08,
-        border: Border.all(color: AppColors.accent20),
+    return Material(
+      color: AppColors.accent08,
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
+        side: const BorderSide(color: AppColors.accent20),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.p2pAdDetailCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -314,22 +319,7 @@ class _RequirementPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.accent12,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.accent),
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: AppColors.accent);
   }
 }
 
@@ -341,10 +331,7 @@ class _TermsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.p2pAdDetailCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -375,14 +362,14 @@ class _EscrowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        border: Border.all(color: AppColors.buy20),
+    return Material(
+      color: AppColors.buy10,
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
+        side: const BorderSide(color: AppColors.buy20),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.p2pAdDetailCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -397,7 +384,7 @@ class _EscrowCard extends StatelessWidget {
                 'Tài sản được bảo vệ bởi hệ thống Escrow VitTrade. ${amount.toStringAsFixed(2)} ${snapshot.ad.asset} sẽ được khóa cho đến khi xác nhận thanh toán thành công.',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.buy,
-                  height: 1.6,
+                  height: AppSpacing.p2pAdDetailEscrowLineHeight,
                 ),
               ),
             ),
@@ -415,25 +402,7 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.warn10,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.warn,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: AppColors.warn);
   }
 }
 

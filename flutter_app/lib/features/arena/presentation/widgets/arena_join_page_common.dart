@@ -62,25 +62,31 @@ class _AcknowledgementRow extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 160),
-                width: AppSpacing.arenaJoinCheckboxSize,
-                height: AppSpacing.arenaJoinCheckboxSize,
-                decoration: BoxDecoration(
-                  color: checked ? AppColors.primary : AppColors.transparent,
-                  borderRadius: AppRadii.smRadius,
-                  border: Border.all(
-                    color: checked ? AppColors.primary : AppColors.borderSolid,
-                    width: AppSpacing.arenaJoinCheckboxBorderWidth,
+              SizedBox.square(
+                dimension: AppSpacing.arenaJoinCheckboxSize,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: checked ? AppColors.primary : AppColors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                      side: BorderSide(
+                        color: checked
+                            ? AppColors.primary
+                            : AppColors.borderSolid,
+                        width: AppSpacing.arenaJoinCheckboxBorderWidth,
+                      ),
+                    ),
                   ),
+                  child: checked
+                      ? const Center(
+                          child: Icon(
+                            Icons.check_rounded,
+                            size: AppSpacing.arenaJoinCheckboxIcon,
+                            color: AppColors.onAccent,
+                          ),
+                        )
+                      : null,
                 ),
-                child: checked
-                    ? const Icon(
-                        Icons.check_rounded,
-                        size: AppSpacing.arenaJoinCheckboxIcon,
-                        color: AppColors.onAccent,
-                      )
-                    : null,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(

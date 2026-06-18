@@ -112,28 +112,28 @@ class _SelectablePill extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
             color: active ? color.withValues(alpha: .14) : AppColors.surface2,
-            border: Border.all(
-              color: active
-                  ? color.withValues(alpha: .34)
-                  : AppColors.cardBorder,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+              side: BorderSide(
+                color: active
+                    ? color.withValues(alpha: .34)
+                    : AppColors.cardBorder,
+              ),
             ),
-            borderRadius: AppRadii.smRadius,
           ),
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: active ? color : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.launchpadPillPadding,
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: active ? color : AppColors.text3,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
           ),
         ),
@@ -163,29 +163,30 @@ class _SmallActionButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
-          decoration: BoxDecoration(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
             color: color.withValues(alpha: .11),
-            borderRadius: AppRadii.inputRadius,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+            ),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.launchpadActionButtonPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
+                const SizedBox(width: AppSpacing.x2),
+                Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

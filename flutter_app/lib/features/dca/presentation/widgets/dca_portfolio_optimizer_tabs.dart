@@ -11,7 +11,7 @@ class _OptimizerTabs extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x2),
+      padding: AppSpacing.dcaPaddingX2,
       child: Row(
         children: [
           for (final tab in _OptimizerTab.values)
@@ -46,32 +46,35 @@ class _OptimizerTabButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: active ? AppColors.surface : AppColors.transparent,
-          borderRadius: AppRadii.mdRadius,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              _tabIcon(tab),
-              color: active ? AppColors.accent : AppColors.text3,
-              size: AppSpacing.iconSm,
-            ),
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-            Text(
-              _tabLabel(tab),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: active ? AppColors.text1 : AppColors.text3,
-                fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
+        child: Padding(
+          padding: AppSpacing.dcaVerticalPaddingX3,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                _tabIcon(tab),
+                color: active ? AppColors.accent : AppColors.text3,
+                size: AppSpacing.iconSm,
               ),
-            ),
-          ],
+              const Padding(padding: AppSpacing.dcaTopPaddingX1),
+              Text(
+                _tabLabel(tab),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: active ? AppColors.text1 : AppColors.text3,
+                  fontWeight: active
+                      ? AppTextStyles.bold
+                      : AppTextStyles.medium,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

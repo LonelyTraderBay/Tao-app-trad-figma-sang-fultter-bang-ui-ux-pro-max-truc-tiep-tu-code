@@ -55,24 +55,24 @@ class _AddMethodButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final background = color == AppColors.accent
+        ? AppColors.accent08
+        : AppColors.warn08;
+    final borderColor = color == AppColors.accent
+        ? AppColors.accent30
+        : AppColors.warningBorder;
+
     return Material(
-      color: AppColors.transparent,
+      color: background,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.mdRadius,
+        side: BorderSide(color: borderColor),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
-        child: Container(
+        child: Padding(
           padding: AppSpacing.p2pPaymentButtonPadding,
-          decoration: BoxDecoration(
-            color: color == AppColors.accent
-                ? AppColors.accent08
-                : AppColors.warn08,
-            border: Border.all(
-              color: color == AppColors.accent
-                  ? AppColors.accent30
-                  : AppColors.warningBorder,
-            ),
-            borderRadius: AppRadii.mdRadius,
-          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -269,17 +269,17 @@ class _MethodIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.buttonCompact,
-      height: AppSpacing.buttonCompact,
-      decoration: BoxDecoration(
-        color: tone == AppColors.accent ? AppColors.accent12 : AppColors.warn10,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Icon(
-        isBank ? Icons.credit_card_rounded : Icons.phone_android_rounded,
-        color: tone,
-        size: AppSpacing.iconMd,
+    return Material(
+      color: tone == AppColors.accent ? AppColors.accent12 : AppColors.warn10,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      child: SizedBox(
+        width: AppSpacing.buttonCompact,
+        height: AppSpacing.buttonCompact,
+        child: Icon(
+          isBank ? Icons.credit_card_rounded : Icons.phone_android_rounded,
+          color: tone,
+          size: AppSpacing.iconMd,
+        ),
       ),
     );
   }
@@ -294,18 +294,17 @@ class _SetDefaultButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.transparent,
+      color: AppColors.surface2,
+      shape: const RoundedRectangleBorder(
+        borderRadius: AppRadii.xlRadius,
+        side: BorderSide(color: AppColors.borderSolid),
+      ),
       child: InkWell(
         key: P2PPaymentMethodsPage.defaultKey(methodId),
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
-        child: Container(
+        child: Padding(
           padding: AppSpacing.p2pPaymentSetDefaultPadding,
-          decoration: BoxDecoration(
-            color: AppColors.surface2,
-            border: Border.all(color: AppColors.borderSolid),
-            borderRadius: AppRadii.xlRadius,
-          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

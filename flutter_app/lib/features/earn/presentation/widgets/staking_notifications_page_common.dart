@@ -10,7 +10,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingNotificationsPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -33,27 +33,30 @@ class _ToggleSwitch extends StatelessWidget {
       toggled: on,
       child: GestureDetector(
         onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
+        child: SizedBox(
           width: AppSpacing.stakingNotificationsSwitchWidth,
           height: AppSpacing.stakingNotificationsSwitchHeight,
-          padding: const EdgeInsets.all(
-            AppSpacing.stakingNotificationsSwitchPadding,
-          ),
-          decoration: BoxDecoration(
-            color: on ? AppColors.buy : AppColors.primary30,
-            borderRadius: AppRadii.lgRadius,
-          ),
-          child: AnimatedAlign(
-            duration: const Duration(milliseconds: 180),
-            alignment: on ? Alignment.centerRight : Alignment.centerLeft,
-            child: const SizedBox(
-              width: AppSpacing.stakingNotificationsSwitchThumb,
-              height: AppSpacing.stakingNotificationsSwitchThumb,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.onAccent,
-                  shape: BoxShape.circle,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: on ? AppColors.buy : AppColors.primary30,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+              ),
+            ),
+            child: Padding(
+              padding: AppSpacing.earnPaddingX1,
+              child: AnimatedAlign(
+                duration: const Duration(milliseconds: 180),
+                alignment: on ? Alignment.centerRight : Alignment.centerLeft,
+                child: const SizedBox(
+                  width: AppSpacing.stakingNotificationsSwitchThumb,
+                  height: AppSpacing.stakingNotificationsSwitchThumb,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: AppColors.onAccent,
+                      shape: CircleBorder(),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -70,15 +73,12 @@ class _PriorityPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.sell15,
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           'Quan trọng',
           style: AppTextStyles.micro.copyWith(
@@ -101,10 +101,12 @@ class _RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.13),
-        border: Border.all(color: color.withValues(alpha: 0.30)),
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: 0.30)),
+          borderRadius: AppRadii.lgRadius,
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -120,15 +122,17 @@ class _UnreadDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(left: AppSpacing.x2, top: AppSpacing.x1),
+    return Padding(
+      padding: AppSpacing.earnLeftPaddingX2(
+        true,
+      ).add(AppSpacing.earnTopPaddingX1),
       child: SizedBox(
         width: AppSpacing.x2,
         height: AppSpacing.x2,
         child: DecoratedBox(
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: AppColors.primarySoft,
-            shape: BoxShape.circle,
+            shape: CircleBorder(),
           ),
         ),
       ),

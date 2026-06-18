@@ -43,8 +43,10 @@ class _P2PNotificationsSettingsPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pNotificationBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pNotificationBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -69,12 +71,7 @@ class _P2PNotificationsSettingsPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -133,20 +130,20 @@ class _Hero extends StatelessWidget {
       key: P2PNotificationsSettingsPage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pComplianceCardPadding,
       child: Row(
         children: [
-          Container(
-            width: 52,
-            height: 52,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: const Icon(
-              Icons.notifications_none_rounded,
-              color: AppColors.onAccent,
-              size: 26,
+          const Material(
+            color: AppColors.primary,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+            child: SizedBox(
+              width: AppSpacing.p2pComplianceIconBox,
+              height: AppSpacing.p2pComplianceIconBox,
+              child: Icon(
+                Icons.notifications_none_rounded,
+                color: AppColors.onAccent,
+                size: AppSpacing.p2pComplianceHeroIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -160,7 +157,7 @@ class _Hero extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: AppColors.primary,
-                    height: 1.15,
+                    height: AppSpacing.p2pComplianceTitleLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -206,7 +203,10 @@ class _SettingsCard extends StatelessWidget {
               onToggle: onToggle,
             ),
             if (index != snapshot.settings.length - 1)
-              const Divider(color: AppColors.borderSolid, height: 1),
+              const Divider(
+                color: AppColors.borderSolid,
+                height: AppSpacing.p2pComplianceDividerHeight,
+              ),
           ],
         ],
       ),
@@ -228,7 +228,7 @@ class _SettingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pComplianceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -285,22 +285,23 @@ class _ChannelButton extends StatelessWidget {
     return Material(
       key: P2PNotificationsSettingsPage.channelKey(settingId, channel.id),
       color: selected ? AppColors.buy10 : AppColors.surface2,
-      borderRadius: AppRadii.inputRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(color: selected ? AppColors.buy : AppColors.border),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
-          height: 54,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected ? AppColors.buy : AppColors.border,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
+        child: SizedBox(
+          height: AppSpacing.p2pComplianceChannelButtonHeight,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(channel.icon, color: color, size: 17),
+              Icon(
+                channel.icon,
+                color: color,
+                size: AppSpacing.p2pComplianceChannelIcon,
+              ),
               const SizedBox(height: AppSpacing.x1),
               Text(
                 channel.label,

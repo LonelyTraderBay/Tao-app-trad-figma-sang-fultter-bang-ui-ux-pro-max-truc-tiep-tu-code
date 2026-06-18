@@ -20,44 +20,20 @@ class _SegmentTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 46,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        children: [
+    return VitCard(
+      height: AppSpacing.inputHeight,
+      padding: AppSpacing.zeroInsets,
+      variant: VitCardVariant.inner,
+      child: VitTabBar(
+        activeKey: activeId,
+        onChanged: onChanged,
+        variant: VitTabBarVariant.segment,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: TraderProfilePage.tabKey(tab.id),
-                onTap: () => onChanged(tab.id),
-                borderRadius: AppRadii.mdRadius,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 140),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: activeId == tab.id
-                        ? _profilePrimary
-                        : AppColors.transparent,
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: Text(
-                    tab.label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: activeId == tab.id
-                          ? AppColors.onAccent
-                          : AppColors.text3,
-                      fontWeight: activeId == tab.id
-                          ? AppTextStyles.bold
-                          : AppTextStyles.medium,
-                      height: 1,
-                    ),
-                  ),
-                ),
-              ),
+            VitTabItem(
+              key: tab.id,
+              label: tab.label,
+              widgetKey: TraderProfilePage.tabKey(tab.id),
             ),
         ],
       ),
@@ -78,7 +54,7 @@ class _OverviewTab extends StatelessWidget {
           title: 'PnL tích lũy (30 ngày)',
           trailing: _signedUsd(snapshot.trader.totalPnl),
           child: SizedBox(
-            height: 160,
+            height: AppSpacing.traderProfileChartHeight,
             child: CustomPaint(
               painter: TraderProfileAreaChartPainter(
                 points: snapshot.pnlHistory,
@@ -87,11 +63,11 @@ class _OverviewTab extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
         _ChartCard(
           title: 'PnL hằng ngày',
           child: SizedBox(
-            height: 100,
+            height: AppSpacing.traderProfileDailyChartHeight,
             child: CustomPaint(
               painter: TraderProfileDailyBarsPainter(
                 points: snapshot.pnlHistory.takeLast(14),
@@ -100,7 +76,7 @@ class _OverviewTab extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
         _DetailsCard(trader: snapshot.trader),
       ],
     );
@@ -117,7 +93,7 @@ class _ChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.traderProfilePanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -129,7 +105,7 @@ class _ChartCard extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.onAccent,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.1,
+                    height: AppSpacing.tradeBotLineHeightShort,
                   ),
                 ),
               ),
@@ -140,12 +116,12 @@ class _ChartCard extends StatelessWidget {
                     color: _profileGreen,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.traderProfilePanelInnerGap),
           child,
         ],
       ),
@@ -190,7 +166,7 @@ class _DetailsCard extends StatelessWidget {
     ];
 
     return _Panel(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.traderProfilePanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -199,16 +175,19 @@ class _DetailsCard extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.onAccent,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.traderProfilePanelInnerGap),
           LayoutBuilder(
             builder: (context, constraints) {
-              final itemWidth = (constraints.maxWidth - 12) / 2;
+              final itemWidth =
+                  (constraints.maxWidth -
+                      AppSpacing.traderProfilePanelInnerGap) /
+                  2;
               return Wrap(
-                spacing: 12,
-                runSpacing: 10,
+                spacing: AppSpacing.traderProfilePanelInnerGap,
+                runSpacing: AppSpacing.x3 + AppSpacing.hairlineStroke,
                 children: [
                   for (final item in details)
                     SizedBox(
@@ -242,8 +221,12 @@ class _DetailRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(item.icon, color: AppColors.text3, size: 15),
-        const SizedBox(width: 10),
+        Icon(
+          item.icon,
+          color: AppColors.text3,
+          size: AppSpacing.traderProfileDetailIcon,
+        ),
+        const SizedBox(width: AppSpacing.x3 + AppSpacing.hairlineStroke),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,16 +235,16 @@ class _DetailRow extends StatelessWidget {
                 item.label,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.2,
+                  height: AppSpacing.tradeBotLineHeightCaption,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.traderProfileTinyGap),
               Text(
                 item.value,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.medium,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],

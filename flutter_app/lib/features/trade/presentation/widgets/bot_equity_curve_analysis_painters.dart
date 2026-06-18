@@ -10,51 +10,38 @@ class _AnalysisCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: _equityGreen.withValues(alpha: .30),
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 30),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: 13,
-                height: 13,
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: AppColors.successAccentSoft,
-                ),
-                child: const Icon(
-                  Icons.check_rounded,
-                  size: 11,
-                  color: AppColors.onAccent,
-                ),
+              const Icon(
+                Icons.check_circle_rounded,
+                size: AppSpacing.iconSm,
+                color: AppColors.successAccentSoft,
               ),
-              const SizedBox(width: 7),
+              const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
               Text(
                 'Strong Outperformance',
                 style: AppTextStyles.caption.copyWith(
                   color: _equityGreen,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           for (final item in items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 4,
-                  height: 4,
-                  margin: const EdgeInsets.only(top: 7),
-                  decoration: const BoxDecoration(
-                    color: AppColors.text3,
-                    shape: BoxShape.circle,
-                  ),
+                const Icon(
+                  Icons.circle,
+                  size: AppSpacing.x1,
+                  color: AppColors.text3,
                 ),
-                const SizedBox(width: 11),
+                const SizedBox(width: AppSpacing.tradeBotRowGap),
                 Expanded(
                   child: Text(
                     item,
@@ -66,7 +53,8 @@ class _AnalysisCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: 16),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.tradeBotContentGap),
           ],
         ],
       ),
@@ -222,7 +210,6 @@ void _paintText(
       style: AppTextStyles.micro.copyWith(
         color: color,
         fontWeight: FontWeight.w500,
-        height: 1,
         decoration: TextDecoration.none,
       ),
     ),

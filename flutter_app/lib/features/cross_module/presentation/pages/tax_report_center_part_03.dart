@@ -19,15 +19,12 @@ class _ReportStatusBadge extends StatelessWidget {
     };
 
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: background,
-        borderRadius: AppRadii.xlRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.crossModulePillPadding,
         child: Text(
           status.name.toUpperCase(),
           style: AppTextStyles.chartLabelTiny.copyWith(
@@ -58,7 +55,7 @@ class _TaxSettingsTab extends StatelessWidget {
           label: 'Report Settings',
           children: [
             VitCard(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.crossModuleCardPadding,
               child: Row(
                 children: [
                   Expanded(
@@ -93,7 +90,7 @@ class _TaxSettingsTab extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.sectionGap),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.crossModuleCardPadding,
           radius: VitCardRadius.lg,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +110,7 @@ class _TaxSettingsTab extends StatelessWidget {
                 'Crypto Tax Guide by IRS',
               ])
                 Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+                  padding: AppSpacing.crossModuleTrailingRowPadding,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -159,13 +156,15 @@ class _ImportantNoticeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.sell10,
-        border: Border.all(color: AppColors.sell20),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.sell20),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.crossModuleCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -210,7 +209,7 @@ class _ImportantNoticeCard extends StatelessWidget {
               'We are not tax advisors or accountants',
             ])
               Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+                padding: AppSpacing.crossModuleTrailingRowPadding,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -248,24 +247,30 @@ class _ToggleSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
+      child: SizedBox(
         width: AppSpacing.inputHeight,
         height: AppSpacing.x6,
-        padding: const EdgeInsets.all(AppSpacing.x2),
-        decoration: BoxDecoration(
-          color: enabled ? AppColors.primary : AppColors.toggleTrackOff,
-          borderRadius: AppRadii.xlRadius,
-        ),
-        child: AnimatedAlign(
-          duration: const Duration(milliseconds: 160),
-          alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: AppSpacing.x5,
-            height: AppSpacing.x5,
-            decoration: const BoxDecoration(
-              color: AppColors.navCenterIcon,
-              shape: BoxShape.circle,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: enabled ? AppColors.primary : AppColors.toggleTrackOff,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.xlRadius,
+            ),
+          ),
+          child: Padding(
+            padding: AppSpacing.crossModuleTogglePadding,
+            child: AnimatedAlign(
+              duration: const Duration(milliseconds: 160),
+              alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
+              child: const SizedBox.square(
+                dimension: AppSpacing.x5,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.navCenterIcon,
+                    shape: CircleBorder(),
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -291,14 +296,15 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.mdRadius,
+    return SizedBox.square(
+      dimension: size,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: background,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Icon(icon, color: color, size: iconSize),
       ),
-      child: Icon(icon, color: color, size: iconSize),
     );
   }
 }
@@ -321,14 +327,18 @@ class _IconAction extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
-      child: Container(
+      child: SizedBox(
         width: AppSpacing.x6,
         height: AppSpacing.x6,
-        decoration: BoxDecoration(
-          color: background,
-          borderRadius: AppRadii.smRadius,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: background,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+            ),
+          ),
+          child: Icon(icon, color: color, size: AppSpacing.iconSm),
         ),
-        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
     );
   }
@@ -352,13 +362,15 @@ class _InfoPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: background,
-        border: Border.all(color: border),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: border),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.crossModulePanelPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

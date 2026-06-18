@@ -61,10 +61,15 @@ class _Legend extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.dcaPerformanceCompareLegendDot,
           height: AppSpacing.dcaPerformanceCompareLegendDot,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: const CircleBorder(),
+            ),
+          ),
         ),
         const SizedBox(width: AppSpacing.x2),
         Text(label, style: AppTextStyles.caption.copyWith(color: color)),

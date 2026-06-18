@@ -27,7 +27,7 @@ class _AmountCard extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pExpressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -50,18 +50,18 @@ class _AmountCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              border: Border.all(
+          Material(
+            color: AppColors.surface2,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(
                 color: amount > 0 && bestAd == null
                     ? AppColors.sell20
                     : amount > 0
                     ? color.withValues(alpha: .45)
                     : AppColors.borderSolid,
-                width: 2,
+                width: AppSpacing.p2pExpressAmountBorderWidth,
               ),
-              borderRadius: AppRadii.inputRadius,
             ),
             child: SizedBox(
               height: AppSpacing.buttonStandard,
@@ -136,7 +136,7 @@ class _PaymentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pExpressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -226,23 +226,24 @@ class _BestOfferCard extends StatelessWidget {
       children: [
         VitCard(
           borderColor: color.withValues(alpha: .35),
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pExpressCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 children: [
-                  Container(
-                    width: AppSpacing.x6,
-                    height: AppSpacing.x6,
-                    decoration: BoxDecoration(
+                  SizedBox.square(
+                    dimension: AppSpacing.p2pExpressIconBoxSize,
+                    child: Material(
                       color: color,
-                      borderRadius: AppRadii.smRadius,
-                    ),
-                    child: const Icon(
-                      Icons.bolt_outlined,
-                      color: AppColors.onAccent,
-                      size: AppSpacing.iconSm,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.smRadius,
+                      ),
+                      child: const Icon(
+                        Icons.bolt_outlined,
+                        color: AppColors.onAccent,
+                        size: AppSpacing.iconSm,
+                      ),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x2),
@@ -307,7 +308,7 @@ class _BestOfferCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           VitCard(
             onTap: onMarketplace,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.p2pExpressCompactCardPadding,
             child: Row(
               children: [
                 const Icon(
@@ -352,14 +353,14 @@ class _EscrowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        border: Border.all(color: AppColors.buy20),
+    return Material(
+      color: AppColors.buy10,
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
+        side: const BorderSide(color: AppColors.buy20),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pExpressEscrowPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -403,7 +404,7 @@ class _HowItWorksCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pExpressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -427,20 +428,21 @@ class _HowItWorksCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           for (final step in steps)
             Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+              padding: AppSpacing.p2pExpressHowStepPadding,
               child: Row(
                 children: [
-                  Container(
-                    width: AppSpacing.x6,
-                    height: AppSpacing.x6,
-                    decoration: BoxDecoration(
+                  SizedBox.square(
+                    dimension: AppSpacing.p2pExpressIconBoxSize,
+                    child: Material(
                       color: AppColors.primary12,
-                      borderRadius: AppRadii.smRadius,
-                    ),
-                    child: Icon(
-                      _stepIcon(step.iconKey),
-                      color: AppColors.primary,
-                      size: AppSpacing.iconSm,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.smRadius,
+                      ),
+                      child: Icon(
+                        _stepIcon(step.iconKey),
+                        color: AppColors.primary,
+                        size: AppSpacing.iconSm,
+                      ),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x3),
@@ -468,7 +470,7 @@ class _NoOfferCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.sell20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pExpressCompactCardPadding,
       child: Row(
         children: [
           const Icon(

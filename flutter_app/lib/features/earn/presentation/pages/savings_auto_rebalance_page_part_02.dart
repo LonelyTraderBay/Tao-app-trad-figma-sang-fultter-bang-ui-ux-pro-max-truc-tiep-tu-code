@@ -18,21 +18,20 @@ class _StrategyCard extends StatelessWidget {
     return VitCard(
       key: SavingsAutoRebalancePage.strategyKey(strategy.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       borderColor: active ? color.withValues(alpha: .42) : null,
       onTap: onTap,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.savingsRebalanceIconBox,
-                height: AppSpacing.savingsRebalanceIconBox,
-                decoration: BoxDecoration(
+              SizedBox.square(
+                dimension: AppSpacing.savingsRebalanceIconBox,
+                child: Material(
                   color: color.withValues(alpha: .14),
-                  borderRadius: BorderRadius.circular(AppRadii.md),
+                  borderRadius: AppRadii.mdRadius,
+                  child: Icon(_riskIcon(strategy.riskLevel), color: color),
                 ),
-                child: Icon(_riskIcon(strategy.riskLevel), color: color),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -93,7 +92,7 @@ class _StrategyCard extends StatelessWidget {
           if (active) ...[
             const SizedBox(height: AppSpacing.x3),
             ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadii.xl),
+              borderRadius: AppRadii.xlRadius,
               child: Row(
                 children: [
                   for (final entry in strategy.allocations.entries)
@@ -125,7 +124,7 @@ class _StrategyComparison extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
@@ -190,20 +189,19 @@ class _HistoryCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.savingsRebalanceIconBox,
-            height: AppSpacing.savingsRebalanceIconBox,
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.savingsRebalanceIconBox,
+            child: Material(
               color: color.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(AppRadii.md),
-            ),
-            child: Icon(
-              _historyIcon(event.status),
-              color: color,
-              size: AppSpacing.savingsRebalanceIcon,
+              borderRadius: AppRadii.mdRadius,
+              child: Icon(
+                _historyIcon(event.status),
+                color: color,
+                size: AppSpacing.savingsRebalanceIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -264,7 +262,7 @@ class _SettingsPanel extends StatelessWidget {
         ),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: Column(
             children: [
               _SettingsRow(
@@ -323,7 +321,7 @@ class _PreviewSheet extends StatelessWidget {
         child: VitCard(
           key: SavingsAutoRebalancePage.previewSheetKey,
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: SafeArea(
             top: false,
             child: Column(
@@ -361,7 +359,7 @@ class _PreviewSheet extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x3),
                 for (final action in actions.take(3))
                   Padding(
-                    padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+                    padding: AppSpacing.earnBottomPaddingX2,
                     child: Row(
                       children: [
                         Icon(
@@ -452,7 +450,7 @@ class _MetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.savingsRebalanceInlineIcon),
@@ -482,20 +480,17 @@ class _TonePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(AppRadii.xs),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: color.withValues(alpha: .12),
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -513,10 +508,9 @@ class _LegendDot extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: AppSpacing.savingsRebalanceLegendDot,
-          height: AppSpacing.savingsRebalanceLegendDot,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        SizedBox.square(
+          dimension: AppSpacing.savingsRebalanceLegendDot,
+          child: Material(color: color, shape: const CircleBorder()),
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(

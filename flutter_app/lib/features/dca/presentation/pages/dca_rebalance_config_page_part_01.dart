@@ -8,7 +8,7 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.contentPad),
+      padding: AppSpacing.dcaContentPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,7 +60,7 @@ class _AllocationSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.contentPad),
+      padding: AppSpacing.dcaContentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -112,7 +112,7 @@ class _AllocationSummary extends StatelessWidget {
                   children: targets
                       .map(
                         (target) => Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+                          padding: AppSpacing.dcaBottomPaddingX3,
                           child: _LegendRow(target: target),
                         ),
                       )
@@ -122,53 +122,54 @@ class _AllocationSummary extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x5),
-          Container(
-            decoration: BoxDecoration(
+          DecoratedBox(
+            decoration: ShapeDecoration(
               color: _valid ? AppColors.buy10 : AppColors.sell10,
-              borderRadius: AppRadii.inputRadius,
-              border: Border.all(
-                color: _valid ? AppColors.buy20 : AppColors.sell20,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.inputRadius,
+                side: BorderSide(
+                  color: _valid ? AppColors.buy20 : AppColors.sell20,
+                ),
               ),
             ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x3,
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  _valid
-                      ? Icons.check_circle_outline_rounded
-                      : Icons.error_outline_rounded,
-                  color: _valid ? AppColors.buy : AppColors.sell,
-                  size: AppSpacing.dcaRebalanceIcon,
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Text(
-                  'Tổng: ${totalPercent.toStringAsFixed(0)}%',
-                  style: AppTextStyles.caption.copyWith(
+            child: Padding(
+              padding: AppSpacing.dcaPrimaryChipPadding,
+              child: Row(
+                children: [
+                  Icon(
+                    _valid
+                        ? Icons.check_circle_outline_rounded
+                        : Icons.error_outline_rounded,
                     color: _valid ? AppColors.buy : AppColors.sell,
-                    fontWeight: AppTextStyles.bold,
+                    size: AppSpacing.dcaRebalanceIcon,
                   ),
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        _valid
-                            ? 'Hợp lệ - sẵn sàng lưu'
-                            : 'Tổng phải bằng 100%',
-                        style: AppTextStyles.micro.copyWith(
-                          color: _valid ? AppColors.buy : AppColors.text3,
+                  const SizedBox(width: AppSpacing.x3),
+                  Text(
+                    'Tổng: ${totalPercent.toStringAsFixed(0)}%',
+                    style: AppTextStyles.caption.copyWith(
+                      color: _valid ? AppColors.buy : AppColors.sell,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          _valid
+                              ? 'Hợp lệ - sẵn sàng lưu'
+                              : 'Tổng phải bằng 100%',
+                          style: AppTextStyles.micro.copyWith(
+                            color: _valid ? AppColors.buy : AppColors.text3,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -196,7 +197,7 @@ class _TargetList extends StatelessWidget {
       children: targets
           .map(
             (target) => Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.x4),
+              padding: AppSpacing.dcaBottomPaddingX4,
               child: _TargetCard(
                 target: target,
                 canRemove: targets.length > 2,
@@ -232,20 +233,15 @@ class _TargetCard extends StatelessWidget {
     final accent = _accentColor(target.accent);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: AppSpacing.x1,
-            decoration: BoxDecoration(
-              color: accent,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(AppRadii.lg),
-              ),
-            ),
+            child: ColoredBox(color: accent),
           ),
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.contentPad),
+            padding: AppSpacing.dcaContentPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -321,51 +317,52 @@ class _TargetCard extends StatelessWidget {
                   onChanged: onPercentChanged,
                 ),
                 const SizedBox(height: AppSpacing.x3),
-                Container(
-                  decoration: BoxDecoration(
+                DecoratedBox(
+                  decoration: ShapeDecoration(
                     color: AppColors.surface2,
-                    borderRadius: AppRadii.inputRadius,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.inputRadius,
+                    ),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x4,
-                    vertical: AppSpacing.x3,
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Dung sai',
-                        style: AppTextStyles.caption.copyWith(
+                  child: Padding(
+                    padding: AppSpacing.dcaPrimaryChipPadding,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Dung sai',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.x2),
+                        const Icon(
+                          Icons.help_outline_rounded,
+                          size: AppSpacing.dcaRebalanceIconXs,
                           color: AppColors.text3,
                         ),
-                      ),
-                      const SizedBox(width: AppSpacing.x2),
-                      const Icon(
-                        Icons.help_outline_rounded,
-                        size: AppSpacing.dcaRebalanceIconXs,
-                        color: AppColors.text3,
-                      ),
-                      const Spacer(),
-                      _IconBadgeButton(
-                        icon: Icons.remove_rounded,
-                        onTap: () => onToleranceChanged(target.tolerance - 1),
-                        color: AppColors.text1,
-                        neutral: true,
-                      ),
-                      const SizedBox(width: AppSpacing.x3),
-                      Text(
-                        '±${target.tolerance.toStringAsFixed(0)}%',
-                        style: AppTextStyles.baseMedium.copyWith(
+                        const Spacer(),
+                        _IconBadgeButton(
+                          icon: Icons.remove_rounded,
+                          onTap: () => onToleranceChanged(target.tolerance - 1),
                           color: AppColors.text1,
+                          neutral: true,
                         ),
-                      ),
-                      const SizedBox(width: AppSpacing.x3),
-                      _IconBadgeButton(
-                        icon: Icons.add_rounded,
-                        onTap: () => onToleranceChanged(target.tolerance + 1),
-                        color: AppColors.text1,
-                        neutral: true,
-                      ),
-                    ],
+                        const SizedBox(width: AppSpacing.x3),
+                        Text(
+                          '±${target.tolerance.toStringAsFixed(0)}%',
+                          style: AppTextStyles.baseMedium.copyWith(
+                            color: AppColors.text1,
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.x3),
+                        _IconBadgeButton(
+                          icon: Icons.add_rounded,
+                          onTap: () => onToleranceChanged(target.tolerance + 1),
+                          color: AppColors.text1,
+                          neutral: true,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -400,7 +397,7 @@ class _StrategySection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         ...options.map(
           (option) => Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+            padding: AppSpacing.dcaBottomPaddingX3,
             child: _StrategyOptionTile(
               option: option,
               selected: active == option.strategy,
@@ -433,16 +430,17 @@ class _StrategyOptionTile extends StatelessWidget {
         key: DCARebalanceConfig.strategyKey(option.strategy),
         onTap: onTap,
         borderRadius: AppRadii.lgRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          decoration: BoxDecoration(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
             color: selected ? AppColors.accent08 : AppColors.surface,
-            borderRadius: AppRadii.lgRadius,
-            border: Border.all(
-              color: selected ? AppColors.accent30 : AppColors.cardBorder,
-              width: selected ? 2 : 1,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.lgRadius,
+              side: BorderSide(
+                color: selected ? AppColors.accent30 : AppColors.cardBorder,
+                width: selected ? 2 : 1,
+              ),
             ),
-            boxShadow: selected
+            shadows: selected
                 ? [
                     const BoxShadow(
                       color: AppColors.accent10,
@@ -452,61 +450,69 @@ class _StrategyOptionTile extends StatelessWidget {
                   ]
                 : null,
           ),
-          padding: const EdgeInsets.all(AppSpacing.contentPad),
-          child: Row(
-            children: [
-              _AccentIcon(
-                icon: _strategyIcon(option.icon),
-                color: selected ? AppColors.accent : AppColors.text3,
-                muted: !selected,
-              ),
-              const SizedBox(width: AppSpacing.x4),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      option.title,
-                      style: AppTextStyles.base.copyWith(
-                        color: selected ? AppColors.accent : AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      option.subtitle,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
+          child: Padding(
+            padding: AppSpacing.dcaContentPadding,
+            child: Row(
+              children: [
+                _AccentIcon(
+                  icon: _strategyIcon(option.icon),
+                  color: selected ? AppColors.accent : AppColors.text3,
+                  muted: !selected,
                 ),
-              ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 160),
-                width: AppSpacing.x5,
-                height: AppSpacing.x5,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: selected ? AppColors.accent : AppColors.borderSolid,
-                    width: AppSpacing.dcaRebalanceConnectorWidth,
+                const SizedBox(width: AppSpacing.x4),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        option.title,
+                        style: AppTextStyles.base.copyWith(
+                          color: selected ? AppColors.accent : AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        option.subtitle,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                child: selected
-                    ? Center(
-                        child: Container(
-                          width: AppSpacing.x3,
-                          height: AppSpacing.x3,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.accent,
-                          ),
+                SizedBox(
+                  width: AppSpacing.x5,
+                  height: AppSpacing.x5,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      shape: CircleBorder(
+                        side: BorderSide(
+                          color: selected
+                              ? AppColors.accent
+                              : AppColors.borderSolid,
+                          width: AppSpacing.dcaRebalanceConnectorWidth,
                         ),
-                      )
-                    : null,
-              ),
-            ],
+                      ),
+                    ),
+                    child: selected
+                        ? const Center(
+                            child: SizedBox(
+                              width: AppSpacing.x3,
+                              height: AppSpacing.x3,
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  shape: CircleBorder(),
+                                  color: AppColors.accent,
+                                ),
+                              ),
+                            ),
+                          )
+                        : null,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -90,57 +90,62 @@ class _ActionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: color.withValues(alpha: .08),
-      borderRadius: AppRadii.inputRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(color: color.withValues(alpha: .18)),
+      ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Container(
+        customBorder: const RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+        ),
+        child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.buttonStandard,
           ),
-          padding: AppSpacing.p2pDisputeActionTilePadding,
-          decoration: BoxDecoration(
-            border: Border.all(color: color.withValues(alpha: .18)),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: AppSpacing.p2pDisputeActionIconBox,
-                height: AppSpacing.p2pDisputeActionIconBox,
-                decoration: BoxDecoration(
+          child: Padding(
+            padding: AppSpacing.p2pDisputeActionTilePadding,
+            child: Row(
+              children: [
+                Material(
                   color: color.withValues(alpha: .14),
-                  borderRadius: AppRadii.smRadius,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                  ),
+                  child: SizedBox(
+                    width: AppSpacing.p2pDisputeActionIconBox,
+                    height: AppSpacing.p2pDisputeActionIconBox,
+                    child: Icon(icon, color: color, size: AppSpacing.iconSm),
+                  ),
                 ),
-                child: Icon(icon, color: color, size: AppSpacing.iconSm),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
                       ),
-                    ),
-                    Text(
-                      subtitle,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
+                      Text(
+                        subtitle,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-            ],
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconSm,
+                ),
+              ],
+            ),
           ),
         ),
       ),

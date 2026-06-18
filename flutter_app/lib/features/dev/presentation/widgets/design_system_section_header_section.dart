@@ -27,19 +27,23 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
       children: [
         for (final demo in demos)
           VitCard(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.devCardPadding,
             radius: VitCardRadius.lg,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
                   children: [
-                    Container(
+                    const SizedBox(
                       width: AppSpacing.x1,
                       height: AppSpacing.iconMd,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: AppRadii.xsRadius,
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.xsRadius,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x2),
@@ -64,9 +68,11 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x3),
                 const DecoratedBox(
-                  decoration: BoxDecoration(
+                  decoration: ShapeDecoration(
                     color: AppColors.surface2,
-                    borderRadius: AppRadii.smRadius,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                    ),
                   ),
                   child: SizedBox(height: AppSpacing.x6),
                 ),
@@ -74,7 +80,7 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
             ),
           ),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.devCardPadding,
           radius: VitCardRadius.lg,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

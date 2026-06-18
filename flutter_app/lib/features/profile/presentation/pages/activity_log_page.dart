@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -58,8 +59,10 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 126
-            : DeviceMetrics.nativeBottomChrome + 32) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.profileActivityBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.profileActivityBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -81,7 +84,7 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
                 child: SingleChildScrollView(
                   key: ActivityLogPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.profileActivityScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     customGap: 0,
@@ -94,7 +97,7 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
                         onChanged: _setFilter,
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 32, 20, 37),
+                        padding: AppSpacing.profileActivityListPadding,
                         child: logs.isEmpty
                             ? const _EmptyActivity()
                             : Column(
@@ -102,7 +105,10 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
                                   for (final log in logs) ...[
                                     _ActivityCard(log: log),
                                     if (log != logs.last)
-                                      const SizedBox(height: 13),
+                                      const SizedBox(
+                                        height:
+                                            AppSpacing.profileActivityCardGap,
+                                      ),
                                   ],
                                 ],
                               ),

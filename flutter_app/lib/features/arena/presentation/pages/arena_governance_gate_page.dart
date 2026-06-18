@@ -127,7 +127,7 @@ class _ArenaGovernanceGatePageState
                   child: SingleChildScrollView(
                     key: ArenaGovernanceGatePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: Column(
                       children: [
                         VitPageContent(

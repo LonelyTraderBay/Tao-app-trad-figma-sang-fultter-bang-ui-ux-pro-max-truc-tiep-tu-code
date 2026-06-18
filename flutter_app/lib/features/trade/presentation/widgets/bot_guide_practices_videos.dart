@@ -9,7 +9,7 @@ class _BestPracticesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Best Practices',
-      customGap: 12,
+      customGap: AppSpacing.tradeBotCardGap,
       children: [
         for (final item in items)
           _InfoCard(
@@ -32,7 +32,7 @@ class _MistakesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Common Mistakes to Avoid',
-      customGap: 12,
+      customGap: AppSpacing.tradeBotCardGap,
       children: [for (final item in items) _MistakeCard(item: item)],
     );
   }
@@ -53,13 +53,13 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.all(16),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: iconColor, size: 30),
-          const SizedBox(width: 13),
+          Icon(icon, color: iconColor, size: AppSpacing.tradeBotCardGap * 2),
+          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,12 +71,11 @@ class _InfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.tradeBotTinyGap),
                 Text(
                   description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
                   ),
                 ),
               ],
@@ -95,17 +94,21 @@ class _MistakeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.all(16),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 12,
+        customGap: AppSpacing.tradeBotCardGap,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.cancel_outlined, color: _guideRed, size: 19),
-              const SizedBox(width: 8),
+              const Icon(
+                Icons.cancel_outlined,
+                color: _guideRed,
+                size: AppSpacing.iconMd,
+              ),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: Text(
                   item.mistake,
@@ -117,48 +120,55 @@ class _MistakeCard extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 27),
-            child: VitPageContent(
-              padding: VitContentPadding.none,
-              customGap: 9,
-              children: [
-                Text(
-                  "WHY IT'S BAD:",
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  item.why,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-                VitCard(
-                  padding: const EdgeInsets.all(9),
-                  variant: VitCardVariant.inner,
-                  borderColor: _guideGreen.withValues(alpha: .24),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    customGap: 4,
-                    children: [
-                      Text(
-                        'HOW TO FIX:',
-                        style: AppTextStyles.micro.copyWith(
-                          color: _guideGreen,
-                          fontWeight: AppTextStyles.bold,
-                        ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(width: AppSpacing.tradeBotMethodTextIndent),
+              Expanded(
+                child: VitPageContent(
+                  padding: VitContentPadding.none,
+                  customGap: AppSpacing.tradeBotRowGap,
+                  children: [
+                    Text(
+                      "WHY IT'S BAD:",
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
                       ),
-                      Text(
-                        item.fix,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text2,
-                          height: 1.35,
-                        ),
+                    ),
+                    Text(
+                      item.why,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
                       ),
-                    ],
-                  ),
+                    ),
+                    VitCard(
+                      padding: AppSpacing.tradeBotCodeBlockCompactPadding,
+                      variant: VitCardVariant.inner,
+                      borderColor: _guideGreen.withValues(alpha: .24),
+                      child: VitPageContent(
+                        padding: VitContentPadding.none,
+                        customGap: AppSpacing.hairlineStroke * 2,
+                        children: [
+                          Text(
+                            'HOW TO FIX:',
+                            style: AppTextStyles.micro.copyWith(
+                              color: _guideGreen,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                          Text(
+                            item.fix,
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
@@ -172,11 +182,11 @@ class _VideoTutorialsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 14),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 10,
+        customGap: AppSpacing.tradeBotRowGap,
         children: [
           Row(
             children: [
@@ -185,26 +195,22 @@ class _VideoTutorialsCard extends StatelessWidget {
                 color: _guidePrimary,
                 size: 22,
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.tradeBotCardIconGap),
               Text(
                 'Video Tutorials',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ],
           ),
           Text(
             'Watch our step-by-step video guides to master each bot strategy.',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1.45,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           VitCtaButton(
-            height: 32,
+            height: AppSpacing.buttonCompact,
             onPressed: () {},
             child: const Text('View All Tutorials'),
           ),

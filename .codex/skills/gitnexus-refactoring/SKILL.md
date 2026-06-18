@@ -20,7 +20,7 @@ after editing.
 If the index is stale, run:
 
 ```bash
-node .gitnexus/run.cjs analyze
+node .gitnexus/run.cjs analyze --skip-agents-md --skip-skills
 ```
 
 ## Rename Checklist

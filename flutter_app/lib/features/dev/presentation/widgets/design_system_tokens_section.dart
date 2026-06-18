@@ -25,10 +25,7 @@ class DesignSystemTokensSection extends StatelessWidget {
       label: 'Design Tokens',
       children: [
         VitCard(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.devTokenCardPadding,
           radius: VitCardRadius.lg,
           child: Column(
             children: [
@@ -52,7 +49,7 @@ class _TokenRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      padding: AppSpacing.devVerticalPaddingX3,
       child: Row(
         children: [
           Expanded(

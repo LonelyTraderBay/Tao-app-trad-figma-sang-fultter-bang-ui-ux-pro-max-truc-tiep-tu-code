@@ -87,7 +87,7 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
                   child: SingleChildScrollView(
                     key: ArenaCreatorPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x3,

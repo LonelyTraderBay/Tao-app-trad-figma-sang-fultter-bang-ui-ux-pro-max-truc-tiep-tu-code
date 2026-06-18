@@ -42,7 +42,7 @@ class _StakingLiquidStakingPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -132,7 +132,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingLiquidStakingPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -169,9 +169,9 @@ class _LiquidTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: StakingLiquidStakingPage.tabsKey,
-      decoration: const BoxDecoration(color: AppColors.surface),
+      color: AppColors.surface,
       child: Row(
         children: [
           for (final tab in _LiquidTab.values)
@@ -207,7 +207,7 @@ class _TabButton extends StatelessWidget {
         key: StakingLiquidStakingPage.tabKey(tab.name),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.x4),
+          padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x4),
           child: Column(
             children: [
               Text(
@@ -218,13 +218,16 @@ class _TabButton extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 160),
-                width: selected ? AppSpacing.buttonHero : 0,
+              SizedBox(
+                width: AppSpacing.buttonHero,
                 height: AppSpacing.stakingProductTabIndicatorHeight,
-                decoration: BoxDecoration(
-                  color: selected ? AppColors.primary : AppColors.transparent,
-                  borderRadius: AppRadii.xsRadius,
+                child: AnimatedScale(
+                  duration: const Duration(milliseconds: 160),
+                  scale: selected ? 1 : 0,
+                  child: Material(
+                    color: selected ? AppColors.primary : AppColors.transparent,
+                    borderRadius: AppRadii.xsRadius,
+                  ),
                 ),
               ),
             ],
@@ -285,25 +288,27 @@ class _LiquidTokenCard extends StatelessWidget {
     return VitCard(
       key: StakingLiquidStakingPage.tokenKey(token.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: AppSpacing.ctaHeight,
-                height: AppSpacing.ctaHeight,
-                decoration: BoxDecoration(
-                  color: AppColors.primary12,
+              Material(
+                color: AppColors.primary12,
+                shape: RoundedRectangleBorder(
                   borderRadius: AppRadii.xlRadius,
-                  border: Border.all(color: AppColors.primary30),
+                  side: const BorderSide(color: AppColors.primary30),
                 ),
-                child: const Icon(
-                  Icons.water_drop_rounded,
-                  color: AppColors.primarySoft,
-                  size: AppSpacing.iconMd,
+                child: const SizedBox(
+                  width: AppSpacing.ctaHeight,
+                  height: AppSpacing.ctaHeight,
+                  child: Icon(
+                    Icons.water_drop_rounded,
+                    color: AppColors.primarySoft,
+                    size: AppSpacing.iconMd,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -407,23 +412,7 @@ class _ProtocolPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: const BoxDecoration(
-        color: AppColors.primary15,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.primarySoft,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: AppColors.primarySoft);
   }
 }
 
@@ -438,7 +427,7 @@ class _TokenMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -464,7 +453,7 @@ class _RiskNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -11,7 +11,7 @@ class _ActionRequiredCard extends StatelessWidget {
       key: StakingValidatorHealthMonitorPage.actionKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn.withValues(alpha: 0.35),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -35,18 +35,23 @@ class _ActionRequiredCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x3),
-                Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-                  decoration: BoxDecoration(
+                DecoratedBox(
+                  decoration: const ShapeDecoration(
                     color: AppColors.primarySoft,
-                    borderRadius: AppRadii.inputRadius,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.inputRadius,
+                    ),
                   ),
-                  child: Text(
-                    snapshot.actionLabel,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.bg,
-                      fontWeight: AppTextStyles.bold,
+                  child: Padding(
+                    padding: AppSpacing.earnVerticalPaddingX3,
+                    child: Center(
+                      child: Text(
+                        snapshot.actionLabel,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.bg,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -69,7 +74,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingValidatorHealthMonitorPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,
@@ -90,20 +95,19 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: AppRadii.pillRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.pillRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -119,20 +123,23 @@ class _SmallButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textColor = color ?? AppColors.text1;
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: textColor.withValues(alpha: color == null ? 0.06 : 0.15),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        label,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.micro.copyWith(
-          color: textColor,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnVerticalPaddingX2,
+        child: Center(
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: textColor,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -150,10 +157,15 @@ class _LegendEntry extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.x2,
           height: AppSpacing.x2,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: const CircleBorder(),
+            ),
+          ),
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(

@@ -113,11 +113,9 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: WithdrawPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.pageHorizontalPadding,
-                    AppSpacing.x4,
-                    AppSpacing.pageHorizontalPadding,
-                    bottomInset,
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.x4,
+                    bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,

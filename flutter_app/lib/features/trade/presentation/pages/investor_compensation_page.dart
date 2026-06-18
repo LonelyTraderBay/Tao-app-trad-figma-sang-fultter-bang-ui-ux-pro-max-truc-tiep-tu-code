@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -20,8 +20,6 @@ part '../widgets/investor_compensation_page_sections.dart';
 part '../widgets/investor_compensation_page_common.dart';
 
 const _compBackground = AppColors.bg;
-const _compPanel = AppColors.surface;
-const _compPanel2 = AppColors.surface2;
 const _compBorder = AppColors.borderSolid;
 const _compPrimary = AppColors.primary;
 const _compGreen = AppColors.buy;
@@ -76,7 +74,9 @@ class _InvestorCompensationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: InvestorCompensationPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
@@ -85,7 +85,7 @@ class _InvestorCompensationPageState
                       _ProtectionCard(snapshot: snapshot),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.cardPaddingCompact,
                         child: VitPageContent(
                           padding: VitContentPadding.none,
                           fullBleed: true,

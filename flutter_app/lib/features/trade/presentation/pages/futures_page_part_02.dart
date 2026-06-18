@@ -8,12 +8,14 @@ class _SideSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _chipBackground,
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      height: AppSpacing.futuresSideSwitchHeight,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.hairlineStroke * 2,
+        top: AppSpacing.hairlineStroke * 2,
+        right: AppSpacing.hairlineStroke * 2,
+        bottom: AppSpacing.hairlineStroke * 2,
       ),
       child: Row(
         children: [
@@ -58,33 +60,20 @@ class _SideButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: active ? color : AppColors.transparent,
-            borderRadius: AppRadii.cardRadius,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: active ? AppColors.onAccent : AppColors.text2,
-                size: 16,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: active ? AppColors.onAccent : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
+      child: VitCtaButton(
+        onPressed: onTap,
+        variant: active
+            ? (color == _futuresGreen
+                  ? VitCtaButtonVariant.success
+                  : VitCtaButtonVariant.danger)
+            : VitCtaButtonVariant.ghost,
+        leading: Icon(icon),
+        padding: AppSpacing.zeroInsets,
+        child: Text(
+          label,
+          style: AppTextStyles.baseMedium.copyWith(
+            color: active ? AppColors.onAccent : AppColors.text2,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ),
@@ -110,12 +99,14 @@ class _OrderTypeAndLeverage extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Container(
-            height: 44,
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: _chipBackground,
-              borderRadius: AppRadii.cardRadius,
+          child: VitCard(
+            variant: VitCardVariant.inner,
+            height: AppSpacing.futuresOrderTypeSelectorHeight,
+            padding: AppSpacing.zeroInsets.copyWith(
+              left: AppSpacing.hairlineStroke * 2,
+              top: AppSpacing.hairlineStroke * 2,
+              right: AppSpacing.hairlineStroke * 2,
+              bottom: AppSpacing.hairlineStroke * 2,
             ),
             child: Row(
               children: [
@@ -135,39 +126,24 @@ class _OrderTypeAndLeverage extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 8),
-        InkWell(
+        const SizedBox(width: AppSpacing.x3),
+        VitCtaButton(
           key: FuturesPage.leverageKey,
-          onTap: onLeverage,
-          borderRadius: AppRadii.cardRadius,
-          child: Container(
-            width: 100,
-            height: 44,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: _tradePrimary.withValues(alpha: .13),
-              border: Border.all(color: _tradePrimary.withValues(alpha: .35)),
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.bolt_rounded, color: _tradePrimary, size: 17),
-                const SizedBox(width: 6),
-                Text(
-                  '${leverage}x',
-                  style: AppTextStyles.caption.copyWith(
-                    color: _tradePrimary,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(width: 4),
-                const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: _tradePrimary,
-                  size: 16,
-                ),
-              ],
+          onPressed: onLeverage,
+          fullWidth: false,
+          height: AppSpacing.searchBarCompactHeight,
+          variant: VitCtaButtonVariant.ghost,
+          leading: const Icon(Icons.bolt_rounded),
+          trailing: const Icon(Icons.keyboard_arrow_down_rounded),
+          padding: AppSpacing.zeroInsets.copyWith(
+            left: AppSpacing.rowPy,
+            right: AppSpacing.x3,
+          ),
+          child: Text(
+            '${leverage}x',
+            style: AppTextStyles.caption.copyWith(
+              color: _tradePrimary,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
         ),
@@ -191,23 +167,18 @@ class _OrderTypeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: active
-                ? _tradePrimary.withValues(alpha: .18)
-                : AppColors.transparent,
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? _tradePrimary : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
+      child: VitCtaButton(
+        onPressed: onTap,
+        height: AppSpacing.buttonCompact,
+        variant: active
+            ? VitCtaButtonVariant.primary
+            : VitCtaButtonVariant.ghost,
+        padding: AppSpacing.zeroInsets,
+        child: Text(
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: active ? AppColors.onAccent : AppColors.text2,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ),
@@ -257,32 +228,23 @@ class _PercentRow extends StatelessWidget {
       children: [
         for (final pct in const [10, 25, 50, 100]) ...[
           Expanded(
-            child: InkWell(
+            child: VitCtaButton(
               key: FuturesPage.pctKey(pct),
-              onTap: () => onPercent(pct),
-              borderRadius: AppRadii.cardRadius,
-              child: Container(
-                height: 36,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: _chipBackground,
-                  border: Border.all(
-                    color: _tradePrimary.withValues(alpha: .18),
-                  ),
-                  borderRadius: AppRadii.cardRadius,
-                ),
-                child: Text(
-                  '$pct%',
-                  style: AppTextStyles.numericCode.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
+              onPressed: () => onPercent(pct),
+              height: AppSpacing.walletTransactionStepLineHeight,
+              variant: VitCtaButtonVariant.ghost,
+              padding: AppSpacing.zeroInsets,
+              child: Text(
+                '$pct%',
+                style: AppTextStyles.numericCode.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.futuresPercentButtonLineHeight,
                 ),
               ),
             ),
           ),
-          if (pct != 100) const SizedBox(width: 8),
+          if (pct != 100) const SizedBox(width: AppSpacing.x3),
         ],
       ],
     );
@@ -311,18 +273,20 @@ class _PreviewCard extends StatelessWidget {
         AppColors.primary,
       ),
     ];
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _panelBackground,
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .06)),
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowPy,
+        top: AppSpacing.rowPy,
+        right: AppSpacing.rowPy,
+        bottom: AppSpacing.rowPy,
       ),
+      borderColor: AppColors.onAccent.withValues(alpha: .06),
       child: Column(
         children: [
           for (final row in rows)
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: AppSpacing.zeroInsets.copyWith(bottom: AppSpacing.x3),
               child: Row(
                 children: [
                   Text(row.$1, style: AppTextStyles.caption),
@@ -361,34 +325,21 @@ class _ToggleChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 36,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? activeColor.withValues(alpha: .12) : _chipBackground,
-          border: Border.all(
-            color: active
-                ? activeColor.withValues(alpha: .35)
-                : _tradePrimary.withValues(alpha: .18),
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: active ? activeColor : AppColors.text2, size: 14),
-            const SizedBox(width: 7),
-            Text(
-              label,
-              style: AppTextStyles.captionSm.copyWith(
-                color: active ? activeColor : AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
+    return VitCtaButton(
+      onPressed: onTap,
+      height: AppSpacing.walletTransactionStepLineHeight,
+      variant: active
+          ? (activeColor == _futuresGreen
+                ? VitCtaButtonVariant.success
+                : VitCtaButtonVariant.danger)
+          : VitCtaButtonVariant.ghost,
+      leading: Icon(icon),
+      padding: AppSpacing.zeroInsets,
+      child: Text(
+        label,
+        style: AppTextStyles.captionSm.copyWith(
+          color: active ? AppColors.onAccent : AppColors.text2,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -412,48 +363,25 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = side == TradeFuturesSide.long ? _futuresGreen : _futuresRed;
     final label = receipt == null
         ? enabled
               ? 'Mở ${leverage}x ${side == TradeFuturesSide.long ? 'Long' : 'Short'}'
               : 'Nhập ký quỹ'
         : 'Đã gửi ${receipt!.orderId}';
-    return InkWell(
+    return VitCtaButton(
       key: FuturesPage.submitKey,
-      onTap: enabled ? onTap : null,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        height: 52,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: enabled ? color : AppColors.surface3,
-          gradient: enabled
-              ? LinearGradient(
-                  colors: [
-                    color,
-                    Color.lerp(color, AppColors.dynamicIslandBg, .18)!,
-                  ],
-                )
-              : null,
-          borderRadius: AppRadii.inputRadius,
-          boxShadow: enabled
-              ? [
-                  BoxShadow(
-                    color: color.withValues(alpha: .30),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                  ),
-                ]
-              : null,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: enabled
-                ? AppColors.onAccent
-                : AppColors.text3.withValues(alpha: .32),
-            fontWeight: AppTextStyles.bold,
-          ),
+      onPressed: enabled ? onTap : null,
+      height: AppSpacing.ctaHeight,
+      variant: side == TradeFuturesSide.long
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.danger,
+      child: Text(
+        label,
+        style: AppTextStyles.baseMedium.copyWith(
+          color: enabled
+              ? AppColors.onAccent
+              : AppColors.text3.withValues(alpha: .32),
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

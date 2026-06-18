@@ -38,10 +38,7 @@ class _AmountInput extends StatelessWidget {
                 onTap: onMax,
                 borderRadius: AppRadii.mdRadius,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x3,
-                    vertical: AppSpacing.x1,
-                  ),
+                  padding: AppSpacing.p2pWalletTransferChipPadding,
                   child: Text(
                     'MAX',
                     style: AppTextStyles.micro.copyWith(
@@ -110,7 +107,7 @@ class _QuickPercentRow extends StatelessWidget {
                 onTap: () => onPercent(values[index]),
                 borderRadius: AppRadii.xlRadius,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+                  padding: AppSpacing.p2pWalletTransferPercentPadding,
                   child: Text(
                     '${values[index]}%',
                     textAlign: TextAlign.center,
@@ -135,15 +132,15 @@ class _FeeNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return Material(
       key: P2PWalletTransferPage.feeKey,
-      decoration: BoxDecoration(
-        color: AppColors.buy.withValues(alpha: .10),
+      color: AppColors.buy.withValues(alpha: .10),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppColors.buy.withValues(alpha: .30)),
+        side: BorderSide(color: AppColors.buy.withValues(alpha: .30)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pWalletCompactCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -169,7 +166,7 @@ class _FeeNotice extends StatelessWidget {
                     'Chuyển tiền nội bộ hoàn toàn miễn phí và được xử lý ngay lập tức.',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: 1.45,
+                      height: AppSpacing.p2pWalletTransferNoticeLineHeight,
                     ),
                   ),
                 ],
@@ -189,15 +186,17 @@ class _EscrowNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return Material(
       key: P2PWalletTransferPage.escrowNoteKey,
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p.withValues(alpha: .10),
+      color: AppModuleAccents.p2p.withValues(alpha: .10),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppModuleAccents.p2p.withValues(alpha: .32)),
+        side: BorderSide(
+          color: AppModuleAccents.p2p.withValues(alpha: .32),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pWalletCompactCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -212,7 +211,7 @@ class _EscrowNotice extends StatelessWidget {
                 text,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: 1.45,
+                  height: AppSpacing.p2pWalletTransferNoticeLineHeight,
                 ),
               ),
             ),

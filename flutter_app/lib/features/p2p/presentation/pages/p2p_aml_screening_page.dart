@@ -34,8 +34,10 @@ class P2PAmlScreeningPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pComplianceBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pComplianceBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -60,12 +62,7 @@ class P2PAmlScreeningPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -105,59 +102,61 @@ class _AmlHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PAmlScreeningPage.heroKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.buy,
+      color: AppColors.buy,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppColors.buy),
+        side: BorderSide(color: AppColors.buy),
       ),
-      child: Row(
-        children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
+      child: Padding(
+        padding: AppSpacing.p2pComplianceCardPadding,
+        child: Row(
+          children: [
+            Material(
               color: AppColors.onAccent.withValues(alpha: .20),
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: const SizedBox(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
-              child: Icon(
-                Icons.shield_outlined,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconMd,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+              ),
+              child: const SizedBox(
+                width: AppSpacing.p2pComplianceIconBox,
+                height: AppSpacing.p2pComplianceIconBox,
+                child: Icon(
+                  Icons.shield_outlined,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.iconMd,
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.statusLabel,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    color: AppColors.onAccent,
-                    fontWeight: AppTextStyles.bold,
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    snapshot.statusLabel,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.sectionTitle.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  snapshot.statusDescription,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.onAccent.withValues(alpha: .90),
-                    fontWeight: AppTextStyles.bold,
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    snapshot.statusDescription,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.onAccent.withValues(alpha: .90),
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -173,7 +172,7 @@ class _AmlSchedule extends StatelessWidget {
     return VitCard(
       key: P2PAmlScreeningPage.scheduleKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pComplianceCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -245,7 +244,10 @@ class _AmlCheckList extends StatelessWidget {
           for (var index = 0; index < checks.length; index++) ...[
             _AmlCheckRow(check: checks[index]),
             if (index != checks.length - 1)
-              const Divider(height: 1, color: AppColors.borderSolid),
+              const Divider(
+                height: AppSpacing.p2pComplianceDividerHeight,
+                color: AppColors.borderSolid,
+              ),
           ],
         ],
       ),
@@ -264,18 +266,18 @@ class _AmlCheckRow extends StatelessWidget {
 
     return Padding(
       key: P2PAmlScreeningPage.checkKey(check.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pComplianceCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: config.color.withValues(alpha: .14),
+          Material(
+            color: config.color.withValues(alpha: .14),
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.lgRadius,
             ),
             child: SizedBox(
-              width: AppSpacing.inputHeight,
-              height: AppSpacing.inputHeight,
+              width: AppSpacing.p2pComplianceIconBox,
+              height: AppSpacing.p2pComplianceIconBox,
               child: Icon(
                 config.icon,
                 color: config.color,
@@ -333,46 +335,48 @@ class _AmlInfoNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PAmlScreeningPage.infoKey,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p.withValues(alpha: .10),
+      color: AppModuleAccents.p2p.withValues(alpha: .10),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppModuleAccents.p2p.withValues(alpha: .24)),
+        side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .24)),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.description_outlined,
-            color: AppModuleAccents.p2p,
-            size: 16,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.infoTitle,
-                  style: AppTextStyles.captionSm.copyWith(
-                    color: AppModuleAccents.p2p,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  snapshot.infoBody,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    height: 1.5,
-                  ),
-                ),
-              ],
+      child: Padding(
+        padding: AppSpacing.p2pComplianceCompactCardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.description_outlined,
+              color: AppModuleAccents.p2p,
+              size: AppSpacing.iconSm,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    snapshot.infoTitle,
+                    style: AppTextStyles.captionSm.copyWith(
+                      color: AppModuleAccents.p2p,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x2),
+                  Text(
+                    snapshot.infoBody,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      height: AppSpacing.p2pComplianceInfoLineHeight,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

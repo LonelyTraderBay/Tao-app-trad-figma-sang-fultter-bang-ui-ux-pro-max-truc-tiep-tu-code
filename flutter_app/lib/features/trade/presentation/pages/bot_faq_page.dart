@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -20,7 +20,6 @@ part '../widgets/bot_faq_search_tabs.dart';
 part '../widgets/bot_faq_cards_help.dart';
 
 const _faqBackground = AppColors.bg;
-const _faqPanel2 = AppColors.surface2;
 const _faqPrimary = AppColors.primary;
 
 class BotFaqPage extends ConsumerStatefulWidget {
@@ -76,8 +75,11 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 94
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.tradeBotBottomInsetVisual +
+                  AppSpacing.hairlineStroke
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.tradeBotBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -98,10 +100,12 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                 child: SingleChildScrollView(
                   key: BotFaqPage.contentKey,
                   clipBehavior: Clip.none,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 14,
+                    customGap: AppSpacing.tradeBotPageTopGap,
                     fullBleed: true,
                     children: [
                       _SearchField(
@@ -119,7 +123,11 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                           _expandedIndex = null;
                         }),
                       ),
-                      _SectionLabel('${category.label} (${items.length})'),
+                      VitSectionHeader(
+                        title: '${category.label} (${items.length})',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _faqPrimary,
+                      ),
                       if (items.isEmpty)
                         const _EmptyFaqs()
                       else
@@ -133,7 +141,8 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                               _expandedIndex = _expandedIndex == i ? null : i;
                             }),
                           ),
-                          if (i != items.length - 1) const SizedBox(height: 9),
+                          if (i != items.length - 1)
+                            const SizedBox(height: AppSpacing.tradeBotRowGap),
                         ],
                       _StatsRow(
                         totalFaqs: snapshot.totalFaqs,

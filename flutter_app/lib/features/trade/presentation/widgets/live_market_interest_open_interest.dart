@@ -19,9 +19,9 @@ class _OpenInterestCard extends StatelessWidget {
             title: 'Open Interest',
             trailing: 'BTC/USDT >',
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.sectionGapCompact),
           const LiveMarketMutedLabel('Total Open Interest'),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
           Row(
             children: [
               Text(
@@ -29,10 +29,9 @@ class _OpenInterestCard extends StatelessWidget {
                 style: AppTextStyles.numericDisplayMd.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.rowGap),
               LiveMarketChip(
                 label:
                     '${positive ? '+' : ''}${data.change24hPct.toStringAsFixed(2)}%',
@@ -40,7 +39,7 @@ class _OpenInterestCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.sectionGapCompact),
           Row(
             children: [
               Expanded(
@@ -51,14 +50,14 @@ class _OpenInterestCard extends StatelessWidget {
                   color: tone,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.rowGap),
               Expanded(
                 child: LiveMarketMetricBox(
                   label: 'High 24h',
                   value: formatLiveMarketMillions(data.high24h),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.rowGap),
               Expanded(
                 child: LiveMarketMetricBox(
                   label: 'Low 24h',
@@ -67,7 +66,7 @@ class _OpenInterestCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.liveMarketCardGap),
           const LiveMarketInfoStrip(),
         ],
       ),

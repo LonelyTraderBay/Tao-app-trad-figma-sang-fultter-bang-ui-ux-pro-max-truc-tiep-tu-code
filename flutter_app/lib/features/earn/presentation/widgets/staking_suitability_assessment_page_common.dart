@@ -31,17 +31,18 @@ class _ResultView extends ConsumerWidget {
           key: StakingSuitabilityAssessmentPage.resultCardKey,
           radius: VitCardRadius.lg,
           borderColor: color.withValues(alpha: 0.6),
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.earnCardPaddingX5,
           child: Column(
             children: [
               DecoratedBox(
-                decoration: BoxDecoration(
+                decoration: ShapeDecoration(
                   color: color.withValues(alpha: 0.12),
-                  border: Border.all(
-                    color: color,
-                    width: AppSpacing.stakingAssessmentScoreBorderWidth,
+                  shape: CircleBorder(
+                    side: BorderSide(
+                      color: color,
+                      width: AppSpacing.stakingAssessmentScoreBorderWidth,
+                    ),
                   ),
-                  shape: BoxShape.circle,
                 ),
                 child: SizedBox(
                   width: AppSpacing.stakingAssessmentScoreRing,
@@ -97,7 +98,7 @@ class _ResultView extends ConsumerWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warn15,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.earnCardPaddingX4,
             child: Text(
               profile.warning!,
               style: AppTextStyles.caption.copyWith(
@@ -121,7 +122,7 @@ class _ResultView extends ConsumerWidget {
         ),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.earnCardPaddingX3,
           child: Text(
             'This assessment is valid until ${snapshot.validUntil}. You must re-assess annually or if your financial situation changes significantly.',
             textAlign: TextAlign.center,
@@ -146,7 +147,7 @@ class _RecommendedProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           Icon(Icons.check_circle_outline_rounded, color: color),

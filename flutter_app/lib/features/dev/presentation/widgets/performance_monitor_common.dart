@@ -15,7 +15,7 @@ class _TipCard extends StatelessWidget {
     };
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.devCompactPadding,
       radius: VitCardRadius.lg,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,13 +55,15 @@ class _TargetsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.primary08,
-        border: Border.all(color: AppColors.primary20),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.primary20),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.devCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -93,13 +95,15 @@ class _InternalNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        border: Border.all(color: AppColors.borderSolid),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.borderSolid),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.devCompactPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -128,7 +132,7 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.devVerticalPaddingX2,
       child: Divider(
         height: AppSpacing.devDividerHeight,
         thickness: AppSpacing.devDividerThickness,
@@ -179,14 +183,15 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.x6,
-      height: AppSpacing.x6,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.mdRadius,
+    return SizedBox.square(
+      dimension: AppSpacing.x6,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: background,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconSm),
     );
   }
 }

@@ -33,25 +33,31 @@ class _VarianceNoteView extends StatelessWidget {
         ? '${_formatEur(note.amount)} higher (better performance)'
         : '${_formatEur(note.amount)} lower than estimated';
 
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.ghost,
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(isHigher ? 10 : 8, 8, 10, 8),
-      decoration: BoxDecoration(color: bg, borderRadius: AppRadii.inputRadius),
+      padding: isHigher
+          ? AppSpacing.exPostCostsReportVarianceNoteHigherPadding
+          : AppSpacing.exPostCostsReportVarianceNoteLowerPadding,
+      borderColor: isHigher ? _reportAmber.withValues(alpha: .26) : null,
+      background: ColoredBox(color: bg),
       child: Row(
         children: [
           Icon(
             isHigher ? Icons.warning_amber_rounded : Icons.check_rounded,
             color: color,
-            size: 11,
+            size: AppSpacing.exPostCostsReportVarianceNoteIcon,
           ),
-          const SizedBox(width: 4),
+          const SizedBox(
+            width: AppSpacing.exPostCostsReportVarianceNoteIconGap,
+          ),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.exPostCostsReportLineHeightTight,
               ),
             ),
           ),
@@ -79,7 +85,7 @@ class _VarianceCard extends StatelessWidget {
         : 'Actual costs matched estimates exactly.';
 
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 21, 16, 16),
+      padding: AppSpacing.exPostCostsReportVariancePadding,
       child: Column(
         children: [
           Row(
@@ -90,7 +96,7 @@ class _VarianceCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.exPostCostsReportLineHeightTight,
                   ),
                 ),
               ),
@@ -103,24 +109,21 @@ class _VarianceCard extends StatelessWidget {
                 '${_formatEur(variance.abs())}',
                 style: AppTextStyles.amountSm.copyWith(
                   color: higher ? _reportRed : _reportGreen,
-                  height: 1,
+                  height: AppSpacing.exPostCostsReportLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
-          Container(
+          const SizedBox(height: AppSpacing.exPostCostsReportVarianceGap),
+          VitCard(
+            variant: VitCardVariant.inner,
             width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(12, 13, 12, 12),
-            decoration: BoxDecoration(
-              color: _reportPanel2,
-              borderRadius: AppRadii.inputRadius,
-            ),
+            padding: AppSpacing.exPostCostsReportVarianceBodyPadding,
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.35,
+                height: AppSpacing.exPostCostsReportLineHeightBody,
               ),
             ),
           ),
@@ -137,25 +140,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 14,
-          decoration: BoxDecoration(
-            color: _reportPrimary,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          text,
-          style: AppTextStyles.badge.copyWith(
-            color: AppColors.text2,
-            height: 1,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: text,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _reportPrimary,
     );
   }
 }

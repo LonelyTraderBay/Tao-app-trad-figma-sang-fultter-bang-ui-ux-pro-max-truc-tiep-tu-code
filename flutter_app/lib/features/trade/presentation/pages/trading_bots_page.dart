@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -11,7 +10,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part 'trading_bots_page_part_01.dart';
 part 'trading_bots_page_part_02.dart';
@@ -19,9 +18,6 @@ part 'trading_bots_page_part_03.dart';
 part 'trading_bots_page_part_04.dart';
 
 const _botPrimary = AppColors.primary;
-const _botPrimaryDark = AppColors.primaryDark;
-const _panelBackground = AppColors.surface;
-const _chipBackground = AppColors.surface2;
 
 enum _TradingBotsTab { myBots, strategies }
 
@@ -81,12 +77,12 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
             type: MaterialType.transparency,
             child: SingleChildScrollView(
               key: TradingBotsPage.contentKey,
-              padding: EdgeInsets.only(bottom: bottomInset),
+              padding: AppSpacing.marketScrollPadding(bottomInset),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    padding: AppSpacing.contentInsets,
                     child: _TradingBotsHeader(
                       onBack: () => goBackOrFallback(
                         context,
@@ -95,25 +91,25 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.x4),
                   const Divider(
-                    height: 1,
-                    thickness: 1,
+                    height: AppSpacing.tradeBotHairline,
+                    thickness: AppSpacing.tradeBotHairline,
                     color: AppColors.divider,
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+                    padding: AppSpacing.tradeBotPageBodyPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _BotsHero(bots: _bots),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.x4),
                         _BotsTabs(
                           active: _tab,
                           botCount: _bots.length,
                           onChanged: (tab) => setState(() => _tab = tab),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.x4),
                         if (_tab == _TradingBotsTab.myBots)
                           _MyBotsTab(
                             bots: _bots,
@@ -137,9 +133,11 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
           ),
           if (_showSuccess)
             Positioned(
-              left: 20,
-              right: 20,
-              top: mode.usesVisualQaFrame ? 80 : 24,
+              left: AppSpacing.contentPad,
+              right: AppSpacing.contentPad,
+              top: mode.usesVisualQaFrame
+                  ? AppSpacing.buttonHero
+                  : AppSpacing.x5,
               child: _SuccessToast(
                 onClose: () => setState(() => _showSuccess = false),
               ),
@@ -179,7 +177,6 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
     final created = await showVitBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppColors.transparent,
       builder: (context) => _CreateBotSheet(strategy: strategy),
     );
     if (created != true || !mounted) return;

@@ -74,7 +74,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -128,10 +128,10 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
             return FractionallySizedBox(
               heightFactor: 0.82,
               child: DecoratedBox(
-                decoration: const BoxDecoration(
+                decoration: const ShapeDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(AppRadii.xl),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.sheetTopLargeRadius,
                   ),
                 ),
                 child: SafeArea(
@@ -139,12 +139,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
                   child: SingleChildScrollView(
                     key: StakingGuidePage.tutorialSheetKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x5,
-                      AppSpacing.contentPad,
-                      AppSpacing.x6,
-                    ),
+                    padding: AppSpacing.earnSheetContentPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

@@ -38,13 +38,15 @@ class _ScoreCard extends StatelessWidget {
             children: [
               for (var i = 0; i < 4; i++) ...[
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     height: AppSpacing.securityScoreBarHeight,
-                    decoration: BoxDecoration(
+                    child: Material(
                       color: i < snapshot.score
                           ? scoreColor
                           : AppColors.surface3,
-                      borderRadius: AppRadii.pillRadius,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.pillRadius,
+                      ),
                     ),
                   ),
                 ),
@@ -54,34 +56,38 @@ class _ScoreCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.securityScoreAlertGap),
-          Container(
+          SizedBox(
             height: AppSpacing.securityScoreAlertHeight,
-            padding: AppSpacing.securityScoreAlertPadding,
-            decoration: BoxDecoration(
+            child: Material(
               color: _securityAmber.withValues(alpha: .12),
-              borderRadius: AppRadii.cardRadius,
-              border: Border.all(color: _securityAmber.withValues(alpha: .28)),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Icon(
-                  Icons.warning_amber_rounded,
-                  color: _securityAmber,
-                  size: AppSpacing.securitySmallIcon,
-                ),
-                const SizedBox(width: AppSpacing.securityIconGap),
-                Expanded(
-                  child: Text(
-                    'B\u1EADt t\u1EA5t c\u1EA3 t\u00EDnh n\u0103ng b\u1EA3o m\u1EADt \u0111\u1EC3 b\u1EA3o v\u1EC7 t\u00E0i s\u1EA3n c\u1EE7a b\u1EA1n\n'
-                    't\u1ED1t nh\u1EA5t.',
-                    style: AppTextStyles.numericMicro.copyWith(
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.cardRadius,
+                side: BorderSide(color: _securityAmber.withValues(alpha: .28)),
+              ),
+              child: Padding(
+                padding: AppSpacing.securityScoreAlertPadding,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.warning_amber_rounded,
                       color: _securityAmber,
-                      fontWeight: AppTextStyles.bold,
+                      size: AppSpacing.securitySmallIcon,
                     ),
-                  ),
+                    const SizedBox(width: AppSpacing.securityIconGap),
+                    Expanded(
+                      child: Text(
+                        'B\u1EADt t\u1EA5t c\u1EA3 t\u00EDnh n\u0103ng b\u1EA3o m\u1EADt \u0111\u1EC3 b\u1EA3o v\u1EC7 t\u00E0i s\u1EA3n c\u1EE7a b\u1EA1n\n'
+                        't\u1ED1t nh\u1EA5t.',
+                        style: AppTextStyles.numericMicro.copyWith(
+                          color: _securityAmber,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ],
@@ -134,64 +140,67 @@ class _SecurityRow extends StatelessWidget {
       key: SecurityPage.itemKey(item.id),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.securityRowHeight,
-        padding: AppSpacing.securityRowPadding,
-        child: Row(
-          children: [
-            Container(
-              width: AppSpacing.securityRowIconBox,
-              height: AppSpacing.securityRowIconBox,
-              decoration: BoxDecoration(
-                color: accent.withValues(alpha: .13),
-                borderRadius: AppRadii.lgRadius,
-              ),
-              alignment: Alignment.center,
-              child: Icon(
-                _iconFor(item.iconKey),
-                color: accent,
-                size: AppSpacing.securityRowIcon,
-              ),
-            ),
-            const SizedBox(width: AppSpacing.securityRowGap),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.control.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+        child: Padding(
+          padding: AppSpacing.securityRowPadding,
+          child: Row(
+            children: [
+              SizedBox(
+                width: AppSpacing.securityRowIconBox,
+                height: AppSpacing.securityRowIconBox,
+                child: Material(
+                  color: accent.withValues(alpha: .13),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.lgRadius,
                   ),
-                  const SizedBox(height: AppSpacing.securityRowSubtitleGap),
-                  Text(
-                    item.description,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.numericMicro.copyWith(
-                      color: _securityMuted,
-                      fontWeight: AppTextStyles.medium,
-                    ),
+                  child: Icon(
+                    _iconFor(item.iconKey),
+                    color: accent,
+                    size: AppSpacing.securityRowIcon,
                   ),
-                ],
+                ),
               ),
-            ),
-            if (item.status != null) ...[
-              const SizedBox(width: AppSpacing.securityStatusGap),
-              _StatusPill(label: item.status!, color: Color(item.statusHex!)),
+              const SizedBox(width: AppSpacing.securityRowGap),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.control.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.securityRowSubtitleGap),
+                    Text(
+                      item.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.numericMicro.copyWith(
+                        color: _securityMuted,
+                        fontWeight: AppTextStyles.medium,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (item.status != null) ...[
+                const SizedBox(width: AppSpacing.securityStatusGap),
+                _StatusPill(label: item.status!, color: Color(item.statusHex!)),
+              ],
+              const SizedBox(width: AppSpacing.securityChevronGap),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.securityChevron,
+              ),
             ],
-            const SizedBox(width: AppSpacing.securityChevronGap),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.securityChevron,
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -206,14 +215,7 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.securityStatusPillPadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.pillRadius,
-      ),
-      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -263,80 +265,75 @@ class _DeviceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ConstrainedBox(
       constraints: const BoxConstraints(
         minHeight: AppSpacing.securityDeviceMinHeight,
       ),
-      padding: AppSpacing.securityDevicePadding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.laptop_mac_rounded,
-            color: AppColors.text3,
-            size: AppSpacing.securityDeviceIcon,
-          ),
-          const SizedBox(width: AppSpacing.securityDeviceGap),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        device.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.control.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.securityDevicePadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.laptop_mac_rounded,
+              color: AppColors.text3,
+              size: AppSpacing.securityDeviceIcon,
+            ),
+            const SizedBox(width: AppSpacing.securityDeviceGap),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          device.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.control.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    if (device.isCurrent) ...[
-                      const SizedBox(width: AppSpacing.securityStatusGap),
-                      _StatusPill(
-                        label: 'Hi\u1EC7n t\u1EA1i',
-                        color: _securityGreen,
-                      ),
+                      if (device.isCurrent) ...[
+                        const SizedBox(width: AppSpacing.securityStatusGap),
+                        _StatusPill(
+                          label: 'Hi\u1EC7n t\u1EA1i',
+                          color: _securityGreen,
+                        ),
+                      ],
                     ],
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.securityDeviceNameGap),
-                Text(
-                  '${device.os} \u2022 ${device.location}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.numericMicro.copyWith(
-                    color: _securityMuted,
                   ),
-                ),
-                const SizedBox(height: AppSpacing.securityDeviceMetaGap),
-                Text(
-                  device.lastSeen,
-                  style: AppTextStyles.numericMicro.copyWith(
-                    color: _securityMuted,
+                  const SizedBox(height: AppSpacing.securityDeviceNameGap),
+                  Text(
+                    '${device.os} \u2022 ${device.location}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.numericMicro.copyWith(
+                      color: _securityMuted,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          if (!device.isCurrent) ...[
-            const SizedBox(width: AppSpacing.securityStatusGap),
-            Container(
-              padding: AppSpacing.securityStatusPillPadding,
-              decoration: BoxDecoration(
-                color: _securityRed.withValues(alpha: .1),
-                borderRadius: AppRadii.badgeRadius,
-              ),
-              child: Text(
-                '\u0110\u0103ng xu\u1EA5t',
-                style: AppTextStyles.badge.copyWith(color: _securityRed),
+                  const SizedBox(height: AppSpacing.securityDeviceMetaGap),
+                  Text(
+                    device.lastSeen,
+                    style: AppTextStyles.numericMicro.copyWith(
+                      color: _securityMuted,
+                    ),
+                  ),
+                ],
               ),
             ),
+            if (!device.isCurrent) ...[
+              const SizedBox(width: AppSpacing.securityStatusGap),
+              const _StatusPill(
+                label: '\u0110\u0103ng xu\u1EA5t',
+                color: _securityRed,
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

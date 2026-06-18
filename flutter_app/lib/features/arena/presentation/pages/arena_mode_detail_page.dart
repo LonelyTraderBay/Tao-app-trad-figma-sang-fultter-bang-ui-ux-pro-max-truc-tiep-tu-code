@@ -85,13 +85,13 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
                   child: SingleChildScrollView(
                     key: ArenaModeDetailPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x5,
                       children: [
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: ArenaModeHero(
                             creatorKey: ArenaModeDetailPage.creatorKey,
                             trustKey: ArenaModeDetailPage.trustKey,
@@ -105,13 +105,13 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
                           ),
                         ),
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: ArenaModeDescriptionCard(
                             description: snapshot.mode.description,
                           ),
                         ),
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: ArenaModeRulesSummary(rows: snapshot.ruleRows),
                         ),
                         ArenaModeQualitySection(
@@ -183,7 +183,7 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
       backgroundColor: AppColors.surface,
       barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .55),
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadii.lg)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) => ArenaModeTrustSheet(snapshot: snapshot),
     );

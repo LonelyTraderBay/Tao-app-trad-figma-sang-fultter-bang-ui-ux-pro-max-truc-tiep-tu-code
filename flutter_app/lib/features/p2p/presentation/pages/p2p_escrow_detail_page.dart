@@ -87,10 +87,7 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pEscrowDetailScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -142,7 +139,7 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pEscrowDetailInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Escrow detail review',

@@ -8,21 +8,17 @@ class _ProviderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.copyConfigurationCardPadding,
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 24,
-            backgroundColor: _configurationPrimary.withValues(alpha: .16),
-            child: Text(
-              provider.avatar,
-              style: AppTextStyles.baseMedium.copyWith(
-                color: _configurationPrimary,
-                fontWeight: AppTextStyles.extraBold,
-              ),
-            ),
+          VitAssetAvatar(
+            label: provider.avatar,
+            accentColor: _configurationPrimary,
+            size: AppSpacing.copyConfigurationAvatarSize,
+            radius: AppRadii.avatarRadius,
+            border: true,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.copyConfigurationInlineGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,14 +27,14 @@ class _ProviderCard extends StatelessWidget {
                   'Đang cấu hình copy cho',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.copyConfigurationTinyGap),
                 Text(
                   provider.name,
                   style: AppTextStyles.baseMedium.copyWith(
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.copyConfigurationTinyGap),
                 Text(
                   'ROI +${provider.totalPnlPct.toStringAsFixed(1)}% · Max DD ${provider.maxDrawdown.toStringAsFixed(1)}%',
                   style: AppTextStyles.navLabel.copyWith(
@@ -95,7 +91,7 @@ class _CapitalSection extends StatelessWidget {
         ),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(14),
+          padding: AppSpacing.copyConfigurationInnerPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -116,17 +112,17 @@ class _CapitalSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.copyConfigurationSmallGap),
               ClipRRect(
                 borderRadius: AppRadii.smRadius,
                 child: LinearProgressIndicator(
-                  minHeight: 8,
+                  minHeight: AppSpacing.copyConfigurationProgressHeight,
                   value: (allocationPercent / 100).clamp(0, 1),
                   backgroundColor: AppColors.borderSolid,
                   valueColor: AlwaysStoppedAnimation<Color>(allocationColor),
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.copyConfigurationSmallGap),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -152,7 +148,8 @@ class _CapitalSection extends StatelessWidget {
                   onPressed: () => onPreset(percent),
                 ),
               ),
-              if (percent != 20) const SizedBox(width: 8),
+              if (percent != 20)
+                const SizedBox(width: AppSpacing.copyConfigurationSmallGap),
             ],
           ],
         ),
@@ -189,7 +186,7 @@ class _ModeSection extends StatelessWidget {
         if (selected == TradeCopyConfigurationMode.fixed)
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(14),
+            padding: AppSpacing.copyConfigurationInnerPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -213,7 +210,7 @@ class _ModeSection extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      width: 54,
+                      width: AppSpacing.copyConfigurationRatioWidth,
                       child: Text(
                         '${copyRatio.toStringAsFixed(0)}%',
                         textAlign: TextAlign.right,

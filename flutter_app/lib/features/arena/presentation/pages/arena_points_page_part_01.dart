@@ -50,7 +50,7 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
             child: SingleChildScrollView(
               key: ArenaPointsPage.contentKey,
               physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: bottomInset),
+              padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
               child: VitPageContent(
                 padding: VitContentPadding.compact,
                 customGap: AppSpacing.x5,
@@ -126,7 +126,7 @@ class _RewardsHero extends StatelessWidget {
 
     return VitModuleHeroCard(
       accentColor: AppColors.accent,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaPaddingX5,
       child: Column(
         children: [
           Row(
@@ -235,7 +235,7 @@ class _RewardMetricCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -346,7 +346,7 @@ class _PendingClaimBanner extends StatelessWidget {
       radius: VitCardRadius.sm,
       borderColor: claimedAll ? AppColors.buy20 : AppColors.warningBorder,
       onTap: claimedAll ? null : onTap,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPaddingX3,
       child: Row(
         children: [
           _AccentIcon(
@@ -399,10 +399,7 @@ class _ExpiringBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: AppColors.sell20,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.arenaPointsExpiringPadding,
       child: Row(
         children: [
           const Icon(

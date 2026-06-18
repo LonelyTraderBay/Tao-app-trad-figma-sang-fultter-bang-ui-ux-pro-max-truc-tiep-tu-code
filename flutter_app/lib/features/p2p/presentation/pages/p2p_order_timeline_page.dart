@@ -73,7 +73,9 @@ class P2POrderTimelinePage extends ConsumerWidget {
                       physics: const BouncingScrollPhysics(
                         parent: AlwaysScrollableScrollPhysics(),
                       ),
-                      padding: EdgeInsets.only(bottom: bottomInset),
+                      padding: AppSpacing.p2pOrderLifecycleScrollPadding(
+                        bottomInset,
+                      ),
                       child: snapshot.events.isEmpty
                           ? VitPageContent(
                               key: emptyKey,
@@ -122,7 +124,7 @@ class _TimelineHeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pOrderLifecycleHeroPadding,
       child: Row(
         children: [
           VitCard(
@@ -178,7 +180,7 @@ class _TimelineList extends StatelessWidget {
           top: AppSpacing.x1,
           bottom: AppSpacing.x6,
           child: const SizedBox(
-            width: 2,
+            width: AppSpacing.p2pOrderTimelineConnectorWidth,
             child: ColoredBox(color: AppColors.borderSolid),
           ),
         ),
@@ -206,25 +208,31 @@ class _TimelineRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _statusColor(event.status);
     return Padding(
-      padding: EdgeInsets.only(bottom: isLast ? 0 : AppSpacing.x6),
+      padding: AppSpacing.p2pOrderTimelineRowPadding(isLast: isLast),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: _statusBackground(event.status),
-              shape: BoxShape.circle,
-              border: Border.all(color: color, width: 2),
+          Material(
+            color: _statusBackground(event.status),
+            shape: CircleBorder(
+              side: BorderSide(
+                color: color,
+                width: AppSpacing.p2pOrderStepperConnectorHeight,
+              ),
             ),
             child: SizedBox.square(
               dimension: AppSpacing.x6,
-              child: Icon(_eventIcon(event.typeKey), color: color, size: 18),
+              child: Icon(
+                _eventIcon(event.typeKey),
+                color: color,
+                size: AppSpacing.p2pOrderTimelineEventIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x5),
           Expanded(
             child: VitCard(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.p2pOrderLifecycleHeroPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

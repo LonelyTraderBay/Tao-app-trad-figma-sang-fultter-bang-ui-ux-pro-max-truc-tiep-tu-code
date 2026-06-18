@@ -57,8 +57,10 @@ class _ComplaintsHandlingPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 70
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.complaintsHandlingBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.complaintsHandlingBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -79,17 +81,21 @@ class _ComplaintsHandlingPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ComplaintsHandlingPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
+                  padding: AppSpacing.complaintsHandlingScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
                     customGap: 0,
                     children: [
                       const _RightsNotice(),
-                      const SizedBox(height: 12),
+                      const SizedBox(
+                        height: AppSpacing.complaintsHandlingReviewGap,
+                      ),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.cardPaddingCompact,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -100,7 +106,9 @@ class _ComplaintsHandlingPageState
                                   'Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.',
                               contractId: 'complaints-handling-review',
                             ),
-                            SizedBox(height: 8),
+                            SizedBox(
+                              height: AppSpacing.complaintsHandlingGridGap,
+                            ),
                             VitStatusPill(
                               label: 'Regulated process',
                               status: VitStatusPillStatus.warning,
@@ -109,16 +117,24 @@ class _ComplaintsHandlingPageState
                           ],
                         ),
                       ),
-                      const SizedBox(height: 36),
+                      const SizedBox(
+                        height: AppSpacing.complaintsHandlingStatsGap,
+                      ),
                       _StatsRow(snapshot: snapshot),
-                      const SizedBox(height: 25),
+                      const SizedBox(
+                        height: AppSpacing.complaintsHandlingPrimaryGap,
+                      ),
                       const _SubmitComplaintButton(),
-                      const SizedBox(height: 25),
+                      const SizedBox(
+                        height: AppSpacing.complaintsHandlingTabGap,
+                      ),
                       _Tabs(
                         active: _tab,
                         onChanged: (tab) => setState(() => _tab = tab),
                       ),
-                      const SizedBox(height: 26),
+                      const SizedBox(
+                        height: AppSpacing.complaintsHandlingTabGap,
+                      ),
                       VitPageSection(
                         customGap: 0,
                         children: [

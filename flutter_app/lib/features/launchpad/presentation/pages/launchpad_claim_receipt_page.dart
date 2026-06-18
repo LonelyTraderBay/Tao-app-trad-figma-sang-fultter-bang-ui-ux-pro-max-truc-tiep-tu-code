@@ -97,28 +97,32 @@ class _LaunchpadClaimReceiptPageState
               ),
               child: Column(
                 children: [
-                  Container(
+                  ColoredBox(
                     key: LaunchpadClaimReceiptPage.tabsKey,
-                    decoration: const BoxDecoration(
-                      color: AppColors.navBg,
-                      border: Border(
-                        bottom: BorderSide(color: AppColors.border),
-                      ),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.contentPad,
-                    ),
-                    child: VitTabBar(
-                      tabs: const [
-                        VitTabItem(key: 'overview', label: 'Tổng quan'),
-                        VitTabItem(key: 'vesting', label: 'Vesting'),
-                        VitTabItem(key: 'history', label: 'Lịch sử'),
+                    color: AppColors.navBg,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: AppSpacing.launchpadHorizontalContentPadding,
+                          child: VitTabBar(
+                            tabs: const [
+                              VitTabItem(key: 'overview', label: 'Tổng quan'),
+                              VitTabItem(key: 'vesting', label: 'Vesting'),
+                              VitTabItem(key: 'history', label: 'Lịch sử'),
+                            ],
+                            activeKey: _activeTab.id,
+                            variant: VitTabBarVariant.underline,
+                            onChanged: (id) => setState(
+                              () => _activeTab = _ClaimReceiptTab.byId(id),
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          height: AppSpacing.launchpadDividerHeight,
+                          color: AppColors.border,
+                        ),
                       ],
-                      activeKey: _activeTab.id,
-                      variant: VitTabBarVariant.underline,
-                      onChanged: (id) => setState(
-                        () => _activeTab = _ClaimReceiptTab.byId(id),
-                      ),
                     ),
                   ),
                   Expanded(

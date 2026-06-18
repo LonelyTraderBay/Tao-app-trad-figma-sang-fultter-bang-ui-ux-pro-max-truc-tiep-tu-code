@@ -47,7 +47,7 @@ class _ConditionBuilder extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           VitCard(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.arenaSmartRuleCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -112,7 +112,7 @@ class _ConditionBuilder extends StatelessWidget {
                   VitCard(
                     variant: VitCardVariant.inner,
                     borderColor: AppColors.accent20,
-                    padding: const EdgeInsets.all(AppSpacing.x3),
+                    padding: AppSpacing.arenaSmartRuleInnerPadding,
                     child: Text(
                       '"$preview."',
                       style: AppTextStyles.caption.copyWith(
@@ -179,10 +179,7 @@ class _BuilderBox extends StatelessWidget {
             borderColor: value.isEmpty
                 ? AppColors.borderSolid
                 : AppColors.accent20,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x3,
-            ),
+            padding: AppSpacing.arenaSmartRuleCompactSelectorPadding,
             onTap: () {
               HapticFeedback.selectionClick();
               onTap();
@@ -319,7 +316,7 @@ class _TimingRulesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaSmartRuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -404,17 +401,14 @@ class _EdgeRuleField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x4),
+      padding: AppSpacing.arenaSmartRuleEdgeFieldPadding,
       child: _FieldBlock(
         label: label,
         hint: 'Nên có',
         child: VitCard(
           variant: VitCardVariant.inner,
           borderColor: value.isEmpty ? AppColors.borderSolid : AppColors.buy20,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x4,
-          ),
+          padding: AppSpacing.arenaSmartRuleSelectorPadding,
           onTap: () {
             HapticFeedback.selectionClick();
             onTap();
@@ -465,7 +459,7 @@ class _SwitchRow extends StatelessWidget {
       },
       borderRadius: AppRadii.mdRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+        padding: AppSpacing.arenaSmartRuleSwitchRowPadding,
         child: Row(
           children: [
             Expanded(

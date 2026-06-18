@@ -6,21 +6,18 @@ class _TaxNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       variant: VitCardVariant.inner,
       borderColor: _taxAmber.withValues(alpha: .30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 1),
-            child: Icon(
-              Icons.warning_amber_rounded,
-              color: _taxAmber,
-              size: 21,
-            ),
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: _taxAmber,
+            size: AppSpacing.iconMd,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,10 +27,10 @@ class _TaxNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: _taxAmber,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.tradeBotRowGap),
                 Text(
                   'Cryptocurrency trading is taxable in most countries. Bot '
                   'trades are treated as individual transactions. We provide '
@@ -41,7 +38,7 @@ class _TaxNotice extends StatelessWidget {
                   'professional for accurate filing.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.tradeBotLineHeightRelaxed,
                   ),
                 ),
               ],
@@ -74,32 +71,25 @@ class _YearPicker extends StatelessWidget {
               key: BotTaxReportingPage.yearKey(years[i]),
               behavior: HitTestBehavior.opaque,
               onTap: () => onChanged(years[i]),
-              child: Container(
-                height: 46,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: selectedYear == years[i]
-                      ? _taxPrimary
-                      : _taxBackground,
-                  border: Border.all(
-                    color: selectedYear == years[i]
-                        ? _taxPrimary
-                        : _taxOptionBorder,
-                  ),
-                  borderRadius: AppRadii.cardRadius,
-                ),
+              child: VitCtaButton(
+                onPressed: () => onChanged(years[i]),
+                height: AppSpacing.tradeBotControlHeight,
+                variant: selectedYear == years[i]
+                    ? VitCtaButtonVariant.primary
+                    : VitCtaButtonVariant.ghost,
+                padding: AppSpacing.zeroInsets,
                 child: Text(
                   years[i],
                   style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
             ),
           ),
-          if (i != years.length - 1) const SizedBox(width: 10),
+          if (i != years.length - 1)
+            const SizedBox(width: AppSpacing.tradeBotRowGap),
         ],
       ],
     );

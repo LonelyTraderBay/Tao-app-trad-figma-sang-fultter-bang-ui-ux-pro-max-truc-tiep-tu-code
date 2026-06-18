@@ -20,7 +20,7 @@ class _TopicsSection extends StatelessWidget {
           title: '2 - Shared Topic Taxonomy',
           accentColor: AppModuleAccents.arena,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           '8 topics dùng chung cho cả Arena và Prediction Markets. Bridge chỉ qua topic, không qua value.',
           style: AppTextStyles.micro.copyWith(
@@ -28,9 +28,9 @@ class _TopicsSection extends StatelessWidget {
             height: AppSpacing.arenaBridgeIntroLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -44,11 +44,11 @@ class _TopicsSection extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         for (final topic in snapshot.topics.take(4)) ...[
           _TopicMappingCard(topic: topic),
           if (topic != snapshot.topics.take(4).last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -76,27 +76,28 @@ class _TopicChip extends StatelessWidget {
         key: ArenaPredictionBridgeFoundationPage.topicKey(topic.id),
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
-        child: Container(
+        child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.arenaBridgeTopicMinHeight,
           ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
+          child: Material(
             color: tone.withValues(alpha: selected ? .20 : .10),
-            border: Border.all(
-              color: tone.withValues(alpha: selected ? .50 : .20),
-              width: selected ? 1.5 : 1,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: tone.withValues(alpha: selected ? .50 : .20),
+                width: selected ? 1.5 : 1,
+              ),
+              borderRadius: AppRadii.mdRadius,
             ),
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Text(
-            topic.label,
-            style: AppTextStyles.micro.copyWith(
-              color: tone,
-              fontWeight: AppTextStyles.bold,
+            child: Padding(
+              padding: AppSpacing.arenaPresetChipPadding,
+              child: Text(
+                topic.label,
+                style: AppTextStyles.micro.copyWith(
+                  color: tone,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -114,16 +115,16 @@ class _TopicMappingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _InlineTitle(icon: Icons.topic_outlined, title: topic.label),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           _MiniMetric(label: 'Prediction', value: topic.predictionUsage),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           _MiniMetric(label: 'Arena', value: topic.arenaUsage),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           _MiniMetric(label: 'Bridge', value: topic.bridgeUsage),
         ],
       ),
@@ -145,7 +146,7 @@ class _BoundarySection extends StatelessWidget {
           title: '3 - Module Boundary Components',
           accentColor: AppColors.sell,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           'Banner, badge và info row bắt buộc khi hiển thị content cross-module.',
           style: AppTextStyles.micro.copyWith(
@@ -153,15 +154,15 @@ class _BoundarySection extends StatelessWidget {
             height: AppSpacing.arenaBridgeIntroLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         for (final banner in snapshot.boundaryBanners) ...[
           _BoundaryBanner(banner: banner),
           if (banner != snapshot.boundaryBanners.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
         ],
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -171,15 +172,15 @@ class _BoundarySection extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Column(
             children: [
               for (final row in snapshot.infoRows) ...[
                 _InfoRow(text: row.text, tone: row.tone),
                 if (row != snapshot.infoRows.last)
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                  const SizedBox(height: AppSpacing.x2),
               ],
             ],
           ),
@@ -200,7 +201,7 @@ class _BoundaryBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: tone.withValues(alpha: .22),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -218,7 +219,7 @@ class _BoundaryBanner extends StatelessWidget {
                     letterSpacing: AppSpacing.arenaBridgeLetterSpacing,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   banner.description,
                   style: AppTextStyles.micro.copyWith(
@@ -255,7 +256,7 @@ class _BridgeComponentsSection extends StatelessWidget {
           title: '4 - Bridge Components',
           accentColor: AppColors.primary,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           '4 reusable bridge components. Mỗi component đều có mandatory disclosure badge.',
           style: AppTextStyles.micro.copyWith(
@@ -263,13 +264,13 @@ class _BridgeComponentsSection extends StatelessWidget {
             height: AppSpacing.arenaBridgeIntroLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         for (final component in snapshot.bridgeComponents) ...[
           _ComponentDemoCard(component: component),
           if (component != snapshot.bridgeComponents.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+            const SizedBox(height: AppSpacing.x4),
         ],
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _DualStatsCard(
           stats: snapshot.dualStats,
           onPredictionTap: onPredictionTap,
@@ -288,7 +289,7 @@ class _ComponentDemoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -306,7 +307,7 @@ class _ComponentDemoCard extends StatelessWidget {
               _BridgeBadge(label: component.badgeLabel, tone: component.tone),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             component.description,
             style: AppTextStyles.micro.copyWith(
@@ -314,7 +315,7 @@ class _ComponentDemoCard extends StatelessWidget {
               height: AppSpacing.arenaBridgeBodyLineHeight,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           _DemoFrame(
             title: component.sampleTitle,
             meta: component.sampleMeta,
@@ -341,7 +342,7 @@ class _DualStatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary.withValues(alpha: .24),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -349,7 +350,7 @@ class _DualStatsCard extends StatelessWidget {
             icon: Icons.account_tree_outlined,
             title: 'DualModuleStatCard - separated profile blocks',
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -375,7 +376,7 @@ class _DualStatsCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           const _InfoRow(
             text: 'Hai khối stats mở hai module riêng. Không tổng hợp số liệu.',
             tone: ArenaBridgeTone.disclosure,
@@ -411,52 +412,56 @@ class _ModuleStatButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
-        child: Container(
+        child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.arenaBridgeStatMinHeight,
           ),
-          padding: const EdgeInsets.all(AppSpacing.x3),
-          decoration: BoxDecoration(
+          child: Material(
             color: color.withValues(alpha: .08),
-            border: Border.all(color: color.withValues(alpha: .20)),
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                _toneIcon(tone),
-                color: color,
-                size: AppSpacing.arenaBridgeActionIcon,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: color.withValues(alpha: .20)),
+              borderRadius: AppRadii.mdRadius,
+            ),
+            child: Padding(
+              padding: AppSpacing.arenaPaddingX3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    _toneIcon(tone),
+                    color: color,
+                    size: AppSpacing.arenaBridgeActionIcon,
+                  ),
+                  const SizedBox(height: AppSpacing.x3),
+                  Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    detail,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
-              Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-              Text(
-                value,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
-              Text(
-                detail,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -478,7 +483,7 @@ class _ExamplesSection extends StatelessWidget {
           title: '5 - Example Usage Frames',
           accentColor: AppColors.buy,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           '4 frame demo: A-C là đúng cách, D là sai cách.',
           style: AppTextStyles.micro.copyWith(
@@ -486,11 +491,11 @@ class _ExamplesSection extends StatelessWidget {
             height: AppSpacing.arenaBridgeIntroLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         for (final example in snapshot.examples) ...[
           _ExampleCard(example: example),
           if (example != snapshot.examples.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+            const SizedBox(height: AppSpacing.x4),
         ],
       ],
     );

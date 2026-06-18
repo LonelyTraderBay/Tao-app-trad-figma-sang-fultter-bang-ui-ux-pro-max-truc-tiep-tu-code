@@ -19,24 +19,23 @@ class _ConvertFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(
-        horizontalPadding,
-        AppSpacing.walletDustFooterTopPadding,
-        horizontalPadding,
-        bottomSpace + AppSpacing.walletDustFooterBottomPadding,
-      ),
-      decoration: const BoxDecoration(
-        color: AppColors.modalScrimStrong,
-        border: Border(top: BorderSide(color: AppColors.border)),
-      ),
-      child: _PrimaryButton(
-        key: DustConverterPage.ctaKey,
-        enabled: enabled,
-        label: enabled
-            ? 'Chuy\u1EC3n \u0111\u1ED5i $selectedCount t\u00E0i s\u1EA3n \u2192 $targetSymbol'
-            : 'Ch\u1ECDn t\u00E0i s\u1EA3n \u0111\u1EC3 chuy\u1EC3n \u0111\u1ED5i',
-        onTap: onTap,
+    return ColoredBox(
+      color: AppColors.modalScrimStrong,
+      child: Padding(
+        padding: AppSpacing.walletDustSheetPadding.copyWith(
+          left: horizontalPadding,
+          top: AppSpacing.walletDustFooterTopPadding,
+          right: horizontalPadding,
+          bottom: bottomSpace + AppSpacing.walletDustFooterBottomPadding,
+        ),
+        child: _PrimaryButton(
+          key: DustConverterPage.ctaKey,
+          enabled: enabled,
+          label: enabled
+              ? 'Chuy\u1EC3n \u0111\u1ED5i $selectedCount t\u00E0i s\u1EA3n \u2192 $targetSymbol'
+              : 'Ch\u1ECDn t\u00E0i s\u1EA3n \u0111\u1EC3 chuy\u1EC3n \u0111\u1ED5i',
+          onTap: onTap,
+        ),
       ),
     );
   }
@@ -56,26 +55,10 @@ class _PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: enabled ? onTap : null,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: AppSpacing.walletDustButtonHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: enabled ? _dustPrimary : AppColors.surface3,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: enabled ? AppColors.onAccent : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      onPressed: enabled ? onTap : null,
+      height: AppSpacing.walletDustButtonHeight,
+      child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
 }
@@ -96,7 +79,7 @@ class _PreviewRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: AppSpacing.zeroInsets.copyWith(
         bottom: last ? 0 : AppSpacing.walletDustPreviewRowGap,
       ),
       child: Row(
@@ -161,25 +144,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: AppSpacing.walletDustSectionMarkerWidth,
-          height: AppSpacing.walletDustSectionMarkerHeight,
-          decoration: BoxDecoration(
-            color: _dustPrimary,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.walletDustSectionLabelGap),
-        Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _dustPrimary,
     );
   }
 }

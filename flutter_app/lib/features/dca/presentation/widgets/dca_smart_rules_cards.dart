@@ -9,7 +9,7 @@ class _RuleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -112,7 +112,7 @@ class _TemplateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -127,12 +127,12 @@ class _TemplateCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           DecoratedBox(
-            decoration: const BoxDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.surface2,
-              borderRadius: AppRadii.mdRadius,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.dcaPaddingX3,
               child: Column(
                 children: [
                   _CodeRow(label: 'Condition', value: template.condition),
@@ -167,9 +167,7 @@ class _TemplateCard extends StatelessWidget {
                   onPressed: () {},
                   fullWidth: false,
                   height: AppSpacing.dcaSmartButtonHeight,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x3,
-                  ),
+                  padding: AppSpacing.dcaHorizontalPaddingX3,
                   leading: const Icon(
                     Icons.copy_rounded,
                     size: AppSpacing.dcaSmartButtonIcon,
@@ -193,7 +191,7 @@ class _HistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -242,12 +240,12 @@ class _HistoryCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           DecoratedBox(
-            decoration: const BoxDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.surface2,
-              borderRadius: AppRadii.mdRadius,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.dcaPaddingX3,
               child: Column(
                 children: [
                   _CodeRow(label: 'Condition Met', value: entry.condition),

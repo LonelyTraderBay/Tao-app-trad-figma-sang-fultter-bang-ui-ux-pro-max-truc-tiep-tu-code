@@ -59,17 +59,20 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.adminCardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.adminBox40,
-            height: AppSpacing.adminBox40,
-            decoration: BoxDecoration(
-              color: tint,
-              borderRadius: AppRadii.inputRadius,
+          SizedBox.square(
+            dimension: AppSpacing.adminBox40,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: tint,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.inputRadius,
+                ),
+              ),
+              child: Icon(icon, color: accent, size: AppSpacing.adminIconXl),
             ),
-            child: Icon(icon, color: accent, size: AppSpacing.adminIconXl),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -155,7 +158,7 @@ class _ABTestCard extends StatelessWidget {
       child: VitCard(
         key: ABTestDashboard.testKey(test.id),
         onTap: onTap,
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.adminCardPadding,
         borderColor: selected ? AppColors.accent30 : AppColors.cardBorder,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -273,15 +276,12 @@ class _MiniStat extends StatelessWidget {
     return Semantics(
       label: 'Admin A/B test metric $label: $value',
       child: DecoratedBox(
-        decoration: const BoxDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.surface2,
-          borderRadius: AppRadii.inputRadius,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.adminCompactPadding,
           child: Column(
             children: [
               Text(

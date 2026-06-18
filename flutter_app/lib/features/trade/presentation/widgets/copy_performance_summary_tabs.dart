@@ -8,7 +8,7 @@ class _PerformanceSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -18,7 +18,7 @@ class _PerformanceSummary extends StatelessWidget {
               fontWeight: AppTextStyles.extraBold,
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.rowPy),
           Row(
             children: [
               Expanded(
@@ -32,7 +32,7 @@ class _PerformanceSummary extends StatelessWidget {
                   textColor: AppColors.infoTextStrong,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.cardGap),
               Expanded(
                 child: _ReturnCard(
                   title: 'Provider lý thuyết',
@@ -46,10 +46,10 @@ class _PerformanceSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.cardGap),
           VitCard(
             variant: VitCardVariant.ghost,
-            padding: const EdgeInsets.all(12),
+            padding: AppSpacing.cardPaddingCompact,
             borderColor: _performanceGreen,
             child: Column(
               children: [
@@ -58,9 +58,9 @@ class _PerformanceSummary extends StatelessWidget {
                     const Icon(
                       Icons.info_outline_rounded,
                       color: _performanceGreen,
-                      size: 15,
+                      size: AppSpacing.walletTokenApprovalActionIcon,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.x3),
                     Expanded(
                       child: Text(
                         'Chênh lệch hiệu suất',
@@ -79,7 +79,7 @@ class _PerformanceSummary extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.formFieldLabelGap),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -117,8 +117,8 @@ class _ReturnCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      height: 92,
-      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
+      height: AppSpacing.copyPerformanceReturnCardHeight,
+      padding: AppSpacing.copyPerformanceReturnCardPadding,
       borderColor: border,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +130,7 @@ class _ReturnCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: textColor),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.formFieldLabelGap),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -139,7 +139,7 @@ class _ReturnCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: 3),
+          const SizedBox(height: AppSpacing.x1),
           Text(range, style: AppTextStyles.micro.copyWith(color: textColor)),
         ],
       ),
@@ -163,42 +163,18 @@ class _PerformanceTabs extends StatelessWidget {
     ];
     return VitCard(
       variant: VitCardVariant.inner,
-      height: 52,
-      padding: EdgeInsets.zero,
-      child: Row(
-        children: [
+      height: AppSpacing.copyPerformanceTabsHeight,
+      padding: AppSpacing.zeroInsets,
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: activeTab,
+        onChanged: onChanged,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: CopyPerformancePage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeTab == tab.$1
-                                ? _performancePrimary
-                                : AppColors.text3,
-                            fontWeight: activeTab == tab.$1
-                                ? AppTextStyles.extraBold
-                                : AppTextStyles.medium,
-                          ),
-                        ),
-                      ),
-                    ),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 150),
-                      width: activeTab == tab.$1 ? 70 : 0,
-                      height: 2,
-                      color: _performancePrimary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: CopyPerformancePage.tabKey(tab.$1),
             ),
         ],
       ),
@@ -223,15 +199,15 @@ class _OverviewTab extends StatelessWidget {
             fontWeight: AppTextStyles.extraBold,
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.walletAssetPillGap),
         SizedBox(
-          height: 258,
+          height: AppSpacing.copyPerformanceEquityChartHeight,
           child: CustomPaint(
             painter: _LineChartPainter(points: snapshot.equityCurve),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.rowPy),
         _InfoBox(
           title: 'Tại sao có chênh lệch?',
           lines: const [
@@ -240,7 +216,7 @@ class _OverviewTab extends StatelessWidget {
             'Position sizing: Fixed mode sử dụng 50% capital',
           ],
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.transferSectionGap),
         Text(
           'Phân bổ Slippage',
           style: AppTextStyles.caption.copyWith(
@@ -248,15 +224,15 @@ class _OverviewTab extends StatelessWidget {
             fontWeight: AppTextStyles.extraBold,
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.walletAssetPillGap),
         SizedBox(
-          height: 220,
+          height: AppSpacing.dcaPortfolioOptimizerFrontierChartHeight,
           child: CustomPaint(
             painter: _BarChartPainter(buckets: snapshot.slippageBuckets),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.cardGap),
         Row(
           children: [
             Expanded(
@@ -265,7 +241,7 @@ class _OverviewTab extends StatelessWidget {
                 value: '${snapshot.avgSlippagePct.toStringAsFixed(2)}%',
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: AppSpacing.walletAssetPillGap),
             Expanded(
               child: _SmallMetricCard(
                 label: 'Provider TB',

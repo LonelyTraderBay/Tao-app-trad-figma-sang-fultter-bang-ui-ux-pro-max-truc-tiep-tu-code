@@ -21,7 +21,6 @@ part '../widgets/network_status_cards_stats.dart';
 part '../widgets/network_status_legend_common.dart';
 
 const _networkBackground = AppColors.bg;
-const _networkPanel = AppColors.surface;
 const _networkBorder = AppColors.overlayStroke;
 const _networkPrimary = AppColors.primary;
 const _networkGreen = AppColors.buy;

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -23,10 +22,6 @@ part '../widgets/trade_history_export_selectors_includes.dart';
 part '../widgets/trade_history_export_footer.dart';
 
 const _tradePrimary = AppColors.primary;
-const _tradePrimaryDark = AppColors.primaryDark;
-const _cardBackground = AppColors.surface2;
-const _chipBackground = AppColors.surface2;
-const _inactiveFormatBackground = AppColors.surface3;
 
 class TradeHistoryExportPage extends ConsumerStatefulWidget {
   const TradeHistoryExportPage({super.key, this.shellRenderMode});
@@ -94,17 +89,16 @@ class _TradeHistoryExportPageState
                   children: [
                     Positioned.fill(
                       child: SingleChildScrollView(
-                        padding: EdgeInsets.fromLTRB(
-                          20,
-                          14,
-                          20,
-                          bottomChrome + 126,
+                        padding: AppSpacing.tradeToolExportScrollPadding(
+                          bottomChrome,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             _SummaryCard(stats: snapshot.stats),
-                            const SizedBox(height: 24),
+                            const SizedBox(
+                              height: AppSpacing.tradeToolContentGap,
+                            ),
                             _Section(
                               title: 'Định dạng file',
                               child: _FormatSelector(
@@ -118,7 +112,9 @@ class _TradeHistoryExportPageState
                                 },
                               ),
                             ),
-                            const SizedBox(height: 26),
+                            const SizedBox(
+                              height: AppSpacing.tradeToolSectionGap,
+                            ),
                             _Section(
                               title: 'Khoảng thời gian',
                               child: _PeriodSelector(
@@ -132,7 +128,9 @@ class _TradeHistoryExportPageState
                                 },
                               ),
                             ),
-                            const SizedBox(height: 26),
+                            const SizedBox(
+                              height: AppSpacing.tradeToolSectionGap,
+                            ),
                             _Section(
                               title: 'Bao gồm dữ liệu',
                               child: _IncludeList(
@@ -140,12 +138,14 @@ class _TradeHistoryExportPageState
                                 onToggle: _toggleInclude,
                               ),
                             ),
-                            const SizedBox(height: 18),
+                            const SizedBox(
+                              height: AppSpacing.tradeToolBodyIcon,
+                            ),
                             const _TaxNote(),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.tradeToolCardGap),
                             const VitCard(
                               variant: VitCardVariant.inner,
-                              padding: EdgeInsets.all(12),
+                              padding: AppSpacing.tradeToolRiskReviewPadding,
                               child: VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'Export review state',
@@ -154,7 +154,7 @@ class _TradeHistoryExportPageState
                                 contractId: 'trade-history-export-review',
                               ),
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.tradeToolCardGap),
                             const TradeBodyReviewSection(
                               title: 'Export body review',
                               message: 'Trade export body reviewed',

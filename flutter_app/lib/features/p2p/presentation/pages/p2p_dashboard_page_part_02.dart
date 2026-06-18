@@ -229,12 +229,10 @@ class _QuickActionTile extends StatelessWidget {
           context.go(action.route);
         },
         borderRadius: AppRadii.cardRadius,
-        child: Container(
+        child: VitCard(
+          variant: VitCardVariant.ghost,
+          borderColor: AppColors.border,
           padding: AppSpacing.p2pDashboardQuickActionPadding,
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.border),
-            borderRadius: AppRadii.cardRadius,
-          ),
           child: Row(
             children: [
               _IconBubble(icon: _quickIcon(action.iconKey), color: color),
@@ -301,20 +299,20 @@ class _IconBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = small ? AppSpacing.buttonCompact : AppSpacing.inputHeight;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return Material(
+      color: color.withValues(alpha: .12),
+      borderRadius: AppRadii.inputRadius,
       child: SizedBox(
         width: size,
         height: size,
-        child: Icon(
-          icon,
-          color: color,
-          size: small
-              ? AppSpacing.p2pDashboardIconBubbleSmallIcon
-              : AppSpacing.iconMd,
+        child: Center(
+          child: Icon(
+            icon,
+            color: color,
+            size: small
+                ? AppSpacing.p2pDashboardIconBubbleSmallIcon
+                : AppSpacing.iconMd,
+          ),
         ),
       ),
     );
@@ -361,13 +359,10 @@ class _TinyLegend extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        DecoratedBox(
-          decoration: const BoxDecoration(shape: BoxShape.circle),
-          child: Container(
-            width: AppSpacing.x2,
-            height: AppSpacing.x2,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-          ),
+        Material(
+          color: color,
+          shape: const CircleBorder(),
+          child: const SizedBox(width: AppSpacing.x2, height: AppSpacing.x2),
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(
@@ -387,22 +382,7 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .16),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Padding(
-        padding: AppSpacing.p2pDashboardPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -413,19 +393,7 @@ class _RequirementPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: AppSpacing.p2pDashboardRequirementPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: AppColors.text3);
   }
 }
 

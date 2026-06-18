@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -19,7 +19,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import '../widgets/trade_body_review_widgets.dart';
 
 const _trackingBackground = AppColors.bg;
-const _trackingPanel2 = AppColors.surface3;
 const _trackingBorder = AppColors.borderSolid;
 const _trackingPrimary = AppColors.primary;
 const _trackingGreen = AppColors.buy;
@@ -46,8 +45,8 @@ class ComplaintTrackingPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 38
-            : DeviceMetrics.nativeBottomChrome + 24) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.complaintCaseBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.complaintCaseBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -67,10 +66,12 @@ class ComplaintTrackingPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  padding: AppSpacing.complaintTrackingScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 13,
+                    customGap: AppSpacing.complaintTrackingSectionGap,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(
@@ -81,7 +82,11 @@ class ComplaintTrackingPage extends ConsumerWidget {
                       ),
                       _StatusCard(snapshot: snapshot),
                       _DeadlineNotice(snapshot: snapshot),
-                      const _SectionLabel('Investigation Timeline'),
+                      const VitSectionHeader(
+                        title: 'Investigation Timeline',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _trackingPrimary,
+                      ),
                       _TimelineList(steps: snapshot.timeline),
                       for (final action in snapshot.actions)
                         _TrackingActionButton(action: action),
@@ -117,29 +122,28 @@ class _StatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(17, 17, 17, 16),
+      padding: AppSpacing.complaintTrackingStatusCardPadding,
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: _trackingAmber.withValues(alpha: .15),
-                  borderRadius: AppRadii.cardRadius,
-                ),
+              VitCard(
+                width: AppSpacing.walletTokenHeroIcon,
+                height: AppSpacing.walletTokenHeroIcon,
+                variant: VitCardVariant.ghost,
+                borderColor: _trackingAmber.withValues(alpha: .24),
+                alignment: Alignment.center,
                 child: const Icon(
                   Icons.schedule_rounded,
                   color: _trackingAmber,
-                  size: 24,
+                  size: AppSpacing.walletAssetActionIconInner,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 4),
+                  padding: AppSpacing.complaintCaseTitleNudgePadding,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -147,16 +151,16 @@ class _StatusCard extends StatelessWidget {
                         'Status',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1.2,
+                          height: AppSpacing.complaintCaseLineHeightBody,
                         ),
                       ),
-                      const SizedBox(height: 7),
+                      const SizedBox(height: AppSpacing.x3),
                       Text(
                         snapshot.statusLabel,
                         style: AppTextStyles.base.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
+                          height: AppSpacing.complaintCaseLineHeightTight,
                         ),
                       ),
                     ],
@@ -165,7 +169,7 @@ class _StatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -174,7 +178,7 @@ class _StatusCard extends StatelessWidget {
                   value: snapshot.submittedLabel,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: _StatusMetricBox(
                   label: 'Response Due',
@@ -197,21 +201,19 @@ class _StatusMetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 51,
-      padding: const EdgeInsets.fromLTRB(11, 9, 11, 8),
-      decoration: BoxDecoration(
-        color: _trackingPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
-          child: Column(
+    return VitCard(
+      height: AppSpacing.inputHeight - AppSpacing.dividerHairline,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.complaintTrackingMetricPadding,
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.complaintCaseLineHeightTight,
             ),
           ),
           const Spacer(),
@@ -219,7 +221,7 @@ class _StatusMetricBox extends StatelessWidget {
             value,
             style: AppTextStyles.badge.copyWith(
               color: AppColors.text1,
-              height: 1,
+              height: AppSpacing.complaintCaseLineHeightTight,
             ),
           ),
         ],
@@ -239,37 +241,6 @@ class _DeadlineNotice extends StatelessWidget {
       state: VitHighRiskUiState.riskReview,
       title: '${snapshot.daysRemaining} Days Remaining',
       message: snapshot.deadlineNotice,
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _trackingPrimary,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
     );
   }
 }
@@ -311,38 +282,42 @@ class _TimelineStepRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 32,
+          width: AppSpacing.complaintTrackingTimelineRailWidth,
           child: Column(
             children: [
-              Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: color.withValues(
-                    alpha: step.state == TradeComplaintTrackingStepState.pending
-                        ? .55
-                        : .15,
-                  ),
-                  shape: BoxShape.circle,
+              CircleAvatar(
+                radius:
+                    AppSpacing.statusPillHorizontalPaddingLg +
+                    AppSpacing.statusPillGapLg,
+                backgroundColor: color.withValues(
+                  alpha: step.state == TradeComplaintTrackingStepState.pending
+                      ? .55
+                      : .15,
                 ),
                 child: _TimelineIcon(state: step.state),
               ),
               if (hasConnector)
-                Container(
-                  width: 2,
-                  height: 48,
-                  margin: const EdgeInsets.symmetric(vertical: 1),
-                  color: step.state == TradeComplaintTrackingStepState.completed
-                      ? _trackingGreen
-                      : _trackingBorder,
+                Padding(
+                  padding: AppSpacing.complaintTrackingConnectorPadding,
+                  child: SizedBox(
+                    width: AppSpacing.hairlineStroke,
+                    height: AppSpacing.complaintTrackingTimelineConnectorHeight,
+                    child: ColoredBox(
+                      color:
+                          step.state ==
+                              TradeComplaintTrackingStepState.completed
+                          ? _trackingGreen
+                          : _trackingBorder,
+                    ),
+                  ),
                 ),
             ],
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.x4),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(top: 2, bottom: 20),
+            padding: AppSpacing.complaintTrackingStepContentPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -351,23 +326,23 @@ class _TimelineStepRow extends StatelessWidget {
                   style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.15,
+                    height: AppSpacing.complaintCaseLineHeightTitle,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   step.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.2,
+                    height: AppSpacing.complaintCaseLineHeightBody,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   step.dateLabel,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.complaintCaseLineHeightTight,
                   ),
                 ),
               ],
@@ -390,22 +365,15 @@ class _TimelineIcon extends StatelessWidget {
       TradeComplaintTrackingStepState.completed => const Icon(
         Icons.check_circle_outline_rounded,
         color: _trackingGreen,
-        size: 17,
+        size: AppSpacing.complaintCaseSmallIcon,
       ),
       TradeComplaintTrackingStepState.current => const Icon(
         Icons.schedule_rounded,
         color: _trackingAmber,
-        size: 17,
+        size: AppSpacing.complaintCaseSmallIcon,
       ),
       TradeComplaintTrackingStepState.pending => Center(
-        child: Container(
-          width: 6,
-          height: 6,
-          decoration: const BoxDecoration(
-            color: AppColors.text3,
-            shape: BoxShape.circle,
-          ),
-        ),
+        child: Icon(Icons.circle, color: AppColors.text3, size: AppSpacing.x3),
       ),
     };
   }
@@ -437,15 +405,22 @@ class _TrackingActionButton extends StatelessWidget {
         context.go(routePath);
       },
       variant: VitCtaButtonVariant.secondary,
-      height: 43,
-      leading: Icon(icon, color: accent, size: 16),
-      trailing: const Icon(Icons.chevron_right_rounded, size: 18),
+      height: AppSpacing.complaintTrackingActionHeight,
+      leading: Icon(
+        icon,
+        color: accent,
+        size: AppSpacing.complaintCaseActionIcon,
+      ),
+      trailing: const Icon(
+        Icons.chevron_right_rounded,
+        size: AppSpacing.complaintCaseTrailingIcon,
+      ),
       child: Text(
         action.label,
         style: AppTextStyles.captionSm.copyWith(
           color: AppColors.text1,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.complaintCaseLineHeightTight,
         ),
       ),
     );
@@ -467,4 +442,3 @@ class _Card extends StatelessWidget {
     );
   }
 }
-

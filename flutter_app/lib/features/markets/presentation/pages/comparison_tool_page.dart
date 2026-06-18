@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -94,7 +95,9 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.comparisonToolVisualBottomExtra
+            : AppSpacing.comparisonToolNativeBottomExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -117,10 +120,12 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ComparisonToolPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.comparisonToolScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 18,
+                      customGap: AppSpacing.comparisonToolPageGap,
                       children: [
                         ComparisonSelectedTokensStrip(
                           selectedPairs: selectedPairs,

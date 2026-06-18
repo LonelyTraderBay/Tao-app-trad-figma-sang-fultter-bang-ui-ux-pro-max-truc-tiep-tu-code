@@ -11,7 +11,7 @@ class _AnalysisHeader extends StatelessWidget {
       key: CopyTradingCardDemo.analysisKey,
       variant: VitCardVariant.standard,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,28 +40,25 @@ class _AnalysisHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
-          DecoratedBox(
-            decoration: const BoxDecoration(
-              color: AppColors.bg,
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Key Improvements:',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.md,
+            padding: AppSpacing.tradeBotCopyDemoCardPadding,
+            background: const ColoredBox(color: AppColors.bg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Key Improvements:',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x2),
-                  for (final item in snapshot.improvements)
-                    _BulletLine(text: item, compact: true),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                for (final item in snapshot.improvements)
+                  _BulletLine(text: item, compact: true),
+              ],
             ),
           ),
         ],
@@ -81,7 +78,7 @@ class _ComparisonMatrix extends StatelessWidget {
       key: CopyTradingCardDemo.matrixKey,
       variant: VitCardVariant.standard,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -165,7 +162,7 @@ class _MatrixHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.tradeBotCopyDemoHeaderBottomPadding,
       child: Row(
         children: [
           Expanded(flex: 5, child: _HeaderCell('Issue Category')),
@@ -186,40 +183,42 @@ class _IssueRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 5,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    issue.category,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
+    return Column(
+      children: [
+        const Divider(height: AppSpacing.dividerHairline),
+        Padding(
+          padding: AppSpacing.tradeBotCopyDemoRowPadding,
+          child: Row(
+            children: [
+              Expanded(
+                flex: 5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      issue.category,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
-                  ),
-                  Text(
-                    issue.description,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-                  ),
-                ],
+                    Text(
+                      issue.description,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Expanded(child: _ComplianceIcon(status: issue.original)),
-            Expanded(child: _ComplianceIcon(status: issue.variantA)),
-            Expanded(child: _ComplianceIcon(status: issue.variantB)),
-            Expanded(child: _ComplianceIcon(status: issue.variantC)),
-          ],
+              Expanded(child: _ComplianceIcon(status: issue.original)),
+              Expanded(child: _ComplianceIcon(status: issue.variantA)),
+              Expanded(child: _ComplianceIcon(status: issue.variantB)),
+              Expanded(child: _ComplianceIcon(status: issue.variantC)),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -240,7 +239,7 @@ class _OriginalIssues extends StatelessWidget {
       children: [
         for (final issue in issues)
           Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+            padding: AppSpacing.tradeBotCopyDemoSectionBottomPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -315,7 +314,7 @@ class _Guidelines extends StatelessWidget {
       key: CopyTradingCardDemo.guidelinesKey,
       variant: VitCardVariant.standard,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -328,28 +327,14 @@ class _Guidelines extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           for (var i = 0; i < guidelines.length; i++)
             Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+              padding: AppSpacing.tradeBotCopyDemoSectionBottomPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DecoratedBox(
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary15,
-                      borderRadius: AppRadii.xsRadius,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.x2,
-                        vertical: AppSpacing.x1,
-                      ),
-                      child: Text(
-                        '§${i + 1}',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ),
+                  VitAccentPill(
+                    label: '#${i + 1}',
+                    accentColor: AppColors.primary,
+                    size: VitStatusPillSize.sm,
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(

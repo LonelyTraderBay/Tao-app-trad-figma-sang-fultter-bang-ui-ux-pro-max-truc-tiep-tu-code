@@ -71,11 +71,13 @@ class P2PDisputeEscalationCard extends StatelessWidget {
                   Expanded(
                     child: Padding(
                       padding: AppSpacing.p2pDisputeLevelConnectorPadding,
-                      child: Container(
+                      child: SizedBox(
                         height: AppSpacing.p2pDisputeLevelConnectorHeight,
-                        color: levels[index].level < currentLevel
-                            ? p2pDisputeLevelColor(levels[index].level)
-                            : AppColors.borderSolid,
+                        child: ColoredBox(
+                          color: levels[index].level < currentLevel
+                              ? p2pDisputeLevelColor(levels[index].level)
+                              : AppColors.borderSolid,
+                        ),
                       ),
                     ),
                   ),
@@ -90,17 +92,19 @@ class P2PDisputeEscalationCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: AppSpacing.x6,
-                  height: AppSpacing.x6,
-                  decoration: BoxDecoration(
-                    color: color,
+                Material(
+                  color: color,
+                  shape: const RoundedRectangleBorder(
                     borderRadius: AppRadii.smRadius,
                   ),
-                  child: Icon(
-                    p2pDisputeLevelIcon(currentLevelData.iconKey),
-                    color: AppColors.onAccent,
-                    size: AppSpacing.iconSm,
+                  child: SizedBox(
+                    width: AppSpacing.x6,
+                    height: AppSpacing.x6,
+                    child: Icon(
+                      p2pDisputeLevelIcon(currentLevelData.iconKey),
+                      color: AppColors.onAccent,
+                      size: AppSpacing.iconSm,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x3),
@@ -149,43 +153,46 @@ class P2PDisputeEscalationCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.x3),
             Material(
               color: AppColors.warn10,
-              borderRadius: AppRadii.inputRadius,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.inputRadius,
+                side: BorderSide(color: AppColors.warn15),
+              ),
               child: InkWell(
                 key: escalateKey,
                 onTap: onEscalate,
-                borderRadius: AppRadii.inputRadius,
-                child: Container(
+                customBorder: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.inputRadius,
+                ),
+                child: ConstrainedBox(
                   constraints: const BoxConstraints(
                     minHeight: AppSpacing.inputHeight,
                   ),
-                  padding: AppSpacing.p2pDisputeEscalatePadding,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.warn15),
-                    borderRadius: AppRadii.inputRadius,
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.arrow_upward_rounded,
-                        color: AppColors.warn,
-                        size: AppSpacing.iconSm,
-                      ),
-                      const SizedBox(width: AppSpacing.x2),
-                      Expanded(
-                        child: Text(
-                          'Chuyển lên Cấp ${nextLevel.level}: ${nextLevel.shortLabel}',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.warn,
-                            fontWeight: AppTextStyles.bold,
+                  child: Padding(
+                    padding: AppSpacing.p2pDisputeEscalatePadding,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.arrow_upward_rounded,
+                          color: AppColors.warn,
+                          size: AppSpacing.iconSm,
+                        ),
+                        const SizedBox(width: AppSpacing.x2),
+                        Expanded(
+                          child: Text(
+                            'Chuyển lên Cấp ${nextLevel.level}: ${nextLevel.shortLabel}',
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.warn,
+                              fontWeight: AppTextStyles.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      const Icon(
-                        Icons.chevron_right_rounded,
-                        color: AppColors.warn,
-                        size: AppSpacing.iconSm,
-                      ),
-                    ],
+                        const Icon(
+                          Icons.chevron_right_rounded,
+                          color: AppColors.warn,
+                          size: AppSpacing.iconSm,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -215,24 +222,26 @@ class _LevelNode extends StatelessWidget {
       opacity: isActive || isCompleted ? 1 : .42,
       child: Column(
         children: [
-          Container(
-            width: AppSpacing.p2pDisputeLevelNodeSize,
-            height: AppSpacing.p2pDisputeLevelNodeSize,
-            decoration: BoxDecoration(
-              color: isActive
-                  ? color
-                  : isCompleted
-                  ? color.withValues(alpha: .12)
-                  : AppColors.surface2,
+          Material(
+            color: isActive
+                ? color
+                : isCompleted
+                ? color.withValues(alpha: .12)
+                : AppColors.surface2,
+            shape: RoundedRectangleBorder(
               borderRadius: AppRadii.inputRadius,
-              border: isActive ? null : Border.all(color: color),
+              side: isActive ? BorderSide.none : BorderSide(color: color),
             ),
-            child: Icon(
-              isCompleted
-                  ? Icons.check_circle_outline_rounded
-                  : p2pDisputeLevelIcon(level.iconKey),
-              color: isActive ? AppColors.onAccent : color,
-              size: AppSpacing.iconSm,
+            child: SizedBox(
+              width: AppSpacing.p2pDisputeLevelNodeSize,
+              height: AppSpacing.p2pDisputeLevelNodeSize,
+              child: Icon(
+                isCompleted
+                    ? Icons.check_circle_outline_rounded
+                    : p2pDisputeLevelIcon(level.iconKey),
+                color: isActive ? AppColors.onAccent : color,
+                size: AppSpacing.iconSm,
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.x2),

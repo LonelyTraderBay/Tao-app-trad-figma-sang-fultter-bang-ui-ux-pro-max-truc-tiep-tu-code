@@ -38,12 +38,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         child: SafeArea(
           bottom: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x3,
-              AppSpacing.contentPad,
-              AppSpacing.x2,
-            ),
+            padding: AppSpacing.onboardingHeaderWelcomePadding,
             child: Align(
               alignment: Alignment.centerRight,
               child: TextButton(
@@ -65,12 +60,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.contentPad,
-            AppSpacing.x4,
-            AppSpacing.contentPad,
-            AppSpacing.x3,
-          ),
+          padding: AppSpacing.onboardingHeaderProgressPadding,
           child: _ProgressHeader(
             currentIndex: snapshot.steps.indexOf(_step),
             total: snapshot.steps.length,
@@ -144,12 +134,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
   Widget _buildFooter(OnboardingSnapshot snapshot) {
     final bottomPadding = MediaQuery.paddingOf(context).bottom;
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        AppSpacing.x3,
-        AppSpacing.contentPad,
-        AppSpacing.x5 + bottomPadding,
-      ),
+      padding: AppSpacing.onboardingFooterPadding(bottomPadding),
       child: switch (_step) {
         OnboardingStepDraft.welcome => Column(
           mainAxisSize: MainAxisSize.min,
@@ -348,7 +333,7 @@ class _ModulesStep extends StatelessWidget {
           ],
         ),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.onboardingCardPadding,
           radius: VitCardRadius.lg,
           child: Column(
             children: [
@@ -360,19 +345,13 @@ class _ModulesStep extends StatelessWidget {
             ],
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            for (var i = 0; i < modules.length; i++) ...[
-              _ModuleDot(
-                key: OnboardingFlow.moduleDotKey(modules[i].id),
-                active: i == currentIndex,
-                color: accent,
-                onTap: () => onSelect(i),
-              ),
-              if (i < modules.length - 1) const SizedBox(width: AppSpacing.x2),
-            ],
-          ],
+        VitCarouselDots(
+          itemCount: modules.length,
+          activeIndex: currentIndex,
+          activeColor: accent,
+          dotKeyBuilder: (index) =>
+              OnboardingFlow.moduleDotKey(modules[index].id),
+          onDotTap: onSelect,
         ),
       ],
     );
@@ -410,7 +389,7 @@ class _BoundariesStep extends StatelessWidget {
             onTap: () => onToggle(boundary.id),
           ),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.onboardingCardPadding,
           radius: VitCardRadius.md,
           borderColor: AppColors.warningBorder,
           child: Column(
@@ -469,7 +448,7 @@ class _TrustStep extends StatelessWidget {
         ),
         for (final pillar in pillars) _TrustCard(pillar: pillar),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.onboardingCardPadding,
           radius: VitCardRadius.md,
           borderColor: AppColors.buy20,
           child: Column(

@@ -136,7 +136,9 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
                                     'Confirm the wallet address, network, asset, whitelist setting, and masked preview before saving.',
                                 contractId: 'Network: ${selectedNetwork.label}',
                               ),
-                              const SizedBox(height: 18),
+                              const SizedBox(
+                                height: AppSpacing.walletAddressAddPreviewGap,
+                              ),
                               VitCard(
                                 variant: VitCardVariant.standard,
                                 radius: VitCardRadius.md,
@@ -225,9 +227,6 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
     showVitBottomSheet<void>(
       context: context,
       backgroundColor: _addressPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
-      ),
       builder: (context) => AddressConfirmPreviewSheet(
         preview: preview,
         onConfirm: () {

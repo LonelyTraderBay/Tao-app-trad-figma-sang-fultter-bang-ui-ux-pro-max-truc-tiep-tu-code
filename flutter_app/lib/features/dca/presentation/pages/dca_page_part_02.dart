@@ -10,24 +10,25 @@ class _NextPurchaseRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.dcaPrimaryChipPadding,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.x6,
             height: AppSpacing.x6,
-            decoration: BoxDecoration(
-              color: AppColors.primary12,
-              borderRadius: AppRadii.mdRadius,
-              border: Border.all(color: AppColors.primary20),
-            ),
-            child: const Icon(
-              Icons.schedule_rounded,
-              color: AppColors.primary,
-              size: AppSpacing.iconMd,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.primary12,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                  side: const BorderSide(color: AppColors.primary20),
+                ),
+              ),
+              child: const Icon(
+                Icons.schedule_rounded,
+                color: AppColors.primary,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -89,10 +90,7 @@ class _OverviewAction extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
       onTap: onTap,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.dcaMetricCellPadding,
       child: SizedBox(
         height: AppSpacing.ctaHeight,
         child: Column(
@@ -190,24 +188,28 @@ class _ToolCard extends StatelessWidget {
       key: DCAPage.toolKey(tool.route),
       radius: VitCardRadius.md,
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: SizedBox(
         height: AppSpacing.dcaMainToolCardHeight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.dcaMainToolIconBox,
               height: AppSpacing.dcaMainToolIconBox,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .13),
-                borderRadius: AppRadii.mdRadius,
-                border: Border.all(color: color.withValues(alpha: .2)),
-              ),
-              child: Icon(
-                _toolIcon(tool.icon),
-                color: color,
-                size: AppSpacing.dcaMainToolIcon,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color.withValues(alpha: .13),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.mdRadius,
+                    side: BorderSide(color: color.withValues(alpha: .2)),
+                  ),
+                ),
+                child: Icon(
+                  _toolIcon(tool.icon),
+                  color: color,
+                  size: AppSpacing.dcaMainToolIcon,
+                ),
               ),
             ),
             const Spacer(),
@@ -251,29 +253,33 @@ class _DcaTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x2),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: const BorderSide(color: AppColors.cardBorder),
+        ),
       ),
-      child: VitTabBar(
-        variant: VitTabBarVariant.segment,
-        activeKey: active.name,
-        onChanged: (key) => onChanged(_DcaTab.values.byName(key)),
-        tabs: [
-          VitTabItem(
-            key: _DcaTab.plans.name,
-            label: 'Kế hoạch ($planCount)',
-            icon: Icons.trending_up_rounded,
-          ),
-          VitTabItem(
-            key: _DcaTab.history.name,
-            label: 'Lịch sử',
-            icon: Icons.bar_chart_rounded,
-          ),
-        ],
+      child: Padding(
+        padding: AppSpacing.dcaPaddingX2,
+        child: VitTabBar(
+          variant: VitTabBarVariant.segment,
+          activeKey: active.name,
+          onChanged: (key) => onChanged(_DcaTab.values.byName(key)),
+          tabs: [
+            VitTabItem(
+              key: _DcaTab.plans.name,
+              label: 'Kế hoạch ($planCount)',
+              icon: Icons.trending_up_rounded,
+            ),
+            VitTabItem(
+              key: _DcaTab.history.name,
+              label: 'Lịch sử',
+              icon: Icons.bar_chart_rounded,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -311,20 +317,22 @@ class _DcaPlanCard extends StatelessWidget {
     return VitCard(
       key: DCAPage.planKey(plan.id),
       clip: true,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       borderColor: plan.status == DcaPlanStatus.active
           ? AppColors.buy20
           : AppColors.cardBorder,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: AppSpacing.dcaMainPlanStatusBarHeight,
-            color: plan.status == DcaPlanStatus.active
-                ? AppColors.buy
-                : AppColors.warn,
+            child: ColoredBox(
+              color: plan.status == DcaPlanStatus.active
+                  ? AppColors.buy
+                  : AppColors.warn,
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x5),
+            padding: AppSpacing.dcaPaddingX5,
             child: Column(
               children: [
                 Row(
@@ -382,7 +390,7 @@ class _DcaPlanCard extends StatelessWidget {
                 VitCard(
                   variant: VitCardVariant.inner,
                   radius: VitCardRadius.md,
-                  padding: const EdgeInsets.all(AppSpacing.x4),
+                  padding: AppSpacing.dcaPaddingX4,
                   child: Row(
                     children: [
                       Expanded(
@@ -427,10 +435,7 @@ class _DcaPlanCard extends StatelessWidget {
                 VitCard(
                   variant: VitCardVariant.inner,
                   radius: VitCardRadius.sm,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x4,
-                    vertical: AppSpacing.x3,
-                  ),
+                  padding: AppSpacing.dcaPrimaryChipPadding,
                   borderColor: AppColors.primary20,
                   child: Row(
                     children: [

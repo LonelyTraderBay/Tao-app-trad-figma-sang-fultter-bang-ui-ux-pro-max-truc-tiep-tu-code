@@ -125,29 +125,37 @@ class _ToolChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: AppSpacing.marketToolHeight,
-        padding: AppSpacing.marketToolPadding,
-        decoration: BoxDecoration(
-          color: tool.color.withValues(alpha: 0.08),
-          border: Border.all(color: tool.color.withValues(alpha: 0.22)),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          children: [
-            Icon(tool.icon, color: tool.color, size: AppSpacing.marketToolIcon),
-            const SizedBox(width: AppSpacing.marketToolIconGap),
-            Text(
-              tool.label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.medium,
-              ),
+    return Material(
+      color: tool.color.withValues(alpha: 0.08),
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.cardRadius,
+        side: BorderSide(color: tool.color.withValues(alpha: 0.22)),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.cardRadius,
+        child: SizedBox(
+          height: AppSpacing.marketToolHeight,
+          child: Padding(
+            padding: AppSpacing.marketToolPadding,
+            child: Row(
+              children: [
+                Icon(
+                  tool.icon,
+                  color: tool.color,
+                  size: AppSpacing.marketToolIcon,
+                ),
+                const SizedBox(width: AppSpacing.marketToolIconGap),
+                Text(
+                  tool.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.medium,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

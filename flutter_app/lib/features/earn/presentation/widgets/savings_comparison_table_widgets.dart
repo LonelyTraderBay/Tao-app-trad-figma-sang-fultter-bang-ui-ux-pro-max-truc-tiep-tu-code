@@ -55,10 +55,7 @@ class _ProductChip extends StatelessWidget {
       key: SavingsComparisonPage.productChipKey(product.id),
       variant: VitCardVariant.inner,
       borderColor: accent.withValues(alpha: 0.35),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.earnCardPaddingX4X3,
       child: Row(
         children: [
           _AssetBadge(asset: product.asset, color: accent),
@@ -110,12 +107,14 @@ class _AddProductButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.lgRadius,
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.borderSolid),
-            borderRadius: AppRadii.lgRadius,
+          decoration: const ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.lgRadius,
+              side: BorderSide(color: AppColors.borderSolid),
+            ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+            padding: AppSpacing.earnVerticalPaddingX3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -400,10 +399,10 @@ class _ComparisonRowShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: highlighted ? AppColors.surface2 : AppColors.transparent,
-        border: isLast
-            ? null
+        shape: isLast
+            ? const Border()
             : const Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: IntrinsicHeight(
@@ -413,18 +412,18 @@ class _ComparisonRowShell extends StatelessWidget {
             SizedBox(
               width: AppSpacing.buttonHero + AppSpacing.x4,
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x4),
+                padding: AppSpacing.earnCardPaddingX4,
                 child: Align(alignment: Alignment.centerLeft, child: label),
               ),
             ),
             for (final value in values)
               Expanded(
                 child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    border: Border(left: BorderSide(color: AppColors.divider)),
+                  decoration: const ShapeDecoration(
+                    shape: Border(left: BorderSide(color: AppColors.divider)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.x3),
+                    padding: AppSpacing.earnCardPaddingX3,
                     child: Center(child: value),
                   ),
                 ),

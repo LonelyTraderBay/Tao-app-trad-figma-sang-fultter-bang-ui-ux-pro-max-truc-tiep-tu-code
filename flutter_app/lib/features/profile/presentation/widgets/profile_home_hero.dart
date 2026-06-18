@@ -24,31 +24,12 @@ class _ProfileHero extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.profileHeroAvatar,
-                height: AppSpacing.profileHeroAvatar,
-                decoration: BoxDecoration(
-                  borderRadius: AppRadii.cardRadius,
-                  gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [AppColors.primary, AppColors.primaryDark],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: _profilePurple.withValues(alpha: .45),
-                      blurRadius: 22,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  user.fullName.characters.first,
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    color: AppColors.onAccent,
-                  ),
-                ),
+              VitAssetAvatar(
+                label: user.fullName,
+                accentColor: AppColors.primary,
+                size: AppSpacing.profileHeroAvatar,
+                radius: AppRadii.cardRadius,
+                border: true,
               ),
               const SizedBox(width: AppSpacing.profileMenuGap),
               Expanded(
@@ -87,27 +68,12 @@ class _ProfileHero extends StatelessWidget {
                   ],
                 ),
               ),
-              GestureDetector(
+              VitIconButton(
                 key: ProfilePage.editProfileKey,
-                onTap: onEdit,
-                behavior: HitTestBehavior.opaque,
-                child: Container(
-                  width: AppSpacing.profileEditButton,
-                  height: AppSpacing.profileEditButton,
-                  decoration: BoxDecoration(
-                    color: AppColors.onAccent.withValues(alpha: .11),
-                    borderRadius: AppRadii.lgRadius,
-                    border: Border.all(
-                      color: AppColors.onAccent.withValues(alpha: .12),
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                  child: const Icon(
-                    Icons.person_outline_rounded,
-                    color: AppColors.text2,
-                    size: AppSpacing.profileEditIcon,
-                  ),
-                ),
+                icon: Icons.person_outline_rounded,
+                tooltip: 'Ch\u1EC9nh s\u1EEDa h\u1ED3 s\u01A1',
+                onPressed: onEdit,
+                size: VitIconButtonSize.md,
               ),
             ],
           ),
@@ -155,15 +121,7 @@ class _HeroPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.profileHeroPillPadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .16),
-        borderRadius: AppRadii.smRadius,
-        border: Border.all(color: color.withValues(alpha: .28)),
-      ),
-      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -182,43 +140,49 @@ class _HeroInfoBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSpacing.profileHeroInfoHeight,
-      padding: AppSpacing.profileHeroInfoPadding,
-      decoration: BoxDecoration(
+      child: Material(
         color: AppColors.onAccent.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.onAccent.withValues(alpha: .08)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.badge.copyWith(color: AppColors.text2),
-          ),
-          const Spacer(),
-          Row(
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.onAccent.withValues(alpha: .08)),
+        ),
+        child: Padding(
+          padding: AppSpacing.profileHeroInfoPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: Text(
-                  value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.control.copyWith(
-                    color: valueColor,
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                ),
+              Text(
+                label,
+                style: AppTextStyles.badge.copyWith(color: AppColors.text2),
               ),
-              if (trailing != null) ...[
-                const SizedBox(width: AppSpacing.profileHeroInfoTrailingGap),
-                trailing!,
-              ],
+              const Spacer(),
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      value,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.control.copyWith(
+                        color: valueColor,
+                        fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
+                  ),
+                  if (trailing != null) ...[
+                    const SizedBox(
+                      width: AppSpacing.profileHeroInfoTrailingGap,
+                    ),
+                    trailing!,
+                  ],
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -18,7 +18,7 @@ class _GoalTile extends StatelessWidget {
 
     return VitCard(
       variant: selected ? VitCardVariant.inner : VitCardVariant.standard,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.onboardingGoalTilePadding,
       borderColor: selected ? accent : AppColors.cardBorder,
       onTap: onTap,
       child: Stack(
@@ -57,13 +57,11 @@ class _GoalTile extends StatelessWidget {
             Positioned(
               top: 0,
               right: 0,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: accent,
-                  shape: BoxShape.circle,
-                ),
+              child: Material(
+                color: accent,
+                shape: const CircleBorder(),
                 child: const Padding(
-                  padding: EdgeInsets.all(AppSpacing.x1),
+                  padding: AppSpacing.onboardingSelectedCheckPadding,
                   child: Icon(
                     Icons.check_rounded,
                     size: AppSpacing.iconSm,
@@ -86,25 +84,7 @@ class _DisclosurePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.warn10,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          text,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.medium,
-          ),
-        ),
-      ),
-    );
+    return VitAccentPill(label: text, accentColor: color);
   }
 }
 
@@ -120,7 +100,7 @@ class _RecommendationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.onboardingCardPadding,
       radius: VitCardRadius.md,
       borderColor: AppColors.primary20,
       onTap: onTap,
@@ -173,7 +153,13 @@ class _BulletRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: color, size: icon == Icons.circle ? 7 : 14),
+        Icon(
+          icon,
+          color: color,
+          size: icon == Icons.circle
+              ? AppSpacing.onboardingBulletDotIcon
+              : AppSpacing.onboardingBulletIcon,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(

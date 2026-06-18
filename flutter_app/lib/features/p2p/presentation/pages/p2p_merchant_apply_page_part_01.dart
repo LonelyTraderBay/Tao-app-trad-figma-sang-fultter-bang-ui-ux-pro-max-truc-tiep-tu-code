@@ -33,8 +33,10 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                AppSpacing.p2pMerchantApplyBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                AppSpacing.p2pMerchantApplyBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -62,10 +64,7 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
                   child: SingleChildScrollView(
                     key: P2PMerchantApplyPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x5,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pMerchantApplyScrollPadding(
                       bottomInset,
                     ),
                     child: _submitted
@@ -198,59 +197,60 @@ class _ProgressHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.contentPad,
-          AppSpacing.x4,
-          AppSpacing.contentPad,
-          AppSpacing.x3,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            for (var i = 0; i < steps.length; i++)
-              Expanded(
-                child: Column(
-                  children: [
-                    Row(
+    return Material(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: AppSpacing.p2pMerchantApplyProgressPadding,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var i = 0; i < steps.length; i++)
+                  Expanded(
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: _StepConnector(
-                            active: i > 0 && i <= currentStep,
-                          ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _StepConnector(
+                                active: i > 0 && i <= currentStep,
+                              ),
+                            ),
+                            _StepDot(index: i, activeIndex: currentStep),
+                            Expanded(
+                              child: _StepConnector(active: i < currentStep),
+                            ),
+                          ],
                         ),
-                        _StepDot(index: i, activeIndex: currentStep),
-                        Expanded(
-                          child: _StepConnector(active: i < currentStep),
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          steps[i],
+                          key: P2PMerchantApplyPage.stepKey(i),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.micro.copyWith(
+                            color: i <= currentStep
+                                ? AppColors.text1
+                                : AppColors.text3,
+                            fontWeight: i <= currentStep
+                                ? AppTextStyles.bold
+                                : AppTextStyles.normal,
+                          ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      steps[i],
-                      key: P2PMerchantApplyPage.stepKey(i),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.micro.copyWith(
-                        color: i <= currentStep
-                            ? AppColors.text1
-                            : AppColors.text3,
-                        fontWeight: i <= currentStep
-                            ? AppTextStyles.bold
-                            : AppTextStyles.normal,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
-        ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: AppSpacing.dividerHairline,
+            child: ColoredBox(color: AppColors.divider),
+          ),
+        ],
       ),
     );
   }
@@ -263,12 +263,14 @@ class _StepConnector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 2,
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
-      decoration: BoxDecoration(
-        color: active ? AppColors.buy : AppColors.surface3,
-        borderRadius: AppRadii.smRadius,
+    return Padding(
+      padding: AppSpacing.p2pMerchantApplyConnectorPadding,
+      child: SizedBox(
+        height: AppSpacing.p2pMerchantApplyConnectorHeight,
+        child: Material(
+          color: active ? AppColors.buy : AppColors.surface3,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        ),
       ),
     );
   }
@@ -289,32 +291,32 @@ class _StepDot extends StatelessWidget {
         : active
         ? AppModuleAccents.p2p
         : AppColors.surface3;
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 160),
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.p2pMerchantApplyStepDotSize,
+      child: Material(
         color: color,
-        border: Border.all(
-          color: completed || active ? color : AppColors.borderSolid,
+        shape: CircleBorder(
+          side: BorderSide(
+            color: completed || active ? color : AppColors.borderSolid,
+          ),
         ),
-        shape: BoxShape.circle,
+        child: Center(
+          child: completed
+              ? const Icon(
+                  Icons.check_rounded,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.iconSm,
+                )
+              : Text(
+                  '${index + 1}',
+                  style: AppTextStyles.micro.copyWith(
+                    color: active ? AppColors.onAccent : AppColors.text3,
+                    fontWeight: AppTextStyles.bold,
+                    height: AppSpacing.p2pMerchantApplyTightLineHeight,
+                  ),
+                ),
+        ),
       ),
-      alignment: Alignment.center,
-      child: completed
-          ? const Icon(
-              Icons.check_rounded,
-              color: AppColors.onAccent,
-              size: AppSpacing.iconSm,
-            )
-          : Text(
-              '${index + 1}',
-              style: AppTextStyles.micro.copyWith(
-                color: active ? AppColors.onAccent : AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
     );
   }
 }
@@ -356,10 +358,10 @@ class _BenefitGrid extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: benefits.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: AppSpacing.p2pMerchantApplyBenefitCrossAxisCount,
         crossAxisSpacing: AppSpacing.x3,
         mainAxisSpacing: AppSpacing.x3,
-        mainAxisExtent: 112,
+        mainAxisExtent: AppSpacing.p2pMerchantApplyBenefitMainAxisExtent,
       ),
       itemBuilder: (context, index) => _BenefitCard(benefit: benefits[index]),
     );
@@ -375,7 +377,7 @@ class _BenefitCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final tone = _toneColor(benefit.toneKey);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMerchantApplyCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -397,7 +399,7 @@ class _BenefitCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.35,
+              height: AppSpacing.p2pMerchantApplyCompactLineHeight,
             ),
           ),
         ],
@@ -414,7 +416,7 @@ class _RequirementChecklist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMerchantApplyCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

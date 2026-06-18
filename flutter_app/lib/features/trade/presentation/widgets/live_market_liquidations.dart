@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_common_widgets.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class LiveMarketLiquidationsTab extends StatelessWidget {
   const LiveMarketLiquidationsTab({required this.snapshot, super.key});
@@ -25,7 +26,7 @@ class LiveMarketLiquidationsTab extends StatelessWidget {
                 title: 'Liquidation Stats',
                 badge: 'Live',
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.liveMarketCardGap),
               LiveMarketMetricBox(
                 label: '24h Total',
                 value: formatLiveMarketCompactUsd(
@@ -36,7 +37,7 @@ class LiveMarketLiquidationsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.liveMarketCardGap),
         LiveMarketCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -47,11 +48,11 @@ class LiveMarketLiquidationsTab extends StatelessWidget {
                 title: 'Recent Liquidations',
                 badge: 'Real-time',
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.liveMarketCardGap),
               for (final liquidation in snapshot.recentLiquidations) ...[
                 _LiquidationRow(liquidation: liquidation),
                 if (liquidation != snapshot.recentLiquidations.last)
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.rowGap),
               ],
             ],
           ),
@@ -69,16 +70,15 @@ class _LiquidationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = liquidation.side == 'long' ? liveMarketGreen : liveMarketRed;
-    return Container(
-      padding: const EdgeInsets.all(11),
-      decoration: BoxDecoration(
-        color: liveMarketPanel2,
-        borderRadius: AppRadii.mdRadius,
-      ),
+    return LiveMarketCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: AppColors.transparent,
+      padding: AppSpacing.liveMarketRowPadding,
       child: Row(
         children: [
           LiveMarketChip(label: liquidation.side.toUpperCase(), color: color),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.statusPillHorizontalPaddingMd),
           Expanded(
             child: Text(
               liquidation.pair,

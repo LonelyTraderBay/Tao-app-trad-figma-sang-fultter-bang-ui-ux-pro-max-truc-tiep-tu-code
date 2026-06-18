@@ -10,7 +10,7 @@ class _InfoNote extends StatelessWidget {
     return VitCard(
       key: P2PBlacklistPage.infoKey,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pBlacklistCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,7 +36,7 @@ class _InfoNote extends StatelessWidget {
                   snapshot.infoText,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height: AppSpacing.p2pBlacklistReadableLineHeight,
                   ),
                 ),
               ],
@@ -57,43 +57,44 @@ class _ReasonCountPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _reasonColor(reason);
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x2,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .08),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(_reasonIcon(reason.iconKey), color: color, size: 10),
-          const SizedBox(width: AppSpacing.x1),
-          Text(
-            reason.label,
-            style: AppTextStyles.micro.copyWith(
+    return Material(
+      color: color.withValues(alpha: .08),
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.p2pBlacklistReasonCountPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              _reasonIcon(reason.iconKey),
               color: color,
-              fontWeight: AppTextStyles.bold,
+              size: AppSpacing.p2pBlacklistReasonCountIcon,
             ),
-          ),
-          const SizedBox(width: AppSpacing.x1),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
-              borderRadius: AppRadii.xsRadius,
-            ),
-            child: Text(
-              '$count',
+            const SizedBox(width: AppSpacing.x1),
+            Text(
+              reason.label,
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x1),
+            Material(
+              color: color.withValues(alpha: .14),
+              borderRadius: AppRadii.xsRadius,
+              child: Padding(
+                padding: AppSpacing.p2pBlacklistReasonBadgePadding,
+                child: Text(
+                  '$count',
+                  style: AppTextStyles.micro.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -107,20 +108,17 @@ class _SmallReasonPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _reasonColor(reason);
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        reason.label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: color.withValues(alpha: .10),
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.p2pBlacklistSmallReasonPadding,
+        child: Text(
+          reason.label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -135,14 +133,18 @@ class _ReasonIconBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
-      decoration: BoxDecoration(
+      child: Material(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.cardRadius,
+        child: Icon(
+          icon,
+          color: color,
+          size: AppSpacing.p2pBlacklistReasonBubbleIcon,
+        ),
       ),
-      child: Icon(icon, color: color, size: 18),
     );
   }
 }
@@ -159,7 +161,7 @@ class _TinyStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x2),
+      padding: AppSpacing.p2pBlacklistTinyCardPadding,
       child: Column(
         children: [
           Text(

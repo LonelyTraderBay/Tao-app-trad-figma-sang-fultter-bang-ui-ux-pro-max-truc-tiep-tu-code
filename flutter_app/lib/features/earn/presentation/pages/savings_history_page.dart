@@ -71,7 +71,7 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -79,7 +79,7 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
                       VitCard(
                         variant: VitCardVariant.standard,
                         radius: VitCardRadius.md,
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _SummaryPills(snapshot: snapshot),
                       ),
                       _SearchField(placeholder: snapshot.searchPlaceholder),
@@ -102,8 +102,8 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
                         _DateHeader(date: group.date),
                         for (final tx in group.transactions)
                           Padding(
-                            padding: EdgeInsets.only(
-                              bottom: tx == group.transactions.last
+                            padding: AppSpacing.earnBottomInsetPadding(
+                              tx == group.transactions.last
                                   ? AppSpacing.x4
                                   : AppSpacing.x3,
                             ),

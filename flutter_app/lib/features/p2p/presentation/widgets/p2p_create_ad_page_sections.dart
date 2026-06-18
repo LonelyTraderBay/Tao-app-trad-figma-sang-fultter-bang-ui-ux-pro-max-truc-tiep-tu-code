@@ -8,7 +8,7 @@ class _SectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.p2pMerchantCommerceSectionLabelPadding,
       child: Text(
         label,
         style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -28,7 +28,7 @@ class _TradeTypePicker extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: AppSpacing.p2pMerchantCommerceSegmentPadding,
       child: Row(
         children: [
           Expanded(
@@ -66,7 +66,7 @@ class _PriceTypePicker extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: AppSpacing.p2pMerchantCommerceSegmentPadding,
       child: Row(
         children: [
           Expanded(
@@ -109,25 +109,19 @@ class _SegmentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          height: AppSpacing.inputHeight - AppSpacing.x2,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: selected ? color : AppColors.transparent,
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.onAccent : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
+    return VitCard(
+      height: AppSpacing.p2pMerchantCommerceSegmentHeight,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      background: ColoredBox(color: selected ? color : AppColors.transparent),
+      onTap: onTap,
+      clip: true,
+      child: Center(
+        child: Text(
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: selected ? AppColors.onAccent : AppColors.text3,
+            fontWeight: AppTextStyles.bold,
           ),
         ),
       ),
@@ -188,30 +182,21 @@ class _ChoiceChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Ink(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            color: selected ? AppColors.primary12 : AppColors.surface2,
-            border: Border.all(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.primarySoft : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: selected ? AppColors.primary30 : AppColors.cardBorder,
+      background: ColoredBox(
+        color: selected ? AppColors.primary12 : AppColors.surface2,
+      ),
+      padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
+      onTap: onTap,
+      clip: true,
+      child: Text(
+        label,
+        style: AppTextStyles.caption.copyWith(
+          color: selected ? AppColors.primarySoft : AppColors.text2,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

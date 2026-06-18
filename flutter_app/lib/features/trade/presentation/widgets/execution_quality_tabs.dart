@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class ExecutionQualityTabs extends StatelessWidget {
   const ExecutionQualityTabs({
@@ -18,33 +19,27 @@ class ExecutionQualityTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (ExecutionQualityTab.slippage, 'Slippage'),
-      (ExecutionQualityTab.execution, 'Execution'),
-      (ExecutionQualityTab.amendment, 'Amendment'),
-    ];
-    return Container(
-      height: 44,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: executionQualityChipBackground,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        children: [
-          for (var i = 0; i < tabs.length; i++) ...[
-            Expanded(
-              child: _TabButton(
-                key: executionQualityTabKey(tabs[i].$1.name),
-                label: tabs[i].$2,
-                active: active == tabs[i].$1,
-                onTap: () => onChanged(tabs[i].$1),
-              ),
-            ),
-            if (i < tabs.length - 1) const SizedBox(width: 4),
-          ],
-        ],
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: active.name,
+      onChanged: (key) => onChanged(ExecutionQualityTab.values.byName(key)),
+      tabs: [
+        VitTabItem(
+          key: ExecutionQualityTab.slippage.name,
+          label: 'Slippage',
+          widgetKey: executionQualityTabKey(ExecutionQualityTab.slippage.name),
+        ),
+        VitTabItem(
+          key: ExecutionQualityTab.execution.name,
+          label: 'Execution',
+          widgetKey: executionQualityTabKey(ExecutionQualityTab.execution.name),
+        ),
+        VitTabItem(
+          key: ExecutionQualityTab.amendment.name,
+          label: 'Amendment',
+          widgetKey: executionQualityTabKey(ExecutionQualityTab.amendment.name),
+        ),
+      ],
     );
   }
 }
@@ -138,7 +133,7 @@ class _ActionTab extends StatelessWidget {
           description,
           style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeToolCardGap),
         ExecutionQualityGradientButton(
           key: buttonKey,
           label: label,
@@ -147,43 +142,6 @@ class _ActionTab extends StatelessWidget {
           onTap: onOpen,
         ),
       ],
-    );
-  }
-}
-
-class _TabButton extends StatelessWidget {
-  const _TabButton({
-    required this.label,
-    required this.active,
-    required this.onTap,
-    super.key,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? executionQualityPrimary : AppColors.transparent,
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.navLabel.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
     );
   }
 }

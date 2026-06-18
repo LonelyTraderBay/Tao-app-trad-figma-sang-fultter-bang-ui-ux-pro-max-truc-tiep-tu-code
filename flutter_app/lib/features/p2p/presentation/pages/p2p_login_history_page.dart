@@ -104,10 +104,7 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: BouncingScrollPhysics(),
                       ),
-                      padding: EdgeInsets.fromLTRB(
-                        AppSpacing.contentPad,
-                        AppSpacing.x4,
-                        AppSpacing.contentPad,
+                      padding: AppSpacing.p2pLoginHistoryScrollPadding(
                         bottomInset,
                       ),
                       child: Column(

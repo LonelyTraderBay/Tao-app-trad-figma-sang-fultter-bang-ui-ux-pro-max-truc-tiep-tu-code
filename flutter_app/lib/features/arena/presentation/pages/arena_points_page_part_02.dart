@@ -16,10 +16,15 @@ class _CategoryRow extends StatelessWidget {
           width: AppSpacing.buttonHero,
           child: Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.x2,
                 height: AppSpacing.x2,
-                decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: color,
+                    shape: const CircleBorder(),
+                  ),
+                ),
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -71,7 +76,7 @@ class _CheckInSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.arenaPaddingX3,
           child: Column(
             children: [
               Row(
@@ -120,44 +125,44 @@ class _CheckInTile extends StatelessWidget {
     final active = item.claimed || item.today;
     final color = item.today ? AppColors.accent : AppColors.buy;
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 160),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x1,
-        vertical: AppSpacing.x3,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: active ? color.withValues(alpha: .13) : AppColors.surface2,
-        border: Border.all(
-          color: active ? color.withValues(alpha: .30) : AppColors.cardBorder,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: active ? color.withValues(alpha: .30) : AppColors.cardBorder,
+          ),
+          borderRadius: AppRadii.cardRadius,
         ),
-        borderRadius: AppRadii.cardRadius,
       ),
-      child: Column(
-        children: [
-          Text(
-            item.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: item.today ? AppColors.accent : AppColors.text3,
+      child: Padding(
+        padding: AppSpacing.arenaPointsCheckInTilePadding,
+        child: Column(
+          children: [
+            Text(
+              item.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: item.today ? AppColors.accent : AppColors.text3,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Icon(
-            item.claimed ? Icons.check_circle_outline : Icons.circle_outlined,
-            color: color,
-            size: AppSpacing.arenaPointsCheckInIcon,
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            item.reward,
-            style: AppTextStyles.micro.copyWith(
+            const SizedBox(height: AppSpacing.x2),
+            Icon(
+              item.claimed ? Icons.check_circle_outline : Icons.circle_outlined,
               color: color,
-              fontWeight: AppTextStyles.bold,
+              size: AppSpacing.arenaPointsCheckInIcon,
             ),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              item.reward,
+              style: AppTextStyles.micro.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -174,7 +179,7 @@ class _ReferralBanner extends StatelessWidget {
       key: ArenaPointsPage.referralKey,
       accentColor: AppColors.buy,
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         children: [
           _AccentIcon(icon: Icons.group_add_outlined, color: AppColors.buy),
@@ -293,25 +298,25 @@ class _FilterButton extends StatelessWidget {
         key: ArenaPointsPage.filterKey(label),
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
-        child: AnimatedContainer(
+        child: DecoratedBox(
           key: active ? ArenaPointsPage.activeFilterKey(label) : null,
-          duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: active ? AppColors.primary12 : AppColors.surface2,
-            border: Border.all(
-              color: active ? AppColors.primary30 : AppColors.borderSolid,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: active ? AppColors.primary30 : AppColors.borderSolid,
+              ),
+              borderRadius: AppRadii.smRadius,
             ),
-            borderRadius: AppRadii.smRadius,
           ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.primary : AppColors.text2,
-              fontWeight: AppTextStyles.medium,
+          child: Padding(
+            padding: AppSpacing.arenaPointsFilterPadding,
+            child: Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
+                color: active ? AppColors.primary : AppColors.text2,
+                fontWeight: AppTextStyles.medium,
+              ),
             ),
           ),
         ),
@@ -334,7 +339,7 @@ class _TaskCard extends StatelessWidget {
       constraints: const BoxConstraints(
         minHeight: AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x5,
       ),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -422,7 +427,7 @@ class _BonusSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         VitCard(
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           clip: true,
           child: Column(
             children: [
@@ -451,7 +456,7 @@ class _BonusRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _accentColor(row.kind);
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         children: [
           _AccentIcon(icon: _accentIcon(row.kind), color: color),

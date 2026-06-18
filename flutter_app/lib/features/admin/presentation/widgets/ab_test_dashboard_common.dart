@@ -23,12 +23,12 @@ class _ExpandedDetails extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x4),
         DecoratedBox(
-          decoration: const BoxDecoration(
+          decoration: const ShapeDecoration(
             color: AppColors.warn08,
-            borderRadius: AppRadii.inputRadius,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.adminCompactPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -125,7 +125,7 @@ class _EmptyTestsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.adminEmptyPadding,
       child: Column(
         children: [
           const Icon(

@@ -8,21 +8,21 @@ class _ScreenerEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 42),
+      padding: AppSpacing.marketScreenerEmptyPadding,
       child: Column(
         children: [
           const Icon(
             Icons.filter_alt_off_rounded,
             color: AppColors.text3,
-            size: 36,
+            size: AppSpacing.marketScreenerEmptyIcon,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketScreenerEmptyGap),
           Text(
             'Không tìm thấy kết quả phù hợp',
             textAlign: TextAlign.center,
             style: AppTextStyles.body.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketScreenerEmptyGap),
           TextButton(
             onPressed: onReset,
             style: TextButton.styleFrom(foregroundColor: _marketPrimary),

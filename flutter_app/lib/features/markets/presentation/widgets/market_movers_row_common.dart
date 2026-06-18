@@ -25,65 +25,71 @@ class _MoverRow extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      child: Container(
-        height: 65,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-          border: last
-              ? null
-              : const Border(bottom: BorderSide(color: AppColors.divider)),
-        ),
-        child: Row(
+      child: SizedBox(
+        height: AppSpacing.marketMoverRowHeight,
+        child: Column(
           children: [
-            _ListRankBadge(rank: rank),
-            const SizedBox(width: 8),
-            _CoinAvatar(mover: mover),
-            const SizedBox(width: 10),
-            Expanded(child: _MoverIdentity(mover: mover)),
-            const SizedBox(width: 8),
-            SizedBox(
-              width: 66,
-              height: 30,
-              child: CustomPaint(
-                painter: _SparklinePainter(
-                  values: mover.sparkline,
-                  color: metricColor,
+            Expanded(
+              child: Padding(
+                padding: AppSpacing.marketMoverRowPadding,
+                child: Row(
+                  children: [
+                    _ListRankBadge(rank: rank),
+                    const SizedBox(width: AppSpacing.marketMoverRowGap),
+                    _CoinAvatar(mover: mover),
+                    const SizedBox(width: AppSpacing.marketMoverHeaderGap),
+                    Expanded(child: _MoverIdentity(mover: mover)),
+                    const SizedBox(width: AppSpacing.marketMoverRowGap),
+                    SizedBox(
+                      width: AppSpacing.marketMoverSparklineWidth,
+                      height: AppSpacing.marketMoverSparklineHeight,
+                      child: VitSparkline(
+                        values: mover.sparkline,
+                        color: metricColor,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.marketMoverHeaderGap),
+                    SizedBox(
+                      width: AppSpacing.marketMoverPriceColumnWidth,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            _formatPrice(mover.price),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                              fontFeatures: AppTextStyles.tabularFigures,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: AppSpacing.marketMoverMetricGap,
+                          ),
+                          Text(
+                            metric.label,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.caption.copyWith(
+                              color: metricColor,
+                              fontWeight: AppTextStyles.bold,
+                              fontFeatures: AppTextStyles.tabularFigures,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            const SizedBox(width: 10),
-            SizedBox(
-              width: 74,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    _formatPrice(mover.price),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                      height: 1,
-                    ),
-                  ),
-                  const SizedBox(height: 7),
-                  Text(
-                    metric.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: metricColor,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                      height: 1,
-                    ),
-                  ),
-                ],
+            if (!last)
+              const Divider(
+                color: AppColors.divider,
+                height: AppSpacing.dividerHairline,
               ),
-            ),
           ],
         ),
       ),
@@ -125,7 +131,7 @@ class _ListRankBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 20,
+      width: AppSpacing.marketMoverRankWidth,
       child: Text(
         '$rank',
         textAlign: TextAlign.center,
@@ -133,7 +139,6 @@ class _ListRankBadge extends StatelessWidget {
           color: AppColors.text3,
           fontWeight: AppTextStyles.bold,
           fontFeatures: AppTextStyles.tabularFigures,
-          height: 1,
         ),
       ),
     );
@@ -147,24 +152,12 @@ class _CoinAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelLength = mover.symbol.length < 3 ? mover.symbol.length : 3;
-    return Container(
-      width: 35,
-      height: 35,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: mover.color.withValues(alpha: 0.16),
-        border: Border.all(color: mover.color.withValues(alpha: 0.32)),
-        shape: BoxShape.circle,
-      ),
-      child: Text(
-        mover.symbol.substring(0, labelLength),
-        style: AppTextStyles.micro.copyWith(
-          color: mover.color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitAssetAvatar(
+      label: mover.symbol,
+      accentColor: mover.color,
+      size: AppSpacing.marketMoverAvatar,
+      radius: AppRadii.pillRadius,
+      border: true,
     );
   }
 }
@@ -189,24 +182,23 @@ class _MoverIdentity extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.body.copyWith(
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: AppSpacing.marketMoverIdentityBadgeGap),
             _MarketCapRankBadge(rank: mover.marketCapRank),
-            if (mover.isNew) ...[const SizedBox(width: 5), const _NewBadge()],
+            if (mover.isNew) ...[
+              const SizedBox(width: AppSpacing.marketMoverIdentityBadgeGap),
+              const _NewBadge(),
+            ],
           ],
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: AppSpacing.marketMoverMetricGap),
         Text(
           mover.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -220,18 +212,17 @@ class _MarketCapRankBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-      decoration: BoxDecoration(
-        color: AppColors.surface3,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        '#$rank',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
+    return Material(
+      color: AppColors.surface3,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+      child: Padding(
+        padding: AppSpacing.marketMoverRankBadgePadding,
+        child: Text(
+          '#$rank',
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -243,21 +234,7 @@ class _NewBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-      decoration: BoxDecoration(
-        color: _marketPrimary.withValues(alpha: 0.15),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        'MỚI',
-        style: AppTextStyles.micro.copyWith(
-          color: _marketPrimary,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: 'MỚI', accentColor: _marketPrimary);
   }
 }
 
@@ -269,9 +246,8 @@ class _DataRefreshFooter extends StatelessWidget {
     return Center(
       child: Text(
         'Dữ liệu cập nhật mỗi 30 giây',
-        style: AppTextStyles.micro.copyWith(color: AppColors.text3, height: 1),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       ),
     );
   }
 }
-

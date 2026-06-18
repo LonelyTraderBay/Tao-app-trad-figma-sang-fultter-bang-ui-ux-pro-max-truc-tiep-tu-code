@@ -131,29 +131,36 @@ class _CategoryTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: AppSpacing.predictionBreakingTabHeight,
-        padding: AppSpacing.predictionBreakingTabPadding,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
+    return Material(
+      color: active
+          ? _predictionPrimary.withValues(alpha: .14)
+          : AppColors.transparent,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
           color: active
-              ? _predictionPrimary.withValues(alpha: .14)
+              ? _predictionPrimary.withValues(alpha: .36)
               : AppColors.transparent,
-          border: Border.all(
-            color: active
-                ? _predictionPrimary.withValues(alpha: .36)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.mdRadius,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? _predictionPrimary : AppColors.text3,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+        borderRadius: AppRadii.mdRadius,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: SizedBox(
+          height: AppSpacing.predictionBreakingTabHeight,
+          child: Padding(
+            padding: AppSpacing.predictionBreakingTabPadding,
+            child: Center(
+              child: Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? _predictionPrimary : AppColors.text3,
+                  fontWeight: active
+                      ? AppTextStyles.bold
+                      : AppTextStyles.normal,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -191,21 +198,21 @@ class _MoverCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.predictionBreakingRankBox,
-            height: AppSpacing.predictionBreakingRankBox,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: rank <= 3
-                  ? rankColor.withValues(alpha: .12)
-                  : AppColors.surface2,
-              borderRadius: AppRadii.smRadius,
-            ),
-            child: Text(
-              '$rank',
-              style: AppTextStyles.caption.copyWith(
-                color: rankColor,
-                fontWeight: AppTextStyles.bold,
+          Material(
+            color: rank <= 3
+                ? rankColor.withValues(alpha: .12)
+                : AppColors.surface2,
+            borderRadius: AppRadii.smRadius,
+            child: SizedBox.square(
+              dimension: AppSpacing.predictionBreakingRankBox,
+              child: Center(
+                child: Text(
+                  '$rank',
+                  style: AppTextStyles.caption.copyWith(
+                    color: rankColor,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
               ),
             ),
           ),
@@ -285,29 +292,29 @@ class _ChangeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isUp = value > 0;
-    return Container(
-      padding: AppSpacing.predictionBreakingChangePadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.badgeRadius,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            isUp ? Icons.arrow_outward_rounded : Icons.south_east_rounded,
-            size: AppSpacing.predictionBreakingChangeIcon,
-            color: color,
-          ),
-          const SizedBox(width: AppSpacing.predictionBreakingChangeIconGap),
-          Text(
-            _formatPercent(value),
-            style: AppTextStyles.badge.copyWith(
+    return Material(
+      color: color.withValues(alpha: .14),
+      borderRadius: AppRadii.badgeRadius,
+      child: Padding(
+        padding: AppSpacing.predictionBreakingChangePadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              isUp ? Icons.arrow_outward_rounded : Icons.south_east_rounded,
+              size: AppSpacing.predictionBreakingChangeIcon,
               color: color,
-              fontWeight: AppTextStyles.bold,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.predictionBreakingChangeIconGap),
+            Text(
+              _formatPercent(value),
+              style: AppTextStyles.badge.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -320,17 +327,17 @@ class _TinyBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionBreakingTinyBadgePadding,
-      decoration: BoxDecoration(
-        color: _predictionPrimary.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.numericMicro.copyWith(
-          color: _predictionPrimary,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: _predictionPrimary.withValues(alpha: .14),
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.predictionBreakingTinyBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.numericMicro.copyWith(
+            color: _predictionPrimary,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );

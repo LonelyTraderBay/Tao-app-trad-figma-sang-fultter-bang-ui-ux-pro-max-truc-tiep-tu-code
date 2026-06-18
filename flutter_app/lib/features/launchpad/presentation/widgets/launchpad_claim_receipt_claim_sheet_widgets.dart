@@ -20,28 +20,27 @@ class _ClaimSheet extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           child: Material(
             color: AppColors.surface,
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(AppRadii.cardLarge),
-            ),
+            borderRadius: AppRadii.sheetTopLargeRadius,
             child: Padding(
               key: LaunchpadClaimReceiptPage.claimSheetKey,
-              padding: EdgeInsets.fromLTRB(
-                AppSpacing.contentPad,
-                AppSpacing.x4,
-                AppSpacing.contentPad,
-                AppSpacing.x5 + MediaQuery.paddingOf(context).bottom,
+              padding: AppSpacing.launchpadClaimSheetPadding(
+                MediaQuery.paddingOf(context).bottom,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Align(
-                    child: Container(
+                    child: SizedBox(
                       width: AppSpacing.launchpadBox40,
                       height: AppSpacing.launchpadSheetHandleHeight,
-                      decoration: BoxDecoration(
-                        color: AppColors.borderSolid,
-                        borderRadius: AppRadii.xsRadius,
+                      child: const DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: AppColors.borderSolid,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.xsRadius,
+                          ),
+                        ),
                       ),
                     ),
                   ),

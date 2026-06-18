@@ -8,22 +8,7 @@ class WalletTokenRiskBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = walletTokenApprovalRiskColor(risk);
-    return Container(
-      height: AppSpacing.walletTokenRiskBadgeHeight,
-      padding: AppSpacing.walletTokenRiskBadgePadding,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        risk.toUpperCase(),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
-    );
+    return VitAccentPill(label: risk.toUpperCase(), accentColor: color);
   }
 }
 
@@ -34,15 +19,14 @@ class WalletTokenApprovalAmount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       height: AppSpacing.walletTokenAmountHeight,
       padding: AppSpacing.walletTokenAmountPadding,
-      decoration: BoxDecoration(
-        color: approval.unlimited
-            ? walletTokenApprovalRed.withValues(alpha: .08)
-            : AppColors.surface2,
-        borderRadius: AppRadii.mdRadius,
-      ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: approval.unlimited
+          ? walletTokenApprovalRed.withValues(alpha: .20)
+          : null,
       child: Row(
         children: [
           Expanded(

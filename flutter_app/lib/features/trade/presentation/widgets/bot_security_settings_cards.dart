@@ -9,16 +9,18 @@ class _TwoFaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      constraints: const BoxConstraints(minHeight: 72),
-      padding: const EdgeInsets.fromLTRB(20, 16, 17, 16),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotSecurityCardMinHeight,
+      ),
+      padding: AppSpacing.tradeBotCardPadding,
       child: Row(
         children: [
           Icon(
             Icons.smartphone_rounded,
             color: enabled ? _securityGreen : AppColors.text3,
-            size: 24,
+            size: AppSpacing.tradeBotCheckbox,
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: AppSpacing.tradeBotPageTopGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,15 +31,15 @@ class _TwoFaCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
                 Text(
                   'Required for creating/deleting bots',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ],
@@ -62,8 +64,10 @@ class _ApiKeyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      constraints: const BoxConstraints(minHeight: 114),
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 15),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotApiKeyCardMinHeight,
+      ),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -76,10 +80,10 @@ class _ApiKeyCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 11),
+                const SizedBox(height: AppSpacing.tradeBotRowGap),
                 Row(
                   children: [
                     VitStatusPill(
@@ -87,7 +91,7 @@ class _ApiKeyCard extends StatelessWidget {
                       status: VitStatusPillStatus.info,
                       size: VitStatusPillSize.sm,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.tradeBotSmallGap),
                     Flexible(
                       child: Text(
                         'Created ${apiKey.created}',
@@ -95,28 +99,28 @@ class _ApiKeyCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1,
+                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: AppSpacing.tradeBotContentGap),
                 Text(
                   'Last used: ${apiKey.lastUsed}',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           const Icon(
             Icons.delete_outline_rounded,
             color: _securityRed,
-            size: 20,
+            size: AppSpacing.tradeBotQuestionIcon,
           ),
         ],
       ),
@@ -132,8 +136,10 @@ class _IpCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      constraints: const BoxConstraints(minHeight: 63),
-      padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotIpCardMinHeight,
+      ),
+      padding: AppSpacing.tradeBotOptionPadding,
       child: Row(
         children: [
           Expanded(
@@ -146,15 +152,15 @@ class _IpCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
                 Text(
                   '${entry.label} - Added ${entry.added}',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ],
@@ -163,7 +169,7 @@ class _IpCard extends StatelessWidget {
           const Icon(
             Icons.delete_outline_rounded,
             color: _securityRed,
-            size: 18,
+            size: AppSpacing.iconSm,
           ),
         ],
       ),
@@ -179,10 +185,10 @@ class _ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
+      padding: AppSpacing.tradeBotCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 14,
+        customGap: AppSpacing.tradeBotPageTopGap,
         children: [
           for (final activity in activities) ...[
             Row(
@@ -197,38 +203,35 @@ class _ActivityCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.medium,
-                          height: 1,
+                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: AppSpacing.tradeBotSmallGap),
                       Text(
                         activity.time,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1,
+                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 1),
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color:
-                          activity.status ==
-                              TradeBotSecurityActivityStatus.success
-                          ? _securityGreen
-                          : _securityAmber,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const SizedBox(width: 8, height: 8),
-                  ),
+                Icon(
+                  Icons.circle,
+                  color:
+                      activity.status == TradeBotSecurityActivityStatus.success
+                      ? _securityGreen
+                      : _securityAmber,
+                  size: AppSpacing.tradeBotSmallGap,
                 ),
-              ],
-            ),
-            if (activity != activities.last)
-              const Divider(color: AppColors.borderSolid, height: 1),
+            ],
+          ),
+          if (activity != activities.last)
+              const Divider(
+                color: AppColors.borderSolid,
+                height: AppSpacing.tradeBotLineHeightTight,
+              ),
           ],
         ],
       ),
@@ -244,23 +247,23 @@ class _SecurityTipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 14,
+        customGap: AppSpacing.tradeBotPageTopGap,
         children: [
           Text(
             'Security Best Practices',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           VitPageContent(
             padding: VitContentPadding.none,
-            customGap: 14,
+            customGap: AppSpacing.tradeBotPageTopGap,
             children: [for (final tip in tips) _SecurityTipRow(tip: tip)],
           ),
         ],
@@ -283,16 +286,16 @@ class _SecurityTipRow extends StatelessWidget {
           '-',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: 1.35,
+            height: AppSpacing.tradeBotLineHeightBody,
           ),
         ),
-        const SizedBox(width: 9),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Text(
             tip,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              height: 1.35,
+              height: AppSpacing.tradeBotLineHeightBody,
             ),
           ),
         ),

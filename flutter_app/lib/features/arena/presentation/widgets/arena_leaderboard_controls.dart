@@ -9,20 +9,24 @@ class _MyRankCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.accent,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaLeaderboardHeroPadding,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.arenaLeaderboardMyRankIconBox,
             height: AppSpacing.arenaLeaderboardMyRankIconBox,
-            decoration: const BoxDecoration(
-              color: AppColors.accent12,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.emoji_events_outlined,
-              color: AppColors.accent,
-              size: AppSpacing.arenaLeaderboardMyRankIcon,
+            child: const DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.accent12,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.emoji_events_outlined,
+                  color: AppColors.accent,
+                  size: AppSpacing.arenaLeaderboardMyRankIcon,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -184,38 +188,38 @@ class _FilterChipButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
             color: active ? accentColor.withValues(alpha: .12) : AppColors.bg,
-            border: Border.all(
-              color: active
-                  ? accentColor.withValues(alpha: .32)
-                  : AppColors.borderSolid,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+              side: BorderSide(
+                color: active
+                    ? accentColor.withValues(alpha: .32)
+                    : AppColors.borderSolid,
+              ),
             ),
-            borderRadius: AppRadii.smRadius,
           ),
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                color: active ? accentColor : AppColors.text2,
-                size: AppSpacing.arenaLeaderboardFilterIcon,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
+          child: Padding(
+            padding: AppSpacing.arenaLeaderboardFilterPadding,
+            child: Row(
+              children: [
+                Icon(
+                  icon,
                   color: active ? accentColor : AppColors.text2,
-                  fontWeight: AppTextStyles.medium,
-                  height: AppSpacing.arenaLeaderboardLineHeight,
+                  size: AppSpacing.arenaLeaderboardFilterIcon,
                 ),
-              ),
-            ],
+                const SizedBox(width: AppSpacing.x2),
+                Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: active ? accentColor : AppColors.text2,
+                    fontWeight: AppTextStyles.medium,
+                    height: AppSpacing.arenaLeaderboardLineHeight,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -241,22 +245,22 @@ class _SeasonButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
             color: active ? AppColors.primary12 : AppColors.transparent,
-            borderRadius: AppRadii.smRadius,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.primary : AppColors.text3,
-              fontWeight: AppTextStyles.medium,
-              height: AppSpacing.arenaLeaderboardLineHeight,
+          child: Padding(
+            padding: AppSpacing.arenaLeaderboardFilterPadding,
+            child: Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
+                color: active ? AppColors.primary : AppColors.text3,
+                fontWeight: AppTextStyles.medium,
+                height: AppSpacing.arenaLeaderboardLineHeight,
+              ),
             ),
           ),
         ),

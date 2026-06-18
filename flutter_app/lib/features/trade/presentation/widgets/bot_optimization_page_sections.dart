@@ -7,7 +7,7 @@ class _IntroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       borderColor: _optimizationPrimary.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -15,9 +15,9 @@ class _IntroCard extends StatelessWidget {
           const Icon(
             Icons.bolt_outlined,
             color: _optimizationPrimary,
-            size: 21,
+            size: AppSpacing.iconMd,
           ),
-          const SizedBox(width: 13),
+          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,15 +26,13 @@ class _IntroCard extends StatelessWidget {
                   'Automated Parameter Tuning',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
-                    height: 1,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.tradeBotRowGap),
                 Text(
                   'Use genetic algorithms to find optimal bot parameters that maximize Sharpe ratio while minimizing drawdown. This typically takes 2-5 minutes.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
                   ),
                 ),
               ],
@@ -59,8 +57,9 @@ class _TargetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPadding,
+      borderColor: AppColors.cardBorder,
       child: Column(
         children: [
           for (final target in targets) ...[
@@ -70,7 +69,8 @@ class _TargetCard extends StatelessWidget {
               selected: target.id == selectedId,
               onTap: () => onChanged(target.id),
             ),
-            if (target != targets.last) const SizedBox(height: 12),
+            if (target != targets.last)
+              const SizedBox(height: AppSpacing.tradeBotCardGap),
           ],
         ],
       ),
@@ -95,46 +95,23 @@ class _TargetTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 64,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        decoration: BoxDecoration(
-          color: selected
-              ? _optimizationPrimary.withValues(alpha: .05)
-              : _optimizationPanel2,
-          border: Border.all(
-            color: selected ? _optimizationPrimary : AppColors.borderSolid,
-            width: selected ? 1.3 : 1,
-          ),
-          borderRadius: AppRadii.cardRadius,
+      child: VitCard(
+        variant: VitCardVariant.inner,
+        constraints: const BoxConstraints(
+          minHeight: AppSpacing.tradeBotOptionMinHeight,
         ),
+        padding: AppSpacing.tradeBotChipPadding,
+        borderColor: selected ? _optimizationPrimary : AppColors.borderSolid,
         child: Row(
           children: [
-            Container(
-              width: 18,
-              height: 18,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: selected
-                      ? _optimizationPrimary
-                      : AppColors.borderSolid,
-                  width: 2,
-                ),
-              ),
-              child: selected
-                  ? Container(
-                      width: 8,
-                      height: 8,
-                      decoration: const BoxDecoration(
-                        color: _optimizationPrimary,
-                        shape: BoxShape.circle,
-                      ),
-                    )
-                  : null,
+            Icon(
+              selected
+                  ? Icons.radio_button_checked_rounded
+                  : Icons.radio_button_unchecked_rounded,
+              color: selected ? _optimizationPrimary : AppColors.borderSolid,
+              size: AppSpacing.iconMd,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: AppSpacing.tradeBotRowGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -145,15 +122,13 @@ class _TargetTile extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: selected ? _optimizationPrimary : AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: AppSpacing.tradeBotRowGap),
                   Text(
                     target.description,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
                     ),
                   ),
                 ],
@@ -186,8 +161,9 @@ class _RangeCard extends StatelessWidget {
     final countRange = ranges.firstWhere((item) => item.id == 'gridCount');
     final rangePct = ranges.firstWhere((item) => item.id == 'gridRange');
 
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 19, 16, 25),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPaddingLoose,
+      borderColor: AppColors.cardBorder,
       child: Column(
         children: [
           _RangeSliderRow(
@@ -196,7 +172,7 @@ class _RangeCard extends StatelessWidget {
             value: gridCount,
             onChanged: onGridCountChanged,
           ),
-          const SizedBox(height: 22),
+          const SizedBox(height: AppSpacing.iconMd),
           _RangeSliderRow(
             key: BotOptimizationPage.rangeKey(rangePct.id),
             range: rangePct,
@@ -233,7 +209,6 @@ class _RangeSliderRow extends StatelessWidget {
                 range.label,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1,
                 ),
               ),
             ),
@@ -242,20 +217,21 @@ class _RangeSliderRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 9),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
-            trackHeight: 7,
+            trackHeight: AppSpacing.tradeBotSmallGap,
             activeTrackColor: _optimizationPrimary,
             inactiveTrackColor: AppColors.onAccent,
             thumbColor: _optimizationPrimary,
             overlayColor: _optimizationPrimary.withValues(alpha: .12),
-            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
+            thumbShape: const RoundSliderThumbShape(
+              enabledThumbRadius: AppSpacing.tradeBotSmallGap,
+            ),
             overlayShape: SliderComponentShape.noOverlay,
           ),
           child: Slider(
@@ -282,7 +258,7 @@ class _HowItWorksCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -291,36 +267,31 @@ class _HowItWorksCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           for (final step in steps) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 4,
-                  height: 4,
-                  margin: const EdgeInsets.only(top: 7),
-                  decoration: const BoxDecoration(
-                    color: AppColors.text3,
-                    shape: BoxShape.circle,
-                  ),
+                const Icon(
+                  Icons.circle,
+                  color: AppColors.text3,
+                  size: AppSpacing.x2,
                 ),
-                const SizedBox(width: 11),
+                const SizedBox(width: AppSpacing.tradeBotRowGap),
                 Expanded(
                   child: Text(
                     step,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      height: 1.45,
                     ),
                   ),
                 ),
               ],
             ),
-            if (step != steps.last) const SizedBox(height: 10),
+            if (step != steps.last)
+              const SizedBox(height: AppSpacing.tradeBotRowGap),
           ],
         ],
       ),
@@ -337,14 +308,11 @@ class _QueuedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      padding: AppSpacing.tradeBotControlPadding,
       borderColor: _optimizationPrimary.withValues(alpha: .24),
       child: Text(
         'Optimization queued (${result.jobId}) - about ${result.estimatedMinutes} min',
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.text2,
-          height: 1.35,
-        ),
+        style: AppTextStyles.caption.copyWith(color: AppColors.text2),
       ),
     );
   }

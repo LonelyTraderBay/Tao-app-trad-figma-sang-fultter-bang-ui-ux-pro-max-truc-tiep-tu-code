@@ -111,28 +111,33 @@ class _LaunchpadDetailSummary extends StatelessWidget {
     return VitCard(
       key: LaunchpadDetailPage.summaryKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.x7,
                 height: AppSpacing.x7,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: project.accent.withValues(alpha: .12),
-                  border: Border.all(
-                    color: project.accent.withValues(alpha: .24),
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: project.accent.withValues(alpha: .12),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: project.accent.withValues(alpha: .24),
+                      ),
+                      borderRadius: AppRadii.cardRadius,
+                    ),
                   ),
-                  borderRadius: AppRadii.cardRadius,
-                ),
-                child: Text(
-                  project.logo,
-                  style: AppTextStyles.base.copyWith(
-                    color: project.accent,
-                    fontWeight: AppTextStyles.bold,
+                  child: Center(
+                    child: Text(
+                      project.logo,
+                      style: AppTextStyles.base.copyWith(
+                        color: project.accent,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),

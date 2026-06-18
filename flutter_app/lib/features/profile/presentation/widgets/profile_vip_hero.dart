@@ -14,40 +14,23 @@ class _VipHero extends StatelessWidget {
       child: ClipRRect(
         borderRadius: AppRadii.cardLargeRadius,
         child: SizedBox(
-          height: 186,
+          height: AppSpacing.profileVipHeroHeight,
           child: Stack(
             children: [
-              Positioned(
-                right: -38,
-                top: -48,
-                child: Container(
-                  width: 118,
-                  height: 118,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _vipGold.withValues(alpha: .12),
-                  ),
-                ),
-              ),
               Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: AppRadii.cardLargeRadius,
-                    gradient: RadialGradient(
-                      center: const Alignment(.75, -.75),
-                      radius: 1.2,
-                      colors: [
-                        _vipGold.withValues(alpha: .18),
-                        AppColors.primary08,
-                        AppColors.transparent,
-                      ],
-                      stops: const [0, .38, 1],
-                    ),
-                  ),
+                child: VitHeroGlow(
+                  center: const Alignment(.75, -.75),
+                  radius: 1.2,
+                  colors: [
+                    _vipGold.withValues(alpha: .18),
+                    AppColors.primary08,
+                    AppColors.transparent,
+                  ],
+                  stops: const [0, .38, 1],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(AppSpacing.contentPad),
+                padding: AppSpacing.profileVipHeroPadding,
                 child: Column(
                   children: [
                     Row(
@@ -63,9 +46,11 @@ class _VipHero extends StatelessWidget {
                                   const Icon(
                                     Icons.workspace_premium_rounded,
                                     color: _vipGold,
-                                    size: 16,
+                                    size: AppSpacing.profileVipHeroBadgeIcon,
                                   ),
-                                  const SizedBox(width: AppSpacing.x2),
+                                  const SizedBox(
+                                    width: AppSpacing.profileVipHeroTitleGap,
+                                  ),
                                   Flexible(
                                     child: Text(
                                       currentTier.name,
@@ -75,14 +60,13 @@ class _VipHero extends StatelessWidget {
                                           .copyWith(
                                             color: _vipGold,
                                             fontWeight: AppTextStyles.heavy,
-                                            height: 1,
                                           ),
                                     ),
                                   ),
                                 ],
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(top: AppSpacing.x3),
+                              const SizedBox(
+                                height: AppSpacing.profileVipHeroMemberGap,
                               ),
                               Text(
                                 'Th\u00E0nh vi\u00EAn t\u1EEB ${snapshot.memberSince}',
@@ -91,13 +75,14 @@ class _VipHero extends StatelessWidget {
                                 style: AppTextStyles.caption.copyWith(
                                   color: AppColors.portfolioTextDim,
                                   fontWeight: FontWeight.w700,
-                                  height: 1,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.x3),
+                        const SizedBox(
+                          width: AppSpacing.profileVipHeroStatusGap,
+                        ),
                         VitStatusPill(
                           label: currentTier.badge,
                           status: VitStatusPillStatus.orange,
@@ -145,7 +130,7 @@ class _HeroFeeBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+      padding: AppSpacing.profileVipFeePadding,
       child: Column(
         children: [
           Text(
@@ -153,16 +138,14 @@ class _HeroFeeBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.portfolioTextMuted,
               fontWeight: FontWeight.w700,
-              height: 1,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.profileVipFeeValueGap),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: _vipSuccess,
               fontWeight: AppTextStyles.heavy,
-              height: 1,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -180,13 +163,10 @@ class _VipTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x2),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      padding: AppSpacing.profileVipTabsPadding,
       child: VitTabBar(
         variant: VitTabBarVariant.pill,
         activeKey: active.name,

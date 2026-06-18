@@ -16,8 +16,8 @@ class _FilterPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 148,
-      padding: const EdgeInsets.fromLTRB(20, 25, 20, 13),
+      height: AppSpacing.profileActivityFilterHeight,
+      padding: AppSpacing.profileActivityFilterPadding,
       borderColor: _activityDivider,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -25,10 +25,10 @@ class _FilterPanel extends StatelessWidget {
           if (suspiciousCount > 0)
             _SuspiciousBanner(count: suspiciousCount)
           else
-            const SizedBox(height: 64),
-          const SizedBox(height: 13),
+            const SizedBox(height: AppSpacing.profileActivitySuspiciousHeight),
+          const SizedBox(height: AppSpacing.profileActivityFilterGap),
           SizedBox(
-            height: 30,
+            height: AppSpacing.profileActivityFilterRailHeight,
             child: Row(
               children: [
                 for (final filter in filters) ...[
@@ -37,7 +37,10 @@ class _FilterPanel extends StatelessWidget {
                     selected: filter.id == activeFilter,
                     onTap: () => onChanged(filter.id),
                   ),
-                  if (filter != filters.last) const SizedBox(width: 12),
+                  if (filter != filters.last)
+                    const SizedBox(
+                      width: AppSpacing.profileActivityFilterChipGap,
+                    ),
                 ],
               ],
             ),
@@ -57,17 +60,17 @@ class _SuspiciousBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: ActivityLogPage.warningKey,
-      height: 64,
-      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+      height: AppSpacing.profileActivitySuspiciousHeight,
+      padding: AppSpacing.profileActivitySuspiciousPadding,
       borderColor: _activityAmber.withValues(alpha: .34),
       child: Row(
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: _activityAmber,
-            size: 17,
+            size: AppSpacing.profileActivityBannerIcon,
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: AppSpacing.profileActivityBannerIconGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -77,21 +80,19 @@ class _SuspiciousBanner extends StatelessWidget {
                   'Ph\u00E1t hi\u1EC7n $count ho\u1EA1t \u0111\u1ED9ng \u0111\u00E1ng ng\u1EDD',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: _activityAmber,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(
+                  height: AppSpacing.profileActivityBannerTitleGap,
+                ),
                 Text(
                   'Vui l\u00F2ng ki\u1EC3m tra v\u00E0 \u0111\u1ED5i m\u1EADt kh\u1EA9u n\u1EBFu kh\u00F4ng ph\u1EA3i b\u1EA1n',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: _activityAmber,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: _activityAmber),
                 ),
               ],
             ),
@@ -119,27 +120,31 @@ class _FilterChip extends StatelessWidget {
       key: ActivityLogPage.filterKey(filter.id),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 30,
-        padding: const EdgeInsets.symmetric(horizontal: 13),
-        decoration: BoxDecoration(
+      child: SizedBox(
+        height: AppSpacing.profileActivityFilterChipHeight,
+        child: Material(
           color: selected
               ? _activityPrimary.withValues(alpha: .2)
               : AppColors.onAccent.withValues(alpha: .04),
-          borderRadius: AppRadii.inputRadius,
-          border: Border.all(
-            color: selected
-                ? _activityPrimary.withValues(alpha: .6)
-                : AppColors.onAccent.withValues(alpha: .08),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
+            side: BorderSide(
+              color: selected
+                  ? _activityPrimary.withValues(alpha: .6)
+                  : AppColors.onAccent.withValues(alpha: .08),
+            ),
           ),
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          filter.label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: selected ? _activityPrimary : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
+          child: Padding(
+            padding: AppSpacing.profileActivityFilterChipPadding,
+            child: Center(
+              child: Text(
+                filter.label,
+                style: AppTextStyles.captionSm.copyWith(
+                  color: selected ? _activityPrimary : AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -160,8 +165,8 @@ class _ActivityCard extends StatelessWidget {
 
     return VitCard(
       key: ActivityLogPage.logKey(log.id),
-      height: 223,
-      padding: const EdgeInsets.fromLTRB(16, 13, 16, 12),
+      height: AppSpacing.profileActivityCardHeight,
+      padding: AppSpacing.profileActivityCardPadding,
       borderColor: suspicious
           ? _activityAmber.withValues(alpha: .32)
           : _activityBorder,
@@ -172,7 +177,7 @@ class _ActivityCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _ActivityIcon(config: type),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileActivityIconGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,48 +192,50 @@ class _ActivityCard extends StatelessWidget {
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              height: 1,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(
+                          width: AppSpacing.profileActivityTitleStatusGap,
+                        ),
                         _StatusPill(config: status),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(
+                      height: AppSpacing.profileActivityDescriptionGap,
+                    ),
                     Text(
                       log.description,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: 1,
                       ),
                     ),
                   ],
                 ),
               ),
               if (suspicious) ...[
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.profileActivityWarningGap),
                 const Icon(
                   Icons.warning_amber_rounded,
                   color: _activityAmber,
-                  size: 17,
+                  size: AppSpacing.profileActivityWarningIcon,
                 ),
               ],
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.profileActivityDetailsGap),
           _ActivityDetails(log: log),
-          const SizedBox(height: 8),
-          const Divider(height: 1, color: _activityDivider),
-          const SizedBox(height: 11),
+          const SizedBox(height: AppSpacing.profileActivityDividerTopGap),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: _activityDivider,
+          ),
+          const SizedBox(height: AppSpacing.profileActivityDividerBottomGap),
           Text(
             log.timestamp,
-            style: AppTextStyles.micro.copyWith(
-              color: _activityMuted,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: _activityMuted),
           ),
         ],
       ),
@@ -243,15 +250,18 @@ class _ActivityIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
+    return SizedBox(
+      width: AppSpacing.profileActivityIconBox,
+      height: AppSpacing.profileActivityIconBox,
+      child: Material(
         color: config.color.withValues(alpha: .16),
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+        child: Icon(
+          config.icon,
+          color: config.color,
+          size: AppSpacing.profileActivityIcon,
+        ),
       ),
-      alignment: Alignment.center,
-      child: Icon(config.icon, color: config.color, size: 19),
     );
   }
 }
@@ -263,23 +273,7 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 22,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: config.color.withValues(alpha: .15),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      alignment: Alignment.center,
-        child: Text(
-        config.label,
-        style: AppTextStyles.captionSm.copyWith(
-          color: config.color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: config.label, accentColor: config.color);
   }
 }
 
@@ -290,38 +284,42 @@ class _ActivityDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 108,
-      padding: const EdgeInsets.fromLTRB(13, 12, 13, 12),
-      decoration: BoxDecoration(
+    return SizedBox(
+      height: AppSpacing.profileActivityDetailsHeight,
+      child: Material(
         color: _activityPanel2.withValues(alpha: .72),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+        child: Padding(
+          padding: AppSpacing.profileActivityDetailsPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: _DetailBlock(
-                  icon: Icons.location_on_outlined,
-                  label: 'V\u1ECA TR\u00CD',
-                  value: log.location,
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: _DetailBlock(
+                      icon: Icons.location_on_outlined,
+                      label: 'V\u1ECA TR\u00CD',
+                      value: log.location,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: AppSpacing.profileActivityDetailsColumnGap,
+                  ),
+                  Expanded(
+                    child: _DetailBlock(
+                      icon: Icons.desktop_windows_outlined,
+                      label: 'THI\u1EBET B\u1ECA',
+                      value: log.device,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _DetailBlock(
-                  icon: Icons.desktop_windows_outlined,
-                  label: 'THI\u1EBET B\u1ECA',
-                  value: log.device,
-                ),
-              ),
+              const SizedBox(height: AppSpacing.profileActivityDetailsRowGap),
+              _DetailBlock(label: 'IP ADDRESS', value: log.ipAddress),
             ],
           ),
-          const SizedBox(height: 14),
-          _DetailBlock(label: 'IP ADDRESS', value: log.ipAddress),
-        ],
+        ),
       ),
     );
   }

@@ -181,7 +181,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: ResetPasswordPage.contentKey,
-                padding: const EdgeInsets.only(bottom: AppSpacing.x6),
+                padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
                   padding: VitContentPadding.relaxed,
                   gap: VitContentGap.relaxed,
@@ -200,9 +200,9 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
   }
 
   List<Widget> _formContent(PasswordResetChallenge challenge) => [
-    const VitCard(padding: EdgeInsets.zero, child: _ResetHero()),
+    const VitCard(padding: AppSpacing.zeroInsets, child: _ResetHero()),
     VitCard(
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           VitInput(
@@ -229,13 +229,13 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
             autofillHints: const [AutofillHints.newPassword],
             onChanged: (_) => _handleNewPasswordChanged(),
           ),
-          const Padding(padding: EdgeInsets.only(top: 12)),
+          const Padding(padding: AppSpacing.authOtpDigitTopPadding),
           _PasswordRulesList(password: _newPassword),
         ],
       ),
     ),
     VitCard(
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: VitInput(
         controller: _confirmPasswordController,
         fieldKey: ResetPasswordPage.confirmPasswordFieldKey,
@@ -276,7 +276,10 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       onPressed: _submitting ? null : () => context.go(AppRoutePaths.authLogin),
       style: TextButton.styleFrom(
         foregroundColor: _authPrimary,
-        minimumSize: const Size(0, 36),
+        minimumSize: const Size(
+          AppSpacing.zero,
+          AppSpacing.authTextButtonHeightLg,
+        ),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       child: Text(
@@ -302,7 +305,10 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       onPressed: () => context.go(AppRoutePaths.authLogin),
       style: TextButton.styleFrom(
         foregroundColor: _authPrimary,
-        minimumSize: const Size(0, 36),
+        minimumSize: const Size(
+          AppSpacing.zero,
+          AppSpacing.authTextButtonHeightLg,
+        ),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       child: Text(

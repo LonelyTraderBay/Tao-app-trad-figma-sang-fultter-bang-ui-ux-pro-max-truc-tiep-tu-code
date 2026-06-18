@@ -40,10 +40,9 @@ class _FieldSection extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
             fontWeight: FontWeight.w700,
-            height: 1,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: 10)),
+        const SizedBox(height: AppSpacing.profileApiCreateFieldGap),
         child,
       ],
     );
@@ -55,7 +54,7 @@ class _TextInput extends StatelessWidget {
     super.key,
     required this.controller,
     required this.hint,
-    this.height = 52,
+    this.height = AppSpacing.inputHeight,
     this.maxLength,
     this.onChanged,
     this.onSubmitted,
@@ -143,11 +142,13 @@ class _SimpleStepScaffold extends StatelessWidget {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.fromLTRB(20, 28, 20, bottomInset),
+                  padding: AppSpacing.profileApiCreateStepScrollPadding(
+                    bottomInset,
+                  ),
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 18,
+                    customGap: AppSpacing.profileApiCreateStepGap,
                     fullBleed: true,
                     children: children,
                   ),
@@ -170,22 +171,23 @@ class _SuccessIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
+        SizedBox(
+          width: AppSpacing.profileApiCreateSuccessIconBox,
+          height: AppSpacing.profileApiCreateSuccessIconBox,
+          child: Material(
             color: _apiGreen.withValues(alpha: .1),
-            borderRadius: AppRadii.cardLargeRadius,
-            border: Border.all(color: _apiGreen.withValues(alpha: .25)),
-          ),
-          alignment: Alignment.center,
-          child: const Icon(
-            Icons.check_circle_outline_rounded,
-            color: _apiGreen,
-            size: 42,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.cardLargeRadius,
+              side: BorderSide(color: _apiGreen.withValues(alpha: .25)),
+            ),
+            child: const Icon(
+              Icons.check_circle_outline_rounded,
+              color: _apiGreen,
+              size: AppSpacing.profileApiCreateSuccessIcon,
+            ),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: 14)),
+        const SizedBox(height: AppSpacing.profileApiCreateSuccessTitleGap),
         Text(
           title,
           textAlign: TextAlign.center,
@@ -204,7 +206,7 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.profileApiCreateSummaryPadding,
       borderColor: _apiBorder,
       child: Column(
         children: [
@@ -232,7 +234,10 @@ class _SummaryCard extends StatelessWidget {
               ],
             ),
             if (row != rows.last)
-              const Divider(height: 18, color: AppColors.divider),
+              const Divider(
+                height: AppSpacing.profileApiCreateSummaryDivider,
+                color: AppColors.divider,
+              ),
           ],
         ],
       ),
@@ -250,13 +255,17 @@ class _WarningCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = amber ? _apiAmber : _apiRed;
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.profileApiCreateWarningPadding,
       borderColor: color.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.warning_amber_rounded, color: color, size: 17),
-          const SizedBox(width: 10),
+          Icon(
+            Icons.warning_amber_rounded,
+            color: color,
+            size: AppSpacing.profileApiCreateWarningIcon,
+          ),
+          const SizedBox(width: AppSpacing.profileApiCreateWarningGap),
           Expanded(
             child: Text(
               text,
@@ -278,7 +287,7 @@ class _KeyResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.profileApiCreateResultCardPadding,
       borderColor: _apiBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -290,7 +299,7 @@ class _KeyResultCard extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: 8)),
+          const SizedBox(height: AppSpacing.profileApiCreateResultValueGap),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(

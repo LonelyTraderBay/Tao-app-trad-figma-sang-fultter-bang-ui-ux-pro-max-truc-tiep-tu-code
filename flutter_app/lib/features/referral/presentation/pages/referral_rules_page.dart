@@ -77,12 +77,7 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                   child: SingleChildScrollView(
                     key: ReferralRulesPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.referralPageScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       customGap: 0,
@@ -93,42 +88,28 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                           subtitle: 'Mời càng nhiều, thưởng càng lớn',
                           color: AppColors.warn,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x3),
-                        ),
+                        const SizedBox(height: AppSpacing.x3),
                         _TierTable(snapshot: snapshot),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x5),
-                        ),
+                        const SizedBox(height: AppSpacing.x5),
                         const _SectionTitle(
                           title: 'Các loại thưởng',
                           color: AppModuleAccents.trade,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x3),
-                        ),
+                        const SizedBox(height: AppSpacing.x3),
                         _RewardTypes(snapshot: snapshot),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x5),
-                        ),
+                        const SizedBox(height: AppSpacing.x5),
                         const _SectionTitle(
                           title: 'Điều khoản chương trình',
                           color: AppColors.text2,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x3),
-                        ),
+                        const SizedBox(height: AppSpacing.x3),
                         _TermsList(snapshot: snapshot),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x5),
-                        ),
+                        const SizedBox(height: AppSpacing.x5),
                         const _SectionTitle(
                           title: 'Câu hỏi thường gặp',
                           color: AppColors.accent,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x3),
-                        ),
+                        const SizedBox(height: AppSpacing.x3),
                         _FaqList(
                           snapshot: snapshot,
                           openIndex: _openFaqIndex,
@@ -141,9 +122,7 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                             });
                           },
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x4),
-                        ),
+                        const SizedBox(height: AppSpacing.x4),
                         _Disclaimer(snapshot: snapshot),
                       ],
                     ),

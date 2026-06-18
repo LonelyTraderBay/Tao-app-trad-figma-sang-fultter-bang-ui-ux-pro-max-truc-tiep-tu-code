@@ -12,28 +12,32 @@ class _ChartSection extends StatelessWidget {
       accentColor: AppColors.buy,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(14),
+          padding: AppSpacing.predictionDetailChartCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const _ChartPeriodTabs(),
-              const Padding(padding: EdgeInsets.only(top: 10)),
+              const SizedBox(height: AppSpacing.predictionDetailChartPlotGap),
               SizedBox(
-                height: 178,
+                height: AppSpacing.predictionDetailChartHeight,
                 child: CustomPaint(
                   painter: _ProbabilityChartPainter(
                     values: snapshot.probabilityHistory,
                   ),
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: 9)),
+              const SizedBox(
+                height: AppSpacing.predictionDetailChartVolumeLabelGap,
+              ),
               Text(
                 'Volume (24h)',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const Padding(padding: EdgeInsets.only(top: 5)),
+              const SizedBox(
+                height: AppSpacing.predictionDetailChartVolumeBarsGap,
+              ),
               SizedBox(
-                height: 42,
+                height: AppSpacing.predictionDetailChartVolumeBarsHeight,
                 child: _VolumeBars(values: snapshot.volumeHistory),
               ),
             ],
@@ -54,34 +58,38 @@ class _ChartPeriodTabs extends StatelessWidget {
       children: [
         for (var index = 0; index < tabs.length; index += 1) ...[
           Expanded(
-            child: Container(
-              height: 30,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: tabs[index] == '30D'
-                    ? _predictionPrimary.withValues(alpha: .14)
-                    : AppColors.transparent,
-                border: Border.all(
+            child: Material(
+              color: tabs[index] == '30D'
+                  ? _predictionPrimary.withValues(alpha: .14)
+                  : AppColors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.smRadius,
+                side: BorderSide(
                   color: tabs[index] == '30D'
                       ? _predictionPrimary.withValues(alpha: .32)
                       : AppColors.transparent,
                 ),
-                borderRadius: AppRadii.smRadius,
               ),
-              child: Text(
-                tabs[index],
-                style: AppTextStyles.micro.copyWith(
-                  color: tabs[index] == '30D'
-                      ? _predictionPrimary
-                      : AppColors.text3,
-                  fontWeight: tabs[index] == '30D'
-                      ? AppTextStyles.bold
-                      : AppTextStyles.normal,
+              child: SizedBox(
+                height: AppSpacing.predictionDetailChartPeriodHeight,
+                child: Center(
+                  child: Text(
+                    tabs[index],
+                    style: AppTextStyles.micro.copyWith(
+                      color: tabs[index] == '30D'
+                          ? _predictionPrimary
+                          : AppColors.text3,
+                      fontWeight: tabs[index] == '30D'
+                          ? AppTextStyles.bold
+                          : AppTextStyles.normal,
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-          if (index != tabs.length - 1) const SizedBox(width: 6),
+          if (index != tabs.length - 1)
+            const SizedBox(width: AppSpacing.predictionDetailChartPeriodGap),
         ],
       ],
     );
@@ -104,12 +112,16 @@ class _VolumeBars extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: FractionallySizedBox(
-                heightFactor: math.max(.10, value / maxValue),
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 1.5),
-                  decoration: BoxDecoration(
+                heightFactor: math.max(
+                  AppSpacing.predictionDetailChartVolumeBarMinFactor,
+                  value / maxValue,
+                ),
+                child: Padding(
+                  padding: AppSpacing.predictionDetailChartVolumeBarMargin,
+                  child: Material(
                     color: _predictionPrimary.withValues(alpha: .30),
-                    borderRadius: BorderRadius.circular(2),
+                    borderRadius: AppRadii.predictionDetailChartVolumeBarRadius,
+                    child: const SizedBox.expand(),
                   ),
                 ),
               ),

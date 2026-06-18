@@ -22,7 +22,7 @@ class _OtpDigitRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         for (var index = 0; index < controllers.length; index++) ...[
-          if (index > 0) const SizedBox(width: 12),
+          if (index > 0) const SizedBox(width: AppSpacing.authOtpDigitGap),
           _OtpDigitField(
             index: index,
             controller: controllers[index],
@@ -57,8 +57,8 @@ class _OtpDigitField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: _otpBoxSize,
-      height: _otpBoxHeight,
+      width: AppSpacing.authOtpBoxSize,
+      height: AppSpacing.authOtpBoxHeight,
       child: Focus(
         onKeyEvent: onKey,
         child: VitInput(
@@ -98,11 +98,11 @@ class _OtpProgress extends StatelessWidget {
         for (var index = 0; index < 6; index++) ...[
           if (index > 0) const SizedBox(width: AppSpacing.x2),
           Expanded(
-            child: Container(
-              height: 2,
-              decoration: BoxDecoration(
+            child: ClipRRect(
+              borderRadius: AppRadii.pillRadius,
+              child: ColoredBox(
                 color: index < filled ? _authPrimary : AppColors.borderSolid,
-                borderRadius: BorderRadius.circular(999),
+                child: const SizedBox(height: AppSpacing.authOtpProgressHeight),
               ),
             ),
           ),
@@ -119,18 +119,22 @@ class _OtpErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
+      child: Material(
         color: AppColors.sell10,
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: AppColors.sell20),
-      ),
-      child: Text(
-        error,
-        textAlign: TextAlign.center,
-        style: AppTextStyles.caption.copyWith(color: AppColors.sell),
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.mdRadius,
+          side: BorderSide(color: AppColors.sell20),
+        ),
+        child: Padding(
+          padding: AppSpacing.authErrorBannerPadding,
+          child: Text(
+            error,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(color: AppColors.sell),
+          ),
+        ),
       ),
     );
   }
@@ -156,7 +160,7 @@ class _ResendControl extends StatelessWidget {
       children: [
         Icon(
           Icons.refresh_rounded,
-          size: 14,
+          size: AppSpacing.authErrorIcon,
           color: canResend ? _authPrimary : AppColors.text3,
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -166,8 +170,11 @@ class _ResendControl extends StatelessWidget {
             onPressed: onResend,
             style: TextButton.styleFrom(
               foregroundColor: _authPrimary,
-              padding: EdgeInsets.zero,
-              minimumSize: const Size(0, 32),
+              padding: AppSpacing.zeroInsets,
+              minimumSize: const Size(
+                AppSpacing.zero,
+                AppSpacing.authTextButtonHeight,
+              ),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             child: Text(

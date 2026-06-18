@@ -13,7 +13,7 @@ class _QuickActionRow extends StatelessWidget {
       key: P2PInsuranceScorePage.quickActionKey(action.label),
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pInsuranceScoreInnerPadding,
       onTap: enabled
           ? () {
               HapticFeedback.selectionClick();
@@ -24,10 +24,9 @@ class _QuickActionRow extends StatelessWidget {
         opacity: enabled ? 1 : .55,
         child: Row(
           children: [
-            Container(
-              width: AppSpacing.x2,
-              height: AppSpacing.x2,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            SizedBox.square(
+              dimension: AppSpacing.p2pInsuranceScoreActionDot,
+              child: Material(color: color, shape: const CircleBorder()),
             ),
             const SizedBox(width: AppSpacing.x3),
             Expanded(
@@ -52,7 +51,7 @@ class _QuickActionRow extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: 17,
+                size: AppSpacing.p2pInsuranceScoreFactorIcon,
               ),
             ],
           ],
@@ -71,7 +70,7 @@ class _TierPathCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pInsuranceScoreCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -80,7 +79,7 @@ class _TierPathCard extends StatelessWidget {
               const Icon(
                 Icons.diamond_outlined,
                 color: AppColors.accent,
-                size: 18,
+                size: AppSpacing.p2pInsuranceScoreHeaderIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
@@ -102,8 +101,8 @@ class _TierPathCard extends StatelessWidget {
                 child: SizedBox(
                   height: AppSpacing.x5,
                   child: VerticalDivider(
-                    width: 1,
-                    thickness: 1,
+                    width: AppSpacing.dividerHairline,
+                    thickness: AppSpacing.dividerHairline,
                     color: AppColors.divider,
                   ),
                 ),
@@ -134,7 +133,7 @@ class _TierCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: tier.isCurrent ? AppColors.primary40 : AppColors.divider,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pInsuranceScoreInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -145,7 +144,7 @@ class _TierCard extends StatelessWidget {
                     ? Icons.check_circle_outline_rounded
                     : Icons.lock_outline_rounded,
                 color: color,
-                size: 18,
+                size: AppSpacing.p2pInsuranceScoreHeaderIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -188,7 +187,7 @@ class _TierCard extends StatelessWidget {
             ClipRRect(
               borderRadius: AppRadii.xsRadius,
               child: SizedBox(
-                height: 5,
+                height: AppSpacing.p2pInsuranceScoreProgressHeight,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -226,24 +225,9 @@ class _RequirementChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: passed ? AppColors.buy10 : AppColors.surface3,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: passed ? AppColors.buy : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: passed ? AppColors.buy : AppColors.text3,
     );
   }
 }
@@ -258,14 +242,14 @@ class _DisclosureCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pInsuranceScoreInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.text3,
-            size: 16,
+            size: AppSpacing.p2pInsuranceScoreSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -273,7 +257,7 @@ class _DisclosureCard extends StatelessWidget {
               text,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.p2pInsuranceScoreBodyLineHeight,
               ),
             ),
           ),

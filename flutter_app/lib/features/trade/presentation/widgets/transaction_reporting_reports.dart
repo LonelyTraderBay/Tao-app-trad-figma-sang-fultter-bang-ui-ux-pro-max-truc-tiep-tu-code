@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class TransactionReportsSection extends StatelessWidget {
   const TransactionReportsSection({
@@ -32,10 +33,10 @@ class TransactionReportsSection extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.transactionReportingLineHeightTight,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.x4),
         if (reports.isEmpty)
           _EmptyReports(query: query)
         else
@@ -46,7 +47,7 @@ class TransactionReportsSection extends StatelessWidget {
               onRetry: () => onRetry(report),
               onCopy: () => onCopy(report),
             ),
-            if (report != reports.last) const SizedBox(height: 12),
+            if (report != reports.last) const SizedBox(height: AppSpacing.x4),
           ],
       ],
     );
@@ -74,28 +75,28 @@ class _ReportCard extends StatelessWidget {
         ? transactionReportGreen
         : transactionReportRed;
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      decoration: BoxDecoration(
-        color: transactionReportPanel,
-        border: Border.all(
-          color: transactionReportBorder.withValues(alpha: .7),
-        ),
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      padding: AppSpacing.transactionReportingReportCardPadding,
+      borderColor: transactionReportBorder.withValues(alpha: .7),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: status.color.withValues(alpha: .13),
-              borderRadius: AppRadii.cardRadius,
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.md,
+            width: AppSpacing.searchBarCompactHeight,
+            height: AppSpacing.searchBarCompactHeight,
+            borderColor: status.color.withValues(alpha: .24),
+            alignment: Alignment.center,
+            child: Icon(
+              status.icon,
+              color: status.color,
+              size: AppSpacing.transactionReportingStatusIcon,
             ),
-            child: Icon(status.icon, color: status.color, size: 19),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -117,25 +118,27 @@ class _ReportCard extends StatelessWidget {
                                   style: AppTextStyles.caption.copyWith(
                                     color: AppColors.text1,
                                     fontWeight: AppTextStyles.bold,
-                                    height: 1,
+                                    height: AppSpacing
+                                        .transactionReportingLineHeightTight,
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 7),
+                              const SizedBox(width: AppSpacing.x3),
                               _SmallPill(
                                 label: report.side.toUpperCase(),
                                 color: sideColor,
                               ),
                             ],
                           ),
-                          const SizedBox(height: 7),
+                          const SizedBox(height: AppSpacing.x3),
                           Text(
                             '${report.transactionId} - ${report.tradingVenue}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              height: 1,
+                              height: AppSpacing
+                                  .transactionReportingLineHeightTight,
                             ),
                           ),
                         ],
@@ -144,7 +147,7 @@ class _ReportCard extends StatelessWidget {
                     _SmallPill(label: status.label, color: status.color),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.x4),
                 Row(
                   children: [
                     Expanded(
@@ -161,7 +164,7 @@ class _ReportCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.x3),
                 Row(
                   children: [
                     Expanded(
@@ -178,54 +181,44 @@ class _ReportCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.rowGapRegular),
                 Row(
                   children: [
-                    Container(
-                      width: 6,
-                      height: 6,
-                      decoration: BoxDecoration(
-                        color: sla.color,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    const SizedBox(width: 6),
+                    Icon(Icons.circle, color: sla.color, size: AppSpacing.x3),
+                    const SizedBox(width: AppSpacing.x2),
                     Text(
                       sla.label,
                       style: AppTextStyles.micro.copyWith(
                         color: sla.color,
                         fontWeight: AppTextStyles.bold,
-                        height: 1,
+                        height: AppSpacing.transactionReportingLineHeightTight,
                       ),
                     ),
                   ],
                 ),
                 if (report.errorMessage != null) ...[
-                  const SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(9, 8, 9, 8),
-                    decoration: BoxDecoration(
-                      color: transactionReportRed.withValues(alpha: .10),
-                      border: Border.all(
-                        color: transactionReportRed.withValues(alpha: .28),
-                      ),
-                      borderRadius: AppRadii.smRadius,
-                    ),
+                  const SizedBox(height: AppSpacing.rowGapRegular),
+                  VitCard(
+                    variant: VitCardVariant.inner,
+                    radius: VitCardRadius.sm,
+                    padding: AppSpacing.transactionReportingErrorPadding,
+                    borderColor: transactionReportRed.withValues(alpha: .28),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Icon(
                           Icons.warning_amber_rounded,
                           color: transactionReportRed,
-                          size: 13,
+                          size: AppSpacing.transactionReportingErrorIcon,
                         ),
-                        const SizedBox(width: 6),
+                        const SizedBox(width: AppSpacing.x2),
                         Expanded(
                           child: Text(
                             report.errorMessage!,
                             style: AppTextStyles.micro.copyWith(
                               color: transactionReportRed,
-                              height: 1.3,
+                              height:
+                                  AppSpacing.transactionReportingErrorLineHeight,
                             ),
                           ),
                         ),
@@ -233,10 +226,10 @@ class _ReportCard extends StatelessWidget {
                     ),
                   ),
                 ],
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.rowGapRegular),
                 Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
+                  spacing: AppSpacing.x3,
+                  runSpacing: AppSpacing.x3,
                   children: [
                     _ActionChip(
                       label: 'View XML',
@@ -281,7 +274,7 @@ class _DetailValue extends StatelessWidget {
           '$label: ',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.transactionReportingLineHeightTight,
           ),
         ),
         Flexible(
@@ -293,7 +286,7 @@ class _DetailValue extends StatelessWidget {
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.transactionReportingLineHeightTight,
             ),
           ),
         ),
@@ -317,31 +310,18 @@ class _ActionChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(9),
-      child: Container(
-        height: 30,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: color == AppColors.text2 ? .08 : .14),
-          borderRadius: BorderRadius.circular(9),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: color, size: 13),
-            const SizedBox(width: 6),
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-          ],
-        ),
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: color == AppColors.primary
+          ? VitCtaButtonVariant.secondary
+          : VitCtaButtonVariant.ghost,
+      fullWidth: false,
+      height: AppSpacing.buttonCompact,
+      padding: AppSpacing.transactionReportingActionPadding,
+      leading: Icon(icon, size: AppSpacing.iconSm),
+      child: Text(
+        label,
+        style: AppTextStyles.micro.copyWith(fontWeight: AppTextStyles.bold),
       ),
     );
   }
@@ -355,23 +335,7 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: BorderRadius.circular(9),
-      ),
-      child: Text(
-        label,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -382,35 +346,16 @@ class _EmptyReports extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 42, horizontal: 16),
-      decoration: BoxDecoration(
-        color: transactionReportPanel,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
-        children: [
-          Icon(
-            Icons.storage_outlined,
-            color: AppColors.text3.withValues(alpha: .5),
-            size: 48,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'No reports found',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            query.isEmpty
-                ? 'Reports will appear here automatically'
-                : 'Try a different search term',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      child: VitEmptyState(
+        icon: Icons.storage_outlined,
+        title: 'No reports found',
+        message: query.isEmpty
+            ? 'Reports will appear here automatically'
+            : 'Try a different search term',
       ),
     );
   }
 }
-

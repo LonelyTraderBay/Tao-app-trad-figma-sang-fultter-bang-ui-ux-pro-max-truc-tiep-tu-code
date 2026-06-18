@@ -11,28 +11,11 @@ class _SettingsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            Container(
-              width: 4,
-              height: 14,
-              decoration: BoxDecoration(
-                color: _tradePrimary,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(width: 6),
-            Text(
-              title,
-              style: AppTextStyles.captionSm.copyWith(
-                color: AppColors.textMutedLight,
-                fontWeight: AppTextStyles.bold,
-                height: 1.2,
-              ),
-            ),
-          ],
+        VitSectionHeader(
+          title: title,
+          variant: VitSectionHeaderVariant.accentBar,
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         child,
       ],
     );
@@ -48,7 +31,7 @@ class _SettingsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 17),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -317,7 +300,7 @@ class _ChoiceBlock extends StatelessWidget {
                 style: AppTextStyles.captionSm.copyWith(
                   color: AppColors.textMutedLight,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.2,
+                  height: AppSpacing.tradeBotLineHeightCaption,
                 ),
               ),
             ),
@@ -327,13 +310,13 @@ class _ChoiceBlock extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: _tradePrimary,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.2,
+                  height: AppSpacing.tradeBotLineHeightCaption,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
           ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.tradeBotSmallGap),
         Row(
           children: [
             for (var i = 0; i < options.length; i++) ...[
@@ -346,7 +329,8 @@ class _ChoiceBlock extends StatelessWidget {
                   onTap: () => onChanged(options[i].id),
                 ),
               ),
-              if (i < options.length - 1) const SizedBox(width: 8),
+              if (i < options.length - 1)
+                const SizedBox(width: AppSpacing.tradeBotSmallGap),
             ],
           ],
         ),

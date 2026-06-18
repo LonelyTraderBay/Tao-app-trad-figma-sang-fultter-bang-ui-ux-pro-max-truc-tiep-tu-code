@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -12,9 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -25,7 +23,6 @@ part '../widgets/provider_governance_page_common.dart';
 const _governancePrimary = AppColors.primary;
 const _governanceWarningBorder = AppColors.warningBorderStrong;
 const _governanceWarning = AppColors.caution;
-const _governancePill = AppColors.buy20;
 
 class ProviderGovernancePage extends ConsumerStatefulWidget {
   const ProviderGovernancePage({super.key, this.shellRenderMode});
@@ -62,7 +59,9 @@ class _ProviderGovernancePageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 128 : 28);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.providerGovernanceBottomInsetVisualExtra
+            : AppSpacing.providerGovernanceBottomInsetNativeExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,14 +82,18 @@ class _ProviderGovernancePageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: ProviderGovernancePage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      padding: AppSpacing.providerGovernanceScrollPadding(
+                        bottomInset,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 0,
+                        customGap: AppSpacing.providerGovernanceContentGap,
                         children: [
                           _ProviderDashboard(stats: snapshot.stats),
-                          const SizedBox(height: 14),
+                          const SizedBox(
+                            height: AppSpacing.providerGovernanceSectionGap,
+                          ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Provider governance review',
@@ -98,14 +101,18 @@ class _ProviderGovernancePageState
                                 'Review strategy change notice, follower impact, fee waterfall, compliance score, limits, and next steps before broadcasting or modifying strategy.',
                             contractId: 'SC-081 provider governance review',
                           ),
-                          const SizedBox(height: 25),
+                          const SizedBox(
+                            height: AppSpacing.providerGovernanceControlGap,
+                          ),
                           _GovernanceTabs(
                             tabs: snapshot.tabs,
                             activeId: _activeTabId,
                             onChanged: (id) =>
                                 setState(() => _activeTabId = id),
                           ),
-                          const SizedBox(height: 26),
+                          const SizedBox(
+                            height: AppSpacing.providerGovernanceTabBodyGap,
+                          ),
                           if (_activeTabId == 'modifications')
                             _ModificationsTab(
                               snapshot: snapshot,

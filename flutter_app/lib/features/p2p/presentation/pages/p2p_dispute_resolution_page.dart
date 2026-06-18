@@ -135,50 +135,54 @@ class _DecisionHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.p2pDisputeCardPadding,
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        border: Border.all(color: AppColors.buy15),
+    return Material(
+      color: AppColors.buy10,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
+        side: BorderSide(color: AppColors.buy15),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: AppSpacing.p2pDisputeHeroIconBox,
-            height: AppSpacing.p2pDisputeHeroIconBox,
-            decoration: const BoxDecoration(
+      child: Padding(
+        padding: AppSpacing.p2pDisputeCardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Material(
               color: AppColors.buy,
-              borderRadius: AppRadii.inputRadius,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
+              child: SizedBox(
+                width: AppSpacing.p2pDisputeHeroIconBox,
+                height: AppSpacing.p2pDisputeHeroIconBox,
+                child: Icon(
+                  Icons.check_circle_outline_rounded,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.iconMd,
+                ),
+              ),
             ),
-            child: const Icon(
-              Icons.check_circle_outline_rounded,
-              color: AppColors.onAccent,
-              size: AppSpacing.iconMd,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.resultTitle,
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    color: AppColors.buy,
-                    fontWeight: AppTextStyles.bold,
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    snapshot.resultTitle,
+                    style: AppTextStyles.sectionTitle.copyWith(
+                      color: AppColors.buy,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  snapshot.disputeLabel,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ],
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    snapshot.disputeLabel,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -277,62 +281,66 @@ class _AppealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.p2pDisputeCardPadding,
-      decoration: BoxDecoration(
-        color: AppColors.warn10,
-        border: Border.all(color: AppColors.warn15),
+    return Material(
+      color: AppColors.warn10,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
+        side: BorderSide(color: AppColors.warn15),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.chat_bubble_outline_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Quyền kháng cáo',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.warn,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  'Bạn có thể kháng cáo quyết định này trước $deadline',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-                ),
-                const SizedBox(height: AppSpacing.x3),
-                VitCtaButton(
-                  key: P2PDisputeResolutionPage.appealKey,
-                  onPressed: onAppeal,
-                  variant: VitCtaButtonVariant.warning,
-                  fullWidth: false,
-                  height: AppSpacing.buttonCompact,
-                  padding: AppSpacing.p2pDisputeAppealButtonPadding,
-                  child: Text(appealOpened ? 'Đang mở kháng cáo' : 'Kháng cáo'),
-                ),
-                if (appealOpened) ...[
-                  const SizedBox(height: AppSpacing.x2),
+      child: Padding(
+        padding: AppSpacing.p2pDisputeCardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.chat_bubble_outline_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.iconSm,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    'Form kháng cáo đã được chuẩn bị. Mock/fail-closed: chưa gửi appeal lên backend.',
-                    style: AppTextStyles.micro.copyWith(
+                    'Quyền kháng cáo',
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.warn,
-                      fontWeight: AppTextStyles.medium,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    'Bạn có thể kháng cáo quyết định này trước $deadline',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+                  ),
+                  const SizedBox(height: AppSpacing.x3),
+                  VitCtaButton(
+                    key: P2PDisputeResolutionPage.appealKey,
+                    onPressed: onAppeal,
+                    variant: VitCtaButtonVariant.warning,
+                    fullWidth: false,
+                    height: AppSpacing.buttonCompact,
+                    padding: AppSpacing.p2pDisputeAppealButtonPadding,
+                    child: Text(
+                      appealOpened ? 'Đang mở kháng cáo' : 'Kháng cáo',
+                    ),
+                  ),
+                  if (appealOpened) ...[
+                    const SizedBox(height: AppSpacing.x2),
+                    Text(
+                      'Form kháng cáo đã được chuẩn bị. Mock/fail-closed: chưa gửi appeal lên backend.',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.warn,
+                        fontWeight: AppTextStyles.medium,
+                      ),
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

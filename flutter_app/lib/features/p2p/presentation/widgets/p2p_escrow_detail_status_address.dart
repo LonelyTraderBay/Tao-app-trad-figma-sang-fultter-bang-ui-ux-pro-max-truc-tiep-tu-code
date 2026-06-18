@@ -12,20 +12,19 @@ class _EscrowStatusHero extends StatelessWidget {
       key: P2PEscrowDetailPage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pEscrowDetailHeroPadding,
       child: Column(
         children: [
-          Container(
-            width: AppSpacing.x7,
-            height: AppSpacing.x7,
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.x7,
+            child: Material(
               color: AppColors.warn15,
               borderRadius: AppRadii.lgRadius,
-            ),
-            child: const Icon(
-              Icons.lock_outline_rounded,
-              color: AppModuleAccents.p2p,
-              size: AppSpacing.iconMd,
+              child: const Icon(
+                Icons.lock_outline_rounded,
+                color: AppModuleAccents.p2p,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
@@ -69,7 +68,7 @@ class _EscrowAddressCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.addressKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pEscrowDetailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -106,7 +105,7 @@ class _EscrowAddressCard extends StatelessWidget {
             variant: VitCardVariant.inner,
             radius: VitCardRadius.lg,
             borderColor: AppColors.primary20,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.p2pEscrowDetailInnerPadding,
             child: Row(
               children: [
                 Expanded(
@@ -140,10 +139,7 @@ class _EscrowAddressCard extends StatelessWidget {
             variant: VitCardVariant.inner,
             radius: VitCardRadius.md,
             borderColor: AppColors.primary20,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x3,
-            ),
+            padding: AppSpacing.p2pEscrowDetailExplorerPadding,
             onTap: onExplorer,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

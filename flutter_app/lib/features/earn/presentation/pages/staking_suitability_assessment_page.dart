@@ -86,7 +86,7 @@ class _StakingSuitabilityAssessmentPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -129,7 +129,7 @@ class _StakingSuitabilityAssessmentPageState
               ),
               if (!_showResult)
                 Padding(
-                  padding: EdgeInsets.only(bottom: footerBottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(footerBottomInset),
                   child: VitStickyFooter(
                     child: Row(
                       children: [

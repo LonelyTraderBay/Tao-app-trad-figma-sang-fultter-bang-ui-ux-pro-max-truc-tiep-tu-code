@@ -12,7 +12,7 @@ class _SignalSummaryCard extends StatelessWidget {
     final oscMeta = _signalMeta(signal.oscSummary);
 
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketAdvancedCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,21 +28,20 @@ class _SignalSummaryCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 6,
-                        vertical: 2,
-                      ),
-                      decoration: const BoxDecoration(
-                        color: AppColors.surface2,
+                    const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+                    Material(
+                      color: AppColors.surface2,
+                      shape: const RoundedRectangleBorder(
                         borderRadius: AppRadii.xsRadius,
                       ),
-                      child: Text(
-                        signal.timeframe,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                          height: 1.2,
+                      child: Padding(
+                        padding: AppSpacing.marketAdvancedCategoryBadgePadding,
+                        child: Text(
+                          signal.timeframe,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                            height: AppSpacing.marketLineHeightCaption,
+                          ),
                         ),
                       ),
                     ),
@@ -52,9 +51,9 @@ class _SignalSummaryCard extends StatelessWidget {
               _SignalPill(meta: signalMeta),
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.marketAnalyticsFooterGap),
           _SignalBar(signal: signal),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketAnalyticsGap),
           Row(
             children: [
               Expanded(
@@ -63,13 +62,13 @@ class _SignalSummaryCard extends StatelessWidget {
                   meta: maMeta,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
               Expanded(
                 child: _SignalMetricCard(label: 'Oscillators', meta: oscMeta),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketAnalyticsGap),
           Text(
             'Pivot Points',
             style: AppTextStyles.micro.copyWith(
@@ -77,7 +76,7 @@ class _SignalSummaryCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.marketOverviewMiniHeaderGap),
           _PivotPoints(points: signal.pivotPoints),
         ],
       ),
@@ -92,20 +91,7 @@ class _SignalPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: meta.color.withValues(alpha: .08),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        meta.label,
-        style: AppTextStyles.caption.copyWith(
-          color: meta.color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
-    );
+    return VitAccentPill(label: meta.label, accentColor: meta.color);
   }
 }
 
@@ -122,7 +108,7 @@ class _SignalBar extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: SizedBox(
-            height: 8,
+            height: AppSpacing.marketAdvancedSignalBarHeight,
             child: Row(
               children: [
                 Expanded(
@@ -141,7 +127,7 @@ class _SignalBar extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: AppSpacing.marketAnalyticsSmallGap),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -198,13 +184,11 @@ class _SignalMetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
-      ),
+    return Material(
+      color: AppColors.surface2,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+        padding: AppSpacing.marketAdvancedSignalMetricPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -212,7 +196,7 @@ class _SignalMetricCard extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            const SizedBox(height: 2),
+            const SizedBox(height: AppSpacing.dividerHairline),
             Text(
               meta.label,
               style: AppTextStyles.caption.copyWith(
@@ -238,7 +222,8 @@ class _PivotPoints extends StatelessWidget {
       children: [
         for (final point in points) ...[
           Expanded(child: _PivotPointCell(point: point)),
-          if (point != points.last) const SizedBox(width: 2),
+          if (point != points.last)
+            const SizedBox(width: AppSpacing.dividerHairline),
         ],
       ],
     );
@@ -260,36 +245,38 @@ class _PivotPointCell extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      decoration: BoxDecoration(
-        color: isPivot ? color.withValues(alpha: .08) : AppColors.transparent,
-        border: isPivot
-            ? Border.all(color: color.withValues(alpha: .20))
-            : null,
+    return Material(
+      color: isPivot ? color.withValues(alpha: .08) : AppColors.transparent,
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.xsRadius,
+        side: isPivot
+            ? BorderSide(color: color.withValues(alpha: .20))
+            : BorderSide.none,
       ),
-      child: Column(
-        children: [
-          Text(
-            point.label,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-              height: 1.2,
+      child: Padding(
+        padding: AppSpacing.marketAdvancedPivotPadding,
+        child: Column(
+          children: [
+            Text(
+              point.label,
+              style: AppTextStyles.micro.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+                height: AppSpacing.marketLineHeightCaption,
+              ),
             ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            _formatPrice(point.value),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1.2,
+            const SizedBox(height: AppSpacing.dividerHairline),
+            Text(
+              _formatPrice(point.value),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                height: AppSpacing.marketLineHeightCaption,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

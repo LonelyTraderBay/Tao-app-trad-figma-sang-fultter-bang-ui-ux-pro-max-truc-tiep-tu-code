@@ -8,30 +8,32 @@ class _CommentsContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: AppSpacing.predictionDetailCommentWarningPadding,
-          decoration: BoxDecoration(
-            color: AppColors.warn08,
-            border: Border.all(color: AppColors.warningBorder),
+        Material(
+          color: AppColors.warn08,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: AppColors.warningBorder),
             borderRadius: AppRadii.mdRadius,
           ),
-          child: Row(
-            children: [
-              const Icon(
-                Icons.warning_amber_rounded,
-                color: AppColors.warn,
-                size: AppSpacing.predictionDetailCommentWarningIcon,
-              ),
-              const SizedBox(
-                width: AppSpacing.predictionDetailCommentWarningGap,
-              ),
-              Expanded(
-                child: Text(
-                  'Beware of external links. Do not share personal or financial information.',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.warn),
+          child: Padding(
+            padding: AppSpacing.predictionDetailCommentWarningPadding,
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.warning_amber_rounded,
+                  color: AppColors.warn,
+                  size: AppSpacing.predictionDetailCommentWarningIcon,
                 ),
-              ),
-            ],
+                const SizedBox(
+                  width: AppSpacing.predictionDetailCommentWarningGap,
+                ),
+                Expanded(
+                  child: Text(
+                    'Beware of external links. Do not share personal or financial information.',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.warn),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         const Padding(
@@ -50,30 +52,36 @@ class _CommentsContent extends StatelessWidget {
           likes: 9,
         ),
         const Padding(padding: AppSpacing.predictionDetailCommentInputTopGap),
-        Container(
+        SizedBox(
           height: AppSpacing.predictionDetailCommentInputHeight,
-          padding: AppSpacing.predictionDetailCommentInputPadding,
-          decoration: BoxDecoration(
+          child: Material(
             color: AppColors.surface2,
-            border: Border.all(color: AppColors.borderSolid),
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Add a comment...',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: AppColors.borderSolid),
+              borderRadius: AppRadii.mdRadius,
+            ),
+            child: Padding(
+              padding: AppSpacing.predictionDetailCommentInputPadding,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Add a comment...',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Post',
+                    style: AppTextStyles.caption.copyWith(
+                      color: _predictionPrimary,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                'Post',
-                style: AppTextStyles.caption.copyWith(
-                  color: _predictionPrimary,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ],

@@ -37,7 +37,12 @@ class _ImpactCard extends StatelessWidget {
     ];
 
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 13),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.walletDepositCopyIcon,
+        right: AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.x4,
+      ),
       borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -47,9 +52,9 @@ class _ImpactCard extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: _tradePrimary,
-                size: 16,
+                size: AppSpacing.walletAssetSectionGap,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Text(
                 'Ước tính tác động',
                 style: AppTextStyles.caption.copyWith(
@@ -59,12 +64,12 @@ class _ImpactCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
           Text(
             'Với ký quỹ \$${_formatWholeNumber(margin)} USDT',
             style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 11),
+          const SizedBox(height: AppSpacing.rowGapRegular),
           for (final row in rows)
             _ImpactRow(label: row.$1, value: row.$2, valueColor: row.$3),
         ],
@@ -86,32 +91,41 @@ class _ImpactRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 9),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: AppTextStyles.captionSm.copyWith(
-                color: AppColors.text3,
-                height: 1.15,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.zeroInsets.copyWith(
+            top: AppSpacing.transferCardGap,
+            bottom: AppSpacing.transferCardGap,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppTextStyles.captionSm.copyWith(
+                    color: AppColors.text3,
+                    height: AppSpacing.leverageImpactRowLineHeight,
+                  ),
+                ),
               ),
-            ),
+              Text(
+                value,
+                style: AppTextStyles.numericCode.copyWith(
+                  color: valueColor,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.leverageImpactRowLineHeight,
+                ),
+              ),
+            ],
           ),
-          Text(
-            value,
-            style: AppTextStyles.numericCode.copyWith(
-              color: valueColor,
-              fontWeight: AppTextStyles.bold,
-              height: 1.15,
-            ),
-          ),
-        ],
-      ),
+        ),
+        const Divider(
+          height: AppSpacing.dividerHairline,
+          thickness: AppSpacing.dividerHairline,
+          color: AppColors.divider,
+        ),
+      ],
     );
   }
 }
@@ -144,7 +158,7 @@ class _RiskTipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       borderColor: AppColors.sell.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -154,9 +168,9 @@ class _RiskTipsCard extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.sell,
-                size: 16,
+                size: AppSpacing.walletAssetSectionGap,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Text(
                 'Lưu ý quan trọng',
                 style: AppTextStyles.caption.copyWith(
@@ -166,20 +180,20 @@ class _RiskTipsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.walletAssetChartBottomGap),
           for (final tip in _tips) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 3),
-                  child: Icon(
+                Padding(
+                  padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x1),
+                  child: const Icon(
                     Icons.check_circle_rounded,
                     color: AppColors.sell,
-                    size: 13,
+                    size: AppSpacing.iconSm,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Text(
                     tip,
@@ -191,7 +205,7 @@ class _RiskTipsCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (tip != _tips.last) const SizedBox(height: 8),
+            if (tip != _tips.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -210,7 +224,7 @@ class _ConfirmButton extends StatelessWidget {
     return VitCtaButton(
       key: LeveragePage.confirmKey,
       onPressed: onPressed,
-      height: 52,
+      height: AppSpacing.ctaHeight,
       variant: leverage > 20
           ? VitCtaButtonVariant.danger
           : VitCtaButtonVariant.primary,

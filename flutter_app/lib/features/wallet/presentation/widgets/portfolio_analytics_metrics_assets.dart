@@ -33,31 +33,35 @@ class _MetricRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: AppSpacing.walletAnalyticsMetricRowHeight,
-      decoration: BoxDecoration(
-        border: isLast
-            ? null
-            : const Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              metric.label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
+    return Column(
+      children: [
+        SizedBox(
+          height: AppSpacing.walletAnalyticsMetricRowHeight,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  metric.label,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                ),
+              ),
+              Text(
+                metric.value,
+                style: AppTextStyles.caption.copyWith(
+                  color: Color(metric.colorHex),
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
+            ],
           ),
-          Text(
-            metric.value,
-            style: AppTextStyles.caption.copyWith(
-              color: Color(metric.colorHex),
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
+        ),
+        if (!isLast)
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
           ),
-        ],
-      ),
+      ],
     );
   }
 }
@@ -113,85 +117,97 @@ class _AssetRow extends StatelessWidget {
     final pct = totalUsd == 0 ? 0.0 : (asset.usdValue / totalUsd) * 100;
     final trendColor = asset.change24h >= 0 ? _analyticsGreen : _analyticsRed;
 
-    return Container(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.walletAnalyticsAssetRowMinHeight,
-      ),
-      padding: AppSpacing.walletAnalyticsAssetRowPadding,
-      decoration: BoxDecoration(
-        border: isLast
-            ? null
-            : const Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          _AssetAvatar(asset: asset, color: color),
-          const SizedBox(width: AppSpacing.walletAnalyticsAssetGap),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      children: [
+        if (!isLast)
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: AppSpacing.walletAnalyticsAssetRowMinHeight,
+          ),
+          child: Padding(
+            padding: AppSpacing.walletAnalyticsAssetRowPadding,
+            child: Row(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        asset.symbol,
-                        style: AppTextStyles.body.copyWith(
-                          fontWeight: AppTextStyles.bold,
+                _AssetAvatar(asset: asset, color: color),
+                const SizedBox(width: AppSpacing.walletAnalyticsAssetGap),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              asset.symbol,
+                              style: AppTextStyles.body.copyWith(
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            _formatUsd(asset.usdValue),
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                              fontFeatures: AppTextStyles.tabularFigures,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: AppSpacing.walletAnalyticsAssetTopGap,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: ClipRRect(
+                              borderRadius: AppRadii.xsRadius,
+                              child: LinearProgressIndicator(
+                                value: math.min(1, pct / 100),
+                                minHeight: AppSpacing
+                                    .walletAnalyticsAssetProgressHeight,
+                                backgroundColor: AppColors.surface3,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  color,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: AppSpacing.walletAnalyticsAssetValueGap,
+                          ),
+                          Text(
+                            '${asset.change24h >= 0 ? '+' : ''}${asset.change24h.toStringAsFixed(2)}%',
+                            style: AppTextStyles.micro.copyWith(
+                              color: trendColor,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: AppSpacing.walletAnalyticsAssetBottomGap,
+                      ),
+                      Text(
+                        '${pct.toStringAsFixed(1)}% danh m\u1EE5c',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
                         ),
                       ),
-                    ),
-                    Text(
-                      _formatUsd(asset.usdValue),
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                        fontFeatures: AppTextStyles.tabularFigures,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.walletAnalyticsAssetTopGap),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: AppRadii.xsRadius,
-                        child: LinearProgressIndicator(
-                          value: math.min(1, pct / 100),
-                          minHeight:
-                              AppSpacing.walletAnalyticsAssetProgressHeight,
-                          backgroundColor: AppColors.surface3,
-                          valueColor: AlwaysStoppedAnimation<Color>(color),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: AppSpacing.walletAnalyticsAssetValueGap,
-                    ),
-                    Text(
-                      '${asset.change24h >= 0 ? '+' : ''}${asset.change24h.toStringAsFixed(2)}%',
-                      style: AppTextStyles.micro.copyWith(
-                        color: trendColor,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: AppSpacing.walletAnalyticsAssetBottomGap,
-                ),
-                Text(
-                  '${pct.toStringAsFixed(1)}% danh m\u1EE5c',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -204,14 +220,14 @@ class _AssetAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: AppSpacing.walletAnalyticsAssetAvatar,
       height: AppSpacing.walletAnalyticsAssetAvatar,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .18),
-        shape: BoxShape.circle,
-        border: Border.all(color: color.withValues(alpha: .56)),
-      ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      borderColor: color.withValues(alpha: .56),
+      background: ColoredBox(color: color.withValues(alpha: .18)),
+      clip: true,
       alignment: Alignment.center,
       child: Text(
         asset.symbol.length <= 3 ? asset.symbol : asset.symbol.substring(0, 3),

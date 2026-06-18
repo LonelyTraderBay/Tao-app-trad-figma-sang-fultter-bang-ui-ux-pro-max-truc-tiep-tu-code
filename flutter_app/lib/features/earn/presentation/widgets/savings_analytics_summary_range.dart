@@ -11,7 +11,7 @@ class _SummaryHero extends StatelessWidget {
       key: SavingsAnalyticsPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Row(
         children: [
           Expanded(
@@ -58,7 +58,7 @@ class _SummaryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Text(
@@ -129,27 +129,27 @@ class _RangeChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: selected ? AppColors.primary12 : AppColors.surface2,
-      borderRadius: AppRadii.mdRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.mdRadius,
+        side: BorderSide(
+          color: selected ? AppColors.primary30 : AppColors.cardBorder,
+        ),
+      ),
       child: InkWell(
         key: SavingsAnalyticsPage.rangeKey(range),
         onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: AppRadii.mdRadius,
-            border: Border.all(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
-            ),
+        customBorder: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        child: Padding(
+          padding: AppSpacing.zeroInsets.copyWith(
+            top: AppSpacing.x2,
+            bottom: AppSpacing.x2,
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-            child: Text(
-              range,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(
-                color: selected ? AppColors.primary : AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-              ),
+          child: Text(
+            range,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(
+              color: selected ? AppColors.primary : AppColors.text3,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
         ),

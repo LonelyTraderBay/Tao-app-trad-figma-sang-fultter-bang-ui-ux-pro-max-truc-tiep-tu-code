@@ -10,22 +10,28 @@ class _CreatorHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: _arenaAccent,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaCreatorHeroPadding,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
+              const SizedBox(
                 width: AppSpacing.arenaCreatorAvatar,
                 height: AppSpacing.arenaCreatorAvatar,
-                decoration: const BoxDecoration(
-                  color: AppColors.surface2,
-                  borderRadius: AppRadii.cardRadius,
-                ),
-                child: const Icon(
-                  Icons.person_rounded,
-                  color: _arenaAccent,
-                  size: AppSpacing.arenaCreatorAvatarGlyph,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.surface2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.cardRadius,
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.person_rounded,
+                      color: _arenaAccent,
+                      size: AppSpacing.arenaCreatorAvatarGlyph,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -133,10 +139,7 @@ class _CreatorStatTile extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: onTap == null ? null : color.withValues(alpha: .28),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.arenaCreatorStatPadding,
       onTap: onTap,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -208,12 +211,14 @@ class _TrustHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: AppSpacing.arenaCreatorSectionMarkerWidth,
           height: AppSpacing.arenaCreatorSectionMarkerHeight,
-          decoration: const BoxDecoration(
-            color: AppColors.buy,
-            borderRadius: AppRadii.xsRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: AppColors.buy,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -235,10 +240,7 @@ class _TrustHeader extends StatelessWidget {
             onTap: onDetails,
             borderRadius: AppRadii.smRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x2,
-                vertical: AppSpacing.x2,
-              ),
+              padding: AppSpacing.arenaCreatorTrustActionPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -276,20 +278,26 @@ class _TrustMetricCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaCreatorMetricPadding,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.arenaCreatorMetricIconBox,
             height: AppSpacing.arenaCreatorMetricIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              _metricIcon(metric.kind),
-              color: color,
-              size: AppSpacing.arenaCreatorMetricGlyph,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: .14),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Center(
+                child: Icon(
+                  _metricIcon(metric.kind),
+                  color: color,
+                  size: AppSpacing.arenaCreatorMetricGlyph,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),

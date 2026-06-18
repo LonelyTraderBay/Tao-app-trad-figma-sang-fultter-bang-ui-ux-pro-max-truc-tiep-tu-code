@@ -15,8 +15,8 @@ class _PinnedSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: AnnouncementsPage.pinnedKey,
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      margin: AppSpacing.supportSectionMargin,
+      padding: AppSpacing.supportCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -37,10 +37,9 @@ class _PinnedSection extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           for (var i = 0; i < announcements.length; i++) ...[
-            if (i > 0)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            if (i > 0) const SizedBox(height: AppSpacing.x3),
             _AnnouncementCard(
               announcement: announcements[i],
               expanded: expandedId == announcements[i].id,
@@ -70,8 +69,8 @@ class _AnnouncementList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: AnnouncementsPage.listKey,
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      margin: AppSpacing.supportSectionMargin,
+      padding: AppSpacing.supportCardPadding,
       child: showEmpty
           ? const VitEmptyState(
               key: AnnouncementsPage.emptyKey,
@@ -82,8 +81,7 @@ class _AnnouncementList extends StatelessWidget {
           : Column(
               children: [
                 for (var i = 0; i < announcements.length; i++) ...[
-                  if (i > 0)
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                  if (i > 0) const SizedBox(height: AppSpacing.x3),
                   _AnnouncementCard(
                     announcement: announcements[i],
                     expanded: expandedId == announcements[i].id,
@@ -113,7 +111,7 @@ class _AnnouncementCard extends StatelessWidget {
     return VitCard(
       key: AnnouncementsPage.announcementKey(announcement.id),
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.supportCardPadding,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,27 +135,27 @@ class _AnnouncementCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   announcement.title,
                   maxLines: expanded ? 2 : 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
+                    height: AppSpacing.supportLineHeightReadable,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   announcement.summary,
                   maxLines: expanded ? 4 : 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.32,
+                    height: AppSpacing.supportLineHeightReadable,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 Row(
                   children: [
                     const Icon(
@@ -175,17 +173,20 @@ class _AnnouncementCard extends StatelessWidget {
                   ],
                 ),
                 if (expanded) ...[
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
-                  const Divider(color: AppColors.divider, height: 1),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                  const SizedBox(height: AppSpacing.x4),
+                  const Divider(
+                    color: AppColors.divider,
+                    height: AppSpacing.dividerHairline,
+                  ),
+                  const SizedBox(height: AppSpacing.x4),
                   Text(
                     announcement.content,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.55,
+                      height: AppSpacing.supportLineHeightExpanded,
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                  const SizedBox(height: AppSpacing.x4),
                   Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x2,
@@ -220,15 +221,17 @@ class _TypeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 42,
-      height: 42,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.supportAnnouncementIconBox,
+      child: Material(
         color: style.color.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        child: Icon(
+          style.icon,
+          color: style.color,
+          size: AppSpacing.supportAnnouncementIcon,
+        ),
       ),
-      child: Icon(style.icon, color: style.color, size: 20),
     );
   }
 }
@@ -240,23 +243,10 @@ class _TypePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: style.color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        style.label,
-        style: AppTextStyles.micro.copyWith(
-          color: style.color,
-          fontWeight: AppTextStyles.bold,
-          height: 1.1,
-        ),
-      ),
+    return VitAccentPill(
+      label: style.label,
+      accentColor: style.color,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -268,19 +258,10 @@ class _Tag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        '#$label',
-        style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-      ),
+    return VitAccentPill(
+      label: '#$label',
+      accentColor: AppColors.text2,
+      size: VitStatusPillSize.sm,
     );
   }
 }

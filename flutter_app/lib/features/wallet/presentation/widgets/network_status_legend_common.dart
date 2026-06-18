@@ -62,13 +62,13 @@ class _LegendItem extends StatelessWidget {
     final color = _healthColor(health);
     return Row(
       children: [
-        Container(
+        VitCard(
           width: AppSpacing.walletNetworkLegendIcon,
           height: AppSpacing.walletNetworkLegendIcon,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: .08),
-            borderRadius: AppRadii.mdRadius,
-          ),
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.sm,
+          background: ColoredBox(color: color.withValues(alpha: .08)),
+          clip: true,
           alignment: Alignment.center,
           child: Icon(
             _healthIcon(health),
@@ -128,13 +128,13 @@ class _TokenLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: AppSpacing.walletAddressIconSize,
       height: AppSpacing.walletAddressIconSize,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .1),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.md,
+      background: ColoredBox(color: color.withValues(alpha: .1)),
+      clip: true,
       alignment: Alignment.center,
       child: Text(
         symbol,
@@ -157,24 +157,7 @@ class _HealthPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.walletNetworkHealthPillPadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(
-          AppSpacing.walletNetworkHealthPillRadius,
-        ),
-      ),
-      child: Text(
-        label,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

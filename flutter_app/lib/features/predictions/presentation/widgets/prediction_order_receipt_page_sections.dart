@@ -252,47 +252,42 @@ class _ShareReceiptButton extends StatelessWidget {
       button: true,
       label: 'Chia sẻ chi tiết lệnh ${receipt.id}',
       child: Material(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.inputRadius,
-        child: Ink(
-          decoration: BoxDecoration(
-            color: AppColors.primary12,
-            border: Border.all(
-              color: AppColors.primary15,
-              width: AppSpacing.predictionReceiptShareBorderWidth,
-            ),
-            borderRadius: AppRadii.inputRadius,
+        color: AppColors.primary12,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: const BorderSide(
+            color: AppColors.primary15,
+            width: AppSpacing.predictionReceiptShareBorderWidth,
           ),
-          child: InkWell(
-            key: PredictionOrderReceiptPage.shareKey,
-            onTap: () {},
-            borderRadius: AppRadii.inputRadius,
-            child: SizedBox(
-              height: AppSpacing.inputHeight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.ios_share_rounded,
-                    color: _predictionPrimary,
-                    size: AppSpacing.predictionReceiptShareIcon,
-                  ),
-                  const SizedBox(
-                    width: AppSpacing.predictionReceiptShareIconGap,
-                  ),
-                  Flexible(
-                    child: Text(
-                      'Chia sẻ chi tiết lệnh',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.body.copyWith(
-                        color: _predictionPrimary,
-                        fontWeight: AppTextStyles.medium,
-                      ),
+        ),
+        child: InkWell(
+          key: PredictionOrderReceiptPage.shareKey,
+          onTap: () {},
+          borderRadius: AppRadii.inputRadius,
+          child: SizedBox(
+            height: AppSpacing.inputHeight,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.ios_share_rounded,
+                  color: _predictionPrimary,
+                  size: AppSpacing.predictionReceiptShareIcon,
+                ),
+                const SizedBox(width: AppSpacing.predictionReceiptShareIconGap),
+                Flexible(
+                  child: Text(
+                    'Chia sẻ chi tiết lệnh',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.body.copyWith(
+                      color: _predictionPrimary,
+                      fontWeight: AppTextStyles.medium,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

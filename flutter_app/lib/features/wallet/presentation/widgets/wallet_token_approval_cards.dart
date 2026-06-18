@@ -82,13 +82,12 @@ class WalletTokenApprovalCard extends StatelessWidget {
           ),
           if (showUnusedWarning) ...[
             const SizedBox(height: AppSpacing.walletTokenApprovalUnusedGap),
-            Container(
+            VitCard(
               height: AppSpacing.walletTokenApprovalUnusedHeight,
               padding: AppSpacing.walletTokenApprovalUnusedPadding,
-              decoration: BoxDecoration(
-                color: walletTokenApprovalRed.withValues(alpha: .07),
-                borderRadius: AppRadii.mdRadius,
-              ),
+              variant: VitCardVariant.inner,
+              radius: VitCardRadius.sm,
+              borderColor: walletTokenApprovalRed.withValues(alpha: .20),
               child: Row(
                 children: [
                   const Icon(
@@ -132,13 +131,12 @@ class WalletTokenCategoryIcon extends StatelessWidget {
       'lending' => Icons.attach_money_rounded,
       _ => Icons.shield_outlined,
     };
-    return Container(
+    return VitCard(
       width: AppSpacing.walletTokenCategoryIcon,
       height: AppSpacing.walletTokenCategoryIcon,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: AppRadii.mdRadius,
-      ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .20),
       alignment: Alignment.center,
       child: Icon(
         icon,

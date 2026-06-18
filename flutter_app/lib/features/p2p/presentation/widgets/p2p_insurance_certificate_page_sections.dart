@@ -17,7 +17,7 @@ class _CertificateCard extends StatelessWidget {
         children: [
           const _CertificateHero(),
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x5),
+            padding: AppSpacing.p2pDocumentLargePadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -46,27 +46,24 @@ class _CertificateHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(gradient: AppGradients.navCenter),
+    return Material(
+      color: AppModuleAccents.p2p,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x5,
-          vertical: AppSpacing.x6,
-        ),
+        padding: AppSpacing.p2pDocumentHeroPadding,
         child: Column(
           children: [
-            Container(
-              width: AppSpacing.x7,
-              height: AppSpacing.x7,
-              decoration: BoxDecoration(
+            SizedBox.square(
+              dimension: AppSpacing.p2pDocumentHeroIconBox,
+              child: const Material(
                 color: AppColors.portfolioBtnGhost,
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.portfolioBtnGhostBorder),
-              ),
-              child: const Icon(
-                Icons.verified_user_outlined,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconLg,
+                shape: CircleBorder(
+                  side: BorderSide(color: AppColors.portfolioBtnGhostBorder),
+                ),
+                child: Icon(
+                  Icons.verified_user_outlined,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.iconLg,
+                ),
               ),
             ),
             const SizedBox(height: AppSpacing.x4),
@@ -100,12 +97,10 @@ class _CertificateIdBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.x4),
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.p2pDocumentDividerBottomPadding,
         child: Column(
           children: [
             Text(
@@ -123,7 +118,9 @@ class _CertificateIdBlock extends StatelessWidget {
             ),
           ],
         ),
-      ),
+        ),
+        const Divider(height: AppSpacing.dividerHairline),
+      ],
     );
   }
 }
@@ -169,7 +166,7 @@ class _CoverageBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDocumentCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -206,19 +203,19 @@ class _ValidityRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.x4),
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.p2pDocumentDividerBottomPadding,
         child: _CertificateInfoRow(
           icon: Icons.calendar_month_outlined,
           label: 'Hiệu lực',
           value: '${snapshot.issueDate} — ${snapshot.validUntil}',
           bottomGap: 0,
         ),
-      ),
+        ),
+        const Divider(height: AppSpacing.dividerHairline),
+      ],
     );
   }
 }
@@ -248,7 +245,7 @@ class _ProtectedCases extends StatelessWidget {
               const Icon(
                 Icons.check_circle_outline_rounded,
                 color: AppColors.buy,
-                size: 15,
+                size: AppSpacing.p2pDocumentSmallIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -256,7 +253,7 @@ class _ProtectedCases extends StatelessWidget {
                   item,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pDocumentBodyLineHeight,
                   ),
                 ),
               ),
@@ -280,14 +277,14 @@ class _AuditCallout extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pDocumentCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.gpp_good_outlined,
             color: AppModuleAccents.p2p,
-            size: 18,
+            size: AppSpacing.p2pDocumentCalloutIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

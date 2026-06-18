@@ -11,10 +11,10 @@ class _SpeedTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionLabel('Speed Metrics'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.executionVenueSummaryGap),
         for (final venue in venues) ...[
           _Card(
-            padding: const EdgeInsets.all(13),
+            padding: AppSpacing.executionVenueCardPadding,
             child: Column(
               children: [
                 Row(
@@ -31,9 +31,9 @@ class _SpeedTab extends StatelessWidget {
                     Icon(
                       Icons.bolt_rounded,
                       color: venue.avgFillTime < .4 ? _venueGreen : _venueAmber,
-                      size: 15,
+                      size: AppSpacing.executionVenueBodyIcon,
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(width: AppSpacing.executionVenueSortLabelGap),
                     Text(
                       '${_formatSpeed(venue.avgFillTime)}s',
                       style: AppTextStyles.caption.copyWith(
@@ -45,7 +45,7 @@ class _SpeedTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 11),
+                const SizedBox(height: AppSpacing.executionVenueCardPaddingValue),
                 Row(
                   children: [
                     Expanded(
@@ -54,7 +54,7 @@ class _SpeedTab extends StatelessWidget {
                         value: '${venue.avgLatency}ms',
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.x3),
                     Expanded(
                       child: _MetricBox(
                         label: 'Reliability',
@@ -66,7 +66,8 @@ class _SpeedTab extends StatelessWidget {
               ],
             ),
           ),
-          if (venue != venues.last) const SizedBox(height: 12),
+          if (venue != venues.last)
+            const SizedBox(height: AppSpacing.executionVenueSummaryGap),
         ],
       ],
     );
@@ -84,16 +85,16 @@ class _TrendsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionLabel('Cost Trends (Last 3 Months)'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.executionVenueSummaryGap),
         _Card(
-          padding: const EdgeInsets.all(14),
+          padding: AppSpacing.executionVenuePanelPadding,
           child: Column(
             children: [
               for (final trend in trends) ...[
                 Row(
                   children: [
                     SizedBox(
-                      width: 44,
+                      width: AppSpacing.homeHeroActionHeight,
                       child: Text(
                         trend.month,
                         style: AppTextStyles.caption.copyWith(
@@ -108,7 +109,7 @@ class _TrendsTab extends StatelessWidget {
                         color: _venueAmber,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.x3),
                     Text(
                       '${trend.binance.toStringAsFixed(2)} bps',
                       style: AppTextStyles.micro.copyWith(
@@ -117,15 +118,14 @@ class _TrendsTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (trend != trends.last) const SizedBox(height: 12),
+                if (trend != trends.last)
+                  const SizedBox(height: AppSpacing.executionVenueSummaryGap),
               ],
-              const SizedBox(height: 14),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: _venueGreen.withValues(alpha: .12),
-                  borderRadius: AppRadii.mdRadius,
-                ),
+              const SizedBox(height: AppSpacing.executionVenuePanelPaddingValue),
+              VitCard(
+                variant: VitCardVariant.inner,
+                padding: AppSpacing.executionVenueCompactPanelPadding,
+                borderColor: _venueGreen.withValues(alpha: .28),
                 child: Text(
                   'Overall costs trending down 5% over last 3 months',
                   style: AppTextStyles.caption.copyWith(
@@ -151,9 +151,9 @@ class _TrendBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: AppRadii.pillRadius,
       child: SizedBox(
-        height: 8,
+        height: AppSpacing.executionVenueTrendBarHeight,
         child: Stack(
           children: [
             const ColoredBox(color: _venuePanel2),
@@ -202,11 +202,11 @@ class _ProgressMetric extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: AppSpacing.executionVenueMetricGap),
         ClipRRect(
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: AppRadii.pillRadius,
           child: SizedBox(
-            height: 6,
+            height: AppSpacing.executionVenueProgressHeight,
             child: Stack(
               children: [
                 const ColoredBox(color: _venuePanel2),

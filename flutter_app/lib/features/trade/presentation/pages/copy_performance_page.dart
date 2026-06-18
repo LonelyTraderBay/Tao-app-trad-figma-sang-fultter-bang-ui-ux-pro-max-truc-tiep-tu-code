@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -59,7 +59,9 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 26 : 14);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.copyPerformanceBottomInsetVisualExtra
+            : AppSpacing.copyPerformanceBottomInsetNativeExtra);
 
     return VitPageLayout(
       semanticLabel: 'SC-074 CopyPerformancePage',
@@ -77,16 +79,16 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyPerformancePage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  padding: AppSpacing.copyPerformanceScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 14,
+                    customGap: AppSpacing.rowPy,
                     children: [
                       _PerformanceSummary(snapshot: snapshot),
                       VitCard(
                         variant: VitCardVariant.inner,
-                        padding: const EdgeInsets.all(12),
+                        padding: AppSpacing.cardPaddingCompact,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Copy performance review',

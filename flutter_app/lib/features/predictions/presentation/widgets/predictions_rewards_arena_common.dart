@@ -44,17 +44,16 @@ class _ArenaRooms extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Container(
-                    width: AppSpacing.predictionRewardsArenaIconBox,
-                    height: AppSpacing.predictionRewardsArenaIconBox,
-                    decoration: BoxDecoration(
-                      color: AppColors.warn10,
-                      borderRadius: AppRadii.mdRadius,
-                    ),
-                    child: const Icon(
-                      Icons.sports_esports_rounded,
-                      color: AppColors.warn,
-                      size: AppSpacing.predictionRewardsArenaIcon,
+                  Material(
+                    color: AppColors.warn10,
+                    borderRadius: AppRadii.mdRadius,
+                    child: const SizedBox.square(
+                      dimension: AppSpacing.predictionRewardsArenaIconBox,
+                      child: Icon(
+                        Icons.sports_esports_rounded,
+                        color: AppColors.warn,
+                        size: AppSpacing.predictionRewardsArenaIcon,
+                      ),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.predictionRewardsArenaGap),
@@ -138,20 +137,20 @@ class _TinyBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionRewardsTinyBadgePadding,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          height: AppSpacing.predictionRewardsTinyBadgeLineHeight,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: background,
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.predictionRewardsTinyBadgePadding,
+        child: Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            height: AppSpacing.predictionRewardsTinyBadgeLineHeight,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );

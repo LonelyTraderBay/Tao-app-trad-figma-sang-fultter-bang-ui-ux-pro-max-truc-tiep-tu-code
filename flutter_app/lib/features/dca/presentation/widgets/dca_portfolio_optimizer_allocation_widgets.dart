@@ -8,53 +8,65 @@ class _FrontierChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.dcaPortfolioOptimizerFrontierChipWidth,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: active ? AppColors.accent10 : AppColors.surface,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(
-          color: active ? AppColors.accent30 : AppColors.cardBorder,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            point.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: active ? AppColors.accent : AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: active ? AppColors.accent10 : AppColors.surface,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+            side: BorderSide(
+              color: active ? AppColors.accent30 : AppColors.cardBorder,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-          Row(
+        ),
+        child: Padding(
+          padding: AppSpacing.dcaPaddingX3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '+${point.returnPercent.toStringAsFixed(0)}%',
+                point.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
-                  color: AppColors.buy,
+                  color: active ? AppColors.accent : AppColors.text1,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              Text(
-                ' · ',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-              Text(
-                '${point.riskPercent.toStringAsFixed(0)}%',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.warn,
-                  fontWeight: AppTextStyles.bold,
+              const Padding(padding: AppSpacing.dcaTopPaddingX2),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '+${point.returnPercent.toStringAsFixed(0)}%',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.buy,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    Text(
+                      ' Â· ',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                    Text(
+                      '${point.riskPercent.toStringAsFixed(0)}%',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.warn,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -70,19 +82,24 @@ class _SimpleAllocationBar extends StatelessWidget {
     final accent = _assetColor(allocation.accent);
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.x7,
           height: AppSpacing.x7,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: accent.withValues(alpha: .10),
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Text(
-            allocation.symbol,
-            style: AppTextStyles.micro.copyWith(
-              color: accent,
-              fontWeight: AppTextStyles.bold,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: accent.withValues(alpha: .10),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.mdRadius,
+              ),
+            ),
+            child: Center(
+              child: Text(
+                allocation.symbol,
+                style: AppTextStyles.micro.copyWith(
+                  color: accent,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -130,7 +147,7 @@ class _SuggestionRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.dcaPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -156,7 +173,7 @@ class _SuggestionRow extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Text(
-                      '${suggestion.currentPercent.toStringAsFixed(0)}% → ${suggestion.suggestedPercent.toStringAsFixed(0)}%',
+                      '${suggestion.currentPercent.toStringAsFixed(0)}% â†’ ${suggestion.suggestedPercent.toStringAsFixed(0)}%',
                       style: AppTextStyles.caption.copyWith(
                         color: color,
                         fontWeight: AppTextStyles.bold,
@@ -164,7 +181,7 @@ class _SuggestionRow extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const Padding(padding: AppSpacing.dcaTopPaddingX2),
                 Text(
                   suggestion.reason,
                   style: AppTextStyles.caption.copyWith(

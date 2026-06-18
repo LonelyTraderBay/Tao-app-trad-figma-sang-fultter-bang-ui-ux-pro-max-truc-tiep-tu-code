@@ -35,7 +35,7 @@ class _StatsGrid extends StatelessWidget {
     ];
 
     return GridView.count(
-      crossAxisCount: 2,
+      crossAxisCount: AppSpacing.predictionDetailStatsColumns,
       crossAxisSpacing: AppSpacing.predictionDetailStatsGap,
       mainAxisSpacing: AppSpacing.predictionDetailStatsGap,
       childAspectRatio: AppSpacing.predictionDetailStatsAspectRatio,
@@ -48,17 +48,17 @@ class _StatsGrid extends StatelessWidget {
             padding: AppSpacing.predictionDetailStatPadding,
             child: Row(
               children: [
-                Container(
+                SizedBox(
                   width: AppSpacing.predictionDetailStatIconBox,
                   height: AppSpacing.predictionDetailStatIconBox,
-                  decoration: BoxDecoration(
+                  child: Material(
                     color: stat.color.withValues(alpha: .12),
                     borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Icon(
-                    stat.icon,
-                    color: stat.color,
-                    size: AppSpacing.predictionDetailStatIcon,
+                    child: Icon(
+                      stat.icon,
+                      color: stat.color,
+                      size: AppSpacing.predictionDetailStatIcon,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.predictionDetailStatGap),

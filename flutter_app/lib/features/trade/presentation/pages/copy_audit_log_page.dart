@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -24,8 +25,6 @@ const _auditPrimary = AppColors.primary;
 const _auditAmber = AppColors.caution;
 const _auditPurple = AppColors.accent;
 const _auditGreen = AppColors.buy;
-const _auditChip = AppColors.surface3;
-const _auditMuted = AppColors.text3;
 
 class CopyAuditLogPage extends ConsumerStatefulWidget {
   const CopyAuditLogPage({
@@ -73,7 +72,9 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 118 : 28);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.copyAuditBottomInsetVisualExtra
+            : AppSpacing.copyAuditBottomInsetNativeExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -99,10 +100,10 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyAuditLogPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.copyAuditScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 22,
+                    customGap: AppSpacing.sectionGapRegular,
                     fullBleed: true,
                     children: [
                       _ComplianceNotice(snapshot: snapshot),
@@ -132,7 +133,10 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                             key: CopyAuditLogPage.eventKey(event.id),
                             event: event,
                           ),
-                          if (event != events.last) const SizedBox(height: 10),
+                          if (event != events.last)
+                            const SizedBox(
+                              height: AppSpacing.walletAssetPillGap,
+                            ),
                         ],
                       _SummarySection(events: snapshot.events),
                     ],
@@ -174,32 +178,34 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
       backgroundColor: AppColors.bg,
       barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .5),
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: AppRadii.sheetTopLargeRadius,
       ),
       builder: (sheetContext) {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
+            padding: AppSpacing.copyAuditSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const VitSheetHandle(),
+                const SizedBox(height: AppSpacing.x4),
                 Text(
                   'Export Audit Log',
                   style: AppTextStyles.baseMedium.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.25,
+                    height: AppSpacing.copyAuditSheetTitleLineHeight,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Chọn định dạng export',
                   style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
                 for (final format in snapshot.exportFormats) ...[
                   _ExportFormatButton(
                     key: CopyAuditLogPage.exportFormatKey(format.id),
@@ -219,13 +225,13 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                     },
                   ),
                   if (format != snapshot.exportFormats.last)
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.x3),
                 ],
-                const SizedBox(height: 14),
+                const SizedBox(height: AppSpacing.rowPy),
                 VitCtaButton(
                   onPressed: () => Navigator.of(sheetContext).pop(),
                   variant: VitCtaButtonVariant.secondary,
-                  height: 46,
+                  height: AppSpacing.referralCtaHeight,
                   child: const Text('Hủy'),
                 ),
               ],

@@ -8,30 +8,37 @@ class _TopTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
-      child: Row(
+    return ColoredBox(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          _TopTab(
-            label: 'So sanh',
-            tab: _CompareTab.compare,
-            active: activeTab == _CompareTab.compare,
-            onChanged: onChanged,
+          Row(
+            children: [
+              _TopTab(
+                label: 'So sanh',
+                tab: _CompareTab.compare,
+                active: activeTab == _CompareTab.compare,
+                onChanged: onChanged,
+              ),
+              _TopTab(
+                label: 'Kich ban',
+                tab: _CompareTab.scenarios,
+                active: activeTab == _CompareTab.scenarios,
+                onChanged: onChanged,
+              ),
+              _TopTab(
+                label: 'Phan tich',
+                tab: _CompareTab.analysis,
+                active: activeTab == _CompareTab.analysis,
+                onChanged: onChanged,
+              ),
+            ],
           ),
-          _TopTab(
-            label: 'Kich ban',
-            tab: _CompareTab.scenarios,
-            active: activeTab == _CompareTab.scenarios,
-            onChanged: onChanged,
-          ),
-          _TopTab(
-            label: 'Phan tich',
-            tab: _CompareTab.analysis,
-            active: activeTab == _CompareTab.analysis,
-            onChanged: onChanged,
+          const Divider(
+            height: AppSpacing.hairlineStroke,
+            thickness: AppSpacing.hairlineStroke,
+            color: AppColors.border,
           ),
         ],
       ),
@@ -60,7 +67,7 @@ class _TopTab extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(tab),
         child: Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.x4),
+          padding: AppSpacing.dcaTopPaddingX4,
           child: Column(
             children: [
               Text(
@@ -71,15 +78,18 @@ class _TopTab extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 160),
+              SizedBox(
                 height: AppSpacing.dcaPerformanceCompareTabIndicatorHeight,
                 width: active
                     ? AppSpacing.dcaPerformanceCompareTabIndicatorWidth
                     : 0,
-                decoration: BoxDecoration(
-                  color: active ? AppColors.primary : AppColors.transparent,
-                  borderRadius: AppRadii.xsRadius,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: active ? AppColors.primary : AppColors.transparent,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.xsRadius,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -109,7 +119,7 @@ class _StrategyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: color.withValues(alpha: 0.28),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -149,7 +159,7 @@ class _WinnerBanner extends StatelessWidget {
     final color = dcaWins ? AppColors.buy : AppColors.primary;
     return VitCard(
       borderColor: color.withValues(alpha: 0.28),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

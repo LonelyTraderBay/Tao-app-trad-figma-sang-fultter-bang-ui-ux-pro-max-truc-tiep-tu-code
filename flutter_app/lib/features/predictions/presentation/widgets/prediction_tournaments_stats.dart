@@ -101,17 +101,17 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionTournamentPillPadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        _statusLabel(status),
-        style: AppTextStyles.numericMicro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: color.withValues(alpha: .14),
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.predictionTournamentPillPadding,
+        child: Text(
+          _statusLabel(status),
+          style: AppTextStyles.numericMicro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -125,15 +125,15 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionTournamentPillPadding,
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.predictionTournamentPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+        ),
       ),
     );
   }

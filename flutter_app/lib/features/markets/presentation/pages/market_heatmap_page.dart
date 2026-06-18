@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -84,10 +85,10 @@ class _MarketHeatmapPageState extends ConsumerState<MarketHeatmapPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketHeatmapPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.marketScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 28,
+                      customGap: AppSpacing.marketHeatmapSectionGap,
                       children: [
                         MarketHeatmapSummaryStrip(
                           totalMarketCap: totalMarketCap,

@@ -50,15 +50,12 @@ class _SummaryPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x3,
-        ),
+        padding: AppSpacing.earnCardPaddingX3,
         child: FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
@@ -96,16 +93,15 @@ class _SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.surface3,
-        borderRadius: AppRadii.xlRadius,
-        border: Border.all(color: AppColors.cardBorder),
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: AppColors.cardBorder),
+          borderRadius: AppRadii.xlRadius,
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x4,
-          vertical: AppSpacing.x3,
-        ),
+        padding: AppSpacing.earnCardPaddingX4X3,
         child: Row(
           children: [
             const Icon(
@@ -196,9 +192,9 @@ class _DateFilterRow extends StatelessWidget {
         ],
         const SizedBox(width: AppSpacing.x2),
         DecoratedBox(
-          decoration: const BoxDecoration(
+          decoration: const ShapeDecoration(
             color: AppColors.surface2,
-            shape: BoxShape.circle,
+            shape: CircleBorder(),
           ),
           child: const SizedBox(
             width: AppSpacing.savingsHistoryFilterButton,
@@ -236,23 +232,29 @@ class _Chip extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
-        child: Container(
-          alignment: center ? Alignment.center : null,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: AppRadii.xlRadius,
-            border: Border.all(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: selected ? AppColors.primary30 : AppColors.cardBorder,
+              ),
+              borderRadius: AppRadii.xlRadius,
             ),
           ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.primary : AppColors.text3,
-              fontWeight: selected ? AppTextStyles.bold : AppTextStyles.normal,
+          child: Padding(
+            padding: AppSpacing.earnWidePillPadding,
+            child: Align(
+              alignment: center ? Alignment.center : Alignment.centerLeft,
+              widthFactor: center ? null : 1,
+              child: Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: selected ? AppColors.primary : AppColors.text3,
+                  fontWeight: selected
+                      ? AppTextStyles.bold
+                      : AppTextStyles.normal,
+                ),
+              ),
             ),
           ),
         ),
@@ -276,15 +278,12 @@ class _ResultsHeader extends StatelessWidget {
         ),
         const Spacer(),
         DecoratedBox(
-          decoration: const BoxDecoration(
+          decoration: const ShapeDecoration(
             color: AppColors.surface2,
-            borderRadius: AppRadii.mdRadius,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x1,
-            ),
+            padding: AppSpacing.earnPillPadding,
             child: Row(
               children: [
                 const Icon(

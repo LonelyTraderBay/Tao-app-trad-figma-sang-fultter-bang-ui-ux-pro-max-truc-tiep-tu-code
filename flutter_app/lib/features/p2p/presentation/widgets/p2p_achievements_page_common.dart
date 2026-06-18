@@ -66,20 +66,25 @@ class _RewardPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 220),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
+    return VitCard(
+      constraints: const BoxConstraints(
+        maxWidth: AppSpacing.p2pTrustProgressRewardMaxWidth,
       ),
-      decoration: BoxDecoration(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      background: ColoredBox(
         color: unlocked ? AppColors.buy10 : AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
       ),
+      padding: AppSpacing.p2pTrustProgressTinyPillPadding,
+      clip: true,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.star_border_rounded, color: color, size: 11),
+          Icon(
+            Icons.star_border_rounded,
+            color: color,
+            size: AppSpacing.p2pTrustProgressTinyIcon,
+          ),
           const SizedBox(width: AppSpacing.x1),
           Flexible(
             child: Text(
@@ -108,7 +113,7 @@ class _TradingLevelLink extends StatelessWidget {
     return VitCard(
       key: P2PAchievementsPage.tradingLevelKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(snapshot.tradingLevelRoute);

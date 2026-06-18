@@ -24,37 +24,26 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
 
     return SafeArea(
       top: false,
-      child: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(AppSpacing.earnWithdrawalSheetRadius),
-          ),
-        ),
+      child: Material(
+        color: AppColors.surface,
+        borderRadius: AppRadii.sheetTopLargeRadius,
         child: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(
-            AppSpacing.x5,
-            AppSpacing.x4,
-            AppSpacing.x5,
-            bottomPadding,
-          ),
+          padding: AppSpacing.earnSheetPadding(bottomPadding - AppSpacing.x5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
               Center(
-                child: Container(
+                child: SizedBox(
                   width: AppSpacing.earnWithdrawalSheetHandleWidth,
                   height: AppSpacing.earnWithdrawalSheetHandleHeight,
-                  decoration: BoxDecoration(
+                  child: const Material(
                     color: AppColors.borderSolid,
-                    borderRadius: BorderRadius.circular(
-                      AppSpacing.earnWithdrawalSheetHandleRadius,
-                    ),
+                    borderRadius: AppRadii.hairlineRadius,
                   ),
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               Text(
                 'Tính phí rút sớm',
                 style: AppTextStyles.sectionTitle.copyWith(
@@ -62,7 +51,7 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               VitInput(
                 controller: _principalController,
                 fieldKey: const Key('sc355_calculator_principal'),
@@ -74,7 +63,7 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                 prefix: const Icon(Icons.account_balance_wallet_rounded),
                 onChanged: (_) => setState(() => _previewRequested = false),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+              const SizedBox(height: AppSpacing.x3),
               VitInput(
                 controller: _earnedController,
                 fieldKey: const Key('sc355_calculator_earned'),
@@ -86,7 +75,7 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                 prefix: const Icon(Icons.savings_rounded),
                 onChanged: (_) => setState(() => _previewRequested = false),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+              const SizedBox(height: AppSpacing.x3),
               VitInput(
                 controller: _daysController,
                 fieldKey: const Key('sc355_calculator_days'),
@@ -97,15 +86,15 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                 onChanged: (_) => setState(() => _previewRequested = false),
               ),
               if (result != null) ...[
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                const SizedBox(height: AppSpacing.x4),
                 _CalculatorResult(
                   result: result,
                   previewRequested: _previewRequested,
                 ),
               ],
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               _WarningBox(text: widget.snapshot.calculatorDisclaimer),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               VitCtaButton(
                 onPressed: result == null
                     ? null
@@ -170,54 +159,55 @@ class _CalculatorResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: StakingWithdrawalPolicyPage.calculatorResultKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Kết quả:',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
-          _CalculationRow(
-            row: StakingWithdrawalCalculationRowDraft(
-              label: 'Phí rút sớm',
-              value: '-${result.penalty.toStringAsFixed(2)} (${result.rate}%)',
-              tone: result.rate == 100
-                  ? StakingDisclosureRiskLevel.high
-                  : StakingDisclosureRiskLevel.medium,
+      color: AppColors.surface2,
+      borderRadius: AppRadii.cardLargeRadius,
+      child: Padding(
+        padding: AppSpacing.earnPaddingX4,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Kết quả:',
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-          ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-          _CalculationRow(
-            row: StakingWithdrawalCalculationRowDraft(
-              label: 'Phần thưởng còn lại',
-              value: '+${result.remaining.toStringAsFixed(2)}',
-              tone: StakingDisclosureRiskLevel.low,
+            const SizedBox(height: AppSpacing.x3),
+            _CalculationRow(
+              row: StakingWithdrawalCalculationRowDraft(
+                label: 'Phí rút sớm',
+                value:
+                    '-${result.penalty.toStringAsFixed(2)} (${result.rate}%)',
+                tone: result.rate == 100
+                    ? StakingDisclosureRiskLevel.high
+                    : StakingDisclosureRiskLevel.medium,
+              ),
             ),
-          ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-          _CalculationRow(
-            row: StakingWithdrawalCalculationRowDraft(
-              label: 'Số lượng nhận về',
-              value: result.receive.toStringAsFixed(2),
-              highlight: true,
+            const SizedBox(height: AppSpacing.x2),
+            _CalculationRow(
+              row: StakingWithdrawalCalculationRowDraft(
+                label: 'Phần thưởng còn lại',
+                value: '+${result.remaining.toStringAsFixed(2)}',
+                tone: StakingDisclosureRiskLevel.low,
+              ),
             ),
-          ),
-          if (previewRequested) ...[
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
-            _SmallBadge(
-              label: 'Preview mock đã sẵn sàng - cần xác nhận trước khi rút',
-              color: AppColors.primary,
+            const SizedBox(height: AppSpacing.x2),
+            _CalculationRow(
+              row: StakingWithdrawalCalculationRowDraft(
+                label: 'Số lượng nhận về',
+                value: result.receive.toStringAsFixed(2),
+                highlight: true,
+              ),
             ),
+            if (previewRequested) ...[
+              const SizedBox(height: AppSpacing.x3),
+              _SmallBadge(
+                label: 'Preview mock đã sẵn sàng - cần xác nhận trước khi rút',
+                color: AppColors.primary,
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -232,7 +222,7 @@ class _NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -264,32 +254,34 @@ class _WarningBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
+    return Material(
+      color: AppColors.warningBg,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
+        side: BorderSide(color: AppColors.warningBorder),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.earnWithdrawalNoticeIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.earnWithdrawalNoticeLineHeight,
+      child: Padding(
+        padding: AppSpacing.earnPaddingX3,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.earnWithdrawalNoticeIcon,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                text,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text2,
+                  height: AppSpacing.earnWithdrawalNoticeLineHeight,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -307,15 +299,11 @@ class _BulletLine extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(
-            top: AppSpacing.earnWithdrawalBulletTopPadding,
-          ),
+          padding: AppSpacing.earnWithdrawalBulletPadding,
           child: SizedBox(
             width: AppSpacing.earnWithdrawalBulletSize,
             height: AppSpacing.earnWithdrawalBulletSize,
-            child: DecoratedBox(
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-            ),
+            child: Material(color: color, shape: const CircleBorder()),
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -341,23 +329,20 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.earnWithdrawalBadgePadV,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.earnWithdrawalBadgeLineHeight,
+    return Material(
+      color: color.withValues(alpha: .12),
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.earnWithdrawalBadgePadding,
+        child: Text(
+          label,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.earnWithdrawalBadgeLineHeight,
+          ),
         ),
       ),
     );

@@ -8,26 +8,26 @@ class _DocumentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 56,
-      padding: const EdgeInsets.fromLTRB(12, 9, 12, 9),
+      height: AppSpacing.regulatoryInspectionDocumentHeight,
+      padding: AppSpacing.regulatoryInspectionDocumentPadding,
       radius: VitCardRadius.sm,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Row(
         children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: _inspectionGreen.withValues(alpha: .13),
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: const Icon(
+          const VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.md,
+            width: AppSpacing.regulatoryInspectionDocumentIconBox,
+            height: AppSpacing.regulatoryInspectionDocumentIconBox,
+            borderColor: _inspectionGreen,
+            alignment: Alignment.center,
+            child: Icon(
               Icons.description_outlined,
               color: _inspectionGreen,
-              size: 15,
+              size: AppSpacing.regulatoryInspectionBodyIcon,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.regulatoryInspectionSmallGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -40,38 +40,26 @@ class _DocumentCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.regulatoryInspectionLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(
+                  height: AppSpacing.regulatoryInspectionCompactGap,
+                ),
                 Text(
                   document.countLabel,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.regulatoryInspectionLineHeightTight,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 10),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
-            decoration: BoxDecoration(
-              color: _inspectionGreen.withValues(alpha: .13),
-              borderRadius: AppRadii.inputRadius,
-            ),
-              child: Text(
-              document.status,
-              style: AppTextStyles.micro.copyWith(
-                color: _inspectionGreen,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
-            ),
-          ),
+          const SizedBox(width: AppSpacing.regulatoryInspectionMetricGap),
+          VitAccentPill(label: document.status, accentColor: _inspectionGreen),
         ],
       ),
     );
@@ -86,27 +74,27 @@ class _InspectorPortalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.regulatoryInspectionPortalPadding,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: _inspectionPrimary.withValues(alpha: .13),
-                  borderRadius: AppRadii.inputRadius,
-                ),
-                child: const Icon(
+              const VitCard(
+                variant: VitCardVariant.inner,
+                radius: VitCardRadius.sm,
+                width: AppSpacing.regulatoryInspectionPortalIconBox,
+                height: AppSpacing.regulatoryInspectionPortalIconBox,
+                borderColor: _inspectionPrimary,
+                alignment: Alignment.center,
+                child: Icon(
                   Icons.shield_outlined,
                   color: _inspectionPrimary,
-                  size: 24,
+                  size: AppSpacing.regulatoryInspectionPortalIcon,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.regulatoryInspectionSmallGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,16 +103,20 @@ class _InspectorPortalCard extends StatelessWidget {
                       snapshot.portalTitle,
                       style: AppTextStyles.baseMedium.copyWith(
                         color: AppColors.text1,
-                        height: 1.1,
+                        height:
+                            AppSpacing.regulatoryInspectionLineHeightCompact,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(
+                      height: AppSpacing.regulatoryInspectionCompactGap,
+                    ),
                     Text(
                       snapshot.portalDescription,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
                         fontWeight: AppTextStyles.normal,
-                        height: 1.35,
+                        height:
+                            AppSpacing.regulatoryInspectionLineHeightReadable,
                       ),
                     ),
                   ],
@@ -132,19 +124,22 @@ class _InspectorPortalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.regulatoryInspectionPortalGap),
           VitCtaButton(
             key: RegulatoryInspectionReadyPage.portalKey,
             onPressed: () {},
             variant: VitCtaButtonVariant.secondary,
-            height: 40,
-            leading: const Icon(Icons.open_in_new_rounded, size: 15),
+            height: AppSpacing.regulatoryInspectionActionHeight,
+            leading: const Icon(
+              Icons.open_in_new_rounded,
+              size: AppSpacing.regulatoryInspectionBodyIcon,
+            ),
             child: Text(
               snapshot.portalCta,
               style: AppTextStyles.control.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.regulatoryInspectionLineHeightTight,
               ),
             ),
           ),
@@ -166,14 +161,17 @@ class _ReportButton extends StatelessWidget {
       onPressed: () {},
       variant: VitCtaButtonVariant.success,
       height: AppSpacing.inputHeight,
-      leading: const Icon(Icons.download_rounded, size: 18),
+      leading: const Icon(
+        Icons.download_rounded,
+        size: AppSpacing.regulatoryInspectionStandardIcon,
+      ),
       child: Text(
         snapshot.reportCta,
         overflow: TextOverflow.ellipsis,
         style: AppTextStyles.body.copyWith(
           color: AppColors.onAccent,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.regulatoryInspectionLineHeightTight,
         ),
       ),
     );
@@ -189,21 +187,11 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _inspectionPrimary,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
+        Expanded(
+          child: VitSectionHeader(
+            title: label,
+            variant: VitSectionHeaderVariant.accentBar,
+            accentColor: _inspectionPrimary,
           ),
         ),
       ],

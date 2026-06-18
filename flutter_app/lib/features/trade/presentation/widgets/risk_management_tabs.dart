@@ -9,65 +9,31 @@ class _RiskTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tabs = [
-      (_RiskTab.oco, 'OCO Orders'),
-      (_RiskTab.positions, 'Positions'),
-      (_RiskTab.calculator, 'Calculator'),
+      VitTabItem(
+        key: _RiskTab.oco.name,
+        label: 'OCO Orders',
+        widgetKey: RiskManagementDemoPage.tabKey(_RiskTab.oco.name),
+      ),
+      VitTabItem(
+        key: _RiskTab.positions.name,
+        label: 'Positions',
+        widgetKey: RiskManagementDemoPage.tabKey(_RiskTab.positions.name),
+      ),
+      VitTabItem(
+        key: _RiskTab.calculator.name,
+        label: 'Calculator',
+        widgetKey: RiskManagementDemoPage.tabKey(_RiskTab.calculator.name),
+      ),
     ];
     return VitCard(
       variant: VitCardVariant.inner,
-      height: 44,
-      padding: const EdgeInsets.all(4),
-      child: Row(
-        children: [
-          for (var i = 0; i < tabs.length; i++) ...[
-            Expanded(
-              child: _TabButton(
-                key: RiskManagementDemoPage.tabKey(tabs[i].$1.name),
-                label: tabs[i].$2,
-                active: active == tabs[i].$1,
-                onTap: () => onChanged(tabs[i].$1),
-              ),
-            ),
-            if (i < tabs.length - 1) const SizedBox(width: 4),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _TabButton extends StatelessWidget {
-  const _TabButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? _riskPrimary : AppColors.transparent,
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
+      height: AppSpacing.tradeToolRiskTabHeight,
+      padding: AppSpacing.tradeSegmentedPadding,
+      child: VitTabBar(
+        tabs: tabs,
+        activeKey: active.name,
+        onChanged: (id) => onChanged(_RiskTab.values.byName(id)),
+        variant: VitTabBarVariant.segment,
       ),
     );
   }
@@ -87,12 +53,12 @@ class _OcoTab extends StatelessWidget {
           'Nhấn nút bên dưới để mở form đặt lệnh OCO',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeToolCardGap),
         _GradientButton(
           key: RiskManagementDemoPage.ocoButtonKey,
           label: 'Mở OCO Order Form',
           icon: Icons.trending_up_rounded,
-          colors: const [AppColors.buy, AppColors.buyDark],
+          variant: VitCtaButtonVariant.success,
           onTap: onOpen,
         ),
       ],
@@ -114,12 +80,12 @@ class _CalculatorTab extends StatelessWidget {
           'Nhấn nút bên dưới để mở calculator',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeToolCardGap),
         _GradientButton(
           key: RiskManagementDemoPage.calculatorButtonKey,
           label: 'Mở Position Sizing Calculator',
           icon: Icons.calculate_rounded,
-          colors: const [AppColors.accent, AppColors.accentDark],
+          variant: VitCtaButtonVariant.auth,
           onTap: onOpen,
         ),
       ],
@@ -139,7 +105,7 @@ class _PositionsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          padding: const EdgeInsets.all(14),
+          padding: AppSpacing.tradeToolCardPadding,
           child: Row(
             children: [
               Expanded(
@@ -161,10 +127,10 @@ class _PositionsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeToolCardGap),
         for (final position in positions) ...[
           _PositionTile(position: position),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.tradeToolIconGap),
         ],
       ],
     );
@@ -191,7 +157,7 @@ class _MiniMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: AppSpacing.tradeToolTinyGap),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
@@ -214,7 +180,7 @@ class _PositionTile extends StatelessWidget {
     final color = Color(position.logoColorHex);
     final pnlColor = position.pnl >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.tradeToolCardPadding,
       child: Row(
         children: [
           _IconTile(
@@ -222,9 +188,9 @@ class _PositionTile extends StatelessWidget {
                 ? Icons.north_east_rounded
                 : Icons.south_east_rounded,
             color: color,
-            size: 40,
+            size: AppSpacing.tradeToolIconTileSm,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tradeToolCardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,7 +214,7 @@ class _PositionTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.tradeToolTinyGap),
                 Text(
                   '${position.side.name.toUpperCase()} · ${position.amount.toStringAsFixed(position.amount >= 10 ? 0 : 2)} ${position.baseAsset} · Entry ${_formatMoney(position.entryPrice)}',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),

@@ -12,21 +12,24 @@ class _ClaimableBanner extends StatelessWidget {
       key: LaunchpadClaimReceiptPage.claimableKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.buy.withValues(alpha: .30),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
-          Container(
+          const SizedBox(
             width: AppSpacing.launchpadBox36,
             height: AppSpacing.launchpadBox36,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: AppColors.buy15,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.card_giftcard_rounded,
-              color: AppColors.buy,
-              size: AppSpacing.iconMd,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.buy15,
+                shape: CircleBorder(),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.card_giftcard_rounded,
+                  color: AppColors.buy,
+                  size: AppSpacing.iconMd,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -76,7 +79,7 @@ class _NextUnlockCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -156,7 +159,7 @@ class _ReceiptDetailsCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadClaimReceiptPage.detailsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -196,7 +199,7 @@ class _VestingPreviewCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadClaimReceiptPage.vestingPreviewKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -225,7 +228,7 @@ class _VestingPreviewCard extends StatelessWidget {
             _VestingMiniRow(entry: entry),
           if (receipt.vestingSchedule.length > 4)
             Padding(
-              padding: const EdgeInsets.only(top: AppSpacing.x2),
+              padding: AppSpacing.launchpadTopPaddingX2,
               child: Text(
                 '+${receipt.vestingSchedule.length - 4} đợt nữa',
                 textAlign: TextAlign.center,

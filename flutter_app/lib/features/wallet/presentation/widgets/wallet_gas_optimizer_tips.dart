@@ -41,14 +41,12 @@ class _TipCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          VitCard(
             width: AppSpacing.walletGasTipIconBox,
             height: AppSpacing.walletGasTipIconBox,
-            decoration: BoxDecoration(
-              color: _gasAmber.withValues(alpha: .10),
-              borderRadius: AppRadii.smRadius,
-            ),
             alignment: Alignment.center,
+            radius: VitCardRadius.sm,
+            borderColor: _gasAmber.withValues(alpha: .20),
             child: const Icon(
               Icons.lightbulb_outline_rounded,
               color: _gasAmber,
@@ -68,7 +66,6 @@ class _TipCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1.1,
                         ),
                       ),
                     ),
@@ -101,7 +98,6 @@ class _TipCard extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: _gasGreen,
                         fontWeight: AppTextStyles.bold,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -123,23 +119,7 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: AppSpacing.walletGasBadgeHeight,
-      padding: AppSpacing.walletGasSmallBadgePadding,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -150,22 +130,7 @@ class _CategoryPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: AppSpacing.walletGasBadgeHeight,
-      padding: AppSpacing.walletGasBadgePadding,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.overlaySubtle,
-        borderRadius: AppRadii.badgeRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.textSoftBlue,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: AppColors.textSoftBlue);
   }
 }
 
@@ -193,17 +158,15 @@ class _QuickActionsCard extends StatelessWidget {
             'View L2 Options',
           ])
             Padding(
-              padding: const EdgeInsets.only(
+              padding: AppSpacing.zeroInsets.copyWith(
                 bottom: AppSpacing.walletGasQuickActionBottomGap,
               ),
-              child: Container(
+              child: VitCard(
                 height: AppSpacing.walletGasQuickActionHeight,
                 padding: AppSpacing.walletGasQuickActionPadding,
-                decoration: BoxDecoration(
-                  color: _gasBackground,
-                  borderRadius: AppRadii.mdRadius,
-                  border: Border.all(color: _gasBorder),
-                ),
+                radius: VitCardRadius.sm,
+                borderColor: _gasBorder,
+                onTap: () {},
                 child: Row(
                   children: [
                     const Icon(

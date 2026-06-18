@@ -20,22 +20,18 @@ class _RelatedMarketsSection extends StatelessWidget {
                 var index = 0;
                 index < snapshot.relatedEvents.length;
                 index += 1
-              )
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: index == snapshot.relatedEvents.length - 1
-                        ? 0
-                        : AppSpacing.predictionDetailRelatedGap,
-                  ),
-                  child: _RelatedMarketCard(
-                    event: snapshot.relatedEvents[index],
-                    onTap: () => context.go(
-                      AppRoutePaths.marketsPredictionEvent(
-                        snapshot.relatedEvents[index].id,
-                      ),
+              ) ...[
+                if (index > 0)
+                  const SizedBox(width: AppSpacing.predictionDetailRelatedGap),
+                _RelatedMarketCard(
+                  event: snapshot.relatedEvents[index],
+                  onTap: () => context.go(
+                    AppRoutePaths.marketsPredictionEvent(
+                      snapshot.relatedEvents[index].id,
                     ),
                   ),
                 ),
+              ],
             ],
           ),
         ),
@@ -80,12 +76,11 @@ class _RelatedMarketCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.predictionDetailRelatedMetaGap),
             Row(
               children: [
-                Container(
-                  width: AppSpacing.predictionDetailRelatedDot,
-                  height: AppSpacing.predictionDetailRelatedDot,
-                  decoration: BoxDecoration(
+                SizedBox.square(
+                  dimension: AppSpacing.predictionDetailRelatedDot,
+                  child: Material(
                     color: top.color,
-                    shape: BoxShape.circle,
+                    shape: const CircleBorder(),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.predictionDetailRelatedDotGap),
@@ -134,17 +129,16 @@ class _ArenaBridgeSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.predictionDetailArenaIconBox,
-                height: AppSpacing.predictionDetailArenaIconBox,
-                decoration: BoxDecoration(
+              const SizedBox.square(
+                dimension: AppSpacing.predictionDetailArenaIconBox,
+                child: Material(
                   color: AppColors.warn10,
                   borderRadius: AppRadii.mdRadius,
-                ),
-                child: const Icon(
-                  Icons.sports_esports_rounded,
-                  color: AppColors.warn,
-                  size: AppSpacing.predictionDetailArenaIcon,
+                  child: Icon(
+                    Icons.sports_esports_rounded,
+                    color: AppColors.warn,
+                    size: AppSpacing.predictionDetailArenaIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.predictionDetailArenaHeaderGap),
@@ -173,43 +167,53 @@ class _ArenaBridgeSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.predictionDetailArenaRoomsGap),
-          for (final room in snapshot.arenaRooms)
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: AppSpacing.predictionDetailArenaRoomBottomGap,
+          for (
+            var index = 0;
+            index < snapshot.arenaRooms.length;
+            index += 1
+          ) ...[
+            _ArenaRoomRow(room: snapshot.arenaRooms[index]),
+            if (index != snapshot.arenaRooms.length - 1)
+              const SizedBox(
+                height: AppSpacing.predictionDetailArenaRoomBottomGap,
               ),
-              child: Container(
-                padding: AppSpacing.predictionDetailArenaRoomPadding,
-                decoration: BoxDecoration(
-                  color: AppColors.surface2,
-                  border: Border.all(color: AppColors.borderSolid),
-                  borderRadius: AppRadii.mdRadius,
-                ),
+          ],
+          Material(
+            color: AppColors.warn08,
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.mdRadius,
+              side: const BorderSide(color: AppColors.warningBorder),
+            ),
+            child: InkWell(
+              key: PredictionEventDetailPage.arenaCreateKey,
+              onTap: onCreate,
+              borderRadius: AppRadii.mdRadius,
+              child: Padding(
+                padding: AppSpacing.predictionDetailArenaCreatePadding,
                 child: Row(
                   children: [
                     const Icon(
-                      Icons.gamepad_outlined,
+                      Icons.auto_awesome_rounded,
                       color: AppColors.warn,
-                      size: AppSpacing.predictionDetailArenaRoomIcon,
+                      size: AppSpacing.predictionDetailArenaCreateIcon,
                     ),
                     const SizedBox(
-                      width: AppSpacing.predictionDetailArenaRoomGap,
+                      width: AppSpacing.predictionDetailArenaCreateGap,
                     ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            room.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            'Tạo Arena từ event này',
                             style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text1,
+                              color: AppColors.warn,
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
                           Text(
-                            '${room.slots} · ${room.points} Arena Points',
+                            'Event chỉ là bối cảnh, không liên kết ví hay P/L.',
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
                             ),
@@ -217,70 +221,76 @@ class _ArenaBridgeSection extends StatelessWidget {
                         ],
                       ),
                     ),
-                    _TinyBadge(
-                      label: room.badge,
+                    const _ArenaBadge('Arena Points only'),
+                    const SizedBox(
+                      width: AppSpacing.predictionDetailArenaCreateBadgeGap,
+                    ),
+                    const Icon(
+                      Icons.chevron_right_rounded,
                       color: AppColors.warn,
-                      background: AppColors.warn10,
+                      size: AppSpacing.predictionDetailArenaCreateChevron,
                     ),
                   ],
                 ),
               ),
             ),
-          InkWell(
-            key: PredictionEventDetailPage.arenaCreateKey,
-            onTap: onCreate,
-            borderRadius: AppRadii.mdRadius,
-            child: Container(
-              padding: AppSpacing.predictionDetailArenaCreatePadding,
-              decoration: BoxDecoration(
-                color: AppColors.warn08,
-                border: Border.all(color: AppColors.warningBorder),
-                borderRadius: AppRadii.mdRadius,
-              ),
-              child: Row(
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ArenaRoomRow extends StatelessWidget {
+  const _ArenaRoomRow({required this.room});
+
+  final PredictionArenaRoomDraft room;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.mdRadius,
+        side: const BorderSide(color: AppColors.borderSolid),
+      ),
+      child: Padding(
+        padding: AppSpacing.predictionDetailArenaRoomPadding,
+        child: Row(
+          children: [
+            const Icon(
+              Icons.gamepad_outlined,
+              color: AppColors.warn,
+              size: AppSpacing.predictionDetailArenaRoomIcon,
+            ),
+            const SizedBox(width: AppSpacing.predictionDetailArenaRoomGap),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
-                    Icons.auto_awesome_rounded,
-                    color: AppColors.warn,
-                    size: AppSpacing.predictionDetailArenaCreateIcon,
-                  ),
-                  const SizedBox(
-                    width: AppSpacing.predictionDetailArenaCreateGap,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Tạo Arena từ event này',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.warn,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                        Text(
-                          'Event chỉ là bối cảnh, không liên kết ví hay P/L.',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    room.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const _ArenaBadge('Arena Points only'),
-                  const SizedBox(
-                    width: AppSpacing.predictionDetailArenaCreateBadgeGap,
-                  ),
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.warn,
-                    size: AppSpacing.predictionDetailArenaCreateChevron,
+                  Text(
+                    '${room.slots} · ${room.points} Arena Points',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+            _TinyBadge(
+              label: room.badge,
+              color: AppColors.warn,
+              background: AppColors.warn10,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -293,15 +303,15 @@ class _ArenaBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionDetailArenaBadgePadding,
-      decoration: BoxDecoration(
-        color: AppColors.warn10,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.badge.copyWith(color: AppColors.warn),
+    return Material(
+      color: AppColors.warn10,
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.predictionDetailArenaBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.badge.copyWith(color: AppColors.warn),
+        ),
       ),
     );
   }

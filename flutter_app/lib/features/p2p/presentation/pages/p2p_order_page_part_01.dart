@@ -107,7 +107,10 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                             onPressed: () => context.go(
                               AppRoutePaths.p2pOrderCancel(order.id),
                             ),
-                            icon: const Icon(Icons.close_rounded, size: 16),
+                            icon: const Icon(
+                              Icons.close_rounded,
+                              size: AppSpacing.iconSm,
+                            ),
                             label: 'Hủy đơn hàng',
                             color: AppColors.sell,
                           ),
@@ -159,32 +162,31 @@ class _StatusBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.p2pOrderStatusPadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .08),
-        border: Border(bottom: BorderSide(color: color.withValues(alpha: .15))),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
+    return Material(
+      color: color.withValues(alpha: .08),
+      child: Padding(
+        padding: AppSpacing.p2pOrderStatusPadding,
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
+            Text(
+              countdown,
+              style: AppTextStyles.baseMedium.copyWith(
                 color: color,
+                fontFeatures: AppTextStyles.tabularFigures,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-          ),
-          Text(
-            countdown,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: color,
-              fontFeatures: AppTextStyles.tabularFigures,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -215,11 +217,13 @@ class _OrderStepper extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: AppSpacing.p2pOrderStepperConnectorPadding,
-                  child: Container(
-                    height: 2,
-                    color: index < activeIndex - 1
-                        ? AppModuleAccents.p2p
-                        : AppColors.borderSolid,
+                  child: SizedBox(
+                    height: AppSpacing.p2pOrderStepperConnectorHeight,
+                    child: ColoredBox(
+                      color: index < activeIndex - 1
+                          ? AppModuleAccents.p2p
+                          : AppColors.borderSolid,
+                    ),
                   ),
                 ),
               ),
@@ -246,30 +250,31 @@ class _StepperNode extends StatelessWidget {
     final isCompleted = index < activeIndex;
     return Column(
       children: [
-        Container(
-          width: AppSpacing.x6,
-          height: AppSpacing.x6,
-          decoration: BoxDecoration(
-            color: isCompleted ? AppModuleAccents.p2p : AppColors.surface2,
-            shape: BoxShape.circle,
-            border: Border.all(
+        Material(
+          color: isCompleted ? AppModuleAccents.p2p : AppColors.surface2,
+          shape: CircleBorder(
+            side: BorderSide(
               color: isCompleted ? AppModuleAccents.p2p : AppColors.borderSolid,
             ),
           ),
-          child: Center(
-            child: isCompleted
-                ? const Icon(
-                    Icons.check_rounded,
-                    color: AppColors.onAccent,
-                    size: AppSpacing.iconSm,
-                  )
-                : Text(
-                    '${index + 1}',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontWeight: AppTextStyles.bold,
+          child: SizedBox(
+            width: AppSpacing.x6,
+            height: AppSpacing.x6,
+            child: Center(
+              child: isCompleted
+                  ? const Icon(
+                      Icons.check_rounded,
+                      color: AppColors.onAccent,
+                      size: AppSpacing.iconSm,
+                    )
+                  : Text(
+                      '${index + 1}',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
-                  ),
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
@@ -299,17 +304,19 @@ class _SafetyBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.x6,
-            height: AppSpacing.x6,
-            decoration: const BoxDecoration(
-              color: AppColors.sell10,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.shield_outlined,
-              color: AppColors.sell,
-              size: AppSpacing.iconSm,
+          Material(
+            color: AppColors.sell10,
+            shape: const CircleBorder(),
+            child: const SizedBox(
+              width: AppSpacing.x6,
+              height: AppSpacing.x6,
+              child: Center(
+                child: Icon(
+                  Icons.shield_outlined,
+                  color: AppColors.sell,
+                  size: AppSpacing.iconSm,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -360,12 +367,10 @@ class _EscrowBanner extends StatelessWidget {
         key: P2POrderPage.escrowKey,
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
-        child: Container(
+        child: VitCard(
+          variant: VitCardVariant.ghost,
+          borderColor: AppColors.buy20,
           padding: AppSpacing.p2pOrderCardPadding,
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.buy20),
-            borderRadius: AppRadii.cardRadius,
-          ),
           child: Row(
             children: [
               const Icon(
@@ -396,11 +401,9 @@ class _EscrowBanner extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.buy10,
-                  borderRadius: AppRadii.inputRadius,
-                ),
+              Material(
+                color: AppColors.buy10,
+                borderRadius: AppRadii.inputRadius,
                 child: Padding(
                   padding: AppSpacing.p2pOrderEscrowActionPadding,
                   child: Row(

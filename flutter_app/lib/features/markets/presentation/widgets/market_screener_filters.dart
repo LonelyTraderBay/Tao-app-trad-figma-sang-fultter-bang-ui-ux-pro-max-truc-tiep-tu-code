@@ -14,12 +14,13 @@ class _PresetScroller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36,
+      height: AppSpacing.marketScreenerPresetHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
         itemCount: presets.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) =>
+            const SizedBox(width: AppSpacing.marketScreenerPresetGap),
         itemBuilder: (context, index) {
           final preset = presets[index];
           final active = preset.id == activePresetId;
@@ -29,46 +30,51 @@ class _PresetScroller extends StatelessWidget {
             'bargains' => 104.0,
             _ => 106.0,
           };
-          return InkWell(
-            key: MarketScreenerPage.presetKey(preset.id),
-            onTap: () => onPresetSelected(preset),
-            borderRadius: AppRadii.lgRadius,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 140),
-              width: chipWidth,
-              height: 36,
-              padding: const EdgeInsets.symmetric(horizontal: 11),
-              decoration: BoxDecoration(
+          return Material(
+            color: active
+                ? _marketPrimary.withValues(alpha: .15)
+                : AppColors.surface3,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.lgRadius,
+              side: BorderSide(
                 color: active
-                    ? _marketPrimary.withValues(alpha: .15)
-                    : AppColors.surface3,
-                border: Border.all(
-                  color: active
-                      ? _marketPrimary.withValues(alpha: .38)
-                      : AppColors.transparent,
-                ),
-                borderRadius: AppRadii.lgRadius,
+                    ? _marketPrimary.withValues(alpha: .38)
+                    : AppColors.transparent,
               ),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      preset.icon,
-                      size: 14,
-                      color: active ? _marketPrimary : AppColors.text2,
+            ),
+            child: InkWell(
+              key: MarketScreenerPage.presetKey(preset.id),
+              onTap: () => onPresetSelected(preset),
+              borderRadius: AppRadii.lgRadius,
+              child: SizedBox(
+                width: chipWidth,
+                height: AppSpacing.marketScreenerPresetHeight,
+                child: Padding(
+                  padding: AppSpacing.marketScreenerPresetPadding,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          preset.icon,
+                          size: AppSpacing.marketScreenerPresetIcon,
+                          color: active ? _marketPrimary : AppColors.text2,
+                        ),
+                        const SizedBox(
+                          width: AppSpacing.marketScreenerPresetIconGap,
+                        ),
+                        Text(
+                          preset.name,
+                          style: AppTextStyles.caption.copyWith(
+                            color: active ? _marketPrimary : AppColors.text2,
+                            fontWeight: AppTextStyles.medium,
+                            height: AppSpacing.marketScreenerPresetLineHeight,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      preset.name,
-                      style: AppTextStyles.caption.copyWith(
-                        color: active ? _marketPrimary : AppColors.text2,
-                        fontWeight: AppTextStyles.medium,
-                        height: 1,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -110,7 +116,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: MarketScreenerPage.advancedFiltersKey,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketScreenerAdvancedPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -127,18 +133,24 @@ class _AdvancedFiltersCard extends StatelessWidget {
               TextButton.icon(
                 key: MarketScreenerPage.resetFiltersKey,
                 onPressed: onReset,
-                icon: const Icon(Icons.refresh_rounded, size: 14),
+                icon: const Icon(
+                  Icons.refresh_rounded,
+                  size: AppSpacing.marketScreenerResetIcon,
+                ),
                 label: const Text('Đặt lại'),
                 style: TextButton.styleFrom(
                   foregroundColor: _marketPrimary,
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  minimumSize: const Size(0, 32),
+                  padding: AppSpacing.marketScreenerResetPadding,
+                  minimumSize: const Size(
+                    0,
+                    AppSpacing.marketScreenerResetHeight,
+                  ),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.marketScreenerAdvancedTitleGap),
           Text(
             'Danh mục',
             style: AppTextStyles.micro.copyWith(
@@ -146,10 +158,10 @@ class _AdvancedFiltersCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.marketScreenerAdvancedCategoryGap),
           Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: AppSpacing.marketScreenerAdvancedCategoryGap,
+            runSpacing: AppSpacing.marketScreenerAdvancedCategoryGap,
             children: [
               for (final category in categories)
                 _CategoryChip(
@@ -162,7 +174,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.marketScreenerAdvancedRangeGap),
           Row(
             children: [
               Expanded(
@@ -173,7 +185,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
                       onRangeChanged(minPrice: value, clearMinPrice: clear),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.marketScreenerAdvancedRangeGap),
               Expanded(
                 child: _RangeInput(
                   label: 'Giá max',
@@ -184,7 +196,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.marketScreenerAdvancedRangeRowGap),
           Row(
             children: [
               Expanded(
@@ -197,7 +209,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.marketScreenerAdvancedRangeGap),
               Expanded(
                 child: _RangeInput(
                   label: '% đổi min',
@@ -233,27 +245,32 @@ class _CategoryChip extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
-      child: Container(
-        height: 34,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _marketPrimary.withValues(alpha: .14)
-              : AppColors.surface2,
-          border: Border.all(
+      child: Material(
+        color: active
+            ? _marketPrimary.withValues(alpha: .14)
+            : AppColors.surface2,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.smRadius,
+          side: BorderSide(
             color: active
                 ? _marketPrimary.withValues(alpha: .36)
                 : AppColors.transparent,
           ),
-          borderRadius: AppRadii.smRadius,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? _marketPrimary : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
-            height: 1,
+        child: SizedBox(
+          height: AppSpacing.marketScreenerCategoryChipHeight,
+          child: Padding(
+            padding: AppSpacing.marketScreenerCategoryChipPadding,
+            child: Center(
+              child: Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? _marketPrimary : AppColors.text3,
+                  fontWeight: AppTextStyles.medium,
+                  height: AppSpacing.marketScreenerCategoryChipLineHeight,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -293,10 +310,7 @@ class _RangeInput extends StatelessWidget {
         labelStyle: AppTextStyles.micro.copyWith(color: AppColors.text3),
         filled: true,
         fillColor: AppColors.surface2,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 10,
-        ),
+        contentPadding: AppSpacing.marketScreenerInputPadding,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: AppColors.borderSolid),
           borderRadius: AppRadii.smRadius,
@@ -331,7 +345,7 @@ class _SortScroller extends StatelessWidget {
     ];
 
     return SizedBox(
-      height: 38,
+      height: AppSpacing.marketScreenerSortHeight,
       child: Row(
         children: [
           for (var index = 0; index < options.length; index++) ...[
@@ -350,11 +364,12 @@ class _SortScroller extends StatelessWidget {
                 onTap: () => onSortSelected(options[index].$1),
               ),
             ),
-            if (index != options.length - 1) const SizedBox(width: 4),
+            if (index != options.length - 1)
+              const SizedBox(width: AppSpacing.marketScreenerSortGap),
           ],
-          const SizedBox(width: 6),
+          const SizedBox(width: AppSpacing.marketScreenerSortResultGap),
           SizedBox(
-            width: 62,
+            width: AppSpacing.marketScreenerSortResultWidth,
             child: Text(
               '$resultCount kết quả',
               maxLines: 1,
@@ -362,7 +377,7 @@ class _SortScroller extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1,
+                height: AppSpacing.marketScreenerPresetLineHeight,
               ),
             ),
           ),
@@ -397,41 +412,48 @@ class _SortChip extends StatelessWidget {
       key: MarketScreenerPage.sortKey(sort),
       onTap: onTap,
       borderRadius: AppRadii.lgRadius,
-      child: Container(
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 6),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _marketPrimary.withValues(alpha: .10)
-              : AppColors.transparent,
-          borderRadius: AppRadii.lgRadius,
-        ),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? _marketPrimary : AppColors.text3,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.medium,
-                  height: 1,
+      child: Material(
+        color: active
+            ? _marketPrimary.withValues(alpha: .10)
+            : AppColors.transparent,
+        borderRadius: AppRadii.lgRadius,
+        child: SizedBox(
+          height: AppSpacing.marketScreenerSortChipHeight,
+          child: Padding(
+            padding: AppSpacing.marketScreenerSortChipPadding,
+            child: Center(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      label,
+                      style: AppTextStyles.caption.copyWith(
+                        color: active ? _marketPrimary : AppColors.text3,
+                        fontWeight: active
+                            ? AppTextStyles.bold
+                            : AppTextStyles.medium,
+                        height: AppSpacing.marketScreenerPresetLineHeight,
+                      ),
+                    ),
+                    if (active) ...[
+                      const SizedBox(
+                        width: AppSpacing.marketScreenerSortIconGap,
+                      ),
+                      Icon(
+                        icon,
+                        color: _marketPrimary,
+                        size: AppSpacing.marketScreenerSortIcon,
+                      ),
+                    ],
+                  ],
                 ),
               ),
-              if (active) ...[
-                const SizedBox(width: 2),
-                Icon(icon, color: _marketPrimary, size: 15),
-              ],
-            ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
-

@@ -8,26 +8,29 @@ class _LatencyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      padding: AppSpacing.armIntegrationLatencyPadding,
       child: Column(
         children: [
           SizedBox(
-            height: 200,
+            height: AppSpacing.armIntegrationChartHeight,
             child: CustomPaint(
               painter: _LatencyPainter(points: points),
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: 14),
-          const Divider(height: 1, color: _armBorder),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.armIntegrationMetricRowGap),
+          const Divider(
+            height: AppSpacing.armIntegrationDividerHeight,
+            color: _armBorder,
+          ),
+          const SizedBox(height: AppSpacing.x4),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _LegendDot(label: 'REGIS-TR', color: _armGreen),
-              SizedBox(width: 18),
+              SizedBox(width: AppSpacing.armIntegrationLegendGap),
               _LegendDot(label: 'UnaVista', color: _armPrimary),
-              SizedBox(width: 18),
+              SizedBox(width: AppSpacing.armIntegrationLegendGap),
               _LegendDot(label: 'Bloomberg', color: _armAmber),
             ],
           ),
@@ -45,7 +48,7 @@ class _SlaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 17),
+      padding: AppSpacing.armIntegrationSlaPadding,
       child: Column(
         children: [
           _ProgressRow(
@@ -53,13 +56,13 @@ class _SlaCard extends StatelessWidget {
             value: '${sla.uptime.toStringAsFixed(2)}%',
             factor: sla.uptime / 100,
           ),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.armIntegrationSlaGap),
           _ProgressRow(
             label: 'Latency Target (<100ms)',
             value: '${sla.latencyAvg}ms avg',
             factor: sla.latencyAvg / 100,
           ),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.armIntegrationSlaGap),
           _ProgressRow(
             label: 'Failover Readiness',
             value: '${sla.failoverReadiness}%',
@@ -93,7 +96,7 @@ class _ProgressRow extends StatelessWidget {
                 label,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1,
+                  height: AppSpacing.armIntegrationLineHeightTight,
                 ),
               ),
             ),
@@ -103,16 +106,16 @@ class _ProgressRow extends StatelessWidget {
                 color: _armGreen,
                 fontWeight: AppTextStyles.bold,
                 fontFeatures: AppTextStyles.tabularFigures,
-                height: 1,
+                height: AppSpacing.armIntegrationLineHeightTight,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.armIntegrationProgressLabelGap),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
           child: SizedBox(
-            height: 8,
+            height: AppSpacing.armIntegrationProgressHeight,
             child: Stack(
               children: [
                 const ColoredBox(color: _armPanel2),
@@ -148,7 +151,7 @@ class _QuickActions extends StatelessWidget {
             onTap: onQueue,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.armIntegrationInlineGap),
         Expanded(
           child: _QuickAction(
             key: ArmIntegrationStatusPage.actionKey('dashboard'),
@@ -182,9 +185,16 @@ class _QuickAction extends StatelessWidget {
     return VitCtaButton(
       onPressed: onTap,
       variant: VitCtaButtonVariant.secondary,
-      height: 44,
-      leading: Icon(icon, color: color, size: 17),
-      trailing: const Icon(Icons.chevron_right_rounded, size: 17),
+      height: AppSpacing.searchBarCompactHeight,
+      leading: Icon(
+        icon,
+        color: color,
+        size: AppSpacing.armIntegrationQuickActionIcon,
+      ),
+      trailing: const Icon(
+        Icons.chevron_right_rounded,
+        size: AppSpacing.armIntegrationQuickActionIcon,
+      ),
       child: Text(
         label,
         maxLines: 1,
@@ -192,7 +202,7 @@ class _QuickAction extends StatelessWidget {
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.armIntegrationLineHeightTight,
         ),
       ),
     );
@@ -208,25 +218,11 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 3,
-          height: 16,
-          decoration: BoxDecoration(
-            color: _armPrimary,
-            borderRadius: AppRadii.xlRadius,
-          ),
-        ),
-        const SizedBox(width: 7),
         Expanded(
-          child: Text(
-            text,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
+          child: VitSectionHeader(
+            title: text,
+            variant: VitSectionHeaderVariant.accentBar,
+            accentColor: _armPrimary,
           ),
         ),
       ],
@@ -244,17 +240,13 @@ class _LegendDot extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        ),
-        const SizedBox(width: 7),
+        Icon(Icons.circle, color: color, size: AppSpacing.x3),
+        const SizedBox(width: AppSpacing.x3),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.armIntegrationLineHeightTight,
           ),
         ),
       ],

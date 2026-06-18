@@ -22,7 +22,7 @@ class _FilterPanel extends StatelessWidget {
     return VitCard(
       key: P2PHomePage.filterKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pHomeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -90,7 +90,10 @@ class _FilterPanel extends StatelessWidget {
             const SizedBox(height: AppSpacing.x3),
             TextButton.icon(
               onPressed: onClear,
-              icon: const Icon(Icons.close_rounded, size: 14),
+              icon: const Icon(
+                Icons.close_rounded,
+                size: AppSpacing.p2pHomeInlineIcon,
+              ),
               label: const Text('Xóa bộ lọc'),
             ),
           ],
@@ -146,7 +149,7 @@ class _OfferCard extends StatelessWidget {
       key: P2PHomePage.adKey(ad.id),
       radius: VitCardRadius.lg,
       onTap: onOpen,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pHomeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -176,7 +179,7 @@ class _OfferCard extends StatelessWidget {
                           const Icon(
                             Icons.verified_rounded,
                             color: AppModuleAccents.p2p,
-                            size: 13,
+                            size: AppSpacing.p2pHomeVerifiedIcon,
                           ),
                         ],
                         if (badge != null) ...[
@@ -238,7 +241,7 @@ class _OfferCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+                padding: AppSpacing.p2pHomePriceBaselinePadding,
                 child: Text(
                   ad.currency,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -246,7 +249,7 @@ class _OfferCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+                padding: AppSpacing.p2pHomePriceBaselinePadding,
                 child: Text(
                   _priceDelta(ad),
                   style: AppTextStyles.micro.copyWith(
@@ -296,7 +299,11 @@ class _OfferCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
-              Icon(Icons.schedule_rounded, color: AppColors.text3, size: 12),
+              Icon(
+                Icons.schedule_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.p2pHomeSmallIcon,
+              ),
               const SizedBox(width: AppSpacing.x1),
               Text(
                 ad.avgResponseTime,
@@ -355,27 +362,23 @@ class _ChipButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: active ? AppColors.primary12 : AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(
+          color: active ? AppColors.primary30 : AppColors.transparent,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: active ? AppColors.primary30 : AppColors.transparent,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
+        child: Padding(
+          padding: AppSpacing.p2pHomeChipPadding,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
               color: active ? AppColors.primary : AppColors.text3,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.p2pHomeTextTightLineHeight,
             ),
           ),
         ),
@@ -404,16 +407,13 @@ class _ActionButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.p2pHomeActionButtonPadding,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.onAccent,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.p2pHomeTextTightLineHeight,
             ),
           ),
         ),
@@ -437,32 +437,27 @@ class _MerchantAvatar extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Container(
-          width: AppSpacing.buttonCompact,
-          height: AppSpacing.buttonCompact,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: .95),
-            shape: BoxShape.circle,
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            ad.merchant.characters.first,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: AppColors.onAccent,
-              height: 1,
-            ),
-          ),
+        VitAssetAvatar(
+          label: ad.merchant,
+          accentColor: color,
+          size: AppSpacing.buttonCompact,
+          radius: AppRadii.pillRadius,
+          border: true,
         ),
         Positioned(
-          right: -1,
-          bottom: -1,
-          child: Container(
+          right: AppSpacing.p2pHomeMerchantOnlineOffset,
+          bottom: AppSpacing.p2pHomeMerchantOnlineOffset,
+          child: SizedBox(
             width: AppSpacing.x3,
             height: AppSpacing.x3,
-            decoration: BoxDecoration(
+            child: Material(
               color: ad.isOnline ? AppColors.buy : AppColors.text3,
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.surface, width: 2),
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: AppColors.surface,
+                  width: AppSpacing.p2pHomeMerchantOnlineBorderWidth,
+                ),
+              ),
             ),
           ),
         ),

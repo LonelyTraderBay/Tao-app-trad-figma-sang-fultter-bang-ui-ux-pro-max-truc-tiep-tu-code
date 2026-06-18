@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -22,7 +21,6 @@ part '../widgets/provider_leaderboard_cards.dart';
 part '../widgets/provider_leaderboard_disclaimer.dart';
 
 const _leaderPrimary = AppColors.primary;
-const _leaderPanel = AppColors.surface2;
 const _leaderChip = AppColors.surface3;
 const _leaderWarningBorder = AppColors.warningBorder;
 const _leaderWarningText = AppColors.caution;
@@ -68,7 +66,9 @@ class _ProviderLeaderboardPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 126 : 28);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.providerLeaderboardBottomInsetVisualExtra
+            : AppSpacing.providerLeaderboardBottomInsetNativeExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -87,16 +87,18 @@ class _ProviderLeaderboardPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ProviderLeaderboardPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.providerLeaderboardScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 13,
+                    customGap: AppSpacing.providerLeaderboardContentGap,
                     children: [
                       _SurvivorshipWarning(snapshot: snapshot),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.providerLeaderboardReviewPadding,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Provider leaderboard review',
@@ -125,7 +127,7 @@ class _ProviderLeaderboardPageState
                         'Hiển thị ${providers.length} providers',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1,
+                          height: AppSpacing.providerLeaderboardLineHeightFlat,
                         ),
                       ),
                       for (final entry in providers.indexed) ...[

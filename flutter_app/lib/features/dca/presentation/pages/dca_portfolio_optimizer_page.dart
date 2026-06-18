@@ -92,7 +92,7 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
                 child: SingleChildScrollView(
                   key: DCAPortfolioOptimizer.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.dcaBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     customGap: AppSpacing.x5,
                     children: [

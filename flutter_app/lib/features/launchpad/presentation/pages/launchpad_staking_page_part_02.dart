@@ -14,7 +14,7 @@ class _PositionCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadStakingPage.positionKey(position.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -99,7 +99,7 @@ class _PositionCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warn15,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.launchpadPaddingX4,
             child: Row(
               children: [
                 const Icon(
@@ -180,7 +180,7 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
     return VitCard(
       key: LaunchpadStakingPage.calculatorKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -241,7 +241,7 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: pool.accent.withValues(alpha: .24),
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.launchpadPaddingX4,
             child: Column(
               children: [
                 _ResultRow(label: 'APY hiệu lực', value: '${_formatApy(apy)}%'),
@@ -277,7 +277,7 @@ class _RiskDisclosure extends StatelessWidget {
       key: LaunchpadStakingPage.disclaimerKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -320,10 +320,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.launchpadMetricCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -366,24 +363,29 @@ class _LogoBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        border: Border.all(
-          color: color.withValues(alpha: .34),
-          width: AppSpacing.launchpadBorderWidthFocus,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: color.withValues(alpha: .34),
+              width: AppSpacing.launchpadBorderWidthFocus,
+            ),
+            borderRadius: AppRadii.lgRadius,
+          ),
         ),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.caption.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.extraBold,
-          height: AppSpacing.launchpadLineHeightTight,
+        child: Center(
+          child: Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.extraBold,
+              height: AppSpacing.launchpadLineHeightTight,
+            ),
+          ),
         ),
       ),
     );
@@ -400,10 +402,7 @@ class _InfoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         children: [
           Text(

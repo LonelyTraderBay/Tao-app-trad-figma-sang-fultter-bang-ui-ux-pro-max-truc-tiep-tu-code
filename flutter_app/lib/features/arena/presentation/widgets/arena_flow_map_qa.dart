@@ -24,7 +24,7 @@ class _QaChecklist extends StatelessWidget {
     return Column(
       children: [
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaFlowMapCardPadding,
           borderColor: checkedIds.length == items.length
               ? AppColors.buy20
               : AppColors.cardBorder,
@@ -60,7 +60,7 @@ class _QaChecklist extends StatelessWidget {
                 variant: VitCardVariant.inner,
                 radius: VitCardRadius.sm,
                 onTap: onCheckAll,
-                padding: const EdgeInsets.all(AppSpacing.x3),
+                padding: AppSpacing.arenaFlowMapInnerPadding,
                 child: Center(
                   child: Text(
                     'Check tất cả',
@@ -115,7 +115,7 @@ class _QaCategory extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         VitCard(
           clip: true,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               for (final item in items) ...[
@@ -157,7 +157,7 @@ class _QaRow extends StatelessWidget {
         key: ArenaFlowMapPage.qaKey(item.id),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaFlowMapCardPadding,
           child: Row(
             children: [
               Icon(
@@ -191,7 +191,7 @@ class _FlowDisclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaFlowMapCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -231,12 +231,16 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.arenaFlowMapMarkerWidth,
           height: AppSpacing.arenaFlowMapMarkerHeight,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: AppRadii.xsRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.xsRadius,
+              ),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -272,14 +276,18 @@ class _FlowIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _flowColor(kind);
-    return Container(
+    return SizedBox(
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        borderRadius: AppRadii.mdRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .13),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(
+          child: Icon(_flowIcon(kind), color: color, size: AppSpacing.iconMd),
+        ),
       ),
-      child: Icon(_flowIcon(kind), color: color, size: AppSpacing.iconMd),
     );
   }
 }
@@ -294,13 +302,17 @@ class _MiniProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.xsRadius,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.x3,
-        color: AppColors.surface3,
-        alignment: Alignment.centerLeft,
-        child: FractionallySizedBox(
-          widthFactor: value.clamp(0.0, 1.0).toDouble(),
-          child: Container(color: color),
+        child: ColoredBox(
+          color: AppColors.surface3,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: FractionallySizedBox(
+              widthFactor: value.clamp(0.0, 1.0).toDouble(),
+              child: ColoredBox(color: color),
+            ),
+          ),
         ),
       ),
     );

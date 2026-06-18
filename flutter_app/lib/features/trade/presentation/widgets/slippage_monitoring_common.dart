@@ -43,22 +43,10 @@ class _SwitchVisual extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 48,
-      height: 24,
-      decoration: BoxDecoration(
-        color: enabled ? _slipPrimary : _slipPanel2,
-        borderRadius: BorderRadius.circular(999),
-      ),
-      alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-      padding: const EdgeInsets.all(4),
-      child: const DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.onAccent,
-          shape: BoxShape.circle,
-        ),
-        child: SizedBox(width: 16, height: 16),
-      ),
+    return VitTogglePill(
+      enabled: enabled,
+      activeColor: _slipPrimary,
+      inactiveColor: _slipPanel2,
     );
   }
 }
@@ -70,30 +58,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 3,
-          height: 16,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: _slipPrimary,
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Expanded(
-          child: Text(
-            text,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: text,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _slipPrimary,
     );
   }
 }
@@ -123,34 +91,35 @@ class _NoticePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 20,
-      right: 20,
-      top: MediaQuery.paddingOf(context).top + 18,
+      left: AppSpacing.contentPad,
+      right: AppSpacing.contentPad,
+      top: MediaQuery.paddingOf(context).top + AppSpacing.tradeToolBodyIcon,
       child: Material(
         color: AppColors.transparent,
         child: VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
+          padding: AppSpacing.tradeToolNoticePadding,
           borderColor: _slipBorder,
           child: Row(
             children: [
               const Icon(
                 Icons.check_circle_outline,
                 color: _slipGreen,
-                size: 18,
+                size: AppSpacing.tradeToolBodyIcon,
               ),
-              const SizedBox(width: 9),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
                   text,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
               ),
-              IconButton(
-                visualDensity: VisualDensity.compact,
+              VitIconButton(
+                icon: Icons.close_rounded,
+                tooltip: 'Dismiss slippage notice',
                 onPressed: onClose,
-                icon: const Icon(Icons.close_rounded, size: 18),
-                color: AppColors.text3,
+                size: VitIconButtonSize.sm,
+                variant: VitIconButtonVariant.transparent,
               ),
             ],
           ),

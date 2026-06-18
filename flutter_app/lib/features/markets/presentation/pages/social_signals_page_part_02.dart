@@ -31,7 +31,7 @@ class _SignalCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 14),
+            padding: AppSpacing.marketSocialSignalCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -39,9 +39,11 @@ class _SignalCard extends StatelessWidget {
                   children: [
                     Text(
                       signal.providerAvatar,
-                      style: AppTextStyles.base.copyWith(height: 1),
+                      style: AppTextStyles.base.copyWith(
+                        height: AppSpacing.marketLineHeightTight,
+                      ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.marketSocialGap),
                     Flexible(
                       child: Text(
                         signal.providerName,
@@ -53,13 +55,13 @@ class _SignalCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(width: AppSpacing.marketSocialCompactGap),
                     _TinyBadge(
                       label: tierConfig.label,
                       color: tierConfig.color,
                       background: tierConfig.background,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.marketSocialGap),
                     Text(
                       '${signal.providerWinRate.toStringAsFixed(1)}% win',
                       style: AppTextStyles.micro.copyWith(
@@ -71,21 +73,22 @@ class _SignalCard extends StatelessWidget {
                       signal.timeAgo,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
+                        height: AppSpacing.marketLineHeightTight,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.marketSocialMediumGap),
                 Row(
                   children: [
                     _TinyBadge(
                       label: directionLabel,
                       color: directionColor,
                       background: directionColor.withValues(alpha: .12),
-                      horizontalPadding: 8,
-                      height: 20,
+                      padding: AppSpacing.marketSocialTinyBadgePaddingWide,
+                      height: AppSpacing.marketSocialTinyBadgeHeightLg,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.marketSocialGap),
                     Flexible(
                       child: Text(
                         signal.pair,
@@ -96,23 +99,23 @@ class _SignalCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.marketSocialGap),
                     _TinyBadge(
                       label: statusConfig.label,
                       color: statusConfig.color,
                       background: statusConfig.color.withValues(alpha: .12),
-                      height: 18,
+                      height: AppSpacing.marketSocialTinyBadgeHeightMd,
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(width: AppSpacing.marketSocialCompactGap),
                     _TinyBadge(
                       label: _categoryLabel(signal.category).toLowerCase(),
                       color: AppColors.text3,
                       background: AppColors.surface2,
-                      height: 18,
+                      height: AppSpacing.marketSocialTinyBadgeHeightMd,
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.marketSocialMediumGap),
                 Row(
                   children: [
                     Expanded(
@@ -163,122 +166,131 @@ class _ExpandedSignalDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final confidence = _confidenceMeta(signal.confidence);
-    return Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.borderSolid)),
-      ),
-      padding: const EdgeInsets.fromLTRB(16, 10, 16, 14),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Mục tiêu',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              for (var index = 0; index < signal.targets.length; index += 1)
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      right: index == signal.targets.length - 1 ? 0 : 8,
-                    ),
-                    child: Container(
-                      height: 44,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: AppColors.buy10,
-                        border: Border.all(color: AppColors.buy20),
-                        borderRadius: AppRadii.smRadius,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'TP${index + 1}',
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                            ),
-                          ),
-                          Text(
-                            _formatPrice(signal.targets[index]),
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.buy,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Divider(
+          height: AppSpacing.dividerHairline,
+          color: AppColors.borderSolid,
+        ),
+        Padding(
+          padding: AppSpacing.marketSocialExpandedPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Độ tin cậy: ',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-              Text(
-                confidence.label,
+                'Mục tiêu',
                 style: AppTextStyles.micro.copyWith(
-                  color: confidence.color,
+                  color: AppColors.text3,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(width: 14),
-              const Icon(
-                Icons.schedule_rounded,
-                size: 12,
-                color: AppColors.text3,
+              const SizedBox(height: AppSpacing.marketSocialCompactGap),
+              Row(
+                children: [
+                  for (var index = 0; index < signal.targets.length; index += 1)
+                    Expanded(
+                      child: Padding(
+                        padding: index == signal.targets.length - 1
+                            ? AppSpacing.zeroInsets
+                            : AppSpacing.marketSocialTargetSpacing,
+                        child: Material(
+                          color: AppColors.buy10,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: AppRadii.smRadius,
+                            side: BorderSide(color: AppColors.buy20),
+                          ),
+                          child: SizedBox(
+                            height: AppSpacing.marketSocialTargetHeight,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'TP${index + 1}',
+                                  style: AppTextStyles.micro.copyWith(
+                                    color: AppColors.text3,
+                                    height: AppSpacing.marketLineHeightTight,
+                                  ),
+                                ),
+                                Text(
+                                  _formatPrice(signal.targets[index]),
+                                  style: AppTextStyles.micro.copyWith(
+                                    color: AppColors.buy,
+                                    fontWeight: AppTextStyles.bold,
+                                    fontFeatures: AppTextStyles.tabularFigures,
+                                    height: AppSpacing.marketLineHeightTight,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
-              const SizedBox(width: 4),
+              const SizedBox(height: AppSpacing.marketSocialSectionGap),
+              Row(
+                children: [
+                  Text(
+                    'Độ tin cậy: ',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                  Text(
+                    confidence.label,
+                    style: AppTextStyles.micro.copyWith(
+                      color: confidence.color,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.marketSocialLargeGap),
+                  const Icon(
+                    Icons.schedule_rounded,
+                    size: AppSpacing.marketDepthTrendIcon,
+                    color: AppColors.text3,
+                  ),
+                  const SizedBox(width: AppSpacing.marketSocialSmallGap),
+                  Text(
+                    signal.expiresIn,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.marketSocialGap),
               Text(
-                signal.expiresIn,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                signal.reasoning,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
+              const SizedBox(height: AppSpacing.marketSocialMediumGap),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.favorite_border_rounded,
+                    size: AppSpacing.marketOverviewMoverHeaderIcon,
+                    color: AppColors.text3,
+                  ),
+                  const SizedBox(width: AppSpacing.marketSocialSmallGap),
+                  Text(
+                    '${signal.likes}',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                  const SizedBox(width: AppSpacing.marketAdvancedTipIcon),
+                  const Icon(
+                    Icons.content_copy_rounded,
+                    size: AppSpacing.marketOverviewMoverHeaderIcon,
+                    color: AppColors.text3,
+                  ),
+                  const SizedBox(width: AppSpacing.marketSocialSmallGap),
+                  Text(
+                    '${signal.copies} copies',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            signal.reasoning,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              const Icon(
-                Icons.favorite_border_rounded,
-                size: 14,
-                color: AppColors.text3,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                '${signal.likes}',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-              const SizedBox(width: 18),
-              const Icon(
-                Icons.content_copy_rounded,
-                size: 14,
-                color: AppColors.text3,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                '${signal.copies} copies',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ],
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -301,9 +313,12 @@ class _SignalMetric extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            height: AppSpacing.marketLineHeightTight,
+          ),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: AppSpacing.marketSocialTinyGap),
         Text(
           value,
           maxLines: 1,
@@ -312,6 +327,7 @@ class _SignalMetric extends StatelessWidget {
             color: valueColor,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
+            height: AppSpacing.marketLineHeightTight,
           ),
         ),
       ],
@@ -324,34 +340,37 @@ class _TinyBadge extends StatelessWidget {
     required this.label,
     required this.color,
     required this.background,
-    this.height = 16,
-    this.horizontalPadding = 5,
+    this.height = AppSpacing.marketSocialTinyBadgeHeight,
+    this.padding = AppSpacing.marketSocialTinyBadgePadding,
   });
 
   final String label;
   final Color color;
   final Color background;
   final double height;
-  final double horizontalPadding;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
+    return Material(
+      color: background,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+      child: SizedBox(
+        height: height,
+        child: Padding(
+          padding: padding,
+          child: Center(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+                height: AppSpacing.marketLineHeightTight,
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -373,38 +392,44 @@ class _ProviderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketSocialCardPadding,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
-                width: 28,
-                height: 28,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: rank <= 3
-                      ? tierConfig.color.withValues(alpha: .15)
-                      : AppColors.surface2,
-                  border: Border.all(
+              Material(
+                color: rank <= 3
+                    ? tierConfig.color.withValues(alpha: .15)
+                    : AppColors.surface2,
+                shape: CircleBorder(
+                  side: BorderSide(
                     color: rank <= 3 ? tierConfig.color : AppColors.borderSolid,
                   ),
-                  shape: BoxShape.circle,
                 ),
-                child: Text(
-                  '$rank',
-                  style: AppTextStyles.micro.copyWith(
-                    color: rank <= 3 ? tierConfig.color : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
+                child: SizedBox.square(
+                  dimension: AppSpacing.marketSocialProviderRank,
+                  child: Center(
+                    child: Text(
+                      '$rank',
+                      style: AppTextStyles.micro.copyWith(
+                        color: rank <= 3 ? tierConfig.color : AppColors.text3,
+                        fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                        height: AppSpacing.marketLineHeightTight,
+                      ),
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.marketSocialSectionGap),
               Text(
                 provider.avatar,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text1),
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text1,
+                  height: AppSpacing.marketLineHeightTight,
+                ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.marketSocialSectionGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,31 +444,35 @@ class _ProviderCard extends StatelessWidget {
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
+                              height: AppSpacing.marketLineHeightTight,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 6),
+                        const SizedBox(
+                          width: AppSpacing.marketSocialCompactGap,
+                        ),
                         _TinyBadge(
                           label: tierConfig.label,
                           color: tierConfig.color,
                           background: tierConfig.background,
-                          height: 18,
+                          height: AppSpacing.marketSocialTinyBadgeHeightMd,
                         ),
                       ],
                     ),
-                    const SizedBox(height: 3),
+                    const SizedBox(height: AppSpacing.marketSocialTinyGap),
                     Text(
                       '${_formatCompact(provider.followers.toDouble())} followers · ${provider.totalSignals} tín hiệu',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
+                        height: AppSpacing.marketLineHeightTight,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.marketSocialGap),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -454,19 +483,27 @@ class _ProviderCard extends StatelessWidget {
                           ? AppColors.buy
                           : AppColors.warn,
                       fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                      height: AppSpacing.marketLineHeightCaption,
                     ),
                   ),
                   Text(
                     'Win rate',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      height: AppSpacing.marketLineHeightTight,
+                    ),
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 14),
-          Container(height: 1, color: AppColors.divider),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.marketSocialLargeGap),
+          const Divider(
+            height: AppSpacing.marketSocialDividerHeight,
+            color: AppColors.divider,
+          ),
+          const SizedBox(height: AppSpacing.marketSocialMediumGap),
           Row(
             children: [
               Expanded(

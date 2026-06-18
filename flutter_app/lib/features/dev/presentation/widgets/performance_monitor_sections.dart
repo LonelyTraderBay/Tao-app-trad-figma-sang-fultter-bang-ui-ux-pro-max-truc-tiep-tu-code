@@ -8,7 +8,7 @@ class _PerformanceScoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.devCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,15 +68,12 @@ class _SummaryTile extends StatelessWidget {
     final toneColor = _toneColor(metric.tone);
 
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x4,
-        ),
+        padding: AppSpacing.devTokenCardPadding,
         child: Column(
           children: [
             FittedBox(
@@ -109,7 +106,7 @@ class _VitalsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.devCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         children: [
@@ -133,7 +130,7 @@ class _VitalRow extends StatelessWidget {
     final toneColor = _toneColor(metric.tone);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.devVerticalPaddingX2,
       child: Column(
         children: [
           Row(
@@ -172,7 +169,7 @@ class _MemoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.devCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         children: [
@@ -222,7 +219,7 @@ class _LazyChunksCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.devCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -246,15 +243,12 @@ class _LazyChunksCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           for (final chunk in chunks) ...[
             DecoratedBox(
-              decoration: const BoxDecoration(
+              decoration: const ShapeDecoration(
                 color: AppColors.surface2,
-                borderRadius: AppRadii.xlRadius,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.x4,
-                  vertical: AppSpacing.x3,
-                ),
+                padding: AppSpacing.devTokenCardPadding,
                 child: Text(
                   chunk,
                   maxLines: 1,
@@ -282,7 +276,7 @@ class _ResourcesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.devCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         children: [
@@ -304,7 +298,7 @@ class _ResourceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.devVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(

@@ -18,7 +18,7 @@ class _RiskScoreCard extends StatelessWidget {
     return VitCard(
       key: StakingRiskScoreCalculatorPage.scoreKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         children: [
           Text(
@@ -26,62 +26,69 @@ class _RiskScoreCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x3),
-          Container(
+          SizedBox(
             width: AppSpacing.buttonHero + AppSpacing.x6 + AppSpacing.x3,
             height: AppSpacing.buttonHero + AppSpacing.x6 + AppSpacing.x3,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: color.withValues(alpha: 0.12),
-              border: Border.all(
-                color: color,
-                width: AppSpacing.stakingRiskScoreBorderWidth,
-              ),
-            ),
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  '$score',
-                  style: AppTextStyles.display.copyWith(
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: 0.12),
+                shape: CircleBorder(
+                  side: BorderSide(
                     color: color,
-                    fontFeatures: AppTextStyles.tabularFigures,
+                    width: AppSpacing.stakingRiskScoreBorderWidth,
                   ),
                 ),
-                Text(
-                  '/ 100',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '$score',
+                      style: AppTextStyles.display.copyWith(
+                        color: color,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
+                    Text(
+                      '/ 100',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x2,
-            ),
-            decoration: BoxDecoration(
+          DecoratedBox(
+            decoration: ShapeDecoration(
               color: color.withValues(alpha: 0.16),
-              borderRadius: AppRadii.pillRadius,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.pillRadius,
+              ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.warning_amber_rounded,
-                  color: color,
-                  size: AppSpacing.stakingRiskScorePillIcon,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  label,
-                  style: AppTextStyles.body.copyWith(
+            child: Padding(
+              padding: AppSpacing.earnWidePillPadding,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.warning_amber_rounded,
                     color: color,
-                    fontWeight: AppTextStyles.bold,
+                    size: AppSpacing.stakingRiskScorePillIcon,
                   ),
-                ),
-              ],
+                  const SizedBox(width: AppSpacing.x2),
+                  Text(
+                    label,
+                    style: AppTextStyles.body.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -131,7 +138,7 @@ class _RecommendationCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: 0.28),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -15,7 +15,7 @@ class _CorrelationContent extends StatelessWidget {
     ];
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,7 +24,7 @@ class _CorrelationContent extends StatelessWidget {
             title: 'Ma trận tương quan',
             color: AppColors.primary,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const Padding(padding: AppSpacing.dcaTopPaddingX3),
           Text(
             'Tương quan càng thấp = diversification tốt. Càng cao = di chuyển cùng hướng.',
             style: AppTextStyles.caption.copyWith(
@@ -32,7 +32,7 @@ class _CorrelationContent extends StatelessWidget {
               height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const Padding(padding: AppSpacing.dcaTopPaddingX5),
           Row(
             children: [
               const SizedBox(width: AppSpacing.x7),
@@ -49,7 +49,7 @@ class _CorrelationContent extends StatelessWidget {
                 ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const Padding(padding: AppSpacing.dcaTopPaddingX2),
           for (var row = 0; row < assets.length; row++) ...[
             Row(
               children: [
@@ -70,7 +70,7 @@ class _CorrelationContent extends StatelessWidget {
               ],
             ),
             if (row != assets.length - 1)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+              const Padding(padding: AppSpacing.dcaTopPaddingX2),
           ],
         ],
       ),
@@ -86,7 +86,7 @@ class _BacktestContent extends StatelessWidget {
     return Column(
       children: [
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.dcaPaddingX5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -95,7 +95,7 @@ class _BacktestContent extends StatelessWidget {
                 title: 'DCA vs HODL (12 tháng)',
                 color: AppColors.buy,
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const Padding(padding: AppSpacing.dcaTopPaddingX4),
               SizedBox(
                 height: AppSpacing.dcaPortfolioOptimizerBacktestChartHeight,
                 width: double.infinity,
@@ -104,7 +104,7 @@ class _BacktestContent extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const Padding(padding: AppSpacing.dcaTopPaddingX4),
         Row(
           children: const [
             Expanded(
@@ -132,7 +132,7 @@ class _BacktestContent extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const Padding(padding: AppSpacing.dcaTopPaddingX4),
         const _DisclaimerCard(
           text:
               'Kết quả dựa trên dữ liệu lịch sử, không đảm bảo hiệu suất tương lai.',
@@ -169,7 +169,7 @@ class _RiskContent extends StatelessWidget {
     return Column(
       children: [
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.dcaPaddingX5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -178,7 +178,7 @@ class _RiskContent extends StatelessWidget {
                 title: 'Đánh giá rủi ro',
                 color: AppColors.sell,
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const Padding(padding: AppSpacing.dcaTopPaddingX4),
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -203,7 +203,7 @@ class _RiskContent extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const Padding(padding: AppSpacing.dcaTopPaddingX4),
         const _DisclaimerCard(
           text:
               'Các chỉ số dựa trên dữ liệu lịch sử. Hãy đa dạng hóa và chỉ đầu tư số tiền bạn chấp nhận mất.',

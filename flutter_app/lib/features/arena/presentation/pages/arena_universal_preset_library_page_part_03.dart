@@ -9,7 +9,7 @@ class _DemoFlowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -41,15 +41,15 @@ class _DemoFlowCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           _DemoStep(step: '1', label: 'Domain', value: flow.domainLabel),
           _DemoStep(step: '2', label: 'Type', value: flow.typeLabel),
           _DemoSuggestions(values: flow.suggestions),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.buy20,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.arenaPaddingX3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -92,14 +92,12 @@ class _DemoStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          borderRadius: AppRadii.smRadius,
-        ),
+      padding: AppSpacing.arenaBottomPaddingX2,
+      child: Material(
+        color: AppColors.surface2,
+        borderRadius: AppRadii.smRadius,
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.arenaPaddingX3,
           child: Row(
             children: [
               _StepDot(step: step, color: AppColors.buy),
@@ -145,13 +143,11 @@ class _DemoSuggestions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
-      ),
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.arenaPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -168,7 +164,7 @@ class _DemoSuggestions extends StatelessWidget {
                 ),
               ],
             ),
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+            const SizedBox(height: AppSpacing.x2),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x2,
@@ -198,11 +194,11 @@ class _DemoSummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.arenaBottomPaddingX2,
       child: VitCard(
         variant: VitCardVariant.inner,
         borderColor: selected ? AppColors.buy20 : null,
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.arenaPaddingX3,
         onTap: onTap,
         child: Row(
           children: [
@@ -252,10 +248,7 @@ class _TitleChip extends StatelessWidget {
       variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: selected ? AppColors.sell20 : AppColors.borderSolid,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.arenaPresetChipPadding,
       onTap: onTap,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
@@ -284,14 +277,12 @@ class _ProcessRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          borderRadius: AppRadii.smRadius,
-        ),
+      padding: AppSpacing.arenaBottomPaddingX2,
+      child: Material(
+        color: AppColors.surface2,
+        borderRadius: AppRadii.smRadius,
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.arenaPaddingX3,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -322,7 +313,7 @@ class _PresetEngineNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -386,16 +377,20 @@ class _StepDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.arenaPresetStepDot,
       height: AppSpacing.arenaPresetStepDot,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      child: Text(
-        step,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.onAccent,
-          fontWeight: AppTextStyles.bold,
+      child: Material(
+        color: color,
+        shape: const CircleBorder(),
+        child: Center(
+          child: Text(
+            step,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.onAccent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );

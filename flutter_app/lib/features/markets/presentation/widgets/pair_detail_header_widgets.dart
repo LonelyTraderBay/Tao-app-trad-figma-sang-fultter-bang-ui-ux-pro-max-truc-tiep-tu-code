@@ -42,21 +42,11 @@ class _PairHeader extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    width: AppSpacing.pairHeaderLogo,
-                    height: AppSpacing.pairHeaderLogo,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: pair.logoColor.withValues(alpha: .15),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      pair.baseAsset,
-                      style: AppTextStyles.micro.copyWith(
-                        color: pair.logoColor,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
+                  VitAssetAvatar(
+                    label: pair.baseAsset,
+                    accentColor: pair.logoColor,
+                    size: AppSpacing.pairHeaderLogo,
+                    radius: AppRadii.pillRadius,
                   ),
                   const SizedBox(width: AppSpacing.pairHeaderSymbolGap),
                   Flexible(
@@ -116,72 +106,69 @@ class _PriceOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final positive = pair.change24h >= 0;
-    return Container(
-      padding: AppSpacing.pairPriceOverviewPadding,
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: AppSpacing.pairPriceOverviewPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Text(
-                  _formatPrice(pair.price),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.amountLg.copyWith(
-                    fontFeatures: AppTextStyles.tabularFigures,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Text(
+                      _formatPrice(pair.price),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.amountLg.copyWith(
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: AppSpacing.pairPriceChangeGap),
+                  VitAccentPill(
+                    label:
+                        '${positive ? '\u25B2' : '\u25BC'} ${pair.change24h.abs().toStringAsFixed(2)}%',
+                    accentColor: positive ? AppColors.buy : AppColors.sell,
+                  ),
+                ],
               ),
-              const SizedBox(width: AppSpacing.pairPriceChangeGap),
-              Container(
-                padding: AppSpacing.pairPriceChangePadding,
-                decoration: BoxDecoration(
-                  color: positive ? AppColors.buy15 : AppColors.sell15,
-                  borderRadius: AppRadii.smRadius,
-                ),
-                child: Text(
-                  '${positive ? '\u25B2' : '\u25BC'} ${pair.change24h.abs().toStringAsFixed(2)}%',
-                  style: AppTextStyles.caption.copyWith(
-                    color: positive ? AppColors.buy : AppColors.sell,
-                    fontWeight: AppTextStyles.bold,
+              const SizedBox(height: AppSpacing.pairPriceStatsGap),
+              Row(
+                children: [
+                  Expanded(
+                    child: _PriceStat(
+                      label: '24h Cao',
+                      value: _formatPrice(pair.high24h),
+                      color: AppColors.buy,
+                    ),
                   ),
-                ),
+                  Expanded(
+                    child: _PriceStat(
+                      label: '24h Thap',
+                      value: _formatPrice(pair.low24h),
+                      color: AppColors.sell,
+                    ),
+                  ),
+                  Expanded(
+                    child: _PriceStat(
+                      label: 'KL 24h',
+                      value: '${_formatCompact(pair.volume24h)}B',
+                      color: AppColors.text2,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.pairPriceStatsGap),
-          Row(
-            children: [
-              Expanded(
-                child: _PriceStat(
-                  label: '24h Cao',
-                  value: _formatPrice(pair.high24h),
-                  color: AppColors.buy,
-                ),
-              ),
-              Expanded(
-                child: _PriceStat(
-                  label: '24h Thap',
-                  value: _formatPrice(pair.low24h),
-                  color: AppColors.sell,
-                ),
-              ),
-              Expanded(
-                child: _PriceStat(
-                  label: 'KL 24h',
-                  value: '${_formatCompact(pair.volume24h)}B',
-                  color: AppColors.text2,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+        ),
+        const Divider(
+          color: AppColors.divider,
+          height: AppSpacing.dividerHairline,
+        ),
+      ],
     );
   }
 }

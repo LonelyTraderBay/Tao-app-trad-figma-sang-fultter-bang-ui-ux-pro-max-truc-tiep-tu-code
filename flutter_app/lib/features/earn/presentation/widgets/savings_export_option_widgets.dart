@@ -52,7 +52,7 @@ class _FormatCard extends StatelessWidget {
       radius: VitCardRadius.md,
       borderColor: selected ? AppColors.buy : AppColors.cardBorder,
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
           Icon(
@@ -168,37 +168,37 @@ class _ChoicePill extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
             color: selected ? AppColors.primary12 : AppColors.transparent,
-            border: Border.all(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
-            ),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) ...[
-                Icon(
-                  icon,
-                  size: AppSpacing.iconSm,
-                  color: selected ? AppColors.primary : AppColors.text3,
-                ),
-                const SizedBox(width: AppSpacing.x1),
-              ],
-              Text(
-                label,
-                style: _captionBold.copyWith(
-                  color: selected ? AppColors.primary : AppColors.text2,
-                ),
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: selected ? AppColors.primary30 : AppColors.cardBorder,
               ),
-            ],
+              borderRadius: AppRadii.inputRadius,
+            ),
+          ),
+          child: Padding(
+            padding: AppSpacing.earnPillPaddingLarge,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (icon != null) ...[
+                  Icon(
+                    icon,
+                    size: AppSpacing.iconSm,
+                    color: selected ? AppColors.primary : AppColors.text3,
+                  ),
+                  const SizedBox(width: AppSpacing.x1),
+                ],
+                Text(
+                  label,
+                  style: _captionBold.copyWith(
+                    color: selected ? AppColors.primary : AppColors.text2,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -255,10 +255,7 @@ class _OptionRow extends StatelessWidget {
       variant: VitCardVariant.standard,
       radius: VitCardRadius.md,
       onTap: onTap,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.earnCardPaddingX4X3,
       child: Row(
         children: [
           Icon(_iconFor(option.iconKey), color: color, size: AppSpacing.iconMd),

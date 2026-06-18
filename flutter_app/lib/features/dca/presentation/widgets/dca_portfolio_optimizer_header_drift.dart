@@ -15,22 +15,26 @@ class _DriftBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.sell20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.x7,
             height: AppSpacing.x7,
-            decoration: BoxDecoration(
-              color: AppColors.sell10,
-              borderRadius: AppRadii.mdRadius,
-              border: Border.all(color: AppColors.sell20),
-            ),
-            child: const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.sell,
-              size: AppSpacing.iconMd,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.sell10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                  side: const BorderSide(color: AppColors.sell20),
+                ),
+              ),
+              child: const Icon(
+                Icons.warning_amber_rounded,
+                color: AppColors.sell,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -56,7 +60,7 @@ class _DriftBanner extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const Padding(padding: AppSpacing.dcaTopPaddingX2),
                 Text(
                   'Danh mục đã lệch ${snapshot.driftPercent.toStringAsFixed(1)}% so với phân bổ mục tiêu (ngưỡng: ${snapshot.driftThresholdPercent.toStringAsFixed(0)}%). Xem xét tái cân bằng.',
                   style: AppTextStyles.caption.copyWith(
@@ -64,7 +68,7 @@ class _DriftBanner extends StatelessWidget {
                     height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const Padding(padding: AppSpacing.dcaTopPaddingX3),
                 Wrap(
                   spacing: AppSpacing.x3,
                   runSpacing: AppSpacing.x2,
@@ -89,7 +93,7 @@ class _DriftBanner extends StatelessWidget {
           ),
           IconButton(
             onPressed: onDismiss,
-            padding: EdgeInsets.zero,
+            padding: AppSpacing.zeroInsets,
             constraints: const BoxConstraints(
               minWidth: AppSpacing.x6,
               minHeight: AppSpacing.x6,

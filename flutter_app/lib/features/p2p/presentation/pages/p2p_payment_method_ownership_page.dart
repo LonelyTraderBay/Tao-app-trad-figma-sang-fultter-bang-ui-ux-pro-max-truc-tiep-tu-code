@@ -212,17 +212,17 @@ class _OwnershipHero extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.x7,
-            height: AppSpacing.x7,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.credit_card_rounded,
-              color: AppColors.text1,
-              size: AppSpacing.p2pPaymentHeroIcon,
+          const Material(
+            color: AppColors.primary,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+            child: SizedBox(
+              width: AppSpacing.x7,
+              height: AppSpacing.x7,
+              child: Icon(
+                Icons.credit_card_rounded,
+                color: AppColors.text1,
+                size: AppSpacing.p2pPaymentHeroIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -340,19 +340,19 @@ class _DocumentIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.x6,
-      height: AppSpacing.x6,
-      decoration: BoxDecoration(
-        color: uploaded ? AppColors.buy15 : AppColors.primary12,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Icon(
-        uploaded
-            ? Icons.check_circle_outline_rounded
-            : Icons.photo_camera_outlined,
-        color: uploaded ? AppColors.buy : AppModuleAccents.p2p,
-        size: AppSpacing.iconMd,
+    return Material(
+      color: uploaded ? AppColors.buy15 : AppColors.primary12,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      child: SizedBox(
+        width: AppSpacing.x6,
+        height: AppSpacing.x6,
+        child: Icon(
+          uploaded
+              ? Icons.check_circle_outline_rounded
+              : Icons.photo_camera_outlined,
+          color: uploaded ? AppColors.buy : AppModuleAccents.p2p,
+          size: AppSpacing.iconMd,
+        ),
       ),
     );
   }
@@ -366,25 +366,21 @@ class _UploadButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: Ink(
-        decoration: BoxDecoration(
-          color: AppColors.primary12,
-          borderRadius: AppRadii.inputRadius,
-          border: Border.all(color: AppColors.primary20),
-        ),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.inputRadius,
-          child: Padding(
-            padding: AppSpacing.p2pPaymentOptionPadding,
-            child: Text(
-              'Upload',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: AppTextStyles.bold,
-              ),
+      color: AppColors.primary12,
+      shape: const RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: BorderSide(color: AppColors.primary20),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.inputRadius,
+        child: Padding(
+          padding: AppSpacing.p2pPaymentOptionPadding,
+          child: Text(
+            'Upload',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.primary,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
         ),

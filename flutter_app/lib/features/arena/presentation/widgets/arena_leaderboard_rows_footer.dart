@@ -19,10 +19,7 @@ class _LeaderboardRow extends StatelessWidget {
           : ArenaLeaderboardPage.creatorRowKey,
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x4,
-          vertical: AppSpacing.x4,
-        ),
+        padding: AppSpacing.arenaLeaderboardRowPadding,
         child: Row(
           children: [
             if (!rising) ...[
@@ -40,19 +37,24 @@ class _LeaderboardRow extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x3),
             ],
-            Container(
+            SizedBox(
               width: AppSpacing.arenaLeaderboardRowAvatar,
               height: AppSpacing.arenaLeaderboardRowAvatar,
-              decoration: BoxDecoration(
-                color: (rising ? AppColors.warn : AppColors.accent).withValues(
-                  alpha: .14,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: (rising ? AppColors.warn : AppColors.accent)
+                      .withValues(alpha: .14),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.mdRadius,
+                  ),
                 ),
-                borderRadius: AppRadii.mdRadius,
-              ),
-              child: Icon(
-                _leaderboardIcon(entry.icon),
-                color: rising ? AppColors.warn : AppColors.accent,
-                size: AppSpacing.arenaLeaderboardRowIcon,
+                child: Center(
+                  child: Icon(
+                    _leaderboardIcon(entry.icon),
+                    color: rising ? AppColors.warn : AppColors.accent,
+                    size: AppSpacing.arenaLeaderboardRowIcon,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -140,7 +142,7 @@ class _CompactLeaderboardState extends StatelessWidget {
   Widget build(BuildContext context) {
     final label = activeTab == _LeaderboardTab.players ? 'Players' : 'Teams';
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaLeaderboardCompactStatePadding,
       child: Column(
         children: [
           Icon(
@@ -184,10 +186,7 @@ class _ArenaFooter extends StatelessWidget {
             onTap: onRules,
             borderRadius: AppRadii.smRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x2,
-                vertical: AppSpacing.x2,
-              ),
+              padding: AppSpacing.arenaLeaderboardFooterActionPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -212,7 +211,7 @@ class _ArenaFooter extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaLeaderboardFooterCardPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -28,9 +28,9 @@ class _QuestionView extends StatelessWidget {
           totalQuestions: totalQuestions,
           progress: progress,
         ),
-        const SizedBox(height: 38),
+        const SizedBox(height: AppSpacing.tradeBotControlCompact),
         _QuestionHeader(question: question),
-        const SizedBox(height: 55),
+        const SizedBox(height: AppSpacing.x7),
         for (final option in question.options) ...[
           _OptionCard(
             questionId: question.id,
@@ -38,9 +38,10 @@ class _QuestionView extends StatelessWidget {
             selected: selected == option.id,
             onTap: () => onAnswer(option.id),
           ),
-          if (option != question.options.last) const SizedBox(height: 14),
+          if (option != question.options.last)
+            const SizedBox(height: AppSpacing.tradeBotPageTopGap),
         ],
-        const SizedBox(height: 41),
+        const SizedBox(height: AppSpacing.tradeBotControlCompact),
         _InfoCard(snapshot: snapshot),
       ],
     );
@@ -69,7 +70,7 @@ class _ProgressBar extends StatelessWidget {
                 'Question $currentQuestion of $totalQuestions',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ),
@@ -78,19 +79,19 @@ class _ProgressBar extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
           child: SizedBox(
-            height: 8,
+            height: AppSpacing.tradeBotProgressHeight,
             child: LinearProgressIndicator(
               value: progress,
-              minHeight: 8,
+              minHeight: AppSpacing.tradeBotProgressHeight,
               backgroundColor: _assessmentPanel2,
               valueColor: const AlwaysStoppedAnimation<Color>(
                 _assessmentPrimary,
@@ -113,21 +114,19 @@ class _QuestionHeader extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 40,
-          height: 40,
+        VitCard(
+          width: AppSpacing.tradeBotQuestionIconBox,
+          height: AppSpacing.tradeBotQuestionIconBox,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: _assessmentPrimary.withValues(alpha: .08),
-            borderRadius: AppRadii.mdRadius,
-          ),
+          variant: VitCardVariant.inner,
+          borderColor: _assessmentPrimary.withValues(alpha: .22),
           child: const Icon(
             Icons.assignment_turned_in_outlined,
             color: _assessmentPrimary,
-            size: 20,
+            size: AppSpacing.tradeBotQuestionIcon,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.tradeBotCardIconGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,15 +135,15 @@ class _QuestionHeader extends StatelessWidget {
                 question.category.name.toUpperCase(),
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.tradeBotRowGap),
               Text(
                 question.question,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
-                  height: 1.5,
+                  height: AppSpacing.tradeBotLineHeightLoose,
                 ),
               ),
             ],
@@ -170,66 +169,36 @@ class _OptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        key: BotSuitabilityAssessmentPage.optionKey(questionId, option.id),
-        borderRadius: AppRadii.cardRadius,
-        onTap: onTap,
-        child: Container(
-          constraints: const BoxConstraints(minHeight: 58),
-          padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
-          decoration: BoxDecoration(
-            color: selected
-                ? _assessmentPrimary.withValues(alpha: .12)
-                : _assessmentPanel,
-            border: Border.all(
-              color: selected ? _assessmentPrimary : _assessmentOptionBorder,
-              width: 2,
+    return VitCard(
+      key: BotSuitabilityAssessmentPage.optionKey(questionId, option.id),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotOptionMinHeight,
+      ),
+      padding: AppSpacing.tradeBotOptionPadding,
+      borderColor: selected ? _assessmentPrimary : _assessmentOptionBorder,
+      onTap: onTap,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            selected
+                ? Icons.radio_button_checked_rounded
+                : Icons.radio_button_unchecked_rounded,
+            color: selected ? _assessmentPrimary : _assessmentOptionBorder,
+            size: AppSpacing.tradeBotQuestionIcon,
+          ),
+          const SizedBox(width: AppSpacing.x4),
+          Expanded(
+            child: Text(
+              option.text,
+              style: AppTextStyles.caption.copyWith(
+                color: selected ? _assessmentPrimary : AppColors.text1,
+                fontWeight: AppTextStyles.medium,
+                height: AppSpacing.tradeBotLineHeightLoose,
+              ),
             ),
-            borderRadius: AppRadii.cardRadius,
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 20,
-                height: 20,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: selected
-                        ? _assessmentPrimary
-                        : _assessmentOptionBorder,
-                    width: 2,
-                  ),
-                ),
-                alignment: Alignment.center,
-                child: selected
-                    ? Container(
-                        width: 10,
-                        height: 10,
-                        decoration: const BoxDecoration(
-                          color: _assessmentPrimary,
-                          shape: BoxShape.circle,
-                        ),
-                      )
-                    : null,
-              ),
-              const SizedBox(width: 13),
-              Expanded(
-                child: Text(
-                  option.text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: selected ? _assessmentPrimary : AppColors.text1,
-                    fontWeight: AppTextStyles.medium,
-                    height: 1.5,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

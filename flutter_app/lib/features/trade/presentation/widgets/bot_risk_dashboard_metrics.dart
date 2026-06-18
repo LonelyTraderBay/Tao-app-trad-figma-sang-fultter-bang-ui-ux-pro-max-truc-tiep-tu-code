@@ -45,10 +45,10 @@ class _CriticalMetricsGrid extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 2,
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 13,
-      childAspectRatio: 1.52,
+      crossAxisCount: AppSpacing.tradeBotGridColumns,
+      crossAxisSpacing: AppSpacing.tradeBotCardGap,
+      mainAxisSpacing: AppSpacing.x4,
+      childAspectRatio: AppSpacing.tradeBotRiskMetricAspectRatio,
       children: [for (final metric in metrics) _MetricCard(metric: metric)],
     );
   }
@@ -79,24 +79,21 @@ class _MetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Icon(metric.icon, color: metric.color, size: 18),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: Text(
                   metric.label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
             ],
@@ -110,18 +107,14 @@ class _MetricCard extends StatelessWidget {
                       metric.label == 'VaR (95%)'
                   ? AppColors.text1
                   : metric.color,
-              height: 1,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Text(
             metric.limit,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.tradeBotRowGap),
           _ProgressTrack(value: metric.percent, color: metric.color),
         ],
       ),
@@ -136,8 +129,8 @@ class _ExposureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPadding,
       child: Column(
         children: [
           for (final exposure in exposures) ...[
@@ -148,16 +141,12 @@ class _ExposureCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.tradeBotSmallGap),
                 Text(
                   '${exposure.percentage}%',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
                 const Spacer(),
                 Text(
@@ -165,30 +154,30 @@ class _ExposureCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: AppSpacing.tradeBotRowGap),
             _ProgressTrack(
               value: exposure.percentage / 100,
               color: Color(exposure.colorHex),
             ),
-            if (exposure != exposures.last) const SizedBox(height: 14),
+            if (exposure != exposures.last)
+              const SizedBox(height: AppSpacing.tradeBotPageTopGap),
           ],
-          const SizedBox(height: 16),
-          const Divider(color: AppColors.borderSolid, height: 1),
-          const SizedBox(height: 15),
+          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+          const Divider(
+            color: AppColors.borderSolid,
+            height: AppSpacing.dividerHairline,
+          ),
+          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
           Row(
             children: [
               Expanded(
                 child: Text(
                   'Diversification Score',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
               Text(
@@ -196,7 +185,6 @@ class _ExposureCard extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: _riskGreen,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ],
@@ -216,9 +204,9 @@ class _ProgressTrack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: AppRadii.pillRadius,
       child: SizedBox(
-        height: 8,
+        height: AppSpacing.tradeBotProgressHeight,
         child: LinearProgressIndicator(
           value: value.clamp(0, 1),
           backgroundColor: _riskTrack,

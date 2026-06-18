@@ -11,15 +11,15 @@ class _DrawdownTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SectionLabel(label: 'Underwater Chart'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         SizedBox(
-          height: 252,
+          height: AppSpacing.tradeBotAttributionDrawdownChartHeight,
           child: CustomPaint(
             painter: _DrawdownPainter(snapshot.drawdowns),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.tradeBotPanelGap),
         Row(
           children: [
             Expanded(
@@ -30,7 +30,7 @@ class _DrawdownTab extends StatelessWidget {
                 valueColor: _attributionRed,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.tradeBotCardGap),
             Expanded(
               child: _MetricTile(
                 label: 'Avg Drawdown',
@@ -41,7 +41,7 @@ class _DrawdownTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         _NoticePanel(
           color: AppColors.caution,
           text:
@@ -63,21 +63,21 @@ class _ProjectionTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SectionLabel(label: 'Monte Carlo Simulation (30 ngày)'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _NoticePanel(
           color: _attributionPrimary,
           text:
               '50 kịch bản ngẫu nhiên dựa trên volatility lịch sử. Vùng tím thể hiện khoảng xác suất tham khảo.',
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         SizedBox(
-          height: 270,
+          height: AppSpacing.tradeBotAttributionProjectionChartHeight,
           child: CustomPaint(
             painter: _ProjectionPainter(snapshot.monteCarloPaths),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         Row(
           children: [
             Expanded(
@@ -87,7 +87,7 @@ class _ProjectionTab extends StatelessWidget {
                 color: _attributionRed,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.tradeBotSmallGap),
             Expanded(
               child: _ProjectionTile(
                 label: '50th Percentile',
@@ -95,7 +95,7 @@ class _ProjectionTab extends StatelessWidget {
                 color: _attributionPurple,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.tradeBotSmallGap),
             Expanded(
               child: _ProjectionTile(
                 label: '95th Percentile',
@@ -121,24 +121,24 @@ class _CorrelationTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SectionLabel(label: 'Daily Returns Correlation'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         SizedBox(
-          height: 250,
+          height: AppSpacing.tradeBotAttributionCorrelationChartHeight,
           child: CustomPaint(
             painter: _CorrelationPainter(snapshot.correlationPoints),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.tradeBotPanelGap),
         VitCard(
-          padding: const EdgeInsets.all(14),
+          padding: AppSpacing.tradeBotControlPadding,
           child: Column(
             children: [
               _KeyValueRow(
                 label: 'Correlation coefficient (R)',
                 value: math.sqrt(snapshot.rSquared).toStringAsFixed(2),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.tradeBotCardGap),
               _KeyValueRow(
                 label: 'R² (explained variance)',
                 value: '${(snapshot.rSquared * 100).toStringAsFixed(0)}%',
@@ -146,7 +146,7 @@ class _CorrelationTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         _NoticePanel(
           color: _attributionPrimary,
           text:
@@ -164,28 +164,27 @@ class _InfoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(13),
-      decoration: BoxDecoration(
-        color: _attributionPrimary.withValues(alpha: .10),
-        border: Border.all(color: _attributionPrimary),
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.tradeBotAttributionPanelPadding,
+      borderColor: _attributionPrimary,
+      background: ColoredBox(color: _attributionPrimary.withValues(alpha: .10)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: _attributionPrimary,
-            size: 15,
+            size: AppSpacing.tradeBotSmallIcon + AppSpacing.hairlineStroke,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.tradeBotSmallGap),
           Expanded(
             child: RichText(
               text: TextSpan(
                 style: AppTextStyles.micro.copyWith(
                   color: _attributionPrimary,
-                  height: 1.45,
+                  height: AppSpacing.tradeBotLineHeightReadable,
                 ),
                 children: [
                   TextSpan(
@@ -233,7 +232,7 @@ class _ContributionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.tradeBotInnerPanelPadding,
       child: Column(
         children: [
           Row(
@@ -243,7 +242,7 @@ class _ContributionBar extends StatelessWidget {
                   label,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
@@ -256,12 +255,12 @@ class _ContributionBar extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.tradeBotRowGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
               value: ratio.clamp(0, 1),
-              minHeight: 8,
+              minHeight: AppSpacing.tradeBotAttributionProgressHeight,
               color: color,
               backgroundColor: AppColors.surface3,
             ),
@@ -287,7 +286,7 @@ class _ProjectionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      padding: AppSpacing.tradeBotAttributionProjectionPadding,
       borderColor: color.withValues(alpha: .24),
       child: Column(
         children: [
@@ -298,7 +297,7 @@ class _ProjectionTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: color),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.tradeBotLabelGap),
           Text(
             '\$${value.toStringAsFixed(0)}',
             style: AppTextStyles.baseMedium.copyWith(

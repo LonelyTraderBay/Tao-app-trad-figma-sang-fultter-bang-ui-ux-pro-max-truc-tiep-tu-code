@@ -10,7 +10,7 @@ class _AssetImpactList extends StatelessWidget {
     return VitCard(
       key: SavingsWhatIfPage.assetImpactKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
           for (final impact in result.assetImpact) ...[
@@ -61,21 +61,21 @@ class _AssetBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.savingsWhatIfAssetBadge,
-      height: AppSpacing.savingsWhatIfAssetBadge,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.savingsWhatIfAssetBadge,
+      child: Material(
         color: color.withValues(alpha: .14),
         borderRadius: AppRadii.lgRadius,
-      ),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Text(
-          asset,
-          style: AppTextStyles.chartLabelTiny.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
+        child: Center(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              asset,
+              style: AppTextStyles.chartLabelTiny.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
           ),
         ),
       ),

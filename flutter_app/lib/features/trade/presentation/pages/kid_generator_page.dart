@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -18,8 +18,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import '../widgets/trade_body_review_widgets.dart';
 
 const _kidBackground = AppColors.bg;
-const _kidPanel = AppColors.surface;
-const _kidPanel2 = AppColors.surface2;
 const _kidBorder = AppColors.borderSolid;
 const _kidPrimary = AppColors.primary;
 const _kidGreen = AppColors.buy;
@@ -71,27 +69,37 @@ class KIDGeneratorPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: KIDGeneratorPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 27, 20, bottomInset),
+                  padding: AppSpacing.tradeBotClientMoneyScrollPadding(
+                    bottomInset,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const _RegulatoryNotice(),
-                      const SizedBox(height: 35),
+                      const SizedBox(height: AppSpacing.x6 + AppSpacing.x1),
                       _KidPreviewCard(document: snapshot.document),
-                      const SizedBox(height: 26),
-                      const _SectionLabel('Document Sections'),
-                      const SizedBox(height: 9),
+                      const SizedBox(
+                        height:
+                            AppSpacing.tradeBotClientMoneyTopGap -
+                            AppSpacing.tradeBotHairline,
+                      ),
+                      const VitSectionHeader(
+                        title: 'Document Sections',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _kidPrimary,
+                      ),
+                      const SizedBox(height: AppSpacing.tradeBotDisclosureGap),
                       for (final section in snapshot.sections) ...[
                         _KidSectionCard(section: section),
                         if (section != snapshot.sections.last)
-                          const SizedBox(height: 8),
+                          const SizedBox(height: AppSpacing.tradeBotSmallGap),
                       ],
-                      const SizedBox(height: 18),
+                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       const _Actions(),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.tradeBotCardGap),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.cardPaddingCompact,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'KID document review required',
@@ -100,7 +108,7 @@ class KIDGeneratorPage extends ConsumerWidget {
                           contractId: 'kid-generator-review',
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.tradeBotCardGap),
                       const TradeBodyReviewSection(
                         title: 'KID body review',
                         message: 'KID generator body reviewed',
@@ -131,12 +139,16 @@ class _RegulatoryNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
+      padding: AppSpacing.tradeBotClientMoneyNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.text1, size: 16),
-          const SizedBox(width: 10),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.text1,
+            size: AppSpacing.tradeBotCheckboxIcon,
+          ),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +160,7 @@ class _RegulatoryNotice extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
                 Text(
                   'This Key Information Document must be provided before you '
                   'invest. It contains essential information in a standardized '
@@ -175,26 +187,25 @@ class _KidPreviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 22, 16, 16),
+      padding: AppSpacing.tradeBotClientMoneyInsolvencyPadding,
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 54,
-                height: 54,
-                decoration: BoxDecoration(
-                  color: _kidPrimary.withValues(alpha: .11),
-                  borderRadius: AppRadii.cardRadius,
-                ),
+              VitCard(
+                width: AppSpacing.x7,
+                height: AppSpacing.x7,
+                variant: VitCardVariant.ghost,
+                borderColor: _kidPrimary.withValues(alpha: .24),
+                alignment: Alignment.center,
                 child: const Icon(
                   Icons.description_outlined,
                   color: _kidPrimary,
-                  size: 28,
+                  size: AppSpacing.iconMd + AppSpacing.x3,
                 ),
               ),
-              const SizedBox(width: 15),
+              const SizedBox(width: AppSpacing.tradeBotSectionMarkerHeight),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,7 +216,9 @@ class _KidPreviewCard extends StatelessWidget {
                         color: AppColors.text1,
                       ),
                     ),
-                    const SizedBox(height: 11),
+                    const SizedBox(
+                      height: AppSpacing.tradeBotCardGap - AppSpacing.x1,
+                    ),
                     Text(
                       'Last updated: ${document.lastUpdated} • '
                       'Version ${document.version}',
@@ -218,7 +231,7 @@ class _KidPreviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           Row(
             children: [
               Expanded(
@@ -227,7 +240,7 @@ class _KidPreviewCard extends StatelessWidget {
                   value: document.documentType,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.tradeBotRowGap),
               Expanded(
                 child: _DocumentMetric(
                   label: 'Pages',
@@ -250,13 +263,11 @@ class _DocumentMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 54,
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 9),
-      decoration: BoxDecoration(
-        color: _kidPanel2,
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      height: AppSpacing.x7,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.tradeBotClientMoneyMetricPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -287,17 +298,21 @@ class _KidSectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       key: KIDGeneratorPage.sectionKey(section.title),
-      padding: const EdgeInsets.fromLTRB(16, 12, 13, 12),
+      padding: AppSpacing.tradeBotCardPadding,
       child: SizedBox(
-        height: 40,
+        height: AppSpacing.tradeBotQuestionIconBox,
         child: Row(
           children: [
             SizedBox(
-              width: 40,
-              height: 40,
-              child: Icon(_iconFor(section.icon), color: _kidPrimary, size: 18),
+              width: AppSpacing.tradeBotQuestionIconBox,
+              height: AppSpacing.tradeBotQuestionIconBox,
+              child: Icon(
+                _iconFor(section.icon),
+                color: _kidPrimary,
+                size: AppSpacing.inputPrefixIcon,
+              ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.tradeBotSmallGap),
             Expanded(
               child: Text(
                 section.title,
@@ -307,17 +322,13 @@ class _KidSectionCard extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              width: 24,
-              height: 24,
-              decoration: const BoxDecoration(
-                color: AppColors.buy10,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
+            const CircleAvatar(
+              radius: AppSpacing.x4,
+              backgroundColor: AppColors.buy10,
+              child: Icon(
                 Icons.check_circle_outline_rounded,
                 color: _kidGreen,
-                size: 16,
+                size: AppSpacing.inputPrefixIcon,
               ),
             ),
           ],
@@ -343,7 +354,7 @@ class _Actions extends StatelessWidget {
             onPressed: () {},
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.tradeBotCardGap),
         Expanded(
           child: _ActionButton(
             icon: Icons.download_rounded,
@@ -373,62 +384,14 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 44,
-      child: FilledButton.icon(
-        style: FilledButton.styleFrom(
-          backgroundColor: filled ? _kidPrimary : _kidPanel2,
-          foregroundColor: AppColors.text1,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.inputRadius,
-            side: BorderSide(
-              color: filled ? AppColors.transparent : _kidBorder,
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-        ),
-        onPressed: onPressed,
-        icon: Icon(icon, size: 16),
-        label: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text1,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 14,
-          decoration: BoxDecoration(
-            color: _kidPrimary,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          text,
-          style: AppTextStyles.navLabel.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitCtaButton(
+      height: AppSpacing.searchBarCompactHeight,
+      variant: filled
+          ? VitCtaButtonVariant.primary
+          : VitCtaButtonVariant.secondary,
+      onPressed: onPressed,
+      leading: Icon(icon),
+      child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
 }
@@ -441,13 +404,9 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: padding,
-      decoration: BoxDecoration(
-        color: _kidPanel,
-        border: Border.all(color: _kidBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      borderColor: _kidBorder.withValues(alpha: .72),
       child: child,
     );
   }

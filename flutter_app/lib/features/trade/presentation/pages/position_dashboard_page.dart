@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -19,12 +19,6 @@ import '../widgets/trade_body_review_widgets.dart';
 
 part '../widgets/position_dashboard_page_sections.dart';
 part '../widgets/position_dashboard_page_common.dart';
-
-const _tradePrimary = AppColors.primary;
-const _cardBackground = AppColors.surface2;
-const _chipBackground = AppColors.surface2;
-const _futuresColor = AppColors.caution;
-const _marginColor = AppColors.accent;
 
 class PositionDashboardPage extends ConsumerStatefulWidget {
   const PositionDashboardPage({super.key, this.shellRenderMode});
@@ -70,15 +64,20 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.only(bottom: bottomChrome + 30),
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    bottom:
+                        bottomChrome +
+                        AppSpacing.x6 -
+                        (AppSpacing.hairlineStroke * 2),
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _SummaryCard(positions: snapshot.positions),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.cardPaddingCompact,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Open position risk review',
@@ -96,13 +95,15 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
                         active: _sortBy,
                         onChanged: (sort) => setState(() => _sortBy = sort),
                       ),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: AppSpacing.rowPy),
                       if (positions.isEmpty)
                         const _EmptyPositions()
                       else
                         for (final position in positions) ...[
                           _PositionTile(position: position),
-                          const SizedBox(height: 16),
+                          const SizedBox(
+                            height: AppSpacing.walletAssetSectionGap,
+                          ),
                         ],
                       const TradeBodyReviewSection(
                         title: 'Position body review',

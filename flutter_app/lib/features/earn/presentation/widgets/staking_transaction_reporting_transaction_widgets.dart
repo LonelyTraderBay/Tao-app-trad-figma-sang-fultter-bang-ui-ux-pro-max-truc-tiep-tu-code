@@ -10,7 +10,7 @@ class _RewardAssetRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Row(
         children: [
           Expanded(
@@ -75,7 +75,7 @@ class _TransactionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Row(
@@ -191,7 +191,7 @@ class _ExportTab extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.warningBorder,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.cardPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -254,17 +254,17 @@ class _ExportCategoryCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.ctaHeight,
-            height: AppSpacing.ctaHeight,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.12),
-              borderRadius: AppRadii.lgRadius,
+          Material(
+            color: color.withValues(alpha: 0.12),
+            borderRadius: AppRadii.lgRadius,
+            child: SizedBox(
+              width: AppSpacing.ctaHeight,
+              height: AppSpacing.ctaHeight,
+              child: Icon(icon, color: color, size: AppSpacing.iconMd),
             ),
-            child: Icon(icon, color: color, size: AppSpacing.iconMd),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -300,7 +300,7 @@ class _ResourceRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
           Expanded(child: Text(resource.label, style: AppTextStyles.caption)),

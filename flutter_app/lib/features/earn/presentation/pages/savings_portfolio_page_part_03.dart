@@ -13,7 +13,7 @@ class _EarningsTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.earnPaddingX5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -56,7 +56,7 @@ class _EarningsTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: Column(
             children: [
               for (final position in snapshot.positions) ...[
@@ -83,9 +83,11 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         DecoratedBox(
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: color,
-            borderRadius: AppRadii.hairlineRadius,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.hairlineRadius,
+            ),
           ),
           child: const SizedBox(
             width: AppSpacing.savingsPortfolioSectionMarkerWidth,
@@ -152,7 +154,7 @@ class _ToneBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: color.withValues(alpha: 0.2),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -179,7 +181,7 @@ class _TinyDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      decoration: ShapeDecoration(color: color, shape: const CircleBorder()),
       child: SizedBox(width: size, height: size),
     );
   }
@@ -194,10 +196,12 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.16),
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: color.withValues(alpha: 0.25)),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.mdRadius,
+          side: BorderSide(color: color.withValues(alpha: 0.25)),
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -225,16 +229,15 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.xlRadius,
-        border: Border.all(color: color.withValues(alpha: 0.24)),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.xlRadius,
+          side: BorderSide(color: color.withValues(alpha: 0.24)),
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -256,10 +259,11 @@ class _DaysPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.16),
-        shape: BoxShape.circle,
-        border: Border.all(color: color.withValues(alpha: 0.25)),
+        shape: CircleBorder(
+          side: BorderSide(color: color.withValues(alpha: 0.25)),
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -337,30 +341,33 @@ class _SecondaryButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.savingsPortfolioSecondaryButtonHeight,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: AppRadii.xlRadius,
-            border: Border.all(color: color.withValues(alpha: 0.18)),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.xlRadius,
+                side: BorderSide(color: color.withValues(alpha: 0.18)),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: color, size: AppSpacing.iconSm),
+                const SizedBox(width: AppSpacing.x2),
+                Flexible(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -71,14 +71,12 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DecoratedBox(
-                decoration: const BoxDecoration(
-                  color: AppColors.surface,
-                  border: Border(bottom: BorderSide(color: AppColors.divider)),
-                ),
+              Material(
+                color: AppColors.surface,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.contentPad,
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.zero,
+                    bottom: AppSpacing.zero,
                   ),
                   child: VitTabBar(
                     variant: VitTabBarVariant.underline,
@@ -94,10 +92,15 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
                   ),
                 ),
               ),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,

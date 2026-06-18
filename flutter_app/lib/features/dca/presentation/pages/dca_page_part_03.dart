@@ -19,15 +19,18 @@ class _CoinAvatar extends StatelessWidget {
       'SOL' => Icons.blur_on_rounded,
       _ => Icons.token_rounded,
     };
-    return Container(
+    return SizedBox(
       width: AppSpacing.dcaMainAssetIconBox,
       height: AppSpacing.dcaMainAssetIconBox,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        shape: BoxShape.circle,
-        border: Border.all(color: color.withValues(alpha: .24)),
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: CircleBorder(
+            side: BorderSide(color: color.withValues(alpha: .24)),
+          ),
+        ),
+        child: Icon(icon, color: color, size: AppSpacing.dcaMainAssetIcon),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.dcaMainAssetIcon),
     );
   }
 }
@@ -133,7 +136,7 @@ class _HistoryPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -239,30 +242,27 @@ class _CreatePlanSheet extends StatelessWidget {
             VitCard(
               key: DCAPage.createSheetKey,
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.contentPad),
-              margin: const EdgeInsets.fromLTRB(
-                AppSpacing.contentPad,
-                0,
-                AppSpacing.contentPad,
-                AppSpacing.contentPad,
-              ),
+              padding: AppSpacing.dcaContentPadding,
+              margin: AppSpacing.dcaSheetMargin,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
                     children: [
-                      Container(
+                      SizedBox(
                         width: AppSpacing.dcaMainToolIconBox,
                         height: AppSpacing.dcaMainToolIconBox,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary12,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.add_chart_rounded,
-                          color: AppColors.primary,
-                          size: AppSpacing.dcaMainToolIcon,
+                        child: const DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: AppColors.primary12,
+                            shape: CircleBorder(),
+                          ),
+                          child: Icon(
+                            Icons.add_chart_rounded,
+                            color: AppColors.primary,
+                            size: AppSpacing.dcaMainToolIcon,
+                          ),
                         ),
                       ),
                       const SizedBox(width: AppSpacing.x4),

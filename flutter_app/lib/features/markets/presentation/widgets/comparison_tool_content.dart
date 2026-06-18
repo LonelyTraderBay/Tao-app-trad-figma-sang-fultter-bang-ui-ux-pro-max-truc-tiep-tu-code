@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/comparison_tool_common.dart';
@@ -15,7 +16,7 @@ class ComparisonSparklineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+      padding: AppSpacing.comparisonToolSparklineCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,7 +27,7 @@ class ComparisonSparklineCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.comparisonToolSparklineGap),
           Row(
             children: [
               for (final pair in pairs) ...[
@@ -34,7 +35,7 @@ class ComparisonSparklineCard extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 48,
+                        height: AppSpacing.comparisonToolSparklineHeight,
                         child: CustomPaint(
                           painter: ComparisonSparklinePainter(
                             values: pair.sparklineData,
@@ -45,19 +46,24 @@ class ComparisonSparklineCard extends StatelessWidget {
                           child: const SizedBox.expand(),
                         ),
                       ),
-                      const SizedBox(height: 9),
+                      const SizedBox(
+                        height: AppSpacing.comparisonToolTokenTextGap,
+                      ),
                       Text(
                         pair.baseAsset,
                         style: AppTextStyles.micro.copyWith(
                           color: pair.logoColor,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
+                          height: AppSpacing.marketLineHeightTight,
                         ),
                       ),
                     ],
                   ),
                 ),
-                if (pair != pairs.last) const SizedBox(width: 18),
+                if (pair != pairs.last)
+                  const SizedBox(
+                    width: AppSpacing.comparisonToolSparklinePairGap,
+                  ),
               ],
             ],
           ),
@@ -84,15 +90,15 @@ class ComparisonMetricSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
-              width: 4,
-              height: 14,
-              decoration: BoxDecoration(
-                color: comparisonToolAccent,
-                borderRadius: BorderRadius.circular(99),
+            Material(
+              color: comparisonToolAccent,
+              borderRadius: AppRadii.xsRadius,
+              child: const SizedBox(
+                width: AppSpacing.serviceTileAccentBarThickness,
+                height: AppSpacing.serviceTileSectionBarHeight,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.x3),
             Text(
               'So sánh chi tiết',
               style: AppTextStyles.caption.copyWith(
@@ -102,10 +108,11 @@ class ComparisonMetricSection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.comparisonToolMetricSectionGap),
         for (final metric in metrics) ...[
           _MetricCard(metric: metric, pairs: pairs),
-          if (metric != metrics.last) const SizedBox(height: 4),
+          if (metric != metrics.last)
+            const SizedBox(height: AppSpacing.comparisonToolMetricCardGap),
         ],
       ],
     );
@@ -125,13 +132,12 @@ class _MetricCard extends StatelessWidget {
     ];
     final bestIndex = comparisonBestIndex(values, metric.highlight);
 
-    return Container(
-      constraints: const BoxConstraints(minHeight: 66),
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.comparisonToolMetricMinHeight,
       ),
+      padding: AppSpacing.comparisonToolMetricCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -140,10 +146,10 @@ class _MetricCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
               fontWeight: AppTextStyles.medium,
-              height: 1,
+              height: AppSpacing.marketLineHeightTight,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.comparisonToolMetricValueGap),
           Row(
             children: [
               for (var index = 0; index < pairs.length; index++) ...[
@@ -168,11 +174,13 @@ class _MetricCard extends StatelessWidget {
                               : AppColors.text1,
                           fontWeight: AppTextStyles.bold,
                           fontFeatures: AppTextStyles.tabularFigures,
-                          height: 1,
+                          height: AppSpacing.marketLineHeightTight,
                         ),
                       ),
                       if (index == bestIndex) ...[
-                        const SizedBox(height: 9),
+                        const SizedBox(
+                          height: AppSpacing.comparisonToolBestGap,
+                        ),
                         Text(
                           'TỐT NHẤT',
                           style: AppTextStyles.badge.copyWith(
@@ -202,7 +210,7 @@ class ComparisonVolumeDistributionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final total = pairs.fold<double>(0, (sum, pair) => sum + pair.volume24h);
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.comparisonToolDistributionPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -213,11 +221,11 @@ class ComparisonVolumeDistributionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.comparisonToolSparklineGap),
           ClipRRect(
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
-              height: 24,
+              height: AppSpacing.comparisonToolDistributionHeight,
               child: Row(
                 children: [
                   for (final pair in pairs)
@@ -232,10 +240,10 @@ class ComparisonVolumeDistributionCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.comparisonToolDistributionGap),
           Wrap(
-            spacing: 14,
-            runSpacing: 8,
+            spacing: AppSpacing.comparisonToolDistributionLegendGap,
+            runSpacing: AppSpacing.comparisonToolDistributionLegendRunGap,
             children: [
               for (final pair in pairs)
                 _LegendEntry(
@@ -260,7 +268,7 @@ class ComparisonMarketCapDistributionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final total = pairs.fold<double>(0, (sum, pair) => sum + pair.marketCap);
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.comparisonToolDistributionPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -271,7 +279,7 @@ class ComparisonMarketCapDistributionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.comparisonToolSparklineGap),
           for (final pair in pairs) ...[
             Row(
               children: [
@@ -294,11 +302,11 @@ class ComparisonMarketCapDistributionCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: AppSpacing.comparisonToolMarketCapRowGap),
             ClipRRect(
-              borderRadius: BorderRadius.circular(999),
+              borderRadius: AppRadii.pillRadius,
               child: SizedBox(
-                height: 6,
+                height: AppSpacing.comparisonToolMarketCapBarHeight,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -314,7 +322,8 @@ class ComparisonMarketCapDistributionCard extends StatelessWidget {
                 ),
               ),
             ),
-            if (pair != pairs.last) const SizedBox(height: 12),
+            if (pair != pairs.last)
+              const SizedBox(height: AppSpacing.comparisonToolDistributionGap),
           ],
         ],
       ),
@@ -333,12 +342,15 @@ class _LegendEntry extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        Material(
+          color: color,
+          shape: const CircleBorder(),
+          child: const SizedBox(
+            width: AppSpacing.comparisonToolLegendDot,
+            height: AppSpacing.comparisonToolLegendDot,
+          ),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: AppSpacing.comparisonToolLegendGap),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),
@@ -354,11 +366,15 @@ class ComparisonNeedMoreTokensCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 48),
+      padding: AppSpacing.comparisonToolNeedPadding,
       child: Column(
         children: [
-          const Icon(Icons.balance_rounded, color: AppColors.text3, size: 42),
-          const SizedBox(height: 12),
+          const Icon(
+            Icons.balance_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.comparisonToolNeedIcon,
+          ),
+          const SizedBox(height: AppSpacing.comparisonToolNeedGap),
           Text(
             'Chọn ít nhất 2 token để so sánh',
             textAlign: TextAlign.center,

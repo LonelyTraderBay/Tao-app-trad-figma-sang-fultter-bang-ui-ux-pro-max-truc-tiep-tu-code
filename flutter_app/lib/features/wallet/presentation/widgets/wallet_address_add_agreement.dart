@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class AddressWhitelistCard extends StatelessWidget {
   const AddressWhitelistCard({
@@ -23,32 +23,29 @@ class AddressWhitelistCard extends StatelessWidget {
       selected: enabled,
       label: 'Add address to withdrawal whitelist',
       value: enabled ? 'Enabled' : 'Disabled',
-      child: GestureDetector(
+      child: VitCard(
         key: const Key('sc143_address_whitelist'),
         onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
-          height: AppSpacing.walletAddressAddWhitelistHeight,
-          padding: AppSpacing.walletAddressSecurityPadding,
-          decoration: BoxDecoration(
-            color: addressAddPanel,
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(color: AppColors.overlayStroke),
-          ),
+        height: AppSpacing.walletAddressAddWhitelistHeight,
+        padding: AppSpacing.walletAddressSecurityPadding,
+        variant: VitCardVariant.ghost,
+        borderColor: AppColors.overlayStroke,
+        background: const ColoredBox(color: addressAddPanel),
+        clip: true,
           child: Row(
             children: [
-              Container(
+              VitCard(
                 width: AppSpacing.walletAddressIconSize,
                 height: AppSpacing.walletAddressIconSize,
-                decoration: BoxDecoration(
+                variant: VitCardVariant.ghost,
+                borderColor: enabled
+                    ? AppColors.buy.withValues(alpha: .30)
+                    : AppColors.borderSolid,
+                background: ColoredBox(
                   color: enabled ? AppColors.buy10 : addressAddPanel2,
-                  borderRadius: AppRadii.cardRadius,
-                  border: Border.all(
-                    color: enabled
-                        ? AppColors.buy.withValues(alpha: .30)
-                        : AppColors.borderSolid,
-                  ),
                 ),
+                alignment: Alignment.center,
+                clip: true,
                 child: Icon(
                   Icons.shield_outlined,
                   color: enabled ? addressAddGreen : AppColors.text3,
@@ -85,8 +82,7 @@ class AddressWhitelistCard extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
@@ -97,27 +93,25 @@ class _SwitchPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: AppSpacing.walletAddressAddSwitchWidth,
       height: AppSpacing.walletAddressAddSwitchHeight,
-      decoration: BoxDecoration(
+      radius: VitCardRadius.sm,
+      variant: VitCardVariant.ghost,
+      borderColor: enabled ? addressAddGreen : AppColors.borderSolid,
+      background: ColoredBox(
         color: enabled ? addressAddGreen : addressAddPanel2,
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(
-          color: enabled ? addressAddGreen : AppColors.borderSolid,
-          width: AppSpacing.walletAddressAddSwitchBorder,
-        ),
       ),
+      clip: true,
       child: AnimatedAlign(
         alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
         duration: const Duration(milliseconds: 160),
-        child: Container(
-          width: AppSpacing.walletAddressAddSwitchKnob,
-          height: AppSpacing.walletAddressAddSwitchKnob,
-          margin: AppSpacing.walletAddressAddSwitchKnobMargin,
-          decoration: const BoxDecoration(
-            color: AppColors.onAccent,
-            shape: BoxShape.circle,
+        child: Padding(
+          padding: AppSpacing.walletAddressAddSwitchKnobMargin,
+          child: SizedBox(
+            width: AppSpacing.walletAddressAddSwitchKnob,
+            height: AppSpacing.walletAddressAddSwitchKnob,
+            child: ClipOval(child: ColoredBox(color: AppColors.onAccent)),
           ),
         ),
       ),
@@ -130,13 +124,12 @@ class AddressWarningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: AppSpacing.walletAddressSecurityPadding,
-      decoration: BoxDecoration(
-        color: AppColors.caution.withValues(alpha: .06),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.caution.withValues(alpha: .15)),
-      ),
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.caution.withValues(alpha: .15),
+      background: ColoredBox(color: AppColors.caution.withValues(alpha: .06)),
+      clip: true,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -165,7 +158,7 @@ class AddressWarningCard extends StatelessWidget {
                   'Kiểm tra kỹ địa chỉ và mạng lưới trước khi lưu. Rút tiền sai địa chỉ hoặc sai mạng sẽ mất vĩnh viễn và không thể khôi phục.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.58,
+                    height: AppSpacing.tradeBotLineHeightLong,
                   ),
                 ),
               ],
@@ -201,27 +194,25 @@ class AddressAgreementRow extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            VitCard(
               width: AppSpacing.walletAddressAddAgreementBox,
               height: AppSpacing.walletAddressAddAgreementBox,
               margin: AppSpacing.walletAddressAddAgreementBoxMargin,
-              decoration: BoxDecoration(
+              radius: VitCardRadius.sm,
+              variant: VitCardVariant.ghost,
+              borderColor: agreed ? addressAddGreen : AppColors.borderSolid,
+              background: ColoredBox(
                 color: agreed ? addressAddGreen : AppColors.transparent,
-                borderRadius: BorderRadius.circular(
-                  AppSpacing.walletAddressAddAgreementRadius,
-                ),
-                border: Border.all(
-                  color: agreed ? addressAddGreen : AppColors.borderSolid,
-                  width: AppSpacing.walletAddressAddAgreementBorder,
-                ),
               ),
+              alignment: Alignment.center,
+              clip: true,
               child: agreed
                   ? const Icon(
                       Icons.check_rounded,
                       color: AppColors.onAccent,
                       size: AppSpacing.walletAddressAddAgreementIcon,
                     )
-                  : null,
+                  : const SizedBox.shrink(),
             ),
             const SizedBox(width: AppSpacing.rowGapRegular),
             Expanded(
@@ -229,7 +220,7 @@ class AddressAgreementRow extends StatelessWidget {
                 'Tôi xác nhận địa chỉ ví và mạng lưới chính xác. Tôi hiểu rằng gửi tiền sai địa chỉ sẽ không thể hoàn lại.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: 1.5,
+                  height: AppSpacing.tradeBotLineHeightLoose,
                   fontWeight: AppTextStyles.medium,
                 ),
               ),

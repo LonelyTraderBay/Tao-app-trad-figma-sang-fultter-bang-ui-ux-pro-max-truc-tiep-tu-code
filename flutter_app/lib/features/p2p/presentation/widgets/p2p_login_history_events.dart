@@ -49,13 +49,13 @@ class _LoginEventCard extends StatelessWidget {
       key: P2PLoginHistoryPage.eventKey(event.id),
       radius: VitCardRadius.lg,
       borderColor: event.status == 'suspicious' ? AppColors.warn : null,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.p2pLoginHistoryEventPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -63,7 +63,7 @@ class _LoginEventCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(child: _EventMainInfo(event: event)),
                 const SizedBox(width: AppSpacing.x2),
-                _EventTrailing(event: event, color: color, expanded: expanded),
+                _EventTrailing(event: event, expanded: expanded),
               ],
             ),
           ),
@@ -82,14 +82,18 @@ class _EventIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.inputHeight,
-      height: AppSpacing.inputHeight,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.p2pLoginHistoryIconBox,
+      child: Material(
+        type: MaterialType.transparency,
         color: color.withValues(alpha: .14),
         borderRadius: AppRadii.lgRadius,
+        child: Icon(
+          _deviceIcon(event.deviceType),
+          color: color,
+          size: AppSpacing.p2pLoginHistoryEventIcon,
+        ),
       ),
-      child: Icon(_deviceIcon(event.deviceType), color: color, size: 22),
     );
   }
 }
@@ -154,22 +158,22 @@ class _EventMainInfo extends StatelessWidget {
 class _EventTrailing extends StatelessWidget {
   const _EventTrailing({
     required this.event,
-    required this.color,
     required this.expanded,
   });
 
   final P2PLoginEventDraft event;
-  final Color color;
   final bool expanded;
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 92),
+      constraints: const BoxConstraints(
+        maxWidth: AppSpacing.p2pLoginHistoryTrailingMaxWidth,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          _StatusBadge(event: event, color: color),
+          _StatusBadge(event: event),
           const SizedBox(height: AppSpacing.x2),
           AnimatedRotation(
             turns: expanded ? .5 : 0,
@@ -177,7 +181,7 @@ class _EventTrailing extends StatelessWidget {
             child: const Icon(
               Icons.keyboard_arrow_down_rounded,
               color: AppColors.text3,
-              size: 16,
+              size: AppSpacing.p2pLoginHistoryExpandIcon,
             ),
           ),
         ],
@@ -193,12 +197,15 @@ class _ExpandedDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(
+          height: AppSpacing.dividerHairline,
+          child: ColoredBox(color: AppColors.divider),
+        ),
+        Padding(
+        padding: AppSpacing.p2pLoginHistoryEventPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -218,13 +225,12 @@ class _ExpandedDetails extends StatelessWidget {
             ),
             if (event.status == 'suspicious') ...[
               const SizedBox(height: AppSpacing.x3),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.warn10,
-                  borderRadius: AppRadii.mdRadius,
-                ),
+              Material(
+                type: MaterialType.transparency,
+                color: AppColors.warn10,
+                borderRadius: AppRadii.mdRadius,
                 child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.x3),
+                  padding: AppSpacing.p2pLoginHistoryNoticePadding,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -250,7 +256,7 @@ class _ExpandedDetails extends StatelessWidget {
                               'Vị trí không quen thuộc. Nếu không phải bạn, hãy đổi mật khẩu ngay.',
                               style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text2,
-                                height: 1.45,
+                                height: AppSpacing.p2pLoginHistoryRiskLineHeight,
                               ),
                             ),
                           ],
@@ -264,6 +270,7 @@ class _ExpandedDetails extends StatelessWidget {
           ],
         ),
       ),
+      ],
     );
   }
 }

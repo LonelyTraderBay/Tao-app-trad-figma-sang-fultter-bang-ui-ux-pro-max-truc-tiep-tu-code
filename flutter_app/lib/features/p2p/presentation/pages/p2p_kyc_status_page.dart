@@ -38,8 +38,9 @@ class P2PKycStatusPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.p2pKycBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pKycBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -75,12 +76,7 @@ class P2PKycStatusPage extends ConsumerWidget {
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: BouncingScrollPhysics(),
                       ),
-                      padding: EdgeInsets.fromLTRB(
-                        AppSpacing.contentPad,
-                        AppSpacing.x4,
-                        AppSpacing.contentPad,
-                        bottomInset,
-                      ),
+                      padding: AppSpacing.p2pKycScrollPadding(bottomInset),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -98,7 +94,7 @@ class P2PKycStatusPage extends ConsumerWidget {
                           _SupportCard(snapshot: snapshot),
                           VitPageContent(
                             padding: VitContentPadding.compact,
-                            customGap: 0,
+                            customGap: AppSpacing.p2pKycContentGap,
                             children: const [
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,

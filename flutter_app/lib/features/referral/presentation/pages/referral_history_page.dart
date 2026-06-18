@@ -94,26 +94,19 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                   child: SingleChildScrollView(
                     key: ReferralHistoryPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.referralPageScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       customGap: 0,
                       fullBleed: true,
                       children: [
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: _StatsRow(stats: snapshot.stats),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x4),
-                        ),
+                        const SizedBox(height: AppSpacing.x4),
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: VitSearchBar(
                             key: ReferralHistoryPage.searchKey,
                             controller: _searchController,
@@ -122,11 +115,9 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                             onChanged: (_) => setState(() {}),
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x4),
-                        ),
+                        const SizedBox(height: AppSpacing.x4),
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: _FilterRail(
                             filters: snapshot.filters,
                             active: snapshot.filter,
@@ -136,9 +127,7 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                             },
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x4),
-                        ),
+                        const SizedBox(height: AppSpacing.x4),
                         _SortRail(
                           options: snapshot.sortOptions,
                           active: snapshot.sort,
@@ -147,9 +136,7 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                             setState(() => _sort = value);
                           },
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x4),
-                        ),
+                        const SizedBox(height: AppSpacing.x4),
                         if (snapshot.friends.isEmpty)
                           const VitEmptyState(
                             key: ReferralHistoryPage.emptyKey,
@@ -168,9 +155,7 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                                 setState(() => _remindedFriend = friend.id);
                               },
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: AppSpacing.x3),
-                            ),
+                            const SizedBox(height: AppSpacing.x3),
                           ],
                       ],
                     ),

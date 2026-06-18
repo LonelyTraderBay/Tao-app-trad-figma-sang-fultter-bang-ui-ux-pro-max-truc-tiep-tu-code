@@ -85,36 +85,28 @@ class _StopCopyModalState extends State<_StopCopyModal> {
         color: AppColors.dynamicIslandBg.withValues(alpha: .54),
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
-            padding: EdgeInsets.fromLTRB(
-              20,
-              20,
-              20,
-              24 + MediaQuery.paddingOf(context).bottom,
-            ),
-            decoration: const BoxDecoration(
-              color: AppColors.bg,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          child: VitSheetSurface(
+            padding: AppSpacing.activeCopiesStopSheetPadding(
+              MediaQuery.paddingOf(context).bottom,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const VitSheetHandle(),
+                const SizedBox(height: AppSpacing.x4),
                 Row(
                   children: [
-                    Container(
-                      width: 44,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: AppColors.sell10,
-                        borderRadius: AppRadii.inputRadius,
-                      ),
-                      child: const Icon(
-                        Icons.stop_rounded,
-                        color: AppColors.sell,
-                      ),
+                    const VitCard(
+                      variant: VitCardVariant.inner,
+                      radius: VitCardRadius.sm,
+                      width: AppSpacing.searchBarCompactHeight,
+                      height: AppSpacing.searchBarCompactHeight,
+                      borderColor: AppColors.sell20,
+                      alignment: Alignment.center,
+                      child: Icon(Icons.stop_rounded, color: AppColors.sell),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: AppSpacing.cardGap),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,28 +128,26 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 14),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: AppColors.sell10,
-                    border: Border.all(color: AppColors.sell20),
-                    borderRadius: AppRadii.inputRadius,
-                  ),
+                const SizedBox(height: AppSpacing.rowPy),
+                VitCard(
+                  variant: VitCardVariant.inner,
+                  radius: VitCardRadius.sm,
+                  padding: AppSpacing.cardPaddingCompact,
+                  borderColor: AppColors.sell20,
                   child: Text(
                     'Cảnh báo: khi dừng copy, các vị thế đang mở có thể được đóng. Hành động này cần xác nhận rõ ràng.',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.sell,
-                      height: 1.45,
+                      height: AppSpacing.activeCopiesLineHeightNotice,
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.cardGap),
                 Text(
                   'Nhập STOP để xác nhận',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.formFieldLabelGap),
                 VitInput(
                   controller: _confirmController,
                   fieldKey: ActiveCopiesPage.stopConfirmInputKey,
@@ -165,13 +155,13 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                   textInputAction: TextInputAction.done,
                   onChanged: widget.onTextChanged,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.cardGap),
                 Row(
                   children: [
                     Expanded(
                       child: _SheetButton(label: 'Hủy', onTap: widget.onCancel),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.x3),
                     Expanded(
                       child: _SheetButton(
                         key: ActiveCopiesPage.stopConfirmButtonKey,
@@ -217,15 +207,10 @@ class _SheetButton extends StatelessWidget {
 }
 
 final class _StatusStyle {
-  const _StatusStyle({
-    required this.label,
-    required this.color,
-    required this.background,
-  });
+  const _StatusStyle({required this.label, required this.color});
 
   final String label;
   final Color color;
-  final Color background;
 }
 
 _StatusStyle _statusStyle(TradeActiveCopyStatus status) {
@@ -233,22 +218,18 @@ _StatusStyle _statusStyle(TradeActiveCopyStatus status) {
     TradeActiveCopyStatus.active => const _StatusStyle(
       label: 'Đang chạy',
       color: AppColors.buy,
-      background: _lightBuyBackground,
     ),
     TradeActiveCopyStatus.coolingOff => const _StatusStyle(
       label: 'Chờ kích hoạt',
       color: AppColors.caution,
-      background: _lightWarnBackground,
     ),
     TradeActiveCopyStatus.paused => const _StatusStyle(
       label: 'Tạm dừng',
       color: AppColors.text3,
-      background: AppColors.surfaceNeutralLight,
     ),
     TradeActiveCopyStatus.stopped => const _StatusStyle(
       label: 'Đã dừng',
       color: AppColors.sell,
-      background: _lightSellBackground,
     ),
   };
 }

@@ -16,46 +16,50 @@ class P2PDisputeStatusBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = p2pDisputeStatusColor(dispute.status);
-    return Container(
-      padding: AppSpacing.p2pDisputeCardPadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .08),
-        border: Border.all(color: color.withValues(alpha: .22)),
+    return Material(
+      color: color.withValues(alpha: .08),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.cardRadius,
+        side: BorderSide(color: color.withValues(alpha: .22)),
       ),
-      child: Row(
-        children: [
-          Container(
-            width: AppSpacing.p2pDisputeStatusIconBox,
-            height: AppSpacing.p2pDisputeStatusIconBox,
-            decoration: BoxDecoration(
+      child: Padding(
+        padding: AppSpacing.p2pDisputeCardPadding,
+        child: Row(
+          children: [
+            Material(
               color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.inputRadius,
-            ),
-            child: Icon(
-              p2pDisputeStatusIcon(dispute.status),
-              color: color,
-              size: AppSpacing.p2pDisputeStatusIcon,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  dispute.statusLabel,
-                  style: AppTextStyles.amountSm.copyWith(color: color),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.inputRadius,
+              ),
+              child: SizedBox(
+                width: AppSpacing.p2pDisputeStatusIconBox,
+                height: AppSpacing.p2pDisputeStatusIconBox,
+                child: Icon(
+                  p2pDisputeStatusIcon(dispute.status),
+                  color: color,
+                  size: AppSpacing.p2pDisputeStatusIcon,
                 ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  'Đơn hàng #${dispute.orderNumber}',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    dispute.statusLabel,
+                    style: AppTextStyles.amountSm.copyWith(color: color),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    'Đơn hàng #${dispute.orderNumber}',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

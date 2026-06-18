@@ -71,18 +71,17 @@ class _ProfileProductTile extends StatelessWidget {
       borderColor: accent.withValues(alpha: .22),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.profileProductIconBox,
             height: AppSpacing.profileProductIconBox,
-            decoration: BoxDecoration(
+            child: Material(
               color: accent.withValues(alpha: .12),
-              borderRadius: AppRadii.cardRadius,
-            ),
-            alignment: Alignment.center,
-            child: Icon(
-              _iconFor(shortcut.iconKey),
-              color: accent,
-              size: AppSpacing.profileProductIcon,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+              child: Icon(
+                _iconFor(shortcut.iconKey),
+                color: accent,
+                size: AppSpacing.profileProductIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.profileProductGap),
@@ -128,61 +127,64 @@ class _MenuRow extends StatelessWidget {
       key: ProfilePage.menuKey(item.id),
       onTap: () => context.go(item.route),
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.profileMenuRowHeight,
-        padding: AppSpacing.profileMenuRowPadding,
-        child: Row(
-          children: [
-            Container(
-              width: AppSpacing.profileMenuIconBox,
-              height: AppSpacing.profileMenuIconBox,
-              decoration: BoxDecoration(
-                color: accent.withValues(alpha: .12),
-                borderRadius: AppRadii.cardRadius,
-              ),
-              alignment: Alignment.center,
-              child: Icon(
-                _iconFor(item.iconKey),
-                color: accent,
-                size: AppSpacing.profileMenuIcon,
-              ),
-            ),
-            const SizedBox(width: AppSpacing.profileMenuGap),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      fontWeight: AppTextStyles.bold,
-                    ),
+        child: Padding(
+          padding: AppSpacing.profileMenuRowPadding,
+          child: Row(
+            children: [
+              SizedBox(
+                width: AppSpacing.profileMenuIconBox,
+                height: AppSpacing.profileMenuIconBox,
+                child: Material(
+                  color: accent.withValues(alpha: .12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.cardRadius,
                   ),
-                  if (item.subtitle != null) ...[
-                    const SizedBox(height: AppSpacing.profileMenuSubtitleGap),
+                  child: Icon(
+                    _iconFor(item.iconKey),
+                    color: accent,
+                    size: AppSpacing.profileMenuIcon,
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.profileMenuGap),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      item.subtitle!,
+                      item.label,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: item.subtitleHex == null
-                            ? _profileMuted
-                            : Color(item.subtitleHex!),
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
+                    if (item.subtitle != null) ...[
+                      const SizedBox(height: AppSpacing.profileMenuSubtitleGap),
+                      Text(
+                        item.subtitle!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: item.subtitleHex == null
+                              ? _profileMuted
+                              : Color(item.subtitleHex!),
+                        ),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
-            ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: _profileMuted,
-              size: AppSpacing.profileMenuChevron,
-            ),
-          ],
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: _profileMuted,
+                size: AppSpacing.profileMenuChevron,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -252,22 +254,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: AppSpacing.profileSectionAccentWidth,
-          height: AppSpacing.profileSectionAccentHeight,
-          decoration: BoxDecoration(
-            color: accent,
-            borderRadius: AppRadii.hairlineRadius,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.profileSectionAccentGap),
-        Text(
-          label,
-          style: AppTextStyles.badge.copyWith(color: AppColors.text2),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      accentColor: accent,
+      variant: VitSectionHeaderVariant.accentBar,
     );
   }
 }

@@ -25,46 +25,56 @@ class _CommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: reply ? AppSpacing.predictionSocialReplyIndent : 0,
-      ),
-      child: VitCard(
-        borderColor: comment.isPinned ? AppColors.primary15 : AppColors.border,
-        padding: AppSpacing.predictionSocialCardPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (reply)
+          const SizedBox(width: AppSpacing.predictionSocialReplyIndent),
+        Expanded(
+          child: VitCard(
+            borderColor: comment.isPinned
+                ? AppColors.primary15
+                : AppColors.border,
+            padding: AppSpacing.predictionSocialCardPadding,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _TierAvatar(tier: comment.userTier),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _TierAvatar(tier: comment.userTier),
+                    const SizedBox(
+                      width: AppSpacing.predictionSocialCommentHeaderGap,
+                    ),
+                    Expanded(child: _CommentUser(comment: comment)),
+                    const Icon(
+                      Icons.more_horiz_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.predictionSocialCommentMoreIcon,
+                    ),
+                  ],
+                ),
                 const SizedBox(
-                  width: AppSpacing.predictionSocialCommentHeaderGap,
+                  height: AppSpacing.predictionSocialCommentBodyGap,
                 ),
-                Expanded(child: _CommentUser(comment: comment)),
-                const Icon(
-                  Icons.more_horiz_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.predictionSocialCommentMoreIcon,
+                Text(
+                  comment.content,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
+                const SizedBox(
+                  height: AppSpacing.predictionSocialCommentBodyGap,
+                ),
+                _CommentActions(comment: comment, reply: reply),
+                if (comment.replies.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.predictionSocialReplyGap),
+                  for (final child in comment.replies)
+                    _CommentCard(comment: child, reply: true),
+                ],
               ],
             ),
-            const SizedBox(height: AppSpacing.predictionSocialCommentBodyGap),
-            Text(
-              comment.content,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text1),
-            ),
-            const SizedBox(height: AppSpacing.predictionSocialCommentBodyGap),
-            _CommentActions(comment: comment, reply: reply),
-            if (comment.replies.isNotEmpty) ...[
-              const SizedBox(height: AppSpacing.predictionSocialReplyGap),
-              for (final child in comment.replies)
-                _CommentCard(comment: child, reply: true),
-            ],
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -172,17 +182,16 @@ class _TierAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.predictionSocialAvatar,
-      height: AppSpacing.predictionSocialAvatar,
-      decoration: BoxDecoration(
-        color: _tierColor(tier),
-        shape: BoxShape.circle,
-      ),
-      child: const Icon(
-        Icons.person_outline_rounded,
-        color: AppColors.onAccent,
-        size: AppSpacing.predictionSocialAvatarIcon,
+    return Material(
+      color: _tierColor(tier),
+      shape: const CircleBorder(),
+      child: const SizedBox.square(
+        dimension: AppSpacing.predictionSocialAvatar,
+        child: Icon(
+          Icons.person_outline_rounded,
+          color: AppColors.onAccent,
+          size: AppSpacing.predictionSocialAvatarIcon,
+        ),
       ),
     );
   }
@@ -196,17 +205,17 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionSocialSmallBadgePadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .16),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.numericMicro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: color.withValues(alpha: .16),
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.predictionSocialSmallBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.numericMicro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -228,24 +237,28 @@ class _ActionPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionSocialActionPillPadding,
-      decoration: BoxDecoration(
-        color: flat ? AppColors.transparent : AppColors.bg,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: color, size: AppSpacing.predictionSocialActionIcon),
-          const SizedBox(width: AppSpacing.predictionSocialActionIconGap),
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: flat ? AppColors.text3 : AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+    return Material(
+      color: flat ? AppColors.transparent : AppColors.bg,
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.predictionSocialActionPillPadding,
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: color,
+              size: AppSpacing.predictionSocialActionIcon,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.predictionSocialActionIconGap),
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: flat ? AppColors.text3 : AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

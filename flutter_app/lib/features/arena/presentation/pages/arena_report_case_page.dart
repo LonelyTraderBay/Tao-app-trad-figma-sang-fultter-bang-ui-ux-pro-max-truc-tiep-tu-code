@@ -89,7 +89,7 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
                   child: SingleChildScrollView(
                     key: ArenaReportCasePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: snapshot.reportCase == null
                         ? VitPageContent(
                             key: ArenaReportCasePage.emptyKey,

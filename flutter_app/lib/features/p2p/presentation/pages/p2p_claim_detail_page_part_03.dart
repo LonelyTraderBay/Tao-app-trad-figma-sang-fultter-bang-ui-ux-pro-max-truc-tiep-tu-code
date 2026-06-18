@@ -10,7 +10,7 @@ class _ReviewerNoteCard extends StatelessWidget {
     final isSystem = note.role == 'Tự động';
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pClaimCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -56,7 +56,7 @@ class _ReviewerNoteCard extends StatelessWidget {
                   note.content,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pClaimBodyLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -84,21 +84,21 @@ class _NotificationsCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.notificationsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pClaimCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.x7,
             height: AppSpacing.x7,
-            decoration: BoxDecoration(
+            child: Material(
               color: AppColors.primary12,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.notifications_none_rounded,
-              color: AppModuleAccents.p2p,
-              size: AppSpacing.iconSm,
+              shape: const CircleBorder(),
+              child: const Icon(
+                Icons.notifications_none_rounded,
+                color: AppModuleAccents.p2p,
+                size: AppSpacing.iconSm,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -149,13 +149,13 @@ class _CheckBullet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+      padding: AppSpacing.p2pClaimChecklistPadding,
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: 13,
+            size: AppSpacing.p2pClaimSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -186,14 +186,14 @@ class _ActionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
           onTap: onTap,
           borderRadius: AppRadii.cardRadius,
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.p2pClaimActionPadding,
             child: Row(
               children: [
                 Icon(icon, color: AppColors.text2, size: AppSpacing.iconSm),
@@ -233,13 +233,13 @@ class _FeedbackBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pClaimCardPadding,
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: 18,
+            size: AppSpacing.p2pClaimFeedbackIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

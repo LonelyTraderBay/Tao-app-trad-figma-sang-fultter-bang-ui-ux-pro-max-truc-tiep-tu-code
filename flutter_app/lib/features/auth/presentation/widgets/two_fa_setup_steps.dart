@@ -8,19 +8,23 @@ class _TwoFaStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
+      padding: AppSpacing.authTwoFaStepperPadding,
       child: Row(
         children: [
           for (var index = 1; index <= 3; index++) ...[
             _StepDot(index: index, activeStep: step),
             if (index < 3)
               Expanded(
-                child: Container(
-                  height: 2,
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    color: index < step ? _authPrimary : _authPrimary30,
-                    borderRadius: BorderRadius.circular(999),
+                child: Padding(
+                  padding: AppSpacing.authTwoFaProgressMargin,
+                  child: ClipRRect(
+                    borderRadius: AppRadii.pillRadius,
+                    child: ColoredBox(
+                      color: index < step ? _authPrimary : _authPrimary30,
+                      child: const SizedBox(
+                        height: AppSpacing.authOtpProgressHeight,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -43,21 +47,27 @@ class _StepDot extends StatelessWidget {
     final isComplete = index < activeStep;
     final color = isActive || isComplete ? _authPrimary : _authStepInactive;
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 150),
-      width: 32,
-      height: 32,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      child: isComplete
-          ? const Icon(Icons.check_rounded, color: AppColors.onAccent, size: 17)
-          : Text(
-              '$index',
-              style: AppTextStyles.caption.copyWith(
-                color: isActive ? AppColors.onAccent : AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+    return SizedBox.square(
+      dimension: AppSpacing.authTwoFaStepDotSize,
+      child: Material(
+        color: color,
+        shape: const CircleBorder(),
+        child: Center(
+          child: isComplete
+              ? const Icon(
+                  Icons.check_rounded,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.authTwoFaStepIcon,
+                )
+              : Text(
+                  '$index',
+                  style: AppTextStyles.caption.copyWith(
+                    color: isActive ? AppColors.onAccent : AppColors.text3,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+        ),
+      ),
     );
   }
 }

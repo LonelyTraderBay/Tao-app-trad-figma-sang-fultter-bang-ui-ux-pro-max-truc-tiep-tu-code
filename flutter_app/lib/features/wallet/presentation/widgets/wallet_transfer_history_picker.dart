@@ -39,14 +39,15 @@ class _RecentTransferRow extends StatelessWidget {
           padding: AppSpacing.walletTransferHistoryRowPadding,
           child: Row(
             children: [
-              Container(
+              VitCard(
                 width: AppSpacing.transferListIcon,
                 height: AppSpacing.transferListIcon,
-                decoration: BoxDecoration(
+                variant: VitCardVariant.ghost,
+                background: ColoredBox(
                   color: _transferPrimary.withValues(alpha: .12),
-                  borderRadius: AppRadii.cardRadius,
                 ),
                 alignment: Alignment.center,
+                clip: true,
                 child: Icon(
                   Icons.swap_vert_rounded,
                   color: _transferPrimary,
@@ -224,13 +225,10 @@ class TransferSuccessBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
       padding: AppSpacing.transferSuccessPadding,
-      decoration: BoxDecoration(
-        color: _transferGreen.withValues(alpha: .12),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _transferGreen.withValues(alpha: .30)),
-      ),
+      borderColor: _transferGreen.withValues(alpha: .30),
       child: Row(
         children: [
           Icon(

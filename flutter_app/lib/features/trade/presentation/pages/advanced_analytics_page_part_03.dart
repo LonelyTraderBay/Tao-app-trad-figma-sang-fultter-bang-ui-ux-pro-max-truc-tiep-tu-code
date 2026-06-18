@@ -10,13 +10,13 @@ class _RiskAnalysisTab extends StatelessWidget {
     final risk = snapshot.risk;
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: 12,
+      customGap: AppSpacing.tradeBotCardGap,
       children: [
         _Card(
-          padding: const EdgeInsets.all(18),
+          padding: AppSpacing.tradeBotCardPaddingTall,
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: 14,
+            customGap: AppSpacing.tradeBotStatusGap,
             children: [
               const _SectionHeader(
                 icon: Icons.shield_outlined,
@@ -26,15 +26,15 @@ class _RiskAnalysisTab extends StatelessWidget {
               ),
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: const EdgeInsets.all(14),
+                padding: AppSpacing.tradeBotAttributionPanelPadding,
                 child: Row(
                   children: [
                     const Icon(
                       Icons.shield_outlined,
                       color: _advancedAmber,
-                      size: 28,
+                      size: AppSpacing.tradeBotClientCategoryHeroIconGlyph,
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: AppSpacing.tradeBotCardIconGap),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +59,7 @@ class _RiskAnalysisTab extends StatelessWidget {
                       '${risk.riskScore}',
                       style: AppTextStyles.heroNumber.copyWith(
                         color: _advancedAmber,
-                        height: 1,
+                        height: AppSpacing.tradeBotLineHeightTight,
                       ),
                     ),
                     Text(
@@ -80,7 +80,7 @@ class _RiskAnalysisTab extends StatelessWidget {
                       valueColor: _advancedAmber,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
                   Expanded(
                     child: _MetricBox(
                       label: 'Sharpe',
@@ -88,7 +88,7 @@ class _RiskAnalysisTab extends StatelessWidget {
                       valueColor: _advancedGreen,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
                   Expanded(
                     child: _MetricBox(
                       label: 'Max DD',
@@ -123,13 +123,13 @@ class _TradeJournalTab extends StatelessWidget {
     final journal = snapshot.journal;
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: 12,
+      customGap: AppSpacing.tradeBotCardGap,
       children: [
         _Card(
-          padding: const EdgeInsets.all(18),
+          padding: AppSpacing.tradeBotCardPaddingTall,
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: 12,
+            customGap: AppSpacing.tradeBotCardGap,
             children: [
               const _SectionHeader(
                 icon: Icons.menu_book_rounded,
@@ -146,7 +146,7 @@ class _TradeJournalTab extends StatelessWidget {
                       valueColor: _advancedGreen,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
                   Expanded(
                     child: _MetricBox(
                       label: 'Trades',
@@ -164,7 +164,7 @@ class _TradeJournalTab extends StatelessWidget {
                       valueColor: _advancedGreen,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
                   Expanded(
                     child: _MetricBox(
                       label: 'Avg Win',
@@ -172,7 +172,7 @@ class _TradeJournalTab extends StatelessWidget {
                       valueColor: _advancedGreen,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
                   Expanded(
                     child: _MetricBox(
                       label: 'Avg Loss',
@@ -208,13 +208,13 @@ class _PositionSizingTab extends StatelessWidget {
     final riskAmount = sizing.accountBalance * sizing.recommendedRiskPct / 100;
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: 12,
+      customGap: AppSpacing.tradeBotCardGap,
       children: [
         _Card(
-          padding: const EdgeInsets.all(18),
+          padding: AppSpacing.tradeBotCardPaddingTall,
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: 14,
+            customGap: AppSpacing.tradeBotStatusGap,
             children: [
               const _SectionHeader(
                 icon: Icons.calculate_outlined,
@@ -230,7 +230,7 @@ class _PositionSizingTab extends StatelessWidget {
                       value: '\$${_formatCompact(sizing.accountBalance)}',
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
                   Expanded(
                     child: _MetricBox(
                       label: 'Risk',
@@ -238,7 +238,7 @@ class _PositionSizingTab extends StatelessWidget {
                       valueColor: _advancedAmber,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
                   Expanded(
                     child: _MetricBox(
                       label: 'Max Loss',
@@ -292,17 +292,17 @@ class _FeaturesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(20, 19, 20, 20),
+      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 14,
+        customGap: AppSpacing.tradeBotStatusGap,
         children: [
           Text(
             'P3 Features Included',
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           GridView.builder(
@@ -310,26 +310,24 @@ class _FeaturesCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisExtent: 38,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
+              crossAxisCount: AppSpacing.tradeBotGridColumns,
+              mainAxisExtent:
+                  AppSpacing.buttonCompact + AppSpacing.hairlineStroke * 2,
+              crossAxisSpacing: AppSpacing.tradeBotSmallGap,
+              mainAxisSpacing: AppSpacing.tradeBotSmallGap,
             ),
             itemBuilder: (context, index) {
               return VitCard(
                 variant: VitCardVariant.inner,
-                padding: const EdgeInsets.symmetric(horizontal: 9),
+                padding: AppSpacing.tradeBotCopyDemoInlinePadding,
                 child: Row(
                   children: [
-                    Container(
-                      width: 6,
-                      height: 6,
-                      decoration: const BoxDecoration(
-                        color: _advancedGreen,
-                        shape: BoxShape.circle,
-                      ),
+                    const Icon(
+                      Icons.circle,
+                      color: _advancedGreen,
+                      size: AppSpacing.x2 + AppSpacing.hairlineStroke,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.x3),
                     Expanded(
                       child: Text(
                         features[index],
@@ -337,7 +335,7 @@ class _FeaturesCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
-                          height: 1.2,
+                          height: AppSpacing.tradeBotLineHeightCaption,
                         ),
                       ),
                     ),
@@ -358,7 +356,7 @@ class _SectionHeader extends StatelessWidget {
     required this.color,
     required this.title,
     required this.subtitle,
-    this.iconSize = 22,
+    this.iconSize = AppSpacing.tradeBotDisputeDropdownIcon,
   });
 
   final IconData icon;
@@ -371,16 +369,16 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: .12),
-            borderRadius: AppRadii.cardRadius,
-          ),
+        VitCard(
+          width: AppSpacing.tradeBotDisclosureIconBox,
+          height: AppSpacing.tradeBotDisclosureIconBox,
+          padding: AppSpacing.zeroInsets,
+          variant: VitCardVariant.ghost,
+          clip: true,
+          background: ColoredBox(color: color.withValues(alpha: .12)),
           child: Icon(icon, color: color, size: iconSize),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.tradeBotCardIconGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -392,17 +390,17 @@ class _SectionHeader extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.15,
+                  height: AppSpacing.tradeBotLineHeightShort,
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: AppSpacing.tradeBotTinyGap),
               Text(
                 subtitle,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: 1.25,
+                  height: AppSpacing.tradeBotLineHeightCompact,
                 ),
               ),
             ],
@@ -429,14 +427,14 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(14, 13, 14, 13),
+      padding: AppSpacing.tradeBotAttributionPanelPadding,
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 18),
-          const SizedBox(width: 10),
+          Icon(icon, color: color, size: AppSpacing.ctaLoadingIcon),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -446,15 +444,15 @@ class _InfoCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.tradeBotLineHeightCaption,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.tradeBotTinyGap),
                 Text(
                   body,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height: AppSpacing.tradeBotLineHeightReadable,
                   ),
                 ),
               ],

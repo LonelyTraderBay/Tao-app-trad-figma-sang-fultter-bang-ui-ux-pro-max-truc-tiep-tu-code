@@ -62,25 +62,18 @@ class _EnterpriseStatesPageState extends ConsumerState<EnterpriseStatesPage> {
           child: SingleChildScrollView(
             key: EnterpriseStatesPage.contentKey,
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.only(bottom: bottomInset),
+            padding: AppSpacing.enterpriseStatesScrollPadding(bottomInset),
             child: VitPageContent(
               padding: VitContentPadding.none,
               fullBleed: true,
               customGap: AppSpacing.x5,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    0,
-                  ),
+                  padding: AppSpacing.enterpriseStatesHeroPadding,
                   child: _PageHero(snapshot: snapshot),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.contentPad,
-                  ),
+                  padding: AppSpacing.enterpriseStatesContentPadding,
                   child: _SectionTabs(
                     tabs: snapshot.tabs,
                     active: _section,

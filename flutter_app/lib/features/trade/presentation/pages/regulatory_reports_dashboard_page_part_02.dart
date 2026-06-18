@@ -10,23 +10,24 @@ class _DistributionLegend extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: 8,
+      customGap: AppSpacing.tradeBotSmallGap,
       children: [
         for (final item in items)
           VitCard(
             height: 38,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: AppSpacing.tradeBotCompactCardPadding,
             variant: VitCardVariant.inner,
             child: Row(
               children: [
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Color(item.colorHex),
-                    borderRadius: AppRadii.xsRadius,
-                  ),
-                  child: const SizedBox(width: 12, height: 12),
+                VitCard(
+                  variant: VitCardVariant.ghost,
+                  width: AppSpacing.tradeBotChartLegendSwatchWidth,
+                  height: AppSpacing.tradeBotChartLegendSwatchHeight,
+                  clip: true,
+                  background: ColoredBox(color: Color(item.colorHex)),
+                  child: const SizedBox.shrink(),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.tradeBotSmallGap),
                 Expanded(
                   child: Text(
                     item.name,
@@ -34,7 +35,7 @@ class _DistributionLegend extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1,
+                      height: AppSpacing.tradeBotLineHeightTight,
                     ),
                   ),
                 ),
@@ -43,15 +44,14 @@ class _DistributionLegend extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ],
             ),
           ),
         VitCard(
-          margin: const EdgeInsets.only(top: 10),
-          padding: const EdgeInsets.only(top: 11),
+          padding: AppSpacing.tradeBotCompactCardPadding,
           variant: VitCardVariant.ghost,
           borderColor: _dashBorder,
           child: Row(
@@ -93,24 +93,28 @@ class _ProviderCard extends StatelessWidget {
     final healthy = provider.status == 'healthy';
     final color = healthy ? _dashGreen : _dashAmber;
     return _Card(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      padding: AppSpacing.tradeBotInnerPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              DecoratedBox(
-                decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-                child: const SizedBox(width: 8, height: 8),
+              VitCard(
+                variant: VitCardVariant.ghost,
+                width: AppSpacing.tradeBotCorrelationLegendDot,
+                height: AppSpacing.tradeBotCorrelationLegendDot,
+                clip: true,
+                background: ColoredBox(color: color),
+                child: const SizedBox.shrink(),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: Text(
                   provider.name,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
@@ -118,12 +122,12 @@ class _ProviderCard extends StatelessWidget {
                 '${_formatInt(provider.reports)} reports',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           Row(
             children: [
               Expanded(
@@ -167,15 +171,15 @@ class _QueueTab extends StatelessWidget {
       children: [
         for (final stat in snapshot.dailyStats.take(4))
           _Card(
-            padding: const EdgeInsets.all(12),
+            padding: AppSpacing.tradeBotInnerPanelPadding,
             child: Row(
               children: [
                 const Icon(
                   Icons.calendar_today_outlined,
                   color: _dashPrimary,
-                  size: 18,
+                  size: AppSpacing.tradeBotActionIcon,
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: AppSpacing.tradeBotRowGap),
                 Expanded(
                   child: Text(
                     stat.date,
@@ -189,7 +193,7 @@ class _QueueTab extends StatelessWidget {
                   label: '${stat.confirmed} confirmed',
                   color: _dashGreen,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.tradeBotSmallGap),
                 _SmallPill(label: '${stat.failed} failed', color: _dashRed),
               ],
             ),
@@ -227,10 +231,10 @@ class _ComplianceTab extends StatelessWidget {
       customGap: 12,
       children: [
         _Card(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.tradeBotCardPadding,
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: 18,
+            customGap: AppSpacing.tradeBotContentGap,
             children: [
               for (final item in items)
                 _ProgressMetric(
@@ -240,8 +244,7 @@ class _ComplianceTab extends StatelessWidget {
                   color: item.$4,
                 ),
               VitCard(
-                margin: const EdgeInsets.only(top: 18),
-                padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                padding: AppSpacing.tradeBotInnerPanelPadding,
                 variant: VitCardVariant.inner,
                 borderColor: _dashGreen.withValues(alpha: .25),
                 child: Row(
@@ -249,9 +252,9 @@ class _ComplianceTab extends StatelessWidget {
                     const Icon(
                       Icons.emoji_events_outlined,
                       color: _dashGreen,
-                      size: 17,
+                      size: AppSpacing.tradeBotMediumIcon,
                     ),
-                    const SizedBox(width: 9),
+                    const SizedBox(width: AppSpacing.tradeBotRowGap),
                     Expanded(
                       child: Text(
                         'Full regulatory compliance maintained for 90 consecutive days',
@@ -328,21 +331,22 @@ class _ExportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       onTap: onTap,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.tradeBotInnerPanelPadding,
       child: Row(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.cardRadius,
-            ),
-            child: SizedBox(
-              width: 40,
-              height: 40,
-              child: Icon(icon, color: color, size: 19),
+          VitCard(
+            variant: VitCardVariant.ghost,
+            width: AppSpacing.tradeBotQuestionIconBox,
+            height: AppSpacing.tradeBotQuestionIconBox,
+            alignment: Alignment.center,
+            borderColor: color.withValues(alpha: .18),
+            child: Icon(
+              icon,
+              color: color,
+              size: AppSpacing.tradeBotActionIcon,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tradeBotCardGap),
           Expanded(
             child: VitPageContent(
               padding: VitContentPadding.none,
@@ -362,7 +366,11 @@ class _ExportCard extends StatelessWidget {
               ],
             ),
           ),
-          const Icon(Icons.download_rounded, color: AppColors.text3, size: 19),
+          const Icon(
+            Icons.download_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.tradeBotActionIcon,
+          ),
         ],
       ),
     );
@@ -403,19 +411,17 @@ class _ProgressMetric extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(999),
-          child: SizedBox(
-            height: 8,
-            child: Stack(
-              children: [
-                const ColoredBox(color: _dashPanel2),
-                FractionallySizedBox(
-                  widthFactor: math.min(pct / 100, 1),
-                  child: ColoredBox(color: color),
-                ),
-              ],
+        const SizedBox(height: AppSpacing.tradeBotSmallGap),
+        VitCard(
+          variant: VitCardVariant.ghost,
+          height: AppSpacing.tradeBotProgressHeight,
+          clip: true,
+          background: const ColoredBox(color: _dashPanel2),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: FractionallySizedBox(
+              widthFactor: math.min(pct / 100, 1),
+              child: ColoredBox(color: color),
             ),
           ),
         ),
@@ -443,7 +449,7 @@ class _QuickActions extends StatelessWidget {
             onTap: onQueue,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.tradeBotCardGap),
         Expanded(
           child: _QuickAction(
             key: RegulatoryReportsDashboardPage.actionKey('arm-status'),

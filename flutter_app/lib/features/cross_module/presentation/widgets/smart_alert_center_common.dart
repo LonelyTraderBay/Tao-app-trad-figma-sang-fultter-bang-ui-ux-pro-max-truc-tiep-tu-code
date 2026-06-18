@@ -8,15 +8,12 @@ class _ModulePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.crossModulePillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),
@@ -43,14 +40,15 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.mdRadius,
+    return SizedBox.square(
+      dimension: size,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: background,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Icon(icon, color: color, size: iconSize),
       ),
-      child: Icon(icon, color: color, size: iconSize),
     );
   }
 }
@@ -73,14 +71,18 @@ class _SmallIconAction extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
-      child: Container(
+      child: SizedBox(
         width: AppSpacing.x6,
         height: AppSpacing.x6,
-        decoration: BoxDecoration(
-          color: background,
-          borderRadius: AppRadii.smRadius,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: background,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+            ),
+          ),
+          child: Icon(icon, color: color, size: AppSpacing.iconSm),
         ),
-        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
     );
   }
@@ -104,13 +106,15 @@ class _InfoPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: background,
-        border: Border.all(color: border),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: border),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.crossModulePanelPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

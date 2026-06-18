@@ -21,35 +21,37 @@ class _IndicatorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         children: [
           InkWell(
             onTap: onToggleExpanded,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: AppSpacing.marketAdvancedIndicatorHeaderPadding,
               child: Row(
                 children: [
-                  Container(
-                    width: 32,
-                    height: 32,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: indicator.color.withValues(alpha: .08),
+                  Material(
+                    color: indicator.color.withValues(alpha: .08),
+                    shape: const RoundedRectangleBorder(
                       borderRadius: AppRadii.smRadius,
                     ),
-                    child: Text(
-                      indicator.shortName.length <= 3
-                          ? indicator.shortName
-                          : indicator.shortName.substring(0, 3),
-                      style: AppTextStyles.micro.copyWith(
-                        color: indicator.color,
-                        fontWeight: AppTextStyles.bold,
+                    child: SizedBox.square(
+                      dimension: AppSpacing.marketAdvancedIndicatorAvatar,
+                      child: Center(
+                        child: Text(
+                          indicator.shortName.length <= 3
+                              ? indicator.shortName
+                              : indicator.shortName.substring(0, 3),
+                          style: AppTextStyles.micro.copyWith(
+                            color: indicator.color,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.marketAnalyticsGap),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,11 +65,13 @@ class _IndicatorCard extends StatelessWidget {
                                 fontWeight: AppTextStyles.bold,
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(
+                              width: AppSpacing.marketAnalyticsCompactGap,
+                            ),
                             _CategoryBadge(category: category),
                           ],
                         ),
-                        const SizedBox(height: 1),
+                        const SizedBox(height: AppSpacing.dividerHairline),
                         Text(
                           indicator.name,
                           maxLines: 1,
@@ -79,7 +83,7 @@ class _IndicatorCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.marketAnalyticsGap),
                   _IndicatorToggle(
                     key: AdvancedChartsPage.indicatorToggleKey(indicator.id),
                     active: active,
@@ -128,7 +132,8 @@ class _IndicatorList extends StatelessWidget {
             onToggleActive: () => onToggleActive(indicator.id),
             onToggleExpanded: () => onToggleExpanded(indicator),
           ),
-          if (indicator != indicators.last) const SizedBox(height: 4),
+          if (indicator != indicators.last)
+            const SizedBox(height: AppSpacing.marketAnalyticsMicroGap),
         ],
       ],
     );
@@ -143,15 +148,18 @@ class _CategoryBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = category?.color ?? AppColors.text3;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .08),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        category?.label ?? 'Khác',
-        style: AppTextStyles.micro.copyWith(color: color, height: 1.2),
+    return Material(
+      color: color.withValues(alpha: .08),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+      child: Padding(
+        padding: AppSpacing.marketAdvancedCategoryBadgePadding,
+        child: Text(
+          category?.label ?? 'Khác',
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            height: AppSpacing.marketLineHeightCaption,
+          ),
+        ),
       ),
     );
   }
@@ -171,24 +179,30 @@ class _IndicatorToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Container(
-        width: 32,
-        height: 32,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? color.withValues(alpha: .08) : AppColors.surface2,
-          border: Border.all(color: active ? color : AppColors.borderSolid),
-          borderRadius: AppRadii.smRadius,
+    return Material(
+      color: active ? color.withValues(alpha: .08) : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.smRadius,
+        side: BorderSide(color: active ? color : AppColors.borderSolid),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.smRadius,
+        child: SizedBox.square(
+          dimension: AppSpacing.marketAdvancedToggleSize,
+          child: Center(
+            child: active
+                ? Icon(
+                    Icons.check_rounded,
+                    size: AppSpacing.marketAdvancedToggleIcon,
+                    color: color,
+                  )
+                : Text(
+                    '+',
+                    style: AppTextStyles.body.copyWith(color: AppColors.text3),
+                  ),
+          ),
         ),
-        child: active
-            ? Icon(Icons.check_rounded, size: 16, color: color)
-            : Text(
-                '+',
-                style: AppTextStyles.body.copyWith(color: AppColors.text3),
-              ),
       ),
     );
   }
@@ -201,63 +215,62 @@ class _IndicatorDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(16, 10, 16, 14),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.cardBorder)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            indicator.description,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-          if (indicator.params.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (final param in indicator.params)
-                  DecoratedBox(
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface2,
-                      borderRadius: AppRadii.smRadius,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      child: RichText(
-                        text: TextSpan(
-                          style: AppTextStyles.micro,
-                          children: [
-                            TextSpan(
-                              text: '${param.label}: ',
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.text3,
-                              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Divider(height: AppSpacing.dividerHairline),
+        Padding(
+          padding: AppSpacing.marketAdvancedDetailsPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                indicator.description,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
+              if (indicator.params.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.marketAnalyticsCompactGap),
+                Wrap(
+                  spacing: AppSpacing.marketAnalyticsCompactGap,
+                  runSpacing: AppSpacing.marketAnalyticsCompactGap,
+                  children: [
+                    for (final param in indicator.params)
+                      Material(
+                        color: AppColors.surface2,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: AppRadii.smRadius,
+                        ),
+                        child: Padding(
+                          padding: AppSpacing.marketAdvancedParamPadding,
+                          child: RichText(
+                            text: TextSpan(
+                              style: AppTextStyles.micro,
+                              children: [
+                                TextSpan(
+                                  text: '${param.label}: ',
+                                  style: AppTextStyles.micro.copyWith(
+                                    color: AppColors.text3,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '${param.value}',
+                                  style: AppTextStyles.micro.copyWith(
+                                    color: AppColors.text1,
+                                    fontWeight: AppTextStyles.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                            TextSpan(
-                              text: '${param.value}',
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                  ],
+                ),
               ],
-            ),
-          ],
-        ],
-      ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -269,12 +282,16 @@ class _DrawingInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _marketPrimary.withValues(alpha: .15),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketAdvancedCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.edit_rounded, size: 17, color: _marketPrimary),
-          const SizedBox(width: 12),
+          const Icon(
+            Icons.edit_rounded,
+            size: AppSpacing.marketAdvancedInfoIcon,
+            color: _marketPrimary,
+          ),
+          const SizedBox(width: AppSpacing.marketAnalyticsGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,12 +303,12 @@ class _DrawingInfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
                 Text(
                   'Chọn công cụ bên dưới để vẽ trên biểu đồ. Hỗ trợ đường xu hướng, kênh giá, Fibonacci và đo lường.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height: AppSpacing.marketLineHeightReadable,
                   ),
                 ),
               ],
@@ -312,22 +329,26 @@ class _DrawingToolsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 3,
+      crossAxisCount: AppSpacing.marketAdvancedGridColumns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 8,
-      crossAxisSpacing: 8,
-      childAspectRatio: .92,
+      mainAxisSpacing: AppSpacing.marketAnalyticsCompactGap,
+      crossAxisSpacing: AppSpacing.marketAnalyticsCompactGap,
+      childAspectRatio: AppSpacing.marketAdvancedGridAspectRatio,
       children: [
         for (final tool in tools)
           VitCard(
             key: AdvancedChartsPage.drawingToolKey(tool.id),
-            padding: const EdgeInsets.all(10),
+            padding: AppSpacing.marketAdvancedCardPaddingCompact,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(tool.icon, size: 25, color: AppColors.text1),
-                const SizedBox(height: 7),
+                Icon(
+                  tool.icon,
+                  size: AppSpacing.marketAdvancedToolIcon,
+                  color: AppColors.text1,
+                ),
+                const SizedBox(height: AppSpacing.marketOverviewMiniHeaderGap),
                 Text(
                   tool.name,
                   maxLines: 2,
@@ -336,10 +357,10 @@ class _DrawingToolsGrid extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.25,
+                    height: AppSpacing.marketLineHeightCaption,
                   ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
                 Text(
                   _categoryFor(categories, tool.categoryId)?.label ?? '',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -360,25 +381,10 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 3,
-          height: 14,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: accentColor,
     );
   }
 }
@@ -396,14 +402,18 @@ class _TipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketAdvancedCardPadding,
       child: Column(
         children: [
           for (var index = 0; index < _tips.length; index += 1) ...[
             Row(
               children: [
-                Icon(_tips[index].$1, size: 18, color: AppColors.text2),
-                const SizedBox(width: 12),
+                Icon(
+                  _tips[index].$1,
+                  size: AppSpacing.marketAdvancedTipIcon,
+                  color: AppColors.text2,
+                ),
+                const SizedBox(width: AppSpacing.marketAnalyticsGap),
                 Expanded(
                   child: Text(
                     _tips[index].$2,
@@ -414,7 +424,8 @@ class _TipsCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (index != _tips.length - 1) const SizedBox(height: 11),
+            if (index != _tips.length - 1)
+              const SizedBox(height: AppSpacing.marketAnalyticsGap),
           ],
         ],
       ),
@@ -429,22 +440,22 @@ class _SignalDisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warn.withValues(alpha: .16),
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.marketAdvancedCardPaddingCompact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            size: 14,
+            size: AppSpacing.marketAdvancedDisclaimerIcon,
             color: AppColors.warn,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
           Expanded(
             child: Text(
               'Tín hiệu kỹ thuật chỉ mang tính tham khảo. Không phải khuyến nghị đầu tư.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.45,
+                height: AppSpacing.marketLineHeightReadable,
               ),
             ),
           ),

@@ -17,29 +17,35 @@ class _ProviderRankCard extends StatelessWidget {
 
     return VitCard(
       key: ProviderLeaderboardPage.providerKey(provider.id),
-      height: redFlags.isEmpty ? 124 : 148,
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+      height: redFlags.isEmpty
+          ? AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x4
+          : AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x6,
+      padding: AppSpacing.providerLeaderboardCardPadding,
       borderColor: AppColors.cardBorder,
       onTap: onOpen,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _RankBadge(rank: rank),
-          const SizedBox(width: 13),
+          const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _ProviderTitle(provider: provider),
-                const SizedBox(height: 9),
+                const SizedBox(
+                  height: AppSpacing.providerLeaderboardCardTitleGap,
+                ),
                 _MetricsRow(provider: provider),
-                const SizedBox(height: 12),
+                const SizedBox(
+                  height: AppSpacing.providerLeaderboardCardMetricsGap,
+                ),
                 _FollowersLabel(count: provider.copiers),
                 if (redFlags.isNotEmpty) ...[
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.x3),
                   Wrap(
-                    spacing: 4,
-                    runSpacing: 4,
+                    spacing: AppSpacing.x1 + AppSpacing.hairlineStroke,
+                    runSpacing: AppSpacing.x1 + AppSpacing.hairlineStroke,
                     children: [
                       for (final flag in redFlags) _RedFlagPill(flag: flag),
                     ],
@@ -48,13 +54,13 @@ class _ProviderRankCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.x3),
           const Padding(
-            padding: EdgeInsets.only(top: 4),
+            padding: AppSpacing.providerLeaderboardTrailingIconPadding,
             child: Icon(
               Icons.visibility_outlined,
               color: AppColors.text3,
-              size: 16,
+              size: AppSpacing.x4 + AppSpacing.x1,
             ),
           ),
         ],
@@ -71,23 +77,17 @@ class _RankBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final podium = rank <= 3;
-    return Container(
-      width: 40,
-      height: 40,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: podium ? _leaderWarningText.withValues(alpha: .12) : _leaderChip,
-        shape: BoxShape.circle,
-        border: podium
-            ? Border.all(color: _leaderWarningText, width: 2)
-            : Border.all(color: AppColors.transparent),
-      ),
+    return CircleAvatar(
+      radius: AppSpacing.x5 - AppSpacing.hairlineStroke,
+      backgroundColor: podium
+          ? _leaderWarningText.withValues(alpha: .12)
+          : _leaderChip,
       child: Text(
         '#$rank',
         style: AppTextStyles.caption.copyWith(
           color: podium ? _leaderWarningText : AppColors.text2,
           fontWeight: AppTextStyles.bold,
-          height: 1,
+          height: AppSpacing.providerLeaderboardLineHeightFlat,
           fontFeatures: AppTextStyles.tabularFigures,
         ),
       ),
@@ -112,19 +112,21 @@ class _ProviderTitle extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.providerLeaderboardLineHeightFlat,
             ),
           ),
         ),
         if (_isProviderVerified(provider)) ...[
-          const SizedBox(width: 7),
+          const SizedBox(
+            width: AppSpacing.providerLeaderboardVerifiedIconGap,
+          ),
           const Icon(
             Icons.check_circle_outline_rounded,
             color: _leaderPrimary,
-            size: 12,
+            size: AppSpacing.providerLeaderboardVerifiedIcon,
           ),
         ],
-        const SizedBox(width: 7),
+        const SizedBox(width: AppSpacing.providerLeaderboardVerifiedIconGap),
         _RiskBadge(riskLevel: provider.riskLevel),
       ],
     );
@@ -139,23 +141,7 @@ class _RiskBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _riskColor(riskLevel);
-    return Container(
-      height: 22,
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: 7),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        _riskLabel(riskLevel),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: _riskLabel(riskLevel), accentColor: color);
   }
 }
 
@@ -213,16 +199,16 @@ class _MetricValue extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.providerLeaderboardLineHeightFlat,
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.providerLeaderboardLineHeightFlat,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -240,13 +226,17 @@ class _FollowersLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(Icons.group_outlined, color: AppColors.text3, size: 10),
-        const SizedBox(width: 4),
+        const Icon(
+          Icons.group_outlined,
+          color: AppColors.text3,
+          size: AppSpacing.providerLeaderboardFollowersIcon,
+        ),
+        const SizedBox(width: AppSpacing.x1 + AppSpacing.hairlineStroke),
         Text(
           '${_formatInteger(count)} followers',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppSpacing.providerLeaderboardLineHeightFlat,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -262,30 +252,6 @@ class _RedFlagPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(
-        color: AppColors.sell10,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.sell,
-            size: 9,
-          ),
-          const SizedBox(width: 3),
-          Text(
-            flag,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.sell,
-              height: 1,
-            ),
-          ),
-        ],
-      ),
-    );
+    return VitAccentPill(label: flag, accentColor: AppColors.sell);
   }
 }

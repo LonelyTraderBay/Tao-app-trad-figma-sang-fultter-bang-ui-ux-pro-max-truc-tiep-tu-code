@@ -60,7 +60,7 @@ class _TradePageState extends ConsumerState<TradePage> {
         type: MaterialType.transparency,
         child: SingleChildScrollView(
           key: TradePage.contentKey,
-          padding: EdgeInsets.only(bottom: bottomInset),
+          padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -172,14 +172,13 @@ class _TradeHeader extends StatelessWidget {
       showBack: showBack,
       onBack: onBack,
       backKey: TradePage.backKey,
-      leading: Container(
+      leading: VitCard(
         width: AppSpacing.tradeHeaderLogo,
         height: AppSpacing.tradeHeaderLogo,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.lg,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: logoColor.withValues(alpha: .20),
-          shape: BoxShape.circle,
-        ),
+        borderColor: logoColor.withValues(alpha: .26),
         child: Text(
           pair.baseAsset.substring(0, 3),
           style: AppTextStyles.micro.copyWith(
@@ -237,7 +236,6 @@ class _TradeHeader extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.buy,
                 fontWeight: AppTextStyles.bold,
-                height: 1.2,
               ),
             ),
           ],
@@ -435,74 +433,46 @@ class _QuickNavChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: AppSpacing.tradeQuickNavGap),
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.mdRadius,
-          child: VitCard(
-            width: AppSpacing.tradeQuickChipWidth,
-            padding: AppSpacing.tradeQuickChipPadding,
-            radius: VitCardRadius.sm,
-            borderColor: color.withValues(alpha: .24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      padding: AppSpacing.zeroInsets.copyWith(
+        right: AppSpacing.tradeQuickNavGap,
+      ),
+      child: VitCard(
+        onTap: onTap,
+        width: AppSpacing.tradeQuickChipWidth,
+        padding: AppSpacing.tradeQuickChipPadding,
+        radius: VitCardRadius.sm,
+        borderColor: color.withValues(alpha: .24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    Icon(
-                      icon,
-                      color: color,
-                      size: AppSpacing.tradeQuickChipIcon,
-                    ),
-                    const SizedBox(width: AppSpacing.tradeQuickChipIconGap),
-                    Expanded(
-                      child: Text(
-                        label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                          height: 1,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.tradeQuickChipBadgeGap),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: AppSpacing.tradeQuickChipBadgeMaxWidth,
-                    ),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: color.withValues(alpha: .12),
-                        borderRadius: AppRadii.xsRadius,
-                        border: Border.all(color: color.withValues(alpha: .24)),
-                      ),
-                      child: Padding(
-                        padding: AppSpacing.tradeQuickChipBadgePadding,
-                        child: Text(
-                          badge,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: color,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
+                Icon(icon, color: color, size: AppSpacing.tradeQuickChipIcon),
+                const SizedBox(width: AppSpacing.tradeQuickChipIconGap),
+                Expanded(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
                 ),
               ],
             ),
-          ),
+            const SizedBox(height: AppSpacing.tradeQuickChipBadgeGap),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: AppSpacing.tradeQuickChipBadgeMaxWidth,
+                ),
+                child: VitAccentPill(label: badge, accentColor: color),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -596,13 +566,13 @@ class _ChartPanel extends StatelessWidget {
                     status: VitStatusPillStatus.error,
                     size: VitStatusPillSize.sm,
                   )
-                : Container(
+                : VitCard(
                     width: AppSpacing.tradeChartLogoSize,
                     height: AppSpacing.tradeChartLogoSize,
-                    decoration: BoxDecoration(
-                      color: AppColors.sell.withValues(alpha: .30),
-                      shape: BoxShape.circle,
-                    ),
+                    variant: VitCardVariant.ghost,
+                    radius: VitCardRadius.lg,
+                    borderColor: AppColors.sell.withValues(alpha: .30),
+                    child: const SizedBox.shrink(),
                   ),
           ),
           Positioned(

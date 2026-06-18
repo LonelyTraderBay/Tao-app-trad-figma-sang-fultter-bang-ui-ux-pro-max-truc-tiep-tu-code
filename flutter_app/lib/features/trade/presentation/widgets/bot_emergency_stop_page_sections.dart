@@ -9,23 +9,22 @@ class _WarningBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      constraints: const BoxConstraints(minHeight: 160),
-      padding: const EdgeInsets.fromLTRB(20, 23, 18, 20),
+      constraints: const BoxConstraints(minHeight: AppSpacing.buttonHero),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       borderColor: _stopRed.withValues(alpha: .62),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 36,
-            height: 36,
+          VitCard(
+            width: AppSpacing.x6,
+            height: AppSpacing.x6,
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: _stopRed, width: 3),
-            ),
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            borderColor: _stopRed,
             child: const Icon(Icons.priority_high_rounded, color: _stopRed),
           ),
-          const SizedBox(width: 15),
+          const SizedBox(width: AppSpacing.tradeBotContentGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,11 +33,10 @@ class _WarningBanner extends StatelessWidget {
                   snapshot.warningTitle,
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: _stopRed,
-                    letterSpacing: .8,
-                    height: 1,
+                    letterSpacing: AppSpacing.dividerHairline,
                   ),
                 ),
-                const SizedBox(height: 13),
+                const SizedBox(height: AppSpacing.x4),
                 Text(
                   snapshot.warningDescription,
                   style: AppTextStyles.body.copyWith(
@@ -65,8 +63,10 @@ class _BotCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final profitColor = bot.profit >= 0 ? _stopGreen : _stopRed;
     return VitCard(
-      constraints: const BoxConstraints(minHeight: 70),
-      padding: const EdgeInsets.fromLTRB(12, 14, 13, 13),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotSecurityCardMinHeight,
+      ),
+      padding: AppSpacing.tradeBotControlPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
         children: [
@@ -85,46 +85,31 @@ class _BotCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                      decoration: BoxDecoration(
-                        color: _stopGreen.withValues(alpha: .12),
-                        borderRadius: AppRadii.smRadius,
-                      ),
-                      child: Text(
-                        bot.statusLabel,
-                        style: AppTextStyles.micro.copyWith(
-                          color: _stopGreen,
-                          fontWeight: AppTextStyles.bold,
-                          height: 1,
-                        ),
-                      ),
+                    const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                    VitAccentPill(
+                      label: bot.statusLabel,
+                      accentColor: _stopGreen,
+                      size: VitStatusPillSize.sm,
                     ),
                   ],
                 ),
-                const SizedBox(height: 11),
+                const SizedBox(height: AppSpacing.tradeBotRowGap),
                 Text(
                   bot.pair,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           Text(
             '${bot.profit >= 0 ? '+' : ''}${bot.profit.toStringAsFixed(2)} USDT',
             style: AppTextStyles.caption.copyWith(
               color: profitColor,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
         ],
@@ -153,25 +138,24 @@ class _ReasonOption extends StatelessWidget {
       child: VitCard(
         variant: selected ? VitCardVariant.ghost : VitCardVariant.standard,
         constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
-        padding: const EdgeInsets.fromLTRB(14, 13, 14, 13),
+        padding: AppSpacing.tradeBotOptionPadding,
         borderColor: selected ? _stopRed : _stopOptionBorder,
         child: Row(
           children: [
             _RadioMark(selected: selected, danger: selected),
-            const SizedBox(width: 13),
+            const SizedBox(width: AppSpacing.x4),
             Icon(
               _reasonIcon(reason.iconName),
               color: _reasonColor(reason),
-              size: 20,
+              size: AppSpacing.contentPad,
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: AppSpacing.tradeBotPageTopGap),
             Expanded(
               child: Text(
                 reason.label,
                 style: AppTextStyles.caption.copyWith(
                   color: selected ? _stopRed : AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.25,
                 ),
               ),
             ),
@@ -206,7 +190,7 @@ class _CheckActionCard extends StatelessWidget {
       borderRadius: AppRadii.cardRadius,
       child: VitCard(
         variant: VitCardVariant.ghost,
-        padding: const EdgeInsets.fromLTRB(15, 14, 14, 15),
+        padding: AppSpacing.tradeBotCardPadding,
         borderColor: danger
             ? _stopRed.withValues(alpha: .48)
             : AppColors.transparent,
@@ -214,7 +198,7 @@ class _CheckActionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _CheckboxMark(selected: selected, color: activeColor),
-            const SizedBox(width: 13),
+            const SizedBox(width: AppSpacing.x4),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,10 +208,9 @@ class _CheckActionCard extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: danger ? _stopRed : AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: 1.25,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.tradeBotSmallGap),
                   Text(
                     description,
                     style: AppTextStyles.caption.copyWith(
@@ -254,12 +237,16 @@ class _SupportNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.tradeBotCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.text3, size: 16),
-          const SizedBox(width: 12),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.text3,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,10 +256,9 @@ class _SupportNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.tradeBotRowGap),
                 Text(
                   snapshot.supportDescription,
                   style: AppTextStyles.caption.copyWith(

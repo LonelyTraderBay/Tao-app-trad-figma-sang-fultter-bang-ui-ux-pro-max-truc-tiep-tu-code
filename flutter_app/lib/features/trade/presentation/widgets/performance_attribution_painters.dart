@@ -18,8 +18,12 @@ class _LegendRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         for (final item in items) ...[
-          Container(width: 18, height: 2, color: item.color),
-          const SizedBox(width: 4),
+          SizedBox(
+            width: AppSpacing.tradeBotAttributionLegendLineWidth,
+            height: AppSpacing.tradeBotAttributionLegendLineHeight,
+            child: ColoredBox(color: item.color),
+          ),
+          const SizedBox(width: AppSpacing.tradeBotAttributionLegendItemGap),
           Text(
             item.label,
             style: AppTextStyles.micro.copyWith(
@@ -27,7 +31,7 @@ class _LegendRow extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tradeBotAttributionLegendGroupGap),
         ],
       ],
     );

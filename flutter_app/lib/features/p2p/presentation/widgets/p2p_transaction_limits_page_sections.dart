@@ -7,15 +7,17 @@ class _TierHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PTransactionLimitsPage.tierHeroKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.buy,
+      type: MaterialType.transparency,
+      color: AppColors.buy,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppColors.buy),
+        side: BorderSide(color: AppColors.buy),
       ),
-      child: Column(
+      child: Padding(
+        padding: AppSpacing.p2pTransactionLimitsCardPadding,
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
@@ -52,16 +54,12 @@ class _TierHero extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.onAccent.withValues(alpha: .20),
-                  borderRadius: AppRadii.inputRadius,
-                ),
+              Material(
+                type: MaterialType.transparency,
+                color: AppColors.onAccent.withValues(alpha: .20),
+                borderRadius: AppRadii.inputRadius,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x3,
-                    vertical: AppSpacing.x2,
-                  ),
+                  padding: AppSpacing.p2pTransactionLimitsBadgePadding,
                   child: Text(
                     tier.statusLabel,
                     style: AppTextStyles.micro.copyWith(
@@ -91,7 +89,8 @@ class _TierHero extends StatelessWidget {
               ),
             ],
           ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -105,13 +104,12 @@ class _TierMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.onAccent.withValues(alpha: .18),
-        borderRadius: AppRadii.lgRadius,
-      ),
+    return Material(
+      type: MaterialType.transparency,
+      color: AppColors.onAccent.withValues(alpha: .18),
+      borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pTransactionLimitsInnerPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -168,14 +166,17 @@ class _CurrentUsage extends StatelessWidget {
               },
               style: TextButton.styleFrom(
                 foregroundColor: AppModuleAccents.p2p,
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+                padding: AppSpacing.p2pTransactionLimitsTrackerPadding,
               ),
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text('Xem chi tiết'),
                   SizedBox(width: AppSpacing.x1),
-                  Icon(Icons.chevron_right_rounded, size: 15),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    size: AppSpacing.p2pTransactionLimitsTrackerIcon,
+                  ),
                 ],
               ),
             ),
@@ -184,15 +185,13 @@ class _CurrentUsage extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pTransactionLimitsCardPadding,
           child: Column(
             children: [
               for (var index = 0; index < snapshot.usageItems.length; index++)
                 Padding(
-                  padding: EdgeInsets.only(
-                    bottom: index == snapshot.usageItems.length - 1
-                        ? 0
-                        : AppSpacing.x4,
+                  padding: AppSpacing.p2pTransactionLimitsUsageItemPadding(
+                    index == snapshot.usageItems.length - 1,
                   ),
                   child: _UsageLimitRow(item: snapshot.usageItems[index]),
                 ),
@@ -297,13 +296,16 @@ class _LimitDetails extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               for (var index = 0; index < items.length; index++) ...[
                 _LimitDetailRow(item: items[index]),
                 if (index != items.length - 1)
-                  const Divider(height: 1, color: AppColors.borderSolid),
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    color: AppColors.borderSolid,
+                  ),
               ],
             ],
           ),

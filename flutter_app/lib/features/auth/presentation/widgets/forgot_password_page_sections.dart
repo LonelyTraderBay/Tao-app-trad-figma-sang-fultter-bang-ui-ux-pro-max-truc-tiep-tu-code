@@ -16,23 +16,23 @@ class _EmailStep extends StatelessWidget {
     return Column(
       children: [
         const _KeyHero(),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const Padding(padding: AppSpacing.authTopGapX5),
         Text(
           'Đặt lại mật khẩu',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const Padding(padding: AppSpacing.authTopGapX3),
         Text(
           'Nhập email đã đăng ký. Chúng tôi sẽ gửi mã xác minh để đặt lại\n'
           'mật khẩu.',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: 1.6,
+            height: AppSpacing.authReadableLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: 17)),
+        const Padding(padding: AppSpacing.authInputTopPadding),
         VitInput(
           controller: controller,
           fieldKey: ForgotPasswordPage.emailFieldKey,
@@ -57,17 +57,26 @@ class _KeyHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: Container(
-        width: 64,
-        height: 64,
-        decoration: BoxDecoration(
+      child: SizedBox.square(
+        dimension: AppSpacing.authHeroIconBoxSm,
+        child: Material(
           color: _authPrimary10,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: _authPrimary30, width: 1.5),
-        ),
-        child: const CustomPaint(
-          size: Size(32, 32),
-          painter: _KeyIconPainter(),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+            side: BorderSide(
+              color: _authPrimary30,
+              width: AppSpacing.borderWidth,
+            ),
+          ),
+          child: const Center(
+            child: CustomPaint(
+              size: Size(
+                AppSpacing.authHeroPainterSize,
+                AppSpacing.authHeroPainterSize,
+              ),
+              painter: _KeyIconPainter(),
+            ),
+          ),
         ),
       ),
     );
@@ -126,7 +135,7 @@ class _OtpStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const Padding(padding: AppSpacing.authTopGapX3),
         Text.rich(
           TextSpan(
             text: 'Mã 6 số đã được gửi đến ',
@@ -140,18 +149,18 @@ class _OtpStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+        const Padding(padding: AppSpacing.authTopGapX1),
         Text(
           '(Demo: nhập 123456)',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x6)),
+        const Padding(padding: AppSpacing.authTopGapX6),
         Text(
           'Mã OTP',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const Padding(padding: EdgeInsets.only(top: 6)),
+        const Padding(padding: AppSpacing.authCompactTopPadding),
         TextField(
           key: ForgotPasswordPage.otpFieldKey,
           controller: controller,
@@ -171,21 +180,27 @@ class _OtpStep extends StatelessWidget {
             counterText: '',
             filled: true,
             fillColor: AppColors.surface2,
-            contentPadding: EdgeInsets.zero,
+            contentPadding: AppSpacing.zeroInsets,
             border: _otpBorder(
               error.isEmpty ? AppColors.borderSolid : AppColors.sell,
             ),
             enabledBorder: _otpBorder(
               error.isEmpty ? AppColors.borderSolid : AppColors.sell,
             ),
-            focusedBorder: _otpBorder(_authPrimary, width: 2),
+            focusedBorder: _otpBorder(
+              _authPrimary,
+              width: AppSpacing.hairlineStroke,
+            ),
             errorBorder: _otpBorder(AppColors.sell),
-            focusedErrorBorder: _otpBorder(AppColors.sell, width: 2),
+            focusedErrorBorder: _otpBorder(
+              AppColors.sell,
+              width: AppSpacing.hairlineStroke,
+            ),
           ),
           onChanged: onChanged,
         ),
         if (error.isNotEmpty) ...[
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const Padding(padding: AppSpacing.authTopGapX2),
           Text(
             error,
             style: AppTextStyles.micro.copyWith(color: AppColors.sell),
@@ -195,7 +210,10 @@ class _OtpStep extends StatelessWidget {
     );
   }
 
-  OutlineInputBorder _otpBorder(Color color, {double width = 1.5}) {
+  OutlineInputBorder _otpBorder(
+    Color color, {
+    double width = AppSpacing.borderWidth,
+  }) {
     return OutlineInputBorder(
       borderRadius: AppRadii.inputRadius,
       borderSide: BorderSide(color: color, width: width),
@@ -233,13 +251,13 @@ class _ResetStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const Padding(padding: AppSpacing.authTopGapX3),
         Text(
           'Tạo mật khẩu mạnh để bảo vệ tài khoản',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x6)),
+        const Padding(padding: AppSpacing.authTopGapX6),
         VitInput(
           controller: newPasswordController,
           fieldKey: ForgotPasswordPage.newPasswordFieldKey,
@@ -261,7 +279,7 @@ class _ResetStep extends StatelessWidget {
           autofillHints: const [AutofillHints.newPassword],
           onChanged: (_) => onChanged(),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const Padding(padding: AppSpacing.authTopGapX4),
         VitInput(
           controller: confirmPasswordController,
           fieldKey: ForgotPasswordPage.confirmPasswordFieldKey,
@@ -275,7 +293,7 @@ class _ResetStep extends StatelessWidget {
           onChanged: (_) => onChanged(),
         ),
         if (error.isNotEmpty && !confirmMismatch) ...[
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const Padding(padding: AppSpacing.authTopGapX3),
           Text(
             error,
             style: AppTextStyles.micro.copyWith(color: AppColors.sell),
@@ -292,37 +310,40 @@ class _SuccessStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x6),
+      padding: AppSpacing.authStateVerticalPadding,
       child: Column(
         children: [
-          Container(
-            width: 96,
-            height: 96,
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.authStateIconBox,
+            child: Material(
               color: AppColors.buy15,
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.buy20, width: 2),
-            ),
-            child: const Icon(
-              Icons.check_circle_outline_rounded,
-              color: AppColors.buy,
-              size: 48,
+              shape: const CircleBorder(
+                side: BorderSide(
+                  color: AppColors.buy20,
+                  width: AppSpacing.hairlineStroke,
+                ),
+              ),
+              child: const Icon(
+                Icons.check_circle_outline_rounded,
+                color: AppColors.buy,
+                size: AppSpacing.authStateIconLg,
+              ),
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x6)),
+          const Padding(padding: AppSpacing.authTopGapX6),
           Text(
             'Thành công!',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const Padding(padding: AppSpacing.authTopGapX3),
           Text(
             'Mật khẩu của bạn đã được đặt lại thành công.\n'
             'Vui lòng đăng nhập với mật khẩu mới.',
             textAlign: TextAlign.center,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text2,
-              height: 1.6,
+              height: AppSpacing.authReadableLineHeight,
             ),
           ),
         ],

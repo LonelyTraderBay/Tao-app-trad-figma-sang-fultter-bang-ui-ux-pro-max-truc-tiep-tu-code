@@ -8,21 +8,20 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.inputRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          fontFeatures: AppTextStyles.tabularFigures,
+      child: Padding(
+        padding: AppSpacing.dcaChipPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
         ),
       ),
     );
@@ -71,14 +70,16 @@ class _IconBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.x6,
       height: AppSpacing.x6,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.mdRadius,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .10),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconSm),
     );
   }
 }
@@ -101,12 +102,16 @@ class _CardLabel extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.x2,
               height: AppSpacing.x2,
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: AppRadii.inputRadius,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.inputRadius,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.x2),
@@ -119,7 +124,7 @@ class _CardLabel extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const Padding(padding: AppSpacing.dcaTopPaddingX2),
         Text(
           subtitle,
           style: AppTextStyles.caption.copyWith(

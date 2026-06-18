@@ -77,7 +77,7 @@ class _QuestionCard extends StatelessWidget {
     return VitCard(
       key: StakingSuitabilityAssessmentPage.questionCardKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -143,18 +143,17 @@ class _OptionTile extends StatelessWidget {
         borderRadius: AppRadii.xlRadius,
         onTap: onTap,
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected ? AppColors.primary : AppColors.transparent,
-              width: AppSpacing.stakingAssessmentOptionBorderWidth,
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: selected ? AppColors.primary : AppColors.transparent,
+                width: AppSpacing.stakingAssessmentOptionBorderWidth,
+              ),
+              borderRadius: AppRadii.xlRadius,
             ),
-            borderRadius: AppRadii.xlRadius,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x4,
-            ),
+            padding: AppSpacing.earnStaticSelectPadding,
             child: Row(
               children: [
                 Icon(
@@ -246,7 +245,7 @@ class _QuizQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -295,7 +294,7 @@ class _QuizOption extends StatelessWidget {
         borderRadius: AppRadii.lgRadius,
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.earnCardPaddingX3,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
@@ -321,7 +320,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingSuitabilityAssessmentPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

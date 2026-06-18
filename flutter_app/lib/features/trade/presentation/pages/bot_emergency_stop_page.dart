@@ -64,8 +64,9 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 116
-            : DeviceMetrics.nativeBottomChrome + 40) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.tradeBotFooterBottomInsetNative
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -85,11 +86,13 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: BotEmergencyStopPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 13, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 12,
+                    customGap: AppSpacing.tradeBotCardGap,
                     children: [
                       _WarningBanner(snapshot: snapshot),
                       _SectionLabel('Bots to Stop (${snapshot.bots.length})'),
@@ -124,7 +127,7 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
                       _SupportNotice(snapshot: snapshot),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Emergency stop review',
@@ -139,8 +142,9 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
               ),
               _StickyActions(
                 bottomPadding: mode.usesVisualQaFrame
-                    ? DeviceMetrics.bottomChrome + 6
-                    : 20 + MediaQuery.paddingOf(context).bottom,
+                    ? DeviceMetrics.bottomChrome + AppSpacing.x2
+                    : AppSpacing.contentPad +
+                          MediaQuery.paddingOf(context).bottom,
                 canSubmit: _reasonId != null && _confirmed && !_stopping,
                 stopping: _stopping,
                 onCancel: () => context.go(AppRoutePaths.tradeBots),

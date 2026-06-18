@@ -88,7 +88,7 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
                 child: SingleChildScrollView(
                   key: ArenaJoinPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
                       maxWidth: DeviceMetrics.width,

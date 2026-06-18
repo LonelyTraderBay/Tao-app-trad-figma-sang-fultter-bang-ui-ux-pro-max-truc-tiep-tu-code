@@ -202,11 +202,9 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppModuleAccents.p2p,
-        shape: BoxShape.circle,
-      ),
+    return Material(
+      color: AppModuleAccents.p2p,
+      shape: const CircleBorder(),
       child: SizedBox(
         width: AppSpacing.buttonCompact,
         height: AppSpacing.buttonCompact,
@@ -235,58 +233,64 @@ class _ActivityRow extends StatelessWidget {
     final buy = activity.type == 'buy';
     final color = buy ? AppColors.buy : AppColors.sell;
     final status = _statusInfo(activity.status);
-    return Container(
-      padding: AppSpacing.p2pDashboardActivityPadding,
-      decoration: BoxDecoration(
-        border: last
-            ? null
-            : const Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          _IconBubble(
-            icon: buy ? Icons.south_west_rounded : Icons.north_east_rounded,
-            color: color,
-            small: true,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${buy ? 'Mua' : 'Bán'} ${_formatAmount(activity.amount)} ${activity.asset}',
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  '${activity.merchant} · ${activity.date}',
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.p2pDashboardActivityPadding,
+          child: Row(
             children: [
-              Text(
-                _formatMoneyCompact(activity.total),
-                style: AppTextStyles.micro.copyWith(
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
+              _IconBubble(
+                icon: buy ? Icons.south_west_rounded : Icons.north_east_rounded,
+                color: color,
+                small: true,
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${buy ? 'Mua' : 'Bán'} ${_formatAmount(activity.amount)} ${activity.asset}',
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      '${activity.merchant} · ${activity.date}',
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.x1),
-              _SmallPill(label: status.label, color: status.color),
+              const SizedBox(width: AppSpacing.x2),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    _formatMoneyCompact(activity.total),
+                    style: AppTextStyles.micro.copyWith(
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  _SmallPill(label: status.label, color: status.color),
+                ],
+              ),
             ],
           ),
-        ],
-      ),
+        ),
+        if (!last)
+          const Divider(
+            height: AppSpacing.p2pMarketplaceAnalyticsDividerHeight,
+            color: AppColors.divider,
+          ),
+      ],
     );
   }
 }
@@ -444,10 +448,18 @@ class _MonthlyBarPainter extends CustomPainter {
     double factor,
     Color color,
   ) {
-    final barHeight = math.max(6.0, height * factor);
+    final barHeight = math.max(
+      AppSpacing.p2pDashboardMonthlyBarMinHeight,
+      height * factor,
+    );
     final rect = RRect.fromRectAndRadius(
-      Rect.fromLTWH(x, top + height - barHeight, 12, barHeight),
-      const Radius.circular(3),
+      Rect.fromLTWH(
+        x,
+        top + height - barHeight,
+        AppSpacing.p2pDashboardMonthlyBarWidth,
+        barHeight,
+      ),
+      AppRadii.swatchCorner,
     );
     canvas.drawRRect(rect, Paint()..color = color);
   }

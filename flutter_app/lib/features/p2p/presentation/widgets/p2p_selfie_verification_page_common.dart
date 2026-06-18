@@ -61,7 +61,7 @@ class _LivenessActionTile extends StatelessWidget {
       radius: VitCardRadius.md,
       variant: completed ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: completed ? AppColors.buy20 : AppColors.cardBorder,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pSelfieReviewPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -110,18 +110,19 @@ class _ResultStep extends StatelessWidget {
       key: P2PSelfieVerificationPage.resultKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(
-          width: AppSpacing.buttonHero,
-          height: AppSpacing.buttonHero,
-          margin: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-          decoration: const BoxDecoration(
-            color: AppColors.buy10,
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(
-            Icons.check_circle_outline_rounded,
-            color: AppColors.buy,
-            size: AppSpacing.iconLg,
+        const Padding(
+          padding: AppSpacing.p2pSelfieResultIconMargin,
+          child: SizedBox.square(
+            dimension: AppSpacing.buttonHero,
+            child: Material(
+              color: AppColors.buy10,
+              shape: CircleBorder(),
+              child: Icon(
+                Icons.check_circle_outline_rounded,
+                color: AppColors.buy,
+                size: AppSpacing.iconLg,
+              ),
+            ),
           ),
         ),
         Text(
@@ -138,11 +139,14 @@ class _ResultStep extends StatelessWidget {
         const SizedBox(height: AppSpacing.x5),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pSelfieCardPadding,
           child: Column(
             children: [
               _ScoreRow(label: 'Face Match Score', value: snapshot.matchScore),
-              Container(height: 1, color: AppColors.cardBorder),
+              const SizedBox(
+                height: AppSpacing.dividerHairline,
+                child: ColoredBox(color: AppColors.cardBorder),
+              ),
               _ScoreRow(label: 'Liveness Score', value: snapshot.livenessScore),
             ],
           ),
@@ -150,7 +154,7 @@ class _ResultStep extends StatelessWidget {
         const SizedBox(height: AppSpacing.x5),
         VitCard(
           radius: VitCardRadius.md,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.p2pSelfieCardPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -165,7 +169,7 @@ class _ResultStep extends StatelessWidget {
                   'Dữ liệu biometric được mã hóa và xóa sau khi xác minh. Chúng tôi không lưu trữ ảnh selfie của bạn.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: AppSpacing.p2pSelfieBodyLineHeight,
                   ),
                 ),
               ),
@@ -202,7 +206,7 @@ class _ScoreRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      padding: AppSpacing.p2pSelfieScoreRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -266,13 +270,13 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 2),
+          padding: AppSpacing.p2pSelfieChecklistIconPadding,
           child: Icon(
             color == AppColors.warn
                 ? Icons.auto_awesome_rounded
                 : Icons.check_circle_outline_rounded,
             color: color,
-            size: 13,
+            size: AppSpacing.p2pSelfieChecklistIconSize,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -281,7 +285,7 @@ class _ChecklistRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.p2pSelfieBodyLineHeight,
             ),
           ),
         ),

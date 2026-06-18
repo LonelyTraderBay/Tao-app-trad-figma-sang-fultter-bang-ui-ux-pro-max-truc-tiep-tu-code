@@ -15,7 +15,7 @@ class _AlertHistoryTab extends StatelessWidget {
           children: [
             for (final entry in snapshot.history)
               VitCard(
-                padding: const EdgeInsets.all(AppSpacing.x4),
+                padding: AppSpacing.crossModuleCardPadding,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -76,7 +76,7 @@ class _AlertHistoryTab extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.sectionGap),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.crossModuleCardPadding,
           radius: VitCardRadius.lg,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,7 +186,7 @@ class _ChannelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -228,24 +228,30 @@ class _ToggleSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
+      child: SizedBox(
         width: AppSpacing.inputHeight,
         height: AppSpacing.x6,
-        padding: const EdgeInsets.all(AppSpacing.x2),
-        decoration: BoxDecoration(
-          color: enabled ? AppColors.primary : AppColors.toggleTrackOff,
-          borderRadius: AppRadii.xlRadius,
-        ),
-        child: AnimatedAlign(
-          duration: const Duration(milliseconds: 160),
-          alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: AppSpacing.x5,
-            height: AppSpacing.x5,
-            decoration: const BoxDecoration(
-              color: AppColors.navCenterIcon,
-              shape: BoxShape.circle,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: enabled ? AppColors.primary : AppColors.toggleTrackOff,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.xlRadius,
+            ),
+          ),
+          child: Padding(
+            padding: AppSpacing.crossModuleTogglePadding,
+            child: AnimatedAlign(
+              duration: const Duration(milliseconds: 160),
+              alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
+              child: const SizedBox.square(
+                dimension: AppSpacing.x5,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.navCenterIcon,
+                    shape: CircleBorder(),
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -290,7 +296,7 @@ class _TemplateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.crossModulePanelPadding,
       radius: VitCardRadius.sm,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -327,10 +333,7 @@ class _TemplateCard extends StatelessWidget {
                 style: TextButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: AppColors.navCenterIcon,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x4,
-                    vertical: AppSpacing.x2,
-                  ),
+                  padding: AppSpacing.crossModuleTextButtonPadding,
                   minimumSize: Size.zero,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   shape: const RoundedRectangleBorder(

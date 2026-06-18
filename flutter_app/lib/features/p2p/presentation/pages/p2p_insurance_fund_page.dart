@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -87,12 +86,7 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
-                      AppSpacing.x2,
-                    ),
+                    padding: AppSpacing.p2pTrustProgressTabPadding,
                     child: VitTabBar(
                       variant: VitTabBarVariant.segment,
                       activeKey: _tab.name,
@@ -126,10 +120,7 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                       child: SingleChildScrollView(
                         key: P2PInsuranceFundPage.contentKey,
                         physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.fromLTRB(
-                          AppSpacing.contentPad,
-                          AppSpacing.x3,
-                          AppSpacing.contentPad,
+                        padding: AppSpacing.p2pTrustProgressScrollPadding(
                           bottomInset,
                         ),
                         child: VitPageContent(
@@ -147,7 +138,7 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                             ),
                             const VitCard(
                               variant: VitCardVariant.inner,
-                              padding: EdgeInsets.all(AppSpacing.x3),
+                              padding: AppSpacing.p2pTrustProgressCompactPadding,
                               child: VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'Insurance fund review',

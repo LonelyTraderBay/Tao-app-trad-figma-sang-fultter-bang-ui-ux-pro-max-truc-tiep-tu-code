@@ -7,30 +7,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 3,
-          height: 16,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: _venuePrimary,
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Expanded(
-          child: Text(
-            text,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: text,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _venuePrimary,
     );
   }
 }
@@ -60,23 +40,25 @@ class _NoticePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 20,
-      right: 20,
-      top: MediaQuery.paddingOf(context).top + 18,
+      left: AppSpacing.contentPad,
+      right: AppSpacing.contentPad,
+      top:
+          MediaQuery.paddingOf(context).top +
+          AppSpacing.executionVenueNoticeTopOffset,
       child: Material(
         color: AppColors.transparent,
         child: VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.fromLTRB(12, 9, 8, 9),
+          padding: AppSpacing.executionVenueNoticePadding,
           borderColor: _venueBorder,
           child: Row(
             children: [
               const Icon(
                 Icons.check_circle_outline,
                 color: _venueGreen,
-                size: 18,
+                size: AppSpacing.executionVenueNoticeIcon,
               ),
-              const SizedBox(width: 9),
+              const SizedBox(width: AppSpacing.x3 + AppSpacing.x1),
               Expanded(
                 child: Text(
                   text,
@@ -86,7 +68,10 @@ class _NoticePanel extends StatelessWidget {
               IconButton(
                 visualDensity: VisualDensity.compact,
                 onPressed: onClose,
-                icon: const Icon(Icons.close_rounded, size: 18),
+                icon: const Icon(
+                  Icons.close_rounded,
+                  size: AppSpacing.executionVenueNoticeIcon,
+                ),
                 color: AppColors.text3,
               ),
             ],

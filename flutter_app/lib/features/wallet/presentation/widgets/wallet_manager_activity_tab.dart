@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class WalletActivityTab extends StatelessWidget {
   const WalletActivityTab({super.key, required this.snapshot});
@@ -40,28 +41,31 @@ class _ActivityRow extends StatelessWidget {
     final parts = wallet.lastActiveLabel.split(' ');
     final time = parts.isNotEmpty ? parts.first : wallet.lastActiveLabel;
     final date = parts.length > 1 ? parts.skip(1).join(' ') : '';
-    return Container(
+    return VitCard(
       height: AppSpacing.walletManagerActivityRowHeight,
       padding: AppSpacing.walletManagerActivityRowPadding,
-      decoration: BoxDecoration(
-        color: walletManagerPanel,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(color: walletManagerBorder),
-      ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: walletManagerBorder,
+      background: const ColoredBox(color: walletManagerPanel),
+      clip: true,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.walletManagerActivityIconBox,
             height: AppSpacing.walletManagerActivityIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .16),
+            child: ClipRRect(
               borderRadius: AppRadii.smRadius,
-            ),
-            alignment: Alignment.center,
-            child: Icon(
-              Icons.account_balance_wallet_outlined,
-              color: color,
-              size: AppSpacing.walletManagerActivityIcon,
+              child: ColoredBox(
+                color: color.withValues(alpha: .16),
+                child: Center(
+                  child: Icon(
+                    Icons.account_balance_wallet_outlined,
+                    color: color,
+                    size: AppSpacing.walletManagerActivityIcon,
+                  ),
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.walletManagerActivityIconGap),
@@ -75,7 +79,7 @@ class _ActivityRow extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.walletManagerActivityTextGap),
@@ -83,7 +87,7 @@ class _ActivityRow extends StatelessWidget {
                   wallet.maskedAddress,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ],
@@ -97,7 +101,7 @@ class _ActivityRow extends StatelessWidget {
                 date,
                 style: AppTextStyles.badge.copyWith(
                   color: AppColors.text2,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
               const SizedBox(height: AppSpacing.walletManagerActivityTimeGap),
@@ -105,7 +109,7 @@ class _ActivityRow extends StatelessWidget {
                 time,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],

@@ -8,20 +8,7 @@ class _MiniBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
-      borderColor: color.withValues(alpha: .18),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1.2,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -65,10 +52,10 @@ String _titleCase(String value) {
 }
 
 double _sortChipWidth(String label) {
-  if (label == 'Top ROI') return 78;
-  if (label == 'AUM cao') return 82;
-  if (label == 'Nhiều copier') return 108;
-  return 106;
+  if (label == 'Top ROI') return AppSpacing.copyTradingV2SortTopRoiWidth;
+  if (label == 'AUM cao') return AppSpacing.copyTradingV2SortAumWidth;
+  if (label.contains('copier')) return AppSpacing.copyTradingV2SortCopiersWidth;
+  return AppSpacing.copyTradingV2SortDefaultWidth;
 }
 
 String _formatCompact(double value, {String prefix = ''}) {

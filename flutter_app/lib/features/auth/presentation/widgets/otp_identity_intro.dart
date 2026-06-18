@@ -7,18 +7,22 @@ class _ShieldHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: Container(
-        width: 80,
-        height: 80,
-        decoration: BoxDecoration(
+      child: SizedBox.square(
+        dimension: AppSpacing.authHeroIconBoxMd,
+        child: Material(
           color: _authPrimary10,
-          borderRadius: AppRadii.cardLargeRadius,
-          border: Border.all(color: _authPrimary30, width: 1.5),
-        ),
-        child: const Icon(
-          Icons.gpp_good_outlined,
-          color: _authPrimary,
-          size: 40,
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardLargeRadius,
+            side: BorderSide(
+              color: _authPrimary30,
+              width: AppSpacing.borderWidth,
+            ),
+          ),
+          child: const Icon(
+            Icons.gpp_good_outlined,
+            color: _authPrimary,
+            size: AppSpacing.authHeroIconLg,
+          ),
         ),
       ),
     );
@@ -39,7 +43,7 @@ class _OtpIntro extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.pageTitle,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const Padding(padding: AppSpacing.authTopGapX3),
         Text.rich(
           TextSpan(
             text: 'Chúng tôi đã gửi mã 6 chữ số đến ',
@@ -49,7 +53,7 @@ class _OtpIntro extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.6,
+                  height: AppSpacing.authReadableLineHeight,
                 ),
               ),
             ],
@@ -57,10 +61,10 @@ class _OtpIntro extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: 1.6,
+            height: AppSpacing.authReadableLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+        const Padding(padding: AppSpacing.authTopGapX1),
         Text.rich(
           TextSpan(
             text: '(Demo: nhập ',

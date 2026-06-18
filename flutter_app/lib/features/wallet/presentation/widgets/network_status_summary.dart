@@ -26,16 +26,16 @@ class _SummaryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              VitCard(
                 width: AppSpacing.walletNetworkSummaryIcon,
                 height: AppSpacing.walletNetworkSummaryIcon,
-                decoration: BoxDecoration(
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.md,
+                borderColor: summaryColor.withValues(alpha: .42),
+                background: ColoredBox(
                   color: summaryColor.withValues(alpha: .08),
-                  borderRadius: AppRadii.cardRadius,
-                  border: Border.all(
-                    color: summaryColor.withValues(alpha: .42),
-                  ),
                 ),
+                clip: true,
                 alignment: Alignment.center,
                 child: Icon(
                   snapshot.downCount > 0
@@ -64,25 +64,12 @@ class _SummaryCard extends StatelessWidget {
                   ],
                 ),
               ),
-              GestureDetector(
+              VitIconButton(
                 key: NetworkStatusPage.refreshKey,
-                onTap: () {},
-                behavior: HitTestBehavior.opaque,
-                child: Container(
-                  width: AppSpacing.buttonCompact,
-                  height: AppSpacing.buttonCompact,
-                  decoration: BoxDecoration(
-                    color: _networkPanel,
-                    borderRadius: AppRadii.cardRadius,
-                    border: Border.all(color: _networkBorder),
-                  ),
-                  alignment: Alignment.center,
-                  child: const Icon(
-                    Icons.refresh_rounded,
-                    color: AppColors.text2,
-                    size: AppSpacing.walletAddressActionIcon,
-                  ),
-                ),
+                icon: Icons.refresh_rounded,
+                tooltip: 'Refresh network status',
+                onPressed: () {},
+                size: VitIconButtonSize.sm,
               ),
             ],
           ),

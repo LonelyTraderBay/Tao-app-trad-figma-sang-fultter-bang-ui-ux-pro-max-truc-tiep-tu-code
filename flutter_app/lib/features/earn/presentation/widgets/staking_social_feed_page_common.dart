@@ -12,10 +12,7 @@ class _StatTile extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: stat.tone == 'success' ? AppColors.buy20 : null,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnCardPaddingX2X4,
       child: Column(
         children: [
           Text(
@@ -51,7 +48,7 @@ class _FooterNote extends StatelessWidget {
       key: StakingSocialFeedPage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Text(
         note,
         textAlign: TextAlign.center,
@@ -74,22 +71,25 @@ class _Pill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: _softBackground(color),
-        borderRadius: AppRadii.smRadius,
-        border: emphasis ? Border.all(color: _softBorder(color)) : null,
+        shape: RoundedRectangleBorder(
+          side: emphasis
+              ? BorderSide(color: _softBorder(color))
+              : BorderSide.none,
+          borderRadius: AppRadii.smRadius,
+        ),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.stakingCommunityPillLineHeight,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.stakingCommunityPillLineHeight,
+          ),
         ),
       ),
     );

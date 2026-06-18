@@ -19,7 +19,7 @@ class _EntryList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (entries.isEmpty) {
       return VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x5),
+        padding: AppSpacing.p2pBlacklistEmptyPadding,
         child: Column(
           children: [
             const Icon(
@@ -85,7 +85,7 @@ class _EntryCard extends StatelessWidget {
           InkWell(
             onTap: onToggle,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.p2pBlacklistCardPadding,
               child: Row(
                 children: [
                   _Avatar(entry: entry, reason: reason),
@@ -111,7 +111,7 @@ class _EntryCard extends StatelessWidget {
                               const Icon(
                                 Icons.verified_outlined,
                                 color: AppColors.primary,
-                                size: 11,
+                                size: AppSpacing.p2pBlacklistVerifiedIcon,
                               ),
                             ],
                             if (entry.badge != null) ...[
@@ -173,28 +173,35 @@ class _ExpandedEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _reasonColor(reason);
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+    return Column(
+      children: [
+        const SizedBox(
+          height: AppSpacing.dividerHairline,
+          child: ColoredBox(color: AppColors.divider),
+        ),
+        Padding(
+          padding: AppSpacing.p2pBlacklistCardPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.p2pBlacklistCompactCardPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(_reasonIcon(reason.iconKey), color: color, size: 14),
+                Icon(
+                  _reasonIcon(reason.iconKey),
+                  color: color,
+                  size: AppSpacing.p2pBlacklistInlineIcon,
+                ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
                     entry.reasonText,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: 1.45,
+                      height: AppSpacing.p2pBlacklistReadableLineHeight,
                     ),
                   ),
                 ),
@@ -240,7 +247,7 @@ class _ExpandedEntry extends StatelessWidget {
                 child: VitCtaButton(
                   key: P2PBlacklistPage.unblockKey(entry.id),
                   variant: VitCtaButtonVariant.success,
-                  height: 40,
+                  height: AppSpacing.p2pBlacklistActionHeight,
                   onPressed: onUnblock,
                   leading: const Icon(Icons.check_circle_outline_rounded),
                   child: const Text('Bỏ chặn'),
@@ -250,7 +257,7 @@ class _ExpandedEntry extends StatelessWidget {
               Expanded(
                 child: VitCtaButton(
                   variant: VitCtaButtonVariant.ghost,
-                  height: 40,
+                  height: AppSpacing.p2pBlacklistActionHeight,
                   onPressed: () => HapticFeedback.selectionClick(),
                   leading: const Icon(
                     Icons.report_problem_outlined,
@@ -261,8 +268,10 @@ class _ExpandedEntry extends StatelessWidget {
               ),
             ],
           ),
-        ],
-      ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -279,39 +288,47 @@ class _Avatar extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
+        SizedBox(
+          width: AppSpacing.p2pBlacklistAvatarSize,
+          height: AppSpacing.p2pBlacklistAvatarSize,
+          child: Material(
             color: AppColors.sell10,
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.sell20, width: 1.5),
-          ),
-          child: Center(
-            child: Text(
-              entry.username.characters.first.toUpperCase(),
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.sell,
-                fontWeight: AppTextStyles.bold,
+            shape: const CircleBorder(
+              side: BorderSide(
+                color: AppColors.sell20,
+                width: AppSpacing.p2pBlacklistAvatarBorder,
+              ),
+            ),
+            child: Center(
+              child: Text(
+                entry.username.characters.first.toUpperCase(),
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.sell,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
           ),
         ),
         Positioned(
-          right: -2,
-          bottom: -2,
-          child: Container(
-            width: 16,
-            height: 16,
-            decoration: BoxDecoration(
+          right: AppSpacing.p2pBlacklistAvatarBadgeOffset,
+          bottom: AppSpacing.p2pBlacklistAvatarBadgeOffset,
+          child: SizedBox(
+            width: AppSpacing.p2pBlacklistAvatarBadgeSize,
+            height: AppSpacing.p2pBlacklistAvatarBadgeSize,
+            child: Material(
               color: color,
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.surface, width: 2),
-            ),
-            child: Icon(
-              _reasonIcon(reason.iconKey),
-              color: AppColors.onAccent,
-              size: 8,
+              shape: const CircleBorder(
+                side: BorderSide(
+                  color: AppColors.surface,
+                  width: AppSpacing.p2pBlacklistAvatarBadgeBorder,
+                ),
+              ),
+              child: Icon(
+                _reasonIcon(reason.iconKey),
+                color: AppColors.onAccent,
+                size: AppSpacing.p2pBlacklistAvatarBadgeIcon,
+              ),
             ),
           ),
         ),
@@ -329,7 +346,7 @@ class _OrderLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pBlacklistCompactCardPadding,
       child: Row(
         children: [
           const Icon(

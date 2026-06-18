@@ -16,7 +16,7 @@ class _AllocationComparisonCard extends StatelessWidget {
     return VitCard(
       key: SavingsAutoRebalancePage.allocationKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
@@ -41,7 +41,7 @@ class _AllocationComparisonCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+                padding: AppSpacing.earnHorizontalPaddingX2,
                 child: Column(
                   children: [
                     const Icon(
@@ -126,19 +126,19 @@ class _AssetDriftRow extends StatelessWidget {
 
     return Row(
       children: [
-        Container(
-          width: AppSpacing.savingsRebalanceAssetBadge,
-          height: AppSpacing.savingsRebalanceAssetBadge,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
+        SizedBox.square(
+          dimension: AppSpacing.savingsRebalanceAssetBadge,
+          child: Material(
             color: color.withValues(alpha: .14),
-            borderRadius: BorderRadius.circular(AppRadii.sm),
-          ),
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              position.asset,
-              style: _captionMedium.copyWith(color: color),
+            borderRadius: AppRadii.smRadius,
+            child: Center(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  position.asset,
+                  style: _captionMedium.copyWith(color: color),
+                ),
+              ),
             ),
           ),
         ),
@@ -210,22 +210,21 @@ class _DriftStatusCard extends StatelessWidget {
     return VitCard(
       key: SavingsAutoRebalancePage.driftStatusKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.savingsRebalanceIconBox,
-            height: AppSpacing.savingsRebalanceIconBox,
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.savingsRebalanceIconBox,
+            child: Material(
               color: color.withValues(alpha: .14),
-              borderRadius: BorderRadius.circular(AppRadii.md),
-            ),
-            child: Icon(
-              needsAction
-                  ? Icons.warning_amber_rounded
-                  : Icons.check_circle_outline_rounded,
-              color: color,
-              size: AppSpacing.savingsRebalanceIcon,
+              borderRadius: AppRadii.mdRadius,
+              child: Icon(
+                needsAction
+                    ? Icons.warning_amber_rounded
+                    : Icons.check_circle_outline_rounded,
+                color: color,
+                size: AppSpacing.savingsRebalanceIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -251,14 +250,11 @@ class _DriftStatusCard extends StatelessWidget {
               onPressed: onPreview,
               style: TextButton.styleFrom(
                 foregroundColor: AppColors.primary,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.x3,
-                  vertical: AppSpacing.x2,
-                ),
+                padding: AppSpacing.earnCardPaddingX3X2,
                 backgroundColor: AppColors.primary08,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadii.sm),
-                  side: const BorderSide(color: AppColors.primary20),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.smRadius,
+                  side: BorderSide(color: AppColors.primary20),
                 ),
               ),
               child: const Text('Xem trước'),
@@ -279,7 +275,7 @@ class _DriftHistoryCard extends StatelessWidget {
     return VitCard(
       key: SavingsAutoRebalancePage.driftChartKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
@@ -375,19 +371,18 @@ class _AutoStatusCard extends StatelessWidget {
     return VitCard(
       key: SavingsAutoRebalancePage.autoStatusKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.savingsRebalanceIconBox,
-            height: AppSpacing.savingsRebalanceIconBox,
-            decoration: BoxDecoration(
+          SizedBox.square(
+            dimension: AppSpacing.savingsRebalanceIconBox,
+            child: Material(
               color: autoEnabled ? AppColors.buy10 : AppColors.hoverBg,
-              borderRadius: BorderRadius.circular(AppRadii.md),
-            ),
-            child: Icon(
-              autoEnabled ? Icons.play_arrow_rounded : Icons.pause_rounded,
-              color: autoEnabled ? AppColors.buy : AppColors.text3,
+              borderRadius: AppRadii.mdRadius,
+              child: Icon(
+                autoEnabled ? Icons.play_arrow_rounded : Icons.pause_rounded,
+                color: autoEnabled ? AppColors.buy : AppColors.text3,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),

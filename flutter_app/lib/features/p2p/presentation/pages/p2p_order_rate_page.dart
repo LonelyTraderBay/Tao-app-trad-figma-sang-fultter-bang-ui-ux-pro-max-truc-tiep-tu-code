@@ -62,8 +62,9 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.p2pOrderBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pOrderBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -95,7 +96,9 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
                         child: SingleChildScrollView(
                           key: P2POrderRatePage.contentKey,
                           physics: const BouncingScrollPhysics(),
-                          padding: EdgeInsets.only(bottom: bottomInset),
+                          padding: AppSpacing.p2pOrderLifecycleScrollPadding(
+                            bottomInset,
+                          ),
                           child: VitPageContent(
                             padding: VitContentPadding.relaxed,
                             customGap: AppSpacing.x6,

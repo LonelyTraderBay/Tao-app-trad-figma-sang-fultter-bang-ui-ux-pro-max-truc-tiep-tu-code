@@ -23,21 +23,21 @@ class _PaymentMethodGroup extends StatelessWidget {
         Row(
           children: [
             Icon(icon, color: AppColors.text3, size: 13),
-            const SizedBox(width: 6),
+            const SizedBox(width: AppSpacing.walletBuyGroupIconGap),
             Text(
               label,
               style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.walletBuyPaymentCardGap),
         for (final method in methods) ...[
           _PaymentMethodCard(
             method: method,
             selected: method.id == selectedId,
             onTap: () => onChanged(method.id),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.walletBuyPaymentCardGap),
         ],
       ],
     );
@@ -62,27 +62,26 @@ class _PaymentMethodCard extends StatelessWidget {
       key: Key('sc145_buy_crypto_payment_${method.id}'),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 64,
-        padding: const EdgeInsets.fromLTRB(12, 10, 13, 10),
-        decoration: BoxDecoration(
+      child: VitCard(
+        height: AppSpacing.walletBuyPaymentCardHeight,
+        padding: AppSpacing.walletBuyPaymentCardPadding,
+        radius: VitCardRadius.sm,
+        borderColor: selected ? _buyPrimary : AppColors.borderSolid,
+        clip: true,
+        background: ColoredBox(
           color: selected ? AppColors.primary08 : _buyPanel,
-          borderRadius: AppRadii.inputRadius,
-          border: Border.all(
-            color: selected ? _buyPrimary : AppColors.borderSolid,
-            width: 1.35,
-          ),
         ),
         child: Row(
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Color(method.logoColorHex).withValues(alpha: .18),
-                borderRadius: AppRadii.lgRadius,
-              ),
+            VitCard(
+              width: AppSpacing.walletBuyPaymentLogoSize,
+              height: AppSpacing.walletBuyPaymentLogoSize,
               alignment: Alignment.center,
+              radius: VitCardRadius.lg,
+              clip: true,
+              background: ColoredBox(
+                color: Color(method.logoColorHex).withValues(alpha: .18),
+              ),
               child: Text(
                 method.logo,
                 style: method.logo.length > 3
@@ -94,7 +93,7 @@ class _PaymentMethodCard extends StatelessWidget {
                       ),
               ),
             ),
-            const SizedBox(width: 13),
+            const SizedBox(width: AppSpacing.cardGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -111,12 +110,14 @@ class _PaymentMethodCard extends StatelessWidget {
                         ),
                       ),
                       if (method.isPopular) ...[
-                        const SizedBox(width: 8),
+                        const SizedBox(
+                          width: AppSpacing.walletBuyPaymentPopularGap,
+                        ),
                         const _PopularBadge(),
                       ],
                     ],
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: AppSpacing.walletBuyGroupIconGap),
                   Row(
                     children: [
                       Icon(
@@ -126,11 +127,11 @@ class _PaymentMethodCard extends StatelessWidget {
                         color: instant ? _buyGreen : AppColors.text3,
                         size: 11,
                       ),
-                      const SizedBox(width: 5),
+                      const SizedBox(width: AppSpacing.walletBuyPaymentMetaGap),
                       Text(
                         method.processingTime,
                         style: AppTextStyles.micro.copyWith(
-                          height: 1.2,
+                          height: AppSpacing.walletBuyMetaLineHeight,
                           color: instant ? _buyGreen : AppColors.text3,
                         ),
                       ),
@@ -152,12 +153,11 @@ class _PopularBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        borderRadius: BorderRadius.circular(7),
-      ),
+    return VitCard(
+      padding: AppSpacing.walletBuyPopularBadgePadding,
+      radius: VitCardRadius.sm,
+      clip: true,
+      background: const ColoredBox(color: AppColors.buy10),
       child: Text(
         'Phổ biến',
         style: AppTextStyles.badge.copyWith(color: _buyGreen),
@@ -173,27 +173,12 @@ class _RadioMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 20,
-      height: 20,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: selected ? _buyPrimary : AppColors.borderSolid,
-          width: 2,
-        ),
-      ),
-      alignment: Alignment.center,
-      child: selected
-          ? Container(
-              width: 10,
-              height: 10,
-              decoration: const BoxDecoration(
-                color: _buyPrimary,
-                shape: BoxShape.circle,
-              ),
-            )
-          : null,
+    return Icon(
+      selected
+          ? Icons.radio_button_checked_rounded
+          : Icons.radio_button_unchecked_rounded,
+      color: selected ? _buyPrimary : AppColors.borderSolid,
+      size: AppSpacing.iconMd,
     );
   }
 }
@@ -206,26 +191,24 @@ class _RateInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 15),
-      decoration: BoxDecoration(
-        color: _buyPanel,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.overlayStroke),
-      ),
+    return VitCard(
+      padding: AppSpacing.walletBuyRateInfoPadding,
+      borderColor: AppColors.overlayStroke,
+      clip: true,
+      background: const ColoredBox(color: _buyPanel),
       child: Column(
         children: [
           _RateRow(
             label: 'Tỷ giá hiện tại',
             value: '1 ${crypto.symbol} = ${_formatInt(crypto.priceVnd)} VND',
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletBuyInlineGap),
           const _RateRow(
             label: 'Phí giao dịch',
             value: 'Miễn phí',
             valueColor: _buyGreen,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletBuyInlineGap),
           _RateRow(
             label: 'Hạn mức ngày',
             value: '${payment.dailyLimitLabel} VND',

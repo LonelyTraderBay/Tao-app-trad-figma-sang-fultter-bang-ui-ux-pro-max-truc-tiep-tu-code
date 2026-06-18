@@ -15,7 +15,7 @@ class _InputSummaryHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -138,7 +138,7 @@ class _QuickComparisonCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadBridgeComparePage.quickCompareKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -283,7 +283,7 @@ class _MetricBarRow extends StatelessWidget {
         ? AppColors.sell
         : route.accent;
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.launchpadBottomPaddingX2,
       child: Row(
         children: [
           SizedBox(
@@ -300,29 +300,37 @@ class _MetricBarRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadii.xl),
+              borderRadius: AppRadii.xlRadius,
               child: ColoredBox(
                 color: AppColors.surface2,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: FractionallySizedBox(
                     widthFactor: fraction,
-                    child: Container(
+                    child: SizedBox(
                       height: AppSpacing.x4,
-                      alignment: Alignment.centerRight,
-                      padding: const EdgeInsets.only(right: AppSpacing.x2),
-                      decoration: BoxDecoration(
-                        color: color.withValues(alpha: best ? 1 : .58),
-                        borderRadius: BorderRadius.circular(AppRadii.xl),
-                      ),
-                      child: Text(
-                        label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.onAccent,
-                          fontWeight: AppTextStyles.bold,
-                          fontFeatures: AppTextStyles.tabularFigures,
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: color.withValues(alpha: best ? 1 : .58),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: AppRadii.xlRadius,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: AppSpacing.launchpadRightPaddingX2,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              label,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.onAccent,
+                                fontWeight: AppTextStyles.bold,
+                                fontFeatures: AppTextStyles.tabularFigures,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -397,37 +405,38 @@ class _SortChip extends StatelessWidget {
       key: LaunchpadBridgeComparePage.sortKey(option.value),
       onTap: onTap,
       borderRadius: AppRadii.inputRadius,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: active ? AppColors.primary08 : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? AppColors.primary.withValues(alpha: .24)
-                : AppColors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
+            side: BorderSide(
+              color: active
+                  ? AppColors.primary.withValues(alpha: .24)
+                  : AppColors.transparent,
+            ),
           ),
-          borderRadius: AppRadii.inputRadius,
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              _sortIcon(option.iconKey),
-              color: active ? AppColors.primary : AppColors.text3,
-              size: AppSpacing.launchpadIconSm,
-            ),
-            const SizedBox(width: AppSpacing.x1),
-            Text(
-              option.label,
-              style: AppTextStyles.caption.copyWith(
+        child: Padding(
+          padding: AppSpacing.launchpadPillPadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                _sortIcon(option.iconKey),
                 color: active ? AppColors.primary : AppColors.text3,
-                fontWeight: active ? AppTextStyles.bold : FontWeight.w500,
+                size: AppSpacing.launchpadIconSm,
               ),
-            ),
-          ],
+              const SizedBox(width: AppSpacing.x1),
+              Text(
+                option.label,
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? AppColors.primary : AppColors.text3,
+                  fontWeight: active ? AppTextStyles.bold : FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

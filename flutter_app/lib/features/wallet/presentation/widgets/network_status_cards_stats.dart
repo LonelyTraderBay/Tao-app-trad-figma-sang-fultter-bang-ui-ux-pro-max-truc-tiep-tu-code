@@ -52,13 +52,15 @@ class _NetworkCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
+              VitCard(
                 width: AppSpacing.walletNetworkActionIconBox,
                 height: AppSpacing.walletNetworkActionIconBox,
-                decoration: BoxDecoration(
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.md,
+                background: ColoredBox(
                   color: healthColor.withValues(alpha: .08),
-                  borderRadius: AppRadii.cardRadius,
                 ),
+                clip: true,
                 alignment: Alignment.center,
                 child: Icon(
                   _healthIcon(network.health),
@@ -227,7 +229,7 @@ class _CongestionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: AppRadii.pillRadius,
       child: LinearProgressIndicator(
         minHeight: AppSpacing.walletNetworkProgressHeight,
         value: (percent / 100).clamp(0, 1).toDouble(),
@@ -247,13 +249,13 @@ class _AvailabilityChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = enabled ? _networkGreen : _networkRed;
-    return Container(
+    return VitCard(
       height: AppSpacing.walletNetworkAvailabilityHeight,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      background: ColoredBox(color: color.withValues(alpha: .05)),
+      clip: true,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .05),
-        borderRadius: AppRadii.inputRadius,
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -283,12 +285,12 @@ class _NetworkNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       padding: AppSpacing.walletNetworkNotePadding,
-      decoration: BoxDecoration(
-        color: _networkAmber.withValues(alpha: .06),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      background: ColoredBox(color: _networkAmber.withValues(alpha: .06)),
+      clip: true,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

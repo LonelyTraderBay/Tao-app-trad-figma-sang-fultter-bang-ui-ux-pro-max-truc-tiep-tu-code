@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
@@ -37,20 +39,22 @@ class MarketSectorControls extends StatelessWidget {
                 active: timeframe == activeTimeframe,
                 onTap: () => onTimeframeSelected(timeframe),
               ),
-              if (timeframe != timeframes.last) const SizedBox(width: 8),
+              if (timeframe != timeframes.last)
+                const SizedBox(width: AppSpacing.marketSectorControlChipGap),
             ],
           ],
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.marketSectorControlGroupGap),
         Expanded(
           child: SizedBox(
-            height: 32,
+            height: AppSpacing.marketSectorControlHeight,
             child: ListView.separated(
               reverse: true,
               scrollDirection: Axis.horizontal,
               clipBehavior: Clip.none,
               itemCount: sortOptions.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 8),
+              separatorBuilder: (_, _) =>
+                  const SizedBox(width: AppSpacing.marketSectorControlChipGap),
               itemBuilder: (context, index) {
                 final option = sortOptions[sortOptions.length - 1 - index];
                 return _ChipButton(
@@ -82,33 +86,39 @@ class _ChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(999),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        height: 32,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? marketSectorPrimary.withValues(alpha: 0.16)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? marketSectorPrimary.withValues(alpha: 0.38)
-                : AppColors.borderSolid,
-          ),
-          borderRadius: BorderRadius.circular(999),
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? marketSectorPrimary : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
+    final shape = RoundedRectangleBorder(
+      borderRadius: AppRadii.pillRadius,
+      side: BorderSide(
+        color: active
+            ? marketSectorPrimary.withValues(alpha: 0.38)
+            : AppColors.borderSolid,
+      ),
+    );
+
+    return Material(
+      color: active
+          ? marketSectorPrimary.withValues(alpha: 0.16)
+          : AppColors.surface2,
+      shape: shape,
+      child: InkWell(
+        onTap: onTap,
+        customBorder: shape,
+        child: SizedBox(
+          height: AppSpacing.marketSectorControlHeight,
+          child: Padding(
+            padding: AppSpacing.marketSectorControlChipPadding,
+            child: Center(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: active ? marketSectorPrimary : AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.marketSectorLineHeightTight,
+                ),
+              ),
+            ),
           ),
         ),
       ),

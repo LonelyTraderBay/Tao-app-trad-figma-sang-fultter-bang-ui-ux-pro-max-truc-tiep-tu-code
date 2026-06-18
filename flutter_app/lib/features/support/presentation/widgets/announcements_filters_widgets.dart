@@ -17,12 +17,7 @@ class _FilterRail extends StatelessWidget {
       key: AnnouncementsPage.filtersKey,
       scrollDirection: Axis.horizontal,
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        AppSpacing.x5,
-        AppSpacing.contentPad,
-        AppSpacing.x1,
-      ),
+      padding: AppSpacing.supportFilterRailPadding,
       child: Row(
         children: [
           for (final filter in filters) ...[
@@ -56,25 +51,30 @@ class _FilterChip extends StatelessWidget {
       key: AnnouncementsPage.filterKey(filter.id),
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: 34,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
+      child: SizedBox(
+        height: AppSpacing.supportFilterChipHeight,
+        child: Material(
           color: selected ? AppColors.primary12 : AppColors.surface,
-          border: Border.all(
-            color: selected ? AppColors.primary40 : AppColors.borderSolid,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.mdRadius,
+            side: BorderSide(
+              color: selected ? AppColors.primary40 : AppColors.borderSolid,
+            ),
           ),
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Text(
-          filter.label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: selected ? AppColors.primary : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1.1,
+          child: Padding(
+            padding: AppSpacing.supportFilterChipPadding,
+            child: Center(
+              child: Text(
+                filter.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: selected ? AppColors.primary : AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.supportLineHeightFilter,
+                ),
+              ),
+            ),
           ),
         ),
       ),

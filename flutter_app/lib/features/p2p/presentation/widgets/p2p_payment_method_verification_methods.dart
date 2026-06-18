@@ -41,17 +41,17 @@ class _OwnershipHero extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.x7,
-            height: AppSpacing.x7,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.shield_outlined,
-              color: AppColors.text1,
-              size: AppSpacing.p2pPaymentHeroIcon,
+          const Material(
+            color: AppColors.primary,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+            child: SizedBox(
+              width: AppSpacing.x7,
+              height: AppSpacing.x7,
+              child: Icon(
+                Icons.shield_outlined,
+                color: AppColors.text1,
+                size: AppSpacing.p2pPaymentHeroIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),

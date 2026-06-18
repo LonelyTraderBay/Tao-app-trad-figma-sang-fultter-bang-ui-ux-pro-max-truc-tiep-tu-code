@@ -9,7 +9,7 @@ class _StudioStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x2),
+      padding: AppSpacing.arenaStudioStepperPadding,
       child: Row(
         children: [
           for (var i = 0; i < steps.length; i++) ...[
@@ -17,15 +17,21 @@ class _StudioStepper extends StatelessWidget {
               child: _StepMarker(item: steps[i], activeStep: step),
             ),
             if (i != steps.length - 1)
-              Container(
-                width: AppSpacing.x5,
-                height: AppSpacing.arenaStudioStepperLineHeight,
-                margin: const EdgeInsets.only(bottom: AppSpacing.x5),
-                decoration: BoxDecoration(
-                  color: steps[i].index < step
-                      ? AppColors.buy
-                      : AppColors.surface3,
-                  borderRadius: AppRadii.xsRadius,
+              Padding(
+                padding: AppSpacing.arenaStudioStepperLineMargin,
+                child: SizedBox(
+                  width: AppSpacing.x5,
+                  height: AppSpacing.arenaStudioStepperLineHeight,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: steps[i].index < step
+                          ? AppColors.buy
+                          : AppColors.surface3,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadii.xsRadius,
+                      ),
+                    ),
+                  ),
                 ),
               ),
           ],
@@ -56,30 +62,34 @@ class _StepMarker extends StatelessWidget {
 
     return Column(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.arenaStudioStepDot,
           height: AppSpacing.arenaStudioStepDot,
-          decoration: BoxDecoration(
-            color: fill,
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: isActive ? AppColors.warn15 : AppColors.borderSolid,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: fill,
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: isActive ? AppColors.warn15 : AppColors.borderSolid,
+                ),
+              ),
+            ),
+            child: Center(
+              child: isDone
+                  ? const Icon(
+                      Icons.check_rounded,
+                      color: AppColors.navCenterIcon,
+                      size: AppSpacing.arenaStudioStepIcon,
+                    )
+                  : Text(
+                      '${item.index}',
+                      style: AppTextStyles.micro.copyWith(
+                        color: textColor,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
             ),
           ),
-          alignment: Alignment.center,
-          child: isDone
-              ? const Icon(
-                  Icons.check_rounded,
-                  color: AppColors.navCenterIcon,
-                  size: AppSpacing.arenaStudioStepIcon,
-                )
-              : Text(
-                  '${item.index}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: textColor,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
         ),
         const SizedBox(height: AppSpacing.x1),
         Text(

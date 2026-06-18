@@ -10,7 +10,7 @@ class _SummaryStats extends StatelessWidget {
     return VitCard(
       key: StakingValidatorHealthMonitorPage.statsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           Expanded(
@@ -66,10 +66,7 @@ class _SummaryTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: borderColor,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnCardPaddingX2X4,
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
@@ -115,21 +112,28 @@ class _ValidatorCard extends StatelessWidget {
       key: StakingValidatorHealthMonitorPage.validatorKey(validator.id),
       radius: VitCardRadius.lg,
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.ctaHeight,
                 height: AppSpacing.ctaHeight,
-                decoration: BoxDecoration(
-                  color: statusColor.withValues(alpha: 0.12),
-                  borderRadius: AppRadii.lgRadius,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: statusColor.withValues(alpha: 0.12),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.lgRadius,
+                    ),
+                  ),
+                  child: Icon(
+                    _statusIcon(validator.status),
+                    color: statusColor,
+                  ),
                 ),
-                child: Icon(_statusIcon(validator.status), color: statusColor),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -279,7 +283,7 @@ class _ValidatorMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -320,7 +324,7 @@ class _TrendSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             children: [
               SizedBox(

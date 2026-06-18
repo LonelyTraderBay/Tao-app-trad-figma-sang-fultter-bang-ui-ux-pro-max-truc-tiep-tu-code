@@ -24,12 +24,11 @@ class WalletAllocationCard extends StatelessWidget {
                 for (final asset in assets.take(6)) ...[
                   Row(
                     children: [
-                      Container(
+                      SizedBox(
                         width: AppSpacing.walletAllocationLegendMarker,
                         height: AppSpacing.walletAllocationLegendMarker,
-                        decoration: BoxDecoration(
-                          color: Color(asset.colorHex),
-                          shape: BoxShape.circle,
+                        child: ClipOval(
+                          child: ColoredBox(color: Color(asset.colorHex)),
                         ),
                       ),
                       const SizedBox(

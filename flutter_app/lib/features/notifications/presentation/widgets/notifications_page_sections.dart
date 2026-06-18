@@ -21,12 +21,7 @@ class _NotificationToolbar extends StatelessWidget {
       radius: VitCardRadius.sm,
       variant: VitCardVariant.inner,
       borderColor: AppColors.divider,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        AppSpacing.x3,
-        AppSpacing.contentPad,
-        AppSpacing.x3,
-      ),
+      padding: AppSpacing.notificationsToolbarPadding,
       child: Row(
         children: [
           const Icon(
@@ -116,12 +111,7 @@ class _NotificationRow extends StatelessWidget {
       radius: VitCardRadius.sm,
       variant: highlighted ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: showDivider ? AppColors.divider : AppColors.transparent,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        AppSpacing.x2,
-        AppSpacing.contentPad,
-        AppSpacing.x2,
-      ),
+      padding: AppSpacing.notificationsRowPadding,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,13 +136,14 @@ class _NotificationRow extends StatelessWidget {
                       ),
                     ),
                     if (!notification.isRead)
-                      Container(
-                        width: 8,
-                        height: 8,
-                        margin: const EdgeInsets.only(left: AppSpacing.x2),
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary,
-                          shape: BoxShape.circle,
+                      const Padding(
+                        padding: AppSpacing.notificationsUnreadDotMargin,
+                        child: SizedBox.square(
+                          dimension: AppSpacing.notificationsUnreadDotSize,
+                          child: Material(
+                            color: AppColors.primary,
+                            shape: CircleBorder(),
+                          ),
                         ),
                       ),
                   ],
@@ -164,7 +155,7 @@ class _NotificationRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.25,
+                    height: AppSpacing.notificationsMessageLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -211,32 +202,15 @@ class _ToolbarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: 34,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: .10),
-          border: Border.all(color: color.withValues(alpha: .22)),
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: color, size: AppSpacing.iconSm),
-            const SizedBox(width: AppSpacing.x2),
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return VitIconButton(
+      icon: icon,
+      tooltip: label,
+      label: label,
+      size: VitIconButtonSize.md,
+      variant: color == AppColors.buy
+          ? VitIconButtonVariant.success
+          : VitIconButtonVariant.primary,
+      onPressed: onTap,
     );
   }
 }
@@ -248,16 +222,20 @@ class _TypeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 38,
-      height: 38,
-      alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: AppSpacing.x1),
-      decoration: BoxDecoration(
-        color: style.color.withValues(alpha: .16),
-        borderRadius: AppRadii.lgRadius,
+    return Padding(
+      padding: AppSpacing.notificationsTypeIconMargin,
+      child: SizedBox.square(
+        dimension: AppSpacing.notificationsTypeIconBox,
+        child: Material(
+          color: style.color.withValues(alpha: .16),
+          borderRadius: AppRadii.lgRadius,
+          child: Icon(
+            style.icon,
+            color: style.color,
+            size: AppSpacing.notificationsTypeIcon,
+          ),
+        ),
       ),
-      child: Icon(style.icon, color: style.color, size: 19),
     );
   }
 }
@@ -270,24 +248,7 @@ class _TypePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.caption.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1.1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -299,24 +260,13 @@ class _DeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitIconButton(
       key: NotificationsPage.deleteKey(id),
-      onTap: onDelete,
-      borderRadius: AppRadii.smRadius,
-      child: Container(
-        width: 34,
-        height: 34,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: AppColors.sell10,
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: const Icon(
-          Icons.delete_outline_rounded,
-          color: AppColors.sell,
-          size: AppSpacing.iconSm,
-        ),
-      ),
+      icon: Icons.delete_outline_rounded,
+      tooltip: 'Delete notification',
+      size: VitIconButtonSize.md,
+      variant: VitIconButtonVariant.danger,
+      onPressed: onDelete,
     );
   }
 }
@@ -329,18 +279,26 @@ class _ListFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+      padding: AppSpacing.notificationsFooterPadding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(width: 36, height: 1, color: AppColors.borderSolid),
+          const SizedBox(
+            width: AppSpacing.notificationsFooterDividerWidth,
+            height: AppSpacing.notificationsFooterDividerHeight,
+            child: ColoredBox(color: AppColors.borderSolid),
+          ),
           const SizedBox(width: AppSpacing.x3),
           Text(
             '$count thông báo',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(width: AppSpacing.x3),
-          Container(width: 36, height: 1, color: AppColors.borderSolid),
+          const SizedBox(
+            width: AppSpacing.notificationsFooterDividerWidth,
+            height: AppSpacing.notificationsFooterDividerHeight,
+            child: ColoredBox(color: AppColors.borderSolid),
+          ),
         ],
       ),
     );

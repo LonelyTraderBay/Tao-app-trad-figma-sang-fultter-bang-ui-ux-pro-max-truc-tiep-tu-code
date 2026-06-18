@@ -20,7 +20,6 @@ part '../widgets/pending_deposits_page_sections.dart';
 part '../widgets/pending_deposits_page_common.dart';
 
 const _pendingBackground = AppColors.bg;
-const _pendingPanel = AppColors.surface;
 const _pendingBorder = AppColors.overlayStroke;
 const _pendingPrimary = AppColors.primary;
 const _pendingGreen = AppColors.buy;

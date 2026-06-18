@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -65,22 +65,30 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: RiskIndicatorExplainerPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
                     customGap: 12,
                     children: [
                       _ProductSriCard(snapshot: snapshot),
-                      const _SectionLabel(
-                        'What is the Summary Risk Indicator?',
+                      const VitSectionHeader(
+                        title: 'What is the Summary Risk Indicator?',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _riskPrimary,
                       ),
                       _SriExplanationCard(
                         holdingPeriodYears: snapshot.holdingPeriodYears,
                       ),
-                      const _SectionLabel('Understanding the 1-7 Scale'),
+                      const VitSectionHeader(
+                        title: 'Understanding the 1-7 Scale',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _riskPrimary,
+                      ),
                       VitPageSection(
-                        customGap: 10,
+                        customGap: AppSpacing.tradeBotRowGap,
                         children: [
                           for (final level in snapshot.levels)
                             _RiskLevelCard(
@@ -90,13 +98,15 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
                             ),
                         ],
                       ),
-                      const _SectionLabel(
-                        'Additional Risks Not Captured by SRI',
+                      const VitSectionHeader(
+                        title: 'Additional Risks Not Captured by SRI',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _riskPrimary,
                       ),
                       _AdditionalRisksCard(risks: snapshot.additionalRisks),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Risk indicator review',

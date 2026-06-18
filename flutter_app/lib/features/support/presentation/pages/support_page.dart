@@ -99,7 +99,7 @@ class _SupportPageState extends ConsumerState<SupportPage> {
                   child: SingleChildScrollView(
                     key: SupportPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.supportScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -107,18 +107,14 @@ class _SupportPageState extends ConsumerState<SupportPage> {
                       children: [
                         if (widget.supportContext != null)
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.contentPad,
-                            ),
+                            padding: AppSpacing.supportContentPadding,
                             child: _SupportContextCard(
                               supportContext: widget.supportContext!,
                             ),
                           ),
                         _QuickContactGrid(snapshot: snapshot),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.contentPad,
-                          ),
+                          padding: AppSpacing.supportContentPadding,
                           child: _SupportTabs(
                             ticketCount: snapshot.tickets.length,
                             showFaq: _showFaq,
@@ -127,9 +123,7 @@ class _SupportPageState extends ConsumerState<SupportPage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.contentPad,
-                          ),
+                          padding: AppSpacing.supportContentPadding,
                           child: _showFaq
                               ? _FaqPanel(
                                   items: snapshot.faqItems,

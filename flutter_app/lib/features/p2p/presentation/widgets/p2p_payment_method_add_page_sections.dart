@@ -55,20 +55,18 @@ class _TypeButton extends StatelessWidget {
       selected: active,
       label: '$label payment type',
       child: Material(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.inputRadius,
-        child: Ink(
-          height: AppSpacing.ctaHeight,
-          decoration: BoxDecoration(
-            color: active ? AppColors.primary12 : AppColors.surface2,
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(
-              color: active ? AppColors.primary40 : AppColors.borderSolid,
-            ),
+        color: active ? AppColors.primary12 : AppColors.surface2,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(
+            color: active ? AppColors.primary40 : AppColors.borderSolid,
           ),
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: AppRadii.inputRadius,
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadii.inputRadius,
+          child: SizedBox(
+            height: AppSpacing.ctaHeight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -148,43 +146,39 @@ class _PaymentOptionChip extends StatelessWidget {
       selected: selected,
       label: '$label payment option',
       child: Material(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.xlRadius,
-        child: Ink(
-          decoration: BoxDecoration(
-            color: selected ? AppColors.primary12 : AppColors.surface2,
-            borderRadius: AppRadii.xlRadius,
-            border: Border.all(
-              color: selected ? AppColors.primary40 : AppColors.borderSolid,
-            ),
+        color: selected ? AppColors.primary12 : AppColors.surface2,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.xlRadius,
+          side: BorderSide(
+            color: selected ? AppColors.primary40 : AppColors.borderSolid,
           ),
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: AppRadii.xlRadius,
-            child: Padding(
-              padding: AppSpacing.p2pPaymentOptionPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (selected) ...[
-                    const Icon(
-                      Icons.check_circle_outline_rounded,
-                      color: AppColors.primary,
-                      size: AppSpacing.iconSm,
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                  ],
-                  Text(
-                    label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: selected ? AppColors.text1 : AppColors.text2,
-                      fontWeight: selected
-                          ? AppTextStyles.bold
-                          : AppTextStyles.medium,
-                    ),
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadii.xlRadius,
+          child: Padding(
+            padding: AppSpacing.p2pPaymentOptionPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (selected) ...[
+                  const Icon(
+                    Icons.check_circle_outline_rounded,
+                    color: AppColors.primary,
+                    size: AppSpacing.iconSm,
                   ),
+                  const SizedBox(width: AppSpacing.x2),
                 ],
-              ),
+                Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: selected ? AppColors.text1 : AppColors.text2,
+                    fontWeight: selected
+                        ? AppTextStyles.bold
+                        : AppTextStyles.medium,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -301,15 +295,17 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.x6,
-      height: AppSpacing.x6,
-      decoration: BoxDecoration(
-        color: AppColors.primary12,
+    return Material(
+      color: AppColors.primary12,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: AppColors.primary20),
+        side: BorderSide(color: AppColors.primary20),
       ),
-      child: Icon(icon, color: AppModuleAccents.p2p, size: AppSpacing.iconMd),
+      child: SizedBox(
+        width: AppSpacing.x6,
+        height: AppSpacing.x6,
+        child: Icon(icon, color: AppModuleAccents.p2p, size: AppSpacing.iconMd),
+      ),
     );
   }
 }

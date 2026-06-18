@@ -13,24 +13,15 @@ class _TermsCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCtaButton(
       key: BotTermsOfServicePage.ctaKey,
-      height: 44,
-      child: FilledButton(
-        onPressed: agreed ? onPressed : null,
-        style: FilledButton.styleFrom(
-          backgroundColor: agreed ? AppColors.primary : _termsPanel2,
-          disabledBackgroundColor: _termsPanel2,
-          disabledForegroundColor: AppColors.text3,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-        ),
-        child: Text(
-          agreed ? snapshot.enabledCta : snapshot.disabledCta,
-          style: AppTextStyles.body.copyWith(
-            color: agreed ? AppColors.onAccent : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
+      height: AppSpacing.tradeBotControlCompact,
+      onPressed: agreed ? onPressed : null,
+      child: Text(
+        agreed ? snapshot.enabledCta : snapshot.disabledCta,
+        style: AppTextStyles.body.copyWith(
+          fontWeight: AppTextStyles.bold,
+          height: AppSpacing.tradeBotLineHeightTight,
         ),
       ),
     );
@@ -47,19 +38,19 @@ class _ComplianceNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       constraints: const BoxConstraints(minHeight: 112),
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 2),
+            padding: AppSpacing.tradeBotIntroIconTopPadding,
             child: Icon(
               Icons.shield_outlined,
               color: AppColors.text3,
-              size: 17,
+              size: AppSpacing.tradeBotMediumIcon,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,15 +60,15 @@ class _ComplianceNote extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.tradeBotLineHeightCaption,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
                 Text(
                   snapshot.complianceDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.55,
+                    height: AppSpacing.tradeBotLineHeightRelaxed,
                   ),
                 ),
               ],
@@ -96,26 +87,10 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 15,
-          decoration: BoxDecoration(
-            color: _termsPrimary,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _termsPrimary,
     );
   }
 }

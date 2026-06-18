@@ -78,7 +78,7 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
               child: SingleChildScrollView(
                 key: FunnelDashboard.contentKey,
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: scrollBottom),
+                padding: AppSpacing.adminScrollPadding(scrollBottom),
                 child: VitPageContent(
                   customGap: AppSpacing.x4,
                   children: [

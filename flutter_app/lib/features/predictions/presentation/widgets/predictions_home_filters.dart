@@ -107,39 +107,45 @@ class _FilterTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: AppSpacing.predictionHomeFilterHeight,
-        padding: AppSpacing.predictionHomeFilterPadding,
-        decoration: BoxDecoration(
+    return Material(
+      color: active
+          ? _marketPrimary.withValues(alpha: .12)
+          : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.mdRadius,
+        side: BorderSide(
           color: active
-              ? _marketPrimary.withValues(alpha: .12)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? _marketPrimary.withValues(alpha: .34)
-                : AppColors.borderSolid,
-          ),
-          borderRadius: AppRadii.mdRadius,
+              ? _marketPrimary.withValues(alpha: .34)
+              : AppColors.borderSolid,
         ),
-        child: Row(
-          children: [
-            Icon(
-              meta.icon,
-              size: AppSpacing.predictionHomeFilterIcon,
-              color: active ? _marketPrimary : AppColors.text3,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: SizedBox(
+          height: AppSpacing.predictionHomeFilterHeight,
+          child: Padding(
+            padding: AppSpacing.predictionHomeFilterPadding,
+            child: Row(
+              children: [
+                Icon(
+                  meta.icon,
+                  size: AppSpacing.predictionHomeFilterIcon,
+                  color: active ? _marketPrimary : AppColors.text3,
+                ),
+                const SizedBox(width: AppSpacing.predictionHomeFilterIconGap),
+                Text(
+                  meta.label,
+                  style: AppTextStyles.badge.copyWith(
+                    color: active ? _marketPrimary : AppColors.text3,
+                    fontWeight: active
+                        ? AppTextStyles.bold
+                        : AppTextStyles.normal,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: AppSpacing.predictionHomeFilterIconGap),
-            Text(
-              meta.label,
-              style: AppTextStyles.badge.copyWith(
-                color: active ? _marketPrimary : AppColors.text3,
-                fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -204,29 +210,34 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Container(
-        height: AppSpacing.predictionHomeCategoryHeight,
-        padding: AppSpacing.predictionHomeCategoryPadding,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
+    return Material(
+      color: active
+          ? _marketPrimary.withValues(alpha: .12)
+          : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.smRadius,
+        side: BorderSide(
           color: active
-              ? _marketPrimary.withValues(alpha: .12)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? _marketPrimary.withValues(alpha: .30)
-                : AppColors.borderSolid,
-          ),
-          borderRadius: AppRadii.smRadius,
+              ? _marketPrimary.withValues(alpha: .30)
+              : AppColors.borderSolid,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? _marketPrimary : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.smRadius,
+        child: SizedBox(
+          height: AppSpacing.predictionHomeCategoryHeight,
+          child: Padding(
+            padding: AppSpacing.predictionHomeCategoryPadding,
+            child: Center(
+              child: Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: active ? _marketPrimary : AppColors.text3,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
           ),
         ),
       ),

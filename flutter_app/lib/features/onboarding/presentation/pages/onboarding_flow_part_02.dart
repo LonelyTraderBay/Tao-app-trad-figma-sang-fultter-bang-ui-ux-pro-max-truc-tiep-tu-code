@@ -23,10 +23,10 @@ class _GoalsStep extends StatelessWidget {
           subtitle: 'Chọn một hoặc nhiều mục tiêu để cá nhân hóa trải nghiệm',
         ),
         GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: AppSpacing.onboardingGoalGridColumns,
           mainAxisSpacing: AppSpacing.x3,
           crossAxisSpacing: AppSpacing.x3,
-          childAspectRatio: 1.08,
+          childAspectRatio: AppSpacing.onboardingGoalGridAspectRatio,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: [
@@ -111,7 +111,7 @@ class _CompleteStep extends StatelessWidget {
           ),
         ],
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.onboardingCardPadding,
           radius: VitCardRadius.md,
           borderColor: AppColors.primary20,
           child: Text.rich(
@@ -217,26 +217,21 @@ class _HeroIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: AppSpacing.buttonHero,
-        height: AppSpacing.buttonHero,
-        decoration: BoxDecoration(
-          color: success ? AppColors.buy : null,
-          gradient: success ? null : AppGradients.navCenter,
-          borderRadius: AppRadii.cardLargeRadius,
-          border: Border.all(color: success ? AppColors.buy20 : color),
-          boxShadow: [
-            BoxShadow(
-              color: success ? AppColors.buy20 : AppColors.primary30,
-              blurRadius: AppSpacing.x5,
-              offset: const Offset(0, AppSpacing.x3),
-            ),
-          ],
-        ),
-        child: Icon(
-          icon,
-          color: AppColors.onAccent,
-          size: AppSpacing.iconLg + AppSpacing.x2,
+      child: SizedBox.square(
+        dimension: AppSpacing.buttonHero,
+        child: Material(
+          color: success ? AppColors.buy : color,
+          elevation: AppSpacing.onboardingHeroIconElevation,
+          shadowColor: success ? AppColors.buy20 : AppColors.primary30,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.cardLargeRadius,
+            side: BorderSide(color: success ? AppColors.buy20 : color),
+          ),
+          child: Icon(
+            icon,
+            color: AppColors.onAccent,
+            size: AppSpacing.iconLg + AppSpacing.x2,
+          ),
         ),
       ),
     );
@@ -297,43 +292,12 @@ class _SmallIconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.buttonCompact + AppSpacing.x3,
-      height: AppSpacing.buttonCompact + AppSpacing.x3,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.onboardingSmallIconBox,
+      child: Material(
         color: background,
         borderRadius: AppRadii.mdRadius,
-      ),
-      child: Icon(icon, color: color, size: AppSpacing.iconMd),
-    );
-  }
-}
-
-class _ModuleDot extends StatelessWidget {
-  const _ModuleDot({
-    super.key,
-    required this.active,
-    required this.color,
-    required this.onTap,
-  });
-
-  final bool active;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.xsRadius,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        width: active ? AppSpacing.x5 : AppSpacing.x3,
-        height: AppSpacing.x3,
-        decoration: BoxDecoration(
-          color: active ? color : AppColors.divider,
-          borderRadius: AppRadii.xsRadius,
-        ),
+        child: Icon(icon, color: color, size: AppSpacing.iconMd),
       ),
     );
   }
@@ -356,7 +320,7 @@ class _BoundaryCard extends StatelessWidget {
 
     return VitCard(
       key: OnboardingFlow.boundaryKey(boundary.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.onboardingCardPadding,
       radius: VitCardRadius.md,
       borderColor: expanded ? accent : AppColors.cardBorder,
       onTap: onTap,
@@ -429,7 +393,7 @@ class _TrustCard extends StatelessWidget {
     final accent = _accentForId(pillar.id);
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.onboardingCardPadding,
       radius: VitCardRadius.md,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

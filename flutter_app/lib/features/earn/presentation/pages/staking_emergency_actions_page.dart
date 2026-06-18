@@ -59,7 +59,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -121,12 +121,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x5,
-              AppSpacing.contentPad,
-              AppSpacing.x5 + navInset,
-            ),
+            padding: AppSpacing.earnSheetPadding(navInset),
             child: Column(
               key: sheetKey,
               mainAxisSize: MainAxisSize.min,
@@ -137,7 +132,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                 VitCard(
                   variant: VitCardVariant.inner,
                   borderColor: color.withValues(alpha: 0.28),
-                  padding: const EdgeInsets.all(AppSpacing.x4),
+                  padding: AppSpacing.earnCardPaddingX4,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -153,9 +148,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                         const SizedBox(height: AppSpacing.x3),
                         for (final bullet in sheet.bullets)
                           Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: AppSpacing.x1,
-                            ),
+                            padding: AppSpacing.earnBottomPaddingX1,
                             child: Text(
                               '- $bullet',
                               style: AppTextStyles.micro.copyWith(
@@ -200,7 +193,7 @@ class _WarningBanner extends StatelessWidget {
       key: StakingEmergencyActionsPage.warningKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.sell.withValues(alpha: 0.35),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -265,18 +258,22 @@ class _EmergencyActionCard extends StatelessWidget {
       key: StakingEmergencyActionsPage.actionKey(action.id),
       radius: VitCardRadius.lg,
       onTap: action.id == 'rebalance' ? null : onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.ctaHeight,
             height: AppSpacing.ctaHeight,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.16),
-              borderRadius: AppRadii.lgRadius,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: 0.16),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.lgRadius,
+                ),
+              ),
+              child: Icon(_actionIcon(action.id), color: color),
             ),
-            child: Icon(_actionIcon(action.id), color: color),
           ),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
@@ -323,10 +320,7 @@ class _UseCasesSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.earnCardPaddingX4X3,
           child: Column(
             children: [
               for (var i = 0; i < useCases.length; i++)
@@ -351,48 +345,50 @@ class _UseCaseRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _toneColor(useCase.severity);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: showDivider
-            ? const Border(bottom: BorderSide(color: AppColors.borderSolid))
-            : null,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.warning_amber_rounded,
-              color: color,
-              size: AppSpacing.stakingEmergencyUseCaseIcon,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    useCase.title,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.x2),
-                  Text(
-                    useCase.description,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: AppSpacing.stakingEmergencyActionLineHeight,
-                    ),
-                  ),
-                ],
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.earnVerticalPaddingX3,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.warning_amber_rounded,
+                color: color,
+                size: AppSpacing.stakingEmergencyUseCaseIcon,
               ),
-            ),
-          ],
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      useCase.title,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x2),
+                    Text(
+                      useCase.description,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        height: AppSpacing.stakingEmergencyActionLineHeight,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+        if (showDivider)
+          const Divider(
+            color: AppColors.borderSolid,
+            height: AppSpacing.dividerHairline,
+          ),
+      ],
     );
   }
 }
@@ -411,7 +407,7 @@ class _CurrentStatusSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Row(
             children: [
               for (var i = 0; i < statusCards.length; i++) ...[
@@ -438,7 +434,7 @@ class _StatusTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: status.tone == 'success' ? AppColors.buy20 : null,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -475,7 +471,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingEmergencyActionsPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,

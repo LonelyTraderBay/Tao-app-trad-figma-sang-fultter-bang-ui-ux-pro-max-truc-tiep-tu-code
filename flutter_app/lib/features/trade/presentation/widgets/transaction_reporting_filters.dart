@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -79,42 +78,20 @@ class TransactionReportingTabs extends StatelessWidget {
       ('stats', 'Stats'),
     ];
 
-    return Container(
-      height: 54,
-      color: transactionReportPanel,
-      child: Row(
-        children: [
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      height: AppSpacing.x7 + AppSpacing.x2,
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: activeId,
+        onChanged: onChanged,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: transactionReportingTabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.navLabel.copyWith(
-                            color: activeId == tab.$1
-                                ? AppColors.primary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 2,
-                      width: activeId == tab.$1 ? 58 : 0,
-                      color: AppColors.primary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: transactionReportingTabKey(tab.$1),
             ),
         ],
       ),

@@ -8,16 +8,18 @@ class _AssetMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.x5,
-      height: AppSpacing.x5,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(color: color.withValues(alpha: .16)),
-      child: Text(
-        symbol.substring(0, 1),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox.square(
+      dimension: AppSpacing.p2pExpressAssetMarkSize,
+      child: ColoredBox(
+        color: color.withValues(alpha: .16),
+        child: Center(
+          child: Text(
+            symbol.substring(0, 1),
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -98,27 +100,25 @@ class _MerchantOfferRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+    return Column(
+      children: [
+        Padding(
+        padding: AppSpacing.p2pExpressMerchantRowPadding,
         child: Row(
           children: [
-            Container(
-              width: AppSpacing.x6,
-              height: AppSpacing.x6,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
+            SizedBox.square(
+              dimension: AppSpacing.p2pExpressIconBoxSize,
+              child: Material(
                 color: AppColors.primary,
-                shape: BoxShape.circle,
-              ),
-              child: Text(
-                ad.merchant.substring(0, 1),
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.onAccent,
-                  fontWeight: AppTextStyles.bold,
+                shape: const CircleBorder(),
+                child: Center(
+                  child: Text(
+                    ad.merchant.substring(0, 1),
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -186,7 +186,12 @@ class _MerchantOfferRow extends StatelessWidget {
             ),
           ],
         ),
-      ),
+        ),
+        const SizedBox(
+          height: AppSpacing.dividerHairline,
+          child: ColoredBox(color: AppColors.divider),
+        ),
+      ],
     );
   }
 }
@@ -208,7 +213,7 @@ class _OfferMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.p2pExpressCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -246,16 +251,11 @@ class _SmallTextChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.xsRadius,
-      ),
+    return Material(
+      color: AppColors.surface2,
+      shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.p2pExpressSmallChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),

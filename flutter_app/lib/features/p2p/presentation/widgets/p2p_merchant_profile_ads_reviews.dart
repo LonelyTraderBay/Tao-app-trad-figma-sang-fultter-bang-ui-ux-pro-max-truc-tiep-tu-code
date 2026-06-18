@@ -38,7 +38,7 @@ class _MerchantAdCard extends StatelessWidget {
     return VitCard(
       key: P2PMerchantProfilePage.adKey(ad.id),
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMerchantCommerceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -132,36 +132,31 @@ class _OutlineActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCard(
       height: AppSpacing.buttonCompact,
-      child: Material(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.inputRadius,
-        child: Ink(
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: .10),
-            border: Border.all(color: color.withValues(alpha: .25)),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: AppRadii.inputRadius,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Icon(Icons.chevron_right_rounded, color: color, size: 14),
-              ],
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .25),
+      background: ColoredBox(color: color.withValues(alpha: .10)),
+      onTap: onTap,
+      clip: true,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-        ),
+          const SizedBox(width: AppSpacing.x2),
+          Icon(
+            Icons.chevron_right_rounded,
+            color: color,
+            size: AppSpacing.p2pMerchantCommerceSmallIcon,
+          ),
+        ],
       ),
     );
   }
@@ -202,27 +197,17 @@ class _ReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMerchantCommerceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.x6,
-                height: AppSpacing.x6,
-                decoration: const BoxDecoration(
-                  color: AppColors.accent,
-                  shape: BoxShape.circle,
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  review.fromUser.characters.first,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.onAccent,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
+              VitAssetAvatar(
+                label: review.fromUser,
+                accentColor: AppColors.accent,
+                size: AppSpacing.p2pMerchantCommerceAvatarSize,
+                radius: AppRadii.pillRadius,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -248,7 +233,11 @@ class _ReviewCard extends StatelessWidget {
                 ),
               ),
               for (var i = 0; i < review.rating; i++)
-                const Icon(Icons.star_rounded, color: AppColors.warn, size: 13),
+                const Icon(
+                  Icons.star_rounded,
+                  color: AppColors.warn,
+                  size: AppSpacing.p2pMerchantCommerceSmallIcon,
+                ),
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -256,7 +245,7 @@ class _ReviewCard extends StatelessWidget {
             review.comment,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.p2pMerchantCommerceBodyLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),

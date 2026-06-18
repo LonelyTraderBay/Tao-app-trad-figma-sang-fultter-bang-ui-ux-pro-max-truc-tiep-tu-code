@@ -52,16 +52,18 @@ class _SettingsSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.primary08,
-        border: Border.all(
-          color: AppColors.primary20,
-          width: AppSpacing.savingsNotificationSummaryBorderWidth,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(
+            color: AppColors.primary20,
+            width: AppSpacing.savingsNotificationSummaryBorderWidth,
+          ),
+          borderRadius: AppRadii.cardLargeRadius,
         ),
-        borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.earnCardPaddingX4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -148,7 +150,7 @@ class _SettingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       onTap: onToggle,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,27 +204,30 @@ class _ToggleSwitch extends StatelessWidget {
       toggled: on,
       child: GestureDetector(
         onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
+        child: SizedBox(
           width: AppSpacing.savingsNotificationSwitchWidth,
           height: AppSpacing.savingsNotificationSwitchHeight,
-          padding: const EdgeInsets.all(
-            AppSpacing.savingsNotificationSwitchPadding,
-          ),
-          decoration: BoxDecoration(
-            color: on ? AppColors.primary : AppColors.borderSolid,
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: AnimatedAlign(
-            duration: const Duration(milliseconds: 180),
-            alignment: on ? Alignment.centerRight : Alignment.centerLeft,
-            child: const SizedBox(
-              width: AppSpacing.savingsNotificationSwitchThumb,
-              height: AppSpacing.savingsNotificationSwitchThumb,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.onAccent,
-                  shape: BoxShape.circle,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: on ? AppColors.primary : AppColors.borderSolid,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.mdRadius,
+              ),
+            ),
+            child: Padding(
+              padding: AppSpacing.savingsNotificationSwitchInset,
+              child: AnimatedAlign(
+                duration: const Duration(milliseconds: 180),
+                alignment: on ? Alignment.centerRight : Alignment.centerLeft,
+                child: const SizedBox(
+                  width: AppSpacing.savingsNotificationSwitchThumb,
+                  height: AppSpacing.savingsNotificationSwitchThumb,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: AppColors.onAccent,
+                      shape: CircleBorder(),
+                    ),
+                  ),
                 ),
               ),
             ),

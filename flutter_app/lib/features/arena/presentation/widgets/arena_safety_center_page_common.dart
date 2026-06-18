@@ -18,7 +18,7 @@ class _QuickLinks extends StatelessWidget {
               HapticFeedback.selectionClick();
               context.go(link.route);
             },
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.arenaSafetyCardPadding,
             child: Row(
               children: [
                 Icon(
@@ -85,15 +85,20 @@ class _ToneIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.arenaSafetyIconBox,
-      height: AppSpacing.arenaSafetyIconBox,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: color.withValues(alpha: .18)),
+    return SizedBox.square(
+      dimension: AppSpacing.arenaSafetyIconBox,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .14),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.mdRadius,
+            side: BorderSide(color: color.withValues(alpha: .18)),
+          ),
+        ),
+        child: Center(
+          child: Icon(icon, color: color, size: AppSpacing.iconMd),
+        ),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconMd),
     );
   }
 }

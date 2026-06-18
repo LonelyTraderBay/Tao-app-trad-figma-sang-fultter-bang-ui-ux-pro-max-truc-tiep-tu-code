@@ -49,7 +49,7 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: AdvancedChartsPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.marketScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
                       customGap: 12,
@@ -153,38 +153,41 @@ class _AdvancedChartsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: SizedBox(
-        height: 54,
-        child: Row(
-          children: [
-            _UnderlinedTab(
-              key: AdvancedChartsPage.indicatorsTabKey,
-              label: 'Chỉ báo',
-              value: 'indicators',
-              active: activeTab == 'indicators',
-              onChanged: onChanged,
+    return Material(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: AppSpacing.marketAdvancedTabsHeight,
+            child: Row(
+              children: [
+                _UnderlinedTab(
+                  key: AdvancedChartsPage.indicatorsTabKey,
+                  label: 'Chỉ báo',
+                  value: 'indicators',
+                  active: activeTab == 'indicators',
+                  onChanged: onChanged,
+                ),
+                _UnderlinedTab(
+                  key: AdvancedChartsPage.drawingTabKey,
+                  label: 'Công cụ vẽ',
+                  value: 'drawing',
+                  active: activeTab == 'drawing',
+                  onChanged: onChanged,
+                ),
+                _UnderlinedTab(
+                  key: AdvancedChartsPage.signalsTabKey,
+                  label: 'Tín hiệu kỹ thuật',
+                  value: 'signals',
+                  active: activeTab == 'signals',
+                  onChanged: onChanged,
+                ),
+              ],
             ),
-            _UnderlinedTab(
-              key: AdvancedChartsPage.drawingTabKey,
-              label: 'Công cụ vẽ',
-              value: 'drawing',
-              active: activeTab == 'drawing',
-              onChanged: onChanged,
-            ),
-            _UnderlinedTab(
-              key: AdvancedChartsPage.signalsTabKey,
-              label: 'Tín hiệu kỹ thuật',
-              value: 'signals',
-              active: activeTab == 'signals',
-              onChanged: onChanged,
-            ),
-          ],
-        ),
+          ),
+          const Divider(height: AppSpacing.dividerHairline),
+        ],
       ),
     );
   }
@@ -225,7 +228,7 @@ class _UnderlinedTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 2,
+              height: AppSpacing.marketAdvancedTabIndicatorHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: _marketPrimary),
@@ -265,8 +268,11 @@ class _ActiveIndicatorSummary extends StatelessWidget {
             key: AdvancedChartsPage.clearAllKey,
             onPressed: onClearAll,
             style: TextButton.styleFrom(
-              minimumSize: const Size(0, 30),
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              minimumSize: const Size(
+                0,
+                AppSpacing.marketAdvancedActionMinHeight,
+              ),
+              padding: AppSpacing.marketAdvancedClearButtonPadding,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             child: Text(
@@ -291,18 +297,18 @@ class _ActiveIndicatorChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 6,
-      runSpacing: 6,
+      spacing: AppSpacing.marketAnalyticsSmallGap,
+      runSpacing: AppSpacing.marketAnalyticsSmallGap,
       children: [
         for (final indicator in indicators)
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: indicator.color.withValues(alpha: .08),
-              border: Border.all(color: indicator.color.withValues(alpha: .22)),
+          Material(
+            color: indicator.color.withValues(alpha: .08),
+            shape: RoundedRectangleBorder(
               borderRadius: AppRadii.smRadius,
+              side: BorderSide(color: indicator.color.withValues(alpha: .22)),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: AppSpacing.marketAdvancedActiveChipPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -313,12 +319,12 @@ class _ActiveIndicatorChips extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(width: 5),
+                  const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
                   GestureDetector(
                     onTap: () => onRemove(indicator.id),
                     child: Icon(
                       Icons.close_rounded,
-                      size: 12,
+                      size: AppSpacing.marketAdvancedChipRemoveIcon,
                       color: indicator.color,
                     ),
                   ),
@@ -356,7 +362,7 @@ class _IndicatorCategoryFilter extends StatelessWidget {
             color: _marketPrimary,
             onTap: () => onSelected('all'),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
           for (final category in categories) ...[
             _FilterChipButton(
               key: category.id == 'trend'
@@ -367,7 +373,8 @@ class _IndicatorCategoryFilter extends StatelessWidget {
               color: category.color,
               onTap: () => onSelected(category.id),
             ),
-            if (category != categories.last) const SizedBox(width: 8),
+            if (category != categories.last)
+              const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
           ],
         ],
       ),
@@ -399,7 +406,7 @@ class _DrawingCategoryFilter extends StatelessWidget {
             color: _marketPrimary,
             onTap: () => onSelected('all'),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
           for (final category in categories) ...[
             _FilterChipButton(
               key: category.id == 'line'
@@ -410,7 +417,8 @@ class _DrawingCategoryFilter extends StatelessWidget {
               color: _marketPrimary,
               onTap: () => onSelected(category.id),
             ),
-            if (category != categories.last) const SizedBox(width: 8),
+            if (category != categories.last)
+              const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
           ],
         ],
       ),
@@ -434,25 +442,25 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-        decoration: BoxDecoration(
-          color: active ? color.withValues(alpha: .10) : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? color.withValues(alpha: .28)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.mdRadius,
+    return Material(
+      color: active ? color.withValues(alpha: .10) : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.mdRadius,
+        side: BorderSide(
+          color: active ? color.withValues(alpha: .28) : AppColors.transparent,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? color : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: Padding(
+          padding: AppSpacing.marketAdvancedFilterChipPadding,
+          child: Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: active ? color : AppColors.text3,
+              fontWeight: AppTextStyles.medium,
+            ),
           ),
         ),
       ),

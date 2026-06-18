@@ -12,11 +12,16 @@ class _OrderSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.walletAssetHeroTopGap,
+        right: AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.walletAssetHeroTopGap,
+      ),
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 9,
+        customGap: AppSpacing.transferCardGap,
         children: [
           _SummaryRow(
             'Margin kha dung',
@@ -45,10 +50,7 @@ class _SummaryRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
         ),
         Text(
@@ -57,7 +59,6 @@ class _SummaryRow extends StatelessWidget {
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1,
           ),
         ),
       ],
@@ -79,22 +80,26 @@ class _MarginOrderReviewCard extends StatelessWidget {
     return _Panel(
       color: _marginAmber.withValues(alpha: .06),
       borderColor: _marginAmber.withValues(alpha: .28),
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.rowPy,
+        right: AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.rowPy,
+      ),
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 10,
+        customGap: AppSpacing.walletAssetChartBottomGap,
         children: [
           Text(
             'Margin order review',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.onAccent,
               fontWeight: AppTextStyles.bold,
-              height: 1.1,
             ),
           ),
           VitPageContent(
             padding: VitContentPadding.none,
-            customGap: 7,
+            customGap: AppSpacing.transferTileGap,
             children: [
               for (final check in checks)
                 _Bullet(text: check, color: _marginAmber),
@@ -123,7 +128,7 @@ class _SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: MarginTradingPage.submitKey,
-      height: 52,
+      height: AppSpacing.ctaHeight,
       onPressed: disabled ? null : () {},
       variant: side == 'long'
           ? VitCtaButtonVariant.success

@@ -9,7 +9,7 @@ class _TermsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: ReferralRulesPage.termsKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         children: [
           for (var i = 0; i < snapshot.terms.length; i++) ...[
@@ -17,20 +17,24 @@ class _TermsList extends StatelessWidget {
               key: ReferralRulesPage.termKey(i),
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: AppSpacing.x5,
-                  height: AppSpacing.x5,
-                  decoration: const BoxDecoration(
-                    color: AppColors.surface2,
-                    borderRadius: AppRadii.xlRadius,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    '${i + 1}',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.referralLineHeightTight,
+                SizedBox.square(
+                  dimension: AppSpacing.x5,
+                  child: DecoratedBox(
+                    decoration: const ShapeDecoration(
+                      color: AppColors.surface2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.xlRadius,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${i + 1}',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                          fontWeight: AppTextStyles.bold,
+                          height: AppSpacing.referralLineHeightTight,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -46,7 +50,7 @@ class _TermsList extends StatelessWidget {
               ],
             ),
             if (i < snapshot.terms.length - 1)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+              const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -78,7 +82,7 @@ class _FaqList extends StatelessWidget {
             index: i,
           ),
           if (i < snapshot.faqs.length - 1)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -108,7 +112,7 @@ class _FaqCard extends StatelessWidget {
             key: ReferralRulesPage.faqToggleKey(index),
             onTap: onTap,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.referralCardPadding,
               child: Row(
                 children: [
                   const Icon(
@@ -140,15 +144,10 @@ class _FaqCard extends StatelessWidget {
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
             secondChild: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.x4,
-                0,
-                AppSpacing.x4,
-                AppSpacing.x4,
-              ),
+              padding: AppSpacing.referralFaqAnswerPadding,
               child: VitCard(
                 variant: VitCardVariant.inner,
-                padding: const EdgeInsets.all(AppSpacing.x4),
+                padding: AppSpacing.referralCardPadding,
                 child: Text(
                   faq.answer,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -176,7 +175,7 @@ class _Disclaimer extends StatelessWidget {
     return VitCard(
       key: ReferralRulesPage.disclaimerKey,
       borderColor: AppColors.warn15,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

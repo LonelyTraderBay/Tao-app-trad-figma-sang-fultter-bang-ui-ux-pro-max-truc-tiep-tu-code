@@ -10,7 +10,7 @@ class _SavingsHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -36,15 +36,14 @@ class _SavingsHero extends StatelessWidget {
                     Row(
                       children: [
                         DecoratedBox(
-                          decoration: const BoxDecoration(
+                          decoration: const ShapeDecoration(
                             color: AppColors.buy10,
-                            borderRadius: AppRadii.xlRadius,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadii.xlRadius,
+                            ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.x3,
-                              vertical: AppSpacing.x1,
-                            ),
+                            padding: AppSpacing.earnPillPadding,
                             child: Text(
                               snapshot.gainLabel,
                               style: AppTextStyles.micro.copyWith(
@@ -132,7 +131,7 @@ class _HeroAction extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+          padding: AppSpacing.earnVerticalPaddingX3,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -174,7 +173,7 @@ class _InsightList extends StatelessWidget {
           VitCard(
             key: _insightKey(insight.route),
             radius: VitCardRadius.lg,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.earnCardPaddingX4,
             onTap: insight.route == null
                 ? null
                 : () {
@@ -246,7 +245,7 @@ class _ToolboxButton extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      padding: AppSpacing.earnVerticalPaddingX3,
       child: InkWell(
         key: SavingsPage.guideButtonKey,
         onTap: () {

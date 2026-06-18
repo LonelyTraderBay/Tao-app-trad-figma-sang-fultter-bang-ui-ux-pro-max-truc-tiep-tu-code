@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -20,7 +20,6 @@ part '../widgets/bot_history_page_sections.dart';
 part '../widgets/bot_history_page_common.dart';
 
 const _historyBackground = AppColors.bg;
-const _historyPanel2 = AppColors.surface2;
 const _historyPrimary = AppColors.primary;
 const _historyGreen = AppColors.buy;
 const _historyRed = AppColors.sell;
@@ -62,8 +61,9 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 28
-            : DeviceMetrics.nativeBottomChrome + 24) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetNative
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.tradeBotBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -89,11 +89,13 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: BotHistoryPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 12,
+                    customGap: AppSpacing.tradeBotCardGap,
                     children: [
                       _StatsCard(
                         totalTrades: filteredTrades.length,
@@ -106,7 +108,11 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
                         trades: snapshot.trades,
                         onChanged: (filter) => setState(() => _filter = filter),
                       ),
-                      _SectionLabel('Trades (${filteredTrades.length})'),
+                      VitSectionHeader(
+                        title: 'Trades (${filteredTrades.length})',
+                        variant: VitSectionHeaderVariant.accentBar,
+                        accentColor: _historyPrimary,
+                      ),
                       if (filteredTrades.isEmpty)
                         const _EmptyHistory()
                       else
@@ -115,7 +121,7 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
                       _ExportNote(onTap: _handleExport),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'History export review',

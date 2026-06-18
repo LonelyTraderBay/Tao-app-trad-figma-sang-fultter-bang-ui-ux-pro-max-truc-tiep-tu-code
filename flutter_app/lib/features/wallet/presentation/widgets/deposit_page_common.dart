@@ -132,7 +132,6 @@ class _NetworkOption extends StatelessWidget {
       child: VitCard(
         variant: VitCardVariant.inner,
         padding: AppSpacing.cardPadding,
-        margin: const EdgeInsets.only(bottom: AppSpacing.x2),
         borderColor: selected ? _depositPrimary : AppColors.border,
         child: Row(
           children: [

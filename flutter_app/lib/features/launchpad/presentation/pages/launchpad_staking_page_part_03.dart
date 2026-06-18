@@ -8,45 +8,45 @@ class _TierChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 160),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x3,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: selected
             ? tier.accent.withValues(alpha: .12)
             : AppColors.surface2,
-        border: Border.all(
-          color: selected
-              ? tier.accent.withValues(alpha: .34)
-              : AppColors.cardBorder,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: selected
+                ? tier.accent.withValues(alpha: .34)
+                : AppColors.cardBorder,
+          ),
+          borderRadius: AppRadii.mdRadius,
         ),
-        borderRadius: AppRadii.mdRadius,
       ),
-      child: Column(
-        children: [
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              tier.label,
-              style: AppTextStyles.micro.copyWith(
-                color: tier.accent,
-                fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadTierChipPadding,
+        child: Column(
+          children: [
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                tier.label,
+                style: AppTextStyles.micro.copyWith(
+                  color: tier.accent,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.launchpadLineHeightTight,
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              '+${_formatApy(tier.apyBonus)}%',
+              style: AppTextStyles.chartLabelXs.copyWith(
+                color: AppColors.text2,
                 height: AppSpacing.launchpadLineHeightTight,
               ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            '+${_formatApy(tier.apyBonus)}%',
-            style: AppTextStyles.chartLabelXs.copyWith(
-              color: AppColors.text2,
-              height: AppSpacing.launchpadLineHeightTight,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -62,7 +62,7 @@ class _UserStakeSummary extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: pool.accent.withValues(alpha: .18),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
           Expanded(
@@ -172,7 +172,7 @@ class _PoolAction extends StatelessWidget {
       return VitCard(
         variant: VitCardVariant.inner,
         borderColor: AppColors.warningBorder,
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+        padding: AppSpacing.launchpadVerticalPaddingX4,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -228,7 +228,7 @@ class _StepperField extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
           Expanded(

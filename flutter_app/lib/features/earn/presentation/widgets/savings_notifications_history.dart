@@ -15,27 +15,24 @@ class _NotificationsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: AppColors.surface,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        AppSpacing.x4,
-        AppSpacing.contentPad,
-        0,
-      ),
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: active,
-        onChanged: onChanged,
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.id,
-              label: tab.id == 'history' && unreadCount > 0
-                  ? '${tab.label} ($unreadCount)'
-                  : tab.label,
-            ),
-        ],
+      child: Padding(
+        padding: AppSpacing.earnSurfaceTabsPadding,
+        child: VitTabBar(
+          variant: VitTabBarVariant.underline,
+          activeKey: active,
+          onChanged: onChanged,
+          tabs: [
+            for (final tab in tabs)
+              VitTabItem(
+                key: tab.id,
+                label: tab.id == 'history' && unreadCount > 0
+                    ? '${tab.label} ($unreadCount)'
+                    : tab.label,
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -125,10 +122,7 @@ class _HistoryActionBar extends StatelessWidget {
               onTap: onMarkAllRead,
               borderRadius: AppRadii.mdRadius,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.x3,
-                  vertical: AppSpacing.x1,
-                ),
+                padding: AppSpacing.earnPillPadding,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -178,17 +172,19 @@ class _NotificationCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardLargeRadius,
         child: Ink(
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: fill,
-            borderRadius: AppRadii.cardLargeRadius,
-            border: Border.all(
-              color: notification.read
-                  ? AppColors.cardBorder
-                  : color.withValues(alpha: 0.28),
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: notification.read
+                    ? AppColors.cardBorder
+                    : color.withValues(alpha: 0.28),
+              ),
+              borderRadius: AppRadii.cardLargeRadius,
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.earnCardPaddingX4,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

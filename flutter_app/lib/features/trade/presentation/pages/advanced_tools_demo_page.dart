@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -62,7 +63,9 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 104 : 24);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.tradeToolBottomInsetSlippageVisual
+            : AppSpacing.tradeToolBottomInsetSlippageNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,11 +86,11 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: AdvancedToolsDemoPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      padding: AppSpacing.tradeToolScrollPadding(bottomInset),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 12,
+                        customGap: AppSpacing.tradeToolCardGap,
                         children: [
                           const _IntroCard(),
                           VitPageSection(
@@ -146,7 +149,7 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                             ),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: EdgeInsets.all(12),
+                            padding: AppSpacing.tradeToolRiskReviewPadding,
                             child: VitPageContent(
                               padding: VitContentPadding.none,
                               fullBleed: true,

@@ -13,37 +13,30 @@ class _MerchantCard extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pMerchant(ad.merchantId));
       },
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pAdDetailCardPadding,
       child: Row(
         children: [
           Stack(
             children: [
-              Container(
-                width: AppSpacing.x7,
-                height: AppSpacing.x7,
-                decoration: const BoxDecoration(
-                  color: AppColors.accent,
-                  shape: BoxShape.circle,
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  ad.merchant.characters.first,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
+              VitAssetAvatar(
+                label: ad.merchant,
+                accentColor: AppColors.accent,
+                size: AppSpacing.p2pAdDetailAvatarSize,
+                radius: AppRadii.pillRadius,
               ),
               Positioned(
                 right: 0,
                 bottom: 0,
-                child: Container(
-                  width: AppSpacing.x4,
-                  height: AppSpacing.x4,
-                  decoration: BoxDecoration(
+                child: SizedBox.square(
+                  dimension: AppSpacing.p2pAdDetailOnlineBadgeSize,
+                  child: Material(
                     color: ad.isOnline ? AppColors.buy : AppColors.text3,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.surface, width: 2),
+                    shape: const CircleBorder(
+                      side: BorderSide(
+                        color: AppColors.surface,
+                        width: AppSpacing.p2pAdDetailOnlineBadgeBorder,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -175,7 +168,7 @@ class _InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       height: AppSpacing.buttonHero + AppSpacing.x6,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pAdDetailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -291,17 +284,14 @@ class _SignalChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Flexible(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: .08),
-          border: Border.all(color: color.withValues(alpha: .16)),
+      child: Material(
+        color: color.withValues(alpha: .08),
+        shape: RoundedRectangleBorder(
           borderRadius: AppRadii.inputRadius,
+          side: BorderSide(color: color.withValues(alpha: .16)),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
+          padding: AppSpacing.p2pAdDetailSignalChipPadding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -65,7 +64,9 @@ class CopyTradingCardDemo extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: CopyTradingCardDemo.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.tradeBotCopyDemoScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     gap: VitContentGap.loose,
                     children: [

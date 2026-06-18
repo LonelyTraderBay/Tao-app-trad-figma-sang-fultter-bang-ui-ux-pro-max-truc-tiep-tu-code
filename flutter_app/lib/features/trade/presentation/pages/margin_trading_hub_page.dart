@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -66,16 +67,21 @@ class MarginTradingHubPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.rowPy,
+                    right: AppSpacing.contentPad,
+                    bottom: bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
                     customGap: 0,
                     children: [
                       _HeroCard(stats: snapshot.stats),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.walletAssetSectionGap),
                       _NavigationCard(items: snapshot.menuItems),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: AppSpacing.rowPy),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Margin suite risk review',
@@ -83,10 +89,10 @@ class MarginTradingHubPage extends ConsumerWidget {
                             'Review leverage limits, liquidation risk, fees, available margin, and next steps before opening any margin workflow.',
                         contractId: 'SC-090 margin hub review',
                       ),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: AppSpacing.rowPy),
                       for (final feature in snapshot.features) ...[
                         _FeatureCard(feature: feature),
-                        const SizedBox(height: 14),
+                        const SizedBox(height: AppSpacing.rowPy),
                       ],
                       _ComplianceCard(compliance: snapshot.compliance),
                     ],

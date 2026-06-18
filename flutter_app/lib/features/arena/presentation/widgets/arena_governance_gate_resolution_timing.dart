@@ -86,7 +86,7 @@ class _TimingRulesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -175,11 +175,11 @@ class _WarningStack extends StatelessWidget {
       children: [
         for (final warning in result.warnings)
           Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+            padding: AppSpacing.arenaGovernanceListItemPadding,
             child: VitCard(
               variant: VitCardVariant.inner,
               borderColor: AppColors.warningBorder,
-              padding: const EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.arenaGovernanceInnerPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

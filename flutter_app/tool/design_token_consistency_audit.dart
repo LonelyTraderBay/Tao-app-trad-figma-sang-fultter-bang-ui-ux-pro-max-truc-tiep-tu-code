@@ -2,6 +2,20 @@ import 'dart:io';
 
 const String _generatedDate = '2026-06-12';
 
+const Set<String> _additionalRootPagePaths = <String>{
+  'lib/features/admin/presentation/pages/ab_test_dashboard.dart',
+  'lib/features/admin/presentation/pages/admin_home.dart',
+  'lib/features/admin/presentation/pages/analytics_dashboard.dart',
+  'lib/features/admin/presentation/pages/funnel_dashboard.dart',
+  'lib/features/dev/presentation/pages/performance_monitor.dart',
+  'lib/features/cross_module/presentation/pages/cross_module_analytics.dart',
+  'lib/features/cross_module/presentation/pages/smart_alert_center.dart',
+  'lib/features/cross_module/presentation/pages/tax_report_center.dart',
+  'lib/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart',
+  'lib/features/onboarding/presentation/pages/onboarding_flow.dart',
+  'lib/features/trade/presentation/pages/copy_trading_card_demo.dart',
+};
+
 const Map<String, int> _p0ModuleDebtBaselines = <String, int>{
   'markets': 2042,
   'p2p': 1911,
@@ -272,13 +286,7 @@ List<File> _collectRootPages(Directory appRoot) {
       featuresDir
           .listSync(recursive: true)
           .whereType<File>()
-          .where(
-            (file) =>
-                file.path.endsWith('_page.dart') &&
-                file.path
-                    .replaceAll('\\', '/')
-                    .contains('/presentation/pages/'),
-          )
+          .where((file) => _isAuditedRootPage(file, appRoot))
           .toList()
         ..sort((a, b) => a.path.compareTo(b.path));
 
@@ -289,6 +297,18 @@ List<File> _collectRootPages(Directory appRoot) {
     pages.add(file);
   }
   return pages;
+}
+
+bool _isAuditedRootPage(File file, Directory appRoot) {
+  final normalizedPath = file.path.replaceAll('\\', '/');
+  if (!normalizedPath.contains('/presentation/pages/')) return false;
+  if (normalizedPath.endsWith('_page.dart')) return true;
+
+  final relativePath = _relativePath(
+    file.path,
+    appRoot.path,
+  ).replaceFirst(RegExp(r'^/+'), '');
+  return _additionalRootPagePaths.contains(relativePath);
 }
 
 List<File> _collectFeatureWidgets(Directory appRoot) {
@@ -663,7 +683,7 @@ String _renderMarkdown(List<TokenAuditFileMetric> metrics) {
     ..writeln('## Inputs')
     ..writeln()
     ..writeln(
-      '- Root pages: `lib/features/*/presentation/pages/*_page.dart` (+ part files).',
+      '- Root pages: `lib/features/*/presentation/pages/*_page.dart` plus audited route-screen exceptions (+ part files).',
     )
     ..writeln(
       '- Feature widgets: `lib/features/*/presentation/widgets/*.dart`.',

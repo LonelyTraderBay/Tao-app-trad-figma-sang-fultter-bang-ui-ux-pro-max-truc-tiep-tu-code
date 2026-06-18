@@ -38,7 +38,7 @@ class BuyInputContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _ZeroFeeBanner(),
-        const SizedBox(height: 17),
+        const SizedBox(height: AppSpacing.walletBuyBannerGap),
         _AmountCard(
           snapshot: snapshot,
           selectedCrypto: selectedCrypto,
@@ -49,9 +49,9 @@ class BuyInputContent extends StatelessWidget {
           onPreset: onPreset,
           onCryptoTap: onCryptoTap,
         ),
-        const SizedBox(height: 19),
+        const SizedBox(height: AppSpacing.walletBuyAmountCardGap),
         Text('Phương thức thanh toán', style: AppTextStyles.baseMedium),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.walletBuyPaymentTitleGap),
         _PaymentMethodGroup(
           icon: Icons.account_balance_rounded,
           label: 'Chuyển khoản ngân hàng',
@@ -61,7 +61,7 @@ class BuyInputContent extends StatelessWidget {
           selectedId: selectedPaymentId,
           onChanged: onPaymentChanged,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletBuySectionGap),
         _PaymentMethodGroup(
           icon: Icons.phone_android_rounded,
           label: 'Ví điện tử',
@@ -71,9 +71,9 @@ class BuyInputContent extends StatelessWidget {
           selectedId: selectedPaymentId,
           onChanged: onPaymentChanged,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletBuySectionGap),
         _RateInfoCard(crypto: selectedCrypto, payment: selectedPayment),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletBuySectionGap),
         _BuyButton(
           enabled: onBuy != null,
           symbol: selectedCrypto.symbol,
@@ -89,18 +89,16 @@ class _ZeroFeeBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 57,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: AppColors.buy.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: AppColors.buy20),
-      ),
+    return VitCard(
+      height: AppSpacing.walletBuyBannerHeight,
+      padding: AppSpacing.walletBuyBannerPadding,
+      borderColor: AppColors.buy20,
+      clip: true,
+      background: ColoredBox(color: AppColors.buy.withValues(alpha: .08)),
       child: Row(
         children: [
           const Icon(Icons.shield_outlined, color: _buyGreen, size: 15),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.walletBuyInlineGap),
           Expanded(
             child: Text(
               'Mua trực tiếp bằng VND — Phí 0% — Nhận USDT tức thì',
@@ -108,11 +106,11 @@ class _ZeroFeeBanner extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.45,
+                height: AppSpacing.walletBuyBannerLineHeight,
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.walletBuyCompactGap),
           Text('0% phí', style: AppTextStyles.badge.copyWith(color: _buyGreen)),
         ],
       ),
@@ -143,14 +141,15 @@ class _AmountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 252),
-      padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
-      decoration: BoxDecoration(
-        color: _buyPanel,
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppColors.overlayStroke),
+    return VitCard(
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.walletBuyAmountCardMinHeight,
       ),
+      padding: AppSpacing.walletBuyAmountCardPadding,
+      radius: VitCardRadius.lg,
+      borderColor: AppColors.overlayStroke,
+      clip: true,
+      background: const ColoredBox(color: _buyPanel),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -171,14 +170,14 @@ class _AmountCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 21),
+          const SizedBox(height: AppSpacing.walletBuyAmountLabelGap),
           Row(
             children: [
               Text(
                 '₫',
                 style: AppTextStyles.amountSm.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.walletBuyCompactGap),
               Expanded(
                 child: TextField(
                   key: const Key('sc145_buy_crypto_amount'),
@@ -189,14 +188,14 @@ class _AmountCard extends StatelessWidget {
                   style: AppTextStyles.amountMd.copyWith(
                     color: AppColors.text1,
                     fontFeatures: AppTextStyles.tabularFigures,
-                    height: 1,
+                    height: AppSpacing.walletBuyAmountLineHeight,
                   ),
                   decoration: InputDecoration(
                     hintText: '0',
                     hintStyle: AppTextStyles.amountMd.copyWith(
                       color: AppColors.text2,
                       fontFeatures: AppTextStyles.tabularFigures,
-                      height: 1,
+                      height: AppSpacing.walletBuyAmountLineHeight,
                     ),
                     border: InputBorder.none,
                     isCollapsed: true,
@@ -205,7 +204,7 @@ class _AmountCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.walletBuyPresetGap),
           Row(
             children: [
               for (var i = 0; i < snapshot.presetAmounts.length; i++) ...[
@@ -219,11 +218,11 @@ class _AmountCard extends StatelessWidget {
                   ),
                 ),
                 if (i != snapshot.presetAmounts.length - 1)
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.walletBuyPaymentPopularGap),
               ],
             ],
           ),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.walletBuyReceiveGap),
           _ReceivePanel(
             crypto: selectedCrypto,
             receiveAmount: receiveAmount,
@@ -252,16 +251,13 @@ class _PresetChip extends StatelessWidget {
       key: Key('sc145_buy_crypto_preset_$amount'),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 30,
+      child: VitCard(
+        height: AppSpacing.walletBuyPresetChipHeight,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: selected ? _buyPrimary : _buyPanel2,
-          borderRadius: AppRadii.inputRadius,
-          border: Border.all(
-            color: selected ? _buyPrimary : AppColors.borderSolid,
-          ),
-        ),
+        radius: VitCardRadius.sm,
+        borderColor: selected ? _buyPrimary : AppColors.borderSolid,
+        clip: true,
+        background: ColoredBox(color: selected ? _buyPrimary : _buyPanel2),
         child: Text(
           '${amount ~/ 1000}K',
           style: AppTextStyles.badge.copyWith(
@@ -286,13 +282,10 @@ class _ReceivePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 66,
-      padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
-      decoration: BoxDecoration(
-        color: _buyPanel2,
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      height: AppSpacing.walletBuyReceivePanelHeight,
+      padding: AppSpacing.walletBuyReceivePanelPadding,
+      variant: VitCardVariant.inner,
       child: Row(
         children: [
           Expanded(
@@ -304,12 +297,12 @@ class _ReceivePanel extends StatelessWidget {
                   'Bạn sẽ nhận được',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: AppSpacing.walletBuyCompactGap),
                 Text(
                   '${_formatCrypto(receiveAmount)} ${crypto.symbol}',
                   style: AppTextStyles.base.copyWith(
                     color: _buyGreen,
-                    height: 1.1,
+                    height: AppSpacing.walletBuyReceiveLineHeight,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
@@ -320,25 +313,26 @@ class _ReceivePanel extends StatelessWidget {
             key: const Key('sc145_buy_crypto_selector'),
             onTap: onCryptoTap,
             behavior: HitTestBehavior.opaque,
-            child: Container(
-              height: 42,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: BoxDecoration(
-                color: _buyPanel,
-                borderRadius: AppRadii.cardRadius,
-                border: Border.all(color: AppColors.borderSolid),
-              ),
+            child: VitCard(
+              height: AppSpacing.walletBuySelectorHeight,
+              padding: AppSpacing.walletBuySelectorPadding,
+              borderColor: AppColors.borderSolid,
+              clip: true,
+              background: const ColoredBox(color: _buyPanel),
               child: Row(
                 children: [
-                  _CryptoLogo(option: crypto, size: 25),
-                  const SizedBox(width: 10),
+                  _CryptoLogo(
+                    option: crypto,
+                    size: AppSpacing.walletBuyCryptoLogoCompact,
+                  ),
+                  const SizedBox(width: AppSpacing.walletBuyCompactGap),
                   Text(
                     crypto.symbol,
                     style: AppTextStyles.body.copyWith(
                       fontWeight: AppTextStyles.medium,
                     ),
                   ),
-                  const SizedBox(width: 7),
+                  const SizedBox(width: AppSpacing.walletBuyMicroGap),
                   const Icon(
                     Icons.keyboard_arrow_down_rounded,
                     color: AppColors.text2,

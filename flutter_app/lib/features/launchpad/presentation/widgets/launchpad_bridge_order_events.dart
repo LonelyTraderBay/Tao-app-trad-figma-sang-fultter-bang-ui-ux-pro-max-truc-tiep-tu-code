@@ -18,14 +18,14 @@ class _BridgeEventLog extends StatelessWidget {
     return VitCard(
       key: LaunchpadBridgeOrderPage.eventLogKey,
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           InkWell(
             onTap: onToggle,
             borderRadius: AppRadii.lgRadius,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.launchpadPaddingX4,
               child: Row(
                 children: [
                   const Icon(
@@ -68,12 +68,18 @@ class _BridgeEventLog extends StatelessWidget {
               height: AppSpacing.launchpadDividerHeight,
               color: AppColors.divider,
             ),
-            Container(
+            SizedBox(
               width: double.infinity,
-              color: AppColors.bg,
-              padding: const EdgeInsets.all(AppSpacing.x3),
-              child: Column(
-                children: [for (final event in events) _EventRow(event: event)],
+              child: ColoredBox(
+                color: AppColors.bg,
+                child: Padding(
+                  padding: AppSpacing.launchpadPaddingX3,
+                  child: Column(
+                    children: [
+                      for (final event in events) _EventRow(event: event),
+                    ],
+                  ),
+                ),
               ),
             ),
             const Divider(
@@ -81,18 +87,17 @@ class _BridgeEventLog extends StatelessWidget {
               color: AppColors.divider,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x4,
-                vertical: AppSpacing.x3,
-              ),
+              padding: AppSpacing.launchpadEventFooterPadding,
               child: Row(
                 children: [
-                  Container(
+                  const SizedBox(
                     width: AppSpacing.launchpadDotSm,
                     height: AppSpacing.launchpadDotSm,
-                    decoration: const BoxDecoration(
-                      color: AppColors.buy,
-                      shape: BoxShape.circle,
+                    child: DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: AppColors.buy,
+                        shape: CircleBorder(),
+                      ),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x2),
@@ -127,9 +132,9 @@ class _EventRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _eventColor(event.level);
-    return Container(
+    return Padding(
       key: LaunchpadBridgeOrderPage.eventKey(event.id),
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+      padding: AppSpacing.launchpadVerticalPaddingX1,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -143,19 +148,26 @@ class _EventRow extends StatelessWidget {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: AppSpacing.launchpadBox36,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 1),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
-              borderRadius: AppRadii.xsRadius,
-            ),
-            child: Text(
-              _eventLabel(event.level),
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: .14),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.xsRadius,
+                ),
+              ),
+              child: Padding(
+                padding: AppSpacing.launchpadEventLevelPadding,
+                child: Center(
+                  child: Text(
+                    _eventLabel(event.level),
+                    style: AppTextStyles.micro.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -185,33 +197,32 @@ class _ConnectionBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final connected = state == LaunchpadBridgeConnectionState.connected;
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: 2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: (connected ? AppColors.buy : AppColors.warn).withValues(
           alpha: .12,
         ),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
-      child: Row(
-        children: [
-          Icon(
-            connected ? Icons.wifi_rounded : Icons.wifi_find_rounded,
-            color: connected ? AppColors.buy : AppColors.warn,
-            size: AppSpacing.launchpadFontXs,
-          ),
-          const SizedBox(width: AppSpacing.x1),
-          Text(
-            connected ? 'Connected' : 'Connecting',
-            style: AppTextStyles.micro.copyWith(
+      child: Padding(
+        padding: AppSpacing.launchpadLiveBadgePadding,
+        child: Row(
+          children: [
+            Icon(
+              connected ? Icons.wifi_rounded : Icons.wifi_find_rounded,
               color: connected ? AppColors.buy : AppColors.warn,
-              fontWeight: AppTextStyles.bold,
+              size: AppSpacing.launchpadFontXs,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x1),
+            Text(
+              connected ? 'Connected' : 'Connecting',
+              style: AppTextStyles.micro.copyWith(
+                color: connected ? AppColors.buy : AppColors.warn,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -53,8 +53,10 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 126
-            : DeviceMetrics.nativeBottomChrome + 32) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.profileSubAccountBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.profileSubAccountBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -76,10 +78,12 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                 child: SingleChildScrollView(
                   key: SubAccountPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.profileSubAccountScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    customGap: AppSpacing.zero,
                     fullBleed: true,
                     children: [
                       _SubAccountSummaryCard(
@@ -87,7 +91,9 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                         isBalanceHidden: _isBalanceHidden,
                         onToggleBalance: _toggleBalance,
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 18)),
+                      const SizedBox(
+                        height: AppSpacing.profileSubAccountSummaryRiskGap,
+                      ),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Review sub-account permissions',
@@ -95,21 +101,29 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                             'Ki\u1EC3m tra quy\u1EC1n chuy\u1EC3n, r\u00FAt, API key v\u00E0 gi\u1EDBi h\u1EA1n tr\u01B0\u1EDBc khi t\u1EA1o ho\u1EB7c m\u1EDF r\u1ED9ng t\u00E0i kho\u1EA3n ph\u1EE5.',
                         contractId: 'Sub accounts: ${snapshot.accounts.length}',
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 26)),
+                      const SizedBox(
+                        height: AppSpacing.profileSubAccountRiskCreateGap,
+                      ),
                       _CreateSubAccountButton(
                         isOpen: _showCreate,
                         onTap: _toggleCreateForm,
                       ),
                       if (_showCreate) ...[
-                        const Padding(padding: EdgeInsets.only(top: 13)),
+                        const SizedBox(
+                          height: AppSpacing.profileSubAccountCreateFormGap,
+                        ),
                         const _CreateSubAccountForm(),
                       ],
-                      const Padding(padding: EdgeInsets.only(top: 24)),
-                      _SectionHeader(
-                        label:
+                      const SizedBox(
+                        height: AppSpacing.profileSubAccountAccountsHeaderGap,
+                      ),
+                      VitSectionHeader(
+                        title:
                             'T\u00C0I KHO\u1EA2N (${snapshot.accounts.length})',
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 10)),
+                      const SizedBox(
+                        height: AppSpacing.profileSubAccountAccountsListGap,
+                      ),
                       if (snapshot.accounts.isEmpty)
                         const VitEmptyState(
                           title:
@@ -127,9 +141,13 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                             onTap: () => _toggleExpanded(account.id),
                           ),
                           if (account != snapshot.accounts.last)
-                            const Padding(padding: EdgeInsets.only(top: 13)),
+                            const SizedBox(
+                              height: AppSpacing.profileSubAccountCardGap,
+                            ),
                         ],
-                      const Padding(padding: EdgeInsets.only(top: 25)),
+                      const SizedBox(
+                        height: AppSpacing.profileSubAccountInfoNoteGap,
+                      ),
                       const _SubAccountInfoNote(),
                     ],
                   ),

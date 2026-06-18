@@ -9,7 +9,7 @@ class _StrategyMatchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -56,7 +56,7 @@ class _ProductResultTile extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           _AssetBadge(asset: product.asset, color: accent),
@@ -125,12 +125,15 @@ class _BulletRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.x3),
+          padding: AppSpacing.earnBulletTopMarginX3,
           child: SizedBox(
             width: AppSpacing.x1,
             height: AppSpacing.x1,
             child: DecoratedBox(
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+              decoration: ShapeDecoration(
+                color: color,
+                shape: const CircleBorder(),
+              ),
             ),
           ),
         ),
@@ -158,10 +161,12 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: 0.25)),
+          borderRadius: AppRadii.xlRadius,
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,

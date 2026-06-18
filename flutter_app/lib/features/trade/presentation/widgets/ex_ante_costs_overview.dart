@@ -6,12 +6,19 @@ class _RegulatoryNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.tradeFeeRowGap,
+        right: AppSpacing.x3,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.text1, size: 16),
-          const SizedBox(width: 10),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.text1,
+            size: AppSpacing.tradeTpslIcon,
+          ),
+          const SizedBox(width: AppSpacing.tradeFeeRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,17 +28,15 @@ class _RegulatoryNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   'This document shows all costs you will pay before investing. '
                   'Required by EU regulation for retail clients.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.35,
                   ),
                 ),
               ],
@@ -51,26 +56,28 @@ class _InvestmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 17),
+      padding: AppSpacing.tradeFeeCardPadding,
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
+              VitCard(
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
+                width: AppSpacing.walletTransactionExplorerHeight,
+                height: AppSpacing.walletTransactionExplorerHeight,
+                clip: true,
+                background: ColoredBox(
                   color: _costPrimary.withValues(alpha: .13),
-                  borderRadius: AppRadii.inputRadius,
                 ),
                 child: const Icon(
                   Icons.attach_money_rounded,
                   color: _costPrimary,
-                  size: 24,
+                  size: AppSpacing.statusPillHeightMd,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,23 +86,20 @@ class _InvestmentCard extends StatelessWidget {
                       'Example Investment Amount',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: 1,
                       ),
                     ),
-                    const SizedBox(height: 13),
+                    const SizedBox(height: AppSpacing.x4),
                     Text(
                       _formatEur(snapshot.investmentAmount),
                       style: AppTextStyles.heroNumber.copyWith(
                         color: AppColors.text1,
-                        height: 1,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: AppSpacing.tradeFeeRowGap),
                     Text(
                       'Estimated for illustration purposes',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -103,7 +107,7 @@ class _InvestmentCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.walletAddressFilterGap),
           Row(
             children: [
               Expanded(
@@ -112,7 +116,7 @@ class _InvestmentCard extends StatelessWidget {
                   value: _formatEur(snapshot.totalFirstYear),
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.tradeFeeRowGap),
               Expanded(
                 child: _MetricBox(
                   label: '% of Investment',
@@ -142,39 +146,18 @@ class _Tabs extends StatelessWidget {
       ('scenarios', 'Scenarios'),
     ];
     return VitCard(
-      height: 53,
-      padding: EdgeInsets.zero,
-      child: Row(
-        children: [
+      height: AppSpacing.x7,
+      padding: AppSpacing.zeroInsets,
+      child: VitTabBar(
+        activeKey: activeId,
+        onChanged: onChanged,
+        variant: VitTabBarVariant.underline,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: ExAnteCostsPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeId == tab.$1
-                                ? _costPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: activeId == tab.$1 ? 100 : 0,
-                      height: 2,
-                      color: _costPrimary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: ExAnteCostsPage.tabKey(tab.$1),
             ),
         ],
       ),

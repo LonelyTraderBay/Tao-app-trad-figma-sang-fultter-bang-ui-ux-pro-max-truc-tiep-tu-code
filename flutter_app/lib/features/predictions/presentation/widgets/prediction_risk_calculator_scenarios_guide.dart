@@ -217,11 +217,9 @@ class _RiskMetricRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: compact
-            ? AppSpacing.predictionRiskMetricCompactVertical
-            : AppSpacing.predictionRiskMetricVertical,
-      ),
+      padding: compact
+          ? AppSpacing.predictionRiskMetricCompactPadding
+          : AppSpacing.predictionRiskMetricPadding,
       child: Row(
         children: [
           if (icon != null) ...[

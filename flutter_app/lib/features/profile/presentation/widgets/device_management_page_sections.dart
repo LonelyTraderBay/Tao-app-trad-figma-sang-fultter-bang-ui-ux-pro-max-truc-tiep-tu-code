@@ -19,28 +19,29 @@ class _SecuritySummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: compactBorder ? null : DeviceManagementPage.summaryKey,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      padding: AppSpacing.profileDevicesSummaryPadding,
       borderColor: compactBorder ? _devicesBorder : AppColors.primary20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Container(
-                width: 44,
-                height: 44,
-                decoration: BoxDecoration(
+              SizedBox(
+                width: AppSpacing.profileDevicesSummaryIconBox,
+                height: AppSpacing.profileDevicesSummaryIconBox,
+                child: Material(
                   color: AppColors.primary15,
-                  borderRadius: AppRadii.lgRadius,
-                ),
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.shield_outlined,
-                  color: _devicesPrimary,
-                  size: 23,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.lgRadius,
+                  ),
+                  child: const Icon(
+                    Icons.shield_outlined,
+                    color: _devicesPrimary,
+                    size: AppSpacing.profileDevicesSummaryIcon,
+                  ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileDevicesSummaryGapInline),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,15 +52,15 @@ class _SecuritySummaryCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
                         fontWeight: AppTextStyles.heavy,
-                        height: 1,
                       ),
                     ),
-                    const Padding(padding: EdgeInsets.only(top: 7)),
+                    const SizedBox(
+                      height: AppSpacing.profileDevicesSummaryTitleGap,
+                    ),
                     Text(
                       '$totalDevices thi\u1EBFt b\u1ECB \u0111\u00E3 \u0111\u0103ng nh\u1EADp',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -67,7 +68,7 @@ class _SecuritySummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: 16)),
+          const SizedBox(height: AppSpacing.profileDevicesSummaryStatsGapTop),
           Row(
             children: [
               Expanded(
@@ -77,7 +78,7 @@ class _SecuritySummaryCard extends StatelessWidget {
                   color: _devicesGreen,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileDevicesSummaryStatGap),
               Expanded(
                 child: _SummaryStat(
                   label: 'Kh\u00F4ng tin c\u1EADy',
@@ -85,7 +86,7 @@ class _SecuritySummaryCard extends StatelessWidget {
                   color: _devicesAmber,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileDevicesSummaryStatGap),
               Expanded(
                 child: _SummaryStat(
                   label: '\u0110ang ho\u1EA1t \u0111\u1ED9ng',
@@ -114,35 +115,33 @@ class _SummaryStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 58,
-      padding: const EdgeInsets.fromLTRB(12, 10, 8, 8),
-      decoration: BoxDecoration(
+    return SizedBox(
+      height: AppSpacing.profileDevicesSummaryStatHeight,
+      child: Material(
         color: _devicesPanel3.withValues(alpha: .82),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: _devicesMuted,
-              height: 1,
-            ),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+        child: Padding(
+          padding: AppSpacing.profileDevicesSummaryStatPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(color: _devicesMuted),
+              ),
+              const Spacer(),
+              Text(
+                value,
+                style: AppTextStyles.caption.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.heavy,
+                ),
+              ),
+            ],
           ),
-          const Spacer(),
-          Text(
-            value,
-            style: AppTextStyles.caption.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.heavy,
-              height: 1,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -155,13 +154,10 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: AppTextStyles.micro.copyWith(
-        color: AppColors.text2,
-        fontWeight: AppTextStyles.heavy,
-        height: 1,
-      ),
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: _devicesPrimary,
     );
   }
 }
@@ -192,7 +188,6 @@ class _OtherDevicesHeader extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: _devicesRed,
                 fontWeight: AppTextStyles.heavy,
-                height: 1,
               ),
             ),
           ),
@@ -222,7 +217,7 @@ class _DeviceCard extends StatelessWidget {
 
     return VitCard(
       key: DeviceManagementPage.deviceCardKey(device.id),
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.profileDevicesCardPadding,
       borderColor: suspicious
           ? _devicesAmber.withValues(alpha: .42)
           : _devicesBorder,
@@ -232,32 +227,40 @@ class _DeviceCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 44,
-                height: 44,
-                decoration: BoxDecoration(
+              SizedBox(
+                width: AppSpacing.profileDevicesIconBox,
+                height: AppSpacing.profileDevicesIconBox,
+                child: Material(
                   color: accent.withValues(alpha: .14),
-                  borderRadius: AppRadii.lgRadius,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.lgRadius,
+                  ),
+                  child: Icon(
+                    _deviceIcon(device.type),
+                    color: accent,
+                    size: AppSpacing.profileDevicesIcon,
+                  ),
                 ),
-                alignment: Alignment.center,
-                child: Icon(_deviceIcon(device.type), color: accent, size: 21),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.profileDevicesIconGap),
               Expanded(
                 child: _DeviceDetails(device: device, suspicious: suspicious),
               ),
             ],
           ),
           if (showActions) ...[
-            const Padding(padding: EdgeInsets.only(top: 14)),
-            const Divider(height: 1, color: _devicesDivider),
-            const Padding(padding: EdgeInsets.only(top: 13)),
+            const SizedBox(height: AppSpacing.profileDevicesActionTopGap),
+            const Divider(
+              height: AppSpacing.dividerHairline,
+              color: _devicesDivider,
+            ),
+            const SizedBox(height: AppSpacing.profileDevicesActionDividerGap),
             Row(
               children: [
                 Expanded(
                   child: _TrustButton(device: device, onTap: onToggleTrust),
                 ),
-                const SizedBox(width: 9),
+                const SizedBox(width: AppSpacing.profileDevicesActionGap),
                 _LogoutButton(deviceId: device.id, onTap: onLogout),
               ],
             ),
@@ -289,28 +292,27 @@ class _DeviceDetails extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.heavy,
-                  height: 1,
                 ),
               ),
             ),
             if (device.isCurrent) ...[
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.profileDevicesNamePillGap),
               const _TinyPill(
                 label: 'Hi\u1EC7n t\u1EA1i',
                 color: _devicesGreen,
               ),
             ],
             if (suspicious) ...[
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.profileDevicesNamePillGap),
               const Icon(
                 Icons.warning_amber_rounded,
                 color: _devicesAmber,
-                size: 15,
+                size: AppSpacing.profileDevicesWarningIcon,
               ),
             ],
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: 7)),
+        const SizedBox(height: AppSpacing.profileDevicesBrowserGap),
         Text(
           '${device.browser} \u2022 ${device.os}',
           maxLines: 1,
@@ -318,13 +320,12 @@ class _DeviceDetails extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             fontWeight: FontWeight.w700,
-            height: 1,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: 8)),
+        const SizedBox(height: AppSpacing.profileDevicesMetaGap),
         Wrap(
-          spacing: 11,
-          runSpacing: 5,
+          spacing: AppSpacing.profileDevicesMetaSpacing,
+          runSpacing: AppSpacing.profileDevicesMetaRunSpacing,
           children: [
             _MetaItem(
               icon: Icons.location_on_outlined,
@@ -336,10 +337,10 @@ class _DeviceDetails extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: 7)),
+        const SizedBox(height: AppSpacing.profileDevicesIpGap),
         Text(
           'IP: ${device.ip}',
-          style: AppTextStyles.micro.copyWith(color: _devicesMuted, height: 1),
+          style: AppTextStyles.micro.copyWith(color: _devicesMuted),
         ),
       ],
     );

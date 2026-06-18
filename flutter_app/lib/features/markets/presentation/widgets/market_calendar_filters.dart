@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_calendar_common.dart';
@@ -19,13 +20,10 @@ class MarketCalendarViewTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
+    return Material(
+      color: AppColors.surface,
       child: SizedBox(
-        height: 54,
+        height: AppSpacing.marketCalendarViewTabHeight,
         child: Row(
           children: [
             _UnderlineViewTab(
@@ -83,7 +81,7 @@ class _UnderlineViewTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 2,
+              height: AppSpacing.marketCalendarViewUnderlineHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 alignment: Alignment.center,
@@ -113,7 +111,7 @@ class MarketCalendarStatsSummary extends StatelessWidget {
             color: marketCalendarPrimary,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.marketCalendarStatsGap),
         Expanded(
           child: _MiniStat(
             label: 'Tác động cao',
@@ -121,7 +119,7 @@ class MarketCalendarStatsSummary extends StatelessWidget {
             color: AppColors.sell,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.marketCalendarStatsGap),
         Expanded(
           child: _MiniStat(
             label: 'Tuần này',
@@ -148,16 +146,19 @@ class _MiniStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 73,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      height: AppSpacing.marketCalendarMiniStatHeight,
+      padding: AppSpacing.marketCalendarMiniStatPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             value,
-            style: AppTextStyles.sectionTitle.copyWith(color: color, height: 1),
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: color,
+              height: AppSpacing.marketSectorLineHeightTight,
+            ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.marketCalendarMiniStatValueGap),
           Text(
             label,
             maxLines: 1,
@@ -195,7 +196,7 @@ class MarketCalendarTypeFilters extends StatelessWidget {
               activeColor: marketCalendarPrimary,
               onTap: () => onSelected(filter),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.marketCalendarFilterGap),
           ],
         ],
       ),
@@ -224,7 +225,7 @@ class MarketCalendarImpactFilters extends StatelessWidget {
             active: activeImpact == impact,
             onTap: () => onSelected(impact),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.marketCalendarFilterGap),
         ],
       ],
     );
@@ -247,29 +248,34 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
+    final shape = RoundedRectangleBorder(
       borderRadius: AppRadii.cardRadius,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
-        constraints: const BoxConstraints(minHeight: 36),
-        padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
-        decoration: BoxDecoration(
-          color: active
-              ? activeColor.withValues(alpha: .18)
-              : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? activeColor.withValues(alpha: .55)
-                : AppColors.transparent,
+      side: BorderSide(
+        color: active
+            ? activeColor.withValues(alpha: .55)
+            : AppColors.transparent,
+      ),
+    );
+
+    return Material(
+      color: active ? activeColor.withValues(alpha: .18) : AppColors.surface2,
+      shape: shape,
+      child: InkWell(
+        onTap: onTap,
+        customBorder: shape,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: AppSpacing.marketCalendarFilterChipHeight,
           ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? activeColor : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
+          child: Padding(
+            padding: AppSpacing.marketCalendarFilterChipPadding,
+            child: Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
+                color: active ? activeColor : AppColors.text3,
+                fontWeight: AppTextStyles.medium,
+              ),
+            ),
           ),
         ),
       ),
@@ -292,42 +298,43 @@ class _ImpactChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cfg = marketCalendarImpactConfig(impact);
-    return InkWell(
-      onTap: onTap,
+    final shape = RoundedRectangleBorder(
       borderRadius: AppRadii.smRadius,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: active
-              ? cfg.color.withValues(alpha: .14)
-              : AppColors.transparent,
-          border: Border.all(
-            color: active
-                ? cfg.color.withValues(alpha: .38)
-                : AppColors.borderSolid,
-          ),
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
+      side: BorderSide(
+        color: active
+            ? cfg.color.withValues(alpha: .38)
+            : AppColors.borderSolid,
+      ),
+    );
+
+    return Material(
+      color: active ? cfg.color.withValues(alpha: .14) : AppColors.transparent,
+      shape: shape,
+      child: InkWell(
+        onTap: onTap,
+        customBorder: shape,
+        child: Padding(
+          padding: AppSpacing.marketCalendarImpactChipPadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Material(
                 color: cfg.color,
-                shape: BoxShape.circle,
+                shape: const CircleBorder(),
+                child: const SizedBox.square(
+                  dimension: AppSpacing.marketCalendarImpactDot,
+                ),
               ),
-              child: const SizedBox(width: 6, height: 6),
-            ),
-            const SizedBox(width: 6),
-            Text(
-              cfg.label,
-              style: AppTextStyles.micro.copyWith(
-                color: active ? cfg.color : AppColors.text3,
-                fontWeight: AppTextStyles.medium,
+              const SizedBox(width: AppSpacing.marketCalendarBadgeSpacing),
+              Text(
+                cfg.label,
+                style: AppTextStyles.micro.copyWith(
+                  color: active ? cfg.color : AppColors.text3,
+                  fontWeight: AppTextStyles.medium,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

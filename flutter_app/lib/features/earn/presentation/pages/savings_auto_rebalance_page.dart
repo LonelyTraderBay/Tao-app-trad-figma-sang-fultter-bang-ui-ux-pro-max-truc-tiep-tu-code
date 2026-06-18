@@ -89,35 +89,37 @@ class _SavingsAutoRebalancePageState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  DecoratedBox(
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface,
-                      border: Border(
-                        bottom: BorderSide(color: AppColors.divider),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.contentPad,
-                      ),
-                      child: VitTabBar(
-                        variant: VitTabBarVariant.underline,
-                        activeKey: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                        tabs: [
-                          for (final tab in snapshot.tabs)
-                            VitTabItem(key: tab, label: tab),
-                        ],
-                      ),
+                  Material(
+                    color: AppColors.surface,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: AppSpacing.earnContentHorizontalPadding,
+                          child: VitTabBar(
+                            variant: VitTabBarVariant.underline,
+                            activeKey: activeTab,
+                            onChanged: (tab) {
+                              HapticFeedback.selectionClick();
+                              setState(() => _tab = tab);
+                            },
+                            tabs: [
+                              for (final tab in snapshot.tabs)
+                                VitTabItem(key: tab, label: tab),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          color: AppColors.divider,
+                          height: AppSpacing.x1,
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: bottomInset),
+                      padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
                         gap: VitContentGap.defaultGap,

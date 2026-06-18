@@ -70,50 +70,41 @@ class _FillProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: AppSpacing.predictionReceiptFillDividerGap,
-      ),
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          border: Border(top: BorderSide(color: AppColors.divider)),
+    return Column(
+      children: [
+        const SizedBox(height: AppSpacing.predictionReceiptFillDividerGap),
+        const SizedBox(
+          height: AppSpacing.predictionReceiptTimelineLineWidth,
+          child: ColoredBox(color: AppColors.divider),
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: AppSpacing.predictionReceiptFillDividerGap,
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Tiến trình khớp',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '$percent%',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.medium,
-                    ),
-                  ),
-                ],
+        const SizedBox(height: AppSpacing.predictionReceiptFillDividerGap),
+        Row(
+          children: [
+            Text(
+              'Tiến trình khớp',
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+            const Spacer(),
+            Text(
+              '$percent%',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.medium,
               ),
-              const SizedBox(height: AppSpacing.predictionReceiptFillBarGap),
-              ClipRRect(
-                borderRadius: AppRadii.pillRadius,
-                child: LinearProgressIndicator(
-                  value: percent / 100,
-                  minHeight: AppSpacing.predictionReceiptFillBarHeight,
-                  color: percent == 100 ? AppColors.buy : AppColors.warn,
-                  backgroundColor: AppColors.surface2,
-                ),
-              ),
-            ],
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.predictionReceiptFillBarGap),
+        ClipRRect(
+          borderRadius: AppRadii.pillRadius,
+          child: LinearProgressIndicator(
+            value: percent / 100,
+            minHeight: AppSpacing.predictionReceiptFillBarHeight,
+            color: percent == 100 ? AppColors.buy : AppColors.warn,
+            backgroundColor: AppColors.surface2,
           ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -134,59 +125,56 @@ class _TimelineStep extends StatelessWidget {
         children: [
           Column(
             children: [
-              Container(
-                width: AppSpacing.predictionReceiptTimelineDot,
-                height: AppSpacing.predictionReceiptTimelineDot,
-                decoration: BoxDecoration(
+              SizedBox.square(
+                dimension: AppSpacing.predictionReceiptTimelineDot,
+                child: Material(
                   color: step.done ? AppColors.buy15 : AppColors.surface2,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: step.done ? AppColors.buy : AppColors.borderSolid,
+                  shape: CircleBorder(
+                    side: BorderSide(
+                      color: step.done ? AppColors.buy : AppColors.borderSolid,
+                    ),
                   ),
-                ),
-                child: Icon(
-                  step.done ? Icons.check_rounded : Icons.schedule_rounded,
-                  size: AppSpacing.predictionReceiptTimelineIcon,
-                  color: color,
+                  child: Icon(
+                    step.done ? Icons.check_rounded : Icons.schedule_rounded,
+                    size: AppSpacing.predictionReceiptTimelineIcon,
+                    color: color,
+                  ),
                 ),
               ),
               if (!isLast)
                 Expanded(
-                  child: Container(
-                    width: AppSpacing.predictionReceiptTimelineLineWidth,
-                    margin: AppSpacing.predictionReceiptTimelineLineMargin,
-                    color: AppColors.borderSolid,
+                  child: Padding(
+                    padding: AppSpacing.predictionReceiptTimelineLineMargin,
+                    child: const SizedBox(
+                      width: AppSpacing.predictionReceiptTimelineLineWidth,
+                      child: ColoredBox(color: AppColors.borderSolid),
+                    ),
                   ),
                 ),
             ],
           ),
           const SizedBox(width: AppSpacing.predictionReceiptTimelineGap),
           Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
-                bottom: isLast
-                    ? 0
-                    : AppSpacing.predictionReceiptTimelineItemBottomGap,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    step.label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: step.done ? AppColors.text1 : AppColors.text3,
-                      fontWeight: AppTextStyles.medium,
-                    ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  step.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: step.done ? AppColors.text1 : AppColors.text3,
+                    fontWeight: AppTextStyles.medium,
                   ),
-                  if (step.date.isNotEmpty)
-                    Text(
-                      step.date,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                ],
-              ),
+                ),
+                if (step.date.isNotEmpty)
+                  Text(
+                    step.date,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                if (!isLast)
+                  const SizedBox(
+                    height: AppSpacing.predictionReceiptTimelineItemBottomGap,
+                  ),
+              ],
             ),
           ),
         ],
@@ -208,19 +196,22 @@ class _SoftPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: AppSpacing.predictionReceiptSoftPillHeight,
-      padding: AppSpacing.predictionReceiptSoftPillPadding,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.badge.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: background,
+      borderRadius: AppRadii.smRadius,
+      child: SizedBox(
+        height: AppSpacing.predictionReceiptSoftPillHeight,
+        child: Padding(
+          padding: AppSpacing.predictionReceiptSoftPillPadding,
+          child: Center(
+            child: Text(
+              label,
+              style: AppTextStyles.badge.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
         ),
       ),
     );

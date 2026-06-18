@@ -10,20 +10,24 @@ class _SafetyCenterCard extends StatelessWidget {
     return VitCard(
       key: ArenaGuidePage.safetyCenterKey,
       onTap: onPressed,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.arenaGuideFeatureIconBox,
             height: AppSpacing.arenaGuideFeatureIconBox,
-            decoration: BoxDecoration(
-              color: AppColors.primary12,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.shield_outlined,
-              color: AppColors.primary,
-              size: AppSpacing.arenaGuideFeatureGlyph,
+            child: const DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.primary12,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.shield_outlined,
+                  color: AppColors.primary,
+                  size: AppSpacing.arenaGuideFeatureGlyph,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -103,8 +107,8 @@ class _FaqList extends StatelessWidget {
       children: [
         for (var index = 0; index < items.length; index++)
           Padding(
-            padding: EdgeInsets.only(
-              bottom: index == items.length - 1 ? 0 : AppSpacing.x2,
+            padding: AppSpacing.arenaGuideAccordionListPadding(
+              index == items.length - 1,
             ),
             child: _AccordionCard(
               key: ArenaGuidePage.faqKey('$index'),
@@ -130,20 +134,24 @@ class _SupportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.arenaGuideFeatureIconBox,
             height: AppSpacing.arenaGuideFeatureIconBox,
-            decoration: BoxDecoration(
-              color: AppColors.primary12,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.help_outline,
-              color: AppColors.primary,
-              size: AppSpacing.arenaGuideFeatureGlyph,
+            child: const DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.primary12,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.help_outline,
+                  color: AppColors.primary,
+                  size: AppSpacing.arenaGuideFeatureGlyph,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -207,22 +215,28 @@ class _AccordionCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.arenaPaddingX4,
             child: Row(
               children: [
-                Container(
+                SizedBox(
                   width: AppSpacing.arenaGuideAccordionIconBox,
                   height: AppSpacing.arenaGuideAccordionIconBox,
-                  decoration: BoxDecoration(
-                    color: open
-                        ? badgeColor.withValues(alpha: .12)
-                        : AppColors.surface2,
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Icon(
-                    icon,
-                    color: open ? badgeColor : AppColors.text3,
-                    size: AppSpacing.arenaGuideAccordionGlyph,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: open
+                          ? badgeColor.withValues(alpha: .12)
+                          : AppColors.surface2,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadii.smRadius,
+                      ),
+                    ),
+                    child: Center(
+                      child: Icon(
+                        icon,
+                        color: open ? badgeColor : AppColors.text3,
+                        size: AppSpacing.arenaGuideAccordionGlyph,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x3),
@@ -238,12 +252,14 @@ class _AccordionCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x2),
-                Container(
+                SizedBox(
                   width: AppSpacing.arenaGuideAccordionDot,
                   height: AppSpacing.arenaGuideAccordionDot,
-                  decoration: BoxDecoration(
-                    color: badgeColor,
-                    shape: BoxShape.circle,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: badgeColor,
+                      shape: const CircleBorder(),
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x2),
@@ -261,24 +277,20 @@ class _AccordionCard extends StatelessWidget {
           ),
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
-            secondChild: Container(
+            secondChild: SizedBox(
               width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.x4,
-                0,
-                AppSpacing.x4,
-                AppSpacing.x4,
-              ),
-              decoration: const BoxDecoration(
-                border: Border(top: BorderSide(color: AppColors.divider)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: AppSpacing.x3),
-                child: Text(
-                  description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.arenaGuideAccordionBodyLineHeight,
+              child: DecoratedBox(
+                decoration: const ShapeDecoration(
+                  shape: Border(top: BorderSide(color: AppColors.divider)),
+                ),
+                child: Padding(
+                  padding: AppSpacing.arenaGuideAccordionBodyPadding,
+                  child: Text(
+                    description,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      height: AppSpacing.arenaGuideAccordionBodyLineHeight,
+                    ),
                   ),
                 ),
               ),
@@ -303,15 +315,12 @@ class _SmallBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.arenaGuideSmallBadgePadH,
-          vertical: AppSpacing.arenaGuideSmallBadgePadV,
-        ),
+        padding: AppSpacing.arenaGuideSmallBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -333,15 +342,12 @@ class _MetaChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.arenaGuideMetaChipPadH,
-          vertical: AppSpacing.arenaGuideMetaChipPadV,
-        ),
+        padding: AppSpacing.arenaGuideMetaChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -363,16 +369,15 @@ class _TipPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .08),
-        border: Border.all(color: color.withValues(alpha: .16)),
-        borderRadius: AppRadii.inputRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .16)),
+          borderRadius: AppRadii.inputRadius,
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
+        padding: AppSpacing.arenaGuideTipPillPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -406,10 +411,15 @@ class _LegendDot extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.arenaGuideLegendDot,
           height: AppSpacing.arenaGuideLegendDot,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: const CircleBorder(),
+            ),
+          ),
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(

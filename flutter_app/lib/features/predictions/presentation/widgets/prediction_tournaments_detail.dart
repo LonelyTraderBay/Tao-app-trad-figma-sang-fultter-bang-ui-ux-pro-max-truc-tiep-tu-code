@@ -132,11 +132,9 @@ class _TournamentDetailHero extends StatelessWidget {
             const SizedBox(
               height: AppSpacing.predictionTournamentDetailHeroGap,
             ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: AppColors.buy.withValues(alpha: .08),
-                borderRadius: AppRadii.cardRadius,
-              ),
+            Material(
+              color: AppColors.buy.withValues(alpha: .08),
+              borderRadius: AppRadii.cardRadius,
               child: Padding(
                 padding: AppSpacing.predictionTournamentInfoPadding,
                 child: Row(

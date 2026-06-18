@@ -45,7 +45,7 @@ class _FaqPanel extends StatelessWidget {
         const SizedBox(height: AppSpacing.x5),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.supportCardPadding,
           borderColor: AppColors.primary20,
           child: Text(
             'Không tìm thấy câu trả lời? Hãy tạo ticket hoặc liên hệ support qua email/hotline.',
@@ -75,7 +75,7 @@ class _FaqCard extends StatelessWidget {
     return VitCard(
       key: SupportPage.faqKey(index),
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.supportCardPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -94,18 +94,16 @@ class _FaqCard extends StatelessWidget {
               AnimatedRotation(
                 turns: expanded ? .5 : 0,
                 duration: const Duration(milliseconds: 160),
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
+                child: SizedBox.square(
+                  dimension: AppSpacing.supportFaqToggleIconBox,
+                  child: const Material(
                     color: AppColors.primary12,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: AppModuleAccents.support,
-                    size: AppSpacing.iconMd,
+                    shape: CircleBorder(),
+                    child: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: AppModuleAccents.support,
+                      size: AppSpacing.iconMd,
+                    ),
                   ),
                 ),
               ),
@@ -132,23 +130,10 @@ class _MiniPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: style.color.withValues(alpha: .16),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: style.color,
-          fontWeight: AppTextStyles.bold,
-          height: 1.1,
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: style.color,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -184,19 +169,10 @@ class _CategoryPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.surface3,
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.navLabel.copyWith(color: AppColors.text2),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: AppColors.text2,
+      size: VitStatusPillSize.sm,
     );
   }
 }

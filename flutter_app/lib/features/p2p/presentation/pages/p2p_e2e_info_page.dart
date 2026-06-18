@@ -38,8 +38,9 @@ class P2PE2EInfoPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.p2pE2EBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pE2EBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -64,16 +65,11 @@ class P2PE2EInfoPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pE2EScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      customGap: AppSpacing.p2pE2EContentGap,
                       children: [
                         _Hero(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x5),
@@ -109,17 +105,17 @@ class _Hero extends StatelessWidget {
     return Column(
       key: P2PE2EInfoPage.heroKey,
       children: [
-        Container(
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
+        SizedBox(
+          width: AppSpacing.p2pE2EHeroIconBox,
+          height: AppSpacing.p2pE2EHeroIconBox,
+          child: Material(
             color: AppColors.buy.withValues(alpha: .12),
             borderRadius: AppRadii.cardLargeRadius,
-          ),
-          child: const Icon(
-            Icons.verified_user_outlined,
-            color: AppColors.buy,
-            size: AppSpacing.iconLg,
+            child: const Icon(
+              Icons.verified_user_outlined,
+              color: AppColors.buy,
+              size: AppSpacing.iconLg,
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.x4),
@@ -153,7 +149,7 @@ class _EncryptionDiagram extends StatelessWidget {
       key: P2PE2EInfoPage.diagramKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pE2ECardPadding,
       child: Column(
         children: [
           Row(
@@ -195,16 +191,20 @@ class _EndpointAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 50,
-      height: 50,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      child: Text(
-        label,
-        style: AppTextStyles.caption.copyWith(
-          color: AppColors.onAccent,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox(
+      width: AppSpacing.p2pE2EEndpointAvatarSize,
+      height: AppSpacing.p2pE2EEndpointAvatarSize,
+      child: Material(
+        color: color,
+        shape: const CircleBorder(),
+        child: Center(
+          child: Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.onAccent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -218,21 +218,29 @@ class _SecureConnector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(width: 16, height: 2, color: AppColors.buy),
-        Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
+        const SizedBox(
+          width: AppSpacing.p2pE2EConnectorWidth,
+          height: AppSpacing.p2pE2EConnectorHeight,
+          child: ColoredBox(color: AppColors.buy),
+        ),
+        SizedBox(
+          width: AppSpacing.p2pE2ELockBox,
+          height: AppSpacing.p2pE2ELockBox,
+          child: Material(
             color: AppColors.buy.withValues(alpha: .12),
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(
-            Icons.lock_outline_rounded,
-            color: AppColors.buy,
-            size: 14,
+            shape: const CircleBorder(),
+            child: const Icon(
+              Icons.lock_outline_rounded,
+              color: AppColors.buy,
+              size: AppSpacing.p2pE2ELockIcon,
+            ),
           ),
         ),
-        Container(width: 16, height: 2, color: AppColors.buy),
+        const SizedBox(
+          width: AppSpacing.p2pE2EConnectorWidth,
+          height: AppSpacing.p2pE2EConnectorHeight,
+          child: ColoredBox(color: AppColors.buy),
+        ),
       ],
     );
   }
@@ -270,18 +278,18 @@ class _InfoItemCard extends StatelessWidget {
     return VitCard(
       key: P2PE2EInfoPage.infoItemKey(item.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pE2ECardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.inputHeight,
             height: AppSpacing.inputHeight,
-            decoration: BoxDecoration(
+            child: Material(
               color: color.withValues(alpha: .12),
               borderRadius: AppRadii.lgRadius,
+              child: Icon(_infoIcon(item.iconKey), color: color),
             ),
-            child: Icon(_infoIcon(item.iconKey), color: color, size: 20),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -301,7 +309,7 @@ class _InfoItemCard extends StatelessWidget {
                   style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text3,
                     fontWeight: AppTextStyles.normal,
-                    height: 1.6,
+                    height: AppSpacing.p2pE2EBodyLineHeight,
                   ),
                 ),
               ],
@@ -323,7 +331,7 @@ class _FingerprintCard extends StatelessWidget {
     return VitCard(
       key: P2PE2EInfoPage.fingerprintKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pE2ECardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -352,8 +360,8 @@ class _FingerprintCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              letterSpacing: 2,
-              height: 1.9,
+              letterSpacing: AppSpacing.p2pE2EFingerprintLetterSpacing,
+              height: AppSpacing.p2pE2EFingerprintLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -378,7 +386,7 @@ class _HowItWorks extends StatelessWidget {
     return VitCard(
       key: P2PE2EInfoPage.stepsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pE2ECardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -412,20 +420,22 @@ class _StepRow extends StatelessWidget {
       key: P2PE2EInfoPage.stepKey(step.id),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 28,
-          height: 28,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
+        SizedBox(
+          width: AppSpacing.p2pE2EStepNodeSize,
+          height: AppSpacing.p2pE2EStepNodeSize,
+          child: Material(
             color: AppColors.buy.withValues(alpha: .12),
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.buy20),
-          ),
-          child: Text(
-            step.step,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.buy,
-              fontWeight: AppTextStyles.bold,
+            shape: const CircleBorder(
+              side: BorderSide(color: AppColors.buy20),
+            ),
+            child: Center(
+              child: Text(
+                step.step,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.buy,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -446,7 +456,7 @@ class _StepRow extends StatelessWidget {
                 step.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.5,
+                  height: AppSpacing.p2pE2EStepLineHeight,
                 ),
               ),
             ],
@@ -464,15 +474,15 @@ class _ServerInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return Material(
       key: P2PE2EInfoPage.serverKey,
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p.withValues(alpha: .08),
+      color: AppModuleAccents.p2p.withValues(alpha: .08),
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        border: Border.all(color: AppModuleAccents.p2p.withValues(alpha: .18)),
+        side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .18)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.p2pE2EServerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -487,7 +497,7 @@ class _ServerInfo extends StatelessWidget {
                 snapshot.serverNote,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: 1.6,
+                  height: AppSpacing.p2pE2EBodyLineHeight,
                 ),
               ),
             ),

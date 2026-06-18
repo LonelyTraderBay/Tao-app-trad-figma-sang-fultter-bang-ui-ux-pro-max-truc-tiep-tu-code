@@ -5,28 +5,25 @@ class _TaxNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
-      decoration: BoxDecoration(
-        color: _tradePrimary.withValues(alpha: .06),
-        border: Border.all(color: _tradePrimary.withValues(alpha: .18)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.tradeToolTaxNotePadding,
+      borderColor: _tradePrimary.withValues(alpha: .18),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 1),
-            child: Icon(Icons.info_outline, color: _tradePrimary, size: 14),
+          const Icon(
+            Icons.info_outline,
+            color: _tradePrimary,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
               'File xuất phục vụ mục đích lưu trữ và khai thuế. Không phải tài liệu '
               'chính thức về thuế. Tham khảo ý kiến chuyên gia thuế cho trường hợp cụ thể.',
               style: AppTextStyles.navLabel.copyWith(
                 color: _tradePrimary,
-                height: 1.45,
               ),
             ),
           ),
@@ -57,153 +54,86 @@ class _ExportFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final exported = result != null;
 
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface2,
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
+    return Material(
+      color: AppColors.surface2,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(20, exported ? 12 : 16, 20, 14),
+        padding: exported
+            ? AppSpacing.tradeToolFooterPaddingExported
+            : AppSpacing.tradeToolFooterPaddingStandard,
         child: exported
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    height: 42,
+                  VitCard(
+                    variant: VitCardVariant.inner,
+                    height: AppSpacing.tradeToolFooterReadyHeight,
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppColors.buy.withValues(alpha: .08),
-                      borderRadius: AppRadii.inputRadius,
-                    ),
+                    borderColor: AppColors.buy.withValues(alpha: .2),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(
                           Icons.check_circle_outline,
                           color: AppColors.buy,
-                          size: 17,
+                          size: AppSpacing.tradeToolFooterIcon,
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'File đã sẵn sàng tải xuống',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.buy,
-                            fontWeight: AppTextStyles.medium,
-                            height: 1,
+                        const SizedBox(width: AppSpacing.tradeToolInlineGap),
+                        Flexible(
+                          child: Text(
+                            'File đã sẵn sàng tải xuống',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.buy,
+                              fontWeight: AppTextStyles.medium,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: AppSpacing.tradeToolIconGap),
                   Row(
                     children: [
                       Expanded(
-                        child: _FooterButton(
+                        child: VitCtaButton(
                           key: TradeHistoryExportPage.newExportKey,
-                          label: 'Tạo mới',
-                          foreground: AppColors.text2,
-                          background: AppColors.surface3,
-                          borderColor: AppColors.borderSolid,
-                          onTap: onNewExport,
+                          variant: VitCtaButtonVariant.secondary,
+                          onPressed: onNewExport,
+                          child: const Text('Tạo mới'),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: AppSpacing.tradeToolCardGap),
                       Expanded(
-                        flex: 2,
-                        child: _FooterButton(
+                        flex: AppSpacing.tradeToolFooterButtonFlex,
+                        child: VitCtaButton(
                           key: TradeHistoryExportPage.downloadKey,
-                          label: 'Tải ${format.toUpperCase()}',
-                          icon: Icons.file_download_outlined,
-                          foreground: AppColors.onAccent,
-                          gradient: const LinearGradient(
-                            colors: [AppColors.buy, AppColors.buyDark],
-                          ),
-                          onTap: () {},
+                          variant: VitCtaButtonVariant.success,
+                          onPressed: () {},
+                          leading: const Icon(Icons.file_download_outlined),
+                          child: Text('Tải ${format.toUpperCase()}'),
                         ),
                       ),
                     ],
                   ),
                 ],
               )
-            : _FooterButton(
+            : VitCtaButton(
                 key: TradeHistoryExportPage.exportKey,
-                label: isExporting
-                    ? 'Đang tạo file...'
-                    : 'Xuất ${format.toUpperCase()} ($period)',
-                icon: isExporting
-                    ? Icons.schedule_outlined
-                    : Icons.file_download_outlined,
-                foreground: isExporting ? AppColors.text3 : AppColors.onAccent,
-                gradient: isExporting
-                    ? null
-                    : const LinearGradient(
-                        colors: [_tradePrimary, _tradePrimaryDark],
-                      ),
-                background: isExporting ? AppColors.surface3 : null,
-                onTap: isExporting ? null : onExport,
-              ),
-      ),
-    );
-  }
-}
-
-class _FooterButton extends StatelessWidget {
-  const _FooterButton({
-    super.key,
-    required this.label,
-    required this.foreground,
-    this.onTap,
-    this.icon,
-    this.background,
-    this.gradient,
-    this.borderColor,
-  });
-
-  final String label;
-  final Color foreground;
-  final VoidCallback? onTap;
-  final IconData? icon;
-  final Color? background;
-  final Gradient? gradient;
-  final Color? borderColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: AppSpacing.inputHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: gradient == null ? background : null,
-          gradient: gradient,
-          border: borderColor == null ? null : Border.all(color: borderColor!),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (icon != null) ...[
-              Icon(icon, color: foreground, size: 17),
-              const SizedBox(width: 8),
-            ],
-            Flexible(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.body.copyWith(
-                  color: foreground,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
+                variant: VitCtaButtonVariant.primary,
+                loading: isExporting,
+                onPressed: isExporting ? null : onExport,
+                leading: Icon(
+                  isExporting
+                      ? Icons.schedule_outlined
+                      : Icons.file_download_outlined,
+                ),
+                child: Text(
+                  isExporting
+                      ? 'Đang tạo file...'
+                      : 'Xuất ${format.toUpperCase()} ($period)',
                 ),
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

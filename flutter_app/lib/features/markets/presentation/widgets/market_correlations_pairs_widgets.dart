@@ -19,7 +19,7 @@ class _SortChips extends StatelessWidget {
             color: AppColors.sell,
             onTap: () => onSelected(CorrelationSortOrder.high),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.marketCorrelationsChipGap),
           _SortChip(
             key: MarketCorrelationsPage.sortLowKey,
             label: 'Tương quan thấp',
@@ -49,22 +49,25 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
+    return Material(
+      color: active ? color.withValues(alpha: .10) : AppColors.surface2,
       borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: 32,
-        padding: const EdgeInsets.symmetric(horizontal: 13),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? color.withValues(alpha: .10) : AppColors.surface2,
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? color : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.mdRadius,
+        child: SizedBox(
+          height: AppSpacing.marketCorrelationsSortChipHeight,
+          child: Padding(
+            padding: AppSpacing.marketCorrelationsSortChipPadding,
+            child: Center(
+              child: Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? color : AppColors.text3,
+                  fontWeight: AppTextStyles.medium,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -96,66 +99,66 @@ class _PairCorrelationRow extends StatelessWidget {
           child: FractionallySizedBox(
             alignment: Alignment.centerLeft,
             widthFactor: maxValue == 0 ? 0 : value / maxValue,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .06),
-                borderRadius: AppRadii.mdRadius,
-              ),
+            child: Material(
+              color: color.withValues(alpha: .06),
+              borderRadius: AppRadii.mdRadius,
             ),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: AppColors.surface.withValues(alpha: .92),
-            borderRadius: AppRadii.mdRadius,
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 18,
-                child: Text(
-                  '$rank',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ),
-              const SizedBox(width: 10),
-              _AssetDot(symbol: pair.assetA, color: pair.colorA),
-              const SizedBox(width: 5),
-              Text(
-                '↔',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-              const SizedBox(width: 5),
-              _AssetDot(symbol: pair.assetB, color: pair.colorB),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  '${pair.assetA}/${pair.assetB}',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    value.toStringAsFixed(2),
-                    style: AppTextStyles.body.copyWith(
-                      color: color,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
-                  ),
-                  Text(
-                    _correlationLabel(value),
+        Material(
+          color: AppColors.surface.withValues(alpha: .92),
+          borderRadius: AppRadii.mdRadius,
+          child: Padding(
+            padding: AppSpacing.marketCorrelationsPairRowPadding,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: AppSpacing.marketCorrelationsRankWidth,
+                  child: Text(
+                    '$rank',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(width: AppSpacing.marketCorrelationsRankGap),
+                _AssetDot(symbol: pair.assetA, color: pair.colorA),
+                const SizedBox(width: AppSpacing.marketCorrelationsAssetDotGap),
+                Text(
+                  '↔',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+                const SizedBox(width: AppSpacing.marketCorrelationsAssetDotGap),
+                _AssetDot(symbol: pair.assetB, color: pair.colorB),
+                const SizedBox(width: AppSpacing.marketCorrelationsPairGap),
+                Expanded(
+                  child: Text(
+                    '${pair.assetA}/${pair.assetB}',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      value.toStringAsFixed(2),
+                      style: AppTextStyles.body.copyWith(
+                        color: color,
+                        fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
+                    Text(
+                      _correlationLabel(value),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -171,14 +174,9 @@ class _AssetDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 24,
-      height: 24,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .18),
-        shape: BoxShape.circle,
-      ),
+    return CircleAvatar(
+      radius: AppSpacing.marketCorrelationsAssetDot / 2,
+      backgroundColor: color.withValues(alpha: .18),
       child: Text(
         symbol.substring(0, 2),
         style: AppTextStyles.micro.copyWith(

@@ -39,12 +39,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                   child: SingleChildScrollView(
                     key: ReferralRewardsPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.referralPageScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       customGap: 0,
@@ -56,21 +51,15 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                           onDisputes: () =>
                               _showDisputeHistorySheet(context, snapshot),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x5),
-                        ),
+                        const SizedBox(height: AppSpacing.x5),
                         _SectionTitle(
                           title: 'Hoa hồng theo tháng',
                           trailing:
                               '+${_formatUsd(snapshot.thisMonthCommission)} tháng này',
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x3),
-                        ),
+                        const SizedBox(height: AppSpacing.x3),
                         _RewardChart(snapshot: snapshot),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x5),
-                        ),
+                        const SizedBox(height: AppSpacing.x5),
                         _RewardTabs(
                           filters: snapshot.filters,
                           active: snapshot.filter,
@@ -79,9 +68,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                             setState(() => _filter = value);
                           },
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x4),
-                        ),
+                        const SizedBox(height: AppSpacing.x4),
                         _SortRail(
                           options: snapshot.sortOptions,
                           active: snapshot.sort,
@@ -90,17 +77,13 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                             setState(() => _sort = value);
                           },
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x4),
-                        ),
+                        const SizedBox(height: AppSpacing.x4),
                         _RewardLedger(
                           snapshot: snapshot,
                           onReport: (record) =>
                               _showReportSheet(context, snapshot, record),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x4),
-                        ),
+                        const SizedBox(height: AppSpacing.x4),
                         const _DisputeInfo(),
                       ],
                     ),
@@ -122,18 +105,13 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadii.lg)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x5,
-              AppSpacing.contentPad,
-              AppSpacing.x6,
-            ),
+            padding: AppSpacing.referralSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -144,12 +122,12 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   '${snapshot.records.length} bản ghi · ${_formatUsd(snapshot.totalCommission)} tổng',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                const SizedBox(height: AppSpacing.x4),
                 Wrap(
                   spacing: AppSpacing.x3,
                   runSpacing: AppSpacing.x3,
@@ -158,7 +136,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                       _TinyPill(label: range.label),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+                const SizedBox(height: AppSpacing.x5),
                 VitCtaButton(
                   onPressed: () => Navigator.of(context).pop(),
                   leading: const Icon(Icons.download_rounded),
@@ -181,18 +159,13 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadii.lg)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x5,
-              AppSpacing.contentPad,
-              AppSpacing.x6,
-            ),
+            padding: AppSpacing.referralSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -203,14 +176,14 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 _SheetRecord(record: record),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                const SizedBox(height: AppSpacing.x4),
                 for (final type in snapshot.disputeTypes) ...[
                   _DisputeTypeRow(type: type),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                  const SizedBox(height: AppSpacing.x2),
                 ],
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                const SizedBox(height: AppSpacing.x4),
                 VitCtaButton(
                   onPressed: () => Navigator.of(context).pop(),
                   variant: VitCtaButtonVariant.warning,
@@ -233,18 +206,13 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadii.lg)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x5,
-              AppSpacing.contentPad,
-              AppSpacing.x6,
-            ),
+            padding: AppSpacing.referralSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -255,7 +223,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                const SizedBox(height: AppSpacing.x4),
                 for (final dispute in snapshot.disputes)
                   _DisputeHistoryCard(dispute: dispute),
               ],
@@ -284,7 +252,7 @@ class _RewardHero extends StatelessWidget {
       key: ReferralRewardsPage.heroKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.referralCardPaddingLarge,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -303,14 +271,14 @@ class _RewardHero extends StatelessWidget {
               _TierPill(snapshot: snapshot),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             _formatUsd(snapshot.totalCommission),
             style: AppTextStyles.heroNumber.copyWith(
               color: AppColors.portfolioTextDim,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             'USDT · Đã cộng vào ví',
             style: AppTextStyles.caption.copyWith(
@@ -318,7 +286,7 @@ class _RewardHero extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               const Icon(
@@ -336,7 +304,7 @@ class _RewardHero extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -358,7 +326,7 @@ class _RewardHero extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -398,16 +366,15 @@ class _TierPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.portfolioBtnGhost,
-        border: Border.all(color: AppColors.portfolioBtnGhostBorder),
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.portfolioBtnGhostBorder),
+          borderRadius: AppRadii.mdRadius,
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
+        padding: AppSpacing.referralCompactPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -449,7 +416,7 @@ class _HeroStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.portfolioBtnGhostBorder,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.referralInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -467,7 +434,7 @@ class _HeroStat extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             _formatUsd(amount),
             style: AppTextStyles.body.copyWith(
@@ -492,12 +459,14 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: AppSpacing.x1,
           height: AppSpacing.x5,
-          decoration: const BoxDecoration(
-            color: AppColors.buy,
-            borderRadius: AppRadii.xsRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: AppColors.buy,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),

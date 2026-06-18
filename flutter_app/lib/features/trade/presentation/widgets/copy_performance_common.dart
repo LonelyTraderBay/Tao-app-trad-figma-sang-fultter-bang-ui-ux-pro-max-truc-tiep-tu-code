@@ -195,21 +195,9 @@ class _SidePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final buy = side == TradeOrderSide.buy;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: buy ? AppColors.buy : AppColors.sell,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child: Text(
-          buy ? 'BUY' : 'SELL',
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.onAccent,
-            fontWeight: AppTextStyles.extraBold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: buy ? 'BUY' : 'SELL',
+      accentColor: buy ? AppColors.buy : AppColors.sell,
     );
   }
 }
@@ -231,21 +219,19 @@ class _TradeColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .13),
-        border: Border.all(color: color),
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.cardPaddingCompact,
+      borderColor: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: AppTextStyles.micro.copyWith(color: color)),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.x3),
           _MiniRow(label: 'Entry', value: '\$${entry.toStringAsFixed(0)}'),
           _MiniRow(label: 'Exit', value: '\$${exit.toStringAsFixed(0)}'),
-          const Divider(color: AppColors.divider, height: 14),
+          const Divider(color: AppColors.divider, height: AppSpacing.rowPy),
           _MiniRow(
             label: 'P/L',
             value: '${pnl >= 0 ? '+' : ''}\$${pnl.toStringAsFixed(0)}',
@@ -267,8 +253,8 @@ class _InlineInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.text3, size: 13),
-        const SizedBox(width: 5),
+        Icon(icon, color: AppColors.text3, size: AppSpacing.x4),
+        const SizedBox(width: AppSpacing.x2),
         Flexible(
           child: Text(
             label,

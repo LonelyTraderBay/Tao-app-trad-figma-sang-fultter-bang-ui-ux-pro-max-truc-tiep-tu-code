@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -12,9 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -23,7 +22,6 @@ part '../widgets/leverage_controls_presets.dart';
 part '../widgets/leverage_impact_confirm.dart';
 
 const _tradePrimary = AppColors.primary;
-const _tradePrimaryDark = AppColors.primaryDark;
 const _chipBackground = AppColors.surface2;
 
 class LeveragePage extends ConsumerStatefulWidget {
@@ -77,7 +75,7 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 34 : 20);
+        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -91,10 +89,10 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
           ),
           child: SingleChildScrollView(
             key: LeveragePage.contentKey,
-            padding: EdgeInsets.only(bottom: bottomInset),
+            padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
             child: VitPageContent(
               padding: VitContentPadding.relaxed,
-              customGap: 18,
+              customGap: AppSpacing.transferSectionGap,
               children: [
                 _LeverageHero(preview: preview, riskColor: riskColor),
                 _RiskMeter(preview: preview, riskColor: riskColor),

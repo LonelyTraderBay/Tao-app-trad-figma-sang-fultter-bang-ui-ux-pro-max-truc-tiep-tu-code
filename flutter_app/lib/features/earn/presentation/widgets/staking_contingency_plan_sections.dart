@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingContingencyPlanPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,7 +53,7 @@ class _RecoveryMetrics extends StatelessWidget {
     return VitCard(
       key: StakingContingencyPlanPage.metricsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -90,7 +90,7 @@ class _MetricTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: metric.tone == 'success' ? AppColors.buy20 : null,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -144,7 +144,7 @@ class _ScenarioCard extends StatelessWidget {
     return VitCard(
       key: StakingContingencyPlanPage.scenarioKey(scenario.scenario),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -165,7 +165,7 @@ class _ScenarioCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.earnCardPaddingX4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -179,7 +179,7 @@ class _ScenarioCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 for (var i = 0; i < scenario.response.length; i++)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+                    padding: AppSpacing.earnBottomPaddingX2,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

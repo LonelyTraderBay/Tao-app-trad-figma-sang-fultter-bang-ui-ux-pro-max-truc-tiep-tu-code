@@ -24,8 +24,6 @@ part '../widgets/otp_input_status.dart';
 const _authPrimary = AppColors.primary;
 const _authPrimary10 = AppColors.primary12;
 const _authPrimary30 = AppColors.primary30;
-const _otpBoxSize = 48.0;
-const _otpBoxHeight = 56.0;
 const _freezeAuthCountdownForQa = bool.fromEnvironment('FREEZE_AUTH_COUNTDOWN');
 
 class OtpPageRouteArgs {
@@ -234,21 +232,21 @@ class _OTPPageState extends ConsumerState<OTPPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: OTPPage.contentKey,
-                padding: const EdgeInsets.only(bottom: AppSpacing.x6),
+                padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
                   padding: VitContentPadding.relaxed,
                   gap: VitContentGap.relaxed,
                   children: [
                     const VitCard(
-                      padding: EdgeInsets.zero,
+                      padding: AppSpacing.zeroInsets,
                       child: _ShieldHero(),
                     ),
                     VitCard(
-                      padding: EdgeInsets.zero,
+                      padding: AppSpacing.zeroInsets,
                       child: _OtpIntro(contact: widget.contact),
                     ),
                     VitCard(
-                      padding: EdgeInsets.zero,
+                      padding: AppSpacing.zeroInsets,
                       child: _OtpDigitRow(
                         controllers: _controllers,
                         focusNodes: _focusNodes,
@@ -281,7 +279,7 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                       textAlign: TextAlign.center,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: 1.5,
+                        height: AppSpacing.authFooterLineHeight,
                       ),
                     ),
                   ],

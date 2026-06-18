@@ -12,8 +12,8 @@ class _PortfolioOverview extends StatelessWidget {
     final labelColor = positive ? AppColors.buy20 : AppColors.sellDeep;
 
     return VitCard(
-      height: 194,
-      padding: const EdgeInsets.all(16),
+      height: AppSpacing.activeCopiesPortfolioHeight,
+      padding: AppSpacing.cardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -24,7 +24,7 @@ class _PortfolioOverview extends StatelessWidget {
                   'Tổng quan portfolio',
                   style: AppTextStyles.baseMedium.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.activeCopiesLineHeightCaption,
                   ),
                 ),
               ),
@@ -34,7 +34,7 @@ class _PortfolioOverview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 11),
+          const SizedBox(height: AppSpacing.rowGapRegular),
           Row(
             children: [
               Expanded(
@@ -55,8 +55,8 @@ class _PortfolioOverview extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            height: 62,
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            height: AppSpacing.activeCopiesPnlHeight,
+            padding: AppSpacing.activeCopiesPnlPadding,
             borderColor: color,
             child: Row(
               children: [
@@ -65,9 +65,9 @@ class _PortfolioOverview extends StatelessWidget {
                       ? Icons.trending_up_rounded
                       : Icons.trending_down_rounded,
                   color: color,
-                  size: 17,
+                  size: AppSpacing.activeCopiesPnlIcon,
                 ),
-                const SizedBox(width: 7),
+                const SizedBox(width: AppSpacing.walletAssetSmallGap),
                 Text(
                   'P/L tổng',
                   style: AppTextStyles.micro.copyWith(
@@ -85,16 +85,16 @@ class _PortfolioOverview extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: color,
                         fontWeight: AppTextStyles.bold,
-                        height: 1.1,
+                        height: AppSpacing.activeCopiesLineHeightShort,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       _formatPercent(snapshot.totalPnlPct),
                       style: AppTextStyles.micro.copyWith(
                         color: labelColor,
-                        height: 1,
+                        height: AppSpacing.activeCopiesLineHeightTight,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
@@ -124,15 +124,15 @@ class _PortfolioMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1.1,
+            height: AppSpacing.activeCopiesLineHeightShort,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
             fontWeight: AppTextStyles.bold,
-            height: 1.15,
+            height: AppSpacing.activeCopiesLineHeightCompact,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -155,61 +155,22 @@ class _SegmentedTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 48,
-      padding: const EdgeInsets.all(4),
+      height: AppSpacing.activeCopiesTabsHeight,
+      padding: AppSpacing.activeCopiesTabsPadding,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      child: Row(
-        children: [
+      child: VitTabBar(
+        variant: VitTabBarVariant.segment,
+        activeKey: activeTab,
+        onChanged: onChanged,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: _SegmentedTabButton(
-                tab: tab,
-                active: activeTab == tab.id,
-                onTap: () => onChanged(tab.id),
-              ),
+            VitTabItem(
+              key: tab.id,
+              label: tab.label,
+              widgetKey: ActiveCopiesPage.tabKey(tab.id),
             ),
         ],
-      ),
-    );
-  }
-}
-
-class _SegmentedTabButton extends StatelessWidget {
-  const _SegmentedTabButton({
-    required this.tab,
-    required this.active,
-    required this.onTap,
-  });
-
-  final TradeActiveCopiesTab tab;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      key: ActiveCopiesPage.tabKey(tab.id),
-      onTap: onTap,
-      borderRadius: AppRadii.lgRadius,
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? _copyPrimary : AppColors.transparent,
-          borderRadius: AppRadii.lgRadius,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            tab.label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.onAccent : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -240,7 +201,7 @@ class _ActiveCopyCard extends StatelessWidget {
     final pnlColor = positive ? AppColors.buy : AppColors.sell;
 
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -248,7 +209,7 @@ class _ActiveCopyCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _ProviderAvatar(copy: copy),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.cardGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,26 +224,26 @@ class _ActiveCopyCard extends StatelessWidget {
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              height: 1.2,
+                              height: AppSpacing.activeCopiesLineHeightCaption,
                             ),
                           ),
                         ),
                         if (copy.providerVerified) ...[
-                          const SizedBox(width: 5),
+                          const SizedBox(width: AppSpacing.x2),
                           const Icon(
                             Icons.check_circle_rounded,
                             color: _copyPrimary,
-                            size: 12,
+                            size: AppSpacing.activeCopiesVerifiedIcon,
                           ),
                         ],
                       ],
                     ),
-                    const SizedBox(height: 7),
+                    const SizedBox(height: AppSpacing.walletAssetSmallGap),
                     Row(
                       children: [
                         _StatusPill(style: status),
                         if (copy.coolingOffUntil != null) ...[
-                          const SizedBox(width: 7),
+                          const SizedBox(width: AppSpacing.walletAssetSmallGap),
                           Flexible(
                             child: Text(
                               'đến ${copy.coolingOffUntil}',
@@ -290,7 +251,7 @@ class _ActiveCopyCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text3,
-                                height: 1,
+                                height: AppSpacing.activeCopiesLineHeightTight,
                               ),
                             ),
                           ),
@@ -300,26 +261,23 @@ class _ActiveCopyCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
-              InkWell(
+              const SizedBox(width: AppSpacing.x3),
+              VitInlineIconAction(
                 key: ActiveCopiesPage.expandKey(copy.id),
-                onTap: onToggle,
-                borderRadius: AppRadii.cardRadius,
-                child: SizedBox(
-                  width: 28,
-                  height: 28,
-                  child: Icon(
-                    expanded
-                        ? Icons.keyboard_arrow_up_rounded
-                        : Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text3,
-                    size: 19,
-                  ),
-                ),
+                icon: expanded
+                    ? Icons.keyboard_arrow_up_rounded
+                    : Icons.keyboard_arrow_down_rounded,
+                tooltip: expanded
+                    ? 'Collapse copy details'
+                    : 'Expand copy details',
+                onPressed: onToggle,
+                color: AppColors.text3,
+                size: AppSpacing.activeCopiesExpandIcon,
+                padding: AppSpacing.activeCopiesExpandPadding,
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
           Row(
             children: [
               Expanded(
@@ -328,14 +286,14 @@ class _ActiveCopyCard extends StatelessWidget {
                   value: _formatUsd(copy.capital),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: _MiniValueCard(
                   label: 'Hiện tại',
                   value: _formatUsd(copy.currentValue),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: _MiniValueCard(
                   label: 'P/L',
@@ -345,10 +303,10 @@ class _ActiveCopyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.x4),
           _ReturnBar(value: copy.pnlPct),
           if (expanded) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
             _ExpandedCopyDetails(
               copy: copy,
               onViewDetails: onViewDetails,
@@ -369,23 +327,12 @@ class _ProviderAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 48,
-      height: 48,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: _copyPrimary.withValues(alpha: .08),
-        shape: BoxShape.circle,
-        border: Border.all(color: _copyPrimary, width: 2),
-      ),
-      child: Text(
-        copy.providerAvatar,
-        style: AppTextStyles.baseMedium.copyWith(
-          color: _copyPrimary,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitAssetAvatar(
+      label: copy.providerAvatar,
+      accentColor: _copyPrimary,
+      size: AppSpacing.walletTokenHeroIcon,
+      radius: AppRadii.avatarRadius,
+      border: true,
     );
   }
 }
@@ -397,21 +344,7 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: style.background,
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        style.label,
-        style: AppTextStyles.micro.copyWith(
-          color: style.color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: style.label, accentColor: style.color);
   }
 }
 
@@ -431,8 +364,8 @@ class _MiniValueCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: 51,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      height: AppSpacing.activeCopiesMiniValueHeight,
+      padding: AppSpacing.activeCopiesMiniValuePadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -442,10 +375,10 @@ class _MiniValueCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1,
+              height: AppSpacing.activeCopiesLineHeightTight,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.formFieldLabelGap),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -453,7 +386,7 @@ class _MiniValueCard extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: valueColor,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
+                height: AppSpacing.activeCopiesLineHeightTight,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),

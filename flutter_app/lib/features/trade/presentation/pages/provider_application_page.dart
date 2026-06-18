@@ -14,10 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -103,14 +100,20 @@ class _ProviderApplicationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ProviderApplicationPage.contentKey,
-                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top:
+                        AppSpacing.x4 +
+                        AppSpacing.x1 -
+                        AppSpacing.hairlineStroke,
+                    bottom: AppSpacing.x5 + AppSpacing.x1,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
                     customGap: 0,
                     children: [
                       _ProgressBars(steps: snapshot.steps, activeStep: step),
-                      const SizedBox(height: 58),
+                      const SizedBox(height: AppSpacing.x7 + AppSpacing.x1),
                       switch (step) {
                         TradeProviderApplicationStep.intro => _IntroStep(
                           snapshot: snapshot,
@@ -143,8 +146,8 @@ class _ProviderApplicationPageState
               SizedBox(
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: DeviceMetrics.nativeBottomChrome + 20,
+                  padding: AppSpacing.providerApplicationFooterPadding(
+                    DeviceMetrics.nativeBottomChrome + AppSpacing.contentPad,
                   ),
                   child: VitStickyFooter(
                     backgroundColor: AppColors.bg,

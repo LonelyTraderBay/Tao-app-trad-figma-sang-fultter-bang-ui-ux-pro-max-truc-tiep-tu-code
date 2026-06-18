@@ -13,25 +13,18 @@ class _BuyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCtaButton(
       key: const Key('sc145_buy_crypto_buy'),
-      onTap: enabled ? onTap : null,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 52,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: enabled ? _buyGreen : AppColors.surface3,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
+      onPressed: enabled ? onTap : null,
+      variant: VitCtaButtonVariant.success,
+      height: AppSpacing.ctaHeight,
+      child: Text(
           enabled ? 'Mua $symbol' : 'Nhập số tiền mua',
           style: AppTextStyles.baseMedium.copyWith(
             color: enabled ? AppColors.onAccent : AppColors.text3,
             fontWeight: AppTextStyles.bold,
           ),
         ),
-      ),
     );
   }
 }
@@ -59,32 +52,31 @@ class BuyConfirmContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: AppRadii.lgRadius,
-            border: Border.all(color: AppColors.primary40),
-          ),
+        VitCard(
+          padding: AppSpacing.walletBuyConfirmPadding,
+          radius: VitCardRadius.lg,
+          borderColor: AppColors.primary40,
+          clip: true,
+          background: const ColoredBox(color: AppColors.surface),
           child: Column(
             children: [
               Text(
                 'Bạn sẽ nhận được',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: AppSpacing.walletBuyCompactGap),
               Text(
                 '${_formatCrypto(receiveAmount)} ${crypto.symbol}',
                 style: AppTextStyles.sectionTitle.copyWith(color: _buyGreen),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.walletBuyConfirmAmountGap),
               _RateRow(
                 label: 'Thanh toán',
                 value: '${_formatInt(amountVnd)} VND',
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.walletBuyInlineGap),
               _RateRow(label: 'Phương thức', value: payment.name),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.walletBuyInlineGap),
               const _RateRow(
                 label: 'Phí',
                 value: 'Miễn phí',
@@ -93,9 +85,9 @@ class BuyConfirmContent extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.walletBuySectionGap),
         _ActionButton(label: 'Xác nhận thanh toán', onTap: onConfirm),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.walletBuyInlineGap),
         _GhostButton(label: 'Quay lại chỉnh sửa', onTap: onBack),
       ],
     );
@@ -133,30 +125,25 @@ class BuySuccessState extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 20, 120),
+                padding: AppSpacing.walletBuySuccessPadding,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 88,
-                      height: 88,
-                      decoration: BoxDecoration(
-                        color: AppColors.buy10,
-                        borderRadius: BorderRadius.circular(44),
-                        border: Border.all(color: AppColors.buy20, width: 2),
-                      ),
-                      child: const Icon(
+                    const CircleAvatar(
+                      radius: AppSpacing.walletBuySuccessIconRadius,
+                      backgroundColor: AppColors.buy10,
+                      child: Icon(
                         Icons.check_circle_outline_rounded,
                         color: _buyGreen,
-                        size: 46,
+                        size: AppSpacing.walletBuySuccessGlyph,
                       ),
                     ),
-                    const SizedBox(height: 22),
+                    const SizedBox(height: AppSpacing.walletBuySuccessTitleGap),
                     Text(
                       'Đặt lệnh thành công!',
                       style: AppTextStyles.sectionTitle,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: AppSpacing.walletBuyCompactGap),
                     Text(
                       'Lệnh mua ${_formatCrypto(receiveAmount)} ${crypto.symbol} từ ${_formatInt(amountVnd)} VND đã được đặt.',
                       textAlign: TextAlign.center,
@@ -164,9 +151,9 @@ class BuySuccessState extends StatelessWidget {
                         color: AppColors.text2,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.walletBuySuccessCtaGap),
                     _ActionButton(label: 'Về Ví', onTap: onWallet),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.walletBuyInlineGap),
                     _GhostButton(label: 'Mua thêm', onTap: onBuyMore),
                   ],
                 ),
@@ -187,22 +174,15 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 52,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _buyPrimary,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: AppColors.onAccent,
-            fontWeight: AppTextStyles.bold,
-          ),
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.primary,
+      height: AppSpacing.ctaHeight,
+      child: Text(
+        label,
+        style: AppTextStyles.baseMedium.copyWith(
+          color: AppColors.onAccent,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -217,23 +197,15 @@ class _GhostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 52,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _buyPanel2,
-          borderRadius: AppRadii.inputRadius,
-          border: Border.all(color: AppColors.borderSolid),
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.ghost,
+      height: AppSpacing.ctaHeight,
+      child: Text(
+        label,
+        style: AppTextStyles.baseMedium.copyWith(
+          color: AppColors.text2,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -254,23 +226,19 @@ class BuyCryptoOptionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
+      margin: AppSpacing.walletBuyOptionRowMargin,
+      padding: AppSpacing.walletBuyOptionRowPadding,
+      borderColor: selected ? _buyPrimary : AppColors.borderSolid,
+      clip: true,
+      background: ColoredBox(
+        color: selected ? AppColors.primary08 : _buyPanel2,
+      ),
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: selected ? AppColors.primary08 : _buyPanel2,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(
-            color: selected ? _buyPrimary : AppColors.borderSolid,
-          ),
-        ),
-        child: Row(
+      child: Row(
           children: [
             _CryptoLogo(option: option),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.walletBuyInlineGap),
             Expanded(
               child: Text(
                 '${option.symbol} · ${option.name}',
@@ -285,27 +253,24 @@ class BuyCryptoOptionRow extends StatelessWidget {
               ),
           ],
         ),
-      ),
     );
   }
 }
 
 class _CryptoLogo extends StatelessWidget {
-  const _CryptoLogo({required this.option, this.size = 40});
+  const _CryptoLogo({
+    required this.option,
+    this.size = AppSpacing.walletBuyCryptoLogoSize,
+  });
 
   final WalletBuyCryptoOption option;
   final double size;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: Color(option.colorHex).withValues(alpha: .18),
-        borderRadius: BorderRadius.circular(size / 2),
-      ),
-      alignment: Alignment.center,
+    return CircleAvatar(
+      radius: size / 2,
+      backgroundColor: Color(option.colorHex).withValues(alpha: .18),
       child: Text(
         option.symbol.length > 3
             ? option.symbol.substring(0, 3)

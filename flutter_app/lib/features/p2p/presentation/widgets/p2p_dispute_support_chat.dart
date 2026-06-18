@@ -35,32 +35,39 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          Container(
-            padding: AppSpacing.p2pDisputeChatHeaderPadding,
-            decoration: const BoxDecoration(
-              color: AppColors.surface,
-              border: Border(bottom: BorderSide(color: AppColors.divider)),
-            ),
-            child: Row(
+          Material(
+            color: AppColors.surface,
+            child: Column(
               children: [
-                const Icon(
-                  Icons.chat_bubble_outline_rounded,
-                  color: AppModuleAccents.p2p,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Text(
-                    'Chat với hỗ trợ',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+                Padding(
+                  padding: AppSpacing.p2pDisputeChatHeaderPadding,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.chat_bubble_outline_rounded,
+                        color: AppModuleAccents.p2p,
+                        size: AppSpacing.iconSm,
+                      ),
+                      const SizedBox(width: AppSpacing.x2),
+                      Expanded(
+                        child: Text(
+                          'Chat với hỗ trợ',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                      ),
+                      P2PDisputeSmallPill(
+                        label: 'Cấp $currentLevel',
+                        color: p2pDisputeLevelColor(currentLevel),
+                      ),
+                    ],
                   ),
                 ),
-                P2PDisputeSmallPill(
-                  label: 'Cấp $currentLevel',
-                  color: p2pDisputeLevelColor(currentLevel),
+                const Divider(
+                  color: AppColors.divider,
+                  height: AppSpacing.dividerHairline,
                 ),
               ],
             ),
@@ -74,53 +81,60 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            padding: AppSpacing.p2pDisputeChatInputPadding,
-            decoration: const BoxDecoration(
-              color: AppColors.surface,
-              border: Border(top: BorderSide(color: AppColors.divider)),
-            ),
-            child: Row(
+          Material(
+            color: AppColors.surface,
+            child: Column(
               children: [
-                Expanded(
-                  child: TextField(
-                    key: inputKey,
-                    controller: controller,
-                    onChanged: (_) => onChanged(),
-                    minLines: 1,
-                    maxLines: 2,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                    ),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      border: InputBorder.none,
-                      hintText: 'Nhập tin nhắn cho hỗ trợ...',
-                      hintStyle: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ),
+                const Divider(
+                  color: AppColors.divider,
+                  height: AppSpacing.dividerHairline,
                 ),
-                const SizedBox(width: AppSpacing.x2),
-                Material(
-                  color: controller.text.trim().isEmpty
-                      ? AppColors.surface2
-                      : AppModuleAccents.p2p,
-                  shape: const CircleBorder(),
-                  child: InkWell(
-                    key: sendKey,
-                    onTap: onSend,
-                    customBorder: const CircleBorder(),
-                    child: const SizedBox(
-                      width: AppSpacing.p2pDisputeSendButtonSize,
-                      height: AppSpacing.p2pDisputeSendButtonSize,
-                      child: Icon(
-                        Icons.send_rounded,
-                        color: AppColors.text1,
-                        size: AppSpacing.iconSm,
+                Padding(
+                  padding: AppSpacing.p2pDisputeChatInputPadding,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          key: inputKey,
+                          controller: controller,
+                          onChanged: (_) => onChanged(),
+                          minLines: 1,
+                          maxLines: 2,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                          ),
+                          decoration: InputDecoration(
+                            isDense: true,
+                            border: InputBorder.none,
+                            hintText: 'Nhập tin nhắn cho hỗ trợ...',
+                            hintStyle: AppTextStyles.caption.copyWith(
+                              color: AppColors.text3,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(width: AppSpacing.x2),
+                      Material(
+                        color: controller.text.trim().isEmpty
+                            ? AppColors.surface2
+                            : AppModuleAccents.p2p,
+                        shape: const CircleBorder(),
+                        child: InkWell(
+                          key: sendKey,
+                          onTap: onSend,
+                          customBorder: const CircleBorder(),
+                          child: const SizedBox(
+                            width: AppSpacing.p2pDisputeSendButtonSize,
+                            height: AppSpacing.p2pDisputeSendButtonSize,
+                            child: Icon(
+                              Icons.send_rounded,
+                              color: AppColors.text1,
+                              size: AppSpacing.iconSm,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -142,50 +156,56 @@ class _SupportMessageBubble extends StatelessWidget {
     final isUser = message.sender == P2PDisputeMessageSender.user;
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        constraints: const BoxConstraints(
-          maxWidth: AppSpacing.p2pDisputeBubbleMaxWidth,
-        ),
-        margin: AppSpacing.p2pDisputeBubbleMargin,
-        padding: AppSpacing.p2pDisputeBubblePadding,
-        decoration: BoxDecoration(
-          color: isUser ? AppModuleAccents.p2p : AppColors.surface2,
-          borderRadius: AppRadii.disputeMessageBubbleRadius(isUser: isUser),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (!isUser) ...[
-              Text(
-                'Hỗ trợ VitTrade',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppModuleAccents.p2p,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x1),
-            ],
-            Text(
-              message.text,
-              style: AppTextStyles.caption.copyWith(
-                color: isUser ? AppColors.onAccent : AppColors.text1,
-                fontWeight: AppTextStyles.medium,
+      child: Padding(
+        padding: AppSpacing.p2pDisputeBubbleMargin,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: AppSpacing.p2pDisputeBubbleMaxWidth,
+          ),
+          child: Material(
+            color: isUser ? AppModuleAccents.p2p : AppColors.surface2,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.disputeMessageBubbleRadius(isUser: isUser),
+            ),
+            child: Padding(
+              padding: AppSpacing.p2pDisputeBubblePadding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (!isUser) ...[
+                    Text(
+                      'Hỗ trợ VitTrade',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppModuleAccents.p2p,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                  ],
+                  Text(
+                    message.text,
+                    style: AppTextStyles.caption.copyWith(
+                      color: isUser ? AppColors.onAccent : AppColors.text1,
+                      fontWeight: AppTextStyles.medium,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      message.time,
+                      style: AppTextStyles.micro.copyWith(
+                        color: isUser
+                            ? AppColors.onAccent.withValues(alpha: .70)
+                            : AppColors.text3,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: AppSpacing.x1),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                message.time,
-                style: AppTextStyles.micro.copyWith(
-                  color: isUser
-                      ? AppColors.onAccent.withValues(alpha: .70)
-                      : AppColors.text3,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

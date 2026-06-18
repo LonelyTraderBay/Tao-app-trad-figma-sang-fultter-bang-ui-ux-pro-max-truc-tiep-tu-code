@@ -98,10 +98,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                   child: SingleChildScrollView(
                     key: P2PMyOrdersPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pMerchantCommerceScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -148,7 +145,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                           ],
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pMerchantCommerceCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P order list review',

@@ -7,7 +7,7 @@ class _InfoBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,7 +64,7 @@ class _StrategySection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         for (final option in strategies)
           Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+            padding: AppSpacing.dcaBottomPaddingX3,
             child: _StrategyTile(
               option: option,
               selected: option.strategy == active,
@@ -96,7 +96,7 @@ class _StrategyTile extends StatelessWidget {
           ? accent.withValues(alpha: .72)
           : AppColors.cardBorder,
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         children: [
           _AccentIcon(icon: _iconForOption(option.icon), accent: accent),
@@ -200,10 +200,7 @@ class _TimeTile extends StatelessWidget {
       variant: VitCardVariant.inner,
       borderColor: selected ? accent.withValues(alpha: .72) : null,
       onTap: onTap,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.dcaPaddingX4,
       child: Column(
         children: [
           Text(

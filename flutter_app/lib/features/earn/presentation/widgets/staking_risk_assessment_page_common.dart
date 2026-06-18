@@ -33,7 +33,7 @@ class _ResultView extends StatelessWidget {
           key: StakingRiskAssessmentPage.resultCardKey,
           radius: VitCardRadius.lg,
           borderColor: accent,
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.earnCardPaddingX5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -131,13 +131,15 @@ class _ResultIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(
-          color: color,
-          width: AppSpacing.stakingAssessmentOptionBorderWidth,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: color,
+            width: AppSpacing.stakingAssessmentOptionBorderWidth,
+          ),
+          borderRadius: AppRadii.xlRadius,
         ),
-        borderRadius: AppRadii.xlRadius,
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -171,7 +173,7 @@ class _ScoreMeter extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -253,7 +255,7 @@ class _ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           Expanded(

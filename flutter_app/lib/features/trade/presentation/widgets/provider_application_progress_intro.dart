@@ -13,17 +13,20 @@ class _ProgressBars extends StatelessWidget {
       children: [
         for (var index = 0; index < steps.length; index++) ...[
           Expanded(
-            child: Container(
-              height: 4,
-              decoration: BoxDecoration(
-                color: activeIndex >= index
-                    ? _providerPrimary
-                    : AppColors.surface3,
-                borderRadius: AppRadii.xlRadius,
+            child: ClipRRect(
+              borderRadius: AppRadii.pillRadius,
+              child: SizedBox(
+                height: AppSpacing.x1 + AppSpacing.hairlineStroke,
+                child: ColoredBox(
+                  color: activeIndex >= index
+                      ? _providerPrimary
+                      : AppColors.surface3,
+                ),
               ),
             ),
           ),
-          if (index != steps.length - 1) const SizedBox(width: 9),
+          if (index != steps.length - 1)
+            const SizedBox(width: AppSpacing.x3 + AppSpacing.hairlineStroke),
         ],
       ],
     );
@@ -41,37 +44,42 @@ class _IntroStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Icon(Icons.groups_2_outlined, color: _providerPrimary, size: 44),
-        const SizedBox(height: 38),
+        const SizedBox(height: AppSpacing.x6 + AppSpacing.x1),
         Text(
           'Trở thành Copy Trading Provider',
           textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(height: 1.18),
+          style: AppTextStyles.sectionTitle.copyWith(
+            height: AppSpacing.providerApplicationIntroTitleLineHeight,
+          ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
         Text(
           'Chia sẻ chiến lược giao dịch và kiếm performance fee từ những người copy bạn',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: 1.42,
+            height: AppSpacing.providerApplicationIntroDescriptionLineHeight,
           ),
         ),
-        const SizedBox(height: 42),
+        const SizedBox(height: AppSpacing.x6 + AppSpacing.x3),
         _SectionLabel(label: 'Lợi ích', color: _providerGreen),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
         for (final benefit in snapshot.benefits) ...[
           _BenefitCard(benefit: benefit),
-          if (benefit != snapshot.benefits.last) const SizedBox(height: 12),
+          if (benefit != snapshot.benefits.last)
+            const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
         ],
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.ctaLoadingIcon),
         _ResponsibilitiesCard(items: snapshot.responsibilities),
-        const SizedBox(height: 14),
+        const SizedBox(
+          height: AppSpacing.x4 + AppSpacing.x1 - AppSpacing.hairlineStroke,
+        ),
         _SectionLabel(label: 'Yêu cầu cơ bản', color: AppColors.text3),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
         for (final requirement in snapshot.requirements) ...[
           _RequirementPreview(requirement: requirement),
           if (requirement != snapshot.requirements.last)
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -86,20 +94,16 @@ class _BenefitCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(minHeight: 64),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      constraints: AppSpacing.providerApplicationBenefitCardConstraints,
+      padding: AppSpacing.providerApplicationBenefitCardPadding,
       child: Row(
         children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: const BoxDecoration(
-              color: AppColors.surfaceSuccessSoft,
-              shape: BoxShape.circle,
-            ),
+          CircleAvatar(
+            radius: AppSpacing.x5 + AppSpacing.hairlineStroke,
+            backgroundColor: AppColors.surfaceSuccessSoft,
             child: Icon(_benefitIcon(benefit.iconName), color: _providerGreen),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,12 +115,14 @@ class _BenefitCard extends StatelessWidget {
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   benefit.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.25,
+                    height:
+                        AppSpacing
+                            .providerApplicationBenefitDescriptionLineHeight,
                   ),
                 ),
               ],
@@ -136,7 +142,7 @@ class _ResponsibilitiesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.providerApplicationPanelPadding,
       borderColor: _providerWarning.withValues(alpha: .55),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +152,7 @@ class _ResponsibilitiesCard extends StatelessWidget {
             color: _providerWarning,
             size: 22,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,15 +164,18 @@ class _ResponsibilitiesCard extends StatelessWidget {
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
                 for (final item in items)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 3),
+                    padding:
+                        AppSpacing.providerApplicationResponsibilityItemPadding,
                     child: Text(
                       '• $item',
                       style: AppTextStyles.caption.copyWith(
                         color: _providerWarning,
-                        height: 1.3,
+                        height:
+                            AppSpacing
+                                .providerApplicationResponsibilityLineHeight,
                       ),
                     ),
                   ),
@@ -187,8 +196,9 @@ class _RequirementPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 32,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      height:
+          AppSpacing.buttonCompact - AppSpacing.x1 + AppSpacing.hairlineStroke,
+      padding: AppSpacing.providerApplicationRequirementPreviewPadding,
       child: Row(
         children: [
           Expanded(

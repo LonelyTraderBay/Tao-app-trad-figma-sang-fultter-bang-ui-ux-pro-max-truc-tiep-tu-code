@@ -51,8 +51,10 @@ class _P2PSuspiciousActivityPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pComplianceBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pComplianceBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final unreviewedCount = _alerts.where((alert) => !alert.reviewed).length;
 
@@ -91,10 +93,7 @@ class _P2PSuspiciousActivityPageState
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: BouncingScrollPhysics(),
                       ),
-                      padding: EdgeInsets.fromLTRB(
-                        AppSpacing.contentPad,
-                        AppSpacing.x4,
-                        AppSpacing.contentPad,
+                      padding: AppSpacing.p2pComplianceScrollPadding(
                         bottomInset,
                       ),
                       child: Column(
@@ -115,7 +114,7 @@ class _P2PSuspiciousActivityPageState
                           const SizedBox(height: AppSpacing.x3),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: EdgeInsets.all(AppSpacing.x3),
+                            padding: AppSpacing.p2pComplianceCompactCardPadding,
                             child: VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'Suspicious activity review',
@@ -160,21 +159,23 @@ class _SummaryCard extends StatelessWidget {
       key: P2PSuspiciousActivityPage.summaryKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pComplianceCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.inputHeight,
-            height: AppSpacing.inputHeight,
-            decoration: BoxDecoration(
-              color: AppColors.warn.withValues(alpha: .18),
+          Material(
+            color: AppColors.warn.withValues(alpha: .18),
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.lgRadius,
             ),
-            child: const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.iconMd,
+            child: const SizedBox(
+              width: AppSpacing.p2pComplianceIconBox,
+              height: AppSpacing.p2pComplianceIconBox,
+              child: Icon(
+                Icons.warning_amber_rounded,
+                color: AppColors.warn,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -237,18 +238,24 @@ class _AlertCard extends StatelessWidget {
       key: P2PSuspiciousActivityPage.alertKey(alert.id),
       radius: VitCardRadius.lg,
       borderColor: alert.reviewed ? null : color,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pComplianceCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.inputHeight,
-            height: AppSpacing.inputHeight,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
+          Material(
+            color: color.withValues(alpha: .14),
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.lgRadius,
             ),
-            child: Icon(Icons.warning_amber_rounded, color: color, size: 20),
+            child: SizedBox(
+              width: AppSpacing.p2pComplianceIconBox,
+              height: AppSpacing.p2pComplianceIconBox,
+              child: Icon(
+                Icons.warning_amber_rounded,
+                color: color,
+                size: AppSpacing.p2pComplianceUnavailableIcon,
+              ),
+            ),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -267,7 +274,7 @@ class _AlertCard extends StatelessWidget {
                     const Icon(
                       Icons.access_time_rounded,
                       color: AppColors.text3,
-                      size: 11,
+                      size: AppSpacing.p2pComplianceMetaIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(
@@ -303,7 +310,7 @@ class _DismissButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: 32,
+      dimension: AppSpacing.p2pComplianceDismissButton,
       child: IconButton(
         key: P2PSuspiciousActivityPage.dismissKey(alertId),
         onPressed: () => onDismiss(alertId),
@@ -323,24 +330,10 @@ class _ReviewedBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.buy.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          'Đã xem lại',
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.buy,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return const VitAccentPill(
+      label: 'Đã xem lại',
+      accentColor: AppColors.buy,
+      semanticStatus: VitStatusPillStatus.success,
     );
   }
 }
@@ -355,7 +348,7 @@ class _EmptyState extends StatelessWidget {
     return VitCard(
       key: P2PSuspiciousActivityPage.emptyKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pComplianceCardPadding,
       child: Column(
         children: [
           const Icon(

@@ -232,7 +232,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
       builder: (context) {
         return SafeArea(
           top: false,
-          child: Container(
+          child: Padding(
             key: DustConverterPage.confirmSheetKey,
             padding: AppSpacing.walletDustSheetPadding,
             child: Column(

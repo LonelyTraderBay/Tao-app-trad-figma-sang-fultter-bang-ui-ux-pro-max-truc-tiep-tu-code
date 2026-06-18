@@ -54,19 +54,14 @@ class _AssetChip extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
-        child: Container(
-          constraints: const BoxConstraints(minWidth: 110, minHeight: 64),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
+        child: VitCard(
+          variant: VitCardVariant.ghost,
+          borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
+          constraints: const BoxConstraints(
+            minWidth: AppSpacing.p2pMarketplaceAnalyticsAssetChipMinWidth,
+            minHeight: AppSpacing.p2pMarketplaceAnalyticsAssetChipMinHeight,
           ),
-          decoration: BoxDecoration(
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(
-              width: selected ? 1.5 : 1,
-              color: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
-            ),
-          ),
+          padding: AppSpacing.p2pMarketplaceAnalyticsSelectorPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -113,7 +108,7 @@ class _MarketTicker extends StatelessWidget {
     return VitCard(
       key: P2POrderBookPage.tickerKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -225,38 +220,12 @@ class _ChangePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tone = value >= 0 ? AppColors.buy : AppColors.sell;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: tone.withValues(alpha: .12),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Row(
-          children: [
-            Icon(
-              value >= 0
-                  ? Icons.arrow_outward_rounded
-                  : Icons.south_east_rounded,
-              color: tone,
-              size: 11,
-            ),
-            const SizedBox(width: AppSpacing.x1),
-            Text(
-              _formatChange(value),
-              style: AppTextStyles.micro.copyWith(
-                color: tone,
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: AppTextStyles.tabularFigures,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return VitMetricDeltaPill(
+      label: _formatChange(value),
+      tone: value >= 0
+          ? VitMetricDeltaTone.positive
+          : VitMetricDeltaTone.negative,
+      icon: value >= 0 ? Icons.arrow_outward_rounded : Icons.south_east_rounded,
     );
   }
 }

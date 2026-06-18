@@ -51,12 +51,7 @@ class ReferralFriendDetailPage extends ConsumerWidget {
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          AppSpacing.x6,
-                          AppSpacing.x2,
-                          AppSpacing.x6,
-                          0,
-                        ),
+                        padding: AppSpacing.referralFriendDetailPadding,
                         child: _NotFoundState(snapshot: snapshot),
                       ),
                     ),
@@ -83,43 +78,47 @@ class _NotFoundState extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         VitCard(
-          padding: EdgeInsets.zero,
-          child: Container(
-            width: AppSpacing.iconLg + AppSpacing.x2,
-            height: AppSpacing.iconLg + AppSpacing.x2,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: AppColors.borderSolid,
-                width: AppSpacing.referralBorderWidth,
+          padding: AppSpacing.zeroInsets,
+          child: SizedBox.square(
+            dimension: AppSpacing.iconLg + AppSpacing.x2,
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: AppColors.borderSolid,
+                    width: AppSpacing.referralBorderWidth,
+                  ),
+                  borderRadius: AppRadii.xlRadius,
+                ),
               ),
-              borderRadius: AppRadii.xlRadius,
-            ),
-            alignment: Alignment.center,
-            child: const Icon(
-              Icons.error_outline_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.iconMd,
+              child: Center(
+                child: Icon(
+                  Icons.error_outline_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconMd,
+                ),
+              ),
             ),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Text(
             snapshot.emptyTitle,
             textAlign: TextAlign.center,
             style: AppTextStyles.baseMedium.copyWith(color: AppColors.text2),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           snapshot.emptyMessage,
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: VitCtaButton(
             key: ReferralFriendDetailPage.listButtonKey,
             onPressed: () => context.go(snapshot.listRoute),

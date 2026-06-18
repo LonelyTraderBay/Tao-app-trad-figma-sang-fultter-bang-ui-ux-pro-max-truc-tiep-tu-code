@@ -17,17 +17,18 @@ class _WalletHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: P2PWalletPage.heroKey,
-      padding: const EdgeInsets.all(AppSpacing.x5),
-      decoration: BoxDecoration(
-        color: AppModuleAccents.p2p,
+      color: AppModuleAccents.p2p,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppModuleAccents.p2p),
+        side: BorderSide(color: AppModuleAccents.p2p),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+      child: Padding(
+        padding: AppSpacing.p2pWalletHeroPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -104,7 +105,8 @@ class _WalletHero extends StatelessWidget {
               ),
             ],
           ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -134,29 +136,36 @@ class _HeroActionButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: AppSpacing.inputHeight),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
-          alignment: Alignment.center,
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  color: filled ? AppModuleAccents.p2p : AppColors.onAccent,
-                  size: AppSpacing.iconSm,
+          child: Padding(
+            padding: AppSpacing.p2pWalletHeroActionPadding,
+            child: Center(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      icon,
+                      color: filled
+                          ? AppModuleAccents.p2p
+                          : AppColors.onAccent,
+                      size: AppSpacing.iconSm,
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    Text(
+                      label,
+                      style: AppTextStyles.caption.copyWith(
+                        color: filled
+                            ? AppModuleAccents.p2p
+                            : AppColors.onAccent,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: filled ? AppModuleAccents.p2p : AppColors.onAccent,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -177,8 +186,8 @@ class _WalletInfoBanner extends StatelessWidget {
       icon: Icons.info_outline_rounded,
       message: text,
       borderColor: AppModuleAccents.p2p.withValues(alpha: .28),
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      iconSize: 16,
+      padding: AppSpacing.p2pWalletNoticePadding,
+      iconSize: AppSpacing.p2pWalletInfoIcon,
       messageStyle: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
     );
   }

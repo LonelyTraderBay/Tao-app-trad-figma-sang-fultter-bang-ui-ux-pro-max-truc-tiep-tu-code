@@ -100,14 +100,14 @@ class _DirectionCard extends StatelessWidget {
     return VitCard(
       key: P2PWalletTransferPage.directionKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pWalletCardPadding,
       child: Row(
         children: [
           Expanded(
             child: _WalletSide(label: 'Từ', balance: source),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+            padding: AppSpacing.p2pWalletTransferSwitchPadding,
             child: Material(
               key: P2PWalletTransferPage.switchKey,
               color: AppModuleAccents.p2p.withValues(alpha: .16),
@@ -246,38 +246,38 @@ class _AssetTile extends StatelessWidget {
       color: selected
           ? color.withValues(alpha: .11)
           : AppColors.surface.withValues(alpha: .50),
-      borderRadius: AppRadii.lgRadius,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.lgRadius,
+        side: BorderSide(color: selected ? color : AppColors.cardBorder),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.lgRadius,
-        child: Container(
+        child: ConstrainedBox(
           key: selected
               ? P2PWalletTransferPage.activeAssetKey(asset.symbol)
               : null,
-          constraints: const BoxConstraints(minHeight: 80),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x3,
+          constraints: const BoxConstraints(
+            minHeight: AppSpacing.p2pWalletTransferAssetTileMinHeight,
           ),
-          decoration: BoxDecoration(
-            borderRadius: AppRadii.lgRadius,
-            border: Border.all(color: selected ? color : AppColors.cardBorder),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _AssetMark(symbol: asset.symbol, color: color),
-              const SizedBox(height: AppSpacing.x2),
-              Text(
-                asset.symbol,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: selected ? color : AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: AppSpacing.p2pWalletTransferAssetTilePadding,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _AssetMark(symbol: asset.symbol, color: color),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  asset.symbol,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: selected ? color : AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -298,15 +298,17 @@ class _AssetMark extends StatelessWidget {
       'VND' => Icons.money_rounded,
       _ => Icons.attach_money_rounded,
     };
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
-      ),
+    return Material(
+      color: color.withValues(alpha: .14),
+      borderRadius: AppRadii.mdRadius,
       child: SizedBox(
         width: AppSpacing.x7,
         height: AppSpacing.x7,
-        child: Icon(icon, color: color, size: 20),
+        child: Icon(
+          icon,
+          color: color,
+          size: AppSpacing.p2pWalletTransactionIcon,
+        ),
       ),
     );
   }

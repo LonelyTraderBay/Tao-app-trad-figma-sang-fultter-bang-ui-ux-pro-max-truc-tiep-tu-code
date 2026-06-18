@@ -17,11 +17,8 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
   Widget build(BuildContext context) {
     final keyText = widget.snapshot.generatedApiKeyPreview;
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        20,
-        20,
-        20,
-        24 + MediaQuery.paddingOf(context).bottom,
+      padding: AppSpacing.tradeBotSheetPaddingWithBottom(
+        MediaQuery.paddingOf(context).bottom,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -31,30 +28,27 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
             'Create API Key',
             style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           const _SheetInput(label: 'Key Name', hint: 'e.g., Trading Bot Key'),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
           Text(
             'Permissions',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Row(
             children: const [
               Expanded(child: _PermissionChip('Read Only')),
-              SizedBox(width: 8),
+              SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(child: _PermissionChip('Trade + Read')),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.tradeBotSelectionDot),
           if (_generated)
-            Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: _securityGreen.withValues(alpha: .08),
-                border: Border.all(color: _securityGreen.withValues(alpha: .2)),
-                borderRadius: AppRadii.inputRadius,
-              ),
+            VitCard(
+              variant: VitCardVariant.inner,
+              padding: AppSpacing.tradeBotCardPadding,
+              borderColor: _securityGreen.withValues(alpha: .2),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -65,13 +59,11 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: _securityPanel,
-                      borderRadius: AppRadii.smRadius,
-                    ),
+                  const SizedBox(height: AppSpacing.tradeBotRowGap),
+                  VitCard(
+                    variant: VitCardVariant.ghost,
+                    padding: AppSpacing.tradeBotInnerPanelPadding,
+                    borderColor: AppColors.borderSolid,
                     child: Row(
                       children: [
                         Expanded(
@@ -84,25 +76,24 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
                             ),
                           ),
                         ),
-                        IconButton(
+                        VitIconButton(
+                          icon: _visible
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          tooltip: _visible ? 'Hide API key' : 'Show API key',
+                          size: VitIconButtonSize.sm,
+                          variant: VitIconButtonVariant.transparent,
                           onPressed: () => setState(() => _visible = !_visible),
-                          icon: Icon(
-                            _visible
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility_outlined,
-                            color: AppColors.text3,
-                            size: 18,
-                          ),
                         ),
                         const Icon(
                           Icons.copy_rounded,
                           color: AppColors.text3,
-                          size: 18,
+                          size: AppSpacing.iconSm,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.tradeBotSmallGap),
                   Text(
                     'Save this key now - you will not be able to see it again.',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -111,18 +102,11 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
               ),
             )
           else
-            SizedBox(
-              height: 44,
-              child: FilledButton(
-                onPressed: () => setState(() => _generated = true),
-                style: FilledButton.styleFrom(
-                  backgroundColor: _securityPrimary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.inputRadius,
-                  ),
-                ),
-                child: const Text('Generate API Key'),
-              ),
+            VitCtaButton(
+              onPressed: () => setState(() => _generated = true),
+              height: AppSpacing.tradeBotSheetActionHeight,
+              variant: VitCtaButtonVariant.primary,
+              child: const Text('Generate API Key'),
             ),
         ],
       ),
@@ -136,11 +120,8 @@ class _IpSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        20,
-        20,
-        20,
-        24 + MediaQuery.paddingOf(context).bottom,
+      padding: AppSpacing.tradeBotSheetPaddingWithBottom(
+        MediaQuery.paddingOf(context).bottom,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -150,26 +131,19 @@ class _IpSheet extends StatelessWidget {
             'Add IP to Whitelist',
             style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           const _SheetInput(label: 'IP Address', hint: 'e.g., 192.168.1.100'),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
           const _SheetInput(
             label: 'Label (Optional)',
             hint: 'e.g., Home Network',
           ),
-          const SizedBox(height: 16),
-          SizedBox(
-            height: 44,
-            child: FilledButton(
-              onPressed: () => Navigator.of(context).pop(),
-              style: FilledButton.styleFrom(
-                backgroundColor: _securityPrimary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.inputRadius,
-                ),
-              ),
-              child: const Text('Add IP Address'),
-            ),
+          const SizedBox(height: AppSpacing.tradeBotSelectionDot),
+          VitCtaButton(
+            onPressed: () => Navigator.of(context).pop(),
+            height: AppSpacing.tradeBotSheetActionHeight,
+            variant: VitCtaButtonVariant.primary,
+            child: const Text('Add IP Address'),
           ),
         ],
       ),
@@ -192,16 +166,13 @@ class _SheetInput extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: 8),
-        Container(
-          height: 44,
+        const SizedBox(height: AppSpacing.tradeBotSmallGap),
+        VitCard(
+          height: AppSpacing.tradeBotSheetActionHeight,
           alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(
-            color: _securityPanel2,
-            border: Border.all(color: AppColors.borderSolid),
-            borderRadius: AppRadii.mdRadius,
-          ),
+          variant: VitCardVariant.inner,
+          padding: AppSpacing.tradeBotChipPadding,
+          borderColor: AppColors.borderSolid,
           child: Text(
             hint,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -219,14 +190,11 @@ class _PermissionChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 42,
+    return VitCard(
+      height: AppSpacing.tradeBotFooterButtonHeight,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: _securityPanel2,
-        border: Border.all(color: AppColors.borderSolid),
-        borderRadius: AppRadii.mdRadius,
-      ),
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.borderSolid,
       child: Text(
         label,
         style: AppTextStyles.caption.copyWith(

@@ -12,7 +12,7 @@ class _OverallRiskCard extends StatelessWidget {
     return VitCard(
       key: StakingRiskDashboardPage.scoreKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -23,32 +23,38 @@ class _OverallRiskCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           Center(
-            child: Container(
+            child: SizedBox(
               width: AppSpacing.stakingRiskDashboardScoreRing,
               height: AppSpacing.stakingRiskDashboardScoreRing,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.12),
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: color,
-                  width: AppSpacing.stakingRiskDashboardScoreBorderWidth,
-                ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    snapshot.overallScore.toString(),
-                    style: AppTextStyles.numericDisplay4xl.copyWith(
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color.withValues(alpha: 0.12),
+                  shape: CircleBorder(
+                    side: BorderSide(
                       color: color,
+                      width: AppSpacing.stakingRiskDashboardScoreBorderWidth,
                     ),
                   ),
-                  Text(
-                    '/ 100',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        snapshot.overallScore.toString(),
+                        style: AppTextStyles.numericDisplay4xl.copyWith(
+                          color: color,
+                        ),
+                      ),
+                      Text(
+                        '/ 100',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -113,21 +119,25 @@ class _RiskMetricCard extends StatelessWidget {
       onTap: metric.actionRoute == null
           ? null
           : () => context.go(metric.actionRoute!),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.ctaHeight,
                 height: AppSpacing.ctaHeight,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.12),
-                  borderRadius: AppRadii.lgRadius,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: color.withValues(alpha: 0.12),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.lgRadius,
+                    ),
+                  ),
+                  child: Icon(_riskIcon(metric.status), color: color),
                 ),
-                child: Icon(_riskIcon(metric.status), color: color),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -191,7 +201,7 @@ class _ExposureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
           SizedBox(
@@ -226,13 +236,18 @@ class _ExposureRow extends StatelessWidget {
     final color = _exposureColor(item.risk);
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.x3,
             height: AppSpacing.x3,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color,
+                shape: const CircleBorder(),
+              ),
+            ),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -276,7 +291,7 @@ class _RiskEventCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: 0.22),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -339,7 +354,7 @@ class _ActionsGrid extends StatelessWidget {
         return VitCard(
           key: StakingRiskDashboardPage.actionKey(action.title),
           onTap: () => context.go(action.route),
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

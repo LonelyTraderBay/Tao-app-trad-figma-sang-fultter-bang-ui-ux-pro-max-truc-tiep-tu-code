@@ -8,24 +8,18 @@ class _TradingBotsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 46,
+      height: AppSpacing.inputHeight,
       child: Row(
         children: [
-          InkWell(
+          VitIconButton(
             key: TradingBotsPage.backKey,
-            onTap: onBack,
-            borderRadius: AppRadii.cardRadius,
-            child: const SizedBox(
-              width: 36,
-              height: 36,
-              child: Icon(
-                Icons.chevron_left_rounded,
-                color: AppColors.text1,
-                size: 26,
-              ),
-            ),
+            icon: Icons.chevron_left_rounded,
+            tooltip: 'Back to Trade',
+            onPressed: onBack,
+            variant: VitIconButtonVariant.transparent,
+            size: VitIconButtonSize.md,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -33,14 +27,16 @@ class _TradingBotsHeader extends StatelessWidget {
               children: [
                 Text(
                   'Trading Bots',
-                  style: AppTextStyles.sectionTitle.copyWith(height: 1.12),
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    height: AppSpacing.tradeBotLineHeightShort,
+                  ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Bot giao dịch · Trade',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ],
@@ -64,48 +60,29 @@ class _BotsHero extends StatelessWidget {
         .length;
     final totalInvestment = bots.fold(0.0, (sum, bot) => sum + bot.investment);
     final totalProfit = bots.fold(0.0, (sum, bot) => sum + bot.profit);
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppColors.surface3, AppColors.surface],
-        ),
-        borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: AppColors.primary20),
-        boxShadow: [
-          BoxShadow(
-            color: _botPrimary.withValues(alpha: .10),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
+    return VitCard(
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.lg,
+      borderColor: AppColors.primary20,
+      padding: AppSpacing.tradeBotHeroPadding,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      _botPrimary.withValues(alpha: .28),
-                      AppColors.accent20,
-                    ],
-                  ),
-                  borderRadius: AppRadii.cardRadius,
-                  border: Border.all(color: _botPrimary.withValues(alpha: .32)),
-                ),
+              VitCard(
+                width: AppSpacing.x7,
+                height: AppSpacing.x7,
+                variant: VitCardVariant.inner,
+                radius: VitCardRadius.md,
+                borderColor: AppColors.primary20,
+                alignment: Alignment.center,
                 child: const Icon(
                   Icons.smart_toy_outlined,
                   color: AppColors.primarySoft,
-                  size: 27,
+                  size: AppSpacing.iconMd,
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,10 +91,10 @@ class _BotsHero extends StatelessWidget {
                       'Giao dịch tự động 24/7',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.onAccent,
-                        height: 1.2,
+                        height: AppSpacing.tradeBotLineHeightCaption,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: AppSpacing.x2),
                     Text(
                       'Bot hoạt động ngay cả khi bạn ngủ',
                       style: AppTextStyles.caption.copyWith(
@@ -129,7 +106,7 @@ class _BotsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppSpacing.x5),
           Row(
             children: [
               _HeroStat(
@@ -137,13 +114,13 @@ class _BotsHero extends StatelessWidget {
                 label: 'Bot đang chạy',
                 valueColor: AppColors.buy,
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.x3),
               _HeroStat(
                 value: '\$${_formatWholeNumber(totalInvestment)}',
                 label: 'Tổng đầu tư',
                 valueColor: AppColors.onAccent,
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.x3),
               _HeroStat(
                 value: _formatSignedMoney(totalProfit),
                 label: 'Lãi nhuận',
@@ -171,14 +148,11 @@ class _HeroStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        height: 64,
+      child: VitCard(
+        height: AppSpacing.launchpadBox64,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: AppColors.onAccent.withValues(alpha: .07),
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: AppColors.onAccent.withValues(alpha: .08)),
-        ),
+        variant: VitCardVariant.inner,
+        borderColor: AppColors.onAccent.withValues(alpha: .08),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -187,10 +161,10 @@ class _HeroStat extends StatelessWidget {
               style: AppTextStyles.numericCode.copyWith(
                 color: valueColor,
                 fontFeatures: AppTextStyles.tabularFigures,
-                height: 1,
+                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               label,
               textAlign: TextAlign.center,
@@ -218,88 +192,33 @@ class _BotsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 48,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: _chipBackground,
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
-      child: Row(
-        children: [
-          _TabButton(
-            key: TradingBotsPage.tabKey('mybots'),
-            active: active == _TradingBotsTab.myBots,
+    return VitCard(
+      height: AppSpacing.tradeBotTabsHeight,
+      padding: AppSpacing.tradeBotTabShellPadding,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      child: VitTabBar(
+        variant: VitTabBarVariant.segment,
+        activeKey: active.name,
+        onChanged: (key) => onChanged(
+          key == _TradingBotsTab.myBots.name
+              ? _TradingBotsTab.myBots
+              : _TradingBotsTab.strategies,
+        ),
+        tabs: [
+          VitTabItem(
+            key: _TradingBotsTab.myBots.name,
             label: 'Bot của tôi ($botCount)',
             icon: Icons.smart_toy_outlined,
-            onTap: () => onChanged(_TradingBotsTab.myBots),
+            widgetKey: TradingBotsPage.tabKey('mybots'),
           ),
-          const SizedBox(width: 4),
-          _TabButton(
-            key: TradingBotsPage.tabKey('strategies'),
-            active: active == _TradingBotsTab.strategies,
+          VitTabItem(
+            key: _TradingBotsTab.strategies.name,
             label: 'Chiến lược',
             icon: Icons.storefront_outlined,
-            onTap: () => onChanged(_TradingBotsTab.strategies),
+            widgetKey: TradingBotsPage.tabKey('strategies'),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _TabButton extends StatelessWidget {
-  const _TabButton({
-    super.key,
-    required this.active,
-    required this.label,
-    required this.icon,
-    required this.onTap,
-  });
-
-  final bool active;
-  final String label;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.lgRadius,
-        child: Container(
-          height: 40,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            gradient: active
-                ? const LinearGradient(colors: [_botPrimary, _botPrimaryDark])
-                : null,
-            borderRadius: AppRadii.lgRadius,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: active ? AppColors.onAccent : AppColors.text3,
-                size: 15,
-              ),
-              const SizedBox(width: 6),
-              Flexible(
-                child: Text(
-                  label,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? AppColors.onAccent : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
-                    height: 1,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -328,38 +247,15 @@ class _MyBotsTab extends StatelessWidget {
       children: [
         for (final bot in bots) ...[
           _BotCard(bot: bot, onToggle: onToggle, onDelete: onDelete),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.x4),
         ],
-        InkWell(
+        VitCtaButton(
           key: TradingBotsPage.addBotKey,
-          onTap: onAdd,
-          borderRadius: AppRadii.cardRadius,
-          child: Container(
-            height: AppSpacing.inputHeight,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: _panelBackground,
-              borderRadius: AppRadii.cardRadius,
-              border: Border.all(
-                color: _botPrimary.withValues(alpha: .48),
-                style: BorderStyle.solid,
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.add_rounded, color: _botPrimary, size: 20),
-                const SizedBox(width: 8),
-                Text(
-                  'Thêm Bot mới',
-                  style: AppTextStyles.body.copyWith(
-                    color: _botPrimary,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          onPressed: onAdd,
+          height: AppSpacing.inputHeight,
+          variant: VitCtaButtonVariant.secondary,
+          leading: const Icon(Icons.add_rounded),
+          child: const Text('Thêm Bot mới'),
         ),
       ],
     );

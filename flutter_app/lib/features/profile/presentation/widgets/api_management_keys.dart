@@ -26,13 +26,13 @@ class _ApiKeyCard extends StatelessWidget {
       opacity: active ? 1 : .65,
       child: VitCard(
         key: ApiManagementPage.cardKey(apiKey.id),
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        padding: AppSpacing.profileApiKeyCardPadding,
         borderColor: active ? _apiBorder : _apiRed.withValues(alpha: .15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _ApiKeyHeader(apiKey: apiKey, onToggle: onToggle),
-            const Padding(padding: EdgeInsets.only(top: 12)),
+            const SizedBox(height: AppSpacing.profileApiKeySecretGap),
             _SecretRow(
               label: 'API KEY',
               value: _maskedKey(apiKey.key),
@@ -47,7 +47,7 @@ class _ApiKeyCard extends StatelessWidget {
                 onTap: () => onCopy('${apiKey.id}_key', apiKey.key),
               ),
             ),
-            const Padding(padding: EdgeInsets.only(top: 8)),
+            const SizedBox(height: AppSpacing.profileApiSecretRowsGap),
             _SecretRow(
               label: 'SECRET',
               value: showSecret
@@ -67,7 +67,7 @@ class _ApiKeyCard extends StatelessWidget {
                     onTap: onReveal,
                   ),
                   if (showSecret) ...[
-                    const SizedBox(width: 7),
+                    const SizedBox(width: AppSpacing.profileApiTitleStatusGap),
                     _IconTap(
                       icon: copiedId == '${apiKey.id}_secret'
                           ? Icons.check_circle_outline_rounded
@@ -81,15 +81,15 @@ class _ApiKeyCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Padding(padding: EdgeInsets.only(top: 12)),
+            const SizedBox(height: AppSpacing.profileApiPermissionGap),
             _PermissionBadges(apiKey: apiKey),
-            const Padding(padding: EdgeInsets.only(top: 13)),
+            const SizedBox(height: AppSpacing.profileApiUsageGap),
             _UsageRow(apiKey: apiKey),
-            const Padding(padding: EdgeInsets.only(top: 14)),
+            const SizedBox(height: AppSpacing.profileApiActionsGapTop),
             Row(
               children: [
                 Expanded(child: _RegenerateButton(onTap: () {})),
-                const SizedBox(width: 10),
+                const SizedBox(width: AppSpacing.profileApiActionGap),
                 _DeleteButton(onTap: onDelete, id: apiKey.id),
               ],
             ),
@@ -112,28 +112,29 @@ class _ApiKeyHeader extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
+        SizedBox(
+          width: AppSpacing.profileApiIconBox,
+          height: AppSpacing.profileApiIconBox,
+          child: Material(
             color: active
                 ? _apiPrimary.withValues(alpha: .15)
                 : _apiRed.withValues(alpha: .1),
-            borderRadius: AppRadii.cardRadius,
-            border: Border.all(
-              color: active
-                  ? _apiPrimary.withValues(alpha: .22)
-                  : _apiRed.withValues(alpha: .22),
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.cardRadius,
+              side: BorderSide(
+                color: active
+                    ? _apiPrimary.withValues(alpha: .22)
+                    : _apiRed.withValues(alpha: .22),
+              ),
+            ),
+            child: Icon(
+              Icons.key_rounded,
+              color: active ? _apiPrimary : _apiRed,
+              size: AppSpacing.profileApiIcon,
             ),
           ),
-          alignment: Alignment.center,
-          child: Icon(
-            Icons.key_rounded,
-            color: active ? _apiPrimary : _apiRed,
-            size: 19,
-          ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.profileApiHeaderGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,28 +148,24 @@ class _ApiKeyHeader extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
                         fontWeight: AppTextStyles.extraBold,
-                        height: 1.2,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 7),
+                  const SizedBox(width: AppSpacing.profileApiTitleStatusGap),
                   _StatusBadge(active: active),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: 3)),
+              const SizedBox(height: AppSpacing.profileApiMetaGap),
               Text(
                 'T\u1EA1o: ${apiKey.createdAt} \u2022 ${apiKey.expiresAt == null ? 'Kh\u00F4ng h\u1EBFt h\u1EA1n' : 'H\u1EBFt h\u1EA1n: ${apiKey.expiresAt}'}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: _apiMuted,
-                  height: 1.2,
-                ),
+                style: AppTextStyles.micro.copyWith(color: _apiMuted),
               ),
             ],
           ),
         ),
-        const SizedBox(width: 9),
+        const SizedBox(width: AppSpacing.profileApiActionGap),
         _ToggleSwitch(
           key: ApiManagementPage.toggleKey(apiKey.id),
           active: active,

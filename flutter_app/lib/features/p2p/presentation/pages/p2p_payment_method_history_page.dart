@@ -290,21 +290,21 @@ class _TrendIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.x7,
-      height: AppSpacing.x7,
-      decoration: BoxDecoration(
-        color: tone == AppColors.buy
-            ? AppColors.buy15
-            : tone == AppColors.sell
-            ? AppColors.sell15
-            : AppColors.surface2,
-        shape: BoxShape.circle,
-      ),
-      child: Icon(
-        isBuy ? Icons.trending_up_rounded : Icons.trending_down_rounded,
-        color: tone,
-        size: AppSpacing.iconMd,
+    return Material(
+      color: tone == AppColors.buy
+          ? AppColors.buy15
+          : tone == AppColors.sell
+          ? AppColors.sell15
+          : AppColors.surface2,
+      shape: const CircleBorder(),
+      child: SizedBox(
+        width: AppSpacing.x7,
+        height: AppSpacing.x7,
+        child: Icon(
+          isBuy ? Icons.trending_up_rounded : Icons.trending_down_rounded,
+          color: tone,
+          size: AppSpacing.iconMd,
+        ),
       ),
     );
   }

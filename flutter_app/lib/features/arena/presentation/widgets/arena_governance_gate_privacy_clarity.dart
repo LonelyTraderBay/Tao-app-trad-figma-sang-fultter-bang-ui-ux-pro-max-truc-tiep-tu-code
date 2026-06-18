@@ -16,7 +16,7 @@ class _PrivacyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,10 +34,7 @@ class _PrivacyCard extends StatelessWidget {
               VitCard(
                 key: ArenaGovernanceGatePage.compareKey,
                 variant: VitCardVariant.ghost,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.x2,
-                  vertical: AppSpacing.x1,
-                ),
+                padding: AppSpacing.arenaGovernanceComparePadding,
                 onTap: onCompare,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -110,7 +107,7 @@ class _PrivacyChip extends StatelessWidget {
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: active ? AppColors.accent20 : AppColors.borderSolid,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+      padding: AppSpacing.arenaGovernancePrivacyChipPadding,
       onTap: onTap,
       child: Column(
         children: [
@@ -144,7 +141,7 @@ class _ClarityScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = result.clarity >= 60 ? AppColors.buy : AppColors.sell;
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaGovernanceCardPadding,
       child: Column(
         children: [
           Row(

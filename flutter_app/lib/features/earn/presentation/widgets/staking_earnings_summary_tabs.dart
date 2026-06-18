@@ -20,7 +20,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: StakingEarningsCalendarPage.summaryKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -111,11 +111,13 @@ class _SummaryActionButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: active ? AppColors.buy20 : AppColors.cardBorder,
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: active ? AppColors.buy20 : AppColors.cardBorder,
+              ),
+              borderRadius: AppRadii.xlRadius,
             ),
-            borderRadius: AppRadii.xlRadius,
           ),
           child: SizedBox(
             width: AppSpacing.buttonCompact,
@@ -148,7 +150,7 @@ class _CalendarTabs extends StatelessWidget {
         color: AppColors.surface,
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x7),
+            padding: AppSpacing.earnContentHorizontalPadding,
             child: VitTabBar(
               variant: VitTabBarVariant.underline,
               tabs: [

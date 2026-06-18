@@ -8,7 +8,7 @@ class _ChallengeSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaJoinCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -56,7 +56,7 @@ class _RoomInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaJoinCardPadding,
       child: Column(
         children: [
           _InfoRow(
@@ -85,7 +85,7 @@ class _InfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.arenaJoinInfoRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -123,20 +123,25 @@ class _CreatorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaJoinCardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.arenaJoinCreatorAvatar,
-            height: AppSpacing.arenaJoinCreatorAvatar,
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.mdRadius,
-              border: Border.all(color: AppColors.border),
-            ),
-            child: const Icon(
-              Icons.workspace_premium_rounded,
-              color: _arenaAccent,
+          SizedBox.square(
+            dimension: AppSpacing.arenaJoinCreatorAvatar,
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.surface2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                  side: BorderSide(color: AppColors.border),
+                ),
+              ),
+              child: const Center(
+                child: Icon(
+                  Icons.workspace_premium_rounded,
+                  color: _arenaAccent,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -174,7 +179,7 @@ class _RulesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final visibleRules = rules.take(4).toList();
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaJoinCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -255,7 +260,7 @@ class _BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaJoinCardPadding,
       child: Column(
         children: [
           _BalanceRow(
@@ -330,7 +335,7 @@ class _NoticeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaJoinCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -15,7 +15,7 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,7 +25,7 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -61,30 +61,33 @@ class _NoticeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: dense ? AppSpacing.x2 : AppSpacing.x3,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: background,
-        border: Border.all(color: border),
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: border),
+          borderRadius: AppRadii.mdRadius,
+        ),
       ),
-      child: Row(
-        children: [
-          Icon(icon, color: color, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.micro.copyWith(
-                color: dense ? color : AppColors.text2,
-                fontWeight: dense ? AppTextStyles.bold : AppTextStyles.normal,
+      child: Padding(
+        padding: dense
+            ? AppSpacing.referralNoticePaddingDense
+            : AppSpacing.referralNoticePadding,
+        child: Row(
+          children: [
+            Icon(icon, color: color, size: AppSpacing.iconSm),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Text(
+                text,
+                style: AppTextStyles.micro.copyWith(
+                  color: dense ? color : AppColors.text2,
+                  fontWeight: dense ? AppTextStyles.bold : AppTextStyles.normal,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -105,16 +108,20 @@ class _IconBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: color.withValues(alpha: .22)),
+    return SizedBox.square(
+      dimension: size,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: background,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: color.withValues(alpha: .22)),
+            borderRadius: AppRadii.mdRadius,
+          ),
+        ),
+        child: Center(
+          child: Icon(icon, color: color, size: size * .45),
+        ),
       ),
-      child: Icon(icon, color: color, size: size * .45),
     );
   }
 }
@@ -135,29 +142,30 @@ class _CompactAction extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: AppColors.primary12,
-          border: Border.all(color: AppColors.primary30),
-          borderRadius: AppRadii.smRadius,
+          shape: const RoundedRectangleBorder(
+            side: BorderSide(color: AppColors.primary30),
+            borderRadius: AppRadii.smRadius,
+          ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: AppColors.primary, size: AppSpacing.iconSm),
-            const SizedBox(width: AppSpacing.x2),
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: AppTextStyles.bold,
+        child: Padding(
+          padding: AppSpacing.referralCompactPillPadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: AppColors.primary, size: AppSpacing.iconSm),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -177,21 +185,20 @@ class _TinyPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: background,
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.referralLineHeightShort,
+      child: Padding(
+        padding: AppSpacing.referralTinyPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.referralLineHeightShort,
+          ),
         ),
       ),
     );
@@ -268,20 +275,24 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.referralCampaignIconBox,
-      height: AppSpacing.referralCampaignIconBox,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        border: Border.all(color: color.withValues(alpha: .24)),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Text(
-        initial,
-        style: AppTextStyles.caption.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox.square(
+      dimension: AppSpacing.referralCampaignIconBox,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: color.withValues(alpha: .24)),
+            borderRadius: AppRadii.lgRadius,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            initial,
+            style: AppTextStyles.caption.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -297,7 +308,7 @@ class _SharePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.referralCardPadding,
       child: Text(
         'Mình đang dùng VitTrade để giao dịch crypto. Đăng ký qua link của mình, cả hai nhận 5 USDT miễn phí.\n$link',
         style: AppTextStyles.caption.copyWith(color: AppColors.text2),

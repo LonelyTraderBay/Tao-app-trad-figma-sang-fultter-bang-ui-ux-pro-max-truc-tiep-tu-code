@@ -64,7 +64,7 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
               child: SingleChildScrollView(
                 key: ABTestDashboard.contentKey,
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: scrollBottom),
+                padding: AppSpacing.adminScrollPadding(scrollBottom),
                 child: VitPageContent(
                   customGap: AppSpacing.x4,
                   children: [

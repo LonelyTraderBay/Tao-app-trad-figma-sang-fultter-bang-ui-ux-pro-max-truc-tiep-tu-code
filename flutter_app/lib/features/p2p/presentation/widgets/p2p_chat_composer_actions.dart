@@ -22,22 +22,25 @@ class _ChatComposer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final canSend = controller.text.trim().isNotEmpty;
-    return Container(
-      padding: EdgeInsets.only(bottom: bottomInset),
-      decoration: const BoxDecoration(
-        color: AppColors.bg,
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
+    return Material(
+      color: AppColors.bg,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
+          const SizedBox(
+            height: AppSpacing.dividerHairline,
+            child: ColoredBox(color: AppColors.divider),
+          ),
+          Padding(
+            padding: AppSpacing.p2pChatComposerBottomPadding(bottomInset),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
           SizedBox(
             height: AppSpacing.buttonStandard,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.contentPad,
-                vertical: AppSpacing.x3,
-              ),
+              padding: AppSpacing.p2pChatQuickReplyRailPadding,
               children: [
                 _ReplyChip(
                   key: P2PChatPage.shareProofKey,
@@ -58,12 +61,7 @@ class _ChatComposer extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x2,
-              AppSpacing.contentPad,
-              AppSpacing.x3,
-            ),
+            padding: AppSpacing.p2pChatComposerInputPadding,
             child: Row(
               children: [
                 _RoundIconButton(icon: Icons.image_outlined, onPressed: () {}),
@@ -73,7 +71,7 @@ class _ChatComposer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: AppSpacing.x3),
+                        padding: AppSpacing.p2pChatComposerLabelPadding,
                         child: Text(
                           'E2E Encrypted',
                           style: AppTextStyles.micro.copyWith(
@@ -106,6 +104,9 @@ class _ChatComposer extends StatelessWidget {
               ],
             ),
           ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -129,19 +130,20 @@ class _ReplyChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: AppSpacing.x2),
+      padding: AppSpacing.p2pChatReplyChipOuterPadding,
       child: Material(
         color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.inputRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(color: color.withValues(alpha: .22)),
+        ),
         child: InkWell(
           onTap: onTap,
-          borderRadius: AppRadii.inputRadius,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-            decoration: BoxDecoration(
-              border: Border.all(color: color.withValues(alpha: .22)),
-              borderRadius: AppRadii.inputRadius,
-            ),
+          customBorder: RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
+          ),
+          child: Padding(
+            padding: AppSpacing.p2pChatReplyChipPadding,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -186,8 +188,8 @@ class _RoundIconButton extends StatelessWidget {
         onTap: onPressed,
         customBorder: const CircleBorder(),
         child: SizedBox(
-          width: 40,
-          height: 40,
+          width: AppSpacing.p2pChatRoundIconButtonSize,
+          height: AppSpacing.p2pChatRoundIconButtonSize,
           child: Icon(icon, color: color, size: AppSpacing.iconMd),
         ),
       ),
@@ -214,10 +216,7 @@ class _SmallHeaderButton extends StatelessWidget {
         onTap: onPressed,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
+          padding: AppSpacing.p2pChatSmallHeaderButtonPadding,
           child: Row(
             children: [
               Text(

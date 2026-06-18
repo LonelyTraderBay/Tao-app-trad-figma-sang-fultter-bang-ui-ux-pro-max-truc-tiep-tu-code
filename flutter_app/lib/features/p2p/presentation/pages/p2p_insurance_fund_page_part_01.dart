@@ -37,7 +37,7 @@ class _FundSummaryCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
@@ -113,7 +113,7 @@ class _EligibilityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
@@ -127,10 +127,7 @@ class _EligibilityCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
-            ),
+            padding: AppSpacing.p2pTrustProgressChipPadding,
             borderColor: AppColors.buy20,
             child: Text(
               'Bạn đủ điều kiện gửi yêu cầu bồi thường',
@@ -156,7 +153,7 @@ class _FundHealthCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
@@ -206,7 +203,7 @@ class _FundHealthCard extends StatelessWidget {
             key: P2PInsuranceFundPage.certificateKey,
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.p2pTrustProgressCompactPadding,
             onTap: () => context.go(snapshot.certificateRoute),
             child: Row(
               children: [
@@ -238,7 +235,7 @@ class _FundHealthCard extends StatelessWidget {
                         'Kiểm toán gần nhất: ${snapshot.lastAuditDate}\n${snapshot.auditorName} · Kỳ tiếp theo: ${snapshot.nextAuditDate}',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1.35,
+                          height: AppSpacing.p2pTrustProgressCaptionLineHeight,
                         ),
                       ),
                     ],
@@ -267,7 +264,7 @@ class _FundChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
@@ -304,7 +301,7 @@ class _FundChartCard extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: AppSpacing.buttonHero * 1.55,
+            height: AppSpacing.p2pTrustProgressChartHeight,
             child: CustomPaint(
               painter: _FundTrendPainter(snapshot.chartPoints),
               child: const SizedBox.expand(),
@@ -335,7 +332,7 @@ class _CoverageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -367,7 +364,7 @@ class _CoverageCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.p2pTrustProgressCompactPadding,
             onTap: () => context.go(snapshot.contributionHistoryRoute),
             child: Row(
               children: [
@@ -409,7 +406,7 @@ class _CoverageTierCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -435,7 +432,7 @@ class _NotificationCard extends StatelessWidget {
     final enabled = prefs.where((item) => item.enabled).length;
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -471,7 +468,7 @@ class _HowItWorksCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [

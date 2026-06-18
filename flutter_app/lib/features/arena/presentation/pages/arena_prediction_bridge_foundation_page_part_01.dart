@@ -40,7 +40,7 @@ class _ArenaPredictionBridgeFoundationPageState
                   child: SingleChildScrollView(
                     key: ArenaPredictionBridgeFoundationPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x5,
@@ -105,7 +105,7 @@ class _BridgeHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.primary,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -127,7 +127,7 @@ class _BridgeHero extends StatelessWidget {
                     height: AppSpacing.arenaBridgeHeroLineHeight,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   'Nền tảng kết nối an toàn giữa Open Arena và Prediction Markets. Khóa boundary trước khi nối flow.',
                   style: AppTextStyles.micro.copyWith(
@@ -193,38 +193,42 @@ class _BridgeTabPill extends StatelessWidget {
         key: ArenaPredictionBridgeFoundationPage.tabKey(config.id),
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Container(
+        child: SizedBox(
           height: AppSpacing.arenaBridgeTabHeight,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-          decoration: BoxDecoration(
+          child: Material(
             color: active
                 ? AppColors.primary.withValues(alpha: .14)
                 : AppColors.surface2,
-            border: Border.all(
-              color: active
-                  ? AppColors.primary.withValues(alpha: .55)
-                  : AppColors.cardBorder,
-              width: active ? 1.5 : 1,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: active
+                    ? AppColors.primary.withValues(alpha: .55)
+                    : AppColors.cardBorder,
+                width: active ? 1.5 : 1,
+              ),
+              borderRadius: AppRadii.inputRadius,
             ),
-            borderRadius: AppRadii.inputRadius,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                config.icon,
-                color: active ? AppColors.primary : AppColors.text2,
-                size: AppSpacing.arenaBridgeChipIcon,
+            child: Padding(
+              padding: AppSpacing.arenaHorizontalPaddingX4,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    config.icon,
+                    color: active ? AppColors.primary : AppColors.text2,
+                    size: AppSpacing.arenaBridgeChipIcon,
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Text(
+                    config.label,
+                    style: AppTextStyles.micro.copyWith(
+                      color: active ? AppColors.primary : AppColors.text2,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                config.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? AppColors.primary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -283,7 +287,7 @@ class _PrinciplesSection extends StatelessWidget {
           title: '1 - Cross-Module Principles',
           accentColor: AppColors.primary,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           '6 nguyên tắc bắt buộc khi kết nối Arena - Prediction Markets. Vi phạm = reject trong code review.',
           style: AppTextStyles.micro.copyWith(
@@ -291,25 +295,25 @@ class _PrinciplesSection extends StatelessWidget {
             height: AppSpacing.arenaBridgeIntroLineHeight,
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         for (final principle in snapshot.principles) ...[
           _PrincipleCard(principle: principle),
           if (principle != snapshot.principles.last)
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+            const SizedBox(height: AppSpacing.x4),
         ],
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         const VitModuleSectionHeader(
           title: 'Allowed vs Not Allowed',
           accentColor: AppColors.buy,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _RuleBoard(
           title: 'Allowed',
           icon: Icons.check_rounded,
           color: AppColors.buy,
           items: snapshot.allowedItems,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _RuleBoard(
           title: 'Not Allowed',
           icon: Icons.close_rounded,
@@ -333,7 +337,7 @@ class _PrincipleCard extends StatelessWidget {
       constraints: const BoxConstraints(
         minHeight: AppSpacing.arenaBridgePrincipleMinHeight,
       ),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -347,9 +351,7 @@ class _PrincipleCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(
-                        top: AppSpacing.arenaBridgeTinyGap,
-                      ),
+                      padding: AppSpacing.arenaBridgePrincipleNumberPadding,
                       child: Text(
                         '#${principle.number}',
                         style: AppTextStyles.micro.copyWith(
@@ -371,7 +373,7 @@ class _PrincipleCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   principle.description,
                   style: AppTextStyles.micro.copyWith(
@@ -405,7 +407,7 @@ class _RuleBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: color.withValues(alpha: .25),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -422,11 +424,10 @@ class _RuleBoard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           for (final item in items) ...[
             _RuleRow(item: item, color: color),
-            if (item != items.last)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+            if (item != items.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -463,7 +464,7 @@ class _RuleRow extends StatelessWidget {
                   height: AppSpacing.arenaBridgeMetricLineHeight,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 item.description,
                 style: AppTextStyles.micro.copyWith(

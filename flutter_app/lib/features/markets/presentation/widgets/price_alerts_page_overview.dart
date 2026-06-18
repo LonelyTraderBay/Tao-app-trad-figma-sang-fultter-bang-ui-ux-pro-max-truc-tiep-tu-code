@@ -5,17 +5,24 @@ class _AddAlertNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
+      child: Material(
         color: AppColors.surface3,
-        borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: AppColors.cardBorder),
-      ),
-      child: Text(
-        'T\u1EA1o c\u1EA3nh b\u00E1o m\u1EDBi s\u1EBD \u0111\u01B0\u1EE3c b\u1ED5 sung sau',
-        style: AppTextStyles.caption.copyWith(color: AppColors.text1),
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: AppColors.cardBorder),
+          borderRadius: AppRadii.mdRadius,
+        ),
+        child: Padding(
+          padding: AppSpacing.priceAlertsNoticePadding,
+          child: Text(
+            'T\u1EA1o c\u1EA3nh b\u00E1o m\u1EDBi s\u1EBD \u0111\u01B0\u1EE3c b\u1ED5 sung sau',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              height: AppSpacing.marketLineHeightCaption,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -32,46 +39,53 @@ class _FilterTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 13, 20, 13),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 8,
-              child: _FilterTab(
-                key: PriceAlertsPage.allFilterKey,
-                label: 'Tất cả',
-                active: activeFilter == _AlertFilter.all,
-                onTap: () => onFilterSelected(_AlertFilter.all),
-              ),
+    return Material(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: AppSpacing.priceAlertsFilterHeaderPadding,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: _FilterTab(
+                    key: PriceAlertsPage.allFilterKey,
+                    label: 'T\u1EA5t c\u1EA3',
+                    active: activeFilter == _AlertFilter.all,
+                    onTap: () => onFilterSelected(_AlertFilter.all),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.priceAlertsFilterGap),
+                Expanded(
+                  flex: 15,
+                  child: _FilterTab(
+                    key: PriceAlertsPage.activeFilterKey,
+                    label: '\u0110ang ho\u1EA1t \u0111\u1ED9ng',
+                    active: activeFilter == _AlertFilter.active,
+                    onTap: () => onFilterSelected(_AlertFilter.active),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.priceAlertsFilterGap),
+                Expanded(
+                  flex: 14,
+                  child: _FilterTab(
+                    key: PriceAlertsPage.triggeredFilterKey,
+                    label: '\u0110\u00E3 k\u00EDch ho\u1EA1t',
+                    active: activeFilter == _AlertFilter.triggered,
+                    onTap: () => onFilterSelected(_AlertFilter.triggered),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 8),
-            Expanded(
-              flex: 15,
-              child: _FilterTab(
-                key: PriceAlertsPage.activeFilterKey,
-                label: 'Đang hoạt động',
-                active: activeFilter == _AlertFilter.active,
-                onTap: () => onFilterSelected(_AlertFilter.active),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              flex: 14,
-              child: _FilterTab(
-                key: PriceAlertsPage.triggeredFilterKey,
-                label: 'Đã kích hoạt',
-                active: activeFilter == _AlertFilter.triggered,
-                onTap: () => onFilterSelected(_AlertFilter.triggered),
-              ),
-            ),
-          ],
-        ),
+          ),
+          const Divider(
+            height: AppSpacing.hairlineStroke,
+            thickness: AppSpacing.hairlineStroke,
+            color: AppColors.divider,
+          ),
+        ],
       ),
     );
   }
@@ -91,31 +105,37 @@ class _FilterTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 140),
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 13),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _marketPrimary.withValues(alpha: .16)
-              : AppColors.surface,
-          border: Border.all(
-            color: active
-                ? _marketPrimary.withValues(alpha: .48)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: active ? _marketPrimary : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
+    final color = active
+        ? _marketPrimary.withValues(alpha: .16)
+        : AppColors.surface;
+    final borderColor = active
+        ? _marketPrimary.withValues(alpha: .48)
+        : AppColors.transparent;
+    return Material(
+      color: color,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: borderColor),
+        borderRadius: AppRadii.cardRadius,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.cardRadius,
+        child: SizedBox(
+          height: AppSpacing.priceAlertsFilterHeight,
+          child: Padding(
+            padding: AppSpacing.priceAlertsFilterTabPadding,
+            child: Center(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.captionSm.copyWith(
+                  color: active ? _marketPrimary : AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.marketLineHeightTight,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -140,24 +160,24 @@ class _StatsSummary extends StatelessWidget {
       children: [
         Expanded(
           child: _StatBox(
-            label: 'Tổng',
+            label: 'T\u1ED5ng',
             value: '$total',
             valueKey: PriceAlertsPage.totalCountKey,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.priceAlertsStatGap),
         Expanded(
           child: _StatBox(
-            label: 'Hoạt động',
+            label: 'Ho\u1EA1t \u0111\u1ED9ng',
             value: '$active',
             valueColor: AppColors.buy,
             valueKey: PriceAlertsPage.activeCountKey,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.priceAlertsStatGap),
         Expanded(
           child: _StatBox(
-            label: 'Đã kích hoạt',
+            label: '\u0110\u00E3 k\u00EDch ho\u1EA1t',
             value: '$triggered',
             valueColor: _marketPrimary,
             valueKey: PriceAlertsPage.triggeredCountKey,
@@ -183,34 +203,33 @@ class _StatBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 72,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.surface3,
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.captionSm.copyWith(
-              color: AppColors.text3,
-              height: 1,
+    return Material(
+      color: AppColors.surface3,
+      borderRadius: AppRadii.cardRadius,
+      child: SizedBox(
+        height: AppSpacing.priceAlertsStatHeight,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.captionSm.copyWith(
+                color: AppColors.text3,
+                height: AppSpacing.marketLineHeightTight,
+              ),
             ),
-          ),
-          const SizedBox(height: 9),
-          Text(
-            value,
-            key: valueKey,
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: valueColor,
-              fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+            const SizedBox(height: AppSpacing.priceAlertsStatLabelGap),
+            Text(
+              value,
+              key: valueKey,
+              style: AppTextStyles.sectionTitle.copyWith(
+                color: valueColor,
+                fontFeatures: AppTextStyles.tabularFigures,
+                height: AppSpacing.marketLineHeightTight,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

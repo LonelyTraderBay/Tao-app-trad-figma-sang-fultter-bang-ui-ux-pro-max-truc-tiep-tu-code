@@ -34,10 +34,10 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: AdvancedAnalyticsPage.contentKey,
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    customGap: 16,
+                    customGap: AppSpacing.x4 + AppSpacing.x1,
                     children: [
                       _HeroCard(stats: snapshot.stats),
                       _UnderlineTabs(
@@ -87,25 +87,27 @@ class _HeroCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       borderColor: AppColors.onAccent.withValues(alpha: .10),
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 25),
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
-                width: 64,
-                height: 64,
-                decoration: BoxDecoration(
+              VitCard(
+                width: AppSpacing.x7 + AppSpacing.tradeBotDisputeDropdownIcon,
+                height: AppSpacing.x7 + AppSpacing.tradeBotDisputeDropdownIcon,
+                padding: AppSpacing.zeroInsets,
+                variant: VitCardVariant.ghost,
+                clip: true,
+                background: ColoredBox(
                   color: AppColors.onAccent.withValues(alpha: .10),
-                  borderRadius: AppRadii.cardRadius,
                 ),
                 child: const Icon(
                   Icons.auto_awesome_rounded,
                   color: AppColors.onAccent,
-                  size: 34,
+                  size: AppSpacing.iconLg,
                 ),
               ),
-              const SizedBox(width: 13),
+              const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,15 +117,20 @@ class _HeroCard extends StatelessWidget {
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
-                        height: 1.15,
+                        height: AppSpacing.tradeBotLineHeightShort,
                       ),
                     ),
-                    const SizedBox(height: 7),
+                    const SizedBox(
+                      height:
+                          AppSpacing.x3 -
+                          AppSpacing.hairlineStroke +
+                          AppSpacing.x1,
+                    ),
                     Text(
                       'AI-powered insights va professional trading tools',
                       style: AppTextStyles.body.copyWith(
                         color: AppColors.onAccent.withValues(alpha: .72),
-                        height: 1.35,
+                        height: AppSpacing.tradeBotLineHeightBody,
                       ),
                     ),
                   ],
@@ -131,12 +138,12 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 23),
+          const SizedBox(height: AppSpacing.x5 + AppSpacing.hairlineStroke),
           Row(
             children: [
               for (final stat in stats) ...[
                 Expanded(child: _HeroStat(stat: stat)),
-                if (stat != stats.last) const SizedBox(width: 8),
+                if (stat != stats.last) const SizedBox(width: AppSpacing.x3),
               ],
             ],
           ),
@@ -155,8 +162,8 @@ class _HeroStat extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(stat.colorHex);
     return VitCard(
-      height: 78,
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
+      height: AppSpacing.x7 + AppSpacing.x5 + AppSpacing.hairlineStroke,
+      padding: AppSpacing.tradeBotMetricBoxPadding,
       variant: VitCardVariant.inner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -169,10 +176,10 @@ class _HeroStat extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Text(
             stat.label,
             maxLines: 2,
@@ -180,7 +187,7 @@ class _HeroStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.onAccent.withValues(alpha: .62),
-              height: 1.2,
+              height: AppSpacing.tradeBotLineHeightCaption,
             ),
           ),
         ],
@@ -205,53 +212,19 @@ class _UnderlineTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 54,
-      child: Row(
-        children: [
+      height: AppSpacing.x7,
+      padding: AppSpacing.zeroInsets,
+      child: VitTabBar(
+        activeKey: activeId,
+        onChanged: onChanged,
+        variant: VitTabBarVariant.segment,
+        tabs: [
           for (final tab in _tabs)
-            Expanded(
-              child: InkWell(
-                key: AdvancedAnalyticsPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: activeId == tab.$1
-                            ? _advancedPrimary
-                            : AppColors.transparent,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        tab.$3,
-                        color: activeId == tab.$1
-                            ? _advancedPrimary
-                            : AppColors.text3,
-                        size: 15,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        tab.$2,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: activeId == tab.$1
-                              ? _advancedPrimary
-                              : AppColors.text3,
-                          fontWeight: AppTextStyles.bold,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              icon: tab.$3,
+              widgetKey: AdvancedAnalyticsPage.tabKey(tab.$1),
             ),
         ],
       ),
@@ -288,7 +261,7 @@ class _AiSignalsTab extends StatelessWidget {
         .length;
 
     return _Card(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
         customGap: 16,
@@ -308,7 +281,7 @@ class _AiSignalsTab extends StatelessWidget {
                   value: '${snapshot.signals.length}',
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: _MiniStatBox(
                   label: 'Avg Confidence',
@@ -316,7 +289,7 @@ class _AiSignalsTab extends StatelessWidget {
                   valueColor: _advancedGreen,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: _MiniStatBox(
                   label: 'L/S Ratio',
@@ -335,7 +308,7 @@ class _AiSignalsTab extends StatelessWidget {
                     onTap: () => onFilterChanged(filter),
                   ),
                 ),
-                if (filter != 'short') const SizedBox(width: 8),
+                if (filter != 'short') const SizedBox(width: AppSpacing.x3),
               ],
             ],
           ),
@@ -371,7 +344,7 @@ class _FilterChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: VitCard(
-        height: 36,
+        height: AppSpacing.tradeHistoryCancelHeight,
         alignment: Alignment.center,
         variant: VitCardVariant.inner,
         borderColor: selected ? _advancedPurple : _advancedBorder,
@@ -380,7 +353,7 @@ class _FilterChip extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: selected ? _advancedPurple : AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ),

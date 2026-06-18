@@ -9,15 +9,20 @@ class _PositionsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     if (positions.isEmpty) {
       return _Panel(
-        padding: const EdgeInsets.symmetric(vertical: 44, horizontal: 16),
+        padding: AppSpacing.zeroInsets.copyWith(
+          left: AppSpacing.walletAssetSectionGap,
+          top: AppSpacing.searchBarCompactHeight,
+          right: AppSpacing.walletAssetSectionGap,
+          bottom: AppSpacing.searchBarCompactHeight,
+        ),
         child: Column(
           children: [
             const Icon(
               Icons.bar_chart_rounded,
               color: AppColors.text3,
-              size: 34,
+              size: AppSpacing.iconLg,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
             Text(
               'Chưa có vị thế',
               style: AppTextStyles.caption.copyWith(
@@ -32,7 +37,8 @@ class _PositionsTab extends StatelessWidget {
       children: [
         for (final position in positions) ...[
           _PositionCard(position: position),
-          if (position != positions.last) const SizedBox(height: 12),
+          if (position != positions.last)
+            const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         ],
       ],
     );
@@ -48,21 +54,21 @@ class _PositionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = position.pnl >= 0 ? _marginGreen : _marginRed;
     return _Panel(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Text(position.pair, style: AppTextStyles.baseMedium),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               _MiniBadge(
                 label: '${position.side.toUpperCase()} ${position.leverage}x',
                 color: color,
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
           Row(
             children: [
               Expanded(
@@ -89,18 +95,27 @@ class _OrdersTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: const EdgeInsets.symmetric(vertical: 44, horizontal: 16),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.searchBarCompactHeight,
+        right: AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.searchBarCompactHeight,
+      ),
       child: Column(
         children: [
-          const Icon(Icons.adjust_rounded, color: AppColors.text3, size: 34),
-          const SizedBox(height: 12),
+          const Icon(
+            Icons.adjust_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconLg,
+          ),
+          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
           Text(
             'Không có lệnh chờ',
             style: AppTextStyles.caption.copyWith(
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Các lệnh limit đang chờ khớp sẽ hiển thị tại đây',
             textAlign: TextAlign.center,

@@ -45,11 +45,13 @@ class _RegulatoryReportsDashboardPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: RegulatoryReportsDashboardPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                        bottomInset,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 18,
+                        customGap: AppSpacing.tradeBotContentGap,
                         children: [
                           _ComplianceAlert(totals: snapshot.totals),
                           VitPageSection(
@@ -86,10 +88,10 @@ class _RegulatoryReportsDashboardPageState
                           ),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: EdgeInsets.all(12),
+                            padding: AppSpacing.tradeBotInnerPanelPadding,
                             child: VitPageContent(
                               padding: VitContentPadding.none,
-                              customGap: 8,
+                              customGap: AppSpacing.tradeBotSmallGap,
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
@@ -133,7 +135,7 @@ class _ComplianceAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      padding: AppSpacing.tradeBotInnerPanelPadding,
       variant: VitCardVariant.inner,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,9 +143,9 @@ class _ComplianceAlert extends StatelessWidget {
           const Icon(
             Icons.check_circle_outline,
             color: AppColors.text1,
-            size: 17,
+            size: AppSpacing.tradeBotMediumIcon,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,15 +155,15 @@ class _ComplianceAlert extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
                 Text(
                   'All reports submitted within T+1. Zero regulatory breaches. Avg latency: ${totals.avgLatency.round()}s.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: 1.4,
+                    height: AppSpacing.tradeBotLineHeightMedium,
                   ),
                 ),
               ],
@@ -215,7 +217,8 @@ class _KpiGrid extends StatelessWidget {
       children: [
         for (final item in items) ...[
           Expanded(child: _KpiCard(item: item)),
-          if (item != items.last) const SizedBox(width: 8),
+          if (item != items.last)
+            const SizedBox(width: AppSpacing.tradeBotSmallGap),
         ],
       ],
     );
@@ -230,16 +233,20 @@ class _KpiCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: 124,
-      padding: const EdgeInsets.fromLTRB(9, 11, 9, 10),
+      height: AppSpacing.tradeBotCassSummaryHeight,
+      padding: AppSpacing.tradeBotMetricBoxPadding,
       borderColor: _dashBorder.withValues(alpha: .68),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(item.$5, color: item.$4, size: 15),
-              const SizedBox(width: 5),
+              Icon(
+                item.$5,
+                color: item.$4,
+                size: AppSpacing.tradeBotMediumIcon,
+              ),
+              const SizedBox(width: AppSpacing.tradeBotTinyGap),
               Expanded(
                 child: Text(
                   item.$1,
@@ -247,13 +254,13 @@ class _KpiCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           Text(
             item.$2,
             maxLines: 1,
@@ -262,7 +269,7 @@ class _KpiCard extends StatelessWidget {
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           const Spacer(),
@@ -272,7 +279,7 @@ class _KpiCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: item.$4 == _dashAmber ? _dashGreen : item.$4,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -306,7 +313,8 @@ class _RangeSelector extends StatelessWidget {
             size: VitStatusPillSize.lg,
             onTap: () => onChanged(range),
           ),
-          if (range != ranges.last) const SizedBox(width: 8),
+          if (range != ranges.last)
+            const SizedBox(width: AppSpacing.tradeBotSmallGap),
         ],
       ],
     );
@@ -328,44 +336,18 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      height: 54,
-      child: Row(
-        children: [
-          for (final tab in _tabs)
-            Expanded(
-              child: InkWell(
-                key: RegulatoryReportsDashboardPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeId == tab.$1
-                                ? _dashPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: activeId == tab.$1 ? 58 : 0,
-                      height: 2,
-                      child: const ColoredBox(color: _dashPrimary),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
+    return VitTabBar(
+      activeKey: activeId,
+      tabs: [
+        for (final tab in _tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: RegulatoryReportsDashboardPage.tabKey(tab.$1),
+          ),
+      ],
+      onChanged: onChanged,
+      variant: VitTabBarVariant.segment,
     );
   }
 }
@@ -379,16 +361,16 @@ class _OverviewTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: 18,
+      customGap: AppSpacing.tradeBotContentGap,
       children: [
         VitPageSection(
           label: 'Submission Trend (Last 7 Days)',
-          customGap: 12,
+          customGap: AppSpacing.tradeBotCardGap,
           children: [
             _Card(
-              padding: const EdgeInsets.all(14),
+              padding: AppSpacing.tradeBotInnerPanelPadding,
               child: SizedBox(
-                height: 200,
+                height: AppSpacing.tradeBotDistributionChartHeight,
                 child: CustomPaint(
                   painter: _TrendPainter(stats: snapshot.dailyStats),
                   child: const SizedBox.expand(),
@@ -399,23 +381,23 @@ class _OverviewTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Report Distribution by Regulation',
-          customGap: 12,
+          customGap: AppSpacing.tradeBotCardGap,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: _Card(
-                    padding: const EdgeInsets.all(12),
+                    padding: AppSpacing.tradeBotInnerPanelPadding,
                     child: SizedBox(
-                      height: 180,
+                      height: AppSpacing.tradeBotDashboardChartHeight,
                       child: CustomPaint(
                         painter: _DonutPainter(items: snapshot.distribution),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.tradeBotCardGap),
                 Expanded(
                   child: _DistributionLegend(
                     items: snapshot.distribution,
@@ -428,7 +410,7 @@ class _OverviewTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'ARM Provider Performance',
-          customGap: 10,
+          customGap: AppSpacing.tradeBotRowGap,
           children: [
             for (final provider in snapshot.providers)
               _ProviderCard(provider: provider),

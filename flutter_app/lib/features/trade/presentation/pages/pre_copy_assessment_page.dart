@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -60,7 +62,9 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 104 : 28);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.preCopyAssessmentBottomInsetVisualExtra
+            : AppSpacing.preCopyAssessmentBottomInsetNativeExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -80,10 +84,12 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: PreCopyAssessmentPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 16, 20, bottomInset),
+                  padding: AppSpacing.preCopyAssessmentScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 14,
+                    customGap: AppSpacing.preCopyAssessmentContentGap,
                     fullBleed: true,
                     children: [
                       _started
@@ -121,23 +127,21 @@ class _WelcomeAssessment extends StatelessWidget {
           text:
               'Chúng tôi cần đánh giá sự phù hợp của Copy Trading với kiến thức, kinh nghiệm và mục tiêu đầu tư của bạn.',
         ),
-        const SizedBox(height: 14),
+        const SizedBox(
+          height: AppSpacing.x4 + AppSpacing.x1 - AppSpacing.hairlineStroke,
+        ),
         VitCard(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.preCopyAssessmentCardPadding,
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 24,
-                backgroundColor: _assessmentPrimary.withValues(alpha: .16),
-                child: Text(
-                  provider.avatar,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: _assessmentPrimary,
-                    fontWeight: AppTextStyles.extraBold,
-                  ),
-                ),
+              VitAssetAvatar(
+                label: provider.avatar,
+                accentColor: _assessmentPrimary,
+                size: AppSpacing.x7 - AppSpacing.x3 + AppSpacing.hairlineStroke,
+                radius: AppRadii.cardRadius,
+                border: true,
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +152,9 @@ class _WelcomeAssessment extends StatelessWidget {
                         fontWeight: AppTextStyles.extraBold,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(
+                      height: AppSpacing.x1 + AppSpacing.hairlineStroke,
+                    ),
                     Text(
                       'ROI +${provider.totalPnlPct.toStringAsFixed(1)}% · Max DD ${provider.maxDrawdown.toStringAsFixed(1)}%',
                       style: AppTextStyles.navLabel.copyWith(
@@ -163,7 +169,7 @@ class _WelcomeAssessment extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.ctaLoadingIcon),
         for (final item in [
           (
             'Trả lời câu hỏi',
@@ -176,7 +182,7 @@ class _WelcomeAssessment extends StatelessWidget {
           ('Nhận kết quả', 'Khuyến nghị phân bổ vốn và cooling-off'),
         ]) ...[
           _ProcessRow(title: item.$1, description: item.$2),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
         ],
         VitCtaButton(
           key: PreCopyAssessmentPage.startKey,
@@ -211,10 +217,12 @@ class _QuestionsSummary extends StatelessWidget {
           message:
               'Confirm risk, limits, cooling-off requirements, and next steps before configuring copy trading.',
         ),
-        const SizedBox(height: 14),
+        const SizedBox(
+          height: AppSpacing.x4 + AppSpacing.x1 - AppSpacing.hairlineStroke,
+        ),
         for (final question in snapshot.questions) ...[
           VitCard(
-            padding: const EdgeInsets.all(16),
+            padding: AppSpacing.preCopyAssessmentCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -224,7 +232,7 @@ class _QuestionsSummary extends StatelessWidget {
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
                 Text(
                   question.description,
                   style: AppTextStyles.navLabel.copyWith(
@@ -232,16 +240,16 @@ class _QuestionsSummary extends StatelessWidget {
                     fontWeight: AppTextStyles.normal,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
                 for (final option in question.options)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
+                    padding: AppSpacing.preCopyAssessmentOptionMargin,
                     child: _OptionRow(option: option),
                   ),
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.preCopyAssessmentQuestionCardGap),
         ],
         VitCtaButton(
           key: PreCopyAssessmentPage.continueKey,
@@ -290,11 +298,11 @@ class _ProcessRow extends StatelessWidget {
     return Row(
       children: [
         const CircleAvatar(
-          radius: 16,
+          radius: AppSpacing.x4 + AppSpacing.x1,
           backgroundColor: AppColors.primary15,
           child: Icon(Icons.check_rounded, color: _assessmentPrimary, size: 17),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,7 +313,7 @@ class _ProcessRow extends StatelessWidget {
                   fontWeight: AppTextStyles.extraBold,
                 ),
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: AppSpacing.x1 - AppSpacing.hairlineStroke),
               Text(
                 description,
                 style: AppTextStyles.navLabel.copyWith(
@@ -329,7 +337,7 @@ class _OptionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.preCopyAssessmentOptionCardPadding,
       child: Text(
         option.label,
         style: AppTextStyles.caption.copyWith(color: AppColors.text2),

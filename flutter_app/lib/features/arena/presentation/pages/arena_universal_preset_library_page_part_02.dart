@@ -21,9 +21,9 @@ class _TitlesSection extends StatelessWidget {
           subtitle: 'Gợi ý title thông minh theo domain + type',
           accentColor: AppColors.sell,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -32,7 +32,7 @@ class _TitlesSection extends StatelessWidget {
                 label: 'AutoTitleSuggestionRow',
                 count: titles.length,
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+              const SizedBox(height: AppSpacing.x3),
               Wrap(
                 spacing: AppSpacing.x2,
                 runSpacing: AppSpacing.x2,
@@ -49,10 +49,10 @@ class _TitlesSection extends StatelessWidget {
           ),
         ),
         if (selectedTitle != null) ...[
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           VitCard(
             borderColor: AppColors.sell20,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.arenaPaddingX4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,7 +60,7 @@ class _TitlesSection extends StatelessWidget {
                   icon: Icons.visibility_outlined,
                   label: 'Title đã chọn',
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   selectedTitle!,
                   style: AppTextStyles.base.copyWith(
@@ -72,9 +72,9 @@ class _TitlesSection extends StatelessWidget {
             ),
           ),
         ],
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
@@ -94,7 +94,7 @@ class _TitlesSection extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         const _PresetEngineNote(),
       ],
     );
@@ -118,7 +118,7 @@ class _PresetSectionHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitModuleSectionHeader(title: title, accentColor: accentColor),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           subtitle,
           style: AppTextStyles.caption.copyWith(
@@ -138,17 +138,17 @@ class _DomainIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.arenaPresetDomainIconBox,
       height: AppSpacing.arenaPresetDomainIconBox,
-      decoration: const BoxDecoration(
+      child: Material(
         color: AppColors.surface2,
-        shape: BoxShape.circle,
-      ),
-      child: Icon(
-        _domainIcon(id),
-        color: _arenaAccent,
-        size: AppSpacing.arenaPresetDomainIcon,
+        shape: const CircleBorder(),
+        child: Icon(
+          _domainIcon(id),
+          color: _arenaAccent,
+          size: AppSpacing.arenaPresetDomainIcon,
+        ),
       ),
     );
   }
@@ -162,17 +162,14 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.warn10,
-        border: Border.all(color: AppColors.warningBorder),
+    return Material(
+      color: AppColors.warn10,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: AppColors.warningBorder),
         borderRadius: AppRadii.smRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.arenaPresetPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -192,13 +189,11 @@ class _ExampleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.smRadius,
-      ),
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x2),
+        padding: AppSpacing.arenaPaddingX2,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -241,10 +236,7 @@ class _DomainFilterChip extends StatelessWidget {
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: active ? AppColors.warn : AppColors.borderSolid,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.arenaPresetChipPadding,
       onTap: onTap,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -285,10 +277,7 @@ class _SuggestionChip extends StatelessWidget {
       variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: selected ? AppColors.warn : AppColors.borderSolid,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.arenaPresetChipPadding,
       onTap: onTap,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -331,10 +320,7 @@ class _SearchBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.borderSolid,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.arenaPresetSectionChipPadding,
       child: Row(
         children: [
           const Icon(
@@ -364,7 +350,7 @@ class _AutocompleteRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.arenaBottomPaddingX2,
       child: Row(
         children: [
           Icon(
@@ -403,7 +389,7 @@ class _DropdownPreview extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: group.disabled ? AppColors.borderSolid : AppColors.accent20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -433,7 +419,7 @@ class _DropdownPreview extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             selected,
             style: AppTextStyles.base.copyWith(
@@ -442,7 +428,7 @@ class _DropdownPreview extends StatelessWidget {
             ),
           ),
           if (group.options.length > 1) ...[
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+            const SizedBox(height: AppSpacing.x2),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x2,
@@ -475,10 +461,7 @@ class _DemoSelectorChip extends StatelessWidget {
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: active ? AppColors.buy : AppColors.borderSolid,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.arenaPresetChipPadding,
       onTap: onTap,
       child: Row(
         mainAxisSize: MainAxisSize.min,

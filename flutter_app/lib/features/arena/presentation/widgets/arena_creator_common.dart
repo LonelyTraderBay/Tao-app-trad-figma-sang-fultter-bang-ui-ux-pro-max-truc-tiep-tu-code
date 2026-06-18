@@ -14,7 +14,7 @@ class _CompactStateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaCreatorEmptyPadding,
       child: Column(
         children: [
           Icon(
@@ -57,10 +57,7 @@ class _PolicyLink extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.smRadius,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x1,
-              vertical: AppSpacing.x2,
-            ),
+            padding: AppSpacing.arenaCreatorPolicyPadding,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

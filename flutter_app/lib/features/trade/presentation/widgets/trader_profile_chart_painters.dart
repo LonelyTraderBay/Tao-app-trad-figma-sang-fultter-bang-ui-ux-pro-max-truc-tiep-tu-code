@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 class TraderProfileAreaChartPainter extends CustomPainter {
@@ -87,7 +88,7 @@ class TraderProfileDailyBarsPainter extends CustomPainter {
       final top = point.pnl >= 0 ? zeroY - height : zeroY;
       final rect = RRect.fromRectAndRadius(
         Rect.fromLTWH(left, top, barWidth, height.clamp(3, size.height)),
-        const Radius.circular(3),
+        AppRadii.swatchCorner,
       );
       final paint = Paint()
         ..color = point.pnl >= 0 ? AppColors.buy : AppColors.sell;

@@ -79,13 +79,13 @@ class _DeviceCard extends StatelessWidget {
       radius: VitCardRadius.lg,
       variant: VitCardVariant.standard,
       borderColor: device.isTrusted ? null : AppColors.warningBorder,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       onTap: onToggleExpanded,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.p2pSecurityDetailsCardPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -122,14 +122,18 @@ class _DeviceIconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.inputHeight,
-      height: AppSpacing.inputHeight,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.p2pSecurityDetailsIconBox,
+      child: Material(
+        type: MaterialType.transparency,
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.lgRadius,
+        child: Icon(
+          _deviceIcon(device.type),
+          color: color,
+          size: AppSpacing.p2pSecurityDetailsDeviceIcon,
+        ),
       ),
-      child: Icon(_deviceIcon(device.type), color: color, size: 24),
     );
   }
 }
@@ -166,7 +170,7 @@ class _DeviceMainInfo extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppModuleAccents.p2p,
-                size: 14,
+                size: AppSpacing.p2pSecurityDetailsTinyIcon,
               ),
             ],
           ],
@@ -213,7 +217,7 @@ class _InlineMeta extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: AppColors.text3, size: 11),
+        Icon(icon, color: AppColors.text3, size: AppSpacing.p2pSecurityDetailsMetaIcon),
         const SizedBox(width: AppSpacing.x1),
         Text(text, style: AppTextStyles.micro.copyWith(color: AppColors.text3)),
       ],
@@ -236,12 +240,15 @@ class _ExpandedDeviceDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Divider(
+          height: AppSpacing.dividerHairline,
+          color: AppColors.divider,
+        ),
+        Padding(
+          padding: AppSpacing.p2pSecurityDetailsCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -302,6 +309,7 @@ class _ExpandedDeviceDetails extends StatelessWidget {
           ],
         ),
       ),
+    ],
     );
   }
 }
@@ -346,10 +354,7 @@ class _CurrentDeviceMessage extends StatelessWidget {
       radius: VitCardRadius.md,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.p2pSecurityDetailsActionPadding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -397,10 +402,7 @@ class _ActionButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: compact ? AppSpacing.x4 : AppSpacing.x3,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.p2pSecurityDetailsDeviceActionPadding(compact),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: compact ? MainAxisSize.min : MainAxisSize.max,
@@ -430,24 +432,10 @@ class _TinyBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      size: VitStatusPillSize.sm,
     );
   }
 }

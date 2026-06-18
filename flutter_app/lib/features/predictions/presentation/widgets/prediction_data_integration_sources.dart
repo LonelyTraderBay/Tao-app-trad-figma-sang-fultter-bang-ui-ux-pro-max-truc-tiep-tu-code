@@ -29,51 +29,64 @@ class _DataIntegrationTabBar extends StatelessWidget {
       ),
     ];
 
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
+    return Material(
+      color: AppColors.surface,
       child: SizedBox(
         height: AppSpacing.predictionDataTabBarHeight,
-        child: Row(
+        child: Stack(
           children: [
-            for (final item in tabs)
-              Expanded(
-                child: InkWell(
-                  key: item.key,
-                  onTap: () => onChanged(item.tab),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            item.label,
-                            style: AppTextStyles.caption.copyWith(
-                              color: activeTab == item.tab
-                                  ? _predictionPrimary
-                                  : AppColors.text3,
-                              fontWeight: AppTextStyles.bold,
+            Row(
+              children: [
+                for (final item in tabs)
+                  Expanded(
+                    child: InkWell(
+                      key: item.key,
+                      onTap: () => onChanged(item.tab),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                item.label,
+                                style: AppTextStyles.caption.copyWith(
+                                  color: activeTab == item.tab
+                                      ? _predictionPrimary
+                                      : AppColors.text3,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 160),
+                            child: Material(
+                              color: _predictionPrimary,
+                              borderRadius: AppRadii.hairlineRadius,
+                              child: SizedBox(
+                                height:
+                                    AppSpacing.predictionDataTabIndicatorHeight,
+                                width: activeTab == item.tab
+                                    ? AppSpacing.predictionDataTabIndicatorWidth
+                                    : 0,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 160),
-                        height: AppSpacing.predictionDataTabIndicatorHeight,
-                        width: activeTab == item.tab
-                            ? AppSpacing.predictionDataTabIndicatorWidth
-                            : 0,
-                        decoration: BoxDecoration(
-                          color: _predictionPrimary,
-                          borderRadius: AppRadii.hairlineRadius,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+              ],
+            ),
+            const Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SizedBox(
+                height: AppSpacing.dividerHairline,
+                child: ColoredBox(color: AppColors.border),
               ),
+            ),
           ],
         ),
       ),
@@ -94,17 +107,16 @@ class _SourcesOverview extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.predictionDataHeroIconBox,
-                height: AppSpacing.predictionDataHeroIconBox,
-                decoration: BoxDecoration(
-                  color: AppColors.buy.withValues(alpha: .1),
-                  borderRadius: AppRadii.inputRadius,
-                ),
-                child: const Icon(
-                  Icons.storage_rounded,
-                  color: AppColors.buy,
-                  size: AppSpacing.predictionDataHeroIcon,
+              Material(
+                color: AppColors.buy.withValues(alpha: .1),
+                borderRadius: AppRadii.inputRadius,
+                child: const SizedBox.square(
+                  dimension: AppSpacing.predictionDataHeroIconBox,
+                  child: Icon(
+                    Icons.storage_rounded,
+                    color: AppColors.buy,
+                    size: AppSpacing.predictionDataHeroIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.predictionDataHeroGap),
@@ -265,17 +277,16 @@ class _SourceCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                width: AppSpacing.predictionDataIconBubble,
-                height: AppSpacing.predictionDataIconBubble,
-                decoration: const BoxDecoration(
-                  color: AppColors.bg,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.refresh_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.predictionDataIconBubbleIcon,
+              const Material(
+                color: AppColors.bg,
+                shape: CircleBorder(),
+                child: SizedBox.square(
+                  dimension: AppSpacing.predictionDataIconBubble,
+                  child: Icon(
+                    Icons.refresh_rounded,
+                    color: AppColors.text3,
+                    size: AppSpacing.predictionDataIconBubbleIcon,
+                  ),
                 ),
               ),
             ],

@@ -86,18 +86,17 @@ class _SecuritySupportCard extends StatelessWidget {
         borderColor: _securityBorder,
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.securitySupportIconBox,
               height: AppSpacing.securitySupportIconBox,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
+              child: Material(
                 color: _securityPrimary.withValues(alpha: .13),
-                borderRadius: AppRadii.lgRadius,
-              ),
-              child: const Icon(
-                Icons.support_agent_rounded,
-                color: _securityPrimary,
-                size: AppSpacing.securitySupportIcon,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+                child: const Icon(
+                  Icons.support_agent_rounded,
+                  color: _securityPrimary,
+                  size: AppSpacing.securitySupportIcon,
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.securitySupportGap),

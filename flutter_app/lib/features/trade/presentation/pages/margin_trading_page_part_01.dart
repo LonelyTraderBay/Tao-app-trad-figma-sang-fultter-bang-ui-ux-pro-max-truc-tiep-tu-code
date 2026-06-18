@@ -10,26 +10,26 @@ class _ClientCategoryCard extends StatelessWidget {
     return _Panel(
       color: _marginAmber.withValues(alpha: .06),
       borderColor: _marginAmber.withValues(alpha: .28),
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetSectionGap,
+        top: AppSpacing.walletTransactionProgressBottomGap,
+        right: AppSpacing.walletAssetSectionGap,
+        bottom: AppSpacing.walletAssetSectionGap,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: _marginAmber.withValues(alpha: .13),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const SizedBox(
-              width: 40,
-              height: 40,
-              child: Icon(Icons.shield_outlined, color: _marginAmber, size: 22),
-            ),
+          const _MarginIconSurface(
+            icon: Icons.shield_outlined,
+            color: _marginAmber,
+            size: AppSpacing.walletAddressIconSize,
+            iconSize: AppSpacing.walletAssetActionIconInner,
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: AppSpacing.rowPy),
           Expanded(
             child: VitPageContent(
               padding: VitContentPadding.none,
-              customGap: 8,
+              customGap: AppSpacing.x3,
               children: [
                 Row(
                   children: [
@@ -39,7 +39,6 @@ class _ClientCategoryCard extends StatelessWidget {
                         style: AppTextStyles.body.copyWith(
                           color: _marginAmber,
                           fontWeight: AppTextStyles.bold,
-                          height: 1.2,
                         ),
                       ),
                     ),
@@ -52,14 +51,11 @@ class _ClientCategoryCard extends StatelessWidget {
                 ),
                 Text(
                   category.description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1.45,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
                 VitPageContent(
                   padding: VitContentPadding.none,
-                  customGap: 4,
+                  customGap: AppSpacing.hairlineStroke * 2,
                   children: [
                     for (final limit in category.limits)
                       _Bullet(text: limit, color: _marginAmber),
@@ -78,61 +74,29 @@ class _SegmentedTabs extends StatelessWidget {
   const _SegmentedTabs({
     required this.tabs,
     required this.activeId,
-    required this.activeColor,
-    required this.height,
     required this.onChanged,
     required this.keyBuilder,
   });
 
   final List<TradeMarginTab> tabs;
   final String activeId;
-  final Color activeColor;
-  final double height;
   final ValueChanged<String> onChanged;
   final Key Function(String id) keyBuilder;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      height: height,
-      padding: const EdgeInsets.all(4),
-      variant: VitCardVariant.inner,
-      child: Row(
-        children: [
-          for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: keyBuilder(tab.id),
-                onTap: () => onChanged(tab.id),
-                borderRadius: AppRadii.inputRadius,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 140),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: tab.id == activeId
-                        ? activeColor
-                        : AppColors.transparent,
-                    borderRadius: AppRadii.inputRadius,
-                  ),
-                  child: Text(
-                    tab.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: tab.id == activeId
-                          ? AppColors.onAccent
-                          : AppColors.text3,
-                      fontWeight: tab.id == activeId
-                          ? AppTextStyles.bold
-                          : AppTextStyles.medium,
-                      height: 1,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: activeId,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.id,
+            label: tab.label,
+            widgetKey: keyBuilder(tab.id),
+          ),
+      ],
     );
   }
 }
@@ -148,10 +112,15 @@ class _AccountHero extends StatelessWidget {
     return _Panel(
       color: _marginHero,
       borderColor: _marginHeroBorder,
-      padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowPy,
+        top: AppSpacing.walletAssetChartBottomGap,
+        right: AppSpacing.rowPy,
+        bottom: AppSpacing.walletAssetChartBottomGap,
+      ),
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 4,
+        customGap: AppSpacing.hairlineStroke * 2,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +140,6 @@ class _AccountHero extends StatelessWidget {
                       _formatMoney(account.totalEquity),
                       style: AppTextStyles.heroNumber.copyWith(
                         color: AppColors.onAccent,
-                        height: 1.05,
                       ),
                     ),
                   ],
@@ -192,13 +160,13 @@ class _AccountHero extends StatelessWidget {
                 value: _formatMoneyCompact(account.totalMargin),
                 color: _marginAmber,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
               _HeroStat(
                 label: 'Khả dụng',
                 value: _formatMoney(account.availableMargin),
                 color: AppColors.onAccent,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
               _HeroStat(
                 label: 'PnL chưa chốt',
                 value: '+${_formatMoneyCompact(totalPnl)}',
@@ -229,7 +197,7 @@ class _AccountHero extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.smRadius,
             child: LinearProgressIndicator(
-              minHeight: 7,
+              minHeight: AppSpacing.transferTileGap,
               value: (account.marginLevel / 300).clamp(0, 1),
               backgroundColor: AppColors.onAccent.withValues(alpha: .13),
               valueColor: const AlwaysStoppedAnimation(_marginGreen),
@@ -256,8 +224,13 @@ class _HeroStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: VitCard(
-        height: 42,
-        padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
+        height: AppSpacing.walletAssetStatHeight,
+        padding: AppSpacing.zeroInsets.copyWith(
+          left: AppSpacing.x3,
+          top: AppSpacing.formFieldLabelGap,
+          right: AppSpacing.x3,
+          bottom: AppSpacing.formFieldLabelGap,
+        ),
         variant: VitCardVariant.inner,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,7 +242,6 @@ class _HeroStat extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
                 fontWeight: AppTextStyles.bold,
-                height: 1.15,
               ),
             ),
             const Spacer(),
@@ -280,7 +252,6 @@ class _HeroStat extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
@@ -324,7 +295,7 @@ class _TradeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: 13,
+      customGap: AppSpacing.x4,
       children: [
         _PriceComparison(prices: snapshot.referencePrices),
         _PairCard(snapshot: snapshot),
@@ -339,8 +310,6 @@ class _TradeTab extends StatelessWidget {
         _SegmentedTabs(
           tabs: snapshot.orderDraft.orderTypes,
           activeId: orderType,
-          activeColor: _marginPrimary.withValues(alpha: .16),
-          height: 46,
           onChanged: onOrderTypeChanged,
           keyBuilder: MarginTradingPage.orderTypeKey,
         ),

@@ -11,28 +11,30 @@ class _RegisterSegmentedControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 48,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
+    return SizedBox(
+      height: AppSpacing.authSegmentedHeight,
+      child: Material(
         color: AppColors.surface2,
         borderRadius: AppRadii.lgRadius,
-      ),
-      child: Row(
-        children: [
-          _RegisterSegmentButton(
-            key: RegisterPage.emailTabKey,
-            label: 'Email',
-            selected: contactType == _RegisterContactType.email,
-            onPressed: () => onChanged(_RegisterContactType.email),
+        child: Padding(
+          padding: AppSpacing.authSegmentedPadding,
+          child: Row(
+            children: [
+              _RegisterSegmentButton(
+                key: RegisterPage.emailTabKey,
+                label: 'Email',
+                selected: contactType == _RegisterContactType.email,
+                onPressed: () => onChanged(_RegisterContactType.email),
+              ),
+              _RegisterSegmentButton(
+                key: RegisterPage.phoneTabKey,
+                label: 'Điện thoại',
+                selected: contactType == _RegisterContactType.phone,
+                onPressed: () => onChanged(_RegisterContactType.phone),
+              ),
+            ],
           ),
-          _RegisterSegmentButton(
-            key: RegisterPage.phoneTabKey,
-            label: 'Điện thoại',
-            selected: contactType == _RegisterContactType.phone,
-            onPressed: () => onChanged(_RegisterContactType.phone),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -55,18 +57,12 @@ class _RegisterSegmentButton extends StatelessWidget {
     return Expanded(
       child: SizedBox.expand(
         child: Material(
-          color: AppColors.transparent,
+          color: selected ? _authSegmentActive : AppColors.transparent,
           borderRadius: AppRadii.cardRadius,
           child: InkWell(
             onTap: onPressed,
             borderRadius: AppRadii.cardRadius,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: selected ? _authSegmentActive : AppColors.transparent,
-                borderRadius: AppRadii.cardRadius,
-              ),
+            child: Center(
               child: Text(
                 label,
                 style: AppTextStyles.body.copyWith(
@@ -107,29 +103,31 @@ class _AgreementRow extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 20,
-                  height: 20,
-                  margin: const EdgeInsets.only(top: 2),
-                  decoration: BoxDecoration(
-                    color: agreed ? _authPrimary : AppColors.transparent,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: hasError
-                          ? AppColors.sell
-                          : agreed
-                          ? _authPrimary
-                          : AppColors.borderSolid,
-                      width: 1.3,
+                Padding(
+                  padding: AppSpacing.authAgreementCheckMargin,
+                  child: SizedBox.square(
+                    dimension: AppSpacing.authAgreementCheckSize,
+                    child: Material(
+                      color: agreed ? _authPrimary : AppColors.transparent,
+                      shape: CircleBorder(
+                        side: BorderSide(
+                          color: hasError
+                              ? AppColors.sell
+                              : agreed
+                              ? _authPrimary
+                              : AppColors.borderSolid,
+                          width: AppSpacing.authAgreementCheckBorder,
+                        ),
+                      ),
+                      child: agreed
+                          ? const Icon(
+                              Icons.check_rounded,
+                              color: AppColors.onAccent,
+                              size: AppSpacing.authInlineCheckIcon,
+                            )
+                          : null,
                     ),
                   ),
-                  child: agreed
-                      ? const Icon(
-                          Icons.check_rounded,
-                          color: AppColors.onAccent,
-                          size: 14,
-                        )
-                      : null,
                 ),
                 const SizedBox(width: AppSpacing.x4),
                 Expanded(
@@ -155,7 +153,7 @@ class _AgreementRow extends StatelessWidget {
                     ),
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: 1.45,
+                      height: AppSpacing.authAgreementLineHeight,
                     ),
                   ),
                 ),
@@ -164,7 +162,7 @@ class _AgreementRow extends StatelessWidget {
           ),
         ),
         if (hasError) ...[
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const Padding(padding: AppSpacing.authTopGapX2),
           Text(
             error!,
             style: AppTextStyles.micro.copyWith(color: AppColors.sell),
@@ -218,18 +216,20 @@ class _PasswordStrength extends StatelessWidget {
             for (var index = 0; index < 4; index++) ...[
               if (index > 0) const SizedBox(width: AppSpacing.x2),
               Expanded(
-                child: Container(
-                  height: 4,
-                  decoration: BoxDecoration(
+                child: ClipRRect(
+                  borderRadius: AppRadii.pillRadius,
+                  child: ColoredBox(
                     color: index < score ? color : AppColors.borderSolid,
-                    borderRadius: BorderRadius.circular(999),
+                    child: const SizedBox(
+                      height: AppSpacing.authPasswordStrengthHeight,
+                    ),
                   ),
                 ),
               ),
             ],
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const Padding(padding: AppSpacing.authTopGapX3),
         Wrap(
           spacing: AppSpacing.x3,
           runSpacing: AppSpacing.x2,
@@ -242,7 +242,7 @@ class _PasswordStrength extends StatelessWidget {
                     check.ok
                         ? Icons.check_circle_outline_rounded
                         : Icons.cancel_outlined,
-                    size: 11,
+                    size: AppSpacing.authPasswordStrengthIcon,
                     color: check.ok ? AppColors.buy : AppColors.text3,
                   ),
                   const SizedBox(width: AppSpacing.x1),

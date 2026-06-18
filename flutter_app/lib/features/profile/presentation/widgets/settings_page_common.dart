@@ -9,8 +9,8 @@ class _AppInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SettingsPage.appInfoKey,
-      height: 164,
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
+      height: AppSpacing.settingsAppInfoHeight,
+      padding: AppSpacing.settingsAppInfoPadding,
       radius: VitCardRadius.lg,
       borderColor: _settingsBorder,
       child: Column(
@@ -21,13 +21,12 @@ class _AppInfoCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.settingsAppInfoTitleGap),
           for (final row in rows) ...[
             SizedBox(
-              height: 36,
+              height: AppSpacing.settingsAppInfoRowHeight,
               child: Row(
                 children: [
                   Expanded(
@@ -37,17 +36,15 @@ class _AppInfoCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: AppSpacing.settingsAppInfoValueGap),
                   Text(
                     row.value,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.medium,
-                      height: 1,
                     ),
                   ),
                 ],

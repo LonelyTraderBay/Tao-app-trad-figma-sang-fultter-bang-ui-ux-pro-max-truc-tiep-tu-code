@@ -82,7 +82,7 @@ class _ChallengeListCard extends StatelessWidget {
 
     return VitCard(
       clip: true,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           for (var i = 0; i < challenges.length; i++)
@@ -116,75 +116,76 @@ class _ChallengeRow extends StatelessWidget {
       type: MaterialType.transparency,
       child: InkWell(
         onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: 13,
-          ),
-          decoration: BoxDecoration(
-            border: showDivider
-                ? const Border(bottom: BorderSide(color: AppColors.divider))
-                : null,
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      challenge.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.body.copyWith(
-                        fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.myArenaTextLineHeight,
-                      ),
-                    ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-                    Wrap(
-                      spacing: AppSpacing.x2,
-                      runSpacing: AppSpacing.x1,
-                      crossAxisAlignment: WrapCrossAlignment.center,
+        child: Column(
+          children: [
+            Padding(
+              padding: AppSpacing.arenaProductionRegistryRowPadding,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _MetaText(challenge.format),
-                        const _MetaDot(),
-                        _MetaText(
-                          '${challenge.slotsFilled}/${challenge.slotsTotal}',
-                        ),
-                        const _MetaDot(),
                         Text(
-                          '${formatArenaPoints(challenge.entryPoints)} pts',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.warn,
+                          challenge.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.body.copyWith(
                             fontWeight: AppTextStyles.bold,
+                            height: AppSpacing.myArenaTextLineHeight,
                           ),
+                        ),
+                        const SizedBox(height: AppSpacing.x2),
+                        Wrap(
+                          spacing: AppSpacing.x2,
+                          runSpacing: AppSpacing.x1,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            _MetaText(challenge.format),
+                            const _MetaDot(),
+                            _MetaText(
+                              '${challenge.slotsFilled}/${challenge.slotsTotal}',
+                            ),
+                            const _MetaDot(),
+                            Text(
+                              '${formatArenaPoints(challenge.entryPoints)} pts',
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.warn,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  _ArenaStatusPill(
-                    label: _stateLabel(challenge.state),
-                    color: statusColor,
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
-                  Text(
-                    'Xem',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      _ArenaStatusPill(
+                        label: _stateLabel(challenge.state),
+                        color: statusColor,
+                      ),
+                      const SizedBox(height: AppSpacing.x2),
+                      Text(
+                        'Xem',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text2,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            if (showDivider)
+              const Divider(
+                height: AppSpacing.myArenaDividerHeight,
+                color: AppColors.divider,
+              ),
+          ],
         ),
       ),
     );
@@ -215,7 +216,7 @@ class _SavedModesList extends StatelessWidget {
 
     return VitCard(
       clip: true,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           for (var i = 0; i < modes.length; i++)
@@ -224,60 +225,57 @@ class _SavedModesList extends StatelessWidget {
               type: MaterialType.transparency,
               child: InkWell(
                 onTap: () => onMode(modes[i].id),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x4,
-                    vertical: 13,
-                  ),
-                  decoration: BoxDecoration(
-                    border: i < modes.length - 1
-                        ? const Border(
-                            bottom: BorderSide(color: AppColors.divider),
-                          )
-                        : null,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              modes[i].title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.body.copyWith(
-                                fontWeight: AppTextStyles.bold,
-                                height: AppSpacing.myArenaTextLineHeight,
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: AppSpacing.x2),
-                            ),
-                            Wrap(
-                              spacing: AppSpacing.x2,
-                              runSpacing: AppSpacing.x1,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: AppSpacing.arenaProductionRegistryRowPadding,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _MetaText(modes[i].creatorName),
-                                const _MetaDot(),
-                                _MetaText('${modes[i].cloneCount} clone'),
-                                const _MetaDot(),
-                                _MetaText(
-                                  '${modes[i].activeChallenges} active',
+                                Text(
+                                  modes[i].title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.body.copyWith(
+                                    fontWeight: AppTextStyles.bold,
+                                    height: AppSpacing.myArenaTextLineHeight,
+                                  ),
+                                ),
+                                const SizedBox(height: AppSpacing.x2),
+                                Wrap(
+                                  spacing: AppSpacing.x2,
+                                  runSpacing: AppSpacing.x1,
+                                  children: [
+                                    _MetaText(modes[i].creatorName),
+                                    const _MetaDot(),
+                                    _MetaText('${modes[i].cloneCount} clone'),
+                                    const _MetaDot(),
+                                    _MetaText(
+                                      '${modes[i].activeChallenges} active',
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(width: AppSpacing.x3),
+                          if (modes[i].fairPlay)
+                            const _ArenaStatusPill(
+                              label: 'Fair play',
+                              color: AppColors.buy,
+                            ),
+                        ],
                       ),
-                      const SizedBox(width: AppSpacing.x3),
-                      if (modes[i].fairPlay)
-                        const _ArenaStatusPill(
-                          label: 'Fair play',
-                          color: AppColors.buy,
-                        ),
-                    ],
-                  ),
+                    ),
+                    if (i < modes.length - 1)
+                      const Divider(
+                        height: AppSpacing.myArenaDividerHeight,
+                        color: AppColors.divider,
+                      ),
+                  ],
                 ),
               ),
             ),
@@ -306,7 +304,7 @@ class _DraftList extends StatelessWidget {
 
     return VitCard(
       clip: true,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           for (var i = 0; i < drafts.length; i++)
@@ -314,70 +312,71 @@ class _DraftList extends StatelessWidget {
               type: MaterialType.transparency,
               child: InkWell(
                 onTap: onStudio,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x4,
-                    vertical: 13,
-                  ),
-                  decoration: BoxDecoration(
-                    border: i < drafts.length - 1
-                        ? const Border(
-                            bottom: BorderSide(color: AppColors.divider),
-                          )
-                        : null,
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: AppSpacing.myArenaDraftIconBox,
-                        height: AppSpacing.myArenaDraftIconBox,
-                        decoration: BoxDecoration(
-                          color: AppColors.surface2,
-                          borderRadius: AppRadii.mdRadius,
-                        ),
-                        child: const Icon(
-                          Icons.edit_note_rounded,
-                          color: AppColors.text2,
-                          size: AppSpacing.myArenaDraftIcon,
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.x3),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              drafts[i].title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.body.copyWith(
-                                fontWeight: AppTextStyles.bold,
-                                height: AppSpacing.myArenaTextLineHeight,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: AppSpacing.arenaProductionRegistryRowPadding,
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            width: AppSpacing.myArenaDraftIconBox,
+                            height: AppSpacing.myArenaDraftIconBox,
+                            child: DecoratedBox(
+                              decoration: ShapeDecoration(
+                                color: AppColors.surface2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: AppRadii.mdRadius,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.edit_note_rounded,
+                                color: AppColors.text2,
+                                size: AppSpacing.myArenaDraftIcon,
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: AppSpacing.x2),
-                            ),
-                            Row(
+                          ),
+                          const SizedBox(width: AppSpacing.x3),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _MetaText(drafts[i].format),
-                                const _MetaDot(),
-                                _MetaText(drafts[i].updatedAt),
+                                Text(
+                                  drafts[i].title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.body.copyWith(
+                                    fontWeight: AppTextStyles.bold,
+                                    height: AppSpacing.myArenaTextLineHeight,
+                                  ),
+                                ),
+                                const SizedBox(height: AppSpacing.x2),
+                                Row(
+                                  children: [
+                                    _MetaText(drafts[i].format),
+                                    const _MetaDot(),
+                                    _MetaText(drafts[i].updatedAt),
+                                  ],
+                                ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(width: AppSpacing.x3),
+                          Text(
+                            '${formatArenaPoints(drafts[i].entryPoints)} pts',
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.warn,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: AppSpacing.x3),
-                      Text(
-                        '${formatArenaPoints(drafts[i].entryPoints)} pts',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.warn,
-                          fontWeight: AppTextStyles.bold,
-                        ),
+                    ),
+                    if (i < drafts.length - 1)
+                      const Divider(
+                        height: AppSpacing.myArenaDividerHeight,
+                        color: AppColors.divider,
                       ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ),
@@ -402,10 +401,10 @@ class _CreatedModesSection extends StatelessWidget {
           title: 'Mode đã tạo (${snapshot.stats.modesCreated})',
           accentColor: AppColors.accent,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
           onTap: onTap,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Row(
             children: [
               _ActionIcon(
@@ -424,7 +423,7 @@ class _CreatedModesSection extends StatelessWidget {
                         height: AppSpacing.myArenaTextLineHeight,
                       ),
                     ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                    const SizedBox(height: AppSpacing.x2),
                     Text(
                       'Quản lý modes và xem thống kê',
                       style: AppTextStyles.micro.copyWith(

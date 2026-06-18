@@ -196,7 +196,7 @@ class _IntroBlock extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitSearchBar(
           key: ArenaHomePage.searchKey,
           controller: controller,
@@ -205,7 +205,7 @@ class _IntroBlock extends StatelessWidget {
           onChanged: onChanged,
           onClear: onClear,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -261,43 +261,47 @@ class _QuickChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: AppSpacing.x3),
+      padding: AppSpacing.arenaHomeQuickChipGapPadding,
       child: Material(
         color: AppColors.transparent,
         borderRadius: AppRadii.inputRadius,
         child: InkWell(
           onTap: onTap,
           borderRadius: AppRadii.inputRadius,
-          child: Container(
+          child: SizedBox(
             height: AppSpacing.arenaHomeQuickChipHeight,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
-            decoration: BoxDecoration(
+            child: Material(
               color: AppColors.surface2,
-              border: Border.all(color: AppColors.cardBorder),
-              borderRadius: AppRadii.inputRadius,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  color: AppColors.text2,
-                  size: AppSpacing.arenaHomeQuickChipIcon,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.inputRadius,
+                side: const BorderSide(color: AppColors.cardBorder),
+              ),
+              child: Padding(
+                padding: AppSpacing.arenaPresetChipPadding,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      icon,
+                      color: AppColors.text2,
+                      size: AppSpacing.arenaHomeQuickChipIcon,
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    Text(
+                      label,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontWeight: AppTextStyles.bold,
+                        height: AppSpacing.arenaHomeQuickChipLineHeight,
+                      ),
+                    ),
+                    if (count > 0) ...[
+                      const SizedBox(width: AppSpacing.x2),
+                      _MiniCountBadge(count: count),
+                    ],
+                  ],
                 ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  label,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaHomeQuickChipLineHeight,
-                  ),
-                ),
-                if (count > 0) ...[
-                  const SizedBox(width: AppSpacing.x2),
-                  _MiniCountBadge(count: count),
-                ],
-              ],
+              ),
             ),
           ),
         ),
@@ -316,7 +320,7 @@ class _HeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: _arenaAccent,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -327,7 +331,7 @@ class _HeroCard extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             'Tạo sân chơi',
             style: AppTextStyles.heroNumber.copyWith(
@@ -335,7 +339,7 @@ class _HeroCard extends StatelessWidget {
               height: AppSpacing.arenaHomeHeroTitleLineHeight,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               const VitStatusPill(
@@ -358,7 +362,7 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+          const SizedBox(height: AppSpacing.x5),
           Row(
             children: [
               Expanded(
@@ -408,12 +412,12 @@ class _TemplateSection extends StatelessWidget {
           title: 'Templates',
           accentColor: AppColors.accent,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           'Chọn template để bắt đầu tạo challenge',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -430,7 +434,7 @@ class _TemplateSection extends StatelessWidget {
             return VitCard(
               key: ArenaHomePage.templateKey(template.id),
               onTap: () => onTap(template.id),
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.arenaPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -454,7 +458,7 @@ class _TemplateSection extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                  const SizedBox(height: AppSpacing.x4),
                   Text(
                     template.description,
                     maxLines: 2,

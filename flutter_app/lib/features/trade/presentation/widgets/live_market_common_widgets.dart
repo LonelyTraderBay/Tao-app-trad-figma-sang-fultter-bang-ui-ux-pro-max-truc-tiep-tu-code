@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 const liveMarketPanel = AppColors.surface;
 const liveMarketPanel2 = AppColors.surface2;
@@ -19,26 +21,12 @@ class LiveMarketLiveDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 8,
-          height: 8,
-          decoration: const BoxDecoration(
-            color: liveMarketGreen,
-            shape: BoxShape.circle,
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          'LIVE',
-          style: AppTextStyles.micro.copyWith(
-            color: liveMarketGreen,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
+    return const VitStatusPill(
+      label: 'LIVE',
+      status: VitStatusPillStatus.success,
+      size: VitStatusPillSize.sm,
+      pulse: true,
+      outline: true,
     );
   }
 }
@@ -65,25 +53,21 @@ class LiveMarketCardHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: color, size: 18),
-        const SizedBox(width: 8),
+        Icon(icon, color: color, size: AppSpacing.liveMarketHeaderIcon),
+        const SizedBox(width: AppSpacing.rowGap),
         Expanded(
           child: Text(
             title,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
             ),
           ),
         ),
         if (trailing != null)
           Text(
             trailing!,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           )
         else if (badge != null)
           LiveMarketChip(label: badge!, color: badgeColor ?? liveMarketGreen),
@@ -93,19 +77,38 @@ class LiveMarketCardHeader extends StatelessWidget {
 }
 
 class LiveMarketCard extends StatelessWidget {
-  const LiveMarketCard({required this.child, super.key});
+  const LiveMarketCard({
+    required this.child,
+    super.key,
+    this.padding = AppSpacing.cardPadding,
+    this.height,
+    this.constraints,
+    this.variant = VitCardVariant.standard,
+    this.radius = VitCardRadius.md,
+    this.borderColor,
+    this.background,
+  });
 
   final Widget child;
+  final EdgeInsetsGeometry padding;
+  final double? height;
+  final BoxConstraints? constraints;
+  final VitCardVariant variant;
+  final VitCardRadius radius;
+  final Color? borderColor;
+  final Widget? background;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: liveMarketPanel,
-        border: Border.all(color: liveMarketBorder.withValues(alpha: .72)),
-        borderRadius: AppRadii.cardRadius,
-      ),
+    return VitCard(
+      variant: variant,
+      radius: radius,
+      padding: padding,
+      height: height,
+      constraints: constraints,
+      borderColor: borderColor ?? liveMarketBorder.withValues(alpha: .72),
+      background: background,
+      clip: background != null,
       child: child,
     );
   }
@@ -127,15 +130,20 @@ class LiveMarketMetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 57),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      decoration: BoxDecoration(color: bg, borderRadius: AppRadii.cardRadius),
+    return VitCard(
+      variant: bg == liveMarketPanel2
+          ? VitCardVariant.inner
+          : VitCardVariant.ghost,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.liveMarketMetricMinHeight,
+      ),
+      padding: AppSpacing.liveMarketMetricPadding,
+      background: bg == liveMarketPanel2 ? null : ColoredBox(color: bg),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           LiveMarketMutedLabel(label, align: TextAlign.center),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.rowGap),
           Text(
             value,
             maxLines: 1,
@@ -144,7 +152,6 @@ class LiveMarketMetricBox extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
             ),
           ),
         ],
@@ -161,21 +168,7 @@ class LiveMarketChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(999),
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -190,7 +183,7 @@ class LiveMarketMutedLabel extends StatelessWidget {
     return Text(
       text,
       textAlign: align,
-      style: AppTextStyles.micro.copyWith(color: AppColors.text3, height: 1.25),
+      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
     );
   }
 }
@@ -207,21 +200,24 @@ class LiveMarketInfoStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-      decoration: BoxDecoration(color: bg, borderRadius: AppRadii.cardRadius),
+    return LiveMarketCard(
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      padding: AppSpacing.liveMarketInfoPadding,
+      background: ColoredBox(color: bg),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline_rounded, color: color, size: 14),
-          const SizedBox(width: 9),
+          Icon(
+            Icons.info_outline_rounded,
+            color: color,
+            size: AppSpacing.liveMarketInlineIcon,
+          ),
+          const SizedBox(width: AppSpacing.rowGap),
           Expanded(
             child: Text(
               'OI tang + gia tang = bullish strong. OI tang + gia giam = bearish momentum. OI giam = positions dong.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: 1.42,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
         ],
@@ -238,9 +234,9 @@ class LiveMarketRatioBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(999),
+      borderRadius: AppRadii.pillRadius,
       child: SizedBox(
-        height: 12,
+        height: AppSpacing.liveMarketRatioBarHeight,
         child: Row(
           children: [
             Expanded(

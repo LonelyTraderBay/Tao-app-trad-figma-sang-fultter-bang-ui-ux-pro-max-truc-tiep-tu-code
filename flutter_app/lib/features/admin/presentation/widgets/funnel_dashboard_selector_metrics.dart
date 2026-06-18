@@ -43,18 +43,20 @@ class _FunnelSelector extends StatelessWidget {
                 behavior: HitTestBehavior.opaque,
                 onTap: () => onChanged(funnel.id),
                 child: DecoratedBox(
-                  decoration: BoxDecoration(
+                  decoration: ShapeDecoration(
                     color: selected ? AppColors.surface : AppColors.surface2,
-                    borderRadius: AppRadii.inputRadius,
-                    border: Border.all(
-                      color: selected
-                          ? AppColors.accent
-                          : AppColors.transparent,
-                      width: selected ? 2 : 1,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.inputRadius,
+                      side: BorderSide(
+                        color: selected
+                            ? AppColors.accent
+                            : AppColors.transparent,
+                        width: selected ? 2 : 1,
+                      ),
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.x4),
+                    padding: AppSpacing.adminCardPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -157,23 +159,26 @@ class _MetricCard extends StatelessWidget {
     return Semantics(
       label: 'Admin funnel metric $title: $value. $caption. $delta $timeframe',
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.adminCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Container(
-                  width: AppSpacing.adminBox40,
-                  height: AppSpacing.adminBox40,
-                  decoration: BoxDecoration(
-                    color: tint,
-                    borderRadius: AppRadii.inputRadius,
-                  ),
-                  child: Icon(
-                    icon,
-                    color: accent,
-                    size: AppSpacing.adminIconXl,
+                SizedBox.square(
+                  dimension: AppSpacing.adminBox40,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: tint,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadii.inputRadius,
+                      ),
+                    ),
+                    child: Icon(
+                      icon,
+                      color: accent,
+                      size: AppSpacing.adminIconXl,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x3),

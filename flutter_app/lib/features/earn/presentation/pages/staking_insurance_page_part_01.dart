@@ -32,7 +32,7 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -105,7 +105,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingInsurancePage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -120,7 +120,7 @@ class _InfoBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -142,9 +142,9 @@ class _InsuranceTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       key: StakingInsurancePage.tabsKey,
-      decoration: const BoxDecoration(color: AppColors.surface),
+      color: AppColors.surface,
       child: Row(
         children: [
           for (final tab in _InsuranceTab.values)
@@ -180,7 +180,7 @@ class _TabButton extends StatelessWidget {
         key: StakingInsurancePage.tabKey(tab.name),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.x4),
+          padding: AppSpacing.earnTopPaddingX4,
           child: Column(
             children: [
               Text(
@@ -190,16 +190,18 @@ class _TabButton extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
-              AnimatedContainer(
+              const SizedBox(height: AppSpacing.x4),
+              AnimatedSize(
                 duration: const Duration(milliseconds: 160),
-                width: selected ? AppSpacing.buttonHero : 0,
-                height: AppSpacing.stakingInsuranceTabIndicatorHeight,
-                decoration: BoxDecoration(
-                  color: selected
-                      ? AppColors.primarySoft
-                      : AppColors.transparent,
-                  borderRadius: AppRadii.xsRadius,
+                child: SizedBox(
+                  width: selected ? AppSpacing.buttonHero : 0,
+                  height: AppSpacing.stakingInsuranceTabIndicatorHeight,
+                  child: Material(
+                    color: selected
+                        ? AppColors.primarySoft
+                        : AppColors.transparent,
+                    borderRadius: AppRadii.xsRadius,
+                  ),
                 ),
               ),
             ],
@@ -235,7 +237,7 @@ class _OverviewTab extends StatelessWidget {
         VitCard(
           key: StakingInsurancePage.overviewSummaryKey,
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: Column(
             children: [
               Row(
@@ -251,9 +253,7 @@ class _OverviewTab extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: AppSpacing.x3),
-                        ),
+                        const Padding(padding: AppSpacing.earnTopPaddingX3),
                         Text(
                           _formatUsd(totalInsured),
                           style: AppTextStyles.heroNumber.copyWith(),
@@ -261,26 +261,27 @@ class _OverviewTab extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: AppSpacing.stakingInsuranceShieldIconBox,
                     height: AppSpacing.stakingInsuranceShieldIconBox,
-                    decoration: BoxDecoration(
+                    child: Material(
                       color: AppColors.buy10,
-                      borderRadius: AppRadii.pillRadius,
-                      border: Border.all(
-                        color: AppColors.buy,
-                        width: AppSpacing.stakingInsuranceShieldBorderWidth,
+                      shape: const CircleBorder(
+                        side: BorderSide(
+                          color: AppColors.buy,
+                          width: AppSpacing.stakingInsuranceShieldBorderWidth,
+                        ),
                       ),
-                    ),
-                    child: const Icon(
-                      Icons.shield_outlined,
-                      color: AppColors.buy,
-                      size: AppSpacing.iconLg,
+                      child: const Icon(
+                        Icons.shield_outlined,
+                        color: AppColors.buy,
+                        size: AppSpacing.iconLg,
+                      ),
                     ),
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+              const SizedBox(height: AppSpacing.x5),
               Row(
                 children: [
                   Expanded(
@@ -301,9 +302,9 @@ class _OverviewTab extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _BenefitsGrid(snapshot: snapshot),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _WarningNote(snapshot: snapshot),
       ],
     );
@@ -321,7 +322,7 @@ class _SummaryMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -329,7 +330,7 @@ class _SummaryMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
@@ -387,22 +388,23 @@ class _BenefitCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.ctaHeight,
             height: AppSpacing.ctaHeight,
-            decoration: BoxDecoration(
+            child: Material(
               color: _iconFillColor(benefit.icon),
-              borderRadius: AppRadii.pillRadius,
-              border: Border.all(color: _iconBorder(benefit.icon)),
-            ),
-            child: Icon(
-              _benefitIcon(benefit.icon),
-              color: _iconColor(benefit.icon),
-              size: AppSpacing.iconMd,
+              shape: CircleBorder(
+                side: BorderSide(color: _iconBorder(benefit.icon)),
+              ),
+              child: Icon(
+                _benefitIcon(benefit.icon),
+                color: _iconColor(benefit.icon),
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const Spacer(),
@@ -415,7 +417,7 @@ class _BenefitCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             benefit.description,
             maxLines: 1,
@@ -439,7 +441,7 @@ class _WarningNote extends StatelessWidget {
       key: StakingInsurancePage.warningKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -454,20 +456,22 @@ class _WarningNote extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.warningTitle, style: AppTextStyles.baseMedium),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 for (final bullet in snapshot.warningBullets)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+                    padding: AppSpacing.earnBottomPaddingX1,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: AppSpacing.x1,
-                          height: AppSpacing.x1,
-                          margin: const EdgeInsets.only(top: AppSpacing.x3),
-                          decoration: const BoxDecoration(
-                            color: AppColors.warn,
-                            shape: BoxShape.circle,
+                        Padding(
+                          padding: AppSpacing.earnBulletTopMarginX3,
+                          child: const SizedBox(
+                            width: AppSpacing.x1,
+                            height: AppSpacing.x1,
+                            child: Material(
+                              color: AppColors.warn,
+                              shape: CircleBorder(),
+                            ),
                           ),
                         ),
                         const SizedBox(width: AppSpacing.x3),

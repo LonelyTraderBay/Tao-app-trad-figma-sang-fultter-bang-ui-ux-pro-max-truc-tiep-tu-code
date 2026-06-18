@@ -10,7 +10,7 @@ class _HeroCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -118,38 +118,39 @@ class _CategoryChip extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.lgRadius,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x1,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: AppRadii.lgRadius,
-            border: Border.all(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: selected ? AppColors.primary30 : AppColors.cardBorder,
+              ),
+              borderRadius: AppRadii.lgRadius,
             ),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                category.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.primary : AppColors.text3,
-                  fontWeight: selected
-                      ? AppTextStyles.bold
-                      : AppTextStyles.normal,
+          child: Padding(
+            padding: AppSpacing.earnPillPaddingLarge,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  category.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: selected ? AppColors.primary : AppColors.text3,
+                    fontWeight: selected
+                        ? AppTextStyles.bold
+                        : AppTextStyles.normal,
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                '$count',
-                style: AppTextStyles.micro.copyWith(
-                  color: selected ? AppColors.primary : AppColors.text3,
-                  fontFeatures: AppTextStyles.tabularFigures,
+                const SizedBox(width: AppSpacing.x1),
+                Text(
+                  '$count',
+                  style: AppTextStyles.micro.copyWith(
+                    color: selected ? AppColors.primary : AppColors.text3,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -204,17 +205,14 @@ class _FAQCard extends StatelessWidget {
     final color = _categoryColor(item.category);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           InkWell(
             onTap: onTap,
             borderRadius: AppRadii.cardLargeRadius,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x1,
-              ),
+              padding: AppSpacing.earnPillPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -246,12 +244,7 @@ class _FAQCard extends StatelessWidget {
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
             secondChild: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.x7,
-                0,
-                AppSpacing.x4,
-                AppSpacing.x4,
-              ),
+              padding: AppSpacing.earnDisclosureDetailsPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -312,9 +305,9 @@ class _QuestionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: SizedBox(
         width: AppSpacing.x6,

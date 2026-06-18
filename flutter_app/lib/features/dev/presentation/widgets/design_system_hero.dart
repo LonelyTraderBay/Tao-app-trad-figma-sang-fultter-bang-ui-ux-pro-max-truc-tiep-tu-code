@@ -16,16 +16,16 @@ class DesignSystemHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.devCardPaddingLarge,
       child: Stack(
         children: [
           Positioned(
             top: -AppSpacing.x6,
             right: -AppSpacing.x6,
             child: DecoratedBox(
-              decoration: const BoxDecoration(
+              decoration: const ShapeDecoration(
                 color: AppColors.accent15,
-                shape: BoxShape.circle,
+                shape: CircleBorder(),
               ),
               child: SizedBox(
                 width: AppSpacing.buttonHero + AppSpacing.x6,

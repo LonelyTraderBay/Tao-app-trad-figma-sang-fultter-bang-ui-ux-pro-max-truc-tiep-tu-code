@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -176,10 +177,10 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: WatchlistPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.marketScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: 12,
+                      customGap: AppSpacing.watchlistSectionGap,
                       children: [
                         items.isEmpty
                             ? _EmptyWatchlist(
@@ -210,7 +211,9 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                                           _removeEntry(items[i].entry.id),
                                     ),
                                     if (i != items.length - 1)
-                                      const SizedBox(height: 12),
+                                      const SizedBox(
+                                        height: AppSpacing.watchlistSectionGap,
+                                      ),
                                   ],
                                 ],
                               ),

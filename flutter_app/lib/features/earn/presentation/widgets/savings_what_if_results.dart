@@ -30,7 +30,7 @@ class _ResultsTab extends StatelessWidget {
         _SectionTitle(label: 'Kết quả mô phỏng'),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           borderColor: impactColor.withValues(alpha: .35),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +62,7 @@ class _ResultsTab extends StatelessWidget {
                   _ImpactBadge(value: result.differencePct),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const SizedBox(height: AppSpacing.x4),
               Row(
                 children: [
                   Expanded(
@@ -83,7 +83,7 @@ class _ResultsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+              const SizedBox(height: AppSpacing.x3),
               Row(
                 children: [
                   Expanded(
@@ -105,12 +105,12 @@ class _ResultsTab extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _ComparisonChart(result: result),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         const _SectionTitle(label: 'Ảnh hưởng theo tài sản'),
         _AssetImpactList(result: result),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Row(
           children: [
             Expanded(
@@ -146,7 +146,7 @@ class _EmptyResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnPaddingX5,
       child: Column(
         children: [
           const Icon(
@@ -154,18 +154,18 @@ class _EmptyResults extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.savingsWhatIfEmptyIcon,
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             'Chưa chạy mô phỏng',
             style: _captionBold.copyWith(color: AppColors.text1),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Chọn kịch bản và bấm "Chạy mô phỏng" để xem kết quả.',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           VitCtaButton(
             onPressed: onRun,
             leading: const Icon(Icons.play_arrow_rounded),
@@ -186,7 +186,7 @@ class _ComparisonChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -194,7 +194,7 @@ class _ComparisonChart extends StatelessWidget {
             'Baseline vs kịch bản',
             style: _captionBold.copyWith(color: AppColors.text2),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const SizedBox(height: AppSpacing.x4),
           SizedBox(
             height: AppSpacing.savingsWhatIfComparisonChartHeight,
             width: double.infinity,
@@ -202,7 +202,7 @@ class _ComparisonChart extends StatelessWidget {
               painter: _LineChartPainter(points: result.monthlyData),
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [

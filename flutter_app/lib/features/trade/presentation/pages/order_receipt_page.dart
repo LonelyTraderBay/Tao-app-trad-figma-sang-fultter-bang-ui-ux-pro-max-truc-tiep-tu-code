@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -24,7 +23,6 @@ part '../widgets/order_receipt_page_sections.dart';
 part '../widgets/order_receipt_page_common.dart';
 
 const _tradePrimary = AppColors.primary;
-const _cardBackground = AppColors.surface2;
 const _footerBackground = AppColors.surface;
 
 class OrderReceiptPage extends ConsumerStatefulWidget {
@@ -73,7 +71,7 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(
+                  padding: AppSpacing.zeroInsets.copyWith(
                     bottom: AppSpacing.tradeReceiptScrollBottom,
                   ),
                   child: Column(

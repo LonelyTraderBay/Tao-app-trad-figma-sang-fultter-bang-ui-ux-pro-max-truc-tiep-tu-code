@@ -94,12 +94,12 @@ class _StatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .08),
-        borderRadius: AppRadii.cardRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+        padding: AppSpacing.launchpadVerticalPaddingX3,
         child: Column(
           children: [
             Text(
@@ -178,7 +178,7 @@ class _UnderlineTabButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+                padding: AppSpacing.launchpadVerticalPaddingX4,
                 child: Text(
                   label,
                   maxLines: 1,
@@ -191,14 +191,18 @@ class _UnderlineTabButton extends StatelessWidget {
                   ),
                 ),
               ),
-              AnimatedContainer(
+              AnimatedSize(
                 duration: const Duration(milliseconds: 180),
-                height: AppSpacing.launchpadGapXxs,
-                width: active ? 132 : 0,
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(
-                    AppSpacing.launchpadRadiusXxs,
+                child: SizedBox(
+                  height: AppSpacing.launchpadGapXxs,
+                  width: active ? 132 : 0,
+                  child: const DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: AppColors.primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.hairlineRadius,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -221,18 +225,22 @@ class _CreateWebhookCard extends StatelessWidget {
       key: LaunchpadWebhooksPage.createKey,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.accent30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       onTap: onTap,
       child: Row(
         children: [
-          Container(
+          const SizedBox(
             width: AppSpacing.launchpadBox40,
             height: AppSpacing.launchpadBox40,
-            decoration: const BoxDecoration(
-              color: AppColors.accent15,
-              borderRadius: AppRadii.cardRadius,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.accent15,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.cardRadius,
+                ),
+              ),
+              child: Icon(Icons.add_rounded, color: AppColors.accent),
             ),
-            child: const Icon(Icons.add_rounded, color: AppColors.accent),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -285,7 +293,7 @@ class _SubscriptionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadWebhooksPage.subscriptionsKey,
       child: subscriptions.isEmpty
           ? const _EmptySubscriptions()
@@ -345,9 +353,9 @@ class _SubscriptionCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.launchpadVerticalMarkerWidth,
-              color: statusColor,
+              child: ColoredBox(color: statusColor),
             ),
             Expanded(
               child: Column(
@@ -358,7 +366,7 @@ class _SubscriptionCard extends StatelessWidget {
                       key: LaunchpadWebhooksPage.expandKey(subscription.id),
                       onTap: onExpand,
                       child: Padding(
-                        padding: const EdgeInsets.all(AppSpacing.x3),
+                        padding: AppSpacing.launchpadPaddingX3,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -462,17 +470,21 @@ class _ChainIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.launchpadBox40,
       height: AppSpacing.launchpadBox40,
-      decoration: BoxDecoration(
-        color: subscription.accent.withValues(alpha: .15),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Icon(
-        Icons.hub_outlined,
-        color: subscription.accent,
-        size: AppSpacing.launchpadIcon2xl,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: subscription.accent.withValues(alpha: .15),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
+        ),
+        child: Icon(
+          Icons.hub_outlined,
+          color: subscription.accent,
+          size: AppSpacing.launchpadIcon2xl,
+        ),
       ),
     );
   }

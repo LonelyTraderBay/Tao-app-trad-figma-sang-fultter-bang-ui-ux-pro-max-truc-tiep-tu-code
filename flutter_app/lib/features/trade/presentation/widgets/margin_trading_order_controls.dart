@@ -10,7 +10,12 @@ class _SideToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       height: 55,
-      padding: const EdgeInsets.all(4),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.hairlineStroke * 2,
+        top: AppSpacing.hairlineStroke * 2,
+        right: AppSpacing.hairlineStroke * 2,
+        bottom: AppSpacing.hairlineStroke * 2,
+      ),
       variant: VitCardVariant.inner,
       child: Row(
         children: [
@@ -22,7 +27,7 @@ class _SideToggle extends StatelessWidget {
             active: side == 'long',
             onTap: () => onChanged('long'),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.x3),
           _SideButton(
             id: 'short',
             label: 'Short',
@@ -69,14 +74,13 @@ class _SideButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: resolvedColor, size: 17),
-            const SizedBox(width: 7),
+            Icon(icon, color: resolvedColor, size: AppSpacing.inputPrefixIcon),
+            const SizedBox(width: AppSpacing.transferTileGap),
             Text(
               label,
               style: AppTextStyles.caption.copyWith(
                 color: resolvedColor,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
               ),
             ),
           ],
@@ -100,31 +104,27 @@ class _LeverageSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       child: InkWell(
         key: MarginTradingPage.leverageKey,
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
+          padding: AppSpacing.zeroInsets.copyWith(
+            left: AppSpacing.walletAssetSectionGap,
+            top: AppSpacing.x4,
+            right: AppSpacing.walletAssetSectionGap,
+            bottom: AppSpacing.x4,
+          ),
           child: Row(
             children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: _marginAmber.withValues(alpha: .13),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: const SizedBox(
-                  width: 34,
-                  height: 34,
-                  child: Icon(
-                    Icons.tune_rounded,
-                    color: _marginAmber,
-                    size: 18,
-                  ),
-                ),
+              const _MarginIconSurface(
+                icon: Icons.tune_rounded,
+                color: _marginAmber,
+                size: AppSpacing.buttonCompact,
+                iconSize: AppSpacing.inputPrefixIcon,
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,15 +134,13 @@ class _LeverageSelector extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
-                        height: 1.1,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.hairlineStroke * 2),
                     Text(
                       'Nhân ${leverage}x giá trị vị thế',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: 1.1,
                       ),
                     ),
                   ],
@@ -153,13 +151,13 @@ class _LeverageSelector extends StatelessWidget {
                 color: _marginAmber,
                 large: true,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
               Icon(
                 expanded
                     ? Icons.keyboard_arrow_up_rounded
                     : Icons.keyboard_arrow_down_rounded,
                 color: AppColors.text3,
-                size: 18,
+                size: AppSpacing.inputPrefixIcon,
               ),
             ],
           ),
@@ -180,14 +178,19 @@ class _LeverageSheet extends StatelessWidget {
     const options = [2, 3, 5, 10, 20, 50];
     return _Panel(
       color: AppColors.surface2,
-      padding: const EdgeInsets.all(14),
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowPy,
+        top: AppSpacing.rowPy,
+        right: AppSpacing.rowPy,
+        bottom: AppSpacing.rowPy,
+      ),
       child: Wrap(
-        spacing: 8,
-        runSpacing: 8,
+        spacing: AppSpacing.x3,
+        runSpacing: AppSpacing.x3,
         children: [
           for (final option in options)
             SizedBox(
-              width: 55,
+              width: AppSpacing.x7,
               child: VitStatusPill(
                 label: '${option}x',
                 status: selected == option

@@ -221,19 +221,19 @@ class _EvidenceRow extends StatelessWidget {
       padding: AppSpacing.p2pDisputeCardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.x6,
-            height: AppSpacing.x6,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              document.uploaded
-                  ? Icons.check_circle_outline_rounded
-                  : _documentIcon(document.source.iconKey),
-              color: color,
-              size: AppSpacing.iconSm,
+          Material(
+            color: color.withValues(alpha: .12),
+            shape: const CircleBorder(),
+            child: SizedBox(
+              width: AppSpacing.x6,
+              height: AppSpacing.x6,
+              child: Icon(
+                document.uploaded
+                    ? Icons.check_circle_outline_rounded
+                    : _documentIcon(document.source.iconKey),
+                color: color,
+                size: AppSpacing.iconSm,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),

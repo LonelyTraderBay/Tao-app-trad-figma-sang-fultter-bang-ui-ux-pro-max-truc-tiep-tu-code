@@ -13,8 +13,9 @@ class _StatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 18),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPaddingLoose,
+      borderColor: AppColors.cardBorder,
       child: Row(
         children: [
           Expanded(
@@ -62,15 +63,12 @@ class _StatColumn extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: 1,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         Text(
           value,
-          style: AppTextStyles.sectionTitle.copyWith(color: color, height: 1),
+          style: AppTextStyles.sectionTitle.copyWith(color: color),
         ),
       ],
     );
@@ -84,13 +82,17 @@ class _SearchBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: 46,
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      height: AppSpacing.tradeBotControlHeight,
+      padding: AppSpacing.tradeBotChipPadding,
       borderColor: AppColors.borderSolid,
       child: Row(
         children: [
-          const Icon(Icons.search_rounded, color: AppColors.text3, size: 19),
-          const SizedBox(width: 11),
+          const Icon(
+            Icons.search_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
           Expanded(
             child: Text(
               'Search by bot name or pair...',
@@ -131,65 +133,20 @@ class _FilterTabs extends StatelessWidget {
       ),
     ];
 
-    return Row(
-      children: [
-        for (final tab in tabs) ...[
-          Expanded(
-            child: _FilterPill(
-              key: BotHistoryPage.filterKey(tab.$1.name),
-              label: tab.$2,
-              active: tab.$1 == filter,
-              onTap: () => onChanged(tab.$1),
-            ),
+    return VitTabBar(
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1.name,
+            label: tab.$2,
+            widgetKey: BotHistoryPage.filterKey(tab.$1.name),
           ),
-          if (tab != tabs.last) const SizedBox(width: 10),
-        ],
       ],
-    );
-  }
-}
-
-class _FilterPill extends StatelessWidget {
-  const _FilterPill({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _historyPrimary.withValues(alpha: .12)
-              : _historyPanel2,
-          border: active
-              ? Border.all(color: _historyPrimary.withValues(alpha: .55))
-              : null,
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? _historyPrimary : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
+      activeKey: filter.name,
+      onChanged: (key) => onChanged(
+        _HistoryFilter.values.firstWhere((filter) => filter.name == key),
       ),
+      variant: VitTabBarVariant.segment,
     );
   }
 }

@@ -16,7 +16,7 @@ class _PresetButton extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.xlRadius,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+            padding: AppSpacing.crossModulePresetButtonPadding,
             child: Text(
               label,
               textAlign: TextAlign.center,
@@ -49,7 +49,7 @@ class _TaxActivityCard extends StatelessWidget {
     return Opacity(
       opacity: activity.taxable ? 1 : 0.58,
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.crossModuleCardPadding,
         radius: VitCardRadius.lg,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,12 +99,14 @@ class _TaxActivityCard extends StatelessWidget {
             if (activity.note != null) ...[
               const SizedBox(height: AppSpacing.x4),
               DecoratedBox(
-                decoration: const BoxDecoration(
+                decoration: const ShapeDecoration(
                   color: AppColors.warn08,
-                  borderRadius: AppRadii.mdRadius,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.mdRadius,
+                  ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.x3),
+                  padding: AppSpacing.crossModulePanelPadding,
                   child: Text(
                     activity.note!,
                     style: AppTextStyles.micro.copyWith(color: AppColors.warn),
@@ -125,15 +127,12 @@ class _NonTaxableBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.warn10,
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.crossModulePillPadding,
         child: Text(
           'NON-TAXABLE',
           style: AppTextStyles.chartLabelTiny.copyWith(
@@ -155,7 +154,7 @@ class _ExportFormatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,7 +209,7 @@ class _FormatButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+          padding: AppSpacing.crossModuleFormatButtonPadding,
           child: Text(
             _formatLabel(format),
             textAlign: TextAlign.center,
@@ -239,7 +238,7 @@ class _JurisdictionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,15 +267,12 @@ class _JurisdictionCard extends StatelessWidget {
                 ),
             ],
             child: DecoratedBox(
-              decoration: const BoxDecoration(
+              decoration: const ShapeDecoration(
                 color: AppColors.bg,
-                borderRadius: AppRadii.xlRadius,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.x4,
-                  vertical: AppSpacing.x3,
-                ),
+                padding: AppSpacing.crossModuleSelectorPadding,
                 child: Row(
                   children: [
                     Expanded(
@@ -378,7 +374,7 @@ class _ReportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       radius: VitCardRadius.lg,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

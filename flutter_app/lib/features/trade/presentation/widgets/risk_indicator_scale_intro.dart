@@ -8,7 +8,7 @@ class _ProductSriCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -17,20 +17,20 @@ class _ProductSriCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.2,
+              height: AppSpacing.tradeBotLineHeightCaption,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           Text(
             'Summary Risk Indicator',
             textAlign: TextAlign.center,
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tradeBotStatusGap),
           Row(
             children: [
               for (final level in snapshot.levels) ...[
@@ -43,11 +43,12 @@ class _ProductSriCard extends StatelessWidget {
                     active: level.level <= snapshot.productSri,
                   ),
                 ),
-                if (level != snapshot.levels.last) const SizedBox(width: 4),
+                if (level != snapshot.levels.last)
+                  const SizedBox(width: AppSpacing.x1),
               ],
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -55,19 +56,19 @@ class _ProductSriCard extends StatelessWidget {
                 'Lower Risk',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
               Text(
                 'Higher Risk',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
           const _SriWarning(),
         ],
       ),
@@ -88,22 +89,20 @@ class _ScaleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 48),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: AppRadii.xsRadius,
-        ),
-        child: Center(
-          child: Text(
-            '$level',
-            style: AppTextStyles.baseMedium.copyWith(
-              color: active ? AppColors.onAccent : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-              height: 1,
-            ),
-          ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      height: AppSpacing.tradeBotClientCategoryIcon,
+      alignment: Alignment.center,
+      clip: true,
+      borderColor: color.withValues(alpha: active ? .18 : .08),
+      background: ColoredBox(color: color),
+      child: Text(
+        '$level',
+        style: AppTextStyles.baseMedium.copyWith(
+          color: active ? AppColors.onAccent : AppColors.text3,
+          fontWeight: AppTextStyles.bold,
+          height: AppSpacing.tradeBotLineHeightTight,
         ),
       ),
     );
@@ -117,21 +116,23 @@ class _SriWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      constraints: const BoxConstraints(minHeight: 52),
-      padding: const EdgeInsets.fromLTRB(13, 11, 13, 11),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotOptionMinHeight,
+      ),
+      padding: AppSpacing.tradeBotCompactCardPadding,
       borderColor: _riskAmber.withValues(alpha: .24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 2),
+            padding: AppSpacing.tradeBotIntroIconTopPadding,
             child: Icon(
               Icons.warning_amber_rounded,
               color: _riskAmber,
-              size: 15,
+              size: AppSpacing.tradeBotSmallIcon,
             ),
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
           Expanded(
             child: Text.rich(
               TextSpan(
@@ -153,7 +154,7 @@ class _SriWarning extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: _riskAmber,
                 fontWeight: AppTextStyles.medium,
-                height: 1.28,
+                height: AppSpacing.tradeBotLineHeightCompact,
               ),
             ),
           ),

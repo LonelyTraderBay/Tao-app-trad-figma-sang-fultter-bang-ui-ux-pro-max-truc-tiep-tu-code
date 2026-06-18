@@ -9,7 +9,7 @@ class _EmptyWatchlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 70),
+      padding: AppSpacing.watchlistEmptyPadding,
       child: VitEmptyState(
         icon: Icons.star_border_rounded,
         title: searchActive
@@ -30,65 +30,6 @@ class _WatchlistItem {
 
   final MarketWatchlistEntry entry;
   final MarketPair pair;
-}
-
-class _WatchlistSparklinePainter extends CustomPainter {
-  const _WatchlistSparklinePainter({required this.values, required this.color});
-
-  final List<double> values;
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (values.length < 2 || size.width <= 0 || size.height <= 0) return;
-
-    final firstValue = values.first == 0 ? 1.0 : values.first;
-    final baseY = size.height * 0.26;
-    final points = <Offset>[];
-    for (var i = 0; i < values.length; i++) {
-      final x = size.width * i / (values.length - 1);
-      final relative = ((values[i] - firstValue) / firstValue).clamp(
-        -0.12,
-        0.12,
-      );
-      final y = (baseY - relative * size.height * 0.72).clamp(
-        4.0,
-        size.height - 6,
-      );
-      points.add(Offset(x, y));
-    }
-
-    final linePath = Path()..moveTo(points.first.dx, points.first.dy);
-    for (final point in points.skip(1)) {
-      linePath.lineTo(point.dx, point.dy);
-    }
-
-    final fillPath = Path.from(linePath)
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-
-    final fillPaint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [color.withValues(alpha: 0.22), color.withValues(alpha: 0.0)],
-      ).createShader(Offset.zero & size);
-    canvas.drawPath(fillPath, fillPaint);
-
-    final linePaint = Paint()
-      ..color = color
-      ..strokeWidth = 1.8
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-    canvas.drawPath(linePath, linePaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant _WatchlistSparklinePainter oldDelegate) {
-    return oldDelegate.values != values || oldDelegate.color != color;
-  }
 }
 
 MarketPair? _findPair(List<MarketPair> pairs, String id) {

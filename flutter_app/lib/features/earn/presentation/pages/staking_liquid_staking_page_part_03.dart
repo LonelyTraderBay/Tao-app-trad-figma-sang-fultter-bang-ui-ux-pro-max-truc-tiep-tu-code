@@ -26,22 +26,24 @@ class _BenefitsGrid extends StatelessWidget {
             final benefit = snapshot.benefits[index];
             return VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.cardPaddingCompact,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: AppSpacing.ctaHeight,
-                    height: AppSpacing.ctaHeight,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary12,
+                  Material(
+                    color: AppColors.primary12,
+                    shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.lgRadius,
-                      border: Border.all(color: AppColors.primary30),
+                      side: const BorderSide(color: AppColors.primary30),
                     ),
-                    child: Icon(
-                      _benefitIcon(benefit.icon),
-                      color: AppColors.primarySoft,
-                      size: AppSpacing.iconMd,
+                    child: SizedBox(
+                      width: AppSpacing.ctaHeight,
+                      height: AppSpacing.ctaHeight,
+                      child: Icon(
+                        _benefitIcon(benefit.icon),
+                        color: AppColors.primarySoft,
+                        size: AppSpacing.iconMd,
+                      ),
                     ),
                   ),
                   const Spacer(),
@@ -80,14 +82,19 @@ class _SheetFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Container(
-        margin: const EdgeInsets.all(AppSpacing.contentPad),
-        padding: const EdgeInsets.all(AppSpacing.x5),
-        decoration: const BoxDecoration(
+      child: Padding(
+        padding: AppSpacing.zeroInsets.copyWith(
+          left: AppSpacing.contentPad,
+          top: AppSpacing.contentPad,
+          right: AppSpacing.contentPad,
+          bottom: AppSpacing.contentPad,
+        ),
+        child: VitSheetSurface(
           color: AppColors.surface,
           borderRadius: AppRadii.cardLargeRadius,
+          padding: AppSpacing.cardPaddingHero,
+          child: child,
         ),
-        child: child,
       ),
     );
   }
@@ -120,7 +127,7 @@ class _TokenDetailSheet extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.cardPadding,
             child: Column(
               children: [
                 _SheetRow(
@@ -170,7 +177,10 @@ class _SheetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.zeroInsets.copyWith(
+        top: AppSpacing.x2,
+        bottom: AppSpacing.x2,
+      ),
       child: Row(
         children: [
           Expanded(
@@ -218,17 +228,19 @@ class _BulletSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         for (final item in items)
           Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+            padding: AppSpacing.zeroInsets.copyWith(bottom: AppSpacing.x2),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: AppSpacing.x1,
-                  height: AppSpacing.x1,
-                  margin: const EdgeInsets.only(top: AppSpacing.x3),
-                  decoration: BoxDecoration(
+                Padding(
+                  padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x3),
+                  child: Material(
                     color: color,
-                    shape: BoxShape.circle,
+                    shape: const CircleBorder(),
+                    child: const SizedBox(
+                      width: AppSpacing.x1,
+                      height: AppSpacing.x1,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x3),

@@ -8,25 +8,27 @@ class _HeroBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(minHeight: 95),
-      padding: const EdgeInsets.fromLTRB(16, 15, 16, 14),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.copySafetyHeroMinHeight,
+      ),
+      padding: AppSpacing.copySafetyHeroPadding,
       borderColor: _safetyPrimary,
       child: Row(
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: const BoxDecoration(
-              color: _safetyPrimary,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
+          const VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.lg,
+            width: AppSpacing.walletTokenHeroIcon,
+            height: AppSpacing.walletTokenHeroIcon,
+            borderColor: _safetyPrimary,
+            alignment: Alignment.center,
+            child: Icon(
               Icons.shield_outlined,
-              color: AppColors.onAccent,
-              size: 25,
+              color: _safetyPrimary,
+              size: AppSpacing.walletTokenHeroIconGlyph,
             ),
           ),
-          const SizedBox(width: 13),
+          const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -37,17 +39,17 @@ class _HeroBanner extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: _safetyPrimary,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.05,
+                    height: AppSpacing.copySafetyHeroTitleLineHeight,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   snapshot.heroDescription,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: _safetyPrimary,
-                    height: 1.25,
+                    height: AppSpacing.copySafetyDescriptionLineHeight,
                   ),
                 ),
               ],
@@ -72,42 +74,20 @@ class _SafetyTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 53,
-      color: _safetyTabsBackground,
-      child: Row(
-        children: [
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      height: AppSpacing.x7 + AppSpacing.x2,
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: activeId,
+        onChanged: onChanged,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: CopySafetyCenterPage.tabKey(tab.id),
-                onTap: () => onChanged(tab.id),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.label,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: tab.id == activeId
-                                ? _safetyPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                            height: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: tab.id == activeId ? 65 : 0,
-                      height: 2,
-                      color: _safetyPrimary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.id,
+              label: tab.label,
+              widgetKey: CopySafetyCenterPage.tabKey(tab.id),
             ),
         ],
       ),
@@ -163,16 +143,16 @@ class _VerificationTab extends StatelessWidget {
           snapshot.verificationIntro,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: 1.4,
+            height: AppSpacing.copySafetyIntroLineHeight,
           ),
         ),
-        const SizedBox(height: 19),
+        const SizedBox(height: AppSpacing.walletAddressActionIcon),
         for (final tier in snapshot.verificationTiers) ...[
           _VerificationTierCard(tier: tier),
           if (tier != snapshot.verificationTiers.last)
-            const SizedBox(height: 18),
+            const SizedBox(height: AppSpacing.transferSectionGap),
         ],
-        const SizedBox(height: 29),
+        const SizedBox(height: AppSpacing.walletTransactionSummaryStatusIcon),
         _WarningCard(text: snapshot.warningText),
       ],
     );
@@ -190,33 +170,37 @@ class _VerificationTierCard extends StatelessWidget {
     return VitCard(
       constraints: BoxConstraints(
         minHeight: tier.tier == 'Basic'
-            ? 207
+            ? AppSpacing.copySafetyTierBasicMinHeight
             : tier.tier == 'Verified'
-            ? 260
-            : 296,
+            ? AppSpacing.copySafetyTierVerifiedMinHeight
+            : AppSpacing.copySafetyTierProMinHeight,
       ),
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 15),
+      padding: AppSpacing.copySafetyTierPadding,
       borderColor: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.shield_outlined, color: color, size: 20),
-              const SizedBox(width: 9),
+              Icon(
+                Icons.shield_outlined,
+                color: color,
+                size: AppSpacing.copySafetyTierIcon,
+              ),
+              const SizedBox(width: AppSpacing.walletAssetPillGap),
               Text(
                 tier.tier,
                 style: AppTextStyles.body.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.copySafetyLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 22),
+          const SizedBox(height: AppSpacing.sectionGapRegular),
           _ListBlock(label: 'Requirements:', items: tier.requirements),
-          const SizedBox(height: 17),
+          const SizedBox(height: AppSpacing.walletAssetActionIcon),
           _ListBlock(label: 'Benefits:', items: tier.benefits, check: true),
         ],
       ),
@@ -238,7 +222,7 @@ class _ListBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 1),
+      padding: AppSpacing.copySafetyListIndentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -247,22 +231,23 @@ class _ListBlock extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.copySafetyLineHeightTight,
             ),
           ),
-          const SizedBox(height: 11),
+          const SizedBox(height: AppSpacing.rowGapRegular),
           for (final item in items) ...[
             Padding(
-              padding: const EdgeInsets.only(left: 14),
+              padding: AppSpacing.copySafetyListItemPadding,
               child: Text(
                 '${check ? '/' : '*'} $item',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.2,
+                  height: AppSpacing.copySafetyListItemLineHeight,
                 ),
               ),
             ),
-            if (item != items.last) const SizedBox(height: 9),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.walletAssetPillGap),
           ],
         ],
       ),

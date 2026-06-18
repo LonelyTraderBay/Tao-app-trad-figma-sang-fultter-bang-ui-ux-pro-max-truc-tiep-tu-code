@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_accent_pill.dart';
 
 class P2PCreateAdPreviewBadge extends StatelessWidget {
   const P2PCreateAdPreviewBadge({super.key, required this.label});
@@ -12,21 +10,9 @@ class P2PCreateAdPreviewBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.buy),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: AppColors.buy,
     );
   }
 }

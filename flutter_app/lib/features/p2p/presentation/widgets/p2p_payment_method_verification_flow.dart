@@ -77,17 +77,17 @@ class _CenteredMethodIntro extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: AppSpacing.p2pPaymentVerificationIntroIconBox,
-          height: AppSpacing.p2pPaymentVerificationIntroIconBox,
-          decoration: const BoxDecoration(
-            color: AppColors.primary12,
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(
-            Icons.credit_card_rounded,
-            color: AppColors.primary,
-            size: AppSpacing.p2pPaymentVerificationIntroIcon,
+        const Material(
+          color: AppColors.primary12,
+          shape: CircleBorder(),
+          child: SizedBox(
+            width: AppSpacing.p2pPaymentVerificationIntroIconBox,
+            height: AppSpacing.p2pPaymentVerificationIntroIconBox,
+            child: Icon(
+              Icons.credit_card_rounded,
+              color: AppColors.primary,
+              size: AppSpacing.p2pPaymentVerificationIntroIcon,
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.x4),
@@ -136,19 +136,20 @@ class _StepRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: AppSpacing.p2pPaymentVerificationStepDot,
-          height: AppSpacing.p2pPaymentVerificationStepDot,
-          decoration: const BoxDecoration(
-            color: AppColors.primary12,
-            shape: BoxShape.circle,
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            '$index',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.primary,
-              fontWeight: AppTextStyles.bold,
+        Material(
+          color: AppColors.primary12,
+          shape: const CircleBorder(),
+          child: SizedBox(
+            width: AppSpacing.p2pPaymentVerificationStepDot,
+            height: AppSpacing.p2pPaymentVerificationStepDot,
+            child: Center(
+              child: Text(
+                '$index',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -171,14 +172,14 @@ class _MethodIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.x6,
-      height: AppSpacing.x6,
-      decoration: BoxDecoration(
-        color: AppColors.primary12,
-        borderRadius: AppRadii.mdRadius,
+    return Material(
+      color: AppColors.primary12,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      child: SizedBox(
+        width: AppSpacing.x6,
+        height: AppSpacing.x6,
+        child: Icon(icon, color: AppModuleAccents.p2p, size: AppSpacing.iconMd),
       ),
-      child: Icon(icon, color: AppModuleAccents.p2p, size: AppSpacing.iconMd),
     );
   }
 }

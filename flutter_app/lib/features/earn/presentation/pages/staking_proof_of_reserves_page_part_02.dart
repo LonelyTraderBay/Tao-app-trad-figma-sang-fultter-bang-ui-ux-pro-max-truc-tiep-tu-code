@@ -10,7 +10,7 @@ class _AssetReserveCard extends StatelessWidget {
     final progress = math.min(asset.reserveRatio / 150, 1.0);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -21,7 +21,7 @@ class _AssetReserveCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(asset.asset, style: AppTextStyles.baseMedium),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Updated: ${asset.lastUpdated}',
                       style: AppTextStyles.micro.copyWith(
@@ -40,7 +40,7 @@ class _AssetReserveCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
@@ -50,7 +50,7 @@ class _AssetReserveCard extends StatelessWidget {
               valueColor: const AlwaysStoppedAnimation<Color>(AppColors.buy),
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -70,10 +70,10 @@ class _AssetReserveCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.earnPaddingX3,
             child: Row(
               children: [
                 Expanded(
@@ -86,9 +86,7 @@ class _AssetReserveCard extends StatelessWidget {
                           color: AppColors.text3,
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: AppSpacing.x1),
-                      ),
+                      const Padding(padding: AppSpacing.earnTopPaddingX1),
                       Text(
                         asset.walletAddress,
                         maxLines: 1,
@@ -121,7 +119,7 @@ class _AuditReportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -132,7 +130,7 @@ class _AuditReportCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(report.auditor, style: AppTextStyles.baseMedium),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       report.dateLabel,
                       style: AppTextStyles.micro.copyWith(
@@ -145,7 +143,7 @@ class _AuditReportCard extends StatelessWidget {
               _StatusPill(label: report.status, color: AppColors.buy),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             report.findings,
             style: AppTextStyles.caption.copyWith(
@@ -153,7 +151,7 @@ class _AuditReportCard extends StatelessWidget {
               height: AppSpacing.stakingProofReportLineHeight,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           SizedBox(
             height: AppSpacing.buttonCompact,
             child: OutlinedButton.icon(
@@ -180,23 +178,24 @@ class _VerificationStepCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.x6,
             height: AppSpacing.x6,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
+            child: Material(
               color: AppColors.primary,
-              shape: BoxShape.circle,
-            ),
-            child: Text(
-              step.step.toString(),
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.onAccent,
-                fontWeight: AppTextStyles.bold,
+              shape: const CircleBorder(),
+              child: Center(
+                child: Text(
+                  step.step.toString(),
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.onAccent,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
               ),
             ),
           ),
@@ -206,7 +205,7 @@ class _VerificationStepCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(step.title, style: AppTextStyles.caption),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   step.description,
                   style: AppTextStyles.caption.copyWith(
@@ -248,19 +247,23 @@ class _VerifySheetState extends State<_VerifySheet> {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Container(
+      child: Padding(
         key: StakingProofOfReservesPage.verifySheetKey,
-        margin: const EdgeInsets.all(AppSpacing.contentPad),
-        padding: const EdgeInsets.all(AppSpacing.x5),
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.sizeOf(context).height * 0.86,
-        ),
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadii.cardLargeRadius,
-        ),
-        child: SingleChildScrollView(
-          child: _proof == null ? _form(context) : _proofView(context),
+        padding: AppSpacing.earnContentMargin,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.sizeOf(context).height * 0.86,
+          ),
+          child: Material(
+            color: AppColors.surface,
+            borderRadius: AppRadii.cardLargeRadius,
+            child: Padding(
+              padding: AppSpacing.earnPaddingX5,
+              child: SingleChildScrollView(
+                child: _proof == null ? _form(context) : _proofView(context),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -272,11 +275,11 @@ class _VerifySheetState extends State<_VerifySheet> {
       mainAxisSize: MainAxisSize.min,
       children: [
         _SheetTitle(title: 'Verify Your Balance'),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.primary20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: Text(
             widget.snapshot.verifyInfo,
             style: AppTextStyles.caption.copyWith(
@@ -285,14 +288,14 @@ class _VerifySheetState extends State<_VerifySheet> {
             ),
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _TextInput(
           fieldKey: StakingProofOfReservesPage.userIdFieldKey,
           label: 'User ID',
           controller: _userId,
           hint: 'e.g., user_12345',
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         _TextInput(
           fieldKey: StakingProofOfReservesPage.balanceFieldKey,
           label: 'Staked Balance (ETH)',
@@ -300,7 +303,7 @@ class _VerifySheetState extends State<_VerifySheet> {
           hint: 'e.g., 10.5',
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         SizedBox(
           height: AppSpacing.ctaHeight,
           child: FilledButton(
@@ -320,12 +323,12 @@ class _VerifySheetState extends State<_VerifySheet> {
       mainAxisSize: MainAxisSize.min,
       children: [
         _SheetTitle(title: 'Verify Your Balance'),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         VitCard(
           key: StakingProofOfReservesPage.proofResultKey,
           variant: VitCardVariant.inner,
           borderColor: AppColors.buy20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnPaddingX4,
           child: Column(
             children: [
               const Icon(
@@ -333,9 +336,9 @@ class _VerifySheetState extends State<_VerifySheet> {
                 color: AppColors.buy,
                 size: AppSpacing.x7,
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+              const SizedBox(height: AppSpacing.x3),
               Text('Verification Successful', style: AppTextStyles.baseMedium),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 'Your balance of ${proof.balance.toStringAsFixed(2)} ETH is included in the Proof of Reserves Merkle tree.',
                 textAlign: TextAlign.center,
@@ -347,16 +350,16 @@ class _VerifySheetState extends State<_VerifySheet> {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         Text('Merkle Proof', style: AppTextStyles.caption),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         _HashCard(label: 'Leaf Hash', value: proof.leaf),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         _HashCard(label: 'Merkle Root', value: proof.root),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.earnPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -364,7 +367,7 @@ class _VerifySheetState extends State<_VerifySheet> {
                 'Sibling Hashes (${proof.siblings.length})',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+              const SizedBox(height: AppSpacing.x2),
               for (var i = 0; i < proof.siblings.length; i++)
                 Text(
                   '${i + 1}. ${_shortHash(proof.siblings[i])}',
@@ -373,7 +376,7 @@ class _VerifySheetState extends State<_VerifySheet> {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         SizedBox(
           height: AppSpacing.ctaHeight,
           child: OutlinedButton(
@@ -430,7 +433,7 @@ class _TextInput extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         VitInput(
           fieldKey: fieldKey,
           controller: controller,
@@ -453,7 +456,7 @@ class _HashCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         children: [
           Expanded(
@@ -464,7 +467,7 @@ class _HashCard extends StatelessWidget {
                   label,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   _shortHash(value),
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),

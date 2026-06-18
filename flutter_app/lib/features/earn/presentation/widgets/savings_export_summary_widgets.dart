@@ -22,7 +22,7 @@ class _ExportSummary extends StatelessWidget {
       key: SavingsExportPage.summaryRowsKey,
       variant: VitCardVariant.standard,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -88,7 +88,7 @@ class _SummaryTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -119,13 +119,15 @@ class _SensitiveNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: AppColors.warningBorder),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.earnCardPaddingX4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -163,7 +165,7 @@ class _PreviewReadyBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -216,7 +218,7 @@ class _HistoryCard extends StatelessWidget {
       key: SavingsExportPage.historyKey(item.id),
       variant: VitCardVariant.standard,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -306,9 +308,9 @@ class _RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -327,23 +329,30 @@ class _SelectionDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 160),
+    return SizedBox(
       width: AppSpacing.earnExportSelectionDot,
       height: AppSpacing.earnExportSelectionDot,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: selected ? color : AppColors.borderSolid),
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          shape: CircleBorder(
+            side: BorderSide(color: selected ? color : AppColors.borderSolid),
+          ),
+        ),
+        child: selected
+            ? Center(
+                child: SizedBox(
+                  width: AppSpacing.earnExportSelectionDotInner,
+                  height: AppSpacing.earnExportSelectionDotInner,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: color,
+                      shape: const CircleBorder(),
+                    ),
+                  ),
+                ),
+              )
+            : null,
       ),
-      child: selected
-          ? Center(
-              child: Container(
-                width: AppSpacing.earnExportSelectionDotInner,
-                height: AppSpacing.earnExportSelectionDotInner,
-                decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-              ),
-            )
-          : null,
     );
   }
 }
@@ -357,15 +366,12 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

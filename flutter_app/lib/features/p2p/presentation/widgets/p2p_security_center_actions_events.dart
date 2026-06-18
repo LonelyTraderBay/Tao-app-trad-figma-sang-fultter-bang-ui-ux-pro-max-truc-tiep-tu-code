@@ -19,10 +19,10 @@ class _QuickActions extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: AppSpacing.p2pSecurityCenterQuickActionCrossAxisCount,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            childAspectRatio: 1.66,
+            childAspectRatio: AppSpacing.p2pSecurityCenterQuickActionAspectRatio,
           ),
           itemBuilder: (context, index) {
             final action = actions[index];
@@ -52,7 +52,7 @@ class _QuickActionCard extends StatelessWidget {
       radius: VitCardRadius.lg,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.borderSolid,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pSecurityCenterItemPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +66,7 @@ class _QuickActionCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.3,
+              height: AppSpacing.p2pSecurityCenterLabelLineHeight,
             ),
           ),
         ],
@@ -90,13 +90,16 @@ class _RecentEvents extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
               for (var index = 0; index < events.length; index++) ...[
                 _SecurityEventRow(event: events[index]),
                 if (index != events.length - 1)
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    color: AppColors.divider,
+                  ),
               ],
             ],
           ),
@@ -117,7 +120,7 @@ class _SecurityEventRow extends StatelessWidget {
 
     return Padding(
       key: P2PSecurityCenterPage.eventKey(event.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pSecurityCenterItemPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -138,7 +141,7 @@ class _SecurityEventRow extends StatelessWidget {
                   event.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.35,
+                    height: AppSpacing.p2pSecurityCenterCompactLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -147,7 +150,7 @@ class _SecurityEventRow extends StatelessWidget {
                     const Icon(
                       Icons.access_time_rounded,
                       color: AppColors.text3,
-                      size: 11,
+                      size: AppSpacing.p2pSecurityCenterTimeIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(
@@ -189,14 +192,14 @@ class _IconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
+    return SizedBox.square(
+      dimension: AppSpacing.p2pSecurityCenterIconBox,
+      child: Material(
+        type: MaterialType.transparency,
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.lgRadius,
+        child: Icon(icon, color: color, size: AppSpacing.iconMd),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconMd),
     );
   }
 }
@@ -214,24 +217,10 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: prominent ? .14 : .1),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      size: prominent ? VitStatusPillSize.md : VitStatusPillSize.sm,
     );
   }
 }

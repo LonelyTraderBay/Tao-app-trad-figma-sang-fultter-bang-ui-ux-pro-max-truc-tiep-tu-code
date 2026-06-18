@@ -14,7 +14,7 @@ class _RebalancingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,25 +68,35 @@ class _TokenSwitch extends StatelessWidget {
     return GestureDetector(
       key: DCAMultiAssetPage.rebalanceToggleKey,
       onTap: onToggle,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
+      child: SizedBox(
         width: AppSpacing.dcaMultiToggleWidth,
         height: AppSpacing.dcaMultiToggleHeight,
-        padding: const EdgeInsets.all(AppSpacing.dcaMultiTogglePadding),
-        decoration: BoxDecoration(
-          color: enabled ? AppColors.primary : AppColors.surface3,
-          borderRadius: AppRadii.xlRadius,
-          border: Border.all(
-            color: enabled ? AppColors.primary : AppColors.borderSolid,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: enabled ? AppColors.primary : AppColors.surface3,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.xlRadius,
+              side: BorderSide(
+                color: enabled ? AppColors.primary : AppColors.borderSolid,
+              ),
+            ),
           ),
-        ),
-        alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-        child: Container(
-          width: AppSpacing.dcaMultiToggleThumb,
-          height: AppSpacing.dcaMultiToggleThumb,
-          decoration: const BoxDecoration(
-            color: AppColors.onAccent,
-            shape: BoxShape.circle,
+          child: Padding(
+            padding: AppSpacing.dcaPaddingX1,
+            child: AnimatedAlign(
+              duration: const Duration(milliseconds: 160),
+              alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
+              child: const SizedBox(
+                width: AppSpacing.dcaMultiToggleThumb,
+                height: AppSpacing.dcaMultiToggleThumb,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.onAccent,
+                    shape: CircleBorder(),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -102,7 +112,7 @@ class _PortfolioOverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -179,17 +189,21 @@ class _AssetDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.dcaMultiLegendMarker,
                 height: AppSpacing.dcaMultiLegendMarker,
-                decoration: BoxDecoration(
-                  color: accent,
-                  borderRadius: AppRadii.xsRadius,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: accent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.xsRadius,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -263,7 +277,7 @@ class _GrowthCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -306,7 +320,7 @@ class _PerformanceRankRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         children: [
           SizedBox(
@@ -394,7 +408,7 @@ class _InfoCallout extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.sm,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -427,7 +441,7 @@ class _WarningCallout extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

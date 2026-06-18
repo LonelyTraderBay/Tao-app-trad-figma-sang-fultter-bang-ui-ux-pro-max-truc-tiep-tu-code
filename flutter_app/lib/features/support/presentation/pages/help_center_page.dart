@@ -91,7 +91,7 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
                   child: SingleChildScrollView(
                     key: HelpCenterPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.supportScrollPadding(bottomInset),
                     child: VitPageContent(
                       gap: VitContentGap.relaxed,
                       children: [

@@ -19,7 +19,7 @@ class _DcaSummaryCard extends StatelessWidget {
       key: SavingsDCAPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -141,15 +141,12 @@ class _GainPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.buy10,
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -179,7 +176,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -237,7 +234,7 @@ class _HeroAction extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.inputRadius,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+            padding: AppSpacing.earnHorizontalPaddingX3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -270,7 +267,7 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

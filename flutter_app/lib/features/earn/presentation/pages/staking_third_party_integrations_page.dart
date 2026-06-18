@@ -80,7 +80,7 @@ class _StakingThirdPartyIntegrationsPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.defaultPadding,
                     gap: VitContentGap.defaultGap,
@@ -118,7 +118,7 @@ class _IntegrationsHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.accent30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -184,7 +184,7 @@ class _IntegrationCard extends StatelessWidget {
     return VitCard(
       key: StakingThirdPartyIntegrationsPage.integrationKey(integration.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           _IntegrationIcon(iconKey: integration.iconKey),
@@ -227,7 +227,7 @@ class _IntegrationCard extends StatelessWidget {
               onPressed: onConnect,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              padding: AppSpacing.earnHorizontalPaddingX4,
               child: const Text('Connect'),
             ),
         ],
@@ -243,17 +243,19 @@ class _IntegrationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.inputHeight,
       height: AppSpacing.inputHeight,
-      decoration: BoxDecoration(
-        color: AppColors.primary12,
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Icon(
-        _integrationIcon(iconKey),
-        color: AppColors.primarySoft,
-        size: AppSpacing.iconMd,
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.primary12,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+        ),
+        child: Icon(
+          _integrationIcon(iconKey),
+          color: AppColors.primarySoft,
+          size: AppSpacing.iconMd,
+        ),
       ),
     );
   }
@@ -269,7 +271,7 @@ class _ApiAccess extends StatelessWidget {
     return VitCard(
       key: StakingThirdPartyIntegrationsPage.apiKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -305,9 +307,7 @@ class _ApiAccess extends StatelessWidget {
                     borderRadius: AppRadii.smRadius,
                     onTap: () => context.go(snapshot.apiDocsRoute),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: AppSpacing.x1,
-                      ),
+                      padding: AppSpacing.earnVerticalPaddingX1,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

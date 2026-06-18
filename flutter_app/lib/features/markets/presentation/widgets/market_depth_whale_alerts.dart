@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_depth_common.dart';
@@ -17,17 +18,18 @@ class MarketDepthWhaleAlertsView extends StatelessWidget {
     return Column(
       children: [
         const _WhaleWarningCard(),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.marketDepthSectionGap),
         const MarketDepthSectionHeader(
           label: 'Lệnh lớn gần đây',
           accentColor: AppColors.warn,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.marketDepthSectionGap),
         for (final order in snapshot.whaleOrders) ...[
           _WhaleOrderCard(order: order, baseAsset: snapshot.pair.baseAsset),
-          if (order != snapshot.whaleOrders.last) const SizedBox(height: 16),
+          if (order != snapshot.whaleOrders.last)
+            const SizedBox(height: AppSpacing.marketDepthSectionGap),
         ],
-        const SizedBox(height: 16),
+        const SizedBox(height: AppSpacing.marketDepthSectionGap),
         _WhaleSummary(orders: snapshot.whaleOrders),
       ],
     );
@@ -41,16 +43,16 @@ class _WhaleWarningCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warn15,
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketDepthWhaleCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 18,
+            size: AppSpacing.marketAdvancedTipIcon,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,14 +62,15 @@ class _WhaleWarningCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
+                    height: AppSpacing.marketLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
                 Text(
                   'Các lệnh lớn bất thường trong sổ lệnh BTC/USDT. Không phải tín hiệu giao dịch, chỉ mang tính tham khảo.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.45,
+                    height: AppSpacing.marketLineHeightReadable,
                   ),
                 ),
               ],
@@ -90,65 +93,58 @@ class _WhaleOrderCard extends StatelessWidget {
     final buy = order.side == MarketOrderSide.buy;
     final color = buy ? AppColors.buy : AppColors.sell;
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.marketDepthWhaleCardPadding,
       child: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .1),
+          Material(
+            color: color.withValues(alpha: .1),
+            shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.mdRadius,
             ),
-            child: const Icon(Icons.waves_rounded, color: AppColors.text2),
+            child: const SizedBox.square(
+              dimension: AppSpacing.marketDepthWhaleIconBox,
+              child: Icon(Icons.waves_rounded, color: AppColors.text2),
+            ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: color.withValues(alpha: .12),
-                        borderRadius: AppRadii.smRadius,
-                      ),
-                      child: Text(
-                        buy ? 'MUA' : 'BÁN',
-                        style: AppTextStyles.micro.copyWith(
-                          color: color,
-                          fontWeight: AppTextStyles.bold,
-                          height: 1,
-                        ),
-                      ),
+                    VitAccentPill(
+                      label: buy ? 'MUA' : 'BÁN',
+                      accentColor: color,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
                     Text(
                       order.timeAgo,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
+                        height: AppSpacing.marketLineHeightTight,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.marketAnalyticsSmallGap),
                 Text(
                   '${order.quantity.toStringAsFixed(4)} $baseAsset',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                    height: AppSpacing.marketLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
                 Text(
                   '@ \$${formatMarketDepthPrice(order.price)}  ≈ ${formatMarketDepthCompact(order.usdValue, prefix: r'$')}',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                    height: AppSpacing.marketLineHeightTight,
+                  ),
                 ),
               ],
             ),
@@ -187,7 +183,7 @@ class _WhaleSummary extends StatelessWidget {
             color: AppColors.buy,
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
         Expanded(
           child: _WhaleSummaryCard(
             count: sellOrders.length,
@@ -220,7 +216,7 @@ class _WhaleSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.marketDepthWhaleSummaryPadding,
       child: Column(
         children: [
           Text(
@@ -228,18 +224,25 @@ class _WhaleSummaryCard extends StatelessWidget {
             style: AppTextStyles.baseMedium.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
+              height: AppSpacing.marketLineHeightCaption,
             ),
           ),
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: AppSpacing.marketLineHeightTight,
+            ),
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
           Text(
             formatMarketDepthCompact(total, prefix: r'$'),
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.medium,
+              fontFeatures: AppTextStyles.tabularFigures,
+              height: AppSpacing.marketLineHeightTight,
             ),
           ),
         ],

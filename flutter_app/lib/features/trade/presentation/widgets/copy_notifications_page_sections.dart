@@ -11,22 +11,19 @@ class _UnreadSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 44,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: _notificationPrimary),
-      ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      height: AppSpacing.tradeBotSheetActionHeight,
+      padding: AppSpacing.tradeBotChipPadding,
+      borderColor: _notificationPrimary,
       child: Row(
         children: [
           const Icon(
             Icons.notifications_none_rounded,
             color: _notificationPrimary,
-            size: 18,
+            size: AppSpacing.inputPrefixIcon,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.statusPillHorizontalPaddingMd),
           Expanded(
             child: Text(
               '$unreadCount thông báo chưa đọc',
@@ -36,14 +33,9 @@ class _UnreadSummary extends StatelessWidget {
               ),
             ),
           ),
-          TextButton(
+          InkWell(
             key: CopyNotificationsPage.markAllReadKey,
-            onPressed: onMarkAllRead,
-            style: TextButton.styleFrom(
-              padding: EdgeInsets.zero,
-              minimumSize: const Size(0, 32),
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            ),
+            onTap: onMarkAllRead,
             child: Text(
               'Đánh dấu tất cả đã đọc',
               style: AppTextStyles.caption.copyWith(
@@ -74,11 +66,12 @@ class _FilterTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 54,
+      height: AppSpacing.buttonStandard,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: tabs.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 10),
+        separatorBuilder: (_, _) =>
+            const SizedBox(width: AppSpacing.statusPillHorizontalPaddingMd),
         itemBuilder: (context, index) {
           final tab = tabs[index];
           final active = tab.id == activeTab;
@@ -108,29 +101,26 @@ class _FilterPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      width: AppSpacing.buttonStandard - AppSpacing.hairlineStroke,
+      height: AppSpacing.buttonStandard - AppSpacing.hairlineStroke,
+      alignment: Alignment.center,
+      padding: AppSpacing.zeroInsets,
+      borderColor: active ? _notificationPrimary : AppColors.transparent,
+      background: ColoredBox(
+        color: active
+            ? _notificationPrimary.withValues(alpha: .16)
+            : _notificationChip,
+      ),
       onTap: onTap,
-      borderRadius: AppRadii.cardLargeRadius,
-      child: Container(
-        width: 53,
-        height: 53,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _notificationPrimary.withValues(alpha: .16)
-              : _notificationChip,
-          borderRadius: AppRadii.cardLargeRadius,
-          border: Border.all(
-            color: active ? _notificationPrimary : AppColors.transparent,
-          ),
-        ),
-        child: Text(
-          _tabLabel(tab.label),
-          textAlign: TextAlign.center,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? _notificationPrimary : _notificationMuted,
-            fontWeight: AppTextStyles.bold,
-          ),
+      child: Text(
+        _tabLabel(tab.label),
+        textAlign: TextAlign.center,
+        style: AppTextStyles.caption.copyWith(
+          color: active ? _notificationPrimary : _notificationMuted,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -161,112 +151,106 @@ class _NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _notificationColor(notification);
     final read = notification.read;
-    return InkWell(
+    return VitCard(
+      variant: read ? VitCardVariant.standard : VitCardVariant.inner,
+      padding: AppSpacing.cardPadding,
+      borderColor: read ? AppColors.cardBorder : color,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: read ? _notificationCard : _notificationPanel,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: read ? AppColors.cardBorder : color),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .18),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                _notificationIcon(notification),
-                color: color,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Opacity(
-                opacity: read ? .7 : 1,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            notification.title,
-                            style: AppTextStyles.baseMedium.copyWith(
-                              fontWeight: read
-                                  ? AppTextStyles.bold
-                                  : AppTextStyles.extraBold,
-                            ),
-                          ),
-                        ),
-                        if (!read) ...[
-                          const SizedBox(width: 8),
-                          Container(
-                            width: 8,
-                            height: 8,
-                            margin: const EdgeInsets.only(top: 3),
-                            decoration: const BoxDecoration(
-                              color: _notificationPrimary,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      notification.message,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                        fontWeight: AppTextStyles.normal,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 4,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        _MetaItem(
-                          icon: Icons.access_time_rounded,
-                          label: notification.timestamp,
-                        ),
-                        if (notification.providerName != null)
-                          _MetaItem(
-                            icon: Icons.group_outlined,
-                            label: notification.providerName!,
-                          ),
-                        if (notification.pnl != null)
-                          Text(
-                            _formatPnl(notification.pnl!),
-                            style: AppTextStyles.caption.copyWith(
-                              color: notification.pnl! >= 0
-                                  ? AppColors.buy
-                                  : AppColors.sell,
-                              fontWeight: AppTextStyles.extraBold,
-                            ),
-                          ),
-                      ],
-                    ),
-                    if (notification.pair != null) ...[
-                      const SizedBox(height: 10),
-                      _PairChip(notification: notification, color: color),
-                    ],
-                  ],
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipOval(
+            child: ColoredBox(
+              color: color.withValues(alpha: .18),
+              child: SizedBox.square(
+                dimension: AppSpacing.walletAddressIconSize,
+                child: Icon(
+                  _notificationIcon(notification),
+                  color: color,
+                  size: AppSpacing.homeNextActionIconSize,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(width: AppSpacing.rowPy),
+          Expanded(
+            child: Opacity(
+              opacity: read ? .7 : 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          notification.title,
+                          style: AppTextStyles.baseMedium.copyWith(
+                            fontWeight: read
+                                ? AppTextStyles.bold
+                                : AppTextStyles.extraBold,
+                          ),
+                        ),
+                      ),
+                      if (!read) ...[
+                        const SizedBox(width: AppSpacing.rowGap),
+                        const ClipOval(
+                          child: ColoredBox(
+                            color: _notificationPrimary,
+                            child: SizedBox.square(
+                              dimension: AppSpacing.rowGap,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.rowGap),
+                  Text(
+                    notification.message,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      fontWeight: AppTextStyles.normal,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.rowGap),
+                  Wrap(
+                    spacing: AppSpacing.statusPillHorizontalPaddingMd,
+                    runSpacing: AppSpacing.statusPillGapMd,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      _MetaItem(
+                        icon: Icons.access_time_rounded,
+                        label: notification.timestamp,
+                      ),
+                      if (notification.providerName != null)
+                        _MetaItem(
+                          icon: Icons.group_outlined,
+                          label: notification.providerName!,
+                        ),
+                      if (notification.pnl != null)
+                        Text(
+                          _formatPnl(notification.pnl!),
+                          style: AppTextStyles.caption.copyWith(
+                            color: notification.pnl! >= 0
+                                ? AppColors.buy
+                                : AppColors.sell,
+                            fontWeight: AppTextStyles.extraBold,
+                          ),
+                        ),
+                    ],
+                  ),
+                  if (notification.pair != null) ...[
+                    const SizedBox(
+                      height: AppSpacing.statusPillHorizontalPaddingMd,
+                    ),
+                    _PairChip(notification: notification, color: color),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -283,8 +267,12 @@ class _MetaItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: AppColors.text3, size: 11),
-        const SizedBox(width: 4),
+        Icon(
+          icon,
+          color: AppColors.text3,
+          size: AppSpacing.statusPillIconSizeMd,
+        ),
+        const SizedBox(width: AppSpacing.statusPillGapMd),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -303,19 +291,10 @@ class _PairChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final side = notification.side == TradeOrderSide.sell ? 'SELL' : 'BUY';
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Text(
-        '$side ${notification.pair}',
-        style: AppTextStyles.caption.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.extraBold,
-        ),
-      ),
+    return VitAccentPill(
+      label: '$side ${notification.pair}',
+      accentColor: color,
+      size: VitStatusPillSize.md,
     );
   }
 }

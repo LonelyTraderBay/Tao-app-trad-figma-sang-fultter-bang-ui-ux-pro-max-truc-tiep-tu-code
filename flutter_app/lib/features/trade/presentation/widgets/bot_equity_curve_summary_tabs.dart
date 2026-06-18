@@ -26,9 +26,9 @@ class _SummaryRow extends StatelessWidget {
         for (var i = 0; i < items.length; i++) ...[
           Expanded(
             child: _Card(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+              padding: AppSpacing.tradeBotInnerPanelPadding,
               child: SizedBox(
-                height: 52,
+                height: AppSpacing.tradeBotEquitySummaryMetricHeight,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -38,17 +38,15 @@ class _SummaryRow extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: 1,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: AppSpacing.formFieldLabelGap),
                     Text(
                       items[i].$2,
                       style: AppTextStyles.baseMedium.copyWith(
                         color: items[i].$3,
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -56,7 +54,8 @@ class _SummaryRow extends StatelessWidget {
               ),
             ),
           ),
-          if (i != items.length - 1) const SizedBox(width: 12),
+          if (i != items.length - 1)
+            const SizedBox(width: AppSpacing.tradeBotCardGap),
         ],
       ],
     );
@@ -76,36 +75,18 @@ class _Tabs extends StatelessWidget {
       ('sharpe', 'Rolling Sharpe'),
       ('alpha', 'Monthly Alpha'),
     ];
-    return Row(
-      children: [
-        for (var i = 0; i < tabs.length; i++) ...[
-          Expanded(
-            child: VitCard(
-              key: BotEquityCurvePage.tabKey(tabs[i].$1),
-              onTap: () => onChanged(tabs[i].$1),
-              height: 35,
-              alignment: Alignment.center,
-              variant: VitCardVariant.inner,
-              borderColor: active == tabs[i].$1
-                  ? _equityPrimary.withValues(alpha: .50)
-                  : AppColors.transparent,
-              child: Text(
-                tabs[i].$2,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: active == tabs[i].$1
-                      ? _equityPrimary
-                      : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ),
+    return VitTabBar(
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: BotEquityCurvePage.tabKey(tab.$1),
           ),
-          if (i != tabs.length - 1) const SizedBox(width: 8),
-        ],
       ],
+      activeKey: active,
+      onChanged: onChanged,
+      variant: VitTabBarVariant.segment,
     );
   }
 }

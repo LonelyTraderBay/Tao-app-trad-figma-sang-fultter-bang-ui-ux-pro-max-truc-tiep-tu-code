@@ -6,15 +6,15 @@ class _UnlockEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 48),
+      padding: AppSpacing.tokenUnlocksEmptyPadding,
       child: Column(
         children: [
           Icon(
             Icons.lock_outline_rounded,
-            size: 34,
+            size: AppSpacing.tokenUnlocksEmptyIcon,
             color: AppColors.text3.withValues(alpha: .4),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tokenUnlocksEmptyGap),
           Text(
             'Không có unlock phù hợp',
             style: AppTextStyles.body.copyWith(color: AppColors.text3),

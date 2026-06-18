@@ -9,23 +9,13 @@ class _SuccessToast extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.transparent,
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(color: AppColors.buy),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.dynamicIslandBg.withValues(alpha: .45),
-              blurRadius: 28,
-            ),
-          ],
-        ),
+      child: VitCard(
+        padding: AppSpacing.tradeBotCardPadding,
+        borderColor: AppColors.buy,
         child: Row(
           children: [
             const Icon(Icons.check_circle_rounded, color: AppColors.buy),
-            const SizedBox(width: 10),
+            const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,10 +34,12 @@ class _SuccessToast extends StatelessWidget {
                 ],
               ),
             ),
-            IconButton(
+            VitIconButton(
               onPressed: onClose,
-              icon: const Icon(Icons.close_rounded, size: 18),
-              color: AppColors.text3,
+              icon: Icons.close_rounded,
+              tooltip: 'Close success toast',
+              variant: VitIconButtonVariant.transparent,
+              size: VitIconButtonSize.sm,
             ),
           ],
         ),
@@ -73,6 +65,14 @@ class _SuccessToast extends StatelessWidget {
       AppColors.sell.withValues(alpha: .10),
       AppColors.sell,
     ),
+  };
+}
+
+VitStatusPillStatus _riskStatus(TradeBotRisk risk) {
+  return switch (risk) {
+    TradeBotRisk.low => VitStatusPillStatus.success,
+    TradeBotRisk.medium => VitStatusPillStatus.warning,
+    TradeBotRisk.high => VitStatusPillStatus.error,
   };
 }
 

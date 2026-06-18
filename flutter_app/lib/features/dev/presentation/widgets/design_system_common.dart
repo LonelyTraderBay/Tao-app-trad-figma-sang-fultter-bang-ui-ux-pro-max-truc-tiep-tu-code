@@ -31,15 +31,12 @@ class DesignSystemPositiveBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.buy15,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.devInlinePillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -65,15 +62,19 @@ class DesignSystemAccentSample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x3),
+      padding: AppSpacing.devBottomPaddingX3,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.x1,
             height: AppSpacing.iconSm,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: AppRadii.xsRadius,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.xsRadius,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x2),

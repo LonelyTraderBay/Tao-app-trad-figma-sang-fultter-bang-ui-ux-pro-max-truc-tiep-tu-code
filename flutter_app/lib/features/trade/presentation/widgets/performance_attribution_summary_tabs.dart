@@ -8,12 +8,12 @@ class _SummaryGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 2,
+      crossAxisCount: AppSpacing.tradeBotGridColumns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 12,
-      crossAxisSpacing: 12,
-      childAspectRatio: 2.18,
+      mainAxisSpacing: AppSpacing.tradeBotCardGap,
+      crossAxisSpacing: AppSpacing.tradeBotCardGap,
+      childAspectRatio: AppSpacing.tradeBotAttributionMetricAspectRatio,
       children: [
         _MetricTile(
           label: 'Total Return',
@@ -63,7 +63,7 @@ class _MetricTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
+      padding: AppSpacing.tradeBotAttributionMetricPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -72,24 +72,24 @@ class _MetricTile extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.15,
+              height: AppSpacing.tradeBotLineHeightShort,
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.tradeBotLabelGap),
           Text(
             value,
             style: AppTextStyles.baseMedium.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.extraBold,
-              height: 1.15,
+              height: AppSpacing.tradeBotLineHeightShort,
             ),
           ),
-          const SizedBox(height: 3),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             caption,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.15,
+              height: AppSpacing.tradeBotLineHeightShort,
             ),
           ),
         ],
@@ -115,44 +115,20 @@ class _AttributionTabs extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      height: 54,
-      padding: EdgeInsets.zero,
-      child: Row(
-        children: [
+      height: AppSpacing.tradeBotAttributionTabHeight,
+      padding: AppSpacing.tradeSegmentedPadding,
+      child: VitTabBar(
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: InkWell(
-                key: PerformanceAttributionPage.tabKey(tab.$1),
-                onTap: () => onChanged(tab.$1),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          tab.$2,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: activeTab == tab.$1
-                                ? _attributionPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.extraBold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 140),
-                      height: 2,
-                      width: activeTab == tab.$1 ? 70 : 0,
-                      color: _attributionPrimary,
-                    ),
-                  ],
-                ),
-              ),
+            VitTabItem(
+              key: tab.$1,
+              label: tab.$2,
+              widgetKey: PerformanceAttributionPage.tabKey(tab.$1),
             ),
         ],
+        activeKey: activeTab,
+        onChanged: onChanged,
+        variant: VitTabBarVariant.segment,
       ),
     );
   }
@@ -169,31 +145,31 @@ class _AttributionTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SectionLabel(label: 'Returns Decomposition'),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.tradeBotCardGap),
         SizedBox(
-          height: 260,
+          height: AppSpacing.tradeBotAttributionReturnsChartHeight,
           child: CustomPaint(
             painter: _ReturnDecompositionPainter(snapshot.returns),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
         const _LegendRow(
           items: [
             _LegendItem('Market (Beta)', _attributionGray),
             _LegendItem('Alpha (Skill)', _attributionPurple),
           ],
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: AppSpacing.tradeBotDisputeCasesTopGap),
         _InfoPanel(snapshot: snapshot),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         _ContributionBar(
           label: 'Market contribution (Beta)',
           value: snapshot.marketContributionPct,
           color: _attributionGray,
           ratio: .92,
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.tradeBotRowGap),
         _ContributionBar(
           label: 'Skill contribution (Alpha)',
           value: snapshot.skillContributionPct,

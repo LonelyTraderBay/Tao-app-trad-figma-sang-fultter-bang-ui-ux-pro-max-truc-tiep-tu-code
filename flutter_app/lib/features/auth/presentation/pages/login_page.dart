@@ -114,29 +114,24 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         builder: (context, constraints) {
           return SingleChildScrollView(
             key: LoginPage.contentKey,
-            padding: const EdgeInsets.only(bottom: AppSpacing.x6),
+            padding: AppSpacing.authScrollBottomPadding,
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: IntrinsicHeight(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    52,
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                  ),
+                  padding: AppSpacing.authStandaloneContentPadding,
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    customGap: AppSpacing.zero,
                     fullBleed: true,
                     children: [
                       const VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _LoginHero(),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 49)),
+                      const Padding(padding: AppSpacing.authHeroFormTopPadding),
                       VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _LoginForm(
                           identifierController: _identifierController,
                           passwordController: _passwordController,
@@ -153,9 +148,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           onDemoLogin: _handleDemoLogin,
                         ),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 52)),
+                      const Padding(
+                        padding: AppSpacing.authFormFooterTopPadding,
+                      ),
                       const VitCard(
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         child: _LegalFooter(),
                       ),
                     ],
@@ -177,29 +174,19 @@ class _LoginHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: 64,
-          height: 64,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [_authPrimary, _authPrimaryDark],
-            ),
+        SizedBox.square(
+          dimension: AppSpacing.authLogoBoxSize,
+          child: Material(
+            color: _authPrimaryDark,
+            elevation: AppSpacing.authLogoElevation,
+            shadowColor: _authPrimaryGlow,
             borderRadius: AppRadii.cardRadius,
-            boxShadow: const [
-              BoxShadow(
-                color: _authPrimaryGlow,
-                blurRadius: 32,
-                offset: Offset(0, 8),
-              ),
-            ],
+            child: const Center(child: _VitTradeLogoMark()),
           ),
-          child: const Center(child: _VitTradeLogoMark()),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const Padding(padding: AppSpacing.authTopGapX4),
         Text('VitTrade', style: AppTextStyles.pageTitle),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const Padding(padding: AppSpacing.authTopGapX2),
         Text(
           'Giao dịch thông minh, an toàn, tốc độ',
           textAlign: TextAlign.center,
@@ -255,7 +242,7 @@ class _LoginForm extends StatelessWidget {
             autofillHints: const [AutofillHints.username, AutofillHints.email],
             onChanged: (_) => onChanged(),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const Padding(padding: AppSpacing.authTopGapX4),
           VitInput(
             controller: passwordController,
             fieldKey: LoginPage.passwordFieldKey,
@@ -280,10 +267,10 @@ class _LoginForm extends StatelessWidget {
             onSubmitted: (_) => onLogin(),
           ),
           if (error.isNotEmpty) ...[
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+            const Padding(padding: AppSpacing.authTopGapX4),
             _LoginErrorBanner(error: error),
           ],
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const Padding(padding: AppSpacing.authTopGapX3),
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
@@ -293,8 +280,11 @@ class _LoginForm extends StatelessWidget {
                   : () => context.go(AppRoutePaths.authForgotPassword),
               style: TextButton.styleFrom(
                 foregroundColor: _authPrimary,
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(0, 32),
+                padding: AppSpacing.zeroInsets,
+                minimumSize: const Size(
+                  AppSpacing.zero,
+                  AppSpacing.authTextButtonHeight,
+                ),
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               child: Text(
@@ -303,7 +293,7 @@ class _LoginForm extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const Padding(padding: AppSpacing.authTopGapX4),
           VitCtaButton(
             key: LoginPage.submitKey,
             onPressed: submitting ? null : onLogin,
@@ -311,9 +301,9 @@ class _LoginForm extends StatelessWidget {
             variant: VitCtaButtonVariant.auth,
             child: const Text('Đăng nhập'),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const Padding(padding: AppSpacing.authTopGapX4),
           const _DividerLabel(),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const Padding(padding: AppSpacing.authTopGapX4),
           VitCtaButton(
             key: LoginPage.demoSubmitKey,
             onPressed: submitting ? null : onDemoLogin,
@@ -321,7 +311,7 @@ class _LoginForm extends StatelessWidget {
             leading: const Icon(Icons.fingerprint_rounded, color: _authPrimary),
             child: const Text('Đăng nhập Demo'),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const Padding(padding: AppSpacing.authTopGapX4),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -336,8 +326,11 @@ class _LoginForm extends StatelessWidget {
                     : () => context.go(AppRoutePaths.authRegister),
                 style: TextButton.styleFrom(
                   foregroundColor: _authPrimary,
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  minimumSize: const Size(0, 32),
+                  padding: AppSpacing.authInlineTextButtonPadding,
+                  minimumSize: const Size(
+                    AppSpacing.zero,
+                    AppSpacing.authTextButtonHeight,
+                  ),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
@@ -363,28 +356,30 @@ class _LoginErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: AppColors.sell10,
+    return Material(
+      color: AppColors.sell10,
+      shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.mdRadius,
-        border: Border.all(color: AppColors.sell20),
+        side: BorderSide(color: AppColors.sell20),
       ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.error_outline_rounded,
-            color: AppColors.sell,
-            size: 14,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              error,
-              style: AppTextStyles.caption.copyWith(color: AppColors.sell),
+      child: Padding(
+        padding: AppSpacing.authErrorBannerPaddingSm,
+        child: Row(
+          children: [
+            const Icon(
+              Icons.error_outline_rounded,
+              color: AppColors.sell,
+              size: AppSpacing.authErrorIcon,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Text(
+                error,
+                style: AppTextStyles.caption.copyWith(color: AppColors.sell),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -397,15 +392,25 @@ class _DividerLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Expanded(child: Divider(color: AppColors.borderSolid, height: 1)),
+        const Expanded(
+          child: Divider(
+            color: AppColors.borderSolid,
+            height: AppSpacing.dividerHairline,
+          ),
+        ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+          padding: AppSpacing.authDividerLabelPadding,
           child: Text(
             'hoặc',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
-        const Expanded(child: Divider(color: AppColors.borderSolid, height: 1)),
+        const Expanded(
+          child: Divider(
+            color: AppColors.borderSolid,
+            height: AppSpacing.dividerHairline,
+          ),
+        ),
       ],
     );
   }
@@ -444,7 +449,10 @@ class _VitTradeLogoMark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: const Size(36, 36),
+      size: const Size(
+        AppSpacing.authLogoMarkSize,
+        AppSpacing.authLogoMarkSize,
+      ),
       painter: _VitTradeLogoPainter(),
     );
   }

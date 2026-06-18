@@ -11,7 +11,7 @@ class _YieldChartCard extends StatelessWidget {
     return VitCard(
       key: SavingsAnalyticsPage.yieldChartKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -39,15 +39,15 @@ class _YieldChartCard extends StatelessWidget {
                   ],
                 ),
               ),
-              DecoratedBox(
-                decoration: const BoxDecoration(
-                  color: AppColors.buy10,
-                  borderRadius: AppRadii.mdRadius,
-                ),
+              Material(
+                color: AppColors.buy10,
+                borderRadius: AppRadii.mdRadius,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x2,
-                    vertical: AppSpacing.x1,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.x2,
+                    top: AppSpacing.x1,
+                    right: AppSpacing.x2,
+                    bottom: AppSpacing.x1,
                   ),
                   child: Row(
                     children: [
@@ -113,8 +113,9 @@ class _LegendItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        DecoratedBox(
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        Material(
+          color: color,
+          shape: const CircleBorder(),
           child: const SizedBox(width: AppSpacing.x2, height: AppSpacing.x2),
         ),
         const SizedBox(width: AppSpacing.x1),
@@ -137,7 +138,7 @@ class _MonthlyIncomeCard extends StatelessWidget {
     return VitCard(
       key: SavingsAnalyticsPage.monthlyChartKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -226,7 +227,7 @@ class _MetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconSm),

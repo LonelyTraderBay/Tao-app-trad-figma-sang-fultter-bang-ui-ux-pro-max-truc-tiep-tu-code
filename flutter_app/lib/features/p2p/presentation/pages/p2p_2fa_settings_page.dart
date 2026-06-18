@@ -91,10 +91,7 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pSecurityDetailsScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
@@ -122,7 +119,7 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pSecurityDetailsInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P 2FA change review',

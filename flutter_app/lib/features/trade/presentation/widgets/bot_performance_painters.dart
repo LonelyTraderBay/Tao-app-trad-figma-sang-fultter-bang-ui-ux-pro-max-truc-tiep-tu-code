@@ -111,7 +111,7 @@ class _WinLossChartPainter extends CustomPainter {
     if (points.isEmpty) return;
     final groupWidth = chart.width / points.length;
     final barWidth = 27.0;
-    final radius = Radius.circular(4);
+    const radius = AppRadii.chartBarCorner;
     final winPaint = Paint()..color = _analyticsGreen;
     final lossPaint = Paint()..color = _analyticsRed;
 
@@ -234,7 +234,7 @@ void _paintText(
       text: text,
       style: style.copyWith(
         fontWeight: AppTextStyles.medium,
-        height: 1,
+        height: AppSpacing.tradeBotLineHeightTight,
         decoration: TextDecoration.none,
       ),
     ),

@@ -73,16 +73,13 @@ class _PctButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: VitCard(
-        height: AppSpacing.tradePctButtonHeight,
-        alignment: Alignment.center,
-        radius: VitCardRadius.sm,
-        borderColor: AppColors.borderSolid,
-        child: Text('$pct%', style: AppTextStyles.caption),
-      ),
+      height: AppSpacing.tradePctButtonHeight,
+      alignment: Alignment.center,
+      radius: VitCardRadius.sm,
+      borderColor: AppColors.borderSolid,
+      child: Text('$pct%', style: AppTextStyles.caption),
     );
   }
 }
@@ -157,22 +154,9 @@ class _FeeCard extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
               const SizedBox(width: AppSpacing.tradeTpslGap),
-              DecoratedBox(
-                decoration: const BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: AppRadii.xsRadius,
-                ),
-                child: Padding(
-                  padding: AppSpacing.tradeFeeBadgePadding,
-                  child: Text(
-                    'VIP 1',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.dynamicIslandBg,
-                      fontWeight: AppTextStyles.bold,
-                      height: 1,
-                    ),
-                  ),
-                ),
+              const VitAccentPill(
+                label: 'VIP 1',
+                accentColor: AppColors.primary,
               ),
               Text(
                 '  -5%',
@@ -272,22 +256,20 @@ class _SegmentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? (activeColor ?? AppColors.bg) : AppColors.transparent,
-          borderRadius: AppRadii.mdRadius,
-        ),
-        child: Text(
-          label,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.text1 : AppColors.text3,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-          ),
+      variant: active ? VitCardVariant.ghost : VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      alignment: Alignment.center,
+      borderColor: active
+          ? (activeColor ?? AppColors.primary)
+          : AppColors.cardBorder,
+      child: Text(
+        label,
+        overflow: TextOverflow.ellipsis,
+        style: AppTextStyles.caption.copyWith(
+          color: active ? AppColors.text1 : AppColors.text3,
+          fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
         ),
       ),
     );

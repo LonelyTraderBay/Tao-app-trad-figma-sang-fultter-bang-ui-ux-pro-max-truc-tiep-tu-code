@@ -43,7 +43,7 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
                   child: SingleChildScrollView(
                     key: ArenaGuidePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x5,
@@ -169,41 +169,49 @@ class _GuideTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
-        child: VitTabBar(
-          variant: VitTabBarVariant.underline,
-          activeKey: active.name,
-          onChanged: (key) =>
-              onChanged(_GuideTab.values.firstWhere((tab) => tab.name == key)),
-          tabs: [
-            VitTabItem(
-              key: _GuideTab.guide.name,
-              label: 'Hướng dẫn',
-              icon: Icons.menu_book_outlined,
+    return ColoredBox(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: AppSpacing.arenaGuideTabsPadding,
+            child: VitTabBar(
+              variant: VitTabBarVariant.underline,
+              activeKey: active.name,
+              onChanged: (key) => onChanged(
+                _GuideTab.values.firstWhere((tab) => tab.name == key),
+              ),
+              tabs: [
+                VitTabItem(
+                  key: _GuideTab.guide.name,
+                  label: 'Hướng dẫn',
+                  icon: Icons.menu_book_outlined,
+                ),
+                VitTabItem(
+                  key: _GuideTab.tips.name,
+                  label: 'Mẹo hay',
+                  icon: Icons.lightbulb_outline,
+                ),
+                VitTabItem(
+                  key: _GuideTab.safety.name,
+                  label: 'An toàn',
+                  icon: Icons.shield_outlined,
+                ),
+                VitTabItem(
+                  key: _GuideTab.faq.name,
+                  label: 'FAQ',
+                  icon: Icons.help_outline,
+                ),
+              ],
             ),
-            VitTabItem(
-              key: _GuideTab.tips.name,
-              label: 'Mẹo hay',
-              icon: Icons.lightbulb_outline,
-            ),
-            VitTabItem(
-              key: _GuideTab.safety.name,
-              label: 'An toàn',
-              icon: Icons.shield_outlined,
-            ),
-            VitTabItem(
-              key: _GuideTab.faq.name,
-              label: 'FAQ',
-              icon: Icons.help_outline,
-            ),
-          ],
-        ),
+          ),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            thickness: AppSpacing.dividerHairline,
+            color: AppColors.border,
+          ),
+        ],
       ),
     );
   }
@@ -218,7 +226,7 @@ class _GuideHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppModuleAccents.arena,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -269,7 +277,7 @@ class _ModeSwitch extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: AppSpacing.arenaGuideModeSwitchPadding,
       child: Row(
         children: [
           Expanded(
@@ -361,17 +369,17 @@ class _StepsTimeline extends StatelessWidget {
           left: AppSpacing.arenaGuideTimelineLeft,
           top: AppSpacing.arenaGuideTimelineInset,
           bottom: AppSpacing.arenaGuideTimelineInset,
-          child: Container(
+          child: const SizedBox(
             width: AppSpacing.arenaGuideTimelineLineWidth,
-            color: AppColors.divider,
+            child: ColoredBox(color: AppColors.divider),
           ),
         ),
         Column(
           children: [
             for (var index = 0; index < steps.length; index++)
               Padding(
-                padding: EdgeInsets.only(
-                  bottom: index == steps.length - 1 ? 0 : AppSpacing.x3,
+                padding: AppSpacing.arenaGuideTimelineStepPadding(
+                  index == steps.length - 1,
                 ),
                 child: _StepRow(step: steps[index]),
               ),
@@ -393,29 +401,32 @@ class _StepRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.arenaGuideStepIconBox,
           height: AppSpacing.arenaGuideStepIconBox,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: .12),
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: color,
-              width: AppSpacing.arenaGuideStepBorderWidth,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color.withValues(alpha: .12),
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: color,
+                  width: AppSpacing.arenaGuideStepBorderWidth,
+                ),
+              ),
             ),
-          ),
-          child: Icon(
-            _iconFor(step.iconKey),
-            color: color,
-            size: AppSpacing.arenaGuideStepGlyph,
+            child: Center(
+              child: Icon(
+                _iconFor(step.iconKey),
+                color: color,
+                size: AppSpacing.arenaGuideStepGlyph,
+              ),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(
-              top: AppSpacing.arenaGuideStepTextTopPadding,
-            ),
+            padding: AppSpacing.arenaGuideStepTextPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -464,22 +475,28 @@ class _StartCard extends StatelessWidget {
     final creating = mode == _GuideMode.create;
     return VitCard(
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.arenaGuideStartIconBox,
                 height: AppSpacing.arenaGuideStartIconBox,
-                decoration: BoxDecoration(
-                  color: AppColors.primary12,
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: const Icon(
-                  Icons.bolt_outlined,
-                  color: AppColors.primary,
-                  size: AppSpacing.arenaGuideStartGlyph,
+                child: const DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.primary12,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.mdRadius,
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.bolt_outlined,
+                      color: AppColors.primary,
+                      size: AppSpacing.arenaGuideStartGlyph,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),

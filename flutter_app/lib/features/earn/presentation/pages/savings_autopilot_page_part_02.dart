@@ -18,7 +18,7 @@ class _ApprovalCard extends StatelessWidget {
     final color = _actionTypeColor(action.type);
     return VitCard(
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,12 +45,12 @@ class _ApprovalCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                    const SizedBox(height: AppSpacing.x2),
                     Text(
                       action.title,
                       style: _captionBold.copyWith(color: AppColors.text1),
                     ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       action.description,
                       maxLines: 3,
@@ -64,7 +64,7 @@ class _ApprovalCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -127,7 +127,7 @@ class _ActionTile extends StatelessWidget {
       key: SavingsAutoPilotPage.actionKey(action.id),
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       onTap: onTap,
       child: Row(
         children: [
@@ -151,7 +151,7 @@ class _ActionTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   action.title,
                   maxLines: 1,
@@ -223,22 +223,22 @@ class _SettingsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionTitle(label: 'Chế độ AutoPilot'),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         for (final item in snapshot.modes) ...[
           _ModeCard(
             item: item,
             selected: item.id == mode,
             onTap: () => onModeChanged(item.id),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
         ],
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         const _SectionTitle(label: 'Ngân sách hằng tháng (USD)'),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         _BudgetCard(selected: monthlyBudgetUsd, onChanged: onBudgetChanged),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         const _SectionTitle(label: 'Modules tự động'),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         for (final module in snapshot.modules) ...[
           _SwitchRow(
             icon: _iconFor(module.iconKey),
@@ -248,11 +248,11 @@ class _SettingsTab extends StatelessWidget {
             value: moduleEnabled(module),
             onChanged: (value) => onModuleChanged(module.id, value),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+          const SizedBox(height: AppSpacing.x2),
         ],
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         const _SectionTitle(label: 'An toàn & Kiểm soát'),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         _SwitchRow(
           icon: Icons.security_rounded,
           color: AppColors.primary,
@@ -261,7 +261,7 @@ class _SettingsTab extends StatelessWidget {
           value: approvalRequired,
           onChanged: onApprovalChanged,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         _SwitchRow(
           icon: Icons.notifications_active_outlined,
           color: AppColors.warn,
@@ -270,9 +270,9 @@ class _SettingsTab extends StatelessWidget {
           value: notificationsEnabled,
           onChanged: onNotificationChanged,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+        const SizedBox(height: AppSpacing.x5),
         const _SectionTitle(label: 'Tham số rủi ro'),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         _RiskParameter(
           label: 'Ngưỡng rebalance',
           value: '${snapshot.config.rebalanceThresholdPct}%',
@@ -280,7 +280,7 @@ class _SettingsTab extends StatelessWidget {
           maxLabel: '25% (ổn định)',
           color: AppColors.primary,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         _RiskParameter(
           label: 'Min APY gain cho switch',
           value: '${snapshot.config.switchMinApyGainPct.toStringAsFixed(1)}%',
@@ -288,7 +288,7 @@ class _SettingsTab extends StatelessWidget {
           maxLabel: '3.0% (thận trọng)',
           color: AppColors.accent,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+        const SizedBox(height: AppSpacing.x3),
         _RiskParameter(
           label: 'Max single-asset',
           value: '${snapshot.config.maxSingleAssetPct}%',
@@ -296,7 +296,7 @@ class _SettingsTab extends StatelessWidget {
           maxLabel: '80% (tập trung)',
           color: AppColors.sell,
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const SizedBox(height: AppSpacing.x4),
         _InfoCallout(text: snapshot.disclaimer, tone: EarnRiskLevel.high),
       ],
     );
@@ -322,7 +322,7 @@ class _ModeCard extends StatelessWidget {
       variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: selected ? color.withValues(alpha: .4) : null,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnPaddingX3,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,12 +334,12 @@ class _ModeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(item.label, style: _captionBold),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   item.description,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+                const SizedBox(height: AppSpacing.x2),
                 Wrap(
                   spacing: AppSpacing.x3,
                   runSpacing: AppSpacing.x1,
@@ -391,10 +391,7 @@ class _BudgetCard extends StatelessWidget {
           variant: VitCardVariant.inner,
           radius: VitCardRadius.lg,
           borderColor: AppColors.primary30,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.earnCardPaddingX4X3,
           child: Row(
             children: [
               const Icon(
@@ -419,7 +416,7 @@ class _BudgetCard extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x2)),
+        const SizedBox(height: AppSpacing.x2),
         Row(
           children: [
             for (final amount in options) ...[
@@ -462,10 +459,7 @@ class _SwitchRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.earnCardPaddingX3X2,
       child: Row(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconSm),

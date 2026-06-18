@@ -82,7 +82,7 @@ class _ArenaPointsEntryDetailPageState
                   child: SingleChildScrollView(
                     key: ArenaPointsEntryDetailPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: snapshot.entry == null
                         ? VitPageContent(
                             padding: VitContentPadding.none,

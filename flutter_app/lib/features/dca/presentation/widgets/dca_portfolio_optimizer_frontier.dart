@@ -26,9 +26,9 @@ class _FrontierContent extends StatelessWidget {
             onTap: () {},
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const Padding(padding: AppSpacing.dcaTopPaddingX4),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.dcaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -38,7 +38,7 @@ class _FrontierContent extends StatelessWidget {
                 subtitle:
                     'Mỗi điểm đại diện một phân bổ tối ưu. Điểm càng cao = lợi nhuận lớn hơn.',
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+              const Padding(padding: AppSpacing.dcaTopPaddingX4),
               SizedBox(
                 height: AppSpacing.dcaPortfolioOptimizerFrontierChartHeight,
                 width: double.infinity,
@@ -49,7 +49,7 @@ class _FrontierContent extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const Padding(padding: AppSpacing.dcaTopPaddingX4),
         SizedBox(
           height: AppSpacing.dcaPortfolioOptimizerFrontierChipListHeight,
           child: ListView.separated(
@@ -64,9 +64,9 @@ class _FrontierContent extends StatelessWidget {
             },
           ),
         ),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const Padding(padding: AppSpacing.dcaTopPaddingX4),
         _SelectedPortfolioCard(snapshot: snapshot),
-        const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+        const Padding(padding: AppSpacing.dcaTopPaddingX4),
         _SuggestionsCard(
           suggestions: snapshot.suggestions,
           expanded: showSuggestions,
@@ -89,23 +89,27 @@ class _SelectedPortfolioCard extends StatelessWidget {
         .toList(growable: false);
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.x7,
                 height: AppSpacing.x7,
-                decoration: BoxDecoration(
-                  color: AppColors.accent10,
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: const Icon(
-                  Icons.pie_chart_outline_rounded,
-                  color: AppColors.accent,
-                  size: AppSpacing.iconMd,
+                child: DecoratedBox(
+                  decoration: const ShapeDecoration(
+                    color: AppColors.accent10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.mdRadius,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.pie_chart_outline_rounded,
+                    color: AppColors.accent,
+                    size: AppSpacing.iconMd,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -120,7 +124,7 @@ class _SelectedPortfolioCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                    const Padding(padding: AppSpacing.dcaTopPaddingX1),
                     Text(
                       'Phân bổ đề xuất',
                       style: AppTextStyles.caption.copyWith(
@@ -136,10 +140,10 @@ class _SelectedPortfolioCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const Padding(padding: AppSpacing.dcaTopPaddingX4),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.dcaPaddingX4,
             child: Row(
               children: [
                 Expanded(
@@ -150,10 +154,10 @@ class _SelectedPortfolioCard extends StatelessWidget {
                     color: AppColors.buy,
                   ),
                 ),
-                Container(
+                const SizedBox(
                   width: AppSpacing.dcaPortfolioOptimizerDividerWidth,
                   height: AppSpacing.x7,
-                  color: AppColors.border,
+                  child: ColoredBox(color: AppColors.border),
                 ),
                 Expanded(
                   child: _StatCell(
@@ -165,11 +169,11 @@ class _SelectedPortfolioCard extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+          const Padding(padding: AppSpacing.dcaTopPaddingX4),
           for (final allocation in optimalAllocations) ...[
             _SimpleAllocationBar(allocation: allocation),
             if (allocation != optimalAllocations.last)
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+              const Padding(padding: AppSpacing.dcaTopPaddingX3),
           ],
         ],
       ),
@@ -191,7 +195,7 @@ class _SuggestionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         children: [
           InkWell(
@@ -224,11 +228,11 @@ class _SuggestionsCard extends StatelessWidget {
             ),
           ),
           if (expanded) ...[
-            const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+            const Padding(padding: AppSpacing.dcaTopPaddingX4),
             for (final suggestion in suggestions) ...[
               _SuggestionRow(suggestion: suggestion),
               if (suggestion != suggestions.last)
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const Padding(padding: AppSpacing.dcaTopPaddingX3),
             ],
           ],
         ],

@@ -110,29 +110,26 @@ class _LaunchpadGasTrackerPageState
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
-                      AppSpacing.x2,
-                    ),
+                    padding: AppSpacing.launchpadHeaderStatsPadding,
                     child: _FeaturedGasCard(price: selectedGas),
                   ),
-                  Container(
+                  ColoredBox(
                     key: LaunchpadGasTrackerPage.tabsKey,
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface,
-                      border: Border(
-                        top: BorderSide(color: AppColors.divider),
-                        bottom: BorderSide(color: AppColors.divider),
-                      ),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.contentPad,
-                    ),
-                    child: _GasTabs(
-                      activeTab: _activeTab,
-                      onChanged: (tab) => setState(() => _activeTab = tab),
+                    color: AppColors.surface,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Divider(height: AppSpacing.hairlineStroke),
+                        Padding(
+                          padding: AppSpacing.launchpadHorizontalContentPadding,
+                          child: _GasTabs(
+                            activeTab: _activeTab,
+                            onChanged: (tab) =>
+                                setState(() => _activeTab = tab),
+                          ),
+                        ),
+                        const Divider(height: AppSpacing.hairlineStroke),
+                      ],
                     ),
                   ),
                   Expanded(

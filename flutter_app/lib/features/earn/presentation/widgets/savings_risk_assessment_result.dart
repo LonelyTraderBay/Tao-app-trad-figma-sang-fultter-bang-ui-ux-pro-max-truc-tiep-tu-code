@@ -10,7 +10,7 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,7 +66,7 @@ class _ResultView extends StatelessWidget {
           key: SavingsRiskAssessmentPage.resultCardKey,
           radius: VitCardRadius.lg,
           borderColor: accent,
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.earnCardPaddingX5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -185,10 +185,12 @@ class _ResultIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: 0.25)),
+          borderRadius: AppRadii.xlRadius,
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,

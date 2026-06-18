@@ -9,12 +9,7 @@ class _RewardChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: ReferralRewardsPage.chartKey,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.x4,
-        AppSpacing.x4,
-        AppSpacing.x4,
-        AppSpacing.x3,
-      ),
+      padding: AppSpacing.referralChartPadding,
       child: SizedBox(
         height: AppSpacing.referralChartHeight,
         child: CustomPaint(
@@ -54,13 +49,13 @@ class _RewardTabs extends StatelessWidget {
     return VitCard(
       key: ReferralRewardsPage.tabsKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: AppSpacing.referralTinyPillPadding,
       child: Row(
         children: [
           for (final filter in filters)
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.referralFinePadding),
+                padding: AppSpacing.referralFineInset,
                 child: _FilterButton(
                   filter: filter,
                   active: filter.filter == active,
@@ -93,22 +88,30 @@ class _FilterButton extends StatelessWidget {
         key: ReferralRewardsPage.tabKey(filter.filter),
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
+        child: SizedBox(
           height: AppSpacing.inputHeight - AppSpacing.x3,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: active ? AppColors.primary : AppColors.transparent,
-            borderRadius: AppRadii.mdRadius,
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
-          child: Text(
-            filter.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.onAccent : AppColors.text3,
-              fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: active ? AppColors.primary : AppColors.transparent,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.mdRadius,
+              ),
+            ),
+            child: Padding(
+              padding: AppSpacing.referralTabButtonPadding,
+              child: Center(
+                child: Text(
+                  filter.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: active ? AppColors.onAccent : AppColors.text3,
+                    fontWeight: active
+                        ? AppTextStyles.bold
+                        : AppTextStyles.medium,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -177,19 +180,28 @@ class _SortChip extends StatelessWidget {
       key: ReferralRewardsPage.sortOptionKey(option.sort),
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.buttonCompact - AppSpacing.x1,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? AppColors.primary12 : AppColors.transparent,
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: Text(
-          option.label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? AppColors.primary : AppColors.text3,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: active ? AppColors.primary12 : AppColors.transparent,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+            ),
+          ),
+          child: Padding(
+            padding: AppSpacing.referralSortChipPadding,
+            child: Center(
+              child: Text(
+                option.label,
+                style: AppTextStyles.micro.copyWith(
+                  color: active ? AppColors.primary : AppColors.text3,
+                  fontWeight: active
+                      ? AppTextStyles.bold
+                      : AppTextStyles.normal,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -211,12 +223,7 @@ class _RewardLedger extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.x4,
-              AppSpacing.x3,
-              AppSpacing.x4,
-              AppSpacing.x3,
-            ),
+            padding: AppSpacing.referralLedgerHeaderPadding,
             child: Row(
               children: [
                 Expanded(
@@ -244,7 +251,7 @@ class _RewardLedger extends StatelessWidget {
           ),
           if (snapshot.records.isEmpty)
             const Padding(
-              padding: EdgeInsets.all(AppSpacing.x6),
+              padding: AppSpacing.referralEmptyPadding,
               child: VitEmptyState(
                 title: 'Chưa có giao dịch',
                 message: 'Thử thay đổi bộ lọc phần thưởng',
@@ -277,15 +284,12 @@ class _PendingPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.warn10,
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.referralTinyPillPadding,
         child: Row(
           children: [
             const Icon(
@@ -328,12 +332,7 @@ class _RewardRecordRow extends StatelessWidget {
       opacity: pending ? 0.74 : 1,
       child: Padding(
         key: ReferralRewardsPage.recordKey(record.id),
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.x4,
-          AppSpacing.x3,
-          AppSpacing.x4,
-          AppSpacing.x3,
-        ),
+        padding: AppSpacing.referralLedgerHeaderPadding,
         child: Row(
           children: [
             _RecordIcon(type: record.type),
@@ -361,7 +360,7 @@ class _RewardRecordRow extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     '${record.action} ${record.date}',
                     maxLines: 1,
@@ -421,18 +420,20 @@ class _RecordIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isKyc = type == ReferralRewardType.kycBonus;
-    return Container(
-      width: AppSpacing.iconLg + AppSpacing.x3,
-      height: AppSpacing.iconLg + AppSpacing.x3,
-      decoration: BoxDecoration(
-        color: isKyc ? AppColors.primary12 : AppColors.buy10,
-        borderRadius: AppRadii.xlRadius,
-      ),
-      alignment: Alignment.center,
-      child: Icon(
-        isKyc ? Icons.workspace_premium_rounded : Icons.trending_up_rounded,
-        color: isKyc ? AppColors.primary : AppColors.buy,
-        size: AppSpacing.iconMd,
+    return SizedBox.square(
+      dimension: AppSpacing.iconLg + AppSpacing.x3,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: isKyc ? AppColors.primary12 : AppColors.buy10,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
+        ),
+        child: Center(
+          child: Icon(
+            isKyc ? Icons.workspace_premium_rounded : Icons.trending_up_rounded,
+            color: isKyc ? AppColors.primary : AppColors.buy,
+            size: AppSpacing.iconMd,
+          ),
+        ),
       ),
     );
   }
@@ -446,15 +447,12 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.warn10,
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.referralTinyPillPadding,
         child: Text(
           label,
           maxLines: 1,

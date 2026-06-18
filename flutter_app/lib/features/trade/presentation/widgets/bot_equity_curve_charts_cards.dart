@@ -8,32 +8,31 @@ class _EquityChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 17),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Column(
         children: [
           SizedBox(
-            height: 214,
+            height: AppSpacing.tradeBotEquityChartHeight,
             child: CustomPaint(
               painter: _EquityPainter(points),
               size: Size.infinite,
             ),
           ),
-          const SizedBox(height: 9),
+          const SizedBox(height: AppSpacing.tradeBotRowGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(
                 Icons.hdr_strong_rounded,
                 color: _equityGreen,
-                size: 13,
+                size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: 4),
+              const SizedBox(width: AppSpacing.tradeBotTinyGap),
               Text(
                 'Bot',
                 style: AppTextStyles.micro.copyWith(
                   color: _equityGreen,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
             ],
@@ -55,19 +54,19 @@ class _SharpeCard extends StatelessWidget {
         .where((point) => point.rollingSharpe != null)
         .toList();
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.tradeBotCardPadding,
       child: Column(
         children: [
           SizedBox(
-            height: 180,
+            height: AppSpacing.tradeBotEquitySharpeChartHeight,
             child: CustomPaint(
               painter: _SharpePainter(rolling),
               size: Size.infinite,
             ),
           ),
-          const SizedBox(height: 16),
-          Row(
-            children: const [
+          const SizedBox(height: AppSpacing.tradeBotContentGap),
+          const Row(
+            children: [
               Expanded(
                 child: _MiniStat(
                   label: 'Current',
@@ -75,7 +74,7 @@ class _SharpeCard extends StatelessWidget {
                   status: 'Excellent',
                 ),
               ),
-              SizedBox(width: 8),
+              SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: _MiniStat(
                   label: 'Average',
@@ -83,7 +82,7 @@ class _SharpeCard extends StatelessWidget {
                   status: 'Good',
                 ),
               ),
-              SizedBox(width: 8),
+              SizedBox(width: AppSpacing.tradeBotSmallGap),
               Expanded(
                 child: _MiniStat(label: 'Min', value: '1.52', status: 'Fair'),
               ),
@@ -111,7 +110,7 @@ class _MiniStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+      padding: AppSpacing.tradeBotControlPadding,
       child: Column(
         children: [
           Text(
@@ -143,7 +142,7 @@ class _MonthlyAlphaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.tradeBotCardPadding,
       child: Column(
         children: [
           for (final month in months) ...[
@@ -164,7 +163,7 @@ class _MonthlyAlphaCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.tradeBotSmallGap),
                 Text(
                   '${month.alpha >= 0 ? '+' : ''}${month.alpha.toStringAsFixed(1)}%',
                   style: AppTextStyles.caption.copyWith(
@@ -175,21 +174,23 @@ class _MonthlyAlphaCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 7),
+            const SizedBox(height: AppSpacing.formFieldLabelGap),
             ClipRRect(
               borderRadius: AppRadii.xsRadius,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: FractionallySizedBox(
                   widthFactor: math.min(month.alpha.abs() * .20, 1),
-                  child: Container(
-                    height: 8,
+                  child: ColoredBox(
                     color: month.alpha >= 0 ? _equityGreen : _equityRed,
+                    child: const SizedBox(
+                      height: AppSpacing.tradeBotProgressHeight,
+                    ),
                   ),
                 ),
               ),
             ),
-            if (month != months.last) const SizedBox(height: 13),
+            if (month != months.last) const SizedBox(height: AppSpacing.x4),
           ],
         ],
       ),
@@ -205,12 +206,12 @@ class _PerformanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      padding: AppSpacing.tradeBotCardPadding,
       child: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 2.85,
+        crossAxisCount: AppSpacing.tradeBotGridColumns,
+        crossAxisSpacing: AppSpacing.tradeBotCardGap,
+        mainAxisSpacing: AppSpacing.tradeBotCardGap,
+        childAspectRatio: AppSpacing.tradeBotEquityPerformanceAspectRatio,
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: [for (final stat in stats) _PerformanceTile(stat: stat)],
@@ -235,11 +236,11 @@ class _PerformanceTile extends StatelessWidget {
     };
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.fromLTRB(13, 12, 12, 11),
+      padding: AppSpacing.tradeBotControlPadding,
       child: Row(
         children: [
-          Icon(icon, color: color, size: 21),
-          const SizedBox(width: 12),
+          Icon(icon, color: color, size: AppSpacing.iconMd),
+          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,19 +250,14 @@ class _PerformanceTile extends StatelessWidget {
                   stat.label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: 1,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: 8),
                 Text(
                   stat.value,
                   style: AppTextStyles.caption.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
-                    height: 1,
                   ),
                 ),
               ],

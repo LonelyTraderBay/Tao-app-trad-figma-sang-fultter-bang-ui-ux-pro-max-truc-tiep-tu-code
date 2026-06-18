@@ -61,12 +61,11 @@ class _NetworkChip extends StatelessWidget {
       borderColor: selected ? AppColors.primary60 : AppColors.borderSolid,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.walletAddressAddNetworkDot,
             height: AppSpacing.walletAddressAddNetworkDot,
-            decoration: BoxDecoration(
-              color: Color(network.colorHex),
-              shape: BoxShape.circle,
+            child: ClipOval(
+              child: ColoredBox(color: Color(network.colorHex)),
             ),
           ),
           const SizedBox(width: AppSpacing.rowGap),

@@ -85,7 +85,7 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
                   child: SingleChildScrollView(
                     key: AnnouncementsPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.supportScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       gap: VitContentGap.relaxed,

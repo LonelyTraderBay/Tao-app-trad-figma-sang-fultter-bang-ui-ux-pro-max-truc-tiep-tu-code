@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -22,7 +23,6 @@ part '../widgets/bot_optimization_page_sections.dart';
 part '../widgets/bot_optimization_page_common.dart';
 
 const _optimizationBackground = AppColors.bg;
-const _optimizationPanel2 = AppColors.surface2;
 const _optimizationPrimary = AppColors.primary;
 
 class BotOptimizationPage extends ConsumerStatefulWidget {
@@ -89,11 +89,10 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                         Positioned.fill(
                           child: SingleChildScrollView(
                             key: BotOptimizationPage.contentKey,
-                            padding: EdgeInsets.fromLTRB(
-                              20,
-                              14,
-                              20,
-                              footerBottom + 74,
+                            padding: AppSpacing.tradeBotScrollPaddingWithBottom(
+                              footerBottom +
+                                  AppSpacing.tradeBotSecurityCardMinHeight +
+                                  AppSpacing.hairlineStroke,
                             ),
                             child: VitPageContent(
                               padding: VitContentPadding.none,
@@ -103,7 +102,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                                 const _IntroCard(),
                                 const VitCard(
                                   variant: VitCardVariant.inner,
-                                  padding: EdgeInsets.all(12),
+                                  padding: AppSpacing.tradeBotInnerPanelPadding,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -115,7 +114,9 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                                             'Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.',
                                         contractId: 'bot-optimization-review',
                                       ),
-                                      SizedBox(height: 8),
+                                      SizedBox(
+                                        height: AppSpacing.tradeBotSmallGap,
+                                      ),
                                       VitStatusPill(
                                         label: 'Queued before apply',
                                         status: VitStatusPillStatus.info,
@@ -124,7 +125,11 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                                     ],
                                   ),
                                 ),
-                                const _SectionLabel('Optimization Target'),
+                                const VitSectionHeader(
+                                  title: 'Optimization Target',
+                                  variant: VitSectionHeaderVariant.accentBar,
+                                  accentColor: _optimizationPrimary,
+                                ),
                                 VitPageSection(
                                   customGap: 0,
                                   children: [
@@ -136,7 +141,11 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                                     ),
                                   ],
                                 ),
-                                const _SectionLabel('Parameter Ranges'),
+                                const VitSectionHeader(
+                                  title: 'Parameter Ranges',
+                                  variant: VitSectionHeaderVariant.accentBar,
+                                  accentColor: _optimizationPrimary,
+                                ),
                                 _RangeCard(
                                   ranges: snapshot.parameterRanges,
                                   gridCount: _gridCount,

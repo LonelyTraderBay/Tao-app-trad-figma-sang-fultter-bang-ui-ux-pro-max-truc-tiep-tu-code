@@ -7,18 +7,13 @@ class _ChatHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        MediaQuery.paddingOf(context).top + AppSpacing.x3,
-        AppSpacing.contentPad,
-        AppSpacing.x3,
-      ),
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
+    return Material(
+      color: AppColors.surface,
+      child: Padding(
+        padding: AppSpacing.p2pChatHeaderPadding(
+          MediaQuery.paddingOf(context).top,
+        ),
+        child: Row(
         children: [
           _RoundIconButton(
             icon: Icons.arrow_back_rounded,
@@ -30,7 +25,7 @@ class _ChatHeader extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               CircleAvatar(
-                radius: 18,
+                radius: AppSpacing.p2pChatHeaderAvatarRadius,
                 backgroundColor: AppColors.accent,
                 child: Text(
                   snapshot.merchantInitial,
@@ -41,15 +36,18 @@ class _ChatHeader extends StatelessWidget {
                 ),
               ),
               Positioned(
-                right: -1,
-                bottom: -1,
-                child: Container(
-                  width: 9,
-                  height: 9,
-                  decoration: BoxDecoration(
+                right: AppSpacing.p2pChatOnlineBadgeOffset,
+                bottom: AppSpacing.p2pChatOnlineBadgeOffset,
+                child: SizedBox.square(
+                  dimension: AppSpacing.p2pChatOnlineBadgeSize,
+                  child: Material(
                     color: AppColors.buy,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.surface, width: 2),
+                    shape: const CircleBorder(
+                      side: BorderSide(
+                        color: AppColors.surface,
+                        width: AppSpacing.p2pChatOnlineBadgeBorder,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -88,6 +86,7 @@ class _ChatHeader extends StatelessWidget {
             onPressed: () => context.go(AppRoutePaths.p2pE2EInfo),
           ),
         ],
+        ),
       ),
     );
   }
@@ -100,28 +99,29 @@ class _RiskBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.contentPad,
-        vertical: AppSpacing.x3,
-      ),
-      color: AppColors.sell10,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.sell,
-            size: AppSpacing.iconSm,
+      child: ColoredBox(
+        color: AppColors.sell10,
+        child: Padding(
+          padding: AppSpacing.p2pChatRiskBannerPadding,
+          child: Row(
+            children: [
+              const Icon(
+                Icons.warning_amber_rounded,
+                color: AppColors.sell,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  message,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.sell),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              message,
-              style: AppTextStyles.micro.copyWith(color: AppColors.sell),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -147,10 +147,7 @@ class _E2EBanner extends StatelessWidget {
       child: InkWell(
         onTap: onOpen,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.contentPad,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.p2pChatBannerPadding,
           child: Row(
             children: [
               const Icon(
@@ -184,7 +181,7 @@ class _E2EBanner extends StatelessWidget {
                   const Icon(
                     Icons.lock_outline_rounded,
                     color: AppColors.buy,
-                    size: 10,
+                    size: AppSpacing.p2pChatTinyIcon,
                   ),
                   const SizedBox(width: AppSpacing.x1),
                   Text(
@@ -200,7 +197,7 @@ class _E2EBanner extends StatelessWidget {
                 onPressed: onClose,
                 icon: const Icon(Icons.close_rounded),
                 color: AppColors.buy,
-                iconSize: 13,
+                iconSize: AppSpacing.p2pChatCloseIcon,
                 visualDensity: VisualDensity.compact,
               ),
             ],
@@ -227,17 +224,14 @@ class _EncryptionPill extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.inputRadius,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x2,
-            ),
+            padding: AppSpacing.p2pChatEncryptionPillPadding,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(
                   Icons.lock_outline_rounded,
                   color: AppColors.buy,
-                  size: 10,
+                  size: AppSpacing.p2pChatTinyIcon,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Text(

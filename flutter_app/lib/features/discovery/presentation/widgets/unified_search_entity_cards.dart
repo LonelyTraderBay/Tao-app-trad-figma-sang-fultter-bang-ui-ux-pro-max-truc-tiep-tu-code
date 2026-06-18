@@ -10,7 +10,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.resultKey('arenaRoom', room.id),
       onTap: () => context.go(room.route),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       borderColor: AppModuleAccents.arena.withValues(alpha: .18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +29,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             room.title,
             style: AppTextStyles.body.copyWith(
@@ -37,7 +37,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Text(
@@ -54,7 +54,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Text(
@@ -84,7 +84,7 @@ class _CreatorResultCard extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.resultKey('creator', creator.id),
       onTap: () => context.go(creator.route),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       child: Row(
         children: [
           _InitialsAvatar(initials: creator.initials),
@@ -116,7 +116,7 @@ class _CreatorResultCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Trust ${creator.trustScore}% · ${creator.modesCreated} modes',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -144,7 +144,7 @@ class _TradingPairResultCard extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.resultKey('pair', pair.id),
       onTap: () => context.go(pair.route),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.discoveryCardPadding,
       borderColor: AppModuleAccents.markets.withValues(alpha: .14),
       child: Row(
         children: [
@@ -165,7 +165,7 @@ class _TradingPairResultCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${pair.baseAsset}/${pair.quoteAsset}',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -184,7 +184,7 @@ class _TradingPairResultCard extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 '$sign${pair.change24h.toStringAsFixed(2)}%',
                 style: AppTextStyles.micro.copyWith(

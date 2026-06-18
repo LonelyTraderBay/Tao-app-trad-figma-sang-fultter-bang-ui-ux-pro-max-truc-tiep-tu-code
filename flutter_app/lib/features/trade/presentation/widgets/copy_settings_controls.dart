@@ -16,14 +16,16 @@ class _CircuitBreakerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SettingsCard(
-      height: enabled ? 122 : 72,
+      height: enabled
+          ? AppSpacing.copySettingsCircuitBreakerExpandedHeight
+          : AppSpacing.copySettingsCircuitBreakerCollapsedHeight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               const Icon(Icons.bolt_rounded, color: _settingsPrimary, size: 16),
-              const SizedBox(width: 7),
+              const SizedBox(width: AppSpacing.walletAssetSmallGap),
               Expanded(
                 child: Text('Circuit Breaker', style: _cardTitleStyle()),
               ),
@@ -34,7 +36,7 @@ class _CircuitBreakerCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: AppSpacing.walletAssetSmallGap),
           Text(
             'Tự động dừng TẤT CẢ copy khi tổng portfolio lỗ quá X%',
             maxLines: 1,
@@ -49,7 +51,7 @@ class _CircuitBreakerCard extends StatelessWidget {
                   'Ngưỡng kích hoạt',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: 1.2,
+                    height: AppSpacing.copySettingsLineHeightCompact,
                   ),
                 ),
                 const Spacer(),
@@ -58,12 +60,12 @@ class _CircuitBreakerCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.sell,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppSpacing.copySettingsLineHeightCompact,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.x3),
             _CompactSlider(
               value: threshold,
               min: 10,
@@ -99,15 +101,17 @@ class _CompactSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 18,
+      height: AppSpacing.ctaLoadingIcon,
       child: SliderTheme(
         data: SliderTheme.of(context).copyWith(
-          trackHeight: 6,
+          trackHeight: AppSpacing.formFieldLabelGap,
           activeTrackColor: color,
           inactiveTrackColor: _sliderInactive,
           thumbColor: color,
           overlayColor: AppColors.transparent,
-          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
+          thumbShape: const RoundSliderThumbShape(
+            enabledThumbRadius: AppSpacing.walletAssetSmallGap,
+          ),
           overlayShape: SliderComponentShape.noOverlay,
         ),
         child: Slider(
@@ -140,8 +144,8 @@ class _NotificationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SettingsCard(
-      height: 56,
-      padding: const EdgeInsets.fromLTRB(12, 9, 12, 9),
+      height: AppSpacing.copySettingsNotificationRowHeight,
+      padding: AppSpacing.copySettingsNotificationPadding,
       child: Row(
         children: [
           Expanded(
@@ -150,20 +154,20 @@ class _NotificationRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(label, style: _cardTitleStyle()),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   description,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.5,
+                    height: AppSpacing.copySettingsLineHeightLoose,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.cardGap),
           _ToggleSwitch(
             key: CopySettingsPage.notificationKey(id),
             value: value,
@@ -190,25 +194,14 @@ class _ToggleSwitch extends StatelessWidget {
     return InkWell(
       onTap: () => onChanged(!value),
       borderRadius: AppRadii.xlRadius,
-      child: Container(
-        width: 48,
-        height: 26,
-        padding: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-          color: value ? _settingsPrimary : AppColors.surface3,
-          borderRadius: AppRadii.xlRadius,
-        ),
-        child: Align(
-          alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: 20,
-            height: 20,
-            decoration: const BoxDecoration(
-              color: AppColors.onAccent,
-              shape: BoxShape.circle,
-            ),
-          ),
-        ),
+      child: VitTogglePill(
+        enabled: value,
+        height: AppSpacing.statusPillHeightMd,
+        knobSize: AppSpacing.homeNextActionIconSize,
+        knobMargin: AppSpacing.copySettingsToggleKnobMargin,
+        activeColor: _settingsPrimary,
+        inactiveColor: AppColors.surface3,
+        inactiveBorderColor: AppColors.surface3,
       ),
     );
   }
@@ -219,7 +212,11 @@ class _SectionDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(height: 1, color: AppColors.cardBorder);
+    return const Divider(
+      height: AppSpacing.dividerHairline,
+      thickness: AppSpacing.dividerHairline,
+      color: AppColors.cardBorder,
+    );
   }
 }
 
@@ -239,39 +236,30 @@ class _ChannelButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      height: AppSpacing.walletDepositCopyButtonHeight,
+      padding: AppSpacing.copySettingsChannelPadding,
+      borderColor: active ? _settingsPrimary : AppColors.cardBorder,
       onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Container(
-        height: 42,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          color: active
-              ? _settingsPrimary.withValues(alpha: .08)
-              : AppColors.transparent,
-          border: Border.all(
-            color: active ? _settingsPrimary : AppColors.cardBorder,
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: active ? _settingsPrimary : AppColors.text3,
+            size: AppSpacing.walletTokenApprovalActionIcon,
           ),
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              color: active ? _settingsPrimary : AppColors.text3,
-              size: 15,
+          const SizedBox(width: AppSpacing.x3),
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: active ? _settingsPrimary : AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+              height: AppSpacing.copySettingsLineHeightTight,
             ),
-            const SizedBox(width: 8),
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? _settingsPrimary : AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-                height: 1.1,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

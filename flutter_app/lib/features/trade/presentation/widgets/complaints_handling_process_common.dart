@@ -10,23 +10,31 @@ class _ProcessContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionLabel('How We Handle Complaints'),
-        const SizedBox(height: 13),
+        const VitSectionHeader(
+          title: 'How We Handle Complaints',
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: _complaintsPrimary,
+        ),
+        const SizedBox(height: AppSpacing.x4),
         _Card(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.cardPadding,
           child: Column(
             children: [
               for (final step in snapshot.processSteps) ...[
                 _ProcessStep(step: step),
                 if (step != snapshot.processSteps.last)
-                  const SizedBox(height: 13),
+                  const SizedBox(height: AppSpacing.x4),
               ],
             ],
           ),
         ),
-        const SizedBox(height: 25),
-        const _SectionLabel('Financial Ombudsman Service'),
-        const SizedBox(height: 13),
+        const SizedBox(height: AppSpacing.x5),
+        const VitSectionHeader(
+          title: 'Financial Ombudsman Service',
+          variant: VitSectionHeaderVariant.accentBar,
+          accentColor: _complaintsPrimary,
+        ),
+        const SizedBox(height: AppSpacing.x4),
         _OmbudsmanCard(ombudsman: snapshot.ombudsman),
       ],
     );
@@ -46,9 +54,9 @@ class _ProcessStep extends StatelessWidget {
         const Icon(
           Icons.check_circle_outline_rounded,
           color: _complaintsGreen,
-          size: 16,
+          size: AppSpacing.complaintCaseActionIcon,
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: AppSpacing.x4),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,15 +66,15 @@ class _ProcessStep extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppSpacing.complaintCaseLineHeightTight,
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: AppSpacing.formFieldLabelGap),
               Text(
                 step.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.35,
+                  height: AppSpacing.complaintsHandlingRightsBodyLineHeight,
                 ),
               ),
             ],
@@ -85,7 +93,7 @@ class _OmbudsmanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -93,13 +101,13 @@ class _OmbudsmanCard extends StatelessWidget {
             ombudsman.description,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.45,
+              height: AppSpacing.complaintsHandlingOmbudsmanLineHeight,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(12),
+            padding: AppSpacing.cardPaddingCompact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -107,79 +115,39 @@ class _OmbudsmanCard extends StatelessWidget {
                   'Contact:',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1,
+                    height: AppSpacing.complaintCaseLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   'Phone: ${ombudsman.phone}',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    height: 1,
+                    height: AppSpacing.complaintCaseLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   'Web: ${ombudsman.website}',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    height: 1,
+                    height: AppSpacing.complaintCaseLineHeightTight,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 12),
-          OutlinedButton.icon(
+          const SizedBox(height: AppSpacing.x4),
+          VitCtaButton(
             onPressed: () =>
                 context.go(AppRoutePaths.tradeCopyOmbudsmanReferral),
-            icon: const Icon(Icons.info_outline_rounded, size: 14),
-            label: const Text('Learn About Ombudsman Referral'),
-            style: OutlinedButton.styleFrom(
-              minimumSize: const Size.fromHeight(40),
-              foregroundColor: AppColors.text1,
-              side: BorderSide(color: _complaintsBorder.withValues(alpha: .76)),
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-              textStyle: AppTextStyles.caption.copyWith(
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+            variant: VitCtaButtonVariant.secondary,
+            height: AppSpacing.searchBarCompactHeight,
+            leading: const Icon(Icons.info_outline_rounded),
+            child: const Text('Learn About Ombudsman Referral'),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 4,
-          height: 15,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: _complaintsPrimary,
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-            height: 1,
-          ),
-        ),
-      ],
     );
   }
 }

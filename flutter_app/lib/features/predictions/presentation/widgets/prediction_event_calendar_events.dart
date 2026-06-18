@@ -110,17 +110,17 @@ class _CalendarEventCard extends StatelessWidget {
                   const SizedBox(
                     width: AppSpacing.predictionCalendarTitleTrailingGap,
                   ),
-                  Container(
-                    padding: AppSpacing.predictionCalendarStatusPadding,
-                    decoration: BoxDecoration(
-                      color: statusBg,
-                      borderRadius: AppRadii.smRadius,
-                    ),
-                    child: Text(
-                      _statusLabel(event.status),
-                      style: AppTextStyles.numericMicro.copyWith(
-                        color: statusColor,
-                        fontWeight: AppTextStyles.bold,
+                  Material(
+                    color: statusBg,
+                    borderRadius: AppRadii.smRadius,
+                    child: Padding(
+                      padding: AppSpacing.predictionCalendarStatusPadding,
+                      child: Text(
+                        _statusLabel(event.status),
+                        style: AppTextStyles.numericMicro.copyWith(
+                          color: statusColor,
+                          fontWeight: AppTextStyles.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -172,16 +172,17 @@ class _CalendarEventCard extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  Container(
-                    padding: AppSpacing.predictionCalendarCategoryBadgePadding,
-                    decoration: BoxDecoration(
-                      color: AppColors.searchBg,
-                      borderRadius: AppRadii.smRadius,
-                    ),
-                    child: Text(
-                      event.category,
-                      style: AppTextStyles.numericMicro.copyWith(
-                        color: AppColors.text2,
+                  Material(
+                    color: AppColors.searchBg,
+                    borderRadius: AppRadii.smRadius,
+                    child: Padding(
+                      padding:
+                          AppSpacing.predictionCalendarCategoryBadgePadding,
+                      child: Text(
+                        event.category,
+                        style: AppTextStyles.numericMicro.copyWith(
+                          color: AppColors.text2,
+                        ),
                       ),
                     ),
                   ),

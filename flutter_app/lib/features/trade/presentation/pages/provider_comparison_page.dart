@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -41,7 +41,9 @@ class ProviderComparisonPage extends ConsumerWidget {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 26 : 14);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.providerComparisonBottomInsetVisualExtra
+            : AppSpacing.providerComparisonBottomInsetNativeExtra);
 
     return VitPageLayout(
       semanticLabel: 'SC-076 ProviderComparisonPage',
@@ -66,12 +68,14 @@ class ProviderComparisonPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 12, 20, bottomInset),
+                  padding: AppSpacing.providerComparisonScrollPadding(
+                    bottomInset,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _WarningBanner(text: snapshot.disclaimer),
-                      const SizedBox(height: 26),
+                      const SizedBox(height: AppSpacing.x5 + AppSpacing.x2),
                       Row(
                         children: [
                           Expanded(
@@ -91,14 +95,14 @@ class ProviderComparisonPage extends ConsumerWidget {
                             ),
                         ],
                       ),
-                      const SizedBox(height: 38),
+                      const SizedBox(height: AppSpacing.x6 + AppSpacing.x1),
                       _ComparisonTable(snapshot: snapshot),
-                      const SizedBox(height: 22),
+                      const SizedBox(height: AppSpacing.x5 + AppSpacing.x1),
                       _LegendPanel(text: snapshot.legend),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: EdgeInsets.all(12),
+                        padding: AppSpacing.providerComparisonPanelPadding,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Provider comparison review',
@@ -107,7 +111,7 @@ class ProviderComparisonPage extends ConsumerWidget {
                           contractId: 'provider-comparison-review',
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
                       const TradeBodyReviewSection(
                         title: 'Provider comparison body review',
                         message: 'Provider comparison body reviewed',
@@ -139,13 +143,10 @@ class _WarningBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.inputRadius,
-      ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.warningBorder,
+      padding: AppSpacing.providerComparisonPanelPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -154,13 +155,13 @@ class _WarningBanner extends StatelessWidget {
             color: AppColors.warningText,
             size: 15,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warningText,
-                height: 1.45,
+                height: AppSpacing.providerComparisonWarningLineHeight,
               ),
             ),
           ),
@@ -181,7 +182,7 @@ class _ComparisonTable extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 12, bottom: 18),
+          padding: AppSpacing.providerComparisonMetricHeaderPadding,
           child: Text(
             'Metric',
             style: AppTextStyles.micro.copyWith(
@@ -192,14 +193,14 @@ class _ComparisonTable extends StatelessWidget {
         ),
         for (final group in TradeProviderComparisonCategory.values) ...[
           _CategoryRow(category: group),
-          const SizedBox(height: 22),
+          const SizedBox(height: AppSpacing.x5 + AppSpacing.x1),
           for (final metric in snapshot.metrics.where(
             (metric) => metric.category == group,
           )) ...[
             Padding(
-              padding: const EdgeInsets.only(left: 12),
+              padding: AppSpacing.providerComparisonMetricLabelPadding,
               child: SizedBox(
-                height: 26,
+                height: AppSpacing.x5 + AppSpacing.x2,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -211,7 +212,7 @@ class _ComparisonTable extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 22),
+            const SizedBox(height: AppSpacing.x5 + AppSpacing.x1),
           ],
         ],
       ],
@@ -250,11 +251,11 @@ class _CategoryRow extends StatelessWidget {
     };
 
     return Padding(
-      padding: const EdgeInsets.only(left: 8),
+      padding: AppSpacing.providerComparisonCategoryPadding,
       child: Row(
         children: [
-          Icon(icon, color: color, size: 13),
-          const SizedBox(width: 8),
+          Icon(icon, color: color, size: AppSpacing.iconSm),
+          const SizedBox(width: AppSpacing.x3),
           Text(
             label,
             style: AppTextStyles.caption.copyWith(
@@ -276,33 +277,30 @@ class _LegendPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.providerComparisonPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: 12,
-                height: 12,
-                decoration: const BoxDecoration(
-                  color: _comparisonGreen,
-                  shape: BoxShape.circle,
-                ),
+              const Icon(
+                Icons.circle,
+                color: _comparisonGreen,
+                size: AppSpacing.x4 - AppSpacing.x1,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.x3),
               Text(
                 '= Giá trị tốt nhất trong nhóm',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
           Text(
             text,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.35,
+              height: AppSpacing.providerComparisonLegendLineHeight,
             ),
           ),
         ],

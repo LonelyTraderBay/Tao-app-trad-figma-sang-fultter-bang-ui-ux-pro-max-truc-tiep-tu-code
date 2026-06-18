@@ -18,18 +18,17 @@ class _DustAssetRow extends StatelessWidget {
       key: DustConverterPage.assetKey(asset.id),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: VitCard(
         height: AppSpacing.walletDustAssetRowHeight,
         padding: AppSpacing.walletDustAssetRowPadding,
-        decoration: BoxDecoration(
+        variant: VitCardVariant.ghost,
+        borderColor: selected
+            ? color.withValues(alpha: .45)
+            : AppColors.transparent,
+        background: ColoredBox(
           color: selected ? color.withValues(alpha: .07) : _dustPanel2,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(
-            color: selected
-                ? color.withValues(alpha: .45)
-                : AppColors.transparent,
-          ),
         ),
+        clip: true,
         child: Row(
           children: [
             Icon(
@@ -110,14 +109,14 @@ class _TokenLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       width: size,
       height: size,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .18),
-        shape: BoxShape.circle,
-        border: Border.all(color: color.withValues(alpha: .42)),
-      ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      borderColor: color.withValues(alpha: .42),
+      background: ColoredBox(color: color.withValues(alpha: .18)),
+      clip: true,
       alignment: Alignment.center,
       child: Text(
         symbol.length > 3 ? symbol.substring(0, 3) : symbol,

@@ -84,7 +84,9 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
                   child: SingleChildScrollView(
                     key: ReferralHomePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.referralBottomScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       children: [
@@ -174,18 +176,13 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadii.lg)),
+        borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.contentPad,
-              AppSpacing.x5,
-              AppSpacing.contentPad,
-              AppSpacing.x6,
-            ),
+            padding: AppSpacing.referralSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -196,14 +193,14 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
                     color: AppColors.text1,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x3)),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   'Mã ${snapshot.referralCode} · Bạn nhận ${_formatUsd(snapshot.currentTier.kycBonus)} + ${snapshot.currentTier.commissionPercent}%',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x4)),
+                const SizedBox(height: AppSpacing.x4),
                 _SharePreview(link: snapshot.referralLink),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x5)),
+                const SizedBox(height: AppSpacing.x5),
                 VitCtaButton(
                   onPressed: () {
                     _copy(snapshot.referralLink);

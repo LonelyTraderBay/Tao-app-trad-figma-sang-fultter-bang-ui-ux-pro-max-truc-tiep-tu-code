@@ -49,7 +49,9 @@ class _AutoCompoundSettingsPageState
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: bottomInset),
+                      padding: AppSpacing.zeroInsets.copyWith(
+                        bottom: bottomInset,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
                         gap: VitContentGap.defaultGap,
@@ -210,7 +212,7 @@ class _SummaryCard extends StatelessWidget {
       key: AutoCompoundSettingsPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.cardPaddingHero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -277,7 +279,7 @@ class _SummaryStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -326,7 +328,7 @@ class _PositionCard extends StatelessWidget {
     return VitCard(
       key: AutoCompoundSettingsPage.positionKey(position.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -415,7 +417,7 @@ class _CompoundDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Row(
@@ -484,7 +486,7 @@ class _DisabledWarning extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
           const Icon(

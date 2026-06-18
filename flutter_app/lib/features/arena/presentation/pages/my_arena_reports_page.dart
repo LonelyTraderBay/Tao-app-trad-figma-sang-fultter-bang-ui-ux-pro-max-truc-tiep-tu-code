@@ -76,7 +76,7 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
                   child: SingleChildScrollView(
                     key: MyArenaReportsPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.defaultPadding,
                       children: [

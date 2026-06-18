@@ -83,7 +83,7 @@ class _QuestionCard extends StatelessWidget {
     return VitCard(
       key: SavingsRiskAssessmentPage.questionCardKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -154,9 +154,9 @@ class _QuestionNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.primary12,
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -200,14 +200,16 @@ class _RiskOptionTile extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.lgRadius,
           child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: selected ? AppColors.primary : AppColors.borderSolid,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: selected ? AppColors.primary : AppColors.borderSolid,
+                ),
+                borderRadius: AppRadii.lgRadius,
               ),
-              borderRadius: AppRadii.lgRadius,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -262,9 +264,9 @@ class _OptionMarker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: selected ? AppColors.primary : AppColors.surface3,
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: SizedBox(
         width: AppSpacing.x6,

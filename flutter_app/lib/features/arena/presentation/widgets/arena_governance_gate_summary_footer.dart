@@ -20,7 +20,7 @@ class _GovernanceSummary extends StatelessWidget {
         : 'Unlisted';
     return VitCard(
       borderColor: AppColors.accent20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,7 +45,7 @@ class _GovernanceSummary extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.arenaGovernanceInnerPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -98,17 +98,12 @@ class _GovernanceFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _tierColor(result.tier);
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.bg,
-        border: Border(top: BorderSide(color: AppColors.borderSolid)),
+        shape: Border(top: BorderSide(color: AppColors.borderSolid)),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.x5,
-          AppSpacing.x4,
-          AppSpacing.x5,
-          AppSpacing.x2,
-        ),
+        padding: AppSpacing.arenaGovernanceFooterPadding,
         child: Column(
           children: [
             Row(
@@ -153,10 +148,7 @@ class _GovernanceFooter extends StatelessWidget {
                 VitCard(
                   key: ArenaGovernanceGatePage.saveKey,
                   variant: VitCardVariant.ghost,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x1,
-                    vertical: AppSpacing.x2,
-                  ),
+                  padding: AppSpacing.arenaGovernanceSavePadding,
                   onTap: onSave,
                   child: Row(
                     children: [

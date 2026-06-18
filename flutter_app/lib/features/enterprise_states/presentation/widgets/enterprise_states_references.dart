@@ -11,7 +11,7 @@ class _ReferenceBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .32),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.enterpriseStatesCardPadding,
       child: Row(
         children: [
           Icon(_bannerIcon(banner.kind), color: color, size: AppSpacing.iconMd),
@@ -51,7 +51,7 @@ class _AppliedSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
+      padding: AppSpacing.enterpriseStatesContentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -88,7 +88,7 @@ class _SecuritySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
+      padding: AppSpacing.enterpriseStatesContentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -147,7 +147,7 @@ class _ReferenceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.enterpriseStatesCardPadding,
       child: Row(
         children: [
           _IconBubble(icon: icon, color: AppColors.primary),
@@ -195,15 +195,18 @@ class _IconBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.inputHeight,
-      height: AppSpacing.inputHeight,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.cardRadius,
-        border: Border.all(color: color.withValues(alpha: .22)),
+    return SizedBox.square(
+      dimension: AppSpacing.enterpriseStatesIconBox,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+            side: BorderSide(color: color.withValues(alpha: .22)),
+          ),
+        ),
+        child: Icon(icon, color: color, size: AppSpacing.iconMd),
       ),
-      child: Icon(icon, color: color, size: AppSpacing.iconMd),
     );
   }
 }

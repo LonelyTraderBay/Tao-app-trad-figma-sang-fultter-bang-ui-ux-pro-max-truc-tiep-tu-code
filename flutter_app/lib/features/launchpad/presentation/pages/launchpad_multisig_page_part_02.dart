@@ -17,7 +17,7 @@ class _HistorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadMultisigPage.historyKey,
       child: VitPageSection(
         label: 'Giao dich da hoan tat',
@@ -57,7 +57,7 @@ class _OwnersSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadMultisigPage.ownersKey,
       child: VitPageSection(
         label: 'Owners & Signers',
@@ -65,7 +65,7 @@ class _OwnersSection extends StatelessWidget {
         children: [
           for (final owner in safe.owners)
             VitCard(
-              padding: const EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.launchpadPaddingX3,
               child: Row(
                 children: [
                   _IconBubble(
@@ -165,16 +165,16 @@ class _TxCard extends StatelessWidget {
           IntrinsicHeight(
             child: Row(
               children: [
-                Container(
+                SizedBox(
                   width: AppSpacing.launchpadVerticalMarkerWidth,
-                  color: status.color,
+                  child: ColoredBox(color: status.color),
                 ),
                 Expanded(
                   child: InkWell(
                     key: LaunchpadMultisigPage.txToggleKey(tx.id),
                     onTap: onToggle,
                     child: Padding(
-                      padding: const EdgeInsets.all(AppSpacing.x3),
+                      padding: AppSpacing.launchpadPaddingX3,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -287,73 +287,84 @@ class _TxDetails extends StatelessWidget {
       if (tx.executedAt != null) ('Executed', tx.executedAt!),
       if (tx.executeTxHash != null) ('Tx Hash', tx.executeTxHash!),
     ];
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+    return SizedBox(
+      width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            tx.description,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+          const Divider(
+            height: AppSpacing.launchpadDividerHeight,
+            color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x2),
-          for (final row in rows)
-            _DetailRow(
-              label: row.$1,
-              value: row.$2,
-              copied: copiedField == '${tx.id}_${row.$1}',
-              onCopy: row.$1 == 'Contract' || row.$1 == 'Tx Hash'
-                  ? () => onCopy(row.$2, '${tx.id}_${row.$1}')
-                  : null,
-            ),
-          if (tx.params.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.x2),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: AppColors.surface2,
-                borderRadius: AppRadii.inputRadius,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x2),
-                child: Column(
-                  children: [
-                    for (final entry in tx.params.entries)
-                      _DetailRow(label: entry.key, value: entry.value),
-                  ],
+          Padding(
+            padding: AppSpacing.launchpadPaddingX3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  tx.description,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
-              ),
+                const SizedBox(height: AppSpacing.x2),
+                for (final row in rows)
+                  _DetailRow(
+                    label: row.$1,
+                    value: row.$2,
+                    copied: copiedField == '${tx.id}_${row.$1}',
+                    onCopy: row.$1 == 'Contract' || row.$1 == 'Tx Hash'
+                        ? () => onCopy(row.$2, '${tx.id}_${row.$1}')
+                        : null,
+                  ),
+                if (tx.params.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.x2),
+                  DecoratedBox(
+                    decoration: const ShapeDecoration(
+                      color: AppColors.surface2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.inputRadius,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: AppSpacing.launchpadPaddingX2,
+                      child: Column(
+                        children: [
+                          for (final entry in tx.params.entries)
+                            _DetailRow(label: entry.key, value: entry.value),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  'Signers (${tx.signedCount}/${tx.threshold} required)',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                for (final signer in tx.signers) _SignerRow(signer: signer),
+                if (tx.status == LaunchpadMultisigTxStatus.pendingSignatures &&
+                    onSign != null) ...[
+                  const SizedBox(height: AppSpacing.x3),
+                  VitCtaButton(
+                    key: LaunchpadMultisigPage.signKey,
+                    variant: VitCtaButtonVariant.warning,
+                    onPressed: onSign,
+                    child: const Text('Ky giao dich'),
+                  ),
+                ],
+                if (tx.status == LaunchpadMultisigTxStatus.ready &&
+                    onExecute != null) ...[
+                  const SizedBox(height: AppSpacing.x3),
+                  VitCtaButton(
+                    key: LaunchpadMultisigPage.executeKey,
+                    variant: VitCtaButtonVariant.success,
+                    onPressed: onExecute,
+                    child: const Text('Thuc hien giao dich'),
+                  ),
+                ],
+              ],
             ),
-          ],
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            'Signers (${tx.signedCount}/${tx.threshold} required)',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x1),
-          for (final signer in tx.signers) _SignerRow(signer: signer),
-          if (tx.status == LaunchpadMultisigTxStatus.pendingSignatures &&
-              onSign != null) ...[
-            const SizedBox(height: AppSpacing.x3),
-            VitCtaButton(
-              key: LaunchpadMultisigPage.signKey,
-              variant: VitCtaButtonVariant.warning,
-              onPressed: onSign,
-              child: const Text('Ky giao dich'),
-            ),
-          ],
-          if (tx.status == LaunchpadMultisigTxStatus.ready &&
-              onExecute != null) ...[
-            const SizedBox(height: AppSpacing.x3),
-            VitCtaButton(
-              key: LaunchpadMultisigPage.executeKey,
-              variant: VitCtaButtonVariant.success,
-              onPressed: onExecute,
-              child: const Text('Thuc hien giao dich'),
-            ),
-          ],
         ],
       ),
     );
@@ -375,42 +386,45 @@ class _DetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
-        child: Row(
-          children: [
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text(
-                value,
-                textAlign: TextAlign.end,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.medium,
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.launchpadVerticalPaddingX1,
+          child: Row(
+            children: [
+              Text(
+                label,
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  value,
+                  textAlign: TextAlign.end,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.medium,
+                  ),
                 ),
               ),
-            ),
-            if (onCopy != null)
-              IconButton(
-                onPressed: onCopy,
-                icon: Icon(
-                  copied ? Icons.check_rounded : Icons.copy_rounded,
-                  color: copied ? AppColors.buy : AppColors.text3,
-                  size: AppSpacing.launchpadIconMd,
+              if (onCopy != null)
+                IconButton(
+                  onPressed: onCopy,
+                  icon: Icon(
+                    copied ? Icons.check_rounded : Icons.copy_rounded,
+                    color: copied ? AppColors.buy : AppColors.text3,
+                    size: AppSpacing.launchpadIconMd,
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
-      ),
+        const Divider(
+          height: AppSpacing.launchpadDividerHeight,
+          color: AppColors.divider,
+        ),
+      ],
     );
   }
 }
@@ -422,47 +436,50 @@ class _SignerRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: AppSpacing.x1),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: signer.signed ? AppColors.buy10 : AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Row(
-        children: [
-          Icon(
-            signer.signed
-                ? Icons.check_circle_outline_rounded
-                : Icons.schedule_rounded,
-            color: signer.signed ? AppColors.buy : AppColors.text3,
-            size: AppSpacing.launchpadIconSm,
+    return Padding(
+      padding: AppSpacing.launchpadTopPaddingX1,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: signer.signed ? AppColors.buy10 : AppColors.surface2,
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
           ),
-          const SizedBox(width: AppSpacing.x2),
-          Text(
-            signer.label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
+        ),
+        child: Padding(
+          padding: AppSpacing.launchpadInlinePillPadding,
+          child: Row(
+            children: [
+              Icon(
+                signer.signed
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.schedule_rounded,
+                color: signer.signed ? AppColors.buy : AppColors.text3,
+                size: AppSpacing.launchpadIconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                signer.label,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  signer.address,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ),
+              if (signer.signedAt != null)
+                Text(
+                  signer.signedAt!,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.buy),
+                ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              signer.address,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ),
-          if (signer.signedAt != null)
-            Text(
-              signer.signedAt!,
-              style: AppTextStyles.micro.copyWith(color: AppColors.buy),
-            ),
-        ],
+        ),
       ),
     );
   }

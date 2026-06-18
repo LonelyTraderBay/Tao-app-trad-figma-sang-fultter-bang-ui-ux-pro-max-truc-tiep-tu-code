@@ -48,7 +48,7 @@ class _SavingsRecommendationsPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -143,22 +143,17 @@ class _SavingsRecommendationsPageState
         return FractionallySizedBox(
           heightFactor: 0.86,
           child: DecoratedBox(
-            decoration: const BoxDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(AppRadii.xl),
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.sheetTopLargeRadius,
               ),
             ),
             child: SafeArea(
               top: false,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.contentPad,
-                  AppSpacing.x5,
-                  AppSpacing.contentPad,
-                  AppSpacing.x6,
-                ),
+                padding: AppSpacing.earnSheetContentPadding,
                 child: _StrategyDetailSheet(
                   strategy: strategy,
                   amount: _amount,
@@ -182,22 +177,17 @@ class _SavingsRecommendationsPageState
         return FractionallySizedBox(
           heightFactor: 0.72,
           child: DecoratedBox(
-            decoration: const BoxDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(AppRadii.xl),
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.sheetTopLargeRadius,
               ),
             ),
             child: SafeArea(
               top: false,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.contentPad,
-                  AppSpacing.x5,
-                  AppSpacing.contentPad,
-                  AppSpacing.x6,
-                ),
+                padding: AppSpacing.earnSheetContentPadding,
                 child: _CompareSheet(strategies: strategies, amount: _amount),
               ),
             ),
@@ -216,16 +206,18 @@ class _HeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.accent08,
-        border: Border.all(
-          color: AppColors.accent20,
-          width: AppSpacing.savingsConsumerBorderWidth,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.cardLargeRadius,
+          side: BorderSide(
+            color: AppColors.accent20,
+            width: AppSpacing.savingsConsumerBorderWidth,
+          ),
         ),
-        borderRadius: AppRadii.cardLargeRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.earnPaddingX4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -268,7 +260,7 @@ class _ProfileCard extends StatelessWidget {
     final profile = snapshot.profile;
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -353,12 +345,12 @@ class _ProfileMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.earnPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -404,7 +396,7 @@ class _AmountSimulator extends StatelessWidget {
     final activeAmount = int.tryParse(amountText);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -481,7 +473,7 @@ class _AmountChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          padding: AppSpacing.earnVerticalPaddingX2,
           child: Text(
             amount >= 1000 ? '\$${amount ~/ 1000}K' : '\$$amount',
             textAlign: TextAlign.center,

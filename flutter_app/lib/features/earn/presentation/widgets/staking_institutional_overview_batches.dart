@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingInstitutionalPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +50,7 @@ class _StatsCard extends StatelessWidget {
     return VitCard(
       key: StakingInstitutionalPage.statsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
           for (var i = 0; i < snapshot.stats.length; i++) ...[
@@ -71,37 +71,38 @@ class _StatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _toneColor(stat.tone);
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x3,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: _toneFillColor(stat.tone),
-        borderRadius: AppRadii.cardRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
-      child: Column(
-        children: [
-          Icon(_infoIcon(stat.icon), color: color, size: AppSpacing.iconSm),
-          const SizedBox(height: AppSpacing.x2),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              stat.value,
-              style: AppTextStyles.sectionTitle.copyWith(
-                color: stat.tone == 'success' ? AppColors.buy : AppColors.text1,
-                fontFeatures: AppTextStyles.tabularFigures,
+      child: Padding(
+        padding: AppSpacing.earnCardPaddingX2X3,
+        child: Column(
+          children: [
+            Icon(_infoIcon(stat.icon), color: color, size: AppSpacing.iconSm),
+            const SizedBox(height: AppSpacing.x2),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                stat.value,
+                style: AppTextStyles.sectionTitle.copyWith(
+                  color: stat.tone == 'success'
+                      ? AppColors.buy
+                      : AppColors.text1,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            stat.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              stat.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -115,9 +116,9 @@ class _BatchTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: StakingInstitutionalPage.tabsKey,
-      decoration: const BoxDecoration(color: AppColors.surface),
+      color: AppColors.surface,
       child: Row(
         children: [
           for (final tab in _InstitutionalBatchTab.values)
@@ -128,7 +129,7 @@ class _BatchTabs extends StatelessWidget {
                   key: StakingInstitutionalPage.tabKey(tab.name),
                   onTap: () => onChanged(tab),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.x4),
+                    padding: AppSpacing.earnTopPaddingX4,
                     child: Column(
                       children: [
                         Text(
@@ -141,15 +142,18 @@ class _BatchTabs extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x4),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 160),
+                        SizedBox(
                           width: active == tab ? AppSpacing.buttonHero : 0,
                           height: AppSpacing.stakingProductTabIndicatorHeight,
-                          decoration: BoxDecoration(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.transparent,
-                            borderRadius: AppRadii.xsRadius,
+                          child: DecoratedBox(
+                            decoration: ShapeDecoration(
+                              color: active == tab
+                                  ? AppColors.primarySoft
+                                  : AppColors.transparent,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: AppRadii.xsRadius,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -175,7 +179,7 @@ class _BatchOperationCard extends StatelessWidget {
     return VitCard(
       key: StakingInstitutionalPage.batchKey(batch.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -282,24 +286,23 @@ class _StatusPill extends StatelessWidget {
       StakingInstitutionalBatchStatus.approved => AppColors.primarySoft,
       StakingInstitutionalBatchStatus.executed => AppColors.buy,
     };
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: switch (status) {
           StakingInstitutionalBatchStatus.pending => AppColors.warn15,
           StakingInstitutionalBatchStatus.approved => AppColors.primary15,
           StakingInstitutionalBatchStatus.executed => AppColors.buy15,
         },
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        _statusLabel(status),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnPillPadding,
+        child: Text(
+          _statusLabel(status),
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -321,13 +324,12 @@ class _InlineAction extends StatelessWidget {
         onTap: HapticFeedback.selectionClick,
         borderRadius: AppRadii.lgRadius,
         child: Ink(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
+          padding: AppSpacing.earnWidePillPadding,
+          decoration: ShapeDecoration(
             color: color,
-            borderRadius: AppRadii.lgRadius,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.lgRadius,
+            ),
           ),
           child: Text(
             label,

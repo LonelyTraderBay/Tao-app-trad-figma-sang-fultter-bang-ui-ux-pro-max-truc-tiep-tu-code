@@ -8,17 +8,17 @@ class _SignalBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionAdvancedSignalBadgePadding,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .15),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: color.withValues(alpha: .15),
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.predictionAdvancedSignalBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -35,12 +35,11 @@ class _LegendItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: AppSpacing.predictionAdvancedLegendSwatch,
-          height: AppSpacing.predictionAdvancedLegendSwatch,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: AppRadii.hairlineRadius,
+        Material(
+          color: color,
+          borderRadius: AppRadii.hairlineRadius,
+          child: const SizedBox.square(
+            dimension: AppSpacing.predictionAdvancedLegendSwatch,
           ),
         ),
         const SizedBox(width: AppSpacing.predictionAdvancedLegendGap),

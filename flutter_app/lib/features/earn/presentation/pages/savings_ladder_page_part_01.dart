@@ -23,7 +23,7 @@ class _LadderHero extends StatelessWidget {
       key: SavingsLadderPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -161,13 +161,9 @@ class _HeroStat extends StatelessWidget {
           Row(
             children: [
               if (dot) ...[
-                Container(
-                  width: AppSpacing.savingsLadderHeroDot,
-                  height: AppSpacing.savingsLadderHeroDot,
-                  decoration: const BoxDecoration(
-                    color: AppColors.buy,
-                    shape: BoxShape.circle,
-                  ),
+                const SizedBox.square(
+                  dimension: AppSpacing.savingsLadderHeroDot,
+                  child: Material(color: AppColors.buy, shape: CircleBorder()),
                 ),
                 const SizedBox(width: AppSpacing.x1),
               ],
@@ -204,21 +200,25 @@ class _LadderTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-        child: VitTabBar(
-          variant: VitTabBarVariant.underline,
-          activeKey: active,
-          onChanged: onChanged,
-          tabs: [
-            for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
-          ],
-        ),
+    return Material(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: AppSpacing.earnHorizontalPaddingX4,
+            child: VitTabBar(
+              variant: VitTabBarVariant.underline,
+              activeKey: active,
+              onChanged: onChanged,
+              tabs: [
+                for (final tab in tabs)
+                  VitTabItem(key: tab.id, label: tab.label),
+              ],
+            ),
+          ),
+          const Divider(color: AppColors.divider, height: AppSpacing.x1),
+        ],
       ),
     );
   }
@@ -247,7 +247,7 @@ class _AmountSelector extends StatelessWidget {
           variant: VitCardVariant.inner,
           radius: VitCardRadius.md,
           borderColor: AppColors.primary30,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+          padding: AppSpacing.earnHorizontalPaddingX4,
           child: SizedBox(
             height: AppSpacing.inputHeight,
             child: Row(
@@ -356,7 +356,7 @@ class _TemplateCard extends StatelessWidget {
       variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: selected ? color.withValues(alpha: .45) : null,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnPaddingX4,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -422,7 +422,7 @@ class _RungList extends StatelessWidget {
       return VitCard(
         key: SavingsLadderPage.rungsKey,
         radius: VitCardRadius.lg,
-        padding: const EdgeInsets.all(AppSpacing.x5),
+        padding: AppSpacing.earnPaddingX5,
         child: Column(
           children: [
             const Icon(

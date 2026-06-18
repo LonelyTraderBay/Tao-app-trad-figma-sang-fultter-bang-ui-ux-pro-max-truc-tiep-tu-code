@@ -14,29 +14,33 @@ class _ClearAllButton extends StatelessWidget {
         key: SavingsNotificationsPage.clearAllButtonKey,
         onTap: onTap,
         borderRadius: AppRadii.lgRadius,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.sell20),
-            borderRadius: AppRadii.lgRadius,
+        child: DecoratedBox(
+          decoration: const ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: AppColors.sell20),
+              borderRadius: AppRadii.lgRadius,
+            ),
           ),
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.delete_outline_rounded,
-                color: AppColors.sell,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                'Xóa tất cả thông báo',
-                style: AppTextStyles.caption.copyWith(
+          child: Padding(
+            padding: AppSpacing.earnVerticalPaddingX3,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.delete_outline_rounded,
                   color: AppColors.sell,
-                  fontWeight: AppTextStyles.bold,
+                  size: AppSpacing.iconSm,
                 ),
-              ),
-            ],
+                const SizedBox(width: AppSpacing.x2),
+                Text(
+                  'Xóa tất cả thông báo',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.sell,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -51,10 +55,7 @@ class _EmptyHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x7,
-      ),
+      padding: AppSpacing.earnCardPaddingX4X7,
       child: Column(
         children: [
           const Icon(
@@ -86,7 +87,7 @@ class _Disclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -120,9 +121,9 @@ class _RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.13),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -139,14 +140,14 @@ class _UnreadDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.only(top: AppSpacing.x1),
+      padding: AppSpacing.earnTopPaddingX1,
       child: SizedBox(
         width: AppSpacing.x2,
         height: AppSpacing.x2,
         child: DecoratedBox(
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: AppColors.primary,
-            shape: BoxShape.circle,
+            shape: CircleBorder(),
           ),
         ),
       ),

@@ -8,24 +8,20 @@ class _DilutionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppRadii.mdRadius,
-      ),
+    return VitCard(
+      padding: AppSpacing.tokenUnlocksDilutionRowPadding,
       child: Row(
         children: [
           SizedBox(
-            width: 14,
+            width: AppSpacing.tokenUnlocksDilutionRankWidth,
             child: Text(
               '${index + 1}',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
-          const SizedBox(width: 10),
-          _TokenAvatar(unlock: unlock, size: 28),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tokenUnlocksDilutionRankGap),
+          _TokenAvatar(unlock: unlock, size: AppSpacing.tokenUnlocksAvatarSm),
+          const SizedBox(width: AppSpacing.tokenUnlocksCardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,16 +69,16 @@ class _UnlockWarningCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warn.withValues(alpha: .16),
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tokenUnlocksWarningPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: 18,
+            size: AppSpacing.tokenUnlocksWarningIcon,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tokenUnlocksWarningIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,12 +90,12 @@ class _UnlockWarningCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: AppSpacing.tokenUnlocksWarningTitleGap),
                 Text(
                   'Token unlock không đồng nghĩa token sẽ bị bán. Tuy nhiên, unlock lớn thường tạo áp lực bán tiềm ẩn. Dữ liệu chỉ mang tính tham khảo.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.55,
+                    height: AppSpacing.tokenUnlocksWarningLineHeight,
                   ),
                 ),
               ],
@@ -128,7 +124,8 @@ class _ScheduleList extends StatelessWidget {
             unlock: unlock,
             categoryConfig: snapshot.categoryConfigs[unlock.category]!,
           ),
-          if (unlock != unlocks.last) const SizedBox(height: 8),
+          if (unlock != unlocks.last)
+            const SizedBox(height: AppSpacing.tokenUnlocksScheduleGap),
         ],
       ],
     );
@@ -146,14 +143,17 @@ class _ScheduleCard extends StatelessWidget {
     final supplyPct = unlock.circulatingSupply / unlock.totalSupply;
 
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tokenUnlocksScheduleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              _TokenAvatar(unlock: unlock, size: 36),
-              const SizedBox(width: 12),
+              _TokenAvatar(
+                unlock: unlock,
+                size: AppSpacing.tokenUnlocksAvatarMd,
+              ),
+              const SizedBox(width: AppSpacing.tokenUnlocksCardGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +167,9 @@ class _ScheduleCard extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(
+                          width: AppSpacing.tokenUnlocksScheduleGap,
+                        ),
                         _TinyBadge(
                           label: _shortVestingTypeLabel(unlock.vestingType),
                           color: categoryConfig.color,
@@ -205,7 +207,7 @@ class _ScheduleCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tokenUnlocksScheduleSupplyGap),
           Row(
             children: [
               Expanded(
@@ -223,17 +225,17 @@ class _ScheduleCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.tokenUnlocksScheduleProgressGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
               value: supplyPct,
-              minHeight: 6,
+              minHeight: AppSpacing.tokenUnlocksCategoryProgressHeight,
               backgroundColor: AppColors.surface2,
               valueColor: AlwaysStoppedAnimation<Color>(unlock.color),
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.tokenUnlocksScheduleTitleGap),
           Text(
             'Lịch mở khóa',
             style: AppTextStyles.micro.copyWith(
@@ -241,7 +243,7 @@ class _ScheduleCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tokenUnlocksScheduleGap),
           for (var index = 0; index < unlock.vestingSchedule.length; index += 1)
             _VestingEventRow(
               event: unlock.vestingSchedule[index],
@@ -276,39 +278,32 @@ class _VestingEventRow extends StatelessWidget {
         children: [
           Column(
             children: [
-              Container(
-                width: 24,
-                height: 24,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: isFirst ? color : color.withValues(alpha: .12),
-                  shape: BoxShape.circle,
-                  border: isFirst
-                      ? null
-                      : Border.all(
-                          color: color.withValues(alpha: .25),
-                          width: 2,
-                        ),
-                ),
+              CircleAvatar(
+                radius: AppSpacing.tokenUnlocksVestingMarker / 2,
+                backgroundColor: isFirst ? color : color.withValues(alpha: .12),
                 child: Icon(
                   isFirst ? Icons.lock_open_rounded : Icons.lock_rounded,
-                  size: isFirst ? 12 : 9,
+                  size: isFirst
+                      ? AppSpacing.tokenUnlocksVestingIconOpen
+                      : AppSpacing.tokenUnlocksVestingIconLocked,
                   color: isFirst ? AppColors.text1 : color,
                 ),
               ),
               if (!isLast)
                 Expanded(
-                  child: Container(
-                    width: 2,
-                    color: color.withValues(alpha: .12),
+                  child: SizedBox(
+                    width: AppSpacing.tokenUnlocksVestingLine,
+                    child: ColoredBox(color: color.withValues(alpha: .12)),
                   ),
                 ),
             ],
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tokenUnlocksVestingContentGap),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(bottom: isLast ? 0 : 13),
+              padding: isLast
+                  ? AppSpacing.zeroInsets
+                  : AppSpacing.tokenUnlocksVestingEventPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -358,14 +353,9 @@ class _TokenAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: unlock.color.withValues(alpha: .14),
-        shape: BoxShape.circle,
-      ),
+    return CircleAvatar(
+      radius: size / 2,
+      backgroundColor: unlock.color.withValues(alpha: .14),
       child: Text(
         unlock.symbol.substring(0, 2),
         style: AppTextStyles.caption.copyWith(
@@ -390,20 +380,11 @@ class _TinyBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          height: 1.2,
-          fontWeight: bold ? AppTextStyles.bold : AppTextStyles.medium,
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      size: VitStatusPillSize.sm,
+      semanticStatus: bold ? VitStatusPillStatus.warning : null,
     );
   }
 }
@@ -416,25 +397,10 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 3,
-          height: 14,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: AppRadii.xsRadius,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: accentColor,
     );
   }
 }

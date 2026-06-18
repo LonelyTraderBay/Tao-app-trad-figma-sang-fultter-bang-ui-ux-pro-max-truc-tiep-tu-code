@@ -16,7 +16,7 @@ class _LevelCard extends StatelessWidget {
 
     return VitCard(
       key: P2PTradingLevelPage.levelKey(level.id),
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       borderColor: current ? accent : AppColors.divider,
       child: Opacity(
@@ -24,25 +24,21 @@ class _LevelCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              padding: const EdgeInsets.all(AppSpacing.x4),
-              decoration: BoxDecoration(
-                color: current
-                    ? accent.withValues(alpha: 0.10)
-                    : passed
-                    ? accent.withValues(alpha: 0.05)
-                    : AppColors.surface2,
-                border: Border(
-                  bottom: BorderSide(
-                    color: current
-                        ? accent.withValues(alpha: 0.20)
-                        : AppColors.divider,
-                  ),
-                ),
-              ),
-              child: Row(
+            Material(
+              color: current
+                  ? accent.withValues(alpha: 0.10)
+                  : passed
+                  ? accent.withValues(alpha: 0.05)
+                  : AppColors.surface2,
+              child: Padding(
+                padding: AppSpacing.p2pTradingLevelCardHeaderPadding,
+                child: Row(
                 children: [
-                  _LevelIconBadge(level: level, size: 48, locked: locked),
+                  _LevelIconBadge(
+                    level: level,
+                    size: AppSpacing.p2pTradingLevelLevelBadgeSize,
+                    locked: locked,
+                  ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
                     child: Column(
@@ -72,7 +68,7 @@ class _LevelCard extends StatelessWidget {
                               const Icon(
                                 Icons.check_circle_outline_rounded,
                                 color: AppColors.buy,
-                                size: 15,
+                                size: AppSpacing.p2pTradingLevelInlineIcon,
                               )
                             else
                               const VitStatusPill(
@@ -88,7 +84,7 @@ class _LevelCard extends StatelessWidget {
                             Icon(
                               Icons.bolt_rounded,
                               color: locked ? AppColors.text3 : accent,
-                              size: 15,
+                              size: AppSpacing.p2pTradingLevelInlineIcon,
                             ),
                             const SizedBox(width: AppSpacing.x1),
                             Text(
@@ -120,10 +116,11 @@ class _LevelCard extends StatelessWidget {
                     size: AppSpacing.iconMd,
                   ),
                 ],
+                ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.p2pTradingLevelCardBodyPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -164,7 +161,7 @@ class _LevelCard extends StatelessWidget {
                         Icon(
                           Icons.check_circle_outline_rounded,
                           color: locked ? AppColors.text3 : AppColors.buy,
-                          size: 14,
+                          size: AppSpacing.p2pTradingLevelRequirementIcon,
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Expanded(
@@ -172,7 +169,8 @@ class _LevelCard extends StatelessWidget {
                             requirement,
                             style: AppTextStyles.caption.copyWith(
                               color: locked ? AppColors.text3 : AppColors.text2,
-                              height: 1.35,
+                              height: AppSpacing
+                                  .p2pTradingLevelRequirementLineHeight,
                             ),
                           ),
                         ),
@@ -182,12 +180,15 @@ class _LevelCard extends StatelessWidget {
                   ],
                   if (locked && level.id == currentLevel + 1) ...[
                     const SizedBox(height: AppSpacing.x3),
-                    const Divider(color: AppColors.divider, height: 1),
+                    const Divider(
+                      color: AppColors.divider,
+                      height: AppSpacing.dividerHairline,
+                    ),
                     const SizedBox(height: AppSpacing.x3),
                     VitCtaButton(
                       key: P2PTradingLevelPage.upgradeButtonKey,
                       variant: VitCtaButtonVariant.warning,
-                      height: 38,
+                      height: AppSpacing.p2pTradingLevelUpgradeButtonHeight,
                       leading: const Icon(Icons.trending_up_rounded),
                       onPressed: () {},
                       child: Text('Nâng cấp lên ${level.nameVi}'),
@@ -217,34 +218,21 @@ class _LevelIconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = _levelColor(level);
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        gradient: locked
-            ? null
-            : LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [accent, accent.withValues(alpha: 0.68)],
-              ),
-        color: locked ? AppColors.surface2 : null,
-        borderRadius: BorderRadius.circular(size * 0.28),
-        boxShadow: locked
-            ? null
-            : [
-                BoxShadow(
-                  color: accent.withValues(alpha: 0.26),
-                  blurRadius: 14,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-      ),
-      alignment: Alignment.center,
-      child: Icon(
-        _levelIcon(level.id),
-        color: locked ? AppColors.text3 : AppColors.navCenterIcon,
-        size: size * 0.48,
+    return SizedBox.square(
+      dimension: size,
+      child: Material(
+        color: locked ? AppColors.surface2 : accent,
+        elevation: locked ? 0 : AppSpacing.p2pTradingLevelBadgeElevation,
+        shadowColor: accent.withValues(alpha: 0.26),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+        clipBehavior: Clip.antiAlias,
+        child: Center(
+          child: Icon(
+            _levelIcon(level.id),
+            color: locked ? AppColors.text3 : AppColors.navCenterIcon,
+            size: size * AppSpacing.p2pTradingLevelBadgeIconScale,
+          ),
+        ),
       ),
     );
   }
@@ -265,20 +253,20 @@ class _LimitTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: highlighted
-            ? accent.withValues(alpha: 0.08)
-            : AppColors.surface2,
-        border: Border.all(
+    return Material(
+      color: highlighted ? accent.withValues(alpha: 0.08) : AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.cardRadius,
+        side: BorderSide(
           color: highlighted
               ? accent.withValues(alpha: 0.20)
               : AppColors.divider,
         ),
-        borderRadius: AppRadii.cardRadius,
       ),
-      child: Column(
+      clipBehavior: Clip.antiAlias,
+      child: Padding(
+        padding: AppSpacing.p2pTradingLevelLimitPadding,
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -286,7 +274,7 @@ class _LimitTile extends StatelessWidget {
               const Icon(
                 Icons.stacked_line_chart_rounded,
                 color: AppColors.text3,
-                size: 12,
+                size: AppSpacing.p2pTradingLevelTinyIcon,
               ),
               const SizedBox(width: AppSpacing.x1),
               Expanded(
@@ -310,6 +298,7 @@ class _LimitTile extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }

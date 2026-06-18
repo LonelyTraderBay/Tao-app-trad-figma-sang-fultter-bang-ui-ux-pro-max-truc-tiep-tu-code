@@ -48,10 +48,10 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: SocialSignalsPage.contentKey,
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.marketScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.relaxed,
-                      customGap: 12,
+                      customGap: AppSpacing.marketSocialSectionGap,
                       children: [
                         const _RiskDisclaimerCard(),
                         if (_tab == 'signals') ...[
@@ -158,35 +158,42 @@ class _SocialSignalsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
+    return Material(
+      color: AppColors.surface,
       child: SizedBox(
-        height: 54,
-        child: Row(
+        height: AppSpacing.marketSocialTabsHeight,
+        child: Column(
           children: [
-            _UnderlinedTab(
-              key: SocialSignalsPage.signalsTabKey,
-              label: 'Tín hiệu',
-              value: 'signals',
-              active: activeTab == 'signals',
-              onChanged: onChanged,
+            Expanded(
+              child: Row(
+                children: [
+                  _UnderlinedTab(
+                    key: SocialSignalsPage.signalsTabKey,
+                    label: 'Tín hiệu',
+                    value: 'signals',
+                    active: activeTab == 'signals',
+                    onChanged: onChanged,
+                  ),
+                  _UnderlinedTab(
+                    key: SocialSignalsPage.providersTabKey,
+                    label: 'Nhà cung cấp',
+                    value: 'providers',
+                    active: activeTab == 'providers',
+                    onChanged: onChanged,
+                  ),
+                  _UnderlinedTab(
+                    key: SocialSignalsPage.performanceTabKey,
+                    label: 'Hiệu suất',
+                    value: 'performance',
+                    active: activeTab == 'performance',
+                    onChanged: onChanged,
+                  ),
+                ],
+              ),
             ),
-            _UnderlinedTab(
-              key: SocialSignalsPage.providersTabKey,
-              label: 'Nhà cung cấp',
-              value: 'providers',
-              active: activeTab == 'providers',
-              onChanged: onChanged,
-            ),
-            _UnderlinedTab(
-              key: SocialSignalsPage.performanceTabKey,
-              label: 'Hiệu suất',
-              value: 'performance',
-              active: activeTab == 'performance',
-              onChanged: onChanged,
+            const Divider(
+              height: AppSpacing.dividerHairline,
+              color: AppColors.divider,
             ),
           ],
         ),
@@ -225,12 +232,13 @@ class _UnderlinedTab extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.medium,
+                    height: AppSpacing.marketLineHeightTight,
                   ),
                 ),
               ),
             ),
             SizedBox(
-              height: 2,
+              height: AppSpacing.marketSocialTabIndicatorHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: _marketPrimary),
@@ -250,19 +258,26 @@ class _RiskDisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: const EdgeInsets.all(12),
+      padding: AppSpacing.marketSocialDisclaimerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(top: 2),
-            child: Icon(Icons.shield_outlined, color: AppColors.warn, size: 14),
+            padding: AppSpacing.marketSocialDisclaimerIconPadding,
+            child: Icon(
+              Icons.shield_outlined,
+              color: AppColors.warn,
+              size: AppSpacing.marketOverviewMoverHeaderIcon,
+            ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.marketSocialGap),
           Expanded(
             child: Text(
               'Tín hiệu từ cộng đồng chỉ mang tính tham khảo. Không phải khuyến nghị đầu tư. Luôn tự nghiên cứu và quản lý rủi ro.',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                height: AppSpacing.marketLineHeightReadable,
+              ),
             ),
           ),
         ],
@@ -295,7 +310,7 @@ class _StatusFilterChips extends StatelessWidget {
             color: AppAssetColors.neutralChain,
             onTap: () => onSelected(null),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.marketSocialGap),
           _FilterChipButton(
             key: SocialSignalsPage.statusActiveKey,
             label: statusConfigs[TradingSignalStatus.active]!.label,
@@ -303,7 +318,7 @@ class _StatusFilterChips extends StatelessWidget {
             color: statusConfigs[TradingSignalStatus.active]!.color,
             onTap: () => onSelected(TradingSignalStatus.active),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.marketSocialGap),
           _FilterChipButton(
             key: SocialSignalsPage.statusTargetHitKey,
             label: statusConfigs[TradingSignalStatus.targetHit]!.label,
@@ -311,7 +326,7 @@ class _StatusFilterChips extends StatelessWidget {
             color: statusConfigs[TradingSignalStatus.targetHit]!.color,
             onTap: () => onSelected(TradingSignalStatus.targetHit),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.marketSocialGap),
           _FilterChipButton(
             key: SocialSignalsPage.statusStoppedKey,
             label: statusConfigs[TradingSignalStatus.stopped]!.label,
@@ -344,21 +359,21 @@ class _CategoryFilterChips extends StatelessWidget {
           active: categoryFilter == null,
           onTap: () => onSelected(null),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.marketSocialGap),
         _CategoryChip(
           key: SocialSignalsPage.categoryScalpKey,
           label: 'Scalp',
           active: categoryFilter == TradingSignalCategory.scalp,
           onTap: () => onSelected(TradingSignalCategory.scalp),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.marketSocialGap),
         _CategoryChip(
           key: SocialSignalsPage.categorySwingKey,
           label: 'Swing',
           active: categoryFilter == TradingSignalCategory.swing,
           onTap: () => onSelected(TradingSignalCategory.swing),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.marketSocialGap),
         _CategoryChip(
           key: SocialSignalsPage.categoryPositionKey,
           label: 'Position',
@@ -389,24 +404,30 @@ class _FilterChipButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
-      child: Container(
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 13),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? color.withValues(alpha: .12) : AppColors.surface2,
-          border: Border.all(
+      child: Material(
+        color: active ? color.withValues(alpha: .12) : AppColors.surface2,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.mdRadius,
+          side: BorderSide(
             color: active
                 ? color.withValues(alpha: .30)
                 : AppColors.transparent,
           ),
-          borderRadius: AppRadii.mdRadius,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: active ? color : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
+        child: SizedBox(
+          height: AppSpacing.marketSocialFilterHeight,
+          child: Padding(
+            padding: AppSpacing.marketSocialFilterPadding,
+            child: Center(
+              child: Text(
+                label,
+                style: AppTextStyles.captionSm.copyWith(
+                  color: active ? color : AppColors.text3,
+                  fontWeight: AppTextStyles.medium,
+                  height: AppSpacing.marketLineHeightTight,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -431,21 +452,25 @@ class _CategoryChip extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.smRadius,
-      child: Container(
-        height: 34,
-        padding: const EdgeInsets.symmetric(horizontal: 13),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active
-              ? _marketPrimary.withValues(alpha: .12)
-              : AppColors.transparent,
-          borderRadius: AppRadii.smRadius,
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? _marketPrimary : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
+      child: Material(
+        color: active
+            ? _marketPrimary.withValues(alpha: .12)
+            : AppColors.transparent,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        child: SizedBox(
+          height: AppSpacing.marketSocialCategoryHeight,
+          child: Padding(
+            padding: AppSpacing.marketSocialFilterPadding,
+            child: Center(
+              child: Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: active ? _marketPrimary : AppColors.text3,
+                  fontWeight: AppTextStyles.medium,
+                  height: AppSpacing.marketLineHeightTight,
+                ),
+              ),
+            ),
           ),
         ),
       ),

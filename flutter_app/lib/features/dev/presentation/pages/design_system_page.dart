@@ -101,13 +101,13 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
                 child: SingleChildScrollView(
                   key: DesignSystemPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  padding: AppSpacing.devScrollPadding(bottomInset),
                   child: VitPageContent(
                     gap: VitContentGap.loose,
                     children: [
                       VitCard(
                         radius: VitCardRadius.lg,
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         clip: true,
                         child: DesignSystemHero(
                           key: DesignSystemPage.heroKey,
@@ -116,7 +116,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
                       ),
                       VitCard(
                         radius: VitCardRadius.lg,
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         clip: true,
                         child: DesignSystemTokensSection(
                           sectionKey: DesignSystemPage.tokensKey,
@@ -125,7 +125,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
                       ),
                       VitCard(
                         radius: VitCardRadius.lg,
-                        padding: EdgeInsets.zero,
+                        padding: AppSpacing.zeroInsets,
                         clip: true,
                         child: DesignSystemColorSection(
                           sectionKey: DesignSystemPage.colorsKey,

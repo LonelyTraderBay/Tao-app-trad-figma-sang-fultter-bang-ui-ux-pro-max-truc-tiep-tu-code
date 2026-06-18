@@ -10,7 +10,7 @@ class _ScoreOverviewCard extends StatelessWidget {
     return VitCard(
       key: P2PInsuranceScorePage.scoreCardKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.p2pInsuranceScoreLargeCardPadding,
       child: Column(
         children: [
           _ScoreRing(snapshot: snapshot),
@@ -28,7 +28,7 @@ class _ScoreOverviewCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              height: 1.45,
+              height: AppSpacing.p2pInsuranceScoreBodyLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
@@ -36,17 +36,14 @@ class _ScoreOverviewCard extends StatelessWidget {
             variant: VitCardVariant.inner,
             radius: VitCardRadius.lg,
             borderColor: AppColors.buy20,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x3,
-            ),
+            padding: AppSpacing.p2pInsuranceScoreGainPadding,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
                   Icons.trending_up_rounded,
                   color: AppColors.buy,
-                  size: 16,
+                  size: AppSpacing.p2pInsuranceScoreSmallIcon,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Flexible(
@@ -79,17 +76,17 @@ class _ScoreRing extends StatelessWidget {
   Widget build(BuildContext context) {
     final progress = snapshot.overallScore / snapshot.maxScore;
     return SizedBox(
-      width: 160,
-      height: 160,
+      width: AppSpacing.p2pInsuranceScoreRingBox,
+      height: AppSpacing.p2pInsuranceScoreRingBox,
       child: Stack(
         alignment: Alignment.center,
         children: [
           SizedBox(
-            width: 150,
-            height: 150,
+            width: AppSpacing.p2pInsuranceScoreRingTrack,
+            height: AppSpacing.p2pInsuranceScoreRingTrack,
             child: CircularProgressIndicator(
               value: progress,
-              strokeWidth: 10,
+              strokeWidth: AppSpacing.p2pInsuranceScoreRingStroke,
               backgroundColor: AppColors.surface3,
               valueColor: const AlwaysStoppedAnimation<Color>(
                 AppModuleAccents.p2p,
@@ -136,7 +133,7 @@ class _FactorBreakdownCard extends StatelessWidget {
     return VitCard(
       key: P2PInsuranceScorePage.factorsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pInsuranceScoreCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -145,7 +142,7 @@ class _FactorBreakdownCard extends StatelessWidget {
               const Icon(
                 Icons.track_changes_rounded,
                 color: AppColors.text2,
-                size: 18,
+                size: AppSpacing.p2pInsuranceScoreHeaderIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
@@ -183,14 +180,17 @@ class _ScoreFactorRow extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 34,
-              height: 34,
-              decoration: BoxDecoration(
+            SizedBox.square(
+              dimension: AppSpacing.p2pInsuranceScoreFactorIconBox,
+              child: Material(
                 color: color.withValues(alpha: .12),
                 borderRadius: AppRadii.mdRadius,
+                child: Icon(
+                  _iconFor(factor.iconKey),
+                  color: color,
+                  size: AppSpacing.p2pInsuranceScoreFactorIcon,
+                ),
               ),
-              child: Icon(_iconFor(factor.iconKey), color: color, size: 17),
             ),
             const SizedBox(width: AppSpacing.x4),
             Expanded(
@@ -209,7 +209,7 @@ class _ScoreFactorRow extends StatelessWidget {
                     factor.description,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1.35,
+                      height: AppSpacing.p2pInsuranceScoreMicroLineHeight,
                     ),
                   ),
                 ],
@@ -237,14 +237,14 @@ class _ScoreFactorRow extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x3),
         Padding(
-          padding: const EdgeInsets.only(left: 46),
+          padding: AppSpacing.p2pInsuranceScoreFactorRailPadding,
           child: Row(
             children: [
               Expanded(
                 child: ClipRRect(
                   borderRadius: AppRadii.xsRadius,
                   child: SizedBox(
-                    height: 5,
+                    height: AppSpacing.p2pInsuranceScoreProgressHeight,
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
@@ -261,7 +261,7 @@ class _ScoreFactorRow extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x3),
               SizedBox(
-                width: 62,
+                width: AppSpacing.p2pInsuranceScoreFactorStatusWidth,
                 child: Text(
                   factor.statusLabel,
                   textAlign: TextAlign.right,
@@ -277,22 +277,26 @@ class _ScoreFactorRow extends StatelessWidget {
         if (factor.recommendation != null) ...[
           const SizedBox(height: AppSpacing.x3),
           Padding(
-            padding: const EdgeInsets.only(left: 46),
+            padding: AppSpacing.p2pInsuranceScoreFactorRailPadding,
             child: VitCard(
               variant: VitCardVariant.inner,
               radius: VitCardRadius.sm,
-              padding: const EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.p2pInsuranceScoreRecommendationPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.bolt_rounded, color: color, size: 14),
+                  Icon(
+                    Icons.bolt_rounded,
+                    color: color,
+                    size: AppSpacing.p2pInsuranceScoreRecommendationIcon,
+                  ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
                     child: Text(
                       factor.recommendation!,
                       style: AppTextStyles.micro.copyWith(
                         color: color,
-                        height: 1.45,
+                        height: AppSpacing.p2pInsuranceScoreBodyLineHeight,
                       ),
                     ),
                   ),
@@ -315,7 +319,7 @@ class _QuickActionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pInsuranceScoreCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -324,7 +328,7 @@ class _QuickActionsCard extends StatelessWidget {
               const Icon(
                 Icons.north_east_rounded,
                 color: AppColors.buy,
-                size: 18,
+                size: AppSpacing.p2pInsuranceScoreHeaderIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(

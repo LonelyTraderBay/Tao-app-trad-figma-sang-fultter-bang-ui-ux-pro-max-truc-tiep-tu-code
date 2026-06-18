@@ -42,10 +42,10 @@ class _SummaryGrid extends StatelessWidget {
     ];
 
     return GridView.count(
-      crossAxisCount: 2,
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
-      childAspectRatio: 1.53,
+      crossAxisCount: AppSpacing.tradeBotGridColumns,
+      crossAxisSpacing: AppSpacing.tradeBotCardGap,
+      mainAxisSpacing: AppSpacing.tradeBotCardGap,
+      childAspectRatio: AppSpacing.tradeBotPortfolioMetricAspectRatio,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: [for (final card in cards) _SummaryCard(data: card)],
@@ -80,37 +80,30 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 15),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(data.icon, color: data.iconColor, size: 21),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Text(
             data.label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.tradeBotTinyGap),
           Text(
             data.value,
             style: AppTextStyles.baseMedium.copyWith(
               color: data.valueColor,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
             ),
           ),
           if (data.caption != null) ...[
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               data.caption!,
-              style: AppTextStyles.micro.copyWith(
-                color: data.captionColor,
-                height: 1,
-              ),
+              style: AppTextStyles.micro.copyWith(color: data.captionColor),
             ),
           ],
         ],
@@ -126,10 +119,10 @@ class _EquityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPadding,
       child: SizedBox(
-        height: 180,
+        height: AppSpacing.tradeBotDashboardChartHeight,
         child: CustomPaint(
           painter: _EquityPainter(points),
           size: Size.infinite,
@@ -146,23 +139,23 @@ class _AllocationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 9),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPadding,
       child: Column(
         children: [
           SizedBox(
-            height: 200,
+            height: AppSpacing.tradeBotDistributionChartHeight,
             child: CustomPaint(
               painter: _DonutPainter(allocations),
               size: Size.infinite,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.tradeBotTinyGap),
           GridView.count(
-            crossAxisCount: 2,
-            childAspectRatio: 4.8,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
+            crossAxisCount: AppSpacing.tradeBotGridColumns,
+            childAspectRatio: AppSpacing.tradeBotAllocationLegendAspectRatio,
+            crossAxisSpacing: AppSpacing.tradeBotSmallGap,
+            mainAxisSpacing: AppSpacing.tradeBotSmallGap,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             children: [
@@ -184,15 +177,12 @@ class _AllocationLegend extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 12,
-          height: 12,
-          decoration: BoxDecoration(
-            color: Color(item.colorHex),
-            shape: BoxShape.circle,
-          ),
+        Icon(
+          Icons.circle,
+          color: Color(item.colorHex),
+          size: AppSpacing.tradeBotCardGap,
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.tradeBotSmallGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,16 +195,12 @@ class _AllocationLegend extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
                 ),
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: AppSpacing.tradeBotTinyGap),
               Text(
                 '\$${item.value.toStringAsFixed(0)}',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: 1,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -232,18 +218,21 @@ class _CorrelationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final headers = rows.map((row) => row.bot).toList();
-    return _Card(
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 17),
+    return VitCard(
+      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         children: [
           Row(
             children: [
               const Expanded(child: _TableHeaderText('Bot', alignLeft: true)),
               for (final header in headers)
-                SizedBox(width: 74, child: _TableHeaderText(header)),
+                SizedBox(
+                  width: AppSpacing.tradeBotCorrelationColumnWidth,
+                  child: _TableHeaderText(header),
+                ),
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: AppSpacing.tradeBotCardGap),
           for (final row in rows) ...[
             Row(
               children: [
@@ -253,22 +242,22 @@ class _CorrelationCard extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: 1,
                     ),
                   ),
                 ),
                 for (final header in headers)
                   SizedBox(
-                    width: 74,
+                    width: AppSpacing.tradeBotCorrelationColumnWidth,
                     child: Center(
                       child: _CorrelationPill(value: row.values[header] ?? 0),
                     ),
                   ),
               ],
             ),
-            if (row != rows.last) const SizedBox(height: 14),
+            if (row != rows.last)
+              const SizedBox(height: AppSpacing.tradeBotPageTopGap),
           ],
-          const SizedBox(height: 15),
+          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
           Text.rich(
             TextSpan(
               children: [
@@ -277,22 +266,16 @@ class _CorrelationCard extends StatelessWidget {
                 ),
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
-                  child: Container(
-                    width: 9,
-                    height: 9,
-                    decoration: const BoxDecoration(
-                      color: _portfolioGreen,
-                      shape: BoxShape.circle,
-                    ),
+                  child: Icon(
+                    Icons.circle,
+                    color: _portfolioGreen,
+                    size: AppSpacing.tradeBotCorrelationLegendDot,
                   ),
                 ),
               ],
             ),
             textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: 1,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -314,7 +297,6 @@ class _TableHeaderText extends StatelessWidget {
       style: AppTextStyles.micro.copyWith(
         color: AppColors.text3,
         fontWeight: AppTextStyles.bold,
-        height: 1,
       ),
     );
   }
@@ -332,21 +314,12 @@ class _CorrelationPill extends StatelessWidget {
         : value.abs() < .5
         ? _portfolioAmber
         : _portfolioRed;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: Text(
-        value.toStringAsFixed(2),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          fontFeatures: AppTextStyles.tabularFigures,
-          height: 1,
-        ),
-      ),
+    return VitAccentPill(
+      label: value.toStringAsFixed(2),
+      accentColor: color,
+      semanticStatus: value.abs() < .2
+          ? VitStatusPillStatus.success
+          : VitStatusPillStatus.warning,
     );
   }
 }

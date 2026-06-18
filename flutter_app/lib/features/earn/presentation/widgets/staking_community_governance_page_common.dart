@@ -10,24 +10,28 @@ class _VotingPower extends StatelessWidget {
     return VitCard(
       key: StakingCommunityGovernancePage.votingPowerKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: AppSpacing.x7,
-                height: AppSpacing.x7,
-                decoration: const BoxDecoration(
+              const DecoratedBox(
+                decoration: ShapeDecoration(
                   color: AppColors.accent12,
-                  borderRadius: AppRadii.lgRadius,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.lgRadius,
+                  ),
                 ),
-                child: const Icon(
-                  Icons.shield_outlined,
-                  color: AppColors.accent,
-                  size: AppSpacing.iconMd,
+                child: SizedBox(
+                  width: AppSpacing.x7,
+                  height: AppSpacing.x7,
+                  child: Icon(
+                    Icons.shield_outlined,
+                    color: AppColors.accent,
+                    size: AppSpacing.iconMd,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -52,7 +56,7 @@ class _VotingPower extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.lg,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.earnCardPaddingX4,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -60,7 +64,7 @@ class _VotingPower extends StatelessWidget {
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+                    padding: AppSpacing.earnBottomPaddingX1,
                     child: Text(
                       power.share,
                       maxLines: 1,
@@ -119,7 +123,7 @@ class _FooterNote extends StatelessWidget {
       key: StakingCommunityGovernancePage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Text(
         note,
         textAlign: TextAlign.center,
@@ -142,22 +146,25 @@ class _Pill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: _softBackground(color),
-        borderRadius: AppRadii.smRadius,
-        border: emphasis ? Border.all(color: _softBorder(color)) : null,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.smRadius,
+          side: emphasis
+              ? BorderSide(color: _softBorder(color))
+              : BorderSide.none,
+        ),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.stakingGovernancePillLineHeight,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.stakingGovernancePillLineHeight,
+          ),
         ),
       ),
     );

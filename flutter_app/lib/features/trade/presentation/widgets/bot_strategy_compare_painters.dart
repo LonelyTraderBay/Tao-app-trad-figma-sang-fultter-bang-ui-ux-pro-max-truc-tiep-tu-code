@@ -230,7 +230,7 @@ void _paintText(
       style: AppTextStyles.micro.copyWith(
         color: color,
         fontWeight: FontWeight.w500,
-        height: 1,
+        height: AppSpacing.tradeBotLineHeightTight,
         decoration: TextDecoration.none,
       ),
     ),

@@ -26,51 +26,65 @@ class _SocialTabBar extends StatelessWidget {
       ),
     ];
 
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
+    return Material(
+      color: AppColors.surface,
       child: SizedBox(
         height: AppSpacing.predictionSocialTabsHeight,
-        child: Row(
+        child: Stack(
           children: [
-            for (final item in tabs)
-              Expanded(
-                child: InkWell(
-                  key: item.key,
-                  onTap: () => onChanged(item.tab),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            item.label,
-                            style: AppTextStyles.caption.copyWith(
-                              color: activeTab == item.tab
-                                  ? _predictionPrimary
-                                  : AppColors.text3,
-                              fontWeight: AppTextStyles.bold,
+            Row(
+              children: [
+                for (final item in tabs)
+                  Expanded(
+                    child: InkWell(
+                      key: item.key,
+                      onTap: () => onChanged(item.tab),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                item.label,
+                                style: AppTextStyles.caption.copyWith(
+                                  color: activeTab == item.tab
+                                      ? _predictionPrimary
+                                      : AppColors.text3,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 160),
+                            child: Material(
+                              color: _predictionPrimary,
+                              borderRadius: AppRadii.hairlineRadius,
+                              child: SizedBox(
+                                height: AppSpacing
+                                    .predictionSocialTabIndicatorHeight,
+                                width: activeTab == item.tab
+                                    ? AppSpacing
+                                          .predictionSocialTabIndicatorWidth
+                                    : 0,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 160),
-                        height: AppSpacing.predictionSocialTabIndicatorHeight,
-                        width: activeTab == item.tab
-                            ? AppSpacing.predictionSocialTabIndicatorWidth
-                            : 0,
-                        decoration: BoxDecoration(
-                          color: _predictionPrimary,
-                          borderRadius: AppRadii.hairlineRadius,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+              ],
+            ),
+            const Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SizedBox(
+                height: AppSpacing.dividerHairline,
+                child: ColoredBox(color: AppColors.border),
               ),
+            ),
           ],
         ),
       ),
@@ -179,39 +193,11 @@ class _NewCommentCard extends StatelessWidget {
             textStyle: AppTextStyles.body,
           ),
           const SizedBox(height: AppSpacing.predictionSocialPostButtonGap),
-          SizedBox(
+          VitCtaButton(
             height: AppSpacing.predictionSocialPostButtonHeight,
-            width: double.infinity,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: _predictionPrimary.withValues(
-                  alpha: hasComment ? 1 : .65,
-                ),
-                borderRadius: AppRadii.lgRadius,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.send_outlined,
-                    color: AppColors.onAccent.withValues(
-                      alpha: hasComment ? 1 : .5,
-                    ),
-                    size: AppSpacing.predictionSocialPostIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.predictionSocialPostIconGap),
-                  Text(
-                    'Dang binh luan',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.onAccent.withValues(
-                        alpha: hasComment ? 1 : .55,
-                      ),
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            onPressed: hasComment ? () {} : null,
+            leading: const Icon(Icons.send_outlined),
+            child: const Text('Dang binh luan'),
           ),
         ],
       ),

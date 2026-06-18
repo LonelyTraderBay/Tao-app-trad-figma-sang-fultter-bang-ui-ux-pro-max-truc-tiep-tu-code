@@ -49,16 +49,15 @@ class _TargetCard extends StatelessWidget {
       key: DustConverterPage.targetKey(target.symbol),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: VitCard(
         height: AppSpacing.walletDustTargetHeight,
         padding: AppSpacing.walletDustTargetPadding,
-        decoration: BoxDecoration(
+        variant: VitCardVariant.ghost,
+        borderColor: selected ? color.withValues(alpha: .7) : _dustBorder,
+        background: ColoredBox(
           color: selected ? color.withValues(alpha: .11) : _dustPanel2,
-          borderRadius: AppRadii.cardRadius,
-          border: Border.all(
-            color: selected ? color.withValues(alpha: .7) : _dustBorder,
-          ),
         ),
+        clip: true,
         child: Row(
           children: [
             _TokenLogo(
@@ -124,13 +123,10 @@ class _SelectAllRow extends StatelessWidget {
       key: DustConverterPage.selectAllKey,
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
+      child: VitCard(
         height: AppSpacing.walletDustSelectAllHeight,
         padding: AppSpacing.walletDustSelectAllPadding,
-        decoration: BoxDecoration(
-          color: _dustPanel2,
-          borderRadius: AppRadii.cardRadius,
-        ),
+        variant: VitCardVariant.inner,
         child: Row(
           children: [
             Icon(

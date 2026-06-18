@@ -92,9 +92,7 @@ class _ArenaUniversalPresetLibraryPageState
                   child: SingleChildScrollView(
                     key: ArenaUniversalPresetLibraryPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(
-                      bottom: bottomInset + AppSpacing.x6,
-                    ),
+                    padding: AppSpacing.arenaPresetScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       customGap: AppSpacing.x4,

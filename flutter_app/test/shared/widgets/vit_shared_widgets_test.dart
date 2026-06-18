@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
@@ -361,6 +362,8 @@ void main() {
                 badgeLabel: 'Ready',
                 onTap: () => productTaps++,
               ),
+              const SizedBox(height: 8),
+              const VitTogglePill(enabled: true),
             ],
           ),
         ),
@@ -373,6 +376,7 @@ void main() {
     expect(find.text('BTC/USDT'), findsOneWidget);
     expect(find.text('ETH/USDT'), findsOneWidget);
     expect(find.text('Recent'), findsOneWidget);
+    expect(find.byType(VitTogglePill), findsOneWidget);
 
     await tester.tap(find.text('View'));
     await tester.ensureVisible(find.text('Swap'));
@@ -409,6 +413,27 @@ void main() {
     expect(inactiveSize.width, AppSpacing.homeAnnouncementDotInactiveWidth);
     expect(activeSize.width, AppSpacing.homeAnnouncementDotActiveWidth);
     expect(find.bySemanticsLabel('Carousel page 2 of 3'), findsOneWidget);
+  });
+
+  testWidgets('VitCarouselDots supports keyed tap callbacks', (tester) async {
+    var selectedIndex = -1;
+
+    await tester.pumpWidget(
+      _wrap(
+        VitCarouselDots(
+          itemCount: 3,
+          activeIndex: 0,
+          dotKeyBuilder: (index) => ValueKey('onboarding_dot_$index'),
+          onDotTap: (index) => selectedIndex = index,
+        ),
+      ),
+    );
+
+    await tester.tap(find.byKey(const ValueKey('onboarding_dot_2')));
+    await tester.pump();
+
+    expect(selectedIndex, 2);
+    expect(find.bySemanticsLabel('Go to carousel page 3'), findsOneWidget);
   });
 
   testWidgets('VitMetricDeltaPill renders semantic tones', (tester) async {
@@ -667,4 +692,28 @@ void main() {
       expect(handleSize.height, AppSpacing.homeMoreProductsSheetHandleHeight);
     },
   );
+
+  testWidgets('VitSheetSurface renders tokenized sheet surface', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(const VitSheetSurface(child: Text('Surface child'))),
+    );
+
+    expect(find.text('Surface child'), findsOneWidget);
+
+    final surface = tester.widget<Container>(
+      find
+          .descendant(
+            of: find.byType(VitSheetSurface),
+            matching: find.byType(Container),
+          )
+          .first,
+    );
+    final decoration = surface.decoration as BoxDecoration;
+
+    expect(surface.padding, AppSpacing.homeMoreProductsSheetPadding);
+    expect(decoration.color, AppColors.bg);
+    expect(decoration.borderRadius, AppRadii.sheetTopLargeRadius);
+  });
 }

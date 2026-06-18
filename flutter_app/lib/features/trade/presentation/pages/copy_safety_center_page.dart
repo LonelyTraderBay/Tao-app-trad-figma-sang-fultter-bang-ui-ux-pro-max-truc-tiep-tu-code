@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -21,7 +22,6 @@ part '../widgets/copy_safety_metrics_tools.dart';
 part '../widgets/copy_safety_enforcement_common.dart';
 
 const _safetyPrimary = AppColors.primary;
-const _safetyTabsBackground = AppColors.surface;
 const _safetyWarningBorder = AppColors.warningBorderStrong;
 
 class CopySafetyCenterPage extends ConsumerStatefulWidget {
@@ -77,10 +77,10 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: CopySafetyCenterPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                      padding: AppSpacing.copySafetyScrollPadding(bottomInset),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
-                        customGap: 24,
+                        customGap: AppSpacing.sectionGapRegular,
                         fullBleed: true,
                         children: [
                           _HeroBanner(snapshot: snapshot),

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -61,8 +62,10 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 126
-            : DeviceMetrics.nativeBottomChrome + 32) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.profileApiBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.profileApiBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -92,10 +95,10 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
                 child: SingleChildScrollView(
                   key: ApiManagementPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.profileApiScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 18,
+                    customGap: AppSpacing.profileApiContentGap,
                     fullBleed: true,
                     children: [
                       VitCard(
@@ -132,8 +135,8 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
                                       onDelete: () => _confirmDelete(apiKey),
                                     ),
                                     if (apiKey != _keys.last)
-                                      const Padding(
-                                        padding: EdgeInsets.only(top: 18),
+                                      const SizedBox(
+                                        height: AppSpacing.profileApiCardGap,
                                       ),
                                   ],
                                 ],

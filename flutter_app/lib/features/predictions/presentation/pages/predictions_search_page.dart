@@ -116,7 +116,7 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
                       customGap: AppSpacing.predictionSearchContentGap,
                       children: [
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: _SearchControl(
                             controller: _searchController,
                             showFilters: _showFilters,
@@ -129,7 +129,7 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
                         ),
                         if (_showFilters)
                           VitCard(
-                            padding: EdgeInsets.zero,
+                            padding: AppSpacing.zeroInsets,
                             child: _FilterPanel(
                               sort: _sort,
                               status: _status,
@@ -149,7 +149,7 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
                             ),
                           ),
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          padding: AppSpacing.zeroInsets,
                           child: Text(
                             _resultsLabel(snapshot.results.length),
                             style: AppTextStyles.micro.copyWith(

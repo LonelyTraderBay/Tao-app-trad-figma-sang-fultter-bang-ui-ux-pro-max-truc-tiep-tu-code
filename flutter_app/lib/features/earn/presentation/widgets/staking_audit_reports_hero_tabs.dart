@@ -10,7 +10,7 @@ class _FeedbackNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           const Icon(
@@ -45,7 +45,7 @@ class _HeroCard extends StatelessWidget {
       key: StakingAuditReportsPage.heroKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -87,7 +87,7 @@ class _StatsSummary extends StatelessWidget {
     return VitCard(
       key: StakingAuditReportsPage.statsKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           for (final stat in stats) ...[

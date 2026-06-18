@@ -22,7 +22,7 @@ class _HubStat extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 11),
+            Icon(icon, color: color, size: AppSpacing.p2pHomeTinyIcon),
             const SizedBox(width: AppSpacing.x1),
             Flexible(
               child: Text(
@@ -67,14 +67,14 @@ class _AccentIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.iconLg,
       height: AppSpacing.iconLg,
-      decoration: BoxDecoration(
+      child: Material(
         color: color.withValues(alpha: .16),
         borderRadius: AppRadii.mdRadius,
+        child: Icon(icon, color: color, size: AppSpacing.p2pHomeAccentIcon),
       ),
-      child: Icon(icon, color: color, size: 17),
     );
   }
 }
@@ -87,14 +87,14 @@ class _ActionIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
-      decoration: BoxDecoration(
+      child: Material(
         color: color.withValues(alpha: .18),
         borderRadius: AppRadii.mdRadius,
+        child: Icon(icon, color: color, size: AppSpacing.p2pHomeActionIcon),
       ),
-      child: Icon(icon, color: color, size: 18),
     );
   }
 }
@@ -107,14 +107,14 @@ class _SmallIconBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.x5,
       height: AppSpacing.x5,
-      decoration: BoxDecoration(
+      child: Material(
         color: color.withValues(alpha: .14),
         borderRadius: AppRadii.xsRadius,
+        child: Icon(icon, color: color, size: AppSpacing.p2pHomeSmallIcon),
       ),
-      child: Icon(icon, color: color, size: 12),
     );
   }
 }
@@ -124,11 +124,13 @@ class _VerticalDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 1,
-      height: AppSpacing.x7,
-      color: AppColors.divider,
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+    return Padding(
+      padding: AppSpacing.p2pHomeDividerMargin,
+      child: const SizedBox(
+        width: AppSpacing.dividerHairline,
+        height: AppSpacing.x7,
+        child: ColoredBox(color: AppColors.divider),
+      ),
     );
   }
 }
@@ -138,25 +140,7 @@ class _LivePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        border: Border.all(color: AppColors.buy20),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Text(
-        'Live',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.buy,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return const VitAccentPill(label: 'Live', accentColor: AppColors.buy);
   }
 }
 
@@ -167,30 +151,33 @@ class _EscrowPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        border: Border.all(color: AppColors.buy20),
+    return Material(
+      color: AppColors.buy10,
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadii.inputRadius,
+        side: const BorderSide(color: AppColors.buy20),
       ),
-      child: Row(
+      child: Padding(
+        padding: AppSpacing.p2pHomePillPadding,
+        child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.shield_outlined, color: AppColors.buy, size: 11),
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.buy,
+            size: AppSpacing.p2pHomeTinyIcon,
+          ),
           const SizedBox(width: AppSpacing.x1),
           Text(
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.buy,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.p2pHomeTextTightLineHeight,
             ),
           ),
         ],
+        ),
       ),
     );
   }
@@ -204,24 +191,7 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .16),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 
@@ -232,22 +202,17 @@ class _PaymentPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.xsRadius,
-      ),
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.p2pHomeSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppSpacing.p2pHomeTextTightLineHeight,
           ),
         ),
       ),

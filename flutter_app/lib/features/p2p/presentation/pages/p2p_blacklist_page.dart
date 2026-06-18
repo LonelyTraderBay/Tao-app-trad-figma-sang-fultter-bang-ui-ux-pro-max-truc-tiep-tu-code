@@ -58,8 +58,10 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pBlacklistBottomInsetVisual
+            : DeviceMetrics.nativeBottomChrome +
+                  AppSpacing.p2pBlacklistBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final entries = snapshot.entries
         .where((item) => !_removedIds.contains(item.id))
@@ -98,28 +100,21 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: bottomInset),
+                    padding: AppSpacing.p2pBlacklistScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.x3,
+                      customGap: AppSpacing.p2pBlacklistContentGap,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            AppSpacing.contentPad,
-                            0,
-                            AppSpacing.contentPad,
-                            AppSpacing.x4,
-                          ),
+                          padding: AppSpacing.p2pBlacklistSummaryPadding,
                           child: _SummaryCard(
                             snapshot: snapshot,
                             entries: entries,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.contentPad,
-                          ),
+                          padding: AppSpacing.p2pBlacklistHorizontalPadding,
                           child: VitSearchBar(
                             key: P2PBlacklistPage.searchKey,
                             controller: _searchController,
@@ -138,12 +133,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                           },
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            AppSpacing.contentPad,
-                            AppSpacing.x2,
-                            AppSpacing.contentPad,
-                            0,
-                          ),
+                          padding: AppSpacing.p2pBlacklistResultPadding,
                           child: Text(
                             '${filtered.length} kết quả',
                             style: AppTextStyles.micro.copyWith(
@@ -153,9 +143,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.contentPad,
-                          ),
+                          padding: AppSpacing.p2pBlacklistHorizontalPadding,
                           child: _EntryList(
                             snapshot: snapshot,
                             entries: filtered,
@@ -176,9 +164,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.contentPad,
-                          ),
+                          padding: AppSpacing.p2pBlacklistHorizontalPadding,
                           child: _InfoNote(snapshot: snapshot),
                         ),
                       ],

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -12,9 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
@@ -58,7 +56,9 @@ class _AdvancedTradingDemoPageState
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 104 : 28);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.tradeToolBottomInsetRiskVisual
+            : AppSpacing.tradeToolBottomInsetRiskNative);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -80,10 +80,10 @@ class _AdvancedTradingDemoPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: AdvancedTradingDemoPage.contentKey,
-                      padding: EdgeInsets.only(bottom: bottomInset),
+                      padding: AppSpacing.tradeToolScrollPadding(bottomInset),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
-                        customGap: 16,
+                        customGap: AppSpacing.tradeToolPageTopGap,
                         children: [
                           _PositionModeCard(
                             activeMode: _positionMode,

@@ -7,16 +7,17 @@ class _IntroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: const EdgeInsets.fromLTRB(16, 17, 16, 16),
+      padding: AppSpacing.tradeBotCardPaddingLoose,
       borderColor: _apiPrimary.withValues(alpha: .25),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 2),
-            child: Icon(Icons.code_rounded, color: _apiPrimary, size: 25),
+          const Icon(
+            Icons.code_rounded,
+            color: _apiPrimary,
+            size: AppSpacing.tradeBotCheckbox,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,17 +27,17 @@ class _IntroCard extends StatelessWidget {
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.1,
+                    height: AppSpacing.tradeBotLineHeightShort,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.tradeBotSmallGap),
                 Text(
                   'Programmatically create, manage, and monitor trading '
                   'bots using our REST API and WebSocket connections. '
                   'Available for Enterprise tier users.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.55,
+                    height: AppSpacing.tradeBotLineHeightRelaxed,
                   ),
                 ),
               ],
@@ -61,47 +62,17 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final widths = <String, double>{
-      'endpoints': 93,
-      'websocket': 96,
-      'examples': 90,
-    };
-    return Row(
-      children: [
-        for (var i = 0; i < tabs.length; i++) ...[
-          GestureDetector(
-            key: BotApiDocumentationPage.tabKey(tabs[i].id),
-            behavior: HitTestBehavior.opaque,
-            onTap: () => onChanged(tabs[i].id),
-            child: Container(
-              width: widths[tabs[i].id] ?? 90,
-              height: 35,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: active == tabs[i].id
-                    ? _apiPrimary.withValues(alpha: .13)
-                    : _apiTabBackground,
-                border: Border.all(
-                  color: active == tabs[i].id
-                      ? _apiPrimary.withValues(alpha: .42)
-                      : AppColors.transparent,
-                ),
-                borderRadius: AppRadii.cardRadius,
-              ),
-              child: Text(
-                tabs[i].label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: active == tabs[i].id ? _apiPrimary : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                  height: 1,
-                ),
-              ),
-            ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: active,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.id,
+            label: tab.label,
+            widgetKey: BotApiDocumentationPage.tabKey(tab.id),
           ),
-          if (i != tabs.length - 1) const SizedBox(width: 10),
-        ],
       ],
     );
   }

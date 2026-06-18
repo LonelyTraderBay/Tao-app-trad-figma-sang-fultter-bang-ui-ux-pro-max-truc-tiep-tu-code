@@ -31,7 +31,7 @@ class _ProductCard extends StatelessWidget {
     return VitCard(
       key: StakingEarnPage.productKey(product.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

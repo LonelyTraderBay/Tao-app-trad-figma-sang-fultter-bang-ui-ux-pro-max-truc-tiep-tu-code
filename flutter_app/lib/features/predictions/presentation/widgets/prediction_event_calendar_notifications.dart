@@ -110,10 +110,10 @@ class _WatchingSection extends StatelessWidget {
                 SizedBox(
                   height: AppSpacing.predictionCalendarEditButtonHeight,
                   width: double.infinity,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: AppColors.bg,
-                      border: Border.all(color: AppColors.border),
+                  child: Material(
+                    color: AppColors.bg,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: AppColors.border),
                       borderRadius: AppRadii.mdRadius,
                     ),
                     child: Row(
@@ -187,64 +187,56 @@ class _NotificationSettingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionCalendarNotificationRowPadding,
-      decoration: BoxDecoration(
-        border: showDivider
-            ? const Border(bottom: BorderSide(color: AppColors.border))
-            : null,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                  ),
+    return Stack(
+      children: [
+        Padding(
+          padding: AppSpacing.predictionCalendarNotificationRowPadding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: AppSpacing.predictionCalendarNotificationLabelGap,
+                    ),
+                    Text(
+                      description,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionCalendarNotificationLabelGap,
-                ),
-                Text(
-                  description,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
+              ),
+              const VitTogglePill(
+                enabled: true,
+                activeColor: _predictionPrimary,
+                width: AppSpacing.predictionCalendarToggleWidth,
+                height: AppSpacing.predictionCalendarToggleHeight,
+                knobSize: AppSpacing.predictionCalendarToggleKnob,
+                knobMargin: AppSpacing.predictionCalendarTogglePadding,
+              ),
+            ],
+          ),
+        ),
+        if (showDivider)
+          const Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: SizedBox(
+              height: AppSpacing.dividerHairline,
+              child: ColoredBox(color: AppColors.border),
             ),
           ),
-          const _TogglePill(),
-        ],
-      ),
-    );
-  }
-}
-
-class _TogglePill extends StatelessWidget {
-  const _TogglePill();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.predictionCalendarToggleWidth,
-      height: AppSpacing.predictionCalendarToggleHeight,
-      decoration: BoxDecoration(
-        color: _predictionPrimary,
-        borderRadius: AppRadii.inputRadius,
-      ),
-      alignment: Alignment.centerRight,
-      padding: AppSpacing.predictionCalendarTogglePadding,
-      child: Container(
-        width: AppSpacing.predictionCalendarToggleKnob,
-        height: AppSpacing.predictionCalendarToggleKnob,
-        decoration: const BoxDecoration(
-          color: AppColors.onAccent,
-          shape: BoxShape.circle,
-        ),
-      ),
+      ],
     );
   }
 }

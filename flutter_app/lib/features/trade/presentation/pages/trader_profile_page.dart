@@ -83,7 +83,7 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: TraderProfilePage.contentKey,
-                  padding: EdgeInsets.fromLTRB(20, 14, 20, bottomInset),
+                  padding: AppSpacing.traderProfileScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
@@ -95,10 +95,10 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
                         onToggleFollow: () =>
                             setState(() => _isFollowing = !_isFollowing),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
                       VitCard(
                         variant: VitCardVariant.inner,
-                        padding: const EdgeInsets.all(12),
+                        padding: AppSpacing.traderProfileRiskPanelPadding,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -109,7 +109,7 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
                                   'Performance, recent trades, statistics, risk history and copy action suitability are reviewed before following.',
                               contractId: 'trader-profile-${widget.traderId}',
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.x3),
                             const VitStatusPill(
                               label: 'Past performance varies',
                               status: VitStatusPillStatus.warning,
@@ -118,7 +118,9 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.traderProfileSectionGap,
+                      ),
                       _SegmentTabs(
                         activeId: _tab,
                         tabs: const [
@@ -128,7 +130,9 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
                         ],
                         onChanged: (id) => setState(() => _tab = id),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(
+                        height: AppSpacing.traderProfileSectionGap,
+                      ),
                       VitPageSection(
                         customGap: 0,
                         children: [

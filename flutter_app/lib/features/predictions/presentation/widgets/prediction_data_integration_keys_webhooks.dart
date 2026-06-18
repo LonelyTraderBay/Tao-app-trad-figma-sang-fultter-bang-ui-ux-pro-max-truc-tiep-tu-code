@@ -100,47 +100,55 @@ class _ApiKeyCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.predictionDataApiKeyBoxTopGap),
-          Container(
+          ConstrainedBox(
             constraints: const BoxConstraints(
               minHeight: AppSpacing.predictionDataApiKeyBoxMinHeight,
             ),
-            padding: AppSpacing.predictionDataApiKeyBoxPadding,
-            decoration: BoxDecoration(
+            child: Material(
               color: AppColors.bg,
-              border: Border.all(color: AppColors.border),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.vpn_key_outlined,
-                  color: AppColors.text3,
-                  size: AppSpacing.predictionDataApiKeyIcon,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: AppColors.border),
+                borderRadius: AppRadii.mdRadius,
+              ),
+              child: Padding(
+                padding: AppSpacing.predictionDataApiKeyBoxPadding,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.vpn_key_outlined,
+                      color: AppColors.text3,
+                      size: AppSpacing.predictionDataApiKeyIcon,
+                    ),
+                    const SizedBox(width: AppSpacing.predictionDataApiKeyGap),
+                    Expanded(
+                      child: Text(
+                        revealed ? apiKey.key : _maskKey(apiKey.key),
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text1,
+                        ),
+                      ),
+                    ),
+                    _InlineIconButton(
+                      key: PredictionDataIntegrationPage.revealApiKey(
+                        apiKey.id,
+                      ),
+                      icon: revealed
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
+                      onTap: onReveal,
+                    ),
+                    _InlineIconButton(
+                      key: PredictionDataIntegrationPage.copyApiKey(apiKey.id),
+                      icon: copied
+                          ? Icons.check_circle_outline_rounded
+                          : Icons.copy_rounded,
+                      color: copied ? AppColors.buy : AppColors.text3,
+                      onTap: onCopy,
+                    ),
+                  ],
                 ),
-                const SizedBox(width: AppSpacing.predictionDataApiKeyGap),
-                Expanded(
-                  child: Text(
-                    revealed ? apiKey.key : _maskKey(apiKey.key),
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text1),
-                  ),
-                ),
-                _InlineIconButton(
-                  key: PredictionDataIntegrationPage.revealApiKey(apiKey.id),
-                  icon: revealed
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                  onTap: onReveal,
-                ),
-                _InlineIconButton(
-                  key: PredictionDataIntegrationPage.copyApiKey(apiKey.id),
-                  icon: copied
-                      ? Icons.check_circle_outline_rounded
-                      : Icons.copy_rounded,
-                  color: copied ? AppColors.buy : AppColors.text3,
-                  onTap: onCopy,
-                ),
-              ],
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.predictionDataPermissionsTopGap),

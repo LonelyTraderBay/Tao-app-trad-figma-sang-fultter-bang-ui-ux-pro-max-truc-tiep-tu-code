@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/controllers/admin_controller.dart';
@@ -81,13 +82,15 @@ class AdminInlineEmptyState extends StatelessWidget {
     return Semantics(
       label: '$title. $message',
       child: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: ShapeDecoration(
           color: AppColors.surface2,
-          border: Border.all(color: AppColors.borderSolid),
-          borderRadius: BorderRadius.circular(AppSpacing.adminStateRadius),
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: AppColors.borderSolid),
+            borderRadius: AppRadii.cardRadius,
+          ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.adminCardPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

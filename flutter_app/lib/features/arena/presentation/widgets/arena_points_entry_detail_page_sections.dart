@@ -14,7 +14,7 @@ class _AmountHero extends StatelessWidget {
         ? AppColors.sell
         : AppColors.text1;
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaPointsEntryHeroPadding,
       child: Column(
         children: [
           Text(
@@ -69,7 +69,7 @@ class _EntryDetails extends StatelessWidget {
       title: 'Chi tiết',
       accentColor: AppColors.accent,
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.arenaPointsEntryCardPadding,
         child: Column(
           children: [
             _DetailRow(label: 'Mô tả', value: entry.note),
@@ -110,7 +110,7 @@ class _BalanceCard extends StatelessWidget {
       title: 'Biến động số dư',
       accentColor: AppColors.buy,
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.arenaPointsEntryCardPadding,
         child: Row(
           children: [
             Expanded(
@@ -119,17 +119,22 @@ class _BalanceCard extends StatelessWidget {
                 value: _formatPoints(entry.balanceBefore),
               ),
             ),
-            Container(
-              width: AppSpacing.arenaPointsEntryBalanceArrowBox,
-              height: AppSpacing.arenaPointsEntryBalanceArrowBox,
-              decoration: BoxDecoration(
-                color: entry.amount >= 0 ? AppColors.buy10 : AppColors.sell10,
-                borderRadius: AppRadii.xlRadius,
-              ),
-              child: Icon(
-                Icons.arrow_forward_rounded,
-                color: entry.amount >= 0 ? AppColors.buy : AppColors.sell,
-                size: AppSpacing.arenaPointsInlineIcon,
+            SizedBox.square(
+              dimension: AppSpacing.arenaPointsEntryBalanceArrowBox,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: entry.amount >= 0 ? AppColors.buy10 : AppColors.sell10,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.xlRadius,
+                  ),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.arrow_forward_rounded,
+                    color: entry.amount >= 0 ? AppColors.buy : AppColors.sell,
+                    size: AppSpacing.arenaPointsInlineIcon,
+                  ),
+                ),
               ),
             ),
             Expanded(
@@ -162,7 +167,7 @@ class _ReferenceCard extends StatelessWidget {
       title: 'Mã tham chiếu',
       accentColor: AppColors.text3,
       child: VitCard(
-        padding: const EdgeInsets.all(AppSpacing.x4),
+        padding: AppSpacing.arenaPointsEntryCardPadding,
         child: Row(
           children: [
             Expanded(
@@ -180,10 +185,7 @@ class _ReferenceCard extends StatelessWidget {
               variant: VitCardVariant.inner,
               radius: VitCardRadius.sm,
               onTap: onCopy,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x3,
-                vertical: AppSpacing.x2,
-              ),
+              padding: AppSpacing.arenaPointsEntryCopyPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -218,7 +220,7 @@ class _AuditNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaPointsEntryNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -295,12 +297,16 @@ class _Section extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.arenaPointsEntrySectionMarkerWidth,
               height: AppSpacing.arenaPointsEntrySectionMarkerHeight,
-              decoration: BoxDecoration(
-                color: accentColor,
-                borderRadius: AppRadii.xsRadius,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: accentColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.xsRadius,
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -331,7 +337,7 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.arenaPointsEntryRowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

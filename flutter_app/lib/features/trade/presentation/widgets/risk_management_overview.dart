@@ -6,13 +6,17 @@ class _IntroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tradeToolRiskIntroPadding,
       borderColor: _riskPrimary.withValues(alpha: .30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _IconTile(icon: Icons.shield_rounded, color: _riskPrimary, size: 40),
-          const SizedBox(width: 12),
+          _IconTile(
+            icon: Icons.shield_rounded,
+            color: _riskPrimary,
+            size: AppSpacing.tradeToolIconTileSm,
+          ),
+          const SizedBox(width: AppSpacing.tradeToolCardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,12 +27,11 @@ class _IntroCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.formFieldLabelGap),
                 Text(
                   '3 công cụ quản lý rủi ro chuyên nghiệp giúp bảo vệ vốn và tối ưu hóa lợi nhuận. Đây là foundation quan trọng nhất cho enterprise trading platform.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.55,
                   ),
                 ),
               ],
@@ -49,45 +52,45 @@ class _FeatureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(feature.colorHex);
-    return InkWell(
+    return VitCard(
       key: RiskManagementDemoPage.featureKey(feature.id),
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            _IconTile(icon: _iconForFeature(feature), color: color, size: 48),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    feature.title,
-                    style: AppTextStyles.caption.copyWith(
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      padding: AppSpacing.tradeToolRiskIntroPadding,
+      child: Row(
+        children: [
+          _IconTile(
+            icon: _iconForFeature(feature),
+            color: color,
+            size: AppSpacing.tradeToolIconTileMd,
+          ),
+          const SizedBox(width: AppSpacing.tradeToolCardGap),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  feature.title,
+                  style: AppTextStyles.caption.copyWith(
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    feature.description,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                      height: 1.5,
-                    ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  feature.description,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(width: 8),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: 20,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(width: AppSpacing.tradeToolInlineGap),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconMd,
+          ),
+        ],
       ),
     );
   }
@@ -130,7 +133,7 @@ class _BenefitsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tradeToolRiskIntroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -140,14 +143,15 @@ class _BenefitsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeToolCardGap),
           for (final benefit in _benefits) ...[
             _BenefitItem(
               icon: benefit.$1,
               title: benefit.$2,
               description: benefit.$3,
             ),
-            if (benefit != _benefits.last) const SizedBox(height: 12),
+            if (benefit != _benefits.last)
+              const SizedBox(height: AppSpacing.tradeToolCardGap),
           ],
         ],
       ),
@@ -171,8 +175,8 @@ class _BenefitItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: _riskPrimary, size: 18),
-        const SizedBox(width: 10),
+        Icon(icon, color: _riskPrimary, size: AppSpacing.tradeToolBodyIcon),
+        const SizedBox(width: AppSpacing.tradeToolIconGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,12 +188,11 @@ class _BenefitItem extends StatelessWidget {
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: AppSpacing.tradeToolMicroGap),
               Text(
                 description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.35,
                 ),
               ),
             ],
@@ -208,7 +211,7 @@ class _StatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.tradeToolRiskIntroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -218,7 +221,7 @@ class _StatusCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.tradeToolCardGap),
           for (final item in items) ...[
             Row(
               children: [
@@ -233,7 +236,7 @@ class _StatusCard extends StatelessWidget {
                 _StatusPill(complete: item.complete),
               ],
             ),
-            if (item != items.last) const SizedBox(height: 9),
+            if (item != items.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -248,21 +251,12 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = complete ? AppColors.buy : AppColors.caution;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
-      ),
-      child: Text(
-        complete ? '✓ Complete' : '⏳ Pending',
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
-        ),
-      ),
+    return VitStatusPill(
+      label: complete ? 'Complete' : 'Pending',
+      icon: complete ? Icons.check_rounded : Icons.schedule_rounded,
+      status:
+          complete ? VitStatusPillStatus.success : VitStatusPillStatus.warning,
+      size: VitStatusPillSize.sm,
     );
   }
 }

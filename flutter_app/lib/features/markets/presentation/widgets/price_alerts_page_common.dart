@@ -11,28 +11,33 @@ class _AddAlertButton extends StatelessWidget {
       key: PriceAlertsPage.addAlertKey,
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
-        height: AppSpacing.buttonStandard,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: _marketPrimary.withValues(alpha: .13),
-          border: Border.all(color: _marketPrimary.withValues(alpha: .30)),
+      child: Material(
+        color: _marketPrimary.withValues(alpha: .13),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: _marketPrimary.withValues(alpha: .30)),
           borderRadius: AppRadii.cardRadius,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.add_rounded, color: _marketPrimary, size: 18),
-            const SizedBox(width: 8),
-            Text(
-              'Tạo cảnh báo mới',
-              style: AppTextStyles.body.copyWith(
+        child: SizedBox(
+          height: AppSpacing.buttonStandard,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.add_rounded,
                 color: _marketPrimary,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
+                size: AppSpacing.priceAlertsAddIcon,
               ),
-            ),
-          ],
+              const SizedBox(width: AppSpacing.priceAlertsAddGap),
+              Text(
+                'T\u1EA1o c\u1EA3nh b\u00E1o m\u1EDBi',
+                style: AppTextStyles.body.copyWith(
+                  color: _marketPrimary,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.marketLineHeightTight,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

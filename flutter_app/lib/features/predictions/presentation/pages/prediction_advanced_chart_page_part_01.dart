@@ -174,51 +174,65 @@ class _AdvancedChartTabBar extends StatelessWidget {
       ),
     ];
 
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
+    return Material(
+      color: AppColors.surface,
       child: SizedBox(
         height: AppSpacing.predictionAdvancedTabsHeight,
-        child: Row(
+        child: Stack(
           children: [
-            for (final item in tabs)
-              Expanded(
-                child: InkWell(
-                  key: item.key,
-                  onTap: () => onChanged(item.tab),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            item.label,
-                            style: AppTextStyles.caption.copyWith(
-                              color: activeTab == item.tab
-                                  ? _predictionPrimary
-                                  : AppColors.text3,
-                              fontWeight: AppTextStyles.bold,
+            Row(
+              children: [
+                for (final item in tabs)
+                  Expanded(
+                    child: InkWell(
+                      key: item.key,
+                      onTap: () => onChanged(item.tab),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                item.label,
+                                style: AppTextStyles.caption.copyWith(
+                                  color: activeTab == item.tab
+                                      ? _predictionPrimary
+                                      : AppColors.text3,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 160),
+                            child: Material(
+                              color: _predictionPrimary,
+                              borderRadius: AppRadii.hairlineRadius,
+                              child: SizedBox(
+                                height: AppSpacing
+                                    .predictionAdvancedTabIndicatorHeight,
+                                width: activeTab == item.tab
+                                    ? AppSpacing
+                                          .predictionAdvancedTabIndicatorWidth
+                                    : 0,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 160),
-                        height: AppSpacing.predictionAdvancedTabIndicatorHeight,
-                        width: activeTab == item.tab
-                            ? AppSpacing.predictionAdvancedTabIndicatorWidth
-                            : 0,
-                        decoration: BoxDecoration(
-                          color: _predictionPrimary,
-                          borderRadius: AppRadii.hairlineRadius,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+              ],
+            ),
+            const Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SizedBox(
+                height: AppSpacing.dividerHairline,
+                child: ColoredBox(color: AppColors.border),
               ),
+            ),
           ],
         ),
       ),
@@ -274,18 +288,16 @@ class _TimeframeButton extends StatelessWidget {
       height: AppSpacing.predictionAdvancedTimeframeHeight,
       child: Material(
         color: active ? _predictionPrimary : AppColors.bg,
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: active ? AppColors.transparent : AppColors.border,
+          ),
+          borderRadius: AppRadii.cardRadius,
+        ),
         child: InkWell(
           onTap: onTap,
           borderRadius: AppRadii.cardRadius,
-          child: Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: active ? AppColors.transparent : AppColors.border,
-              ),
-              borderRadius: AppRadii.cardRadius,
-            ),
+          child: Center(
             child: Text(
               label,
               style: AppTextStyles.caption.copyWith(

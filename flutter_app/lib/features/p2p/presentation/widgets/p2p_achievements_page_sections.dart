@@ -13,7 +13,7 @@ class _SummaryCard extends StatelessWidget {
       key: P2PAchievementsPage.summaryKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.p2pTrustProgressHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -40,7 +40,7 @@ class _SummaryCard extends StatelessWidget {
                     Text(
                       '${snapshot.unlockedCount}/${snapshot.achievements.length}',
                       style: AppTextStyles.amountMd.copyWith(
-                        height: 1.05,
+                        height: AppSpacing.p2pTrustProgressAmountLineHeight,
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
@@ -56,7 +56,7 @@ class _SummaryCard extends StatelessWidget {
             value: '$progressPct%',
             progress: snapshot.overallProgress,
             color: AppModuleAccents.p2p,
-            minHeight: 8,
+            minHeight: AppSpacing.p2pTrustProgressSummaryProgressHeight,
           ),
           const SizedBox(height: AppSpacing.x4),
           Row(
@@ -108,10 +108,7 @@ class _SummaryMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.p2pTrustProgressSummaryMetricPadding,
       child: Column(
         children: [
           Text(
@@ -195,7 +192,7 @@ class _AchievementCard extends StatelessWidget {
     return VitCard(
       key: P2PAchievementsPage.achievementKey(achievement.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -251,7 +248,7 @@ class _AchievementCard extends StatelessWidget {
                     value: achievement.progressLabel,
                     progress: achievement.progress,
                     color: color,
-                    minHeight: 6,
+                    minHeight: AppSpacing.p2pTrustProgressCardProgressHeight,
                   ),
                 ],
                 const SizedBox(height: AppSpacing.x3),
@@ -291,18 +288,22 @@ class _AchievementIconBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = large ? 56.0 : 44.0;
-    final iconSize = large ? 28.0 : 21.0;
+    final size = large
+        ? AppSpacing.p2pTrustProgressIconBoxLarge
+        : AppSpacing.p2pTrustProgressIconBox;
+    final iconSize = large
+        ? AppSpacing.p2pTrustProgressIconLarge
+        : AppSpacing.p2pTrustProgressIcon;
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Container(
+        VitCard(
           width: size,
           height: size,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: locked ? .34 : .22),
-            borderRadius: AppRadii.cardRadius,
-          ),
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.md,
+          background: ColoredBox(color: color.withValues(alpha: locked ? .34 : .22)),
+          clip: true,
           child: Icon(
             icon,
             color: locked ? AppColors.text3 : color,
@@ -311,20 +312,23 @@ class _AchievementIconBubble extends StatelessWidget {
         ),
         if (!large && !locked && showBadge)
           Positioned(
-            right: -3,
-            bottom: -3,
-            child: Container(
-              width: 18,
-              height: 18,
-              decoration: BoxDecoration(
+            right: AppSpacing.p2pTrustProgressBadgeInset,
+            bottom: AppSpacing.p2pTrustProgressBadgeInset,
+            child: SizedBox.square(
+              dimension: AppSpacing.p2pTrustProgressBadgeSize,
+              child: Material(
                 color: AppColors.buy,
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.surface, width: 2),
-              ),
-              child: const Icon(
-                Icons.check_rounded,
-                color: AppColors.onAccent,
-                size: 10,
+                shape: const CircleBorder(
+                  side: BorderSide(
+                    color: AppColors.surface,
+                    width: AppSpacing.p2pTrustProgressBadgeBorderWidth,
+                  ),
+                ),
+                child: const Icon(
+                  Icons.check_rounded,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.p2pTrustProgressBadgeIcon,
+                ),
               ),
             ),
           ),

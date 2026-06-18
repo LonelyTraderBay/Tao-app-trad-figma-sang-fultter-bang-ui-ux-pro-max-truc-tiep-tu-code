@@ -19,17 +19,16 @@ class _EmailCta extends StatelessWidget {
         padding: AppSpacing.predictionBreakingEmailPadding,
         child: Row(
           children: [
-            Container(
-              width: AppSpacing.predictionBreakingEmailIconBox,
-              height: AppSpacing.predictionBreakingEmailIconBox,
-              decoration: BoxDecoration(
-                color: AppColors.buy.withValues(alpha: .12),
-                borderRadius: AppRadii.mdRadius,
-              ),
-              child: const Icon(
-                Icons.mail_outline_rounded,
-                color: AppColors.buy,
-                size: AppSpacing.predictionBreakingEmailIcon,
+            Material(
+              color: AppColors.buy.withValues(alpha: .12),
+              borderRadius: AppRadii.mdRadius,
+              child: const SizedBox.square(
+                dimension: AppSpacing.predictionBreakingEmailIconBox,
+                child: Icon(
+                  Icons.mail_outline_rounded,
+                  color: AppColors.buy,
+                  size: AppSpacing.predictionBreakingEmailIcon,
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.predictionBreakingEmailGap),
@@ -63,17 +62,16 @@ class _EmailCta extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.predictionBreakingEmailIconBox,
-                height: AppSpacing.predictionBreakingEmailIconBox,
-                decoration: BoxDecoration(
-                  color: _emailPurple.withValues(alpha: .13),
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: const Icon(
-                  Icons.mail_outline_rounded,
-                  color: _emailPurple,
-                  size: AppSpacing.predictionBreakingEmailIcon,
+              Material(
+                color: _emailPurple.withValues(alpha: .13),
+                borderRadius: AppRadii.mdRadius,
+                child: const SizedBox.square(
+                  dimension: AppSpacing.predictionBreakingEmailIconBox,
+                  child: Icon(
+                    Icons.mail_outline_rounded,
+                    color: _emailPurple,
+                    size: AppSpacing.predictionBreakingEmailIcon,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.predictionBreakingEmailGap),
@@ -117,30 +115,26 @@ class _EmailCta extends StatelessWidget {
               const SizedBox(
                 width: AppSpacing.predictionBreakingEmailButtonGap,
               ),
-              InkWell(
-                key: PredictionsBreakingPage.subscribeKey,
-                onTap: onSubscribe,
+              Material(
+                color: _emailPurple,
                 borderRadius: AppRadii.mdRadius,
-                child: Container(
-                  height: AppSpacing.predictionBreakingSubscribeHeight,
-                  padding: AppSpacing.predictionBreakingSubscribePadding,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: _emailPurple,
-                    borderRadius: AppRadii.mdRadius,
-                    boxShadow: [
-                      BoxShadow(
-                        color: _emailPurple.withValues(alpha: .26),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+                key: PredictionsBreakingPage.subscribeKey,
+                child: InkWell(
+                  onTap: onSubscribe,
+                  borderRadius: AppRadii.mdRadius,
+                  child: SizedBox(
+                    height: AppSpacing.predictionBreakingSubscribeHeight,
+                    child: Padding(
+                      padding: AppSpacing.predictionBreakingSubscribePadding,
+                      child: Center(
+                        child: Text(
+                          'Subscribe',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.onAccent,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                  child: Text(
-                    'Subscribe',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.onAccent,
-                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
                 ),

@@ -85,12 +85,7 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                   child: SingleChildScrollView(
                     key: P2PAdDetailPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x4,
-                      AppSpacing.contentPad,
-                      bottomInset,
-                    ),
+                    padding: AppSpacing.p2pAdDetailScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -115,7 +110,7 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                         _EscrowCard(snapshot: snapshot, amount: cryptoAmount),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: EdgeInsets.all(AppSpacing.x3),
+                          padding: AppSpacing.p2pAdDetailCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P order preview review',
@@ -132,7 +127,7 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
               VitStickyFooter(
                 backgroundColor: AppColors.surface.withValues(alpha: .96),
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: footerInset),
+                  padding: AppSpacing.p2pAdDetailFooterPadding(footerInset),
                   child: VitCtaButton(
                     key: P2PAdDetailPage.buyButtonKey,
                     onPressed: isValid

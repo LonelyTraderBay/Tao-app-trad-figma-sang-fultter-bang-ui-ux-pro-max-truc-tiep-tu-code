@@ -14,18 +14,19 @@ class _KycStatusCard extends StatelessWidget {
       borderColor: _kycGreen.withValues(alpha: .45),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.kycStatusIconBox,
             height: AppSpacing.kycStatusIconBox,
-            decoration: BoxDecoration(
+            child: Material(
               color: _kycGreen.withValues(alpha: .2),
-              borderRadius: AppRadii.cardLargeRadius,
-            ),
-            alignment: Alignment.center,
-            child: const Icon(
-              Icons.shield_outlined,
-              color: _kycGreen,
-              size: AppSpacing.kycStatusIcon,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.cardLargeRadius,
+              ),
+              child: const Icon(
+                Icons.shield_outlined,
+                color: _kycGreen,
+                size: AppSpacing.kycStatusIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.kycStatusGap),
@@ -107,69 +108,71 @@ class _KycLevelCard extends StatelessWidget {
             key: KYCPage.levelKey(level.level),
             onTap: onTap,
             behavior: HitTestBehavior.opaque,
-            child: Container(
+            child: SizedBox(
               height: AppSpacing.kycLevelRowHeight,
-              padding: AppSpacing.kycLevelRowPadding,
-              child: Row(
-                children: [
-                  _LevelIcon(level: level.level, done: done, accent: accent),
-                  const SizedBox(width: AppSpacing.kycLevelRowGap),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          level.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.baseMedium.copyWith(
-                            color: done ? AppColors.text1 : AppColors.text2,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.kycStatusTextGap),
-                        if (done)
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.check_rounded,
-                                color: _kycMuted,
-                                size: AppSpacing.kycDetailIcon,
-                              ),
-                              const SizedBox(
-                                width:
-                                    AppSpacing.dividerHairline +
-                                    AppSpacing.hairlineStroke,
-                              ),
-                              Text(
-                                '\u0110\u00E3 ho\u00E0n th\u00E0nh',
-                                style: AppTextStyles.badge.copyWith(
-                                  color: _kycMuted,
-                                ),
-                              ),
-                            ],
-                          )
-                        else
+              child: Padding(
+                padding: AppSpacing.kycLevelRowPadding,
+                child: Row(
+                  children: [
+                    _LevelIcon(level: level.level, done: done, accent: accent),
+                    const SizedBox(width: AppSpacing.kycLevelRowGap),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                           Text(
-                            'Ch\u01B0a x\u00E1c minh',
-                            style: AppTextStyles.badge.copyWith(
-                              color: _kycMuted,
+                            level.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.baseMedium.copyWith(
+                              color: done ? AppColors.text1 : AppColors.text2,
+                              fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                      ],
+                          const SizedBox(height: AppSpacing.kycStatusTextGap),
+                          if (done)
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.check_rounded,
+                                  color: _kycMuted,
+                                  size: AppSpacing.kycDetailIcon,
+                                ),
+                                const SizedBox(
+                                  width:
+                                      AppSpacing.dividerHairline +
+                                      AppSpacing.hairlineStroke,
+                                ),
+                                Text(
+                                  '\u0110\u00E3 ho\u00E0n th\u00E0nh',
+                                  style: AppTextStyles.badge.copyWith(
+                                    color: _kycMuted,
+                                  ),
+                                ),
+                              ],
+                            )
+                          else
+                            Text(
+                              'Ch\u01B0a x\u00E1c minh',
+                              style: AppTextStyles.badge.copyWith(
+                                color: _kycMuted,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                  AnimatedRotation(
-                    turns: expanded ? .25 : 0,
-                    duration: const Duration(milliseconds: 180),
-                    child: const Icon(
-                      Icons.chevron_right_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.kycLevelChevron,
+                    AnimatedRotation(
+                      turns: expanded ? .25 : 0,
+                      duration: const Duration(milliseconds: 180),
+                      child: const Icon(
+                        Icons.chevron_right_rounded,
+                        color: AppColors.text3,
+                        size: AppSpacing.kycLevelChevron,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -208,31 +211,34 @@ class _LevelIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: AppSpacing.kycLevelIconBox,
       height: AppSpacing.kycLevelIconBox,
-      decoration: BoxDecoration(
+      child: Material(
         color: done ? accent.withValues(alpha: .13) : AppColors.transparent,
-        borderRadius: AppRadii.lgRadius,
-        border: Border.all(
-          color: done ? accent : AppColors.borderSolid,
-          width: AppSpacing.kycLevelIconBorder,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.lgRadius,
+          side: BorderSide(
+            color: done ? accent : AppColors.borderSolid,
+            width: AppSpacing.kycLevelIconBorder,
+          ),
+        ),
+        child: Center(
+          child: done
+              ? Icon(
+                  Icons.check_circle_outline_rounded,
+                  color: accent,
+                  size: AppSpacing.kycLevelDoneIcon,
+                )
+              : Text(
+                  '$level',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
         ),
       ),
-      alignment: Alignment.center,
-      child: done
-          ? Icon(
-              Icons.check_circle_outline_rounded,
-              color: accent,
-              size: AppSpacing.kycLevelDoneIcon,
-            )
-          : Text(
-              '$level',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
     );
   }
 }

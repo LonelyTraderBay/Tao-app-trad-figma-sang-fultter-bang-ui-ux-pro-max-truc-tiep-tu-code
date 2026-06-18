@@ -10,18 +10,11 @@ class _AssetHero extends StatelessWidget {
     final color = Color(snapshot.colorHex);
     final positive = snapshot.change24h >= 0;
 
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.hero,
       height: AppSpacing.walletAssetHeroHeight,
       padding: AppSpacing.walletAssetHeroPadding,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [color.withValues(alpha: .13), color.withValues(alpha: .045)],
-        ),
-        borderRadius: AppRadii.cardLargeRadius,
-        border: Border.all(color: color.withValues(alpha: .25)),
-      ),
+      borderColor: color.withValues(alpha: .25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -127,25 +120,12 @@ class _AssetLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(snapshot.colorHex);
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .14),
-        shape: BoxShape.circle,
-        border: Border.all(color: color.withValues(alpha: .35), width: 2),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        snapshot.symbol.substring(
-          0,
-          snapshot.symbol.length < 3 ? snapshot.symbol.length : 3,
-        ),
-        style: AppTextStyles.caption.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
+    return VitAssetAvatar(
+      label: snapshot.symbol,
+      accentColor: color,
+      size: size,
+      radius: AppRadii.pillRadius,
+      border: true,
     );
   }
 }
@@ -163,13 +143,11 @@ class _StatPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
       height: AppSpacing.walletAssetStatHeight,
       padding: AppSpacing.walletAssetStatPillPadding,
-      decoration: BoxDecoration(
-        color: AppColors.onAccent.withValues(alpha: .05),
-        borderRadius: AppRadii.cardRadius,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -246,14 +224,13 @@ class _ActionTile extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
-          Container(
+          VitCard(
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
             width: AppSpacing.walletAssetActionIcon,
             height: AppSpacing.walletAssetActionIcon,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .15),
-              borderRadius: AppRadii.lgRadius,
-            ),
             alignment: Alignment.center,
+            borderColor: color.withValues(alpha: .22),
             child: Icon(
               icon,
               color: color,
@@ -322,9 +299,10 @@ class _PriceChartCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.walletAssetChartBottomGap),
           Expanded(
-            child: CustomPaint(
-              painter: _AssetChartPainter(points: snapshot.chart, color: color),
-              child: const SizedBox.expand(),
+            child: VitSparkline(
+              values: [for (final point in snapshot.chart) point.price],
+              color: color,
+              strokeWidth: AppSpacing.borderWidth,
             ),
           ),
         ],

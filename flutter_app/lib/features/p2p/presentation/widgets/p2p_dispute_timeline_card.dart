@@ -52,20 +52,21 @@ class _TimelineItem extends StatelessWidget {
       children: [
         Column(
           children: [
-            Container(
-              width: AppSpacing.p2pDisputeTimelineDot,
-              height: AppSpacing.p2pDisputeTimelineDot,
-              decoration: BoxDecoration(
-                color: color,
-                shape: BoxShape.circle,
-                border: Border.all(color: color.withValues(alpha: .35)),
+            Material(
+              color: color,
+              shape: CircleBorder(
+                side: BorderSide(color: color.withValues(alpha: .35)),
+              ),
+              child: const SizedBox(
+                width: AppSpacing.p2pDisputeTimelineDot,
+                height: AppSpacing.p2pDisputeTimelineDot,
               ),
             ),
             if (!isLast)
-              Container(
+              const SizedBox(
                 width: AppSpacing.p2pDisputeTimelineConnectorWidth,
                 height: AppSpacing.p2pDisputeTimelineConnectorHeight,
-                color: AppColors.borderSolid,
+                child: ColoredBox(color: AppColors.borderSolid),
               ),
           ],
         ),
