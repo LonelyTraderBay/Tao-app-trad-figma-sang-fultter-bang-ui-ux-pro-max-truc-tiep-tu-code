@@ -10,34 +10,31 @@ class _ChartSection extends StatelessWidget {
     return VitPageSection(
       label: 'Price / Probability',
       accentColor: AppColors.buy,
+      density: VitDensity.compact,
       children: [
         VitCard(
-          padding: AppSpacing.predictionDetailChartCardPadding,
+          density: VitDensity.compact,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const _ChartPeriodTabs(),
-              const SizedBox(height: AppSpacing.predictionDetailChartPlotGap),
+              const SizedBox(height: AppSpacing.x2),
               SizedBox(
-                height: AppSpacing.predictionDetailChartHeight,
+                height: AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x5,
                 child: CustomPaint(
                   painter: _ProbabilityChartPainter(
                     values: snapshot.probabilityHistory,
                   ),
                 ),
               ),
-              const SizedBox(
-                height: AppSpacing.predictionDetailChartVolumeLabelGap,
-              ),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 'Volume (24h)',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(
-                height: AppSpacing.predictionDetailChartVolumeBarsGap,
-              ),
+              const SizedBox(height: AppSpacing.x1),
               SizedBox(
-                height: AppSpacing.predictionDetailChartVolumeBarsHeight,
+                height: AppSpacing.x5,
                 child: _VolumeBars(values: snapshot.volumeHistory),
               ),
             ],
@@ -71,7 +68,7 @@ class _ChartPeriodTabs extends StatelessWidget {
                 ),
               ),
               child: SizedBox(
-                height: AppSpacing.predictionDetailChartPeriodHeight,
+                height: VitDensity.compact.controlHeight,
                 child: Center(
                   child: Text(
                     tabs[index],

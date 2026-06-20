@@ -22,7 +22,7 @@ class _WatchlistToolbar extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.watchlistToolbarPadding,
+            padding: VitDensity.compact.cardPadding,
             child: Column(
               children: [
                 Row(
@@ -36,7 +36,7 @@ class _WatchlistToolbar extends StatelessWidget {
                         onClear: onClear,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.watchlistActionGap),
+                    const SizedBox(width: AppSpacing.x2),
                     Material(
                       color: _marketPrimary,
                       shape: const CircleBorder(),
@@ -44,28 +44,28 @@ class _WatchlistToolbar extends StatelessWidget {
                         key: WatchlistPage.addPairKey,
                         onTap: onAddPair,
                         customBorder: const CircleBorder(),
-                        child: const SizedBox(
-                          width: AppSpacing.watchlistAddButton,
-                          height: AppSpacing.watchlistAddButton,
-                          child: Icon(
+                        child: SizedBox(
+                          width: VitDensity.compact.controlHeight,
+                          height: VitDensity.compact.controlHeight,
+                          child: const Icon(
                             Icons.add_rounded,
                             color: AppColors.onAccent,
-                            size: AppSpacing.watchlistAddIcon,
+                            size: AppSpacing.iconMd,
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.watchlistSectionGap),
+                const SizedBox(height: AppSpacing.x2),
                 Row(
                   children: [
                     const Icon(
                       Icons.star_rounded,
                       color: AppColors.warn,
-                      size: AppSpacing.watchlistCountIcon,
+                      size: AppSpacing.iconSm,
                     ),
-                    const SizedBox(width: AppSpacing.watchlistCountGap),
+                    const SizedBox(width: AppSpacing.x1),
                     Text(
                       '$count cặp đang theo dõi',
                       style: AppTextStyles.caption.copyWith(

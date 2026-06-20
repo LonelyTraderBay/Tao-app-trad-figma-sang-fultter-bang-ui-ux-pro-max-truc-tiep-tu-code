@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpArmStatus(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,19 @@ void main() {
     expect(find.text('ARM Providers'), findsOneWidget);
     expect(find.text('REGIS-TR'), findsWidgets);
     expect(find.text('Latency Monitoring (Last 15 min)'), findsOneWidget);
+  });
+
+  testWidgets('SC-095 first viewport reaches first ARM provider', (
+    tester,
+  ) async {
+    await pumpArmStatus(tester);
+
+    expectActionableInFirstViewport(
+      tester,
+      ArmIntegrationStatusPage.connectionKey('arm-1').asFinder(),
+      routeName: 'ArmIntegrationStatusPage',
+      actionLabel: 'first ARM provider card',
+    );
   });
 
   testWidgets('SC-095 test connection toggles local testing state', (

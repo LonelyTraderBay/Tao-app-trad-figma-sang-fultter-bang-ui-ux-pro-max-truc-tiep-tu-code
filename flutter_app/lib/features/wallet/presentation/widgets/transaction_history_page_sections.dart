@@ -11,12 +11,7 @@ class _ExportBar extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletHistoryExportBarPadH,
-        top: AppSpacing.walletHistoryExportBarPadV,
-        right: AppSpacing.walletHistoryExportBarPadH,
-        bottom: AppSpacing.walletHistoryExportBarPadV,
-      ),
+      padding: _historyExportPadding,
       child: Row(
         children: [
           Expanded(
@@ -30,7 +25,7 @@ class _ExportBar extends StatelessWidget {
             label: 'Xuất CSV',
             icon: Icons.cloud_download_outlined,
             status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.lg,
+            size: VitStatusPillSize.md,
             onTap: onExport,
           ),
         ],
@@ -63,8 +58,7 @@ class _FilterTabs extends StatelessWidget {
               active: filters[i].id == active,
               onTap: () => onChanged(filters[i].id),
             ),
-            if (i != filters.length - 1)
-              const SizedBox(width: AppSpacing.walletHistoryFilterGap),
+            if (i != filters.length - 1) const SizedBox(width: _historyTinyGap),
           ],
         ],
       ),
@@ -89,7 +83,7 @@ class _FilterChip extends StatelessWidget {
       key: TransactionHistoryPage.filterKey(filter.id),
       label: filter.label,
       status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
-      size: VitStatusPillSize.lg,
+      size: VitStatusPillSize.md,
       outline: !active,
       onTap: onTap,
     );
@@ -118,13 +112,11 @@ class _TransactionGroup extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(
-          height: AppSpacing.walletHistorySectionHeaderHeight,
+          height: _historySectionHeaderHeight,
           child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: AppSpacing.zeroInsets.copyWith(
-                left: AppSpacing.walletHistorySectionPadLeft,
-              ),
+              padding: AppSpacing.zeroInsets.copyWith(left: _historyTinyGap),
               child: Text(
                 _formatDate(group.date),
                 style: AppTextStyles.caption.copyWith(
@@ -165,27 +157,23 @@ class _TransactionRow extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: AppSpacing.walletHistoryItemMinHeight,
-            ),
+            constraints: const BoxConstraints(minHeight: _historyRowMinHeight),
             child: Padding(
-              padding: AppSpacing.cardPaddingCompact,
+              padding: _historyRowPadding,
               child: Row(
                 children: [
                   _TransactionIcon(meta: meta),
-                  const SizedBox(
-                    width: AppSpacing.walletHistoryAmountColumnWidth,
-                  ),
+                  const SizedBox(width: _historyInlineGap),
                   Expanded(
                     child: _TransactionInfo(tx: tx, meta: meta),
                   ),
-                  const SizedBox(width: AppSpacing.rowGapCompact),
+                  const SizedBox(width: _historyTinyGap),
                   _AmountStatus(tx: tx, meta: meta),
-                  const SizedBox(width: AppSpacing.walletHistoryRowChevronGap),
+                  const SizedBox(width: _historyTinyGap),
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.text3,
-                    size: AppSpacing.walletTransactionActionIcon,
+                    size: AppSpacing.iconMd,
                   ),
                 ],
               ),
@@ -213,14 +201,14 @@ class _TransactionIcon extends StatelessWidget {
       return VitCard(
         variant: VitCardVariant.inner,
         radius: VitCardRadius.sm,
-        width: AppSpacing.walletAssetActionIcon,
-        height: AppSpacing.walletAssetActionIcon,
+        width: _historyIconBox,
+        height: _historyIconBox,
         alignment: Alignment.center,
         borderColor: meta.color.withValues(alpha: .22),
         child: const Icon(
           Icons.currency_exchange_rounded,
           color: _historyPrimary,
-          size: AppSpacing.walletHistoryTradeIconGlyph,
+          size: AppSpacing.iconSm,
         ),
       );
     }
@@ -228,11 +216,11 @@ class _TransactionIcon extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      width: AppSpacing.walletAssetActionIcon,
-      height: AppSpacing.walletAssetActionIcon,
+      width: _historyIconBox,
+      height: _historyIconBox,
       alignment: Alignment.center,
       borderColor: meta.color.withValues(alpha: .22),
-      child: Icon(meta.icon, color: AppColors.text1, size: AppSpacing.iconMd),
+      child: Icon(meta.icon, color: AppColors.text1, size: AppSpacing.iconSm),
     );
   }
 }
@@ -258,7 +246,7 @@ class _TransactionInfo extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
+        const SizedBox(height: _historyTinyGap),
         Text(
           _timePart(tx.createdAt),
           maxLines: 1,
@@ -266,7 +254,7 @@ class _TransactionInfo extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         if (tx.network != null) ...[
-          const SizedBox(height: AppSpacing.walletHistoryTextSpacing),
+          const SizedBox(height: _historyTinyGap),
           Text(
             'Mạng: ${tx.network}',
             maxLines: 1,
@@ -275,7 +263,7 @@ class _TransactionInfo extends StatelessWidget {
           ),
         ],
         if (tx.txHash != null) ...[
-          const SizedBox(height: AppSpacing.walletHistoryTextSpacing),
+          const SizedBox(height: _historyTinyGap),
           Text(
             tx.txHash!,
             maxLines: 1,

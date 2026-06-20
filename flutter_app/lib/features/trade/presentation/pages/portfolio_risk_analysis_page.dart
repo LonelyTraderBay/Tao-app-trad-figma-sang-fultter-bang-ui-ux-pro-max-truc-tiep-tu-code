@@ -6,9 +6,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,12 +24,24 @@ part '../widgets/portfolio_risk_analysis_page_common.dart';
 const _riskPrimary = AppColors.primary;
 const _riskWarningBorder = AppColors.warningBorderStrong;
 const _riskWarningText = AppColors.caution;
+const double _riskVisualScrollClearance = 108;
+const double _riskNativeScrollClearance = 72;
+const double _riskSectionSpace = AppSpacing.x2;
+const double _riskTinySpace = AppSpacing.x1;
+const double _riskSummaryExtent = 82;
+const double _riskChartExtent = 128;
+const double _riskRingExtent = 78;
+const double _riskAssetRowExtent = 46;
+const double _riskSwatchExtent = 14;
+const double _riskBodyLineHeight = 1.24;
+const double _riskCaptionLineHeight = 1.1;
 
 class PortfolioRiskAnalysisPage extends ConsumerStatefulWidget {
   const PortfolioRiskAnalysisPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc078_portfolio_risk_content');
   static Key tabKey(String id) => Key('sc078_tab_$id');
+  static Key assetKey(String asset) => Key('sc078_asset_$asset');
 
   final ShellRenderMode? shellRenderMode;
 
@@ -46,13 +58,12 @@ class _PortfolioRiskAnalysisPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradePortfolioRiskAnalysisProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
+        (mode.usesVisualQaFrame
+            ? _riskVisualScrollClearance
+            : _riskNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 146 : 30);
+        AppSpacing.x2;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -71,32 +82,27 @@ class _PortfolioRiskAnalysisPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: PortfolioRiskAnalysisPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     fullBleed: true,
-                    customGap: 0,
                     children: [
                       _RiskSummaryGrid(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.tradeBotPanelGap),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Portfolio risk preview',
                         message:
                             'Review exposure, VaR, correlation, stress scenarios, limits, and next-step rebalancing before changing copy allocations.',
                         contractId: 'SC-078 risk analysis review',
+                        density: VitDensity.compact,
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       _RiskWarningPanel(alerts: snapshot.riskAlerts),
-                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       _RiskTabs(
                         tabs: snapshot.tabs,
                         activeId: _activeTab,
                         onChanged: (id) => setState(() => _activeTab = id),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotPanelGap),
                       if (_activeTab == 'exposure')
                         _ExposureTab(snapshot: snapshot)
                       else if (_activeTab == 'correlation')

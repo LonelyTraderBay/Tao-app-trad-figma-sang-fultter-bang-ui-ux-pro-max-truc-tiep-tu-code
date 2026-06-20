@@ -23,8 +23,7 @@ class _TargetSelector extends StatelessWidget {
               onTap: () => onSelected(target.symbol),
             ),
           ),
-          if (target != targets.last)
-            const SizedBox(width: AppSpacing.walletDustTargetGap),
+          if (target != targets.last) const SizedBox(width: _dustTinyGap),
         ],
       ],
     );
@@ -50,8 +49,8 @@ class _TargetCard extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: VitCard(
-        height: AppSpacing.walletDustTargetHeight,
-        padding: AppSpacing.walletDustTargetPadding,
+        height: _dustTargetHeight,
+        padding: _dustTargetPadding,
         variant: VitCardVariant.ghost,
         borderColor: selected ? color.withValues(alpha: .7) : _dustBorder,
         background: ColoredBox(
@@ -63,9 +62,9 @@ class _TargetCard extends StatelessWidget {
             _TokenLogo(
               symbol: target.symbol,
               color: color,
-              size: AppSpacing.walletDustTokenLogo,
+              size: _dustTokenLogo,
             ),
-            const SizedBox(width: AppSpacing.walletDustTargetLogoGap),
+            const SizedBox(width: _dustInlineGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -78,7 +77,7 @@ class _TargetCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.walletDustTargetTextGap),
+                  const SizedBox(height: _dustTinyGap),
                   Text(
                     target.name,
                     maxLines: 1,
@@ -92,7 +91,7 @@ class _TargetCard extends StatelessWidget {
               const Icon(
                 Icons.check_circle_outline,
                 color: _dustGreen,
-                size: AppSpacing.walletDustCheckboxIcon,
+                size: AppSpacing.iconSm,
               ),
           ],
         ),
@@ -124,8 +123,8 @@ class _SelectAllRow extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: VitCard(
-        height: AppSpacing.walletDustSelectAllHeight,
-        padding: AppSpacing.walletDustSelectAllPadding,
+        height: _dustSelectAllHeight,
+        padding: _dustSelectAllPadding,
         variant: VitCardVariant.inner,
         child: Row(
           children: [
@@ -134,9 +133,9 @@ class _SelectAllRow extends StatelessWidget {
                   ? Icons.check_box_rounded
                   : Icons.check_box_outline_blank_rounded,
               color: selectedCount > 0 ? _dustPrimary : _dustMuted,
-              size: AppSpacing.walletDustSelectAllIcon,
+              size: AppSpacing.iconSm,
             ),
-            const SizedBox(width: AppSpacing.walletDustSelectAllGap),
+            const SizedBox(width: _dustInlineGap),
             Text(
               label,
               style: AppTextStyles.caption.copyWith(

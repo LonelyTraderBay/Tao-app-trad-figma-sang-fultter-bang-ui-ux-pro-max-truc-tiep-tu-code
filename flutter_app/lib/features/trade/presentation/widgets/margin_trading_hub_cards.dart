@@ -10,12 +10,6 @@ class _FeatureCard extends StatelessWidget {
     final color = Color(feature.colorHex);
     return _HubCard(
       key: MarginTradingHubPage.featureKey(feature.phase),
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.ctaLoadingIcon,
-        top: AppSpacing.ctaLoadingIcon,
-        right: AppSpacing.ctaLoadingIcon,
-        bottom: AppSpacing.ctaLoadingIcon,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -23,12 +17,10 @@ class _FeatureCard extends StatelessWidget {
             children: [
               VitCard(
                 variant: VitCardVariant.inner,
-                width:
-                    AppSpacing.walletAddressActionSize +
-                    AppSpacing.formFieldLabelGap,
-                height:
-                    AppSpacing.walletAddressActionSize +
-                    AppSpacing.formFieldLabelGap,
+                width: _hubIconTile,
+                height: _hubIconTile,
+                density: VitDensity.compact,
+                padding: EdgeInsets.zero,
                 borderColor: color.withValues(alpha: .18),
                 child: Icon(
                   _featureIcon(feature.phase),
@@ -36,7 +28,7 @@ class _FeatureCard extends StatelessWidget {
                   size: AppSpacing.x5,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
+              const SizedBox(width: _hubSpace),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,17 +38,17 @@ class _FeatureCard extends StatelessWidget {
                       style: AppTextStyles.baseMedium.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.marginTradingHubLineHeightTitle,
+                        height: _hubLineTight,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: _hubTinySpace),
                     MarginHubPhaseBadge(label: feature.phase, color: color),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.ctaLoadingIcon),
+          const SizedBox(height: _hubSpace),
           for (final item in feature.items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,22 +56,22 @@ class _FeatureCard extends StatelessWidget {
                 Icon(
                   Icons.check_circle_outline_rounded,
                   color: color,
-                  size: AppSpacing.marginTradingHubFeatureCheckIcon,
+                  size: AppSpacing.x4,
                 ),
-                const SizedBox(width: AppSpacing.x3),
+                const SizedBox(width: _hubTinySpace),
                 Expanded(
                   child: Text(
                     item,
                     style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.marginTradingHubLineHeightBody,
+                      height: _hubLineBody,
                     ),
                   ),
                 ),
               ],
             ),
             if (item != feature.items.last)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: _hubTinySpace),
           ],
         ],
       ),
@@ -96,7 +88,8 @@ class _ComplianceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.cardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _hubGreen.withValues(alpha: .24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -107,11 +100,9 @@ class _ComplianceCard extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: _hubGreen,
-                size:
-                    AppSpacing.walletAddressActionSize +
-                    AppSpacing.formFieldLabelGap,
+                size: _hubIconTile,
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: _hubSpace),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,15 +112,15 @@ class _ComplianceCard extends StatelessWidget {
                       style: AppTextStyles.baseMedium.copyWith(
                         color: _hubGreen,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.marginTradingHubLineHeightCaption,
+                        height: _hubLineTight,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.transferTileGap),
+                    const SizedBox(height: _hubTinySpace),
                     Text(
                       compliance.description,
                       style: AppTextStyles.captionSm.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.marginTradingHubLineHeightBody,
+                        height: _hubLineBody,
                       ),
                     ),
                   ],
@@ -137,17 +128,16 @@ class _ComplianceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAssetSectionGap),
+          const SizedBox(height: _hubSpace),
           GridView.builder(
             itemCount: compliance.regulations.length,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: AppSpacing.marginTradingHubComplianceGridColumns,
-              mainAxisExtent: AppSpacing.marginTradingHubComplianceGridExtent,
-              crossAxisSpacing:
-                  AppSpacing.marginTradingHubComplianceGridCrossGap,
-              mainAxisSpacing: AppSpacing.marginTradingHubComplianceGridMainGap,
+              crossAxisCount: 2,
+              mainAxisExtent: _hubComplianceGridExtent,
+              crossAxisSpacing: _hubTinySpace,
+              mainAxisSpacing: _hubTinySpace,
             ),
             itemBuilder: (context, index) {
               return VitCard(
@@ -159,7 +149,7 @@ class _ComplianceCard extends StatelessWidget {
                   style: AppTextStyles.captionSm.copyWith(
                     color: _hubGreen,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.marginTradingHubLineHeightTight,
+                    height: _hubLineTight,
                   ),
                 ),
               );
@@ -172,15 +162,15 @@ class _ComplianceCard extends StatelessWidget {
 }
 
 class _HubCard extends StatelessWidget {
-  const _HubCard({super.key, required this.child, required this.padding});
+  const _HubCard({super.key, required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: padding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _hubBorder.withValues(alpha: .68),
       child: child,
     );

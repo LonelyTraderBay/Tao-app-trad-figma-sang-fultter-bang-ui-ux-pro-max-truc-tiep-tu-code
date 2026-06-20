@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpOrderReceipt(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -87,6 +89,25 @@ void main() {
     expect(find.byKey(OrderReceiptPage.shareKey), findsOneWidget);
     expect(find.byKey(OrderReceiptPage.continueTradingKey), findsOneWidget);
     expect(find.byKey(OrderReceiptPage.supportKey), findsOneWidget);
+  });
+
+  testWidgets('SC-051 first viewport reaches receipt id', (tester) async {
+    await pumpOrderReceipt(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'OrderReceiptPage',
+      semanticLabel: 'SC-051 OrderReceiptPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('ORD-98EH1ZT2'),
+      minVisibleHeight: 12,
+      targetLabel: 'trade receipt order id',
+      reason:
+          'Order receipt should expose the actual order id above the sticky '
+          'footer and bottom navigation on the QA phone viewport.',
+    );
   });
 
   testWidgets('SC-051 status badge opens orders history', (tester) async {

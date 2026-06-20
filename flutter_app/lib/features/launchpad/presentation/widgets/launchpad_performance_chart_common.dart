@@ -12,7 +12,7 @@ class _ChartTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.md,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: _launchpadPerformanceCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -27,7 +27,7 @@ class _ChartTab extends StatelessWidget {
                 'Chỉ tính các tháng có dự án launch. Tháng không có dự án hiện 0%.',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.x3),
               _PointBars(
                 points: points,
                 valueFor: (point) => point.avgRoi.toDouble(),
@@ -36,10 +36,10 @@ class _ChartTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.md,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: _launchpadPerformanceCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -54,7 +54,7 @@ class _ChartTab extends StatelessWidget {
                 'Tổng số USDT huy động qua tất cả dự án trong tháng.',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.x3),
               _PointBars(
                 points: points,
                 valueFor: (point) => point.volume / 1000,
@@ -86,7 +86,7 @@ class _PointBars extends StatelessWidget {
       (largest, point) => valueFor(point) > largest ? valueFor(point) : largest,
     );
     return SizedBox(
-      height: AppSpacing.launchpadPerformanceSparklineHeight,
+      height: _launchpadPerformanceSparklineHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -99,7 +99,7 @@ class _PointBars extends StatelessWidget {
                     '${valueFor(point).round()}$suffix',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.launchpadLineHeightTight,
+                      height: _launchpadPerformanceLineHeightTight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x2),
@@ -108,9 +108,11 @@ class _PointBars extends StatelessWidget {
                       heightFactor: (valueFor(point) / max).clamp(.08, 1.0),
                       alignment: Alignment.bottomCenter,
                       child: const DecoratedBox(
-                        decoration: BoxDecoration(
+                        decoration: ShapeDecoration(
                           color: AppColors.primary,
-                          borderRadius: AppRadii.mdRadius,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.mdRadius,
+                          ),
                         ),
                         child: SizedBox.expand(),
                       ),
@@ -121,7 +123,7 @@ class _PointBars extends StatelessWidget {
                     point.month,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.launchpadLineHeightTight,
+                      height: _launchpadPerformanceLineHeightTight,
                     ),
                   ),
                 ],
@@ -140,33 +142,37 @@ class _PerformanceDisclaimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: LaunchpadPerformancePage.disclaimerKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.warn08,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.warningBorder),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.error_outline_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.iconMd,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Dữ liệu chỉ mang tính tham khảo. ROI được tính từ giá launch đến giá hiện tại hoặc ATH, chưa trừ phí và slippage. Nghiên cứu kỹ trước khi tham gia bất kỳ dự án nào.',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.launchpadLineHeightReadable,
+      child: Padding(
+        padding: _launchpadPerformanceCardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.error_outline_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.iconMd,
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Text(
+                'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Dữ liệu chỉ mang tính tham khảo. ROI được tính từ giá launch đến giá hiện tại hoặc ATH, chưa trừ phí và slippage. Nghiên cứu kỹ trước khi tham gia bất kỳ dự án nào.',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  height: _launchpadPerformanceLineHeightReadable,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -180,21 +186,20 @@ class _TinyPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.launchpadLineHeightCompact,
+      child: Padding(
+        padding: AppSpacing.launchpadInlinePillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            height: _launchpadPerformanceLineHeightCompact,
+          ),
         ),
       ),
     );

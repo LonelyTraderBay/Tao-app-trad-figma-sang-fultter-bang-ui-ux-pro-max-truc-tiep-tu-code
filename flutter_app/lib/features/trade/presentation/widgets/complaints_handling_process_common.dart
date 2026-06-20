@@ -7,34 +7,32 @@ class _ProcessContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         const VitSectionHeader(
           title: 'How We Handle Complaints',
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
-        const SizedBox(height: AppSpacing.x4),
         _Card(
-          padding: AppSpacing.cardPadding,
           child: Column(
             children: [
               for (final step in snapshot.processSteps) ...[
                 _ProcessStep(step: step),
                 if (step != snapshot.processSteps.last)
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.x2),
               ],
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
         const VitSectionHeader(
           title: 'Financial Ombudsman Service',
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
-        const SizedBox(height: AppSpacing.x4),
         _OmbudsmanCard(ombudsman: snapshot.ombudsman),
       ],
     );
@@ -56,7 +54,7 @@ class _ProcessStep extends StatelessWidget {
           color: _complaintsGreen,
           size: AppSpacing.complaintCaseActionIcon,
         ),
-        const SizedBox(width: AppSpacing.x4),
+        const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,16 +64,12 @@ class _ProcessStep extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.complaintCaseLineHeightTight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.formFieldLabelGap),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 step.description,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.complaintsHandlingRightsBodyLineHeight,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -93,56 +87,43 @@ class _OmbudsmanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             ombudsman.description,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: AppSpacing.complaintsHandlingOmbudsmanLineHeight,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.cardPaddingCompact,
+            density: VitDensity.compact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Contact:',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.complaintCaseLineHeightTight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Phone: ${ombudsman.phone}',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    height: AppSpacing.complaintCaseLineHeightTight,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Web: ${ombudsman.website}',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    height: AppSpacing.complaintCaseLineHeightTight,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           VitCtaButton(
             onPressed: () =>
                 context.go(AppRoutePaths.tradeCopyOmbudsmanReferral),
             variant: VitCtaButtonVariant.secondary,
-            height: AppSpacing.searchBarCompactHeight,
+            density: VitDensity.compact,
             leading: const Icon(Icons.info_outline_rounded),
             child: const Text('Learn About Ombudsman Referral'),
           ),
@@ -153,15 +134,14 @@ class _OmbudsmanCard extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
+  const _Card({required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: padding,
+      density: VitDensity.compact,
       borderColor: _complaintsBorder.withValues(alpha: .76),
       child: child,
     );

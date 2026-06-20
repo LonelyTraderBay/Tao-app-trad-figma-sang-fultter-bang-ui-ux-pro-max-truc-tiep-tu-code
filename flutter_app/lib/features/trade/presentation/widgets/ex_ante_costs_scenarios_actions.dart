@@ -20,71 +20,80 @@ class _Scenarios extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionLabel('Cost Scenarios by Holding Period'),
-        const SizedBox(height: AppSpacing.tradeListGap),
-        Row(
+        VitPageSection(
+          label: 'Cost Scenarios by Holding Period',
+          accentColor: _costPrimary,
+          density: VitDensity.compact,
           children: [
-            for (final period in const [1, 3, 5]) ...[
-              Expanded(
-                child: _PeriodButton(
-                  label: '$period ${period == 1 ? 'Year' : 'Years'}',
-                  selected: holdingPeriod == period,
-                  onPressed: () => onChanged(period),
-                ),
-              ),
-              if (period != 5) const SizedBox(width: AppSpacing.x3),
-            ],
-          ],
-        ),
-        const SizedBox(height: AppSpacing.tradeListGap),
-        _Card(
-          padding: AppSpacing.tradeFeeCardPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Total Costs Over $holdingPeriod '
-                '${holdingPeriod == 1 ? 'Year' : 'Years'}',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.tradeListGap),
-              _ScenarioRow(label: 'One-off Costs', value: snapshot.oneOffCosts),
-              _ScenarioRow(
-                label: 'Recurring Costs ($holdingPeriod years)',
-                value: snapshot.recurringCosts * holdingPeriod,
-              ),
-              _ScenarioRow(
-                label: 'Incidental Costs (estimated)',
-                value: snapshot.incidentalCosts * holdingPeriod,
-              ),
-              VitCard(
-                variant: VitCardVariant.inner,
-                margin: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x1),
-                padding: AppSpacing.cardPaddingCompact,
-                borderColor: _costRed.withValues(alpha: .28),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Total',
-                        style: AppTextStyles.caption.copyWith(
-                          color: _costRed,
-                          fontWeight: AppTextStyles.bold,
+            Row(
+              children: [
+                for (final period in const [1, 3, 5]) ...[
+                  Expanded(
+                    child: _PeriodButton(
+                      label: '$period ${period == 1 ? 'Year' : 'Years'}',
+                      selected: holdingPeriod == period,
+                      onPressed: () => onChanged(period),
+                    ),
+                  ),
+                  if (period != 5) const SizedBox(width: _costTinySpace),
+                ],
+              ],
+            ),
+            _Card(
+              padding: AppSpacing.cardPaddingCompact,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Total Costs Over $holdingPeriod '
+                    '${holdingPeriod == 1 ? 'Year' : 'Years'}',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(height: _costSpace),
+                  _ScenarioRow(
+                    label: 'One-off Costs',
+                    value: snapshot.oneOffCosts,
+                  ),
+                  _ScenarioRow(
+                    label: 'Recurring Costs ($holdingPeriod years)',
+                    value: snapshot.recurringCosts * holdingPeriod,
+                  ),
+                  _ScenarioRow(
+                    label: 'Incidental Costs (estimated)',
+                    value: snapshot.incidentalCosts * holdingPeriod,
+                  ),
+                  VitCard(
+                    variant: VitCardVariant.inner,
+                    margin: AppSpacing.zeroInsets.copyWith(top: _costTinySpace),
+                    padding: AppSpacing.cardPaddingCompact,
+                    borderColor: _costRed.withValues(alpha: .28),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Total',
+                            style: AppTextStyles.caption.copyWith(
+                              color: _costRed,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
                         ),
-                      ),
+                        Text(
+                          _formatEur(total),
+                          style: AppTextStyles.baseMedium.copyWith(
+                            color: _costRed,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      _formatEur(total),
-                      style: AppTextStyles.baseMedium.copyWith(color: _costRed),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
@@ -108,7 +117,7 @@ class _QuickLinks extends StatelessWidget {
                 context.go(AppRoutePaths.tradeCopyExPostCostsReport),
           ),
         ),
-        const SizedBox(width: AppSpacing.tradeListGap),
+        const SizedBox(width: _costSpace),
         Expanded(
           child: _QuickLinkButton(
             key: ExAnteCostsPage.kidKey,
@@ -142,8 +151,8 @@ class _QuickLinkButton extends StatelessWidget {
     return VitCtaButton(
       onPressed: onPressed,
       variant: VitCtaButtonVariant.secondary,
-      height: AppSpacing.buttonStandard - AppSpacing.rowGapRegular,
-      leading: Icon(icon, color: color),
+      height: _costButtonExtent,
+      leading: Icon(icon, color: color, size: AppSpacing.x4),
       trailing: const Icon(Icons.chevron_right_rounded),
       child: Text(label),
     );
@@ -167,8 +176,8 @@ class _FullWidthButton extends StatelessWidget {
     return VitCtaButton(
       onPressed: onPressed,
       variant: VitCtaButtonVariant.secondary,
-      height: AppSpacing.buttonStandard - AppSpacing.rowGapRegular,
-      leading: Icon(icon),
+      height: _costButtonExtent,
+      leading: Icon(icon, size: AppSpacing.x4),
       child: Text(label),
     );
   }
@@ -189,21 +198,19 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.walletAddressStatsHeight,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.tradeFeeRowGap,
-        top: AppSpacing.tradeFeeRowGap,
-        right: AppSpacing.tradeFeeRowGap,
-        bottom: AppSpacing.tradeReceiptTotalGap,
-      ),
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: _costLineTight,
+            ),
           ),
-          const Spacer(),
+          const SizedBox(height: _costTinySpace),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(
@@ -234,15 +241,16 @@ class _WarningBox extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _costAmber,
-            size: AppSpacing.tradeReceiptNoticeIcon,
+            size: AppSpacing.x4,
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: _costSpace),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _costAmber,
                 fontWeight: AppTextStyles.bold,
+                height: _costLineTight,
               ),
             ),
           ),
@@ -266,7 +274,7 @@ class _PeriodButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.walletAddressCopyHeight,
+      height: _costButtonExtent,
       child: FilledButton(
         style: FilledButton.styleFrom(
           backgroundColor: selected ? _costPrimary : _costPanel2,
@@ -290,13 +298,9 @@ class _ScenarioRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      margin: AppSpacing.zeroInsets.copyWith(bottom: AppSpacing.x3),
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.tradeFeeRowGap,
-        top: AppSpacing.tradeFeeRowGap,
-        right: AppSpacing.tradeFeeRowGap,
-        bottom: AppSpacing.tradeFeeRowGap,
-      ),
+      margin: AppSpacing.zeroInsets.copyWith(bottom: _costTinySpace),
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
           Expanded(

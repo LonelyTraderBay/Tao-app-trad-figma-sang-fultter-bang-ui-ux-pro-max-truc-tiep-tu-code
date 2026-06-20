@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTargetMarketDefinition(
     WidgetTester tester, {
@@ -78,6 +80,19 @@ void main() {
     expect(find.text('Client Type'), findsOneWidget);
     expect(find.text('Retail (high knowledge)'), findsOneWidget);
     expect(find.text('Inexperienced retail'), findsOneWidget);
+  });
+
+  testWidgets('SC-101 first viewport reaches first target dimension', (
+    tester,
+  ) async {
+    await pumpTargetMarketDefinition(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(TargetMarketDefinitionPage.dimensionKey('client-type')),
+      targetLabel: 'the first target-market dimension',
+      minVisibleHeight: 48,
+    );
   });
 
   testWidgets('SC-101 accepts product-scoped navigation edge', (tester) async {

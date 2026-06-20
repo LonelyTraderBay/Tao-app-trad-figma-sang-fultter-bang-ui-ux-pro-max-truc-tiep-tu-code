@@ -9,6 +9,7 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       padding: padding,
       borderColor: _armBorder.withValues(alpha: .72),
       child: child,

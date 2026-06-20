@@ -18,7 +18,7 @@ class _WhitelistAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pSecurityCenterItemPadding,
+      padding: _p2pSecurityCompactPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -39,7 +39,7 @@ class _WhitelistAction extends StatelessWidget {
                   body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.p2pSecurityCenterCompactLineHeight,
+                    height: _p2pSecurityCompactLine,
                   ),
                 ),
               ],
@@ -68,7 +68,7 @@ class _SecurityScoreCard extends StatelessWidget {
     return VitCard(
       key: P2PSecurityCenterPage.scoreKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pSecurityCenterCardPadding,
+      padding: _p2pSecurityCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -97,16 +97,16 @@ class _SecurityScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Center(
             child: SizedBox(
-              width: AppSpacing.p2pSecurityCenterScoreBox,
-              height: AppSpacing.p2pSecurityCenterScoreBox,
+              width: _p2pSecurityScoreBox,
+              height: _p2pSecurityScoreBox,
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   SizedBox.square(
-                    dimension: AppSpacing.p2pSecurityCenterScoreTrack,
+                    dimension: _p2pSecurityScoreTrack,
                     child: CircularProgressIndicator(
                       value: progress,
                       strokeWidth: AppSpacing.p2pSecurityCenterScoreStroke,
@@ -122,7 +122,7 @@ class _SecurityScoreCard extends StatelessWidget {
                         '${snapshot.score}',
                         style: AppTextStyles.heroNumber.copyWith(
                           color: AppColors.buy,
-                          height: AppSpacing.p2pSecurityCenterNumberLineHeight,
+                          height: _p2pSecurityNumberLine,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x1),
@@ -138,7 +138,7 @@ class _SecurityScoreCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Material(
             type: MaterialType.transparency,
             color: AppColors.buy10,
@@ -149,7 +149,7 @@ class _SecurityScoreCard extends StatelessWidget {
                 snapshot.scoreBody,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.p2pSecurityCenterBodyLineHeight,
+                  height: _p2pSecurityBodyLine,
                 ),
               ),
             ),
@@ -173,7 +173,7 @@ class _SecurityFeatures extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionTitle('Tính năng bảo mật'),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
           padding: AppSpacing.zeroInsets,
@@ -186,7 +186,7 @@ class _SecurityFeatures extends StatelessWidget {
                 ),
                 if (index != features.length - 1)
                   const Divider(
-                    height: AppSpacing.dividerHairline,
+                    height: _p2pSecurityDividerExtent,
                     color: AppColors.divider,
                   ),
               ],
@@ -213,7 +213,7 @@ class _SecurityFeatureRow extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: AppSpacing.p2pSecurityCenterItemPadding,
+        padding: _p2pSecurityCompactPadding,
         child: Row(
           children: [
             _IconBadge(icon: _featureIcon(feature.iconKey), color: color),

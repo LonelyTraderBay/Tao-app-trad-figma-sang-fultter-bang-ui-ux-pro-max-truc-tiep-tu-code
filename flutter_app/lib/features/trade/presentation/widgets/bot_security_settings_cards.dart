@@ -9,10 +9,6 @@ class _TwoFaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotSecurityCardMinHeight,
-      ),
-      padding: AppSpacing.tradeBotCardPadding,
       child: Row(
         children: [
           Icon(
@@ -20,7 +16,7 @@ class _TwoFaCard extends StatelessWidget {
             color: enabled ? _securityGreen : AppColors.text3,
             size: AppSpacing.tradeBotCheckbox,
           ),
-          const SizedBox(width: AppSpacing.tradeBotPageTopGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,16 +27,12 @@ class _TwoFaCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Required for creating/deleting bots',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -64,10 +56,6 @@ class _ApiKeyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotApiKeyCardMinHeight,
-      ),
-      padding: AppSpacing.tradeBotCardPaddingLoose,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -80,10 +68,9 @@ class _ApiKeyCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotRowGap),
+                const SizedBox(height: AppSpacing.x2),
                 Row(
                   children: [
                     VitStatusPill(
@@ -91,7 +78,7 @@ class _ApiKeyCard extends StatelessWidget {
                       status: VitStatusPillStatus.info,
                       size: VitStatusPillSize.sm,
                     ),
-                    const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                    const SizedBox(width: AppSpacing.x2),
                     Flexible(
                       child: Text(
                         'Created ${apiKey.created}',
@@ -99,24 +86,20 @@ class _ApiKeyCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.tradeBotContentGap),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   'Last used: ${apiKey.lastUsed}',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          const SizedBox(width: AppSpacing.x2),
           const Icon(
             Icons.delete_outline_rounded,
             color: _securityRed,
@@ -136,10 +119,6 @@ class _IpCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotIpCardMinHeight,
-      ),
-      padding: AppSpacing.tradeBotOptionPadding,
       child: Row(
         children: [
           Expanded(
@@ -152,16 +131,12 @@ class _IpCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${entry.label} - Added ${entry.added}',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -185,10 +160,10 @@ class _ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotPageTopGap,
+        fullBleed: true,
+        density: VitDensity.compact,
         children: [
           for (final activity in activities) ...[
             Row(
@@ -203,15 +178,13 @@ class _ActivityCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.medium,
-                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         activity.time,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
                     ],
@@ -225,13 +198,10 @@ class _ActivityCard extends StatelessWidget {
                       : _securityAmber,
                   size: AppSpacing.tradeBotSmallGap,
                 ),
-            ],
-          ),
-          if (activity != activities.last)
-              const Divider(
-                color: AppColors.borderSolid,
-                height: AppSpacing.tradeBotLineHeightTight,
-              ),
+              ],
+            ),
+            if (activity != activities.last)
+              const Divider(color: AppColors.borderSolid, height: 1),
           ],
         ],
       ),
@@ -247,23 +217,24 @@ class _SecurityTipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotPageTopGap,
+        fullBleed: true,
+        density: VitDensity.compact,
         children: [
           Text(
             'Security Best Practices',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           VitPageContent(
             padding: VitContentPadding.none,
-            customGap: AppSpacing.tradeBotPageTopGap,
+            fullBleed: true,
+            density: VitDensity.compact,
             children: [for (final tip in tips) _SecurityTipRow(tip: tip)],
           ),
         ],
@@ -284,19 +255,13 @@ class _SecurityTipRow extends StatelessWidget {
       children: [
         Text(
           '-',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.tradeBotLineHeightBody,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(width: AppSpacing.x3),
+        const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
             tip,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightBody,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
         ),
       ],

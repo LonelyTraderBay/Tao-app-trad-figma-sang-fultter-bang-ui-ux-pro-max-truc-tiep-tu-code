@@ -99,7 +99,7 @@ class StakingMaturityAlert extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -126,7 +126,7 @@ class StakingMaturityAlert extends StatelessWidget {
             variant: VitCtaButtonVariant.warning,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            padding: AppSpacing.earnHorizontalPaddingX4,
             onPressed: () => context.go(snapshot.calendarRoute),
             child: const Text('Xem'),
           ),
@@ -156,7 +156,7 @@ class _NavCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       onTap: () => context.go(route),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -164,10 +164,12 @@ class _NavCard extends StatelessWidget {
           Row(
             children: [
               DecoratedBox(
-                decoration: BoxDecoration(
+                decoration: ShapeDecoration(
                   color: accent.withValues(alpha: 0.12),
-                  border: Border.all(color: accent.withValues(alpha: 0.35)),
-                  borderRadius: AppRadii.lgRadius,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.lgRadius,
+                    side: BorderSide(color: accent.withValues(alpha: 0.35)),
+                  ),
                 ),
                 child: SizedBox(
                   width: AppSpacing.x7,

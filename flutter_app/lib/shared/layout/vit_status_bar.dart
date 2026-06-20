@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 
@@ -22,7 +23,12 @@ class VitStatusBar extends StatelessWidget {
     return SizedBox(
       height: DeviceMetrics.safeTop,
       child: Padding(
-        padding: const EdgeInsets.only(left: 32, right: 28, bottom: 4),
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          DeviceMetrics.statusBarPadStart,
+          0,
+          DeviceMetrics.statusBarPadEnd,
+          DeviceMetrics.statusBarPadBottom,
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,13 +45,13 @@ class VitStatusBar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _CellSignalIcon(),
-                SizedBox(width: 6),
+                SizedBox(width: DeviceMetrics.statusBarIconGap),
                 Icon(
                   Icons.wifi_rounded,
                   color: AppColors.statusBarIcon,
-                  size: 16,
+                  size: DeviceMetrics.statusBarWifiIcon,
                 ),
-                SizedBox(width: 6),
+                SizedBox(width: DeviceMetrics.statusBarIconGap),
                 _BatteryIcon(),
               ],
             ),
@@ -62,18 +68,21 @@ class _CellSignalIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      width: 17,
-      height: 12,
+      width: DeviceMetrics.statusCellSignalWidth,
+      height: DeviceMetrics.statusCellSignalHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          _SignalBar(height: 3),
-          SizedBox(width: 1.5),
-          _SignalBar(height: 6),
-          SizedBox(width: 1.5),
-          _SignalBar(height: 9),
-          SizedBox(width: 1.5),
-          _SignalBar(height: 12, color: AppColors.statusBarIconDim),
+          _SignalBar(height: DeviceMetrics.statusSignalBarLow),
+          SizedBox(width: DeviceMetrics.statusSignalBarGap),
+          _SignalBar(height: DeviceMetrics.statusSignalBarMedium),
+          SizedBox(width: DeviceMetrics.statusSignalBarGap),
+          _SignalBar(height: DeviceMetrics.statusSignalBarHigh),
+          SizedBox(width: DeviceMetrics.statusSignalBarGap),
+          _SignalBar(
+            height: DeviceMetrics.statusSignalBarFull,
+            color: AppColors.statusBarIconDim,
+          ),
         ],
       ),
     );
@@ -91,12 +100,16 @@ class _SignalBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 3,
+    return SizedBox(
+      width: DeviceMetrics.statusSignalBarWidth,
       height: height,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(0.75),
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color,
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.statusSignalRadius,
+          ),
+        ),
       ),
     );
   }
@@ -107,37 +120,54 @@ class _BatteryIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 27,
-      height: 13,
+    return const SizedBox(
+      width: DeviceMetrics.statusBatteryWidth,
+      height: DeviceMetrics.statusBatteryHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            width: 23,
-            height: 13,
-            padding: const EdgeInsets.all(1.5),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.statusBarIconDim),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                width: 17,
-                decoration: BoxDecoration(
-                  color: AppColors.statusBattery,
-                  borderRadius: BorderRadius.circular(2),
+          SizedBox(
+            width: DeviceMetrics.statusBatteryBodyWidth,
+            height: DeviceMetrics.statusBatteryHeight,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: AppColors.statusBarIconDim),
+                  borderRadius: AppRadii.statusBatteryBodyRadius,
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsetsDirectional.all(
+                  DeviceMetrics.statusBatteryPadding,
+                ),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: SizedBox(
+                    width: DeviceMetrics.statusBatteryFillWidth,
+                    height: double.infinity,
+                    child: DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: AppColors.statusBattery,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: AppRadii.statusBatteryFillRadius,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-          Container(
-            width: 3,
-            height: 5,
-            decoration: const BoxDecoration(
-              color: AppColors.statusBarIconDim,
-              borderRadius: BorderRadius.horizontal(right: Radius.circular(2)),
+          SizedBox(
+            width: DeviceMetrics.statusBatteryTerminalWidth,
+            height: DeviceMetrics.statusBatteryTerminalHeight,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.statusBarIconDim,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.statusBatteryTerminalRadius,
+                ),
+              ),
             ),
           ),
         ],

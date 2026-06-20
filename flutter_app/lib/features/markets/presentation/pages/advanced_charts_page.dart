@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -21,6 +21,67 @@ part 'advanced_charts_page_part_02.dart';
 part 'advanced_charts_page_part_03.dart';
 
 const _marketPrimary = AppColors.primary;
+const double _advancedVisualScrollClearance = 108;
+const double _advancedNativeScrollClearance = 72;
+const double _advancedTabsHeight = AppSpacing.buttonCompact;
+const double _advancedTabIndicatorHeight = AppSpacing.dividerHairline;
+const double _advancedActionMinHeight = 28;
+const double _advancedChipRemoveIcon = 12;
+const double _advancedTinyGap = 3;
+const double _advancedMicroGap = AppSpacing.x1;
+const double _advancedSmallGap = 6;
+const double _advancedCompactGap = AppSpacing.x2;
+const double _advancedGap = AppSpacing.x2;
+const double _advancedFooterGap = AppSpacing.x2;
+const double _advancedMiniHeaderGap = AppSpacing.x1;
+const double _advancedIndicatorAvatar = 30;
+const double _advancedToggleSize = 30;
+const double _advancedToggleIcon = AppSpacing.iconSm + AppSpacing.x1;
+const double _advancedInfoIcon = AppSpacing.iconSm + AppSpacing.x1;
+const double _advancedToolIcon = AppSpacing.iconMd;
+const double _advancedTipIcon = AppSpacing.iconSm + AppSpacing.x1;
+const double _advancedDisclaimerIcon = AppSpacing.iconSm + AppSpacing.x1;
+const double _advancedSignalBarHeight = 6;
+const double _advancedLineHeightCaption = 1.15;
+const double _advancedLineHeightReadable = 1.25;
+const int _advancedGridColumns = 3;
+const double _advancedGridAspectRatio = 1.0;
+const EdgeInsets _advancedClearButtonPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x1,
+);
+const EdgeInsets _advancedActiveChipPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x1,
+);
+const EdgeInsets _advancedFilterChipPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _advancedIndicatorHeaderPadding = EdgeInsets.all(
+  AppSpacing.x3,
+);
+const EdgeInsets _advancedCategoryBadgePadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x1,
+);
+const EdgeInsets _advancedDetailsPadding = EdgeInsets.fromLTRB(
+  AppSpacing.x3,
+  AppSpacing.x2,
+  AppSpacing.x3,
+  AppSpacing.x3,
+);
+const EdgeInsets _advancedParamPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x1,
+);
+const EdgeInsets _advancedSignalMetricPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _advancedPivotPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x1,
+);
+const EdgeInsets _advancedCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _advancedCardPaddingCompact = EdgeInsets.all(AppSpacing.x2);
 
 class AdvancedChartsPage extends ConsumerStatefulWidget {
   const AdvancedChartsPage({super.key, this.shellRenderMode});

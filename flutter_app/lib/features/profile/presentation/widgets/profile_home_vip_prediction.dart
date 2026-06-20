@@ -8,10 +8,10 @@ class _VipCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.profileVipCardHeight,
-      padding: AppSpacing.profileModuleCardPadding,
+      density: VitDensity.compact,
       borderColor: _profileBorder,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -31,7 +31,7 @@ class _VipCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.profileVipProgressGap),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
@@ -41,7 +41,7 @@ class _VipCard extends StatelessWidget {
               backgroundColor: _profilePanel2,
             ),
           ),
-          const Spacer(),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -66,11 +66,11 @@ class _PredictionCard extends StatelessWidget {
     return VitCard(
       key: ProfilePage.predictionCardKey,
       onTap: onTap,
-      height: AppSpacing.profileModuleCardHeight,
-      padding: AppSpacing.profileModuleCardPadding,
+      density: VitDensity.compact,
       borderColor: _profilePurple.withValues(alpha: .38),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -94,7 +94,7 @@ class _PredictionCard extends StatelessWidget {
               _TinyTag(label: 'Prediction Market', color: _profilePurple),
             ],
           ),
-          const Spacer(),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           Row(
             children: [
               Expanded(
@@ -120,7 +120,7 @@ class _PredictionCard extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           Row(
             children: [
               Expanded(

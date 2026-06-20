@@ -19,34 +19,38 @@ class _SideChoice extends StatelessWidget {
       key: LaunchpadLimitOrdersPage.sideKey(side),
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: Container(
-        padding: const EdgeInsets.all(AppSpacing.x4),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: active ? color.withValues(alpha: .10) : AppColors.surface,
-          border: Border.all(color: active ? color : AppColors.cardBorder),
-          borderRadius: AppRadii.cardRadius,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: active ? color : AppColors.cardBorder),
+            borderRadius: AppRadii.cardRadius,
+          ),
         ),
-        child: Column(
-          children: [
-            Icon(
-              isBuy ? Icons.south_rounded : Icons.north_rounded,
-              color: active ? color : AppColors.text3,
-            ),
-            const SizedBox(height: AppSpacing.x2),
-            Text(
-              isBuy ? 'Buy' : 'Sell',
-              style: AppTextStyles.base.copyWith(
-                color: active ? color : AppColors.text1,
-                fontWeight: AppTextStyles.bold,
+        child: Padding(
+          padding: AppSpacing.launchpadPaddingX4,
+          child: Column(
+            children: [
+              Icon(
+                isBuy ? Icons.south_rounded : Icons.north_rounded,
+                color: active ? color : AppColors.text3,
               ),
-            ),
-            const SizedBox(height: AppSpacing.x1),
-            Text(
-              isBuy ? 'Mua khi gia xuong' : 'Ban khi gia len',
-              textAlign: TextAlign.center,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ],
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                isBuy ? 'Buy' : 'Sell',
+                style: AppTextStyles.base.copyWith(
+                  color: active ? color : AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x1),
+              Text(
+                isBuy ? 'Mua khi gia xuong' : 'Ban khi gia len',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -114,18 +118,23 @@ class _ExpiryButton extends StatelessWidget {
       key: LaunchpadLimitOrdersPage.expiryKey(value),
       onTap: onTap,
       borderRadius: AppRadii.inputRadius,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.launchpadBox40,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? AppColors.primary : AppColors.bg,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
-          '${value}d',
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text1,
-            fontWeight: AppTextStyles.bold,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: active ? AppColors.primary : AppColors.bg,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              '${value}d',
+              style: AppTextStyles.caption.copyWith(
+                color: active ? AppColors.onAccent : AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
           ),
         ),
       ),

@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpComplaints(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -84,6 +86,27 @@ void main() {
     expect(find.text('Trade Execution'), findsOneWidget);
     expect(find.text('Resolution Timeline'), findsOneWidget);
     expect(find.text('Final Response'), findsOneWidget);
+  });
+
+  testWidgets('SC-111 first viewport reaches complaint categories', (
+    tester,
+  ) async {
+    await pumpComplaints(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ComplaintsHandlingPage',
+      semanticLabel: 'SC-111 ComplaintsHandlingPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Trade Execution'),
+      minVisibleHeight: 18,
+      targetLabel: 'first complaint category',
+      reason:
+          'Complaints handling must expose the first category above bottom '
+          'navigation after rights, review, stats, action, and tabs.',
+    );
   });
 
   testWidgets('SC-111 resolved complaint submission edge opens SC-112', (

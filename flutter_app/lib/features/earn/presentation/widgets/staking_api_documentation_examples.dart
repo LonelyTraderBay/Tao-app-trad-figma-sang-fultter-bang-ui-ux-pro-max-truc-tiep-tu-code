@@ -59,7 +59,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(AppSpacing.x3),
+                    padding: AppSpacing.earnCardPaddingX3,
                     child: Row(
                       children: [
                         Expanded(
@@ -84,7 +84,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                     height: AppSpacing.stakingApiDividerHeight,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(AppSpacing.x3),
+                    padding: AppSpacing.earnCardPaddingX3,
                     child: StakingApiDocumentationCodeBlock(
                       text: selected.source,
                       tall: true,
@@ -102,24 +102,27 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: AppSpacing.buttonHero,
-                        height: AppSpacing.buttonHero,
-                        decoration: BoxDecoration(
-                          color: AppColors.warn.withValues(alpha: 0.12),
-                          borderRadius: AppRadii.lgRadius,
-                        ),
-                        child: const Icon(
-                          Icons.bolt_rounded,
-                          color: AppColors.warn,
-                          size: AppSpacing.iconMd,
+                      SizedBox.square(
+                        dimension: AppSpacing.buttonHero,
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: AppColors.warn.withValues(alpha: 0.12),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: AppRadii.lgRadius,
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.bolt_rounded,
+                            color: AppColors.warn,
+                            size: AppSpacing.iconMd,
+                          ),
                         ),
                       ),
                       const SizedBox(width: AppSpacing.x3),
@@ -147,7 +150,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                   const SizedBox(height: AppSpacing.x4),
                   VitCard(
                     variant: VitCardVariant.inner,
-                    padding: const EdgeInsets.all(AppSpacing.x3),
+                    padding: AppSpacing.earnCardPaddingX3,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -219,10 +222,7 @@ class _LanguageButton extends StatelessWidget {
         borderRadius: AppRadii.inputRadius,
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
+          padding: AppSpacing.earnPillPaddingLarge,
           child: Text(
             example.label,
             style: AppTextStyles.caption.copyWith(

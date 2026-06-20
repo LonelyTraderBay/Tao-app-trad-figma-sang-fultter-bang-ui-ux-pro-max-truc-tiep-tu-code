@@ -33,7 +33,8 @@ class _ModeTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.inputHeight,
+      height: _convertModeHeight,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.x2,
         top: AppSpacing.x2,
@@ -86,7 +87,7 @@ class _FavoriteHeader extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const Spacer(),
+        const SizedBox(width: _convertSpace),
         const Icon(
           Icons.star_rounded,
           color: AppColors.primary,
@@ -121,11 +122,11 @@ class _FavoritePairs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.buttonCompact,
+      height: _convertChipHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: pairs.length,
-        separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.rowGap),
+        separatorBuilder: (_, _) => const SizedBox(width: _convertSpace),
         itemBuilder: (context, index) {
           final pair = pairs[index];
           final active =
@@ -134,7 +135,8 @@ class _FavoritePairs extends StatelessWidget {
             key: ConvertPage.favoriteKey(pair.label),
             onTap: () => onSelected(pair),
             variant: active ? VitCardVariant.ghost : VitCardVariant.inner,
-            height: AppSpacing.buttonCompact,
+            height: _convertChipHeight,
+            density: VitDensity.compact,
             padding: AppSpacing.zeroInsets.copyWith(
               left: AppSpacing.rowPy,
               right: AppSpacing.rowPy,
@@ -166,7 +168,8 @@ class _RateBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.buttonStandard - AppSpacing.rowGapRegular,
+      height: _convertControlHeight,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.rowPy,
         right: AppSpacing.rowPy,
@@ -179,7 +182,7 @@ class _RateBar extends StatelessWidget {
             color: _tradePrimary,
             size: AppSpacing.iconMd,
           ),
-          const SizedBox(width: AppSpacing.rowGap),
+          const SizedBox(width: _convertSpace),
           const Icon(
             Icons.swap_vert_rounded,
             color: AppColors.text3,
@@ -197,7 +200,7 @@ class _RateBar extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.rowGap),
+          const SizedBox(width: _convertSpace),
           Text(
             countdown,
             style: AppTextStyles.micro.copyWith(
@@ -205,7 +208,7 @@ class _RateBar extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(width: AppSpacing.rowGap),
+          const SizedBox(width: _convertSpace),
           const Icon(
             Icons.refresh_rounded,
             color: _tradePrimary,

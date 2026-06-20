@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -48,11 +49,14 @@ class _KYCPageState extends ConsumerState<KYCPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(profileControllerProvider).getKyc();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.kycBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.kycBottomInsetNative) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.x7 +
+                  AppSpacing.x6 +
+                  AppSpacing.x5 +
+                  AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -74,14 +78,13 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                 child: SingleChildScrollView(
                   key: KYCPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.kycScrollPadding(bottomInset),
+                  padding: AppSpacing.kycScrollPadding(scrollClearance),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       _KycStatusCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.kycStatusToReviewGap),
                       VitHighRiskStatePanel(
                         state: _submitting
                             ? VitHighRiskUiState.submitting
@@ -92,8 +95,8 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                         message:
                             'Ki\u1EC3m tra c\u1EA5p KYC, gi\u1EDBi h\u1EA1n giao d\u1ECBch v\u00E0 t\u00EDnh n\u0103ng m\u1EDF kho\u00E1 tr\u01B0\u1EDBc khi n\u1ED9p.',
                         contractId: 'Current level: ${snapshot.currentLevel}',
+                        density: VitDensity.compact,
                       ),
-                      const SizedBox(height: AppSpacing.kycReviewToLevelsGap),
                       if (snapshot.levels.isEmpty)
                         const VitEmptyState(
                           title: 'Ch\u01B0a c\u00F3 c\u1EA5p KYC',
@@ -101,8 +104,8 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                               'C\u00E1c c\u1EA5p x\u00E1c minh s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
                           icon: Icons.verified_user_outlined,
                         )
-                      else
-                        for (final level in snapshot.levels) ...[
+                      else ...[
+                        for (final level in snapshot.levels)
                           _KycLevelCard(
                             level: level,
                             done: snapshot.currentLevel >= level.level,
@@ -120,10 +123,7 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                             },
                             onStart: () => _startVerification(level.level),
                           ),
-                          if (level != snapshot.levels.last)
-                            const SizedBox(height: AppSpacing.kycLevelGap),
-                        ],
-                      const SizedBox(height: AppSpacing.kycPrivacyGap),
+                      ],
                       const _PrivacyCard(),
                     ],
                   ),

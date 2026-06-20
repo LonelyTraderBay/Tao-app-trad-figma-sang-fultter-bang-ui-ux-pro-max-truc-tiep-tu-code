@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBotPerformanceAnalytics(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -68,6 +70,28 @@ void main() {
     expect(find.text('Cumulative PnL'), findsOneWidget);
     expect(find.text('Win/Loss Distribution'), findsOneWidget);
     expect(find.text('Performance by Strategy'), findsOneWidget);
+  });
+
+  testWidgets('SC-124 first viewport reaches cumulative PnL chart', (
+    tester,
+  ) async {
+    await pumpBotPerformanceAnalytics(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'BotPerformanceAnalyticsPage',
+      semanticLabel: 'SC-124 BotPerformanceAnalyticsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(BotPerformanceAnalyticsPage.pnlChartKey),
+      minVisibleHeight: 24,
+      targetLabel: 'cumulative PnL chart',
+      reason:
+          'Bot performance analytics must expose the first analytical chart '
+          'above bottom navigation after key metrics, review, and timeframe '
+          'tabs.',
+    );
   });
 
   testWidgets('SC-124 timeframe tabs are selectable', (tester) async {

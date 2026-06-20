@@ -132,7 +132,6 @@ class _ChallengeRow extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.body.copyWith(
                             fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.myArenaTextLineHeight,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x2),
@@ -182,7 +181,7 @@ class _ChallengeRow extends StatelessWidget {
             ),
             if (showDivider)
               const Divider(
-                height: AppSpacing.myArenaDividerHeight,
+                height: AppSpacing.dividerHairline,
                 color: AppColors.divider,
               ),
           ],
@@ -241,7 +240,6 @@ class _SavedModesList extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.body.copyWith(
                                     fontWeight: AppTextStyles.bold,
-                                    height: AppSpacing.myArenaTextLineHeight,
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.x2),
@@ -272,7 +270,7 @@ class _SavedModesList extends StatelessWidget {
                     ),
                     if (i < modes.length - 1)
                       const Divider(
-                        height: AppSpacing.myArenaDividerHeight,
+                        height: AppSpacing.dividerHairline,
                         color: AppColors.divider,
                       ),
                   ],
@@ -346,7 +344,6 @@ class _DraftList extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.body.copyWith(
                                     fontWeight: AppTextStyles.bold,
-                                    height: AppSpacing.myArenaTextLineHeight,
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.x2),
@@ -373,7 +370,7 @@ class _DraftList extends StatelessWidget {
                     ),
                     if (i < drafts.length - 1)
                       const Divider(
-                        height: AppSpacing.myArenaDividerHeight,
+                        height: AppSpacing.dividerHairline,
                         color: AppColors.divider,
                       ),
                   ],
@@ -394,17 +391,16 @@ class _CreatedModesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      density: VitDensity.compact,
       children: [
         VitModuleSectionHeader(
           title: 'Mode đã tạo (${snapshot.stats.modesCreated})',
           accentColor: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x3),
         VitCard(
           onTap: onTap,
-          padding: AppSpacing.arenaPaddingX4,
+          density: VitDensity.compact,
           child: Row(
             children: [
               _ActionIcon(
@@ -420,7 +416,6 @@ class _CreatedModesSection extends StatelessWidget {
                       '${snapshot.stats.modesCreated} mode đã tạo',
                       style: AppTextStyles.body.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.myArenaTextLineHeight,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x2),

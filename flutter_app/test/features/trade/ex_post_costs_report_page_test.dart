@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpExPostReport(
     WidgetTester tester, {
@@ -86,6 +88,19 @@ void main() {
     expect(find.text('€401'), findsOneWidget);
     expect(find.text('€420'), findsOneWidget);
     expect(find.text('-€19'), findsOneWidget);
+  });
+
+  testWidgets('SC-107 first viewport reaches the first cost row', (
+    tester,
+  ) async {
+    await pumpExPostReport(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.text('One-off Costs'),
+      targetLabel: 'the first ex-post cost breakdown row',
+      minVisibleHeight: 20,
+    );
   });
 
   testWidgets('SC-105 ex-post quick link opens SC-107 route', (tester) async {

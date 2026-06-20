@@ -4,11 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_transfer_sections.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +23,20 @@ const _transferBackground = AppColors.bg;
 const _transferPanel = AppColors.surface;
 const _transferPrimary = AppColors.primary;
 const _transferGreen = AppColors.buy;
+const _transferNativeBottomClearance = 88.0;
+const _transferVisualBottomClearance = 112.0;
+const _transferScrollTopPad = 0.0;
+const _transferGap = 8.0;
+const _transferTinyGap = 4.0;
+const _transferCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 10);
+const _transferSheetPadding = EdgeInsets.fromLTRB(16, 14, 16, 16);
+
+double _transferScrollBottomInset(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? _transferVisualBottomClearance
+          : _transferNativeBottomClearance) +
+      MediaQuery.paddingOf(context).bottom;
+}
 
 class TransferPage extends ConsumerStatefulWidget {
   const TransferPage({super.key, this.shellRenderMode});
@@ -64,13 +78,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(walletTransferProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletBottomInsetVisualChrome
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletBottomInsetNativeChrome) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = _transferScrollBottomInset(context, mode);
     final fromWallet = _wallet(snapshot, _fromWalletId);
     final toWallet = _wallet(snapshot, _toWalletId);
     final asset = _asset(snapshot, _assetId);
@@ -96,24 +104,25 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                 child: SingleChildScrollView(
                   key: TransferPage.contentKey,
                   padding: AppSpacing.contentInsets.copyWith(
+                    top: _transferScrollTopPad,
                     bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       if (_showSuccess) ...[
                         const TransferSuccessBanner(),
-                        const SizedBox(height: AppSpacing.rowPy),
+                        const SizedBox(height: _transferGap),
                       ],
                       VitCard(
                         variant: VitCardVariant.standard,
                         radius: VitCardRadius.md,
-                        padding: AppSpacing.cardPaddingCompact,
+                        padding: _transferCardPadding,
                         child: VitPageContent(
                           padding: VitContentPadding.none,
-                          customGap: AppSpacing.transferCardGap,
+                          customGap: _transferGap,
                           fullBleed: true,
                           children: [
                             TransferWalletCard(
@@ -148,12 +157,12 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.transferSectionGap),
+                      const SizedBox(height: _transferGap),
                       TransferAssetCard(
                         asset: asset,
                         onTap: () => _showAssetPicker(snapshot),
                       ),
-                      const SizedBox(height: AppSpacing.transferSectionGap),
+                      const SizedBox(height: _transferGap),
                       TransferAmountCard(
                         controller: _amountController,
                         asset: asset,
@@ -166,7 +175,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                         },
                       ),
                       if (_amount > 0) ...[
-                        const SizedBox(height: AppSpacing.transferHintGap),
+                        const SizedBox(height: _transferTinyGap),
                         Text(
                           '\u2248 ${formatTransferUsd(usdValue)}',
                           style: AppTextStyles.control.copyWith(
@@ -174,9 +183,9 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                           ),
                         ),
                       ],
-                      const SizedBox(height: AppSpacing.transferInputGap),
+                      const SizedBox(height: _transferGap),
                       const TransferInfoNotice(),
-                      const SizedBox(height: AppSpacing.transferInputGap),
+                      const SizedBox(height: _transferGap),
                       TransferButton(
                         key: TransferPage.submitKey,
                         enabled: canTransfer,
@@ -190,7 +199,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                               )
                             : null,
                       ),
-                      const SizedBox(height: AppSpacing.rowGap),
+                      const SizedBox(height: _transferGap),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Review transfer before confirmation',
@@ -199,7 +208,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                         contractId:
                             '${fromWallet.name} -> ${toWallet.name} / ${asset.symbol}',
                       ),
-                      const SizedBox(height: AppSpacing.transferInputGap),
+                      const SizedBox(height: _transferGap),
                       RecentTransfersList(transfers: snapshot.recentTransfers),
                     ],
                   ),
@@ -254,13 +263,13 @@ class _TransferPageState extends ConsumerState<TransferPage> {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: AppSpacing.transferSheetPadding,
+            padding: _transferSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(title, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.transferInfoGap),
+                const SizedBox(height: _transferGap),
                 for (final wallet in snapshot.wallets)
                   if (wallet.id != excludedWalletId)
                     TransferWalletPickerRow(
@@ -290,7 +299,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: AppSpacing.transferSheetPadding,
+            padding: _transferSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -299,7 +308,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                   'Ch\u1ecdn t\u00e0i s\u1ea3n',
                   style: AppTextStyles.baseMedium,
                 ),
-                const SizedBox(height: AppSpacing.transferInfoGap),
+                const SizedBox(height: _transferGap),
                 for (final asset in snapshot.assets)
                   TransferAssetPickerRow(
                     asset: asset,

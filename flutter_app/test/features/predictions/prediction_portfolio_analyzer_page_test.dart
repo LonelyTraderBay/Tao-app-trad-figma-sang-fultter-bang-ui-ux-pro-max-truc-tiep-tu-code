@@ -10,12 +10,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAnalyzer(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -86,6 +85,22 @@ void main() {
     expect(find.text('Portfolio by Category'), findsOneWidget);
     expect(find.text('Crypto'), findsOneWidget);
     expect(find.text('Macro'), findsOneWidget);
+  });
+
+  testWidgets('SC-038 first viewport reaches analyzer metrics', (tester) async {
+    await pumpAnalyzer(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-038 PredictionPortfolioAnalyzerPage',
+      semanticLabel: 'SC-038 PredictionPortfolioAnalyzerPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Open Positions'),
+      targetLabel: 'the first analyzer metric card',
+      minVisibleHeight: 12,
+    );
   });
 
   testWidgets('SC-038 tabs switch performance and risk locally', (

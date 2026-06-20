@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -41,11 +42,15 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(tradeRiskIndicatorExplainerProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
+    final chromeInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollClearance = chromeInset + MediaQuery.paddingOf(context).bottom;
     final bottomInset =
+        scrollClearance +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 70
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? AppSpacing.x6 + AppSpacing.x4
+            : AppSpacing.x5 + AppSpacing.x2);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -65,13 +70,16 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: RiskIndicatorExplainerPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.x2,
+                    right: AppSpacing.contentPad,
+                    bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
+                    density: VitDensity.compact,
                     fullBleed: true,
-                    customGap: 12,
                     children: [
                       _ProductSriCard(snapshot: snapshot),
                       const VitSectionHeader(
@@ -88,7 +96,7 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
                         accentColor: _riskPrimary,
                       ),
                       VitPageSection(
-                        customGap: AppSpacing.tradeBotRowGap,
+                        density: VitDensity.compact,
                         children: [
                           for (final level in snapshot.levels)
                             _RiskLevelCard(
@@ -104,16 +112,13 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
                         accentColor: _riskPrimary,
                       ),
                       _AdditionalRisksCard(risks: snapshot.additionalRisks),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Risk indicator review',
-                          message:
-                              'SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.',
-                          contractId: 'risk-indicator-review',
-                        ),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Risk indicator review',
+                        message:
+                            'SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.',
+                        contractId: 'risk-indicator-review',
+                        density: VitDensity.compact,
                       ),
                     ],
                   ),

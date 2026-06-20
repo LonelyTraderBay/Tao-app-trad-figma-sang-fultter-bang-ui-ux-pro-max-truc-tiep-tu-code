@@ -27,22 +27,41 @@ class VitEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
+      padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x6,
-        vertical: 64,
+        vertical:
+            AppSpacing.buttonStandard +
+            AppSpacing.x3 +
+            AppSpacing.dividerHairline,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              border: Border.all(color: AppColors.borderSolid),
-              borderRadius: AppRadii.cardLargeRadius,
+          SizedBox(
+            width:
+                AppSpacing.buttonStandard +
+                AppSpacing.contentPad +
+                AppSpacing.x2,
+            height:
+                AppSpacing.buttonStandard +
+                AppSpacing.contentPad +
+                AppSpacing.x2,
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.surface2,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: AppColors.borderSolid),
+                  borderRadius: AppRadii.cardLargeRadius,
+                ),
+              ),
+              child: Center(
+                child: Icon(
+                  icon,
+                  color: AppColors.borderSolid,
+                  size: AppSpacing.iconLg + AppSpacing.hairlineStroke,
+                ),
+              ),
             ),
-            child: Icon(icon, color: AppColors.borderSolid, size: 36),
           ),
           const SizedBox(height: AppSpacing.x4),
           Text(
@@ -64,7 +83,7 @@ class VitEmptyState extends StatelessWidget {
               key: actionKey,
               onPressed: onAction,
               fullWidth: false,
-              height: 44,
+              height: AppSpacing.inputHeight - AppSpacing.x3,
               child: Text(actionLabel!),
             ),
           ],

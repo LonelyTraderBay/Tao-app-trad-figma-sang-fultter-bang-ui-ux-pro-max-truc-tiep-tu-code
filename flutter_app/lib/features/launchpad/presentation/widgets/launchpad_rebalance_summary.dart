@@ -23,7 +23,7 @@ class LaunchpadRebalanceSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -83,11 +83,11 @@ class LaunchpadRebalanceSummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
+      decoration: const ShapeDecoration(
+        shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+        padding: AppSpacing.launchpadVerticalPaddingX2,
         child: Row(
           children: [
             Expanded(
@@ -116,29 +116,33 @@ class LaunchpadRebalanceWarningBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.warn08,
-        border: Border.all(color: AppColors.warn15),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.warn15),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.launchpadIconLg,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              'Day la de xuat tu dong dua tren ty le muc tieu. Gia token co the thay doi giua luc xem va luc thuc hien. Luon kiem tra lai truoc khi giao dich.',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX3,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.launchpadIconLg,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                'Day la de xuat tu dong dua tren ty le muc tieu. Gia token co the thay doi giua luc xem va luc thuc hien. Luon kiem tra lai truoc khi giao dich.',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

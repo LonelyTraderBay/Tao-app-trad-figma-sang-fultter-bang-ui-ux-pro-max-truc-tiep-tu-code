@@ -37,11 +37,12 @@ class _ImpactCard extends StatelessWidget {
     ];
 
     return VitCard(
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletAssetSectionGap,
-        top: AppSpacing.walletDepositCopyIcon,
-        right: AppSpacing.walletAssetSectionGap,
-        bottom: AppSpacing.x4,
+        left: _leverageCardSpace,
+        top: _leverageCardSpace,
+        right: _leverageCardSpace,
+        bottom: _leverageCardSpace,
       ),
       borderColor: AppColors.cardBorder,
       child: Column(
@@ -64,12 +65,12 @@ class _ImpactCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+          const SizedBox(height: _leverageSpace),
           Text(
             'Với ký quỹ \$${_formatWholeNumber(margin)} USDT',
             style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.rowGapRegular),
+          const SizedBox(height: _leverageSpace),
           for (final row in rows)
             _ImpactRow(label: row.$1, value: row.$2, valueColor: row.$3),
         ],
@@ -105,7 +106,7 @@ class _ImpactRow extends StatelessWidget {
                   label,
                   style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.leverageImpactRowLineHeight,
+                    height: _leverageImpactRowLineHeight,
                   ),
                 ),
               ),
@@ -114,7 +115,7 @@ class _ImpactRow extends StatelessWidget {
                 style: AppTextStyles.numericCode.copyWith(
                   color: valueColor,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.leverageImpactRowLineHeight,
+                  height: _leverageImpactRowLineHeight,
                 ),
               ),
             ],
@@ -142,6 +143,7 @@ class _WarningCard extends StatelessWidget {
       title: 'Leverage risk review',
       message: preview.warningText,
       contractId: 'SC-058 ${preview.leverage}x',
+      density: VitDensity.compact,
     );
   }
 }
@@ -158,7 +160,8 @@ class _RiskTipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: AppColors.sell.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -180,7 +183,7 @@ class _RiskTipsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAssetChartBottomGap),
+          const SizedBox(height: _leverageSpace),
           for (final tip in _tips) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,7 +227,7 @@ class _ConfirmButton extends StatelessWidget {
     return VitCtaButton(
       key: LeveragePage.confirmKey,
       onPressed: onPressed,
-      height: AppSpacing.ctaHeight,
+      height: _leverageConfirmHeight,
       variant: leverage > 20
           ? VitCtaButtonVariant.danger
           : VitCtaButtonVariant.primary,

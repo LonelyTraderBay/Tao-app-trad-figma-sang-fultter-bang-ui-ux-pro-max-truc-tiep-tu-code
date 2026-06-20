@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_identity_v
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_kyc_requirements_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PKycRequirements(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -91,6 +93,22 @@ void main() {
     expect(find.text('Nâng cao'), findsOneWidget);
     expect(find.text('Cần hỗ trợ?'), findsOneWidget);
     expect(find.text('Liên hệ Support'), findsOneWidget);
+  });
+
+  testWidgets('SC-247 first viewport reaches current KYC tier', (tester) async {
+    await pumpP2PKycRequirements(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-247 P2PKycRequirementsPage',
+      semanticLabel: 'SC-247 P2PKycRequirementsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PKycRequirementsPage.tierKey(1)),
+      routeName: 'SC-247 P2PKycRequirementsPage',
+      actionLabel: 'the current P2P KYC tier card',
+    );
   });
 
   testWidgets('SC-247 wires upgrade and support navigation edges', (

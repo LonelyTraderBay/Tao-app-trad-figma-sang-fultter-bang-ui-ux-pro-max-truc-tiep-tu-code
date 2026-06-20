@@ -13,16 +13,18 @@ class _QuickActions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionTitle('Thao tác nhanh'),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         GridView.builder(
           itemCount: actions.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.p2pSecurityCenterQuickActionCrossAxisCount,
+            crossAxisCount:
+                AppSpacing.p2pSecurityCenterQuickActionCrossAxisCount,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            childAspectRatio: AppSpacing.p2pSecurityCenterQuickActionAspectRatio,
+            childAspectRatio:
+                AppSpacing.p2pSecurityCenterQuickActionAspectRatio,
           ),
           itemBuilder: (context, index) {
             final action = actions[index];
@@ -52,7 +54,7 @@ class _QuickActionCard extends StatelessWidget {
       radius: VitCardRadius.lg,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.borderSolid,
-      padding: AppSpacing.p2pSecurityCenterItemPadding,
+      padding: _p2pSecurityCompactPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +68,7 @@ class _QuickActionCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.p2pSecurityCenterLabelLineHeight,
+              height: _p2pSecurityLabelLine,
             ),
           ),
         ],
@@ -87,7 +89,7 @@ class _RecentEvents extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionTitle('Hoạt động gần đây'),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
           padding: AppSpacing.zeroInsets,
@@ -97,7 +99,7 @@ class _RecentEvents extends StatelessWidget {
                 _SecurityEventRow(event: events[index]),
                 if (index != events.length - 1)
                   const Divider(
-                    height: AppSpacing.dividerHairline,
+                    height: _p2pSecurityDividerExtent,
                     color: AppColors.divider,
                   ),
               ],
@@ -120,7 +122,7 @@ class _SecurityEventRow extends StatelessWidget {
 
     return Padding(
       key: P2PSecurityCenterPage.eventKey(event.id),
-      padding: AppSpacing.p2pSecurityCenterItemPadding,
+      padding: _p2pSecurityCompactPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -141,7 +143,7 @@ class _SecurityEventRow extends StatelessWidget {
                   event.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.p2pSecurityCenterCompactLineHeight,
+                    height: _p2pSecurityCompactLine,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -193,7 +195,7 @@ class _IconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.p2pSecurityCenterIconBox,
+      dimension: _p2pSecurityIconBox,
       child: Material(
         type: MaterialType.transparency,
         color: color.withValues(alpha: .12),

@@ -14,12 +14,12 @@ class _AddAlertNotice extends StatelessWidget {
           borderRadius: AppRadii.mdRadius,
         ),
         child: Padding(
-          padding: AppSpacing.priceAlertsNoticePadding,
+          padding: _alertsNoticePadding,
           child: Text(
             'T\u1EA1o c\u1EA3nh b\u00E1o m\u1EDBi s\u1EBD \u0111\u01B0\u1EE3c b\u1ED5 sung sau',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              height: AppSpacing.marketLineHeightCaption,
+              height: _alertsLineHeightCaption,
             ),
           ),
         ),
@@ -45,7 +45,7 @@ class _FilterTabs extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: AppSpacing.priceAlertsFilterHeaderPadding,
+            padding: _alertsFilterHeaderPadding,
             child: Row(
               children: [
                 Expanded(
@@ -57,7 +57,7 @@ class _FilterTabs extends StatelessWidget {
                     onTap: () => onFilterSelected(_AlertFilter.all),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.priceAlertsFilterGap),
+                const SizedBox(width: _alertsFilterGap),
                 Expanded(
                   flex: 15,
                   child: _FilterTab(
@@ -67,7 +67,7 @@ class _FilterTabs extends StatelessWidget {
                     onTap: () => onFilterSelected(_AlertFilter.active),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.priceAlertsFilterGap),
+                const SizedBox(width: _alertsFilterGap),
                 Expanded(
                   flex: 14,
                   child: _FilterTab(
@@ -121,9 +121,9 @@ class _FilterTab extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: SizedBox(
-          height: AppSpacing.priceAlertsFilterHeight,
+          height: _alertsFilterHeight,
           child: Padding(
-            padding: AppSpacing.priceAlertsFilterTabPadding,
+            padding: _alertsFilterTabPadding,
             child: Center(
               child: Text(
                 label,
@@ -132,7 +132,7 @@ class _FilterTab extends StatelessWidget {
                 style: AppTextStyles.captionSm.copyWith(
                   color: active ? _marketPrimary : AppColors.text2,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.marketLineHeightTight,
+                  height: _alertsLineHeightTight,
                 ),
               ),
             ),
@@ -165,7 +165,7 @@ class _StatsSummary extends StatelessWidget {
             valueKey: PriceAlertsPage.totalCountKey,
           ),
         ),
-        const SizedBox(width: AppSpacing.priceAlertsStatGap),
+        const SizedBox(width: _alertsStatGap),
         Expanded(
           child: _StatBox(
             label: 'Ho\u1EA1t \u0111\u1ED9ng',
@@ -174,7 +174,7 @@ class _StatsSummary extends StatelessWidget {
             valueKey: PriceAlertsPage.activeCountKey,
           ),
         ),
-        const SizedBox(width: AppSpacing.priceAlertsStatGap),
+        const SizedBox(width: _alertsStatGap),
         Expanded(
           child: _StatBox(
             label: '\u0110\u00E3 k\u00EDch ho\u1EA1t',
@@ -207,7 +207,7 @@ class _StatBox extends StatelessWidget {
       color: AppColors.surface3,
       borderRadius: AppRadii.cardRadius,
       child: SizedBox(
-        height: AppSpacing.priceAlertsStatHeight,
+        height: _alertsStatHeight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -215,17 +215,17 @@ class _StatBox extends StatelessWidget {
               label,
               style: AppTextStyles.captionSm.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.marketLineHeightTight,
+                height: _alertsLineHeightTight,
               ),
             ),
-            const SizedBox(height: AppSpacing.priceAlertsStatLabelGap),
+            const SizedBox(height: _alertsStatLabelGap),
             Text(
               value,
               key: valueKey,
               style: AppTextStyles.sectionTitle.copyWith(
                 color: valueColor,
                 fontFeatures: AppTextStyles.tabularFigures,
-                height: AppSpacing.marketLineHeightTight,
+                height: _alertsLineHeightTight,
               ),
             ),
           ],

@@ -34,24 +34,34 @@ class VitTogglePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
-      decoration: BoxDecoration(
-        color: enabled ? activeColor : inactiveColor,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(color: enabled ? activeColor : inactiveBorderColor),
-      ),
-      child: AnimatedAlign(
-        alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-        duration: duration,
-        child: Container(
-          width: knobSize,
-          height: knobSize,
-          margin: knobMargin,
-          decoration: BoxDecoration(
-            color: enabled ? activeKnobColor : inactiveKnobColor,
-            shape: BoxShape.circle,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: enabled ? activeColor : inactiveColor,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: enabled ? activeColor : inactiveBorderColor,
+            ),
+            borderRadius: AppRadii.inputRadius,
+          ),
+        ),
+        child: AnimatedAlign(
+          alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
+          duration: duration,
+          child: Padding(
+            padding: knobMargin,
+            child: SizedBox(
+              width: knobSize,
+              height: knobSize,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: enabled ? activeKnobColor : inactiveKnobColor,
+                  shape: const CircleBorder(),
+                ),
+              ),
+            ),
           ),
         ),
       ),

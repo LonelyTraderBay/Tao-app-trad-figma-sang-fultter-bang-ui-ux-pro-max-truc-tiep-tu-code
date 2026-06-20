@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTracking(
     WidgetTester tester, {
@@ -74,6 +76,24 @@ void main() {
     expect(find.text('Complaint Submitted'), findsOneWidget);
     expect(find.text('Final Response'), findsOneWidget);
     expect(find.text('Add Information'), findsOneWidget);
+  });
+
+  testWidgets('SC-113 first viewport reaches investigation timeline', (
+    tester,
+  ) async {
+    await pumpTracking(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-113 ComplaintTrackingPage',
+      semanticLabel: 'SC-113 ComplaintTrackingPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Complaint Submitted'),
+      targetLabel: 'the first complaint timeline step',
+      minVisibleHeight: 12,
+    );
   });
 
   testWidgets('SC-113 dynamic complaint id edge renders resolved id', (

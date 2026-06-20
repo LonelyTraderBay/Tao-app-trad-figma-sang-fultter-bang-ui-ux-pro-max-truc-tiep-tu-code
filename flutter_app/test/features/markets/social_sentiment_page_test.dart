@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSentiment(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -93,6 +95,24 @@ void main() {
     expect(find.text('Social Dominance'), findsOneWidget);
     expect(find.text('Diễn biến 7 ngày'), findsOneWidget);
     expect(find.text('Top Trending'), findsOneWidget);
+  });
+
+  testWidgets('SC-020 first viewport reaches sentiment timeline card', (
+    tester,
+  ) async {
+    await pumpSentiment(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SocialSentimentPage',
+      semanticLabel: 'SC-020 SocialSentimentPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(SocialSentimentPage.timelineCardKey),
+      targetLabel: 'sentiment timeline card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-020 token tab sorts by mentions', (tester) async {

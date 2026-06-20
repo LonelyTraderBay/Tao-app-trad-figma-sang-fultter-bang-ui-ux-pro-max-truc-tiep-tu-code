@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -57,12 +58,13 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
         .where((log) => log.status == 'suspicious')
         .length;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome +
-                  AppSpacing.profileActivityBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.profileActivityBottomInsetNative) +
+                  AppSpacing.x7 +
+                  AppSpacing.x6 +
+                  AppSpacing.x6
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -84,10 +86,12 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
                 child: SingleChildScrollView(
                   key: ActivityLogPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.profileActivityScrollPadding(bottomInset),
+                  padding: AppSpacing.profileActivityScrollPadding(
+                    scrollClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       _FilterPanel(
@@ -96,23 +100,21 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
                         suspiciousCount: suspiciousCount,
                         onChanged: _setFilter,
                       ),
-                      Padding(
-                        padding: AppSpacing.profileActivityListPadding,
-                        child: logs.isEmpty
-                            ? const _EmptyActivity()
-                            : Column(
-                                children: [
-                                  for (final log in logs) ...[
-                                    _ActivityCard(log: log),
-                                    if (log != logs.last)
-                                      const SizedBox(
-                                        height:
-                                            AppSpacing.profileActivityCardGap,
-                                      ),
-                                  ],
-                                ],
-                              ),
-                      ),
+                      if (logs.isEmpty)
+                        const Padding(
+                          padding: EdgeInsetsDirectional.symmetric(
+                            horizontal: AppSpacing.contentPad,
+                          ),
+                          child: _EmptyActivity(),
+                        )
+                      else
+                        for (final log in logs)
+                          Padding(
+                            padding: const EdgeInsetsDirectional.symmetric(
+                              horizontal: AppSpacing.contentPad,
+                            ),
+                            child: _ActivityCard(log: log),
+                          ),
                       const _ActivityFooter(),
                     ],
                   ),

@@ -26,19 +26,19 @@ class _FlowGroupCard extends StatelessWidget {
                 _FlowNodeRow(node: node, onRoute: onRoute),
                 if (node != group.nodes.last)
                   const Divider(
-                    height: AppSpacing.arenaFlowMapDividerHeight,
+                    height: _flowMapDividerHeight,
                     color: AppColors.divider,
                   ),
               ],
               Padding(
-                padding: AppSpacing.arenaFlowMapCardPadding,
+                padding: _flowMapCardPadding,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Icon(
                       Icons.alt_route_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.arenaFlowMapSmallIcon,
+                      size: _flowMapSmallIcon,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -46,7 +46,7 @@ class _FlowGroupCard extends StatelessWidget {
                         group.connectionNote,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.arenaFlowMapConnectionLineHeight,
+                          height: _flowMapConnectionLineHeight,
                         ),
                       ),
                     ),
@@ -77,7 +77,7 @@ class _FlowNodeRow extends StatelessWidget {
         key: ArenaFlowMapPage.nodeKey(node.label),
         onTap: route == null ? null : () => onRoute(route),
         child: Padding(
-          padding: AppSpacing.arenaFlowMapCardPadding,
+          padding: _flowMapCardPadding,
           child: Row(
             children: [
               _FlowIcon(kind: node.kind),
@@ -119,7 +119,7 @@ class _FlowNodeRow extends StatelessWidget {
                 Icon(
                   Icons.chevron_right_rounded,
                   color: color,
-                  size: AppSpacing.arenaFlowMapInlineIcon,
+                  size: _flowMapInlineIcon,
                 ),
               ],
             ],
@@ -146,7 +146,7 @@ class _SharedComponents extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         for (final component in components) ...[
           VitCard(
-            padding: AppSpacing.arenaFlowMapCardPadding,
+            density: VitDensity.compact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -205,7 +205,7 @@ class _HandoffNotes extends StatelessWidget {
       children: [
         for (final note in notes) ...[
           VitCard(
-            padding: AppSpacing.arenaFlowMapCardPadding,
+            density: VitDensity.compact,
             borderColor: _flowColor(note.kind).withValues(alpha: .22),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,7 +228,7 @@ class _HandoffNotes extends StatelessWidget {
                         note.detail,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text2,
-                          height: AppSpacing.arenaFlowMapBodyLineHeight,
+                          height: _flowMapBodyLineHeight,
                         ),
                       ),
                     ],

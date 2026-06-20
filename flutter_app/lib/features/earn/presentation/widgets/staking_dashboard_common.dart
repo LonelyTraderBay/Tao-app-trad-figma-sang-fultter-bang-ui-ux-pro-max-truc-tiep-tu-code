@@ -25,9 +25,11 @@ class StakingCircleIconButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.portfolioBtnGhostBorder),
-            borderRadius: AppRadii.xlRadius,
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(color: AppColors.portfolioBtnGhostBorder),
+              borderRadius: AppRadii.xlRadius,
+            ),
           ),
           child: SizedBox(
             width: AppSpacing.buttonCompact,
@@ -55,12 +57,14 @@ class StakingLegendDot extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.x4,
           height: AppSpacing.x1,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: AppRadii.xsRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

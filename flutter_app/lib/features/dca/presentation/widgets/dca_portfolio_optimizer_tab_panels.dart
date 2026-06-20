@@ -15,7 +15,7 @@ class _CorrelationContent extends StatelessWidget {
     ];
 
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: _dcaPortfolioHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,7 +29,7 @@ class _CorrelationContent extends StatelessWidget {
             'Tương quan càng thấp = diversification tốt. Càng cao = di chuyển cùng hướng.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
+              height: _dcaPortfolioBodyLineHeight,
             ),
           ),
           const Padding(padding: AppSpacing.dcaTopPaddingX5),
@@ -86,7 +86,7 @@ class _BacktestContent extends StatelessWidget {
     return Column(
       children: [
         VitCard(
-          padding: AppSpacing.dcaPaddingX5,
+          padding: _dcaPortfolioHeroPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -97,7 +97,7 @@ class _BacktestContent extends StatelessWidget {
               ),
               const Padding(padding: AppSpacing.dcaTopPaddingX4),
               SizedBox(
-                height: AppSpacing.dcaPortfolioOptimizerBacktestChartHeight,
+                height: _dcaPortfolioBacktestChartHeight,
                 width: double.infinity,
                 child: CustomPaint(painter: _BacktestChartPainter()),
               ),
@@ -169,7 +169,7 @@ class _RiskContent extends StatelessWidget {
     return Column(
       children: [
         VitCard(
-          padding: AppSpacing.dcaPaddingX5,
+          padding: _dcaPortfolioHeroPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -184,10 +184,8 @@ class _RiskContent extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: metrics.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount:
-                      AppSpacing.dcaPortfolioOptimizerRiskGridColumns,
-                  childAspectRatio:
-                      AppSpacing.dcaPortfolioOptimizerRiskGridAspect,
+                  crossAxisCount: _dcaPortfolioRiskGridColumns,
+                  childAspectRatio: _dcaPortfolioRiskGridAspect,
                   crossAxisSpacing: AppSpacing.x3,
                   mainAxisSpacing: AppSpacing.x3,
                 ),

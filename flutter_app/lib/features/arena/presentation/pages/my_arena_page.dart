@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -69,12 +70,10 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
       MyArenaContractScope.arena => repository.getArenaMy(),
     };
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.myArenaBottomInsetVisualExtra
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.myArenaBottomInsetNativeExtra) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -102,10 +101,10 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
                   child: SingleChildScrollView(
                     key: MyArenaPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.myArenaScrollPadding(bottomInset),
+                    padding: AppSpacing.myArenaScrollPadding(scrollClearance),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.x5,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         _PointsHero(
                           stats: snapshot.stats,
@@ -116,6 +115,7 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
                         VitCtaButton(
                           key: MyArenaPage.createChallengeKey,
                           onPressed: () => _go(AppRoutePaths.arenaStudio),
+                          density: VitDensity.compact,
                           leading: const Icon(Icons.auto_awesome_rounded),
                           child: const Text('Tạo challenge mới'),
                         ),

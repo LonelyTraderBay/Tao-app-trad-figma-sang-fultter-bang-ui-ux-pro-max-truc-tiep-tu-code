@@ -25,7 +25,7 @@ class LaunchpadRebalanceSuggestionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: sectionKey,
       child: VitPageSection(
         label: 'De xuat rebalance',
@@ -57,13 +57,13 @@ class _SuggestionCard extends StatelessWidget {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: AppSpacing.launchpadVerticalMarkerWidth,
-              color: color,
+              child: ColoredBox(color: color),
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x3),
+                padding: AppSpacing.launchpadPaddingX3,
                 child: Row(
                   children: [
                     _AssetBadge(asset: suggestion.asset),
@@ -138,19 +138,21 @@ class _AssetBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.launchpadBox34,
-      height: AppSpacing.launchpadBox34,
-      decoration: BoxDecoration(
-        color: asset.accent.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        asset.symbol.substring(0, math.min(2, asset.symbol.length)),
-        style: AppTextStyles.micro.copyWith(
-          color: asset.accent,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox34,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: asset.accent.withValues(alpha: .14),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(
+          child: Text(
+            asset.symbol.substring(0, math.min(2, asset.symbol.length)),
+            style: AppTextStyles.micro.copyWith(
+              color: asset.accent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -166,12 +168,12 @@ class _ActionPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+        padding: AppSpacing.launchpadCompactChipPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

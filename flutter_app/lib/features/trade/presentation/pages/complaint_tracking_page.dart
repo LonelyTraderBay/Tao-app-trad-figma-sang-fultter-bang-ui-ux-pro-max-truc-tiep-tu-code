@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +23,17 @@ const _trackingBorder = AppColors.borderSolid;
 const _trackingPrimary = AppColors.primary;
 const _trackingGreen = AppColors.buy;
 const _trackingAmber = AppColors.caution;
+const _trackingSpace = AppSpacing.x2;
+const _trackingTinySpace = AppSpacing.x1;
+const _trackingVisualScrollClearance = 112.0;
+const _trackingNativeScrollClearance = 72.0;
+const _trackingIconTile = 36.0;
+const _trackingTimelineRailWidth = 28.0;
+const _trackingTimelineDotRadius = 12.0;
+const _trackingTimelineConnectorHeight = 24.0;
+const _trackingActionHeight = 44.0;
+const _trackingLineTight = 1.2;
+const _trackingLineBody = 1.24;
 
 class ComplaintTrackingPage extends ConsumerWidget {
   const ComplaintTrackingPage({
@@ -43,11 +54,11 @@ class ComplaintTrackingPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getComplaintTracking(complaintId: complaintId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.complaintCaseBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.complaintCaseBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+            ? _trackingVisualScrollClearance
+            : _trackingNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -66,28 +77,26 @@ class ComplaintTrackingPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: AppSpacing.complaintTrackingScrollPadding(
-                    bottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    customGap: AppSpacing.complaintTrackingSectionGap,
-                    fullBleed: true,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review complaint case status',
-                        message:
-                            'Confirm evidence, response deadline, escalation limits, and next steps before adding information.',
-                      ),
                       _StatusCard(snapshot: snapshot),
-                      _DeadlineNotice(snapshot: snapshot),
                       const VitSectionHeader(
                         title: 'Investigation Timeline',
                         variant: VitSectionHeaderVariant.accentBar,
                         accentColor: _trackingPrimary,
                       ),
                       _TimelineList(steps: snapshot.timeline),
+                      _DeadlineNotice(snapshot: snapshot),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review complaint case status',
+                        message:
+                            'Confirm evidence, response deadline, escalation limits, and next steps before adding information.',
+                        density: VitDensity.compact,
+                      ),
                       for (final action in snapshot.actions)
                         _TrackingActionButton(action: action),
                       const TradeBodyReviewSection(
@@ -122,67 +131,62 @@ class _StatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.complaintTrackingStatusCardPadding,
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               VitCard(
-                width: AppSpacing.walletTokenHeroIcon,
-                height: AppSpacing.walletTokenHeroIcon,
+                width: _trackingIconTile,
+                height: _trackingIconTile,
                 variant: VitCardVariant.ghost,
+                density: VitDensity.compact,
+                padding: EdgeInsets.zero,
                 borderColor: _trackingAmber.withValues(alpha: .24),
                 alignment: Alignment.center,
                 child: const Icon(
                   Icons.schedule_rounded,
                   color: _trackingAmber,
-                  size: AppSpacing.walletAssetActionIconInner,
+                  size: AppSpacing.x4,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: _trackingSpace),
               Expanded(
-                child: Padding(
-                  padding: AppSpacing.complaintCaseTitleNudgePadding,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Status',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                          height: AppSpacing.complaintCaseLineHeightBody,
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Status',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        height: _trackingLineBody,
                       ),
-                      const SizedBox(height: AppSpacing.x3),
-                      Text(
-                        snapshot.statusLabel,
-                        style: AppTextStyles.base.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.complaintCaseLineHeightTight,
-                        ),
+                    ),
+                    const SizedBox(height: _trackingTinySpace),
+                    Text(
+                      snapshot.statusLabel,
+                      style: AppTextStyles.base.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                        height: _trackingLineTight,
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          Row(
-            children: [
-              Expanded(
-                child: _StatusMetricBox(
-                  label: 'Submitted',
-                  value: snapshot.submittedLabel,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x4),
-              Expanded(
-                child: _StatusMetricBox(
-                  label: 'Response Due',
-                  value: snapshot.responseDueLabel,
+                    ),
+                    const SizedBox(height: _trackingTinySpace),
+                    Wrap(
+                      spacing: _trackingSpace,
+                      runSpacing: _trackingTinySpace,
+                      children: [
+                        _StatusMetricInline(
+                          label: 'Submitted',
+                          value: snapshot.submittedLabel,
+                        ),
+                        _StatusMetricInline(
+                          label: 'Response Due',
+                          value: snapshot.responseDueLabel,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -193,35 +197,29 @@ class _StatusCard extends StatelessWidget {
   }
 }
 
-class _StatusMetricBox extends StatelessWidget {
-  const _StatusMetricBox({required this.label, required this.value});
+class _StatusMetricInline extends StatelessWidget {
+  const _StatusMetricInline({required this.label, required this.value});
 
   final String label;
   final String value;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      height: AppSpacing.inputHeight - AppSpacing.dividerHairline,
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
-      padding: AppSpacing.complaintTrackingMetricPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Text.rich(
+      TextSpan(
+        text: '$label: ',
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.text3,
+          height: _trackingLineTight,
+        ),
         children: [
-          Text(
-            label,
+          TextSpan(
+            text: value,
             style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.complaintCaseLineHeightTight,
-            ),
-          ),
-          const Spacer(),
-          Text(
-            value,
-            style: AppTextStyles.badge.copyWith(
               color: AppColors.text1,
-              height: AppSpacing.complaintCaseLineHeightTight,
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
+              height: _trackingLineTight,
             ),
           ),
         ],
@@ -241,6 +239,7 @@ class _DeadlineNotice extends StatelessWidget {
       state: VitHighRiskUiState.riskReview,
       title: '${snapshot.daysRemaining} Days Remaining',
       message: snapshot.deadlineNotice,
+      density: VitDensity.compact,
     );
   }
 }
@@ -282,13 +281,11 @@ class _TimelineStepRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.complaintTrackingTimelineRailWidth,
+          width: _trackingTimelineRailWidth,
           child: Column(
             children: [
               CircleAvatar(
-                radius:
-                    AppSpacing.statusPillHorizontalPaddingLg +
-                    AppSpacing.statusPillGapLg,
+                radius: _trackingTimelineDotRadius,
                 backgroundColor: color.withValues(
                   alpha: step.state == TradeComplaintTrackingStepState.pending
                       ? .55
@@ -298,10 +295,10 @@ class _TimelineStepRow extends StatelessWidget {
               ),
               if (hasConnector)
                 Padding(
-                  padding: AppSpacing.complaintTrackingConnectorPadding,
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
                   child: SizedBox(
                     width: AppSpacing.hairlineStroke,
-                    height: AppSpacing.complaintTrackingTimelineConnectorHeight,
+                    height: _trackingTimelineConnectorHeight,
                     child: ColoredBox(
                       color:
                           step.state ==
@@ -314,10 +311,10 @@ class _TimelineStepRow extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(width: AppSpacing.x4),
+        const SizedBox(width: _trackingSpace),
         Expanded(
           child: Padding(
-            padding: AppSpacing.complaintTrackingStepContentPadding,
+            padding: const EdgeInsets.only(bottom: AppSpacing.x2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -326,23 +323,23 @@ class _TimelineStepRow extends StatelessWidget {
                   style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.complaintCaseLineHeightTitle,
+                    height: _trackingLineTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: _trackingTinySpace),
                 Text(
                   step.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.complaintCaseLineHeightBody,
+                    height: _trackingLineBody,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: _trackingTinySpace),
                 Text(
                   step.dateLabel,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.complaintCaseLineHeightTight,
+                    height: _trackingLineTight,
                   ),
                 ),
               ],
@@ -365,12 +362,12 @@ class _TimelineIcon extends StatelessWidget {
       TradeComplaintTrackingStepState.completed => const Icon(
         Icons.check_circle_outline_rounded,
         color: _trackingGreen,
-        size: AppSpacing.complaintCaseSmallIcon,
+        size: AppSpacing.x4,
       ),
       TradeComplaintTrackingStepState.current => const Icon(
         Icons.schedule_rounded,
         color: _trackingAmber,
-        size: AppSpacing.complaintCaseSmallIcon,
+        size: AppSpacing.x4,
       ),
       TradeComplaintTrackingStepState.pending => Center(
         child: Icon(Icons.circle, color: AppColors.text3, size: AppSpacing.x3),
@@ -405,22 +402,15 @@ class _TrackingActionButton extends StatelessWidget {
         context.go(routePath);
       },
       variant: VitCtaButtonVariant.secondary,
-      height: AppSpacing.complaintTrackingActionHeight,
-      leading: Icon(
-        icon,
-        color: accent,
-        size: AppSpacing.complaintCaseActionIcon,
-      ),
-      trailing: const Icon(
-        Icons.chevron_right_rounded,
-        size: AppSpacing.complaintCaseTrailingIcon,
-      ),
+      height: _trackingActionHeight,
+      leading: Icon(icon, color: accent, size: AppSpacing.x4),
+      trailing: const Icon(Icons.chevron_right_rounded, size: AppSpacing.x4),
       child: Text(
         action.label,
         style: AppTextStyles.captionSm.copyWith(
           color: AppColors.text1,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.complaintCaseLineHeightTight,
+          height: _trackingLineTight,
         ),
       ),
     );
@@ -428,15 +418,15 @@ class _TrackingActionButton extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
+  const _Card({required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: padding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _trackingBorder.withValues(alpha: .76),
       child: child,
     );

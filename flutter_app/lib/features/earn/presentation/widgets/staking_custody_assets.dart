@@ -22,7 +22,7 @@ class StakingCustodySegregationSection extends StatelessWidget {
         VitCard(
           key: StakingCustodyKeys.segregation,
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -73,7 +73,7 @@ class StakingCustodyHotColdSection extends StatelessWidget {
         VitCard(
           key: StakingCustodyKeys.hotCold,
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

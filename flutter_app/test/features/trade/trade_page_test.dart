@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTrade(
     WidgetTester tester, {
@@ -132,6 +134,19 @@ void main() {
     expect(find.text('BÁN'), findsOneWidget);
     expect(find.text('Giới hạn'), findsOneWidget);
     expect(find.text('TP/SL'), findsOneWidget);
+  });
+
+  testWidgets('SC-048 first viewport reaches order side switch', (
+    tester,
+  ) async {
+    await pumpTrade(tester);
+
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(TradePage.buySideKey),
+      routeName: 'TradePage',
+      actionLabel: 'buy side switch',
+    );
   });
 
   testWidgets('SC-048 switches market data tabs and order side', (

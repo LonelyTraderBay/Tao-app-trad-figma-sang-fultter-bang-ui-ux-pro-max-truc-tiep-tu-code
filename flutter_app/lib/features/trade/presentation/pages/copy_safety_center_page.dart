@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +23,18 @@ part '../widgets/copy_safety_enforcement_common.dart';
 
 const _safetyPrimary = AppColors.primary;
 const _safetyWarningBorder = AppColors.warningBorderStrong;
+const _safetySpace = AppSpacing.x2;
+const _safetyCardSpace = AppSpacing.x3;
+const _safetyVisualScrollClearance = 112.0;
+const _safetyNativeScrollClearance = 72.0;
+const _safetyHeroMinHeight = 84.0;
+const _safetyTabsHeight = 60.0;
+const _safetyHeroLineHeight = 1.08;
+const _safetyBodyLineHeight = 1.22;
+const _safetyReadableLineHeight = 1.28;
+const _safetyTierMinHeight = 0.0;
+const _safetyActionIconSize = 20.0;
+const _safetySheetButtonHeight = 44.0;
 
 class CopySafetyCenterPage extends ConsumerStatefulWidget {
   const CopySafetyCenterPage({super.key, this.shellRenderMode});
@@ -52,11 +64,11 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
     _activeTabId ??= snapshot.defaultTabId;
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? _safetyVisualScrollClearance
+            : _safetyNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -77,11 +89,10 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: CopySafetyCenterPage.contentKey,
-                      padding: AppSpacing.copySafetyScrollPadding(bottomInset),
+                      padding: EdgeInsets.only(bottom: scrollEndClearance),
                       child: VitPageContent(
-                        padding: VitContentPadding.none,
-                        customGap: AppSpacing.sectionGapRegular,
-                        fullBleed: true,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
                         children: [
                           _HeroBanner(snapshot: snapshot),
                           VitHighRiskStatePanel(
@@ -90,6 +101,7 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
                             message:
                                 'Check verification, trust metrics, reporting tools, and emergency stop before allowing copied trades.',
                             contractId: 'Safety tab: ${_activeTabId!}',
+                            density: VitDensity.compact,
                           ),
                           _SafetyTabs(
                             tabs: snapshot.tabs,

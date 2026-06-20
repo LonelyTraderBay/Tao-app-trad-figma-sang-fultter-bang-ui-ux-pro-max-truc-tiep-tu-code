@@ -11,11 +11,11 @@ class _ArenaCard extends StatelessWidget {
     return VitCard(
       key: ProfilePage.arenaCardKey,
       onTap: onTap,
-      height: AppSpacing.profileModuleCardHeight,
-      padding: AppSpacing.profileModuleCardPadding,
+      density: VitDensity.compact,
       borderColor: _profileAmber.withValues(alpha: .34),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -39,7 +39,7 @@ class _ArenaCard extends StatelessWidget {
               _TinyTag(label: 'Points only', color: _profileAmber),
             ],
           ),
-          const Spacer(),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           Row(
             children: [
               Expanded(
@@ -66,7 +66,7 @@ class _ArenaCard extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           Row(
             children: [
               Expanded(
@@ -130,7 +130,7 @@ class _ModuleStat extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.numericMicro.copyWith(color: _profileMuted),
         ),
-        const SizedBox(height: AppSpacing.profileModuleGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           maxLines: 1,

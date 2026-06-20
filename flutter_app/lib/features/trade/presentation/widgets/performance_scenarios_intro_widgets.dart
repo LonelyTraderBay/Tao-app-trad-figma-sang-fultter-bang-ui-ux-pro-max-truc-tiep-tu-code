@@ -7,23 +7,18 @@ class _WarningNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotSecurityCardMinHeight,
-      ),
-      padding: AppSpacing.tradeBotDisputeNoticePadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _scenarioAmber.withValues(alpha: .38),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: AppSpacing.tradeBotIntroIconTopPadding,
-            child: Icon(
-              Icons.warning_amber_rounded,
-              color: _scenarioAmber,
-              size: AppSpacing.tradeBotSmallIcon,
-            ),
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: _scenarioAmber,
+            size: AppSpacing.x4,
           ),
-          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          const SizedBox(width: _scenarioSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,10 +27,10 @@ class _WarningNotice extends StatelessWidget {
                   'Not a Guarantee',
                   style: AppTextStyles.badge.copyWith(
                     color: _scenarioAmber,
-                    height: AppSpacing.tradeBotLineHeightShort,
+                    height: _scenarioLineTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
+                const SizedBox(height: _scenarioTinySpace),
                 Text(
                   'These scenarios are illustrations based on past '
                   'performance and statistical models. Actual results may '
@@ -43,7 +38,7 @@ class _WarningNotice extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: _scenarioAmber,
                     fontWeight: AppTextStyles.medium,
-                    height: AppSpacing.tradeBotLineHeightBody,
+                    height: _scenarioLineTight,
                   ),
                 ),
               ],
@@ -63,24 +58,28 @@ class _InvestmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPaddingTall,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      padding: AppSpacing.cardPaddingCompact,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'Example Investment',
-            style: AppTextStyles.navLabel.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightCaption,
+          const Icon(
+            Icons.account_balance_wallet_outlined,
+            color: _scenarioPrimary,
+            size: AppSpacing.x4,
+          ),
+          const SizedBox(width: _scenarioSpace),
+          Expanded(
+            child: Text(
+              'Example Investment',
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text3,
+                height: _scenarioLineTight,
+              ),
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
           Text(
             _formatEur(investment),
-            style: AppTextStyles.amountMd.copyWith(
-              color: AppColors.text1,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
           ),
         ],
       ),

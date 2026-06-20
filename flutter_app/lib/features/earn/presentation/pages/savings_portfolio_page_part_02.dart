@@ -10,11 +10,11 @@ class _AllocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX5,
+      padding: _savingsPortfolioCardPadding,
       child: Column(
         children: [
           SizedBox(
-            height: AppSpacing.savingsPortfolioDonutHeight,
+            height: _savingsPortfolioDonutExtent,
             child: CustomPaint(
               painter: _DonutPainter(
                 segments: [
@@ -48,7 +48,7 @@ class _AllocationCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           for (final position in positions) ...[
             _AllocationRow(position: position),
             if (position != positions.last)
@@ -150,7 +150,7 @@ class _IncomeProjectionCard extends StatelessWidget {
     };
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: _savingsPortfolioCardPadding,
       child: Column(
         children: [
           DecoratedBox(
@@ -198,7 +198,7 @@ class _MaturitySummary extends StatelessWidget {
     final total = events.length;
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: _savingsPortfolioCardPadding,
       child: Row(
         children: [
           DecoratedBox(
@@ -268,7 +268,7 @@ class _MaturityCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: color.withValues(alpha: 0.45),
-      padding: AppSpacing.earnPaddingX4,
+      padding: _savingsPortfolioCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -291,9 +291,11 @@ class _MaturityCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        _StatusPill(
-                          label: _statusLabel(event.tone),
-                          color: color,
+                        Flexible(
+                          child: _StatusPill(
+                            label: _statusLabel(event.tone),
+                            color: color,
+                          ),
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Text(
@@ -311,14 +313,14 @@ class _MaturityCard extends StatelessWidget {
               _DaysPill(days: event.daysLeft, color: color),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           DecoratedBox(
             decoration: const ShapeDecoration(
               color: AppColors.surface3,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
             ),
             child: Padding(
-              padding: AppSpacing.earnPaddingX4,
+              padding: _savingsPortfolioCardPadding,
               child: Row(
                 children: [
                   Expanded(
@@ -335,7 +337,7 @@ class _MaturityCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Text(
@@ -345,12 +347,14 @@ class _MaturityCard extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const Spacer(),
-              Text(
-                event.elapsedLabel,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
+              Expanded(
+                child: Text(
+                  event.elapsedLabel,
+                  textAlign: TextAlign.right,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
             ],
@@ -372,7 +376,7 @@ class _MaturityCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -434,7 +438,7 @@ class _PositionsTab extends StatelessWidget {
             VitTabItem(key: 'locked', label: 'Cố định'),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         for (final position in positions) ...[
           _PositionCard(position: position),
           if (position != positions.last) const SizedBox(height: AppSpacing.x3),
@@ -454,7 +458,7 @@ class _PositionCard extends StatelessWidget {
     final color = _assetColor(position.asset);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: _savingsPortfolioCardPadding,
       child: Row(
         children: [
           _AssetBadge(asset: position.asset, color: color),

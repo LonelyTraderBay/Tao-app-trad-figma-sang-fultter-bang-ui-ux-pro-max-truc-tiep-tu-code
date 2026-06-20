@@ -14,7 +14,7 @@ class _CorrelationTabs extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            height: AppSpacing.marketCorrelationsTabsHeight,
+            height: _corrTabsHeight,
             child: Row(
               children: [
                 _UnderlinedTab(
@@ -87,7 +87,7 @@ class _UnderlinedTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: AppSpacing.marketCorrelationsTabIndicatorHeight,
+              height: _corrTabIndicatorHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: _marketPrimary),
@@ -116,14 +116,14 @@ class _TimeframeChips extends StatelessWidget {
           active: timeframe == MarketCorrelationTimeframe.d7,
           onTap: () => onSelected(MarketCorrelationTimeframe.d7),
         ),
-        const SizedBox(width: AppSpacing.marketCorrelationsChipGap),
+        const SizedBox(width: _corrChipGap),
         _TimeframeChip(
           key: MarketCorrelationsPage.timeframe30dKey,
           label: '30d',
           active: timeframe == MarketCorrelationTimeframe.d30,
           onTap: () => onSelected(MarketCorrelationTimeframe.d30),
         ),
-        const SizedBox(width: AppSpacing.marketCorrelationsChipGap),
+        const SizedBox(width: _corrChipGap),
         _TimeframeChip(
           key: MarketCorrelationsPage.timeframe90dKey,
           label: '90d',
@@ -165,7 +165,7 @@ class _TimeframeChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: SizedBox(
-          height: AppSpacing.marketCorrelationsTimeframeChipHeight,
+          height: _corrTimeframeChipHeight,
           child: Padding(
             padding: AppSpacing.marketCorrelationsTimeframeChipPadding,
             child: Center(

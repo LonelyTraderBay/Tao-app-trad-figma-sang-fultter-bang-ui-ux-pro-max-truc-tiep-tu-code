@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAddressBook(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -68,7 +70,25 @@ void main() {
     expect(find.text('5'), findsOneWidget);
     expect(find.text('Ví lạnh cá nhân'), findsOneWidget);
     expect(find.text('Binance Exchange'), findsOneWidget);
-    expect(find.text('Sao chép'), findsWidgets);
+    expect(find.byKey(AddressBookPage.copyKey('addr1')), findsOneWidget);
+  });
+
+  testWidgets('SC-144 first viewport reaches first address copy action', (
+    tester,
+  ) async {
+    await pumpAddressBook(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'AddressBookPage',
+      semanticLabel: 'SC-144 AddressBookPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(AddressBookPage.copyKey('addr1')),
+      routeName: 'AddressBookPage',
+      actionLabel: 'the first saved address copy action',
+    );
   });
 
   testWidgets('SC-144 filters and add navigation are wired', (tester) async {

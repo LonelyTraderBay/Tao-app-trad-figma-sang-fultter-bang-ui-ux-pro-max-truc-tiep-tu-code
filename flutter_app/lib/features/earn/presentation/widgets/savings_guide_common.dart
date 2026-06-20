@@ -115,7 +115,7 @@ class SavingsGuideTipPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -142,14 +142,14 @@ class SavingsGuideTipPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(top: AppSpacing.earnGuideBulletTop),
+                  padding: AppSpacing.earnWithdrawalBulletPadding,
                   child: SizedBox(
                     width: AppSpacing.earnGuideBulletSize,
                     height: AppSpacing.earnGuideBulletSize,
                     child: DecoratedBox(
-                      decoration: BoxDecoration(
+                      decoration: ShapeDecoration(
                         color: AppColors.text3,
-                        shape: BoxShape.circle,
+                        shape: CircleBorder(),
                       ),
                     ),
                   ),
@@ -183,15 +183,12 @@ class SavingsGuideDifficultyPill extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = savingsGuideDifficultyColor(difficulty);
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           savingsGuideDifficultyLabel(difficulty),
           style: AppTextStyles.micro.copyWith(
@@ -222,10 +219,12 @@ class SavingsGuideRoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(color: color.withValues(alpha: 0.22)),
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.mdRadius,
+          side: BorderSide(color: color.withValues(alpha: 0.22)),
+        ),
       ),
       child: SizedBox(
         width: size,

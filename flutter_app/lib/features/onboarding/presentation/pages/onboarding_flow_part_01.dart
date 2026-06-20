@@ -256,8 +256,8 @@ class _WelcomeStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-      padding: VitContentPadding.relaxed,
-      gap: VitContentGap.relaxed,
+      padding: VitContentPadding.defaultPadding,
+      gap: VitContentGap.defaultGap,
       children: [
         const SizedBox(height: AppSpacing.x7),
         const _HeroIcon(icon: Icons.auto_awesome_rounded),
@@ -308,8 +308,8 @@ class _ModulesStep extends StatelessWidget {
     final accent = _accentForId(module.id);
 
     return VitPageContent(
-      padding: VitContentPadding.relaxed,
-      gap: VitContentGap.relaxed,
+      padding: VitContentPadding.defaultPadding,
+      gap: VitContentGap.defaultGap,
       children: [
         _StepHeading(
           title: 'Khám phá 5 modules',
@@ -375,7 +375,7 @@ class _BoundariesStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-      padding: VitContentPadding.relaxed,
+      padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
         _StepHeading(
@@ -439,7 +439,7 @@ class _TrustStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-      padding: VitContentPadding.relaxed,
+      padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
         _StepHeading(

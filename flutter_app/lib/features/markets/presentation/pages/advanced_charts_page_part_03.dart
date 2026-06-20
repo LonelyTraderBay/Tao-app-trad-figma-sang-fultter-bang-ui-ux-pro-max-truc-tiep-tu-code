@@ -12,7 +12,7 @@ class _SignalSummaryCard extends StatelessWidget {
     final oscMeta = _signalMeta(signal.oscSummary);
 
     return VitCard(
-      padding: AppSpacing.marketAdvancedCardPadding,
+      padding: _advancedCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,19 +28,19 @@ class _SignalSummaryCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+                    const SizedBox(width: _advancedCompactGap),
                     Material(
                       color: AppColors.surface2,
                       shape: const RoundedRectangleBorder(
                         borderRadius: AppRadii.xsRadius,
                       ),
                       child: Padding(
-                        padding: AppSpacing.marketAdvancedCategoryBadgePadding,
+                        padding: _advancedCategoryBadgePadding,
                         child: Text(
                           signal.timeframe,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            height: AppSpacing.marketLineHeightCaption,
+                            height: _advancedLineHeightCaption,
                           ),
                         ),
                       ),
@@ -51,9 +51,9 @@ class _SignalSummaryCard extends StatelessWidget {
               _SignalPill(meta: signalMeta),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsFooterGap),
+          const SizedBox(height: _advancedFooterGap),
           _SignalBar(signal: signal),
-          const SizedBox(height: AppSpacing.marketAnalyticsGap),
+          const SizedBox(height: _advancedGap),
           Row(
             children: [
               Expanded(
@@ -62,13 +62,13 @@ class _SignalSummaryCard extends StatelessWidget {
                   meta: maMeta,
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+              const SizedBox(width: _advancedCompactGap),
               Expanded(
                 child: _SignalMetricCard(label: 'Oscillators', meta: oscMeta),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsGap),
+          const SizedBox(height: _advancedGap),
           Text(
             'Pivot Points',
             style: AppTextStyles.micro.copyWith(
@@ -76,7 +76,7 @@ class _SignalSummaryCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketOverviewMiniHeaderGap),
+          const SizedBox(height: _advancedMiniHeaderGap),
           _PivotPoints(points: signal.pivotPoints),
         ],
       ),
@@ -108,7 +108,7 @@ class _SignalBar extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: SizedBox(
-            height: AppSpacing.marketAdvancedSignalBarHeight,
+            height: _advancedSignalBarHeight,
             child: Row(
               children: [
                 Expanded(
@@ -127,7 +127,7 @@ class _SignalBar extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.marketAnalyticsSmallGap),
+        const SizedBox(height: _advancedSmallGap),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -188,7 +188,7 @@ class _SignalMetricCard extends StatelessWidget {
       color: AppColors.surface2,
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       child: Padding(
-        padding: AppSpacing.marketAdvancedSignalMetricPadding,
+        padding: _advancedSignalMetricPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -254,7 +254,7 @@ class _PivotPointCell extends StatelessWidget {
             : BorderSide.none,
       ),
       child: Padding(
-        padding: AppSpacing.marketAdvancedPivotPadding,
+        padding: _advancedPivotPadding,
         child: Column(
           children: [
             Text(
@@ -262,7 +262,7 @@ class _PivotPointCell extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.marketLineHeightCaption,
+                height: _advancedLineHeightCaption,
               ),
             ),
             const SizedBox(height: AppSpacing.dividerHairline),
@@ -272,7 +272,7 @@ class _PivotPointCell extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.marketLineHeightCaption,
+                height: _advancedLineHeightCaption,
               ),
             ),
           ],

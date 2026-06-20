@@ -52,13 +52,15 @@ class PredictionPortfolioTinyBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionPortfolioTinyBadgePadding,
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: background,
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
-      child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
+      child: Padding(
+        padding: AppSpacing.predictionPortfolioTinyBadgePadding,
+        child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
+      ),
     );
   }
 }

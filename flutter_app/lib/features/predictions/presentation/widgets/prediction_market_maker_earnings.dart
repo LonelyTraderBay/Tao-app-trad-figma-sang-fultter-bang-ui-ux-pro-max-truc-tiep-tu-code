@@ -12,7 +12,7 @@ class _EarningsTab extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: AppSpacing.predictionMarketMakerCardPadding,
+          density: VitDensity.compact,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -22,11 +22,9 @@ class _EarningsTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(
-                height: AppSpacing.predictionMarketMakerEarningsTitleGap,
-              ),
+              const SizedBox(height: AppSpacing.x3),
               SizedBox(
-                height: AppSpacing.predictionMarketMakerEarningsChartHeight,
+                height: VitDensity.compact.controlHeight * 3.5,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -45,7 +43,7 @@ class _EarningsTab extends StatelessWidget {
           ),
         ),
         VitCard(
-          padding: AppSpacing.predictionMarketMakerCardPadding,
+          density: VitDensity.compact,
           child: Column(
             children: [
               _AnalysisRow(
@@ -91,9 +89,7 @@ class _FeeBar extends StatelessWidget {
             borderRadius: BorderRadius.vertical(top: AppRadii.smCorner),
           ),
         ),
-        const SizedBox(
-          height: AppSpacing.predictionMarketMakerEarningsBarLabelGap,
-        ),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           point.date,
           style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
@@ -125,9 +121,7 @@ class _OverviewMetric extends StatelessWidget {
           label,
           style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(
-          height: AppSpacing.predictionMarketMakerOverviewMetricGap,
-        ),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: (small ? AppTextStyles.caption : AppTextStyles.baseMedium)
@@ -166,9 +160,7 @@ class _AnalysisRow extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.predictionMarketMakerAnalysisIcon,
           ),
-          const SizedBox(
-            width: AppSpacing.predictionMarketMakerAnalysisIconGap,
-          ),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               label,

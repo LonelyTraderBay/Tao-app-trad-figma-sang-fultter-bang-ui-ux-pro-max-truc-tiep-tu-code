@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpWithdrawLimits(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -79,6 +81,22 @@ void main() {
     expect(find.text('Level 0'), findsOneWidget);
     expect(find.text('Level 3'), findsOneWidget);
     expect(find.text('HI\u1EC6N T\u1EA0I'), findsOneWidget);
+  });
+
+  testWidgets('SC-153 first viewport reaches first KYC tier', (tester) async {
+    await pumpWithdrawLimits(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'WithdrawLimitsPage',
+      semanticLabel: 'SC-153 WithdrawLimitsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(WithdrawLimitsPage.tierKey(0)),
+      routeName: 'WithdrawLimitsPage',
+      actionLabel: 'the first KYC tier card',
+    );
   });
 
   testWidgets('SC-153 wires locked tier to KYC edge', (tester) async {

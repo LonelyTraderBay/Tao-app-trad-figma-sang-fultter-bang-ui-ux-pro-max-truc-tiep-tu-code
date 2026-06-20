@@ -8,11 +8,13 @@ class _DCAPageState extends ConsumerState<DCAPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaDashboardProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollEndPadding =
+        navClearance +
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -40,10 +42,11 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                       child: SingleChildScrollView(
                         key: DCAPage.contentKey,
                         physics: const BouncingScrollPhysics(),
-                        padding: AppSpacing.dcaBottomInsetPadding(bottomInset),
+                        padding: AppSpacing.dcaBottomInsetPadding(
+                          scrollEndPadding,
+                        ),
                         child: VitPageContent(
-                          padding: VitContentPadding.relaxed,
-                          customGap: AppSpacing.x5,
+                          density: VitDensity.compact,
                           children: [
                             _DcaOverviewCard(
                               snapshot: snapshot,
@@ -54,7 +57,6 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                               onHistory: () =>
                                   setState(() => _activeTab = _DcaTab.history),
                             ),
-                            _AdvancedTools(tools: snapshot.tools, onOpen: _go),
                             _DcaTabs(
                               active: _activeTab,
                               planCount: snapshot.plans.length,
@@ -74,6 +76,7 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                                       snapshot: snapshot,
                                     ),
                             ),
+                            _AdvancedTools(tools: snapshot.tools, onOpen: _go),
                           ],
                         ),
                       ),
@@ -140,7 +143,7 @@ class _DcaOverviewCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.dcaContentPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -162,7 +165,7 @@ class _DcaOverviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -173,14 +176,14 @@ class _DcaOverviewCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.numericDisplayHeroXs.copyWith(
                     fontWeight: AppTextStyles.heavy,
-                    height: AppSpacing.dcaMainTightLineHeight,
+                    height: 1.04,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               SizedBox(
                 width: AppSpacing.dcaMainSparklineWidth,
-                height: AppSpacing.x7,
+                height: VitDensity.compact.controlHeight,
                 child: CustomPaint(
                   painter: _SparklinePainter(
                     values: snapshot.sparkline,
@@ -191,7 +194,7 @@ class _DcaOverviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -223,7 +226,7 @@ class _DcaOverviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -235,7 +238,7 @@ class _DcaOverviewCard extends StatelessWidget {
                   color: AppModuleAccents.trade,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _OverviewMetric(
                   icon: Icons.trending_up_rounded,
@@ -245,7 +248,7 @@ class _DcaOverviewCard extends StatelessWidget {
                   color: AppColors.buy,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _OverviewMetric(
                   icon: Icons.bar_chart_rounded,
@@ -257,9 +260,9 @@ class _DcaOverviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           _NextPurchaseRow(overview: overview),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -271,7 +274,7 @@ class _DcaOverviewCard extends StatelessWidget {
                   onTap: onCreate,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _OverviewAction(
                   key: DCAPage.pauseAllKey,
@@ -281,7 +284,7 @@ class _DcaOverviewCard extends StatelessWidget {
                   onTap: onPauseAll,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _OverviewAction(
                   key: DCAPage.chartKey,
@@ -291,7 +294,7 @@ class _DcaOverviewCard extends StatelessWidget {
                   onTap: onChart,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _OverviewAction(
                   key: DCAPage.historyKey,
@@ -345,7 +348,7 @@ class _DeltaPill extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.buy,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.dcaMainTightLineHeight,
+                    height: 1.04,
                   ),
                 ),
               ),
@@ -377,67 +380,64 @@ class _OverviewMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: AppSpacing.dcaPaddingX4,
-      child: SizedBox(
-        height: AppSpacing.dcaMainStatCardHeight,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: AppSpacing.x6,
-                  height: AppSpacing.x6,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: color.withValues(alpha: .15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: AppRadii.mdRadius,
-                        side: BorderSide(color: color.withValues(alpha: .2)),
-                      ),
-                    ),
-                    child: Icon(icon, color: color, size: AppSpacing.iconMd),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Text(
-                    label,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.portfolioTextDim,
-                      fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.dcaMainStatLabelLineHeight,
+      density: VitDensity.compact,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 28,
+                height: 28,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: color.withValues(alpha: .15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.mdRadius,
+                      side: BorderSide(color: color.withValues(alpha: .2)),
                     ),
                   ),
+                  child: Icon(icon, color: color, size: AppSpacing.iconSm),
                 ),
-              ],
-            ),
-            const Spacer(),
-            Text(
-              value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.amountXs.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.heavy,
-                height: AppSpacing.dcaMainTightLineHeight,
               ),
-            ),
-            const SizedBox(height: AppSpacing.x2),
-            Text(
-              subtitle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.portfolioTextMuted,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.dcaMainTightLineHeight,
+              const SizedBox(width: AppSpacing.x1),
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.portfolioTextDim,
+                    fontWeight: AppTextStyles.bold,
+                    height: 1.08,
+                  ),
+                ),
               ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.amountXs.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.heavy,
+              height: 1.04,
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            subtitle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.portfolioTextMuted,
+              fontWeight: AppTextStyles.bold,
+              height: 1.04,
+            ),
+          ),
+        ],
       ),
     );
   }

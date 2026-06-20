@@ -15,9 +15,9 @@ class _StrategySelectionGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: AppSpacing.tradeBotGridColumns,
-      crossAxisSpacing: AppSpacing.tradeBotRowGap,
-      mainAxisSpacing: AppSpacing.tradeBotRowGap,
-      childAspectRatio: AppSpacing.tradeBotStrategyGridAspectRatio,
+      crossAxisSpacing: AppSpacing.x2,
+      mainAxisSpacing: AppSpacing.x2,
+      childAspectRatio: 2.25,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: [
@@ -51,9 +51,10 @@ class _StrategyCard extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       borderColor: selected ? color : AppColors.borderSolid,
-      padding: AppSpacing.tradeBotStrategyCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -62,9 +63,9 @@ class _StrategyCard extends StatelessWidget {
                     ? Icons.check_circle_outline
                     : Icons.radio_button_unchecked_rounded,
                 color: selected ? color : AppColors.borderSolid,
-                size: AppSpacing.tradeBotActionIcon,
+                size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   strategy.name,
@@ -73,13 +74,12 @@ class _StrategyCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: selected ? color : AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -122,18 +122,14 @@ class _MiniMetric extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeBotMetricGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.tradeBotLineHeightTight,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -153,28 +149,25 @@ class _BestStrategyCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .30),
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
             Icons.workspace_premium_outlined,
             color: color,
-            size: AppSpacing.tradeBotHeroIcon,
+            size: AppSpacing.iconMd,
           ),
-          const SizedBox(width: AppSpacing.tradeBotStatusGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Best Risk-Adjusted Returns',
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: color,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.baseMedium.copyWith(color: color),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotRowGap),
+                const SizedBox(height: AppSpacing.x2),
                 Text.rich(
                   TextSpan(
                     children: [
@@ -190,10 +183,7 @@ class _BestStrategyCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.tradeBotLineHeightLong,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),

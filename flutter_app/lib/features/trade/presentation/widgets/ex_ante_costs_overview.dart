@@ -5,20 +5,20 @@ class _RegulatoryNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.tradeFeeRowGap,
-        right: AppSpacing.x3,
-      ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
+      borderColor: _costPrimary.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppColors.text1,
-            size: AppSpacing.tradeTpslIcon,
+            size: AppSpacing.x4,
           ),
-          const SizedBox(width: AppSpacing.tradeFeeRowGap),
+          const SizedBox(width: _costSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,6 +37,7 @@ class _RegulatoryNotice extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
+                    height: _costLineTight,
                   ),
                 ),
               ],
@@ -56,75 +57,51 @@ class _InvestmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeFeeCardPadding,
-      child: Column(
+      padding: AppSpacing.cardPaddingCompact,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              VitCard(
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
-                width: AppSpacing.walletTransactionExplorerHeight,
-                height: AppSpacing.walletTransactionExplorerHeight,
-                clip: true,
-                background: ColoredBox(
-                  color: _costPrimary.withValues(alpha: .13),
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Example Investment Amount',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                child: const Icon(
-                  Icons.attach_money_rounded,
-                  color: _costPrimary,
-                  size: AppSpacing.statusPillHeightMd,
+                const SizedBox(height: _costTinySpace),
+                Text(
+                  _formatEur(snapshot.investmentAmount),
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    color: AppColors.text1,
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.x4),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Example Investment Amount',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x4),
-                    Text(
-                      _formatEur(snapshot.investmentAmount),
-                      style: AppTextStyles.heroNumber.copyWith(
-                        color: AppColors.text1,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.tradeFeeRowGap),
-                    Text(
-                      'Estimated for illustration purposes',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
+                const SizedBox(height: _costTinySpace),
+                Text(
+                  'Illustrative estimate',
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    height: _costLineTight,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: AppSpacing.walletAddressFilterGap),
-          Row(
-            children: [
-              Expanded(
-                child: _MetricBox(
-                  label: 'Total Costs (Year 1)',
-                  value: _formatEur(snapshot.totalFirstYear),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.tradeFeeRowGap),
-              Expanded(
-                child: _MetricBox(
-                  label: '% of Investment',
-                  value: '${snapshot.totalPercentage.toStringAsFixed(2)}%',
-                  valueColor: _costRed,
-                ),
-              ),
-            ],
+          const SizedBox(width: _costTinySpace),
+          Expanded(
+            child: _MetricBox(
+              label: 'Year 1',
+              value: _formatEur(snapshot.totalFirstYear),
+            ),
+          ),
+          const SizedBox(width: _costTinySpace),
+          Expanded(
+            child: _MetricBox(
+              label: '% Invested',
+              value: '${snapshot.totalPercentage.toStringAsFixed(2)}%',
+              valueColor: _costRed,
+            ),
           ),
         ],
       ),
@@ -146,7 +123,8 @@ class _Tabs extends StatelessWidget {
       ('scenarios', 'Scenarios'),
     ];
     return VitCard(
-      height: AppSpacing.x7,
+      height: _costTabExtent,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets,
       child: VitTabBar(
         activeKey: activeId,

@@ -55,25 +55,19 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.executionVenueSummaryHeight,
-      padding: AppSpacing.executionVenueSummaryCardPadding,
+      density: VitDensity.compact,
       borderColor: _venueBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.executionVenueLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(
-            height:
-                AppSpacing.x4 + AppSpacing.x2 - AppSpacing.x1,
-          ),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -82,18 +76,14 @@ class _SummaryCard extends StatelessWidget {
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.executionVenueLineHeightTight,
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             subtitle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: subtitleColor,
-              height: AppSpacing.executionVenueLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: subtitleColor),
           ),
         ],
       ),
@@ -127,10 +117,7 @@ class _SortSelector extends StatelessWidget {
           width: AppSpacing.executionVenueSortLabelWidth,
           child: Text(
             'Sort\nby:',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.executionVenueLineHeightControl,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
         const SizedBox(width: AppSpacing.executionVenueSortLabelGap),
@@ -141,7 +128,10 @@ class _SortSelector extends StatelessWidget {
               onTap: () => onChanged(option.$1),
               borderRadius: AppRadii.pillRadius,
               child: VitCard(
-                height: AppSpacing.homeHeroActionHeight,
+                constraints: const BoxConstraints(
+                  minHeight: AppSpacing.tradeBotControlCompact,
+                ),
+                density: VitDensity.compact,
                 alignment: Alignment.center,
                 variant: activeId == option.$1
                     ? VitCardVariant.standard
@@ -162,7 +152,6 @@ class _SortSelector extends StatelessWidget {
                         ? AppColors.onAccent
                         : AppColors.text2,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.executionVenueLineHeightControl,
                   ),
                 ),
               ),
@@ -190,8 +179,7 @@ class _Tabs extends StatelessWidget {
       ('trends', 'Trends'),
     ];
     return VitCard(
-      height: AppSpacing.inputHeight,
-      padding: AppSpacing.zeroInsets,
+      density: VitDensity.compact,
       child: VitTabBar(
         activeKey: activeId,
         onChanged: onChanged,

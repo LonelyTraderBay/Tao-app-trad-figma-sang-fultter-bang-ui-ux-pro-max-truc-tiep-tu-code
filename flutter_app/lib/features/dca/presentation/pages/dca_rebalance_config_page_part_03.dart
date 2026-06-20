@@ -33,7 +33,7 @@ class _PreviewRow extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const Spacer(),
+            const SizedBox(width: AppSpacing.x3),
             Text(
               '${preview.currentPercent.toStringAsFixed(0)}% → ${preview.targetPercent.toStringAsFixed(0)}%',
               style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -300,7 +300,7 @@ class _TogglePill extends StatelessWidget {
         onTap: () => onChanged(!value),
         child: SizedBox(
           width: AppSpacing.dcaRebalanceToggleWidth,
-          height: AppSpacing.dcaRebalanceToggleHeight,
+          height: _dcaRebalanceToggleHeight,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: value ? AppColors.buy : AppColors.borderSolid,
@@ -315,7 +315,7 @@ class _TogglePill extends StatelessWidget {
                 alignment: value ? Alignment.centerRight : Alignment.centerLeft,
                 child: const SizedBox(
                   width: AppSpacing.dcaRebalanceToggleThumb,
-                  height: AppSpacing.dcaRebalanceToggleThumb,
+                  height: _dcaRebalanceToggleThumb,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
                       color: AppColors.text1,

@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,6 +22,14 @@ part '../widgets/advanced_tools_tabs_sheets.dart';
 part '../widgets/advanced_tools_common.dart';
 
 const _toolsPrimary = AppColors.primary;
+const _toolsSpace = AppSpacing.x2;
+const _toolsCardSpace = AppSpacing.x3;
+const _toolsVisualScrollClearance = 112.0;
+const _toolsNativeScrollClearance = 72.0;
+const _toolsButtonHeight = 44.0;
+const _toolsMetricRowHeight = 36.0;
+const _toolsBodyLineHeight = 1.24;
+const _toolsReadableLineHeight = 1.32;
 
 enum _ToolsTab { ladder, bulk, shortcuts }
 
@@ -57,15 +65,11 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
         .state
         .snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.tradeToolBottomInsetSlippageVisual
-            : AppSpacing.tradeToolBottomInsetSlippageNative);
+            ? _toolsVisualScrollClearance
+            : _toolsNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -86,23 +90,17 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: AdvancedToolsDemoPage.contentKey,
-                      padding: AppSpacing.tradeToolScrollPadding(bottomInset),
+                      padding: EdgeInsets.only(bottom: scrollEndClearance),
                       child: VitPageContent(
-                        padding: VitContentPadding.none,
-                        fullBleed: true,
-                        customGap: AppSpacing.tradeToolCardGap,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
                         children: [
                           const _IntroCard(),
-                          VitPageSection(
-                            customGap: 12,
-                            children: [
-                              for (final feature in snapshot.features)
-                                _FeatureCard(
-                                  feature: feature,
-                                  onTap: () => _onFeatureTap(feature),
-                                ),
-                            ],
-                          ),
+                          for (final feature in snapshot.features)
+                            _FeatureCard(
+                              feature: feature,
+                              onTap: () => _onFeatureTap(feature),
+                            ),
                           const _SpeedCard(),
                           const _BenefitsCard(),
                           _ProgressCard(items: snapshot.statusItems),
@@ -149,11 +147,10 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                             ),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: AppSpacing.tradeToolRiskReviewPadding,
-                            child: VitPageContent(
-                              padding: VitContentPadding.none,
-                              fullBleed: true,
-                              customGap: 8,
+                            density: VitDensity.compact,
+                            padding: AppSpacing.cardPaddingCompact,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
@@ -161,7 +158,9 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                                   message:
                                       'Ladder, bulk cancel and shortcut actions keep order preview, confirmation, affected count, result toast and next step visible before execution.',
                                   contractId: 'advanced-tools-review',
+                                  density: VitDensity.compact,
                                 ),
+                                SizedBox(height: _toolsSpace),
                                 VitStatusPill(
                                   label: 'Preview before submit',
                                   status: VitStatusPillStatus.info,

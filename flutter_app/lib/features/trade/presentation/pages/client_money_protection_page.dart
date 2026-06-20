@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -28,6 +29,7 @@ class ClientMoneyProtectionPage extends ConsumerStatefulWidget {
   const ClientMoneyProtectionPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc102_client_money_content');
+  static const overviewSectionKey = Key('sc102_client_money_overview_section');
   static Key tabKey(String id) => Key('sc102_client_money_tab_$id');
   static const cassHistoryKey = Key('sc102_cass_history');
 
@@ -48,11 +50,11 @@ class _ClientMoneyProtectionPageState
         .watch(tradeReadModelControllerProvider)
         .getClientMoneyProtection();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 70
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -72,13 +74,16 @@ class _ClientMoneyProtectionPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ClientMoneyProtectionPage.contentKey,
-                  padding: AppSpacing.tradeBotClientMoneyScrollPadding(
-                    bottomInset,
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.tradeBotCardGap,
+                    AppSpacing.contentPad,
+                    scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: AppSpacing.tradeBotCardGap,
+                    density: VitDensity.compact,
                     children: [
                       const _ProtectionNotice(),
                       _BalanceCard(snapshot: snapshot),
@@ -91,14 +96,15 @@ class _ClientMoneyProtectionPageState
                         const _Documents(),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
+                        density: VitDensity.compact,
                         child: VitPageContent(
                           padding: VitContentPadding.none,
                           fullBleed: true,
-                          customGap: AppSpacing.tradeBotClientMoneyRiskGap,
+                          density: VitDensity.compact,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
+                              density: VitDensity.compact,
                               title: 'Client money protection review',
                               message:
                                   'Segregation status, reconciliation, documents, limits and next steps are reviewed before client-money actions.',

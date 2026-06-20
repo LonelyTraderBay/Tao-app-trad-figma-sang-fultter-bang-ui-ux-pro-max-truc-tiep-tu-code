@@ -17,7 +17,7 @@ class _ConsentTile extends StatelessWidget {
       key: CopyConfirmationPage.consentKey(item.id),
       variant: checked ? VitCardVariant.standard : VitCardVariant.inner,
       borderColor: checked ? _confirmationPrimary : null,
-      padding: AppSpacing.copyConfirmationCompactPadding,
+      density: VitDensity.compact,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,16 +27,13 @@ class _ConsentTile extends StatelessWidget {
                 ? Icons.check_box_rounded
                 : Icons.check_box_outline_blank_rounded,
             color: checked ? _confirmationPrimary : AppColors.text3,
-            size: AppSpacing.copyConfirmationCheckboxIcon,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.copyConfirmationIconGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               item.label,
-              style: AppTextStyles.captionSm.copyWith(
-                color: AppColors.text1,
-                height: AppSpacing.complaintCaseLineHeightReadable,
-              ),
+              style: AppTextStyles.captionSm.copyWith(color: AppColors.text1),
             ),
           ),
         ],
@@ -55,22 +52,21 @@ class _CoolingOffCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: _confirmationPrimary,
-      padding: AppSpacing.copyConfirmationSoftPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.schedule_rounded,
             color: _confirmationPrimary,
-            size: AppSpacing.copyConfirmationCoolingIcon,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.copyConfirmationIconGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               'Sau khi xác nhận, bạn có $hours giờ cooling-off để review lại quyết định trước khi copy chính thức kích hoạt.',
               style: AppTextStyles.captionSm.copyWith(
                 color: _confirmationPrimary,
-                height: AppSpacing.copyConfirmationLineHeightReadable,
               ),
             ),
           ),
@@ -94,7 +90,7 @@ class _NextStepsCard extends StatelessWidget {
       'Theo dõi real-time P/L và dừng copy bất cứ lúc nào',
     ];
     return VitCard(
-      padding: AppSpacing.copyConfirmationCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -104,13 +100,13 @@ class _NextStepsCard extends StatelessWidget {
               fontWeight: AppTextStyles.extraBold,
             ),
           ),
-          const SizedBox(height: AppSpacing.copyConfirmationRowGap),
+          const SizedBox(height: AppSpacing.x2),
           for (var index = 0; index < steps.length; index++) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  radius: AppSpacing.copyConfirmationStepRadius,
+                  radius: AppSpacing.x3,
                   backgroundColor: _confirmationPrimary.withValues(alpha: .16),
                   child: Text(
                     '${index + 1}',
@@ -120,20 +116,19 @@ class _NextStepsCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.copyConfirmationIconGap),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
                     steps[index],
                     style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.copyConfirmationLineHeightBody,
                     ),
                   ),
                 ),
               ],
             ),
             if (index != steps.length - 1)
-              const SizedBox(height: AppSpacing.copyConfirmationIconGap),
+              const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -155,7 +150,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.copyConfirmationSummaryRowPadding,
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
       child: Row(
         children: [
           Expanded(
@@ -164,7 +159,7 @@ class _SummaryRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
-          const SizedBox(width: AppSpacing.copyConfirmationRowGap),
+          const SizedBox(width: AppSpacing.x2),
           Flexible(
             child: Text(
               value,
@@ -173,7 +168,6 @@ class _SummaryRow extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: valueColor,
                 fontWeight: FontWeight.w700,
-                height: AppSpacing.copyConfirmationLineHeightDense,
               ),
             ),
           ),

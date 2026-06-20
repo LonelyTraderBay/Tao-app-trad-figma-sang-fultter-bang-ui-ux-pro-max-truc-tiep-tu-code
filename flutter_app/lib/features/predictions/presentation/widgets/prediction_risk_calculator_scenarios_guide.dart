@@ -29,7 +29,7 @@ class _ScenariosTab extends StatelessWidget {
       children: [
         for (final scenario in scenarios)
           VitCard(
-            padding: AppSpacing.predictionRiskCardPadding,
+            density: VitDensity.compact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -62,9 +62,7 @@ class _ScenariosTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionRiskScenarioTitleGap,
-                ),
+                const SizedBox(height: AppSpacing.x2),
                 _RiskMetricRow(
                   label: 'Settlement value',
                   value: _formatMoney(scenario.settlementValue),
@@ -83,7 +81,7 @@ class _ScenariosTab extends StatelessWidget {
             ),
           ),
         VitCard(
-          padding: AppSpacing.predictionRiskCardPadding,
+          density: VitDensity.compact,
           child: _RiskMetricRow(
             label: 'Net Expected Value',
             value:
@@ -142,7 +140,7 @@ class _GuideCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionRiskGuidePadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -153,7 +151,7 @@ class _GuideCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.predictionRiskGuideTitleGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             body,
             style: AppTextStyles.badge.copyWith(color: AppColors.text2),
@@ -184,7 +182,7 @@ class _SummaryMetric extends StatelessWidget {
           label,
           style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.predictionRiskMetricGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
@@ -228,7 +226,7 @@ class _RiskMetricRow extends StatelessWidget {
               color: iconColor,
               size: AppSpacing.predictionRiskMetricIcon,
             ),
-            const SizedBox(width: AppSpacing.predictionRiskMetricIconGap),
+            const SizedBox(width: AppSpacing.x2),
           ],
           Expanded(
             child: Text(

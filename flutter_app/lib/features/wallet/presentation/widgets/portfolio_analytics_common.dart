@@ -21,17 +21,15 @@ class _PlaceholderAnalyticsView extends StatelessWidget {
 }
 
 class _VitCardSurface extends StatelessWidget {
-  const _VitCardSurface({required this.child, this.padding, this.height});
+  const _VitCardSurface({required this.child, this.padding});
 
   final Widget child;
   final EdgeInsetsGeometry? padding;
-  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: height,
-      padding: padding,
+      padding: padding ?? VitDensity.compact.cardPadding,
       borderColor: AppColors.cardBorder,
       child: child,
     );

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -51,12 +52,13 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(profileControllerProvider).getSubAccounts();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome +
-                  AppSpacing.profileSubAccountBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.profileSubAccountBottomInsetNative) +
+                  AppSpacing.x7 +
+                  AppSpacing.x6 +
+                  AppSpacing.x6
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -79,11 +81,11 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                   key: SubAccountPage.contentKey,
                   physics: const BouncingScrollPhysics(),
                   padding: AppSpacing.profileSubAccountScrollPadding(
-                    bottomInset,
+                    scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.zero,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       _SubAccountSummaryCard(
@@ -91,38 +93,23 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                         isBalanceHidden: _isBalanceHidden,
                         onToggleBalance: _toggleBalance,
                       ),
-                      const SizedBox(
-                        height: AppSpacing.profileSubAccountSummaryRiskGap,
-                      ),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Review sub-account permissions',
                         message:
                             'Ki\u1EC3m tra quy\u1EC1n chuy\u1EC3n, r\u00FAt, API key v\u00E0 gi\u1EDBi h\u1EA1n tr\u01B0\u1EDBc khi t\u1EA1o ho\u1EB7c m\u1EDF r\u1ED9ng t\u00E0i kho\u1EA3n ph\u1EE5.',
                         contractId: 'Sub accounts: ${snapshot.accounts.length}',
-                      ),
-                      const SizedBox(
-                        height: AppSpacing.profileSubAccountRiskCreateGap,
+                        density: VitDensity.compact,
                       ),
                       _CreateSubAccountButton(
                         isOpen: _showCreate,
                         onTap: _toggleCreateForm,
                       ),
-                      if (_showCreate) ...[
-                        const SizedBox(
-                          height: AppSpacing.profileSubAccountCreateFormGap,
-                        ),
-                        const _CreateSubAccountForm(),
-                      ],
-                      const SizedBox(
-                        height: AppSpacing.profileSubAccountAccountsHeaderGap,
-                      ),
+                      if (_showCreate) const _CreateSubAccountForm(),
                       VitSectionHeader(
                         title:
                             'T\u00C0I KHO\u1EA2N (${snapshot.accounts.length})',
-                      ),
-                      const SizedBox(
-                        height: AppSpacing.profileSubAccountAccountsListGap,
+                        density: VitDensity.compact,
                       ),
                       if (snapshot.accounts.isEmpty)
                         const VitEmptyState(
@@ -132,22 +119,15 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                               'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5 \u0111\u1EC3 t\u00E1ch quy\u1EC1n, API v\u00E0 v\u00ED giao d\u1ECBch.',
                           icon: Icons.groups_outlined,
                         )
-                      else
-                        for (final account in snapshot.accounts) ...[
+                      else ...[
+                        for (final account in snapshot.accounts)
                           _SubAccountCard(
                             account: account,
                             isExpanded: _expandedId == account.id,
                             isBalanceHidden: _isBalanceHidden,
                             onTap: () => _toggleExpanded(account.id),
                           ),
-                          if (account != snapshot.accounts.last)
-                            const SizedBox(
-                              height: AppSpacing.profileSubAccountCardGap,
-                            ),
-                        ],
-                      const SizedBox(
-                        height: AppSpacing.profileSubAccountInfoNoteGap,
-                      ),
+                      ],
                       const _SubAccountInfoNote(),
                     ],
                   ),

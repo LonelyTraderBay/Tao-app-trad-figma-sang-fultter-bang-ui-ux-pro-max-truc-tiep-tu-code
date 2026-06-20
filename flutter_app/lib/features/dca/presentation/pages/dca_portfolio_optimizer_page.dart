@@ -9,7 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -34,6 +34,23 @@ part '../widgets/dca_portfolio_optimizer_stat_widgets.dart';
 part '../widgets/dca_portfolio_optimizer_frontier_painter.dart';
 
 enum _OptimizerTab { frontier, correlation, backtest, risk }
+
+const double _dcaPortfolioVisualNavClearance = 112;
+const double _dcaPortfolioNativeNavClearance = 88;
+const double _dcaPortfolioBodyLineHeight = 1.35;
+const double _dcaPortfolioTightLineHeight = 1.0;
+const double _dcaPortfolioFrontierChartHeight = 180;
+const double _dcaPortfolioFrontierChipListHeight = AppSpacing.inputHeight;
+const double _dcaPortfolioFrontierChipWidth =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _dcaPortfolioBacktestChartHeight = 180;
+const double _dcaPortfolioDividerWidth = AppSpacing.hairlineStroke;
+const int _dcaPortfolioRiskGridColumns = 2;
+const double _dcaPortfolioRiskGridAspect = 1.35;
+const double _dcaPortfolioHeroIconExtent = AppSpacing.inputHeight;
+const double _dcaPortfolioIconBubbleExtent = AppSpacing.x6;
+const EdgeInsets _dcaPortfolioCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _dcaPortfolioHeroPadding = EdgeInsets.all(AppSpacing.x4);
 
 class DCAPortfolioOptimizer extends ConsumerStatefulWidget {
   const DCAPortfolioOptimizer({super.key, this.shellRenderMode});
@@ -60,11 +77,11 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaPortfolioOptimizerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _dcaPortfolioVisualNavClearance
+        : _dcaPortfolioNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       semanticLabel: 'SC-174 DCAPortfolioOptimizer',
@@ -92,9 +109,15 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
                 child: SingleChildScrollView(
                   key: DCAPortfolioOptimizer.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.dcaBottomInsetPadding(bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    scrollEndPadding,
+                  ),
                   child: VitPageContent(
-                    customGap: AppSpacing.x5,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       if (_showDriftBanner)
                         _DriftBanner(
@@ -104,13 +127,13 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
                           },
                           onSettings: _showDriftSettings,
                         ),
-                      _ComparisonHero(snapshot: snapshot),
                       _OptimizerTabs(
                         activeTab: _activeTab,
                         onChanged: (tab) {
                           setState(() => _activeTab = tab);
                         },
                       ),
+                      _ComparisonHero(snapshot: snapshot),
                       _TabContent(
                         activeTab: _activeTab,
                         snapshot: snapshot,

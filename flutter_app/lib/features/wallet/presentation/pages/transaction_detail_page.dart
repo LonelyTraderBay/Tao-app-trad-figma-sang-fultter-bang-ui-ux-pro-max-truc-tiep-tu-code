@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -25,6 +25,31 @@ const _detailBackground = AppColors.bg;
 const _detailPrimary = AppColors.primary;
 const _detailGreen = AppColors.buy;
 const _detailRed = AppColors.sell;
+const _detailNativeBottomClearance = 88.0;
+const _detailVisualBottomClearance = 112.0;
+const _detailScrollTopPad = 0.0;
+const _detailGap = 8.0;
+const _detailTinyGap = 4.0;
+const _detailInlineGap = 8.0;
+const _detailIconBox = 42.0;
+const _detailMissingIconBox = 42.0;
+const _detailProgressDot = 10.0;
+const _detailProgressLineWidth = 2.0;
+const _detailProgressLineHeight = 22.0;
+const _detailInfoRowMinHeight = 44.0;
+const _detailExplorerHeight = 44.0;
+const _detailActionHeight = 44.0;
+const _detailCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 12);
+const _detailHeaderPadding = EdgeInsets.fromLTRB(12, 12, 12, 8);
+const _detailRowPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
+const _detailLinePadding = EdgeInsets.symmetric(vertical: 3);
+
+double _detailScrollBottomInset(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? _detailVisualBottomClearance
+          : _detailNativeBottomClearance) +
+      MediaQuery.paddingOf(context).bottom;
+}
 
 class TransactionDetailPage extends ConsumerWidget {
   const TransactionDetailPage({
@@ -45,13 +70,7 @@ class TransactionDetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(walletTransactionDetailProvider(transactionId));
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletBottomInsetVisualChrome
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletBottomInsetNativeChrome) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = _detailScrollBottomInset(context, mode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -72,12 +91,12 @@ class TransactionDetailPage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: contentKey,
                   padding: AppSpacing.contentInsets.copyWith(
-                    top: AppSpacing.rowPy,
+                    top: _detailScrollTopPad,
                     bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       snapshot.transaction == null

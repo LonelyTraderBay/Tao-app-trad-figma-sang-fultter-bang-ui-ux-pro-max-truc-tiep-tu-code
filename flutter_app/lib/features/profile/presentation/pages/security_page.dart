@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -62,11 +63,12 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(profileControllerProvider).getSecurity();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.securityBottomInsetVisual
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7 + AppSpacing.x1
             : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.securityBottomInsetNative) +
+                  AppSpacing.x5 +
+                  AppSpacing.x1) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -88,10 +90,10 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
                 child: SingleChildScrollView(
                   key: SecurityPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.securityScrollPadding(bottomInset),
+                  padding: AppSpacing.securityScrollPadding(scrollClearance),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.securityContentGap,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       VitHighRiskStatePanel(
@@ -100,6 +102,7 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
                         message:
                             'Confirm 2FA, anti-phishing code, device sessions, and password changes before sensitive account actions.',
                         contractId: 'Security score: ${snapshot.score}/4',
+                        density: VitDensity.compact,
                       ),
                       _ScoreCard(snapshot: snapshot),
                       _SecurityList(

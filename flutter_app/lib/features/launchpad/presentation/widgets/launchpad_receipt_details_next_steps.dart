@@ -11,25 +11,29 @@ class _ProjectReceiptCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .20),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.launchpadBox48,
-            height: AppSpacing.launchpadBox48,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: subscription.accent.withValues(alpha: .12),
-              border: Border.all(
-                color: subscription.accent.withValues(alpha: .35),
+          SizedBox.square(
+            dimension: AppSpacing.launchpadBox48,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: subscription.accent.withValues(alpha: .12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.lgRadius,
+                  side: BorderSide(
+                    color: subscription.accent.withValues(alpha: .35),
+                  ),
+                ),
               ),
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: Text(
-              subscription.projectLogo,
-              style: AppTextStyles.caption.copyWith(
-                color: subscription.accent,
-                fontWeight: AppTextStyles.bold,
+              child: Center(
+                child: Text(
+                  subscription.projectLogo,
+                  style: AppTextStyles.caption.copyWith(
+                    color: subscription.accent,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
               ),
             ),
           ),
@@ -89,7 +93,7 @@ class _ReceiptDetailsCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -118,10 +122,7 @@ class _ReceiptDetailsCard extends StatelessWidget {
                 },
                 borderRadius: AppRadii.smRadius,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x2,
-                    vertical: AppSpacing.x1,
-                  ),
+                  padding: AppSpacing.launchpadInlinePillPadding,
                   child: Row(
                     children: [
                       Text(
@@ -156,33 +157,41 @@ class _ReceiptInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              row.label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.launchpadVerticalPaddingX2,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  row.label,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ),
+              Text(
+                row.value,
+                style: AppTextStyles.caption.copyWith(
+                  color:
+                      row.color ??
+                      (row.isStrong ? AppColors.text1 : AppColors.text2),
+                  fontWeight: row.isStrong
+                      ? AppTextStyles.bold
+                      : AppTextStyles.medium,
+                  fontFeatures: row.isMono
+                      ? AppTextStyles.tabularFigures
+                      : null,
+                ),
+              ),
+            ],
           ),
-          Text(
-            row.value,
-            style: AppTextStyles.caption.copyWith(
-              color:
-                  row.color ??
-                  (row.isStrong ? AppColors.text1 : AppColors.text2),
-              fontWeight: row.isStrong
-                  ? AppTextStyles.bold
-                  : AppTextStyles.medium,
-              fontFeatures: row.isMono ? AppTextStyles.tabularFigures : null,
-            ),
-          ),
-        ],
-      ),
+        ),
+        const Divider(
+          height: AppSpacing.dividerHairline,
+          thickness: AppSpacing.dividerHairline,
+          color: AppColors.divider,
+        ),
+      ],
     );
   }
 }
@@ -202,7 +211,7 @@ class _ReceiptNextSteps extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -226,7 +235,9 @@ class _ReceiptNextSteps extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           for (var i = 0; i < _steps.length; i++)
             Padding(
-              padding: EdgeInsets.only(top: i == 0 ? 0 : AppSpacing.x2),
+              padding: i == 0
+                  ? AppSpacing.zeroInsets
+                  : AppSpacing.launchpadTopPaddingX2,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -293,20 +304,19 @@ class _ReceiptStatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: status.color.withValues(alpha: .12),
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
-      child: Text(
-        status.label,
-        style: AppTextStyles.micro.copyWith(
-          color: status.color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadInlinePillPadding,
+        child: Text(
+          status.label,
+          style: AppTextStyles.micro.copyWith(
+            color: status.color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );

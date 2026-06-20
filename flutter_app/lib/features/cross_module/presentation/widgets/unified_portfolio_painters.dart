@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/cross_module/domain/entities/unified_portfolio_entities.dart';
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_common.dart';
@@ -80,7 +81,7 @@ class UnifiedPnlBarPainter extends CustomPainter {
       final top = module.pnl >= 0 ? zeroY - height : zeroY;
       final rect = RRect.fromRectAndRadius(
         Rect.fromLTWH(x, top, barWidth, height),
-        const Radius.circular(AppSpacing.x2),
+        AppRadii.xsCorner,
       );
       final paint = Paint()
         ..color = module.pnl >= 0 ? AppColors.buy : AppColors.sell;

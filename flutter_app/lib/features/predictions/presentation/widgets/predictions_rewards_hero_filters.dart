@@ -10,7 +10,7 @@ class _RewardsHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       borderColor: AppColors.accent20,
-      padding: AppSpacing.predictionRewardsHeroPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -19,16 +19,16 @@ class _RewardsHero extends StatelessWidget {
               Material(
                 color: AppColors.warn10,
                 borderRadius: AppRadii.cardRadius,
-                child: const SizedBox.square(
-                  dimension: AppSpacing.predictionRewardsHeroIconBox,
-                  child: Icon(
+                child: SizedBox.square(
+                  dimension: VitDensity.compact.controlHeight,
+                  child: const Icon(
                     Icons.card_giftcard_rounded,
                     color: AppColors.warn,
                     size: AppSpacing.predictionRewardsHeroIcon,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionRewardsHeroTitleGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +52,7 @@ class _RewardsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionRewardsHeroPoolGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               const Icon(
@@ -60,14 +60,14 @@ class _RewardsHero extends StatelessWidget {
                 color: AppColors.portfolioTextMuted,
                 size: AppSpacing.predictionRewardsPoolIcon,
               ),
-              const SizedBox(width: AppSpacing.predictionRewardsPoolGap),
+              const SizedBox(width: AppSpacing.x1),
               Text(
                 'Total daily pool:',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.portfolioTextMuted,
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionRewardsPoolGap),
+              const SizedBox(width: AppSpacing.x1),
               Text(
                 '\$${snapshot.totalDailyPool.toStringAsFixed(0)}',
                 style: AppTextStyles.body.copyWith(
@@ -96,7 +96,7 @@ class _HowItWorksNote extends StatelessWidget {
         side: BorderSide(color: _predictionPrimary.withValues(alpha: .18)),
       ),
       child: Padding(
-        padding: AppSpacing.predictionRewardsNotePadding,
+        padding: VitDensity.compact.cardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -105,7 +105,7 @@ class _HowItWorksNote extends StatelessWidget {
               color: _predictionPrimary,
               size: AppSpacing.predictionRewardsNoteIcon,
             ),
-            const SizedBox(width: AppSpacing.predictionRewardsNoteGap),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Text.rich(
                 TextSpan(
@@ -115,7 +115,7 @@ class _HowItWorksNote extends StatelessWidget {
                       text: ' Place a ',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.predictionRewardsNoteLineHeight,
+                        height: 1.35,
                         fontWeight: AppTextStyles.normal,
                       ),
                     ),
@@ -124,7 +124,7 @@ class _HowItWorksNote extends StatelessWidget {
                       text: ' (not market order) within the ',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.predictionRewardsNoteLineHeight,
+                        height: 1.35,
                         fontWeight: AppTextStyles.normal,
                       ),
                     ),
@@ -133,7 +133,7 @@ class _HowItWorksNote extends StatelessWidget {
                       text: ' and hold at least ',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.predictionRewardsNoteLineHeight,
+                        height: 1.35,
                         fontWeight: AppTextStyles.normal,
                       ),
                     ),
@@ -143,7 +143,7 @@ class _HowItWorksNote extends StatelessWidget {
                           '. Rewards are distributed daily in USDT at 00:00 UTC.',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.predictionRewardsNoteLineHeight,
+                        height: 1.35,
                         fontWeight: AppTextStyles.normal,
                       ),
                     ),
@@ -151,7 +151,7 @@ class _HowItWorksNote extends StatelessWidget {
                 ),
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.predictionRewardsNoteLineHeight,
+                  height: 1.35,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -181,7 +181,7 @@ class _CategoryFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.predictionRewardsFilterHeight,
+      height: VitDensity.compact.controlHeight - AppSpacing.x3,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
@@ -207,8 +207,7 @@ class _CategoryFilters extends StatelessWidget {
             onTap: () => onCategoryChanged(category),
           );
         },
-        separatorBuilder: (_, _) =>
-            const SizedBox(width: AppSpacing.predictionRewardsFilterGap),
+        separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.x2),
         itemCount: categories.length + 1,
       ),
     );
@@ -247,7 +246,7 @@ class _FilterChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
         child: SizedBox(
-          height: AppSpacing.predictionRewardsFilterHeight,
+          height: VitDensity.compact.controlHeight - AppSpacing.x3,
           child: Padding(
             padding: AppSpacing.predictionRewardsFilterPadding,
             child: Row(
@@ -259,9 +258,7 @@ class _FilterChip extends StatelessWidget {
                     color: active ? activeColor : AppColors.text3,
                     size: AppSpacing.predictionRewardsFilterIcon,
                   ),
-                  const SizedBox(
-                    width: AppSpacing.predictionRewardsFilterIconGap,
-                  ),
+                  const SizedBox(width: AppSpacing.x1),
                 ],
                 Text(
                   label,

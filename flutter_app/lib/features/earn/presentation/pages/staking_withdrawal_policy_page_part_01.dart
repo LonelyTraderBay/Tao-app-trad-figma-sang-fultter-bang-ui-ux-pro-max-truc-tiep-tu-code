@@ -11,11 +11,11 @@ class _StakingWithdrawalPolicyPageState
         .getPolicy();
     final activeTab = _activeTab ?? snapshot.defaultTab;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _stakingWithdrawalVisualNavClearance
+        : _stakingWithdrawalNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -34,13 +34,19 @@ class _StakingWithdrawalPolicyPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    scrollEndPadding,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    density: VitDensity.compact,
                     children: [
                       _InfoBanner(snapshot: snapshot),
                       const VitHighRiskStatePanel(
+                        density: VitDensity.compact,
                         state: VitHighRiskUiState.riskReview,
                         title: 'Withdrawal policy review required',
                         message:
@@ -96,7 +102,7 @@ class _InfoBanner extends StatelessWidget {
     return ConstrainedBox(
       key: StakingWithdrawalPolicyPage.infoKey,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.earnWithdrawalInfoMinHeight,
+        minHeight: _stakingWithdrawalInfoMinHeight,
       ),
       child: Material(
         color: AppColors.primary08,
@@ -104,7 +110,7 @@ class _InfoBanner extends StatelessWidget {
           borderRadius: AppRadii.cardLargeRadius,
           side: const BorderSide(
             color: AppColors.primary20,
-            width: AppSpacing.earnWithdrawalBorderWidth,
+            width: _stakingWithdrawalBorderWidth,
           ),
         ),
         child: Padding(
@@ -115,7 +121,7 @@ class _InfoBanner extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.primary,
-                size: AppSpacing.earnWithdrawalInfoIcon,
+                size: _stakingWithdrawalInfoIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -134,7 +140,7 @@ class _InfoBanner extends StatelessWidget {
                       snapshot.infoBody,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.earnWithdrawalInfoLineHeight,
+                        height: _stakingWithdrawalInfoLineHeight,
                       ),
                     ),
                   ],
@@ -163,7 +169,7 @@ class _PolicyTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.earnWithdrawalTabMinHeight,
+        minHeight: _stakingWithdrawalTabMinHeight,
       ),
       child: Material(
         color: AppColors.surface2,
@@ -199,17 +205,19 @@ class _TimelineTab extends StatelessWidget {
       children: [
         VitPageSection(
           label: snapshot.processTitle,
+          density: VitDensity.compact,
           children: [_ProcessCard(steps: snapshot.processSteps)],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         VitPageSection(
           label: snapshot.timelineTitle,
+          density: VitDensity.compact,
           children: [
             for (final timeline in snapshot.timelines)
               _TimelineCard(timeline: timeline),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         _NoteCard(text: snapshot.timelineNote),
       ],
     );
@@ -226,12 +234,12 @@ class _ProcessCard extends StatelessWidget {
     return VitCard(
       key: StakingWithdrawalPolicyPage.processKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: _stakingWithdrawalCardPadding,
       child: Column(
         children: [
           for (final step in steps) ...[
             _ProcessStepRow(step: step),
-            if (step != steps.last) const SizedBox(height: AppSpacing.x4),
+            if (step != steps.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -251,21 +259,21 @@ class _ProcessStepRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.earnWithdrawalProcessIconBox,
-          height: AppSpacing.earnWithdrawalProcessIconBox,
+          width: _stakingWithdrawalProcessIconBox,
+          height: _stakingWithdrawalProcessIconBox,
           child: Material(
             color: _toneTint(step.tone),
             shape: RoundedRectangleBorder(
               borderRadius: AppRadii.lgRadius,
               side: BorderSide(
                 color: color.withValues(alpha: .28),
-                width: AppSpacing.earnWithdrawalBorderWidth,
+                width: _stakingWithdrawalBorderWidth,
               ),
             ),
             child: Icon(
               _stepIcon(step.step),
               color: color,
-              size: AppSpacing.earnWithdrawalProcessIcon,
+              size: _stakingWithdrawalProcessIcon,
             ),
           ),
         ),
@@ -294,7 +302,7 @@ class _ProcessStepRow extends StatelessWidget {
                 step.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.earnWithdrawalProcessLineHeight,
+                  height: _stakingWithdrawalProcessLineHeight,
                 ),
               ),
             ],
@@ -317,10 +325,10 @@ class _TimelineCard extends StatelessWidget {
       radius: VitCardRadius.lg,
       constraints: BoxConstraints(
         minHeight: timeline.penalty.contains('\n')
-            ? AppSpacing.earnWithdrawalTimelineMinHeightTall
-            : AppSpacing.earnWithdrawalTimelineMinHeight,
+            ? _stakingWithdrawalTimelineMinHeightTall
+            : _stakingWithdrawalTimelineMinHeight,
       ),
-      padding: AppSpacing.earnPaddingX4,
+      padding: _stakingWithdrawalCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -400,7 +408,7 @@ class _TimelineMetric extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color ?? AppColors.text1,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.earnWithdrawalTimelineValueLineHeight,
+            height: _stakingWithdrawalTimelineValueLineHeight,
           ),
         ),
       ],
@@ -421,10 +429,11 @@ class _PenaltiesTab extends StatelessWidget {
       children: [
         VitPageSection(
           label: snapshot.penaltyTitle,
+          density: VitDensity.compact,
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.earnPaddingX4,
+              padding: _stakingWithdrawalCardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -432,15 +441,15 @@ class _PenaltiesTab extends StatelessWidget {
                     snapshot.penaltyBody,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.earnWithdrawalPenaltyBodyLineHeight,
+                      height: _stakingWithdrawalPenaltyBodyLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.x3),
                   Material(
                     color: AppColors.surface2,
                     borderRadius: AppRadii.lgRadius,
                     child: Padding(
-                      padding: AppSpacing.earnPaddingX4,
+                      padding: _stakingWithdrawalCardPadding,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -449,7 +458,7 @@ class _PenaltiesTab extends StatelessWidget {
                               const Icon(
                                 Icons.cancel_outlined,
                                 color: AppColors.sell,
-                                size: AppSpacing.earnWithdrawalFormulaIcon,
+                                size: _stakingWithdrawalFormulaIcon,
                               ),
                               const SizedBox(width: AppSpacing.x2),
                               Expanded(
@@ -483,7 +492,7 @@ class _PenaltiesTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         VitPageSection(
           label: 'Ví dụ Tính toán',
           children: [
@@ -491,7 +500,7 @@ class _PenaltiesTab extends StatelessWidget {
               _PenaltyExampleCard(example: example),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         VitCtaButton(
           key: StakingWithdrawalPolicyPage.calculatorCtaKey,
           onPressed: onOpenCalculator,

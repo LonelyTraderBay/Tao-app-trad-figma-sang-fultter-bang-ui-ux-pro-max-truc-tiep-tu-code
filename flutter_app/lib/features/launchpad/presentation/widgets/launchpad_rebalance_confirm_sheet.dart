@@ -41,80 +41,83 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
       child: SafeArea(
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
+          child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: DeviceMetrics.width),
-            decoration: const BoxDecoration(
-              color: AppColors.bg,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(AppRadii.cardLarge),
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.bg,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.sheetTopLargeRadius,
+                ),
               ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                AppSpacing.contentPad,
-                AppSpacing.x3,
-                AppSpacing.contentPad,
-                AppSpacing.x6 + bottomInset,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Center(
-                    child: Container(
-                      width: AppSpacing.launchpadBox40,
-                      height: AppSpacing.launchpadSheetHandleHeight,
-                      decoration: const BoxDecoration(
-                        color: AppColors.borderSolid,
-                        borderRadius: AppRadii.xsRadius,
+              child: Padding(
+                padding: AppSpacing.launchpadSheetPadding(
+                  AppSpacing.x6 + bottomInset,
+                ).copyWith(top: AppSpacing.x3),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Center(
+                      child: SizedBox(
+                        width: AppSpacing.launchpadBox40,
+                        height: AppSpacing.launchpadSheetHandleHeight,
+                        child: DecoratedBox(
+                          decoration: const ShapeDecoration(
+                            color: AppColors.borderSolid,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadii.xsRadius,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.x4),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.check_circle_outline_rounded,
-                        color: AppColors.buy,
-                        size: AppSpacing.launchpadIcon4xl,
-                      ),
-                      const SizedBox(width: AppSpacing.x2),
-                      Text(
-                        'Xac nhan Rebalance',
-                        style: AppTextStyles.base.copyWith(
+                    const SizedBox(height: AppSpacing.x4),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.check_circle_outline_rounded,
+                          color: AppColors.buy,
+                          size: AppSpacing.launchpadIcon4xl,
+                        ),
+                        const SizedBox(width: AppSpacing.x2),
+                        Text(
+                          'Xac nhan Rebalance',
+                          style: AppTextStyles.base.copyWith(
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    for (final suggestion in executable)
+                      _ConfirmActionRow(suggestion: suggestion),
+                    const SizedBox(height: AppSpacing.x3),
+                    LaunchpadRebalanceSummaryRow(
+                      label: 'Gas tong',
+                      value: '~\$${totalGas.toStringAsFixed(2)}',
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    VitCtaButton(
+                      key: confirmKey,
+                      variant: VitCtaButtonVariant.success,
+                      onPressed: onClose,
+                      child: const Text('Xac nhan Rebalance (Mo phong)'),
+                    ),
+                    const SizedBox(height: AppSpacing.x2),
+                    TextButton(
+                      key: cancelKey,
+                      onPressed: onClose,
+                      child: Text(
+                        'Huy',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text3,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.x4),
-                  for (final suggestion in executable)
-                    _ConfirmActionRow(suggestion: suggestion),
-                  const SizedBox(height: AppSpacing.x3),
-                  LaunchpadRebalanceSummaryRow(
-                    label: 'Gas tong',
-                    value: '~\$${totalGas.toStringAsFixed(2)}',
-                  ),
-                  const SizedBox(height: AppSpacing.x4),
-                  VitCtaButton(
-                    key: confirmKey,
-                    variant: VitCtaButtonVariant.success,
-                    onPressed: onClose,
-                    child: const Text('Xac nhan Rebalance (Mo phong)'),
-                  ),
-                  const SizedBox(height: AppSpacing.x2),
-                  TextButton(
-                    key: cancelKey,
-                    onPressed: onClose,
-                    child: Text(
-                      'Huy',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                        fontWeight: AppTextStyles.bold,
-                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -132,43 +135,46 @@ class _ConfirmActionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = launchpadRebalanceActionColor(suggestion.action);
-    return Container(
-      margin: const EdgeInsets.only(bottom: AppSpacing.x2),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .1),
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: Row(
-        children: [
-          Text(
-            launchpadRebalanceActionLabel(suggestion.action),
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-            ),
+    return Padding(
+      padding: AppSpacing.launchpadBottomPaddingX2,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .1),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
           ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              suggestion.asset.symbol,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
+        ),
+        child: Padding(
+          padding: AppSpacing.launchpadPillPadding,
+          child: Row(
+            children: [
+              Text(
+                launchpadRebalanceActionLabel(suggestion.action),
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
-            ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  suggestion.asset.symbol,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+              Text(
+                '\$${suggestion.suggestedValue.toStringAsFixed(2)}',
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
           ),
-          Text(
-            '\$${suggestion.suggestedValue.toStringAsFixed(2)}',
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

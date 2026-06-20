@@ -20,35 +20,6 @@ class _BoundaryDisclosure extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({
-    required this.icon,
-    required this.iconColor,
-    required this.label,
-  });
-
-  final IconData icon;
-  final Color iconColor;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: iconColor, size: 15),
-        const SizedBox(width: AppSpacing.x2),
-        Text(
-          label,
-          style: AppTextStyles.body.copyWith(
-            color: AppColors.text1,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _AccentIcon extends StatelessWidget {
   const _AccentIcon({required this.icon, required this.color});
 

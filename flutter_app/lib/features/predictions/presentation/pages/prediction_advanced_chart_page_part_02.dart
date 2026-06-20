@@ -62,11 +62,11 @@ class _RsiCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionAdvancedCardPadding,
+      density: VitDensity.compact,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.predictionAdvancedChartGap,
+        gap: VitContentGap.tight,
         children: [
           Row(
             children: [
@@ -88,7 +88,7 @@ class _RsiCard extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: AppSpacing.predictionAdvancedRsiHeight,
+            height: AppSpacing.x7 * 3,
             child: CustomPaint(
               painter: _RsiPainter(points: snapshot.priceHistory),
               child: const SizedBox.expand(),
@@ -126,6 +126,7 @@ class _IndicatorSummarySection extends StatelessWidget {
     return VitPageSection(
       label: 'Technical Indicators',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         for (final indicator in snapshot.indicators)
           _IndicatorCard(indicator: indicator),
@@ -147,7 +148,7 @@ class _IndicatorCard extends StatelessWidget {
       _ => .25,
     };
     return VitCard(
-      padding: AppSpacing.predictionAdvancedCompactPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Row(
@@ -163,9 +164,7 @@ class _IndicatorCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: AppSpacing.predictionAdvancedIndicatorDescGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       indicator.description,
                       style: AppTextStyles.micro.copyWith(
@@ -178,16 +177,14 @@ class _IndicatorCard extends StatelessWidget {
               _SignalBadge(label: indicator.signal, color: indicator.color),
             ],
           ),
-          const SizedBox(
-            height: AppSpacing.predictionAdvancedIndicatorStrengthGap,
-          ),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
                 child: ClipRRect(
                   borderRadius: AppRadii.xsRadius,
                   child: SizedBox(
-                    height: AppSpacing.predictionAdvancedMiniBarHeight,
+                    height: AppSpacing.x1,
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: FractionallySizedBox(
@@ -219,7 +216,7 @@ class _OverallSignalCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.predictionAdvancedCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -240,14 +237,12 @@ class _OverallSignalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionAdvancedOverallSignalGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'BULLISH',
             style: AppTextStyles.sectionTitle.copyWith(color: AppColors.buy),
           ),
-          const SizedBox(
-            height: AppSpacing.predictionAdvancedOverallDescriptionGap,
-          ),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             '3/4 indicators show buy signal. Momentum is positive.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -266,11 +261,11 @@ class _OrderFlowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionAdvancedCardPadding,
+      density: VitDensity.compact,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.predictionAdvancedChartGap,
+        gap: VitContentGap.tight,
         children: [
           Text(
             'Order Flow (Buy vs Sell Pressure)',
@@ -279,7 +274,7 @@ class _OrderFlowCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: AppSpacing.predictionAdvancedOrderFlowHeight,
+            height: AppSpacing.x7 * 4,
             child: CustomPaint(
               painter: _OrderFlowPainter(points: snapshot.orderFlow),
               child: const SizedBox.expand(),
@@ -311,6 +306,7 @@ class _SupportResistanceSection extends StatelessWidget {
     return VitPageSection(
       label: 'Support & Resistance',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         _LevelCard(
           label: 'Resistance',
@@ -349,7 +345,7 @@ class _LevelCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .18),
-      padding: AppSpacing.predictionAdvancedCompactPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           Expanded(
@@ -362,16 +358,12 @@ class _LevelCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionAdvancedLevelValueGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${(value * 100).toStringAsFixed(1)}%',
                   style: AppTextStyles.sectionTitle.copyWith(color: color),
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionAdvancedLevelHelperGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   helper,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -398,11 +390,11 @@ class _PatternRecognitionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionAdvancedCardPadding,
+      density: VitDensity.compact,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.predictionAdvancedPatternGap,
+        gap: VitContentGap.tight,
         children: [
           Text(
             'Pattern Recognition',
@@ -450,13 +442,11 @@ class _PatternRow extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: AppSpacing.predictionAdvancedPatternBarGap,
-              ),
+              const SizedBox(height: AppSpacing.x1),
               ClipRRect(
                 borderRadius: AppRadii.xsRadius,
                 child: SizedBox(
-                  height: AppSpacing.predictionAdvancedMiniBarHeight,
+                  height: AppSpacing.x1,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: FractionallySizedBox(
@@ -492,7 +482,7 @@ class _AnalysisDisclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn.withValues(alpha: .20),
-      padding: AppSpacing.predictionAdvancedCompactPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

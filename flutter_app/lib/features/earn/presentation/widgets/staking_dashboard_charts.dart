@@ -19,7 +19,7 @@ class StakingPerformanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
           SizedBox(
@@ -79,7 +79,7 @@ class StakingAllocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           SizedBox(
@@ -163,12 +163,15 @@ class _AllocationLegend extends StatelessWidget {
       width: AppSpacing.buttonHero,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.x3,
-            height: AppSpacing.x3,
-            decoration: BoxDecoration(
-              color: stakingAssetColor(item.colorIndex),
-              borderRadius: AppRadii.xsRadius,
+          SizedBox.square(
+            dimension: AppSpacing.x3,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: stakingAssetColor(item.colorIndex),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.xsRadius,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x2),

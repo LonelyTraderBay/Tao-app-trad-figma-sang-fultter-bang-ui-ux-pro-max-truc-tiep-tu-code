@@ -14,7 +14,7 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: VitDensity.compact.cardPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
         children: [
@@ -65,11 +65,8 @@ class _StatColumn extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeBotRowGap),
-        Text(
-          value,
-          style: AppTextStyles.sectionTitle.copyWith(color: color),
-        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(value, style: AppTextStyles.sectionTitle.copyWith(color: color)),
       ],
     );
   }
@@ -82,8 +79,8 @@ class _SearchBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.tradeBotControlHeight,
-      padding: AppSpacing.tradeBotChipPadding,
+      height: VitDensity.compact.controlHeight,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
       borderColor: AppColors.borderSolid,
       child: Row(
         children: [
@@ -92,7 +89,7 @@ class _SearchBox extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconMd,
           ),
-          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               'Search by bot name or pair...',

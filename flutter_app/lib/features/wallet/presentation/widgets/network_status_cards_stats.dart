@@ -12,14 +12,14 @@ class _NetworkCard extends StatelessWidget {
     final congestionColor = _congestionColor(network.congestionPct);
     return VitCard(
       key: NetworkStatusPage.networkKey(network.id),
-      padding: AppSpacing.cardPadding,
+      padding: VitDensity.compact.cardPadding,
       borderColor: _networkBorder,
       child: Column(
         children: [
           Row(
             children: [
               _TokenLogo(symbol: network.symbol, color: tokenColor),
-              const SizedBox(width: AppSpacing.walletTokenHeroGap),
+              const SizedBox(width: _networkInlineGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,14 +37,14 @@ class _NetworkCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.rowGap),
+                        const SizedBox(width: _networkTinyGap),
                         _HealthPill(
                           label: _healthLabel(network.health),
                           color: healthColor,
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.rowGap),
+                    const SizedBox(height: _networkTinyGap),
                     Text(
                       'Block #${_formatInt(network.blockHeight)}',
                       style: AppTextStyles.micro.copyWith(color: _networkMuted),
@@ -53,8 +53,8 @@ class _NetworkCard extends StatelessWidget {
                 ),
               ),
               VitCard(
-                width: AppSpacing.walletNetworkActionIconBox,
-                height: AppSpacing.walletNetworkActionIconBox,
+                width: _networkActionIconBoxSize,
+                height: _networkActionIconBoxSize,
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.md,
                 background: ColoredBox(
@@ -70,7 +70,7 @@ class _NetworkCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletTokenStatValueGap),
+          const SizedBox(height: _networkCardGap),
           Row(
             children: [
               Expanded(
@@ -88,14 +88,14 @@ class _NetworkCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
+          const SizedBox(height: _networkTinyGap),
           _CongestionBar(
             percent: network.congestionPct,
             color: congestionColor,
           ),
-          const SizedBox(height: AppSpacing.rowGapRegular),
+          const SizedBox(height: _networkCardGap),
           _StatsGrid(network: network),
-          const SizedBox(height: AppSpacing.rowGapRegular),
+          const SizedBox(height: _networkCardGap),
           Row(
             children: [
               Expanded(
@@ -104,7 +104,7 @@ class _NetworkCard extends StatelessWidget {
                   enabled: network.depositEnabled,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAddressStatsValueGap),
+              const SizedBox(width: _networkTinyGap),
               Expanded(
                 child: _AvailabilityChip(
                   label: 'R\u00FAt',
@@ -114,7 +114,7 @@ class _NetworkCard extends StatelessWidget {
             ],
           ),
           if (network.notes != null) ...[
-            const SizedBox(height: AppSpacing.rowGapRegular),
+            const SizedBox(height: _networkCardGap),
             _NetworkNote(note: network.notes!),
           ],
         ],
@@ -160,13 +160,11 @@ class _StatsGrid extends StatelessWidget {
             children: [
               for (var col = 0; col < 2; col++) ...[
                 Expanded(child: _StatTile(stat: stats[row * 2 + col])),
-                if (col == 0)
-                  const SizedBox(width: AppSpacing.walletAddressStatsValueGap),
+                if (col == 0) const SizedBox(width: _networkTinyGap),
               ],
             ],
           ),
-          if (row == 0)
-            const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
+          if (row == 0) const SizedBox(height: _networkTinyGap),
         ],
       ],
     );
@@ -182,13 +180,13 @@ class _StatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.walletNetworkStatHeight,
-      padding: AppSpacing.walletNetworkStatPadding,
+      height: _networkStatHeight,
+      padding: _networkCompactStatPadding,
       borderColor: AppColors.divider,
       child: Row(
         children: [
           Icon(stat.icon, color: _networkMuted, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.walletAddressStatsValueGap),
+          const SizedBox(width: _networkTinyGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -200,7 +198,7 @@ class _StatTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: _networkMuted),
                 ),
-                const SizedBox(height: AppSpacing.walletNetworkStatTextGap),
+                const SizedBox(height: _networkTinyGap),
                 Text(
                   stat.value,
                   maxLines: 1,
@@ -250,7 +248,7 @@ class _AvailabilityChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = enabled ? _networkGreen : _networkRed;
     return VitCard(
-      height: AppSpacing.walletNetworkAvailabilityHeight,
+      height: _networkAvailabilityHeight,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
       background: ColoredBox(color: color.withValues(alpha: .05)),
@@ -264,7 +262,7 @@ class _AvailabilityChip extends StatelessWidget {
             color: color,
             size: AppSpacing.statusPillIconSizeMd,
           ),
-          const SizedBox(width: AppSpacing.walletAddressSectionGap),
+          const SizedBox(width: _networkTinyGap),
           Text(
             '$label ${enabled ? 'OK' : 'T\u1EA1m d\u1EEBng'}',
             style: AppTextStyles.micro.copyWith(

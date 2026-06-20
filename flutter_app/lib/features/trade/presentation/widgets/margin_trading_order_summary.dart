@@ -21,7 +21,7 @@ class _OrderSummary extends StatelessWidget {
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.transferCardGap,
+        density: VitDensity.compact,
         children: [
           _SummaryRow(
             'Margin kha dung',
@@ -88,7 +88,7 @@ class _MarginOrderReviewCard extends StatelessWidget {
       ),
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.walletAssetChartBottomGap,
+        density: VitDensity.compact,
         children: [
           Text(
             'Margin order review',
@@ -99,7 +99,7 @@ class _MarginOrderReviewCard extends StatelessWidget {
           ),
           VitPageContent(
             padding: VitContentPadding.none,
-            customGap: AppSpacing.transferTileGap,
+            density: VitDensity.compact,
             children: [
               for (final check in checks)
                 _Bullet(text: check, color: _marginAmber),
@@ -128,7 +128,7 @@ class _SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: MarginTradingPage.submitKey,
-      height: AppSpacing.ctaHeight,
+      density: VitDensity.compact,
       onPressed: disabled ? null : () {},
       variant: side == 'long'
           ? VitCtaButtonVariant.success

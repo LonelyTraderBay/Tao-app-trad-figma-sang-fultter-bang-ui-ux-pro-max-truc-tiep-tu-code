@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -64,15 +65,15 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
     _settings ??= snapshot.settings;
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final chromeInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollClearance =
+        chromeInset +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.copySettingsBottomInsetVisual
-            : AppSpacing.copySettingsBottomInsetNative);
+            ? AppSpacing.x6 + AppSpacing.x6
+            : AppSpacing.x5 + AppSpacing.x5);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -91,14 +92,20 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopySettingsPage.contentKey,
-                  padding: AppSpacing.copySettingsScrollPadding(bottomInset),
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.rowPy,
+                    right: AppSpacing.contentPad,
+                    bottom: scrollClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
+                        density: VitDensity.compact,
                         title: 'Review copy trading defaults',
                         message:
                             'Confirm stop-loss, take-profit, allocation limits, circuit breaker, and emergency contact before saving copy defaults.',
@@ -106,7 +113,6 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                             ? 'Circuit breaker: on'
                             : 'Circuit breaker: off',
                       ),
-                      const SizedBox(height: AppSpacing.cardGap),
                       _SettingsSection(
                         label: 'Cài đặt mặc định',
                         accent: _settingsPrimary,
@@ -318,7 +324,6 @@ class _CopySettingsPageState extends ConsumerState<CopySettingsPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x1),
                       _SaveButton(
                         saved: _saved,
                         onTap: () {

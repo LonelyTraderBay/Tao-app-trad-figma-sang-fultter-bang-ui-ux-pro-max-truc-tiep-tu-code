@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSearch(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -90,6 +92,27 @@ void main() {
     expect(find.text('12 events found'), findsOneWidget);
     expect(find.text('Apple releases AR glasses in 2026?'), findsOneWidget);
     expect(find.text('Tesla stock above \$400 by mid-2026?'), findsOneWidget);
+  });
+
+  testWidgets('SC-028 first viewport reaches first search result', (
+    tester,
+  ) async {
+    await pumpSearch(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'PredictionsSearchPage',
+      semanticLabel: 'SC-028 PredictionsSearchPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PredictionsSearchPage.resultKey('pred-5')),
+      minVisibleHeight: 12,
+      targetLabel: 'first prediction search result',
+      reason:
+          'Prediction search should expose a real event result above bottom '
+          'navigation after the compact search and filter controls.',
+    );
   });
 
   testWidgets('SC-028 supports search, status, category, and clear filters', (

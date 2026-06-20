@@ -65,19 +65,23 @@ class PredictionPortfolioReceiptCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.predictionPortfolioReceiptIconBox,
             height: AppSpacing.predictionPortfolioReceiptIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              isFilled
-                  ? Icons.check_circle_outline_rounded
-                  : Icons.cancel_outlined,
-              color: color,
-              size: AppSpacing.predictionPortfolioReceiptIcon,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: .12),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Icon(
+                isFilled
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.cancel_outlined,
+                color: color,
+                size: AppSpacing.predictionPortfolioReceiptIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.predictionPortfolioReceiptGap),

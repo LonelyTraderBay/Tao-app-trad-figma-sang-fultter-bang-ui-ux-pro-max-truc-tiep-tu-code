@@ -24,10 +24,10 @@ class _CompactMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.predictionDataMetricLineHeight,
+            height: 1.1,
           ),
         ),
-        const SizedBox(height: AppSpacing.predictionDataMetricValueGap),
+        const SizedBox(height: AppSpacing.x1),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -76,7 +76,7 @@ class _MiniStatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.predictionDataStatusPillLineHeight,
+            height: 1.1,
           ),
         ),
       ),
@@ -176,7 +176,7 @@ class _PrimaryBlueButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
-      height: AppSpacing.predictionDataPrimaryButtonHeight,
+      density: VitDensity.compact,
       leading: Icon(icon),
       onPressed: () {},
       child: Text(label),
@@ -227,7 +227,7 @@ class _NoticeCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .18),
-      padding: AppSpacing.predictionDataNoticePadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -238,7 +238,7 @@ class _NoticeCard extends StatelessWidget {
               message,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.predictionDataNoticeLineHeight,
+                height: 1.2,
               ),
             ),
           ),

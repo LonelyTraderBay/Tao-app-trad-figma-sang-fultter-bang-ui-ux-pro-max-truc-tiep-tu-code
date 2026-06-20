@@ -31,16 +31,15 @@ class DcaReadOnlyField extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         DecoratedBox(
-          decoration: BoxDecoration(
+          decoration: const ShapeDecoration(
             color: AppColors.surface2,
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(color: AppColors.cardBorder),
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(color: AppColors.cardBorder),
+            ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x3,
-            ),
+            padding: AppSpacing.dcaPrimaryChipPadding,
             child: Row(
               children: [
                 Expanded(
@@ -79,24 +78,47 @@ class DcaSelectionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
+      child: TweenAnimationBuilder<double>(
         duration: const Duration(milliseconds: 160),
-        height: AppSpacing.ctaHeight - AppSpacing.x4,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: selected ? AppColors.primary : AppColors.surface2,
-          borderRadius: AppRadii.inputRadius,
-          border: Border.all(
-            color: selected ? AppColors.primary : AppColors.cardBorder,
-          ),
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: selected ? AppColors.onAccent : AppColors.text1,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
+        tween: Tween<double>(end: selected ? 1 : 0),
+        builder: (context, value, _) {
+          final background = Color.lerp(
+            AppColors.surface2,
+            AppColors.primary,
+            value,
+          )!;
+          final borderColor = Color.lerp(
+            AppColors.cardBorder,
+            AppColors.primary,
+            value,
+          )!;
+          final textColor = Color.lerp(
+            AppColors.text1,
+            AppColors.onAccent,
+            value,
+          )!;
+          return SizedBox(
+            height: AppSpacing.ctaHeight - AppSpacing.x4,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: background,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.inputRadius,
+                  side: BorderSide(color: borderColor),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: textColor,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -108,7 +130,7 @@ class DcaNoResultsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x6),
+      padding: AppSpacing.dcaPaddingX5,
       child: Column(
         children: [
           const Icon(
@@ -141,15 +163,12 @@ class DcaStatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.dcaChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -171,12 +190,14 @@ class DcaSectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: AppSpacing.x1,
           height: AppSpacing.x4,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: AppRadii.xsRadius,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: AppColors.primary,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

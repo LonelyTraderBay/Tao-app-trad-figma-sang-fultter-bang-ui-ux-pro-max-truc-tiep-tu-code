@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpWithdrawalPolicy(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -77,6 +79,24 @@ void main() {
     expect(find.text('Quy trình Rút tiền'), findsOneWidget);
     expect(find.text('Staking Linh hoạt'), findsOneWidget);
     expect(find.text('Staking Cố định 30D'), findsOneWidget);
+  });
+
+  testWidgets('SC-355 first viewport reaches withdrawal process', (
+    tester,
+  ) async {
+    await pumpWithdrawalPolicy(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-355 StakingWithdrawalPolicyPage',
+      semanticLabel: 'SC-355 StakingWithdrawalPolicyPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingWithdrawalPolicyPage.processKey),
+      routeName: 'SC-355 StakingWithdrawalPolicyPage',
+      actionLabel: 'the withdrawal process card',
+    );
   });
 
   testWidgets('SC-355 switches to penalties and opens calculator preview', (

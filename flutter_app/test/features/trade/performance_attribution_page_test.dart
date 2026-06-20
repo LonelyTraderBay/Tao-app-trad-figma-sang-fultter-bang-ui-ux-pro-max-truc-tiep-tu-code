@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPerformanceAttribution(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -69,6 +71,17 @@ void main() {
     expect(find.text('-4.1%'), findsNWidgets(2));
     expect(find.text('Returns Decomposition'), findsOneWidget);
     expect(find.byIcon(Icons.info_outline_rounded), findsOneWidget);
+  });
+
+  testWidgets('SC-075 first viewport reaches attribution tabs', (tester) async {
+    await pumpPerformanceAttribution(tester);
+
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(PerformanceAttributionPage.tabKey('drawdown')),
+      routeName: 'PerformanceAttributionPage',
+      actionLabel: 'drawdown attribution tab',
+    );
   });
 
   testWidgets('SC-075 switches drawdown and projection tabs', (tester) async {

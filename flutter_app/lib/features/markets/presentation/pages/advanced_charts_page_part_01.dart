@@ -16,13 +16,11 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
           drawingCategory: _drawingCategory,
         );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+    final scrollEndClearance =
+        (mode.usesVisualQaFrame
+            ? _advancedVisualScrollClearance
+            : _advancedNativeScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -49,10 +47,10 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: AdvancedChartsPage.contentKey,
-                    padding: AppSpacing.marketScrollPadding(bottomInset),
+                    padding: EdgeInsets.only(bottom: scrollEndClearance),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: 12,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         if (_tab == 'indicators') ...[
                           _ActiveIndicatorSummary(
@@ -159,7 +157,7 @@ class _AdvancedChartsTabs extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            height: AppSpacing.marketAdvancedTabsHeight,
+            height: _advancedTabsHeight,
             child: Row(
               children: [
                 _UnderlinedTab(
@@ -228,7 +226,7 @@ class _UnderlinedTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: AppSpacing.marketAdvancedTabIndicatorHeight,
+              height: _advancedTabIndicatorHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: _marketPrimary),
@@ -268,11 +266,8 @@ class _ActiveIndicatorSummary extends StatelessWidget {
             key: AdvancedChartsPage.clearAllKey,
             onPressed: onClearAll,
             style: TextButton.styleFrom(
-              minimumSize: const Size(
-                0,
-                AppSpacing.marketAdvancedActionMinHeight,
-              ),
-              padding: AppSpacing.marketAdvancedClearButtonPadding,
+              minimumSize: const Size(0, _advancedActionMinHeight),
+              padding: _advancedClearButtonPadding,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             child: Text(
@@ -297,8 +292,8 @@ class _ActiveIndicatorChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.marketAnalyticsSmallGap,
-      runSpacing: AppSpacing.marketAnalyticsSmallGap,
+      spacing: _advancedSmallGap,
+      runSpacing: _advancedSmallGap,
       children: [
         for (final indicator in indicators)
           Material(
@@ -308,7 +303,7 @@ class _ActiveIndicatorChips extends StatelessWidget {
               side: BorderSide(color: indicator.color.withValues(alpha: .22)),
             ),
             child: Padding(
-              padding: AppSpacing.marketAdvancedActiveChipPadding,
+              padding: _advancedActiveChipPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -319,12 +314,12 @@ class _ActiveIndicatorChips extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
+                  const SizedBox(width: _advancedSmallGap),
                   GestureDetector(
                     onTap: () => onRemove(indicator.id),
                     child: Icon(
                       Icons.close_rounded,
-                      size: AppSpacing.marketAdvancedChipRemoveIcon,
+                      size: _advancedChipRemoveIcon,
                       color: indicator.color,
                     ),
                   ),
@@ -362,7 +357,7 @@ class _IndicatorCategoryFilter extends StatelessWidget {
             color: _marketPrimary,
             onTap: () => onSelected('all'),
           ),
-          const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+          const SizedBox(width: _advancedCompactGap),
           for (final category in categories) ...[
             _FilterChipButton(
               key: category.id == 'trend'
@@ -374,7 +369,7 @@ class _IndicatorCategoryFilter extends StatelessWidget {
               onTap: () => onSelected(category.id),
             ),
             if (category != categories.last)
-              const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+              const SizedBox(width: _advancedCompactGap),
           ],
         ],
       ),
@@ -406,7 +401,7 @@ class _DrawingCategoryFilter extends StatelessWidget {
             color: _marketPrimary,
             onTap: () => onSelected('all'),
           ),
-          const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+          const SizedBox(width: _advancedCompactGap),
           for (final category in categories) ...[
             _FilterChipButton(
               key: category.id == 'line'
@@ -418,7 +413,7 @@ class _DrawingCategoryFilter extends StatelessWidget {
               onTap: () => onSelected(category.id),
             ),
             if (category != categories.last)
-              const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+              const SizedBox(width: _advancedCompactGap),
           ],
         ],
       ),
@@ -454,7 +449,7 @@ class _FilterChipButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: AppSpacing.marketAdvancedFilterChipPadding,
+          padding: _advancedFilterChipPadding,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(

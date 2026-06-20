@@ -8,7 +8,7 @@ class _VolumeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -23,7 +23,7 @@ class _VolumeCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: AppSpacing.p2pMarketplaceAnalyticsChartTallHeight,
+            height: _p2pAdAnalyticsChartTallExtent,
             child: CustomPaint(
               painter: _VolumeBarPainter(points),
               child: const SizedBox.expand(),
@@ -48,7 +48,7 @@ class _HeatmapCard extends StatelessWidget {
     );
 
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -86,8 +86,7 @@ class _HeatmapCard extends StatelessWidget {
                               '${point.hour}h',
                               style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text3,
-                                height: AppSpacing
-                                    .p2pMarketplaceAnalyticsTightLineHeight,
+                                height: _p2pAdAnalyticsTightLine,
                               ),
                             ),
                           ] else
@@ -137,7 +136,7 @@ class _PaymentBreakdownCard extends StatelessWidget {
     );
 
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -228,7 +227,7 @@ class _CompetitorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -243,7 +242,7 @@ class _CompetitorCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           SizedBox(
-            height: AppSpacing.p2pMarketplaceAnalyticsRadarHeight,
+            height: _p2pAdAnalyticsRadarExtent,
             child: CustomPaint(
               painter: _RadarComparisonPainter(rows),
               child: const SizedBox.expand(),
@@ -315,7 +314,7 @@ class _ComparisonTableRow extends StatelessWidget {
         children: [
           if (!header)
             const Divider(
-              height: AppSpacing.p2pMarketplaceAnalyticsDividerHeight,
+              height: _p2pAdAnalyticsDividerExtent,
               color: AppColors.divider,
             ),
           Padding(
@@ -399,7 +398,7 @@ class _TipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -446,7 +445,7 @@ class _TipRow extends StatelessWidget {
                 tip.text,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.p2pMarketplaceAnalyticsBodyLineHeight,
+                  height: _p2pAdAnalyticsBodyLine,
                 ),
               ),
             ),

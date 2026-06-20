@@ -28,16 +28,16 @@ class _ProcessNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.complaintSubmissionLineHeightTight,
+                    height: _submissionLineTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: _submissionSpace),
                 Text(
                   snapshot.processDescription,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.complaintSubmissionLineHeightBody,
+                    height: _submissionLineBody,
                   ),
                 ),
               ],
@@ -82,16 +82,17 @@ class _CategoryField extends StatelessWidget {
                   category,
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
-                    height: AppSpacing.complaintSubmissionLineHeightShort,
+                    height: _submissionLineShort,
                   ),
                 ),
               ),
           ],
           child: VitCard(
             key: ComplaintSubmissionPage.categoryKey,
-            height: AppSpacing.inputHeight,
+            height: _submissionCategoryHeight,
             variant: VitCardVariant.inner,
             padding: AppSpacing.complaintSubmissionCategoryPadding,
+            density: VitDensity.compact,
             borderColor: _submissionBorder.withValues(alpha: .76),
             child: Row(
               children: [
@@ -100,7 +101,7 @@ class _CategoryField extends StatelessWidget {
                     value ?? 'Select category',
                     style: AppTextStyles.base.copyWith(
                       color: AppColors.text1,
-                      height: AppSpacing.complaintSubmissionLineHeightTight,
+                      height: _submissionLineTight,
                     ),
                   ),
                 ),
@@ -139,14 +140,11 @@ class _TextInputBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = multiline
-        ? AppSpacing.complaintSubmissionMultilineHeight
-        : AppSpacing.complaintSubmissionSingleLineHeight;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _FieldLabel(label),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _submissionSpace),
         if (!multiline)
           VitInput(
             controller: controller,
@@ -157,7 +155,7 @@ class _TextInputBlock extends StatelessWidget {
           )
         else
           SizedBox(
-            height: height,
+            height: _submissionMultilineHeight,
             child: TextField(
               key: multiline
                   ? ComplaintSubmissionPage.descriptionKey
@@ -173,9 +171,7 @@ class _TextInputBlock extends StatelessWidget {
                   : TextAlignVertical.center,
               style: AppTextStyles.base.copyWith(
                 color: AppColors.text1,
-                height: multiline
-                    ? AppSpacing.complaintSubmissionLineHeightBody
-                    : AppSpacing.complaintSubmissionLineHeightTight,
+                height: multiline ? _submissionLineBody : _submissionLineTight,
               ),
               decoration: InputDecoration(
                 counterText: '',
@@ -185,8 +181,8 @@ class _TextInputBlock extends StatelessWidget {
                   color: AppColors.text3,
                   fontWeight: AppTextStyles.bold,
                   height: multiline
-                      ? AppSpacing.complaintSubmissionLineHeightHint
-                      : AppSpacing.complaintSubmissionLineHeightTight,
+                      ? _submissionLineHint
+                      : _submissionLineTight,
                 ),
                 filled: true,
                 fillColor: _submissionPanel2,
@@ -203,7 +199,7 @@ class _TextInputBlock extends StatelessWidget {
           '${controller.text.length}/$maxLength characters (min $minLength)',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.complaintSubmissionLineHeightTight,
+            height: _submissionLineTight,
           ),
         ),
       ],
@@ -219,13 +215,13 @@ class _EvidenceUploadCard extends StatelessWidget {
     return _Card(
       padding: AppSpacing.complaintSubmissionEvidencePadding,
       child: SizedBox(
-        height: AppSpacing.complaintSubmissionEvidenceHeight,
+        height: _submissionEvidenceHeight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const VitCard(
-              width: AppSpacing.searchBarCompactHeight,
-              height: AppSpacing.searchBarCompactHeight,
+              width: _submissionEvidenceIconSize,
+              height: _submissionEvidenceIconSize,
               variant: VitCardVariant.inner,
               radius: VitCardRadius.sm,
               alignment: Alignment.center,
@@ -241,19 +237,19 @@ class _EvidenceUploadCard extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.complaintSubmissionLineHeightTight,
+                height: _submissionLineTight,
               ),
             ),
-            const SizedBox(height: AppSpacing.formFieldLabelGap),
+            const SizedBox(height: _submissionSmallSpace),
             Text(
               'Screenshots, emails, or other supporting documents',
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.complaintSubmissionLineHeightTight,
+                height: _submissionLineTight,
               ),
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: _submissionCardSpace),
             const VitAccentPill(
               label: 'Choose Files',
               accentColor: AppColors.text1,
@@ -289,8 +285,8 @@ class _TermsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: AppSpacing.complaintSubmissionCheckboxSize,
-              height: AppSpacing.complaintSubmissionCheckboxSize,
+              width: _submissionCheckboxSize,
+              height: _submissionCheckboxSize,
               child: Checkbox(
                 value: accepted,
                 onChanged: (value) => onChanged(value ?? false),
@@ -299,7 +295,7 @@ class _TermsCard extends StatelessWidget {
                 activeColor: _submissionPrimary,
               ),
             ),
-            const SizedBox(width: AppSpacing.x4),
+            const SizedBox(width: _submissionCardSpace),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -308,16 +304,16 @@ class _TermsCard extends StatelessWidget {
                     snapshot.termsIntro,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      height: AppSpacing.complaintSubmissionLineHeightReadable,
+                      height: _submissionLineReadable,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: _submissionSpace),
                   for (final term in snapshot.terms)
                     Text(
                       '- $term',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.complaintSubmissionLineHeightLong,
+                        height: _submissionLineLong,
                       ),
                     ),
                 ],

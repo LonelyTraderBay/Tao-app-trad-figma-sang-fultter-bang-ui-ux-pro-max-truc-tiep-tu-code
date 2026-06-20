@@ -35,9 +35,10 @@ class _TradeSection extends StatelessWidget {
     return VitPageSection(
       label: 'Trade',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         VitCard(
-          padding: AppSpacing.predictionDetailTradeCardPadding,
+          density: VitDensity.compact,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -51,16 +52,12 @@ class _TradeSection extends StatelessWidget {
                 onRight: () => onSideChanged(false),
               ),
               if (event.outcomes.length > 2) ...[
-                const SizedBox(
-                  height: AppSpacing.predictionDetailTradeSectionGap,
-                ),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   'Outcome',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionDetailTradeLabelGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -80,14 +77,12 @@ class _TradeSection extends StatelessWidget {
                   ),
                 ),
               ],
-              const SizedBox(
-                height: AppSpacing.predictionDetailTradeSectionGap,
-              ),
+              const SizedBox(height: AppSpacing.x3),
               Text(
                 'Order Type',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.predictionDetailTradeLabelGap),
+              const SizedBox(height: AppSpacing.x1),
               _SegmentedToggle(
                 leftLabel: 'Market',
                 rightLabel: 'Limit',
@@ -97,25 +92,21 @@ class _TradeSection extends StatelessWidget {
                 onLeft: () => onOrderTypeChanged(true),
                 onRight: () => onOrderTypeChanged(false),
               ),
-              const SizedBox(height: AppSpacing.predictionDetailTradeHelperGap),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 isMarket
                     ? 'Execute at current best available price'
                     : 'Set your desired entry price',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(
-                height: AppSpacing.predictionDetailTradeSectionGap,
-              ),
+              const SizedBox(height: AppSpacing.x3),
               Text(
                 'Amount',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.predictionDetailTradeLabelGap),
+              const SizedBox(height: AppSpacing.x1),
               _TradeAmountInput(amount: amount, onChanged: onAmountChanged),
-              const SizedBox(
-                height: AppSpacing.predictionDetailTradeAmountPresetGap,
-              ),
+              const SizedBox(height: AppSpacing.x2),
               Row(
                 children: [
                   for (final preset in const ['10', '25', '50', '100']) ...[
@@ -133,20 +124,17 @@ class _TradeSection extends StatelessWidget {
                   ],
                 ],
               ),
-              const SizedBox(
-                height: AppSpacing.predictionDetailTradePreviewGap,
-              ),
+              const SizedBox(height: AppSpacing.x3),
               PredictionOrderPreviewCard(preview: preview),
-              const SizedBox(
-                height: AppSpacing.predictionDetailTradeDisclaimerGap,
-              ),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 'Đây không phải lời khuyên đầu tư. Xác suất không phải sự chắc chắn.',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.predictionDetailTradeCtaGap),
+              const SizedBox(height: AppSpacing.x2),
               VitCtaButton(
+                density: VitDensity.compact,
                 variant: isBuy
                     ? VitCtaButtonVariant.success
                     : VitCtaButtonVariant.danger,

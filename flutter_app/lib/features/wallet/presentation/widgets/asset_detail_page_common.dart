@@ -20,12 +20,12 @@ class _AssetTransactions extends StatelessWidget {
     }
 
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      padding: VitDensity.compact.cardPadding,
       borderColor: AppColors.overlayStroke,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.walletAssetTransactionsGap,
+        density: VitDensity.compact,
         children: [
           Text(
             'Lịch sử giao dịch',
@@ -55,8 +55,8 @@ class _AssetTransactionRow extends StatelessWidget {
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
       padding: AppSpacing.zeroInsets.copyWith(
-        top: AppSpacing.walletTransactionDetailsPadVertical,
-        bottom: AppSpacing.walletTransactionDetailsPadVertical,
+        top: _assetTransactionVerticalPad,
+        bottom: _assetTransactionVerticalPad,
       ),
       onTap: onTap,
       child: Row(
@@ -64,8 +64,8 @@ class _AssetTransactionRow extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            width: AppSpacing.walletAssetTransactionIcon,
-            height: AppSpacing.walletAssetTransactionIcon,
+            width: _assetTransactionIconSize,
+            height: _assetTransactionIconSize,
             alignment: Alignment.center,
             borderColor: color.withValues(alpha: .20),
             child: Icon(
@@ -76,7 +76,7 @@ class _AssetTransactionRow extends StatelessWidget {
               size: AppSpacing.walletAssetTransactionGlyph,
             ),
           ),
-          const SizedBox(width: AppSpacing.walletHistoryFilterGap),
+          const SizedBox(width: _assetInlineGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +87,7 @@ class _AssetTransactionRow extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                const SizedBox(height: _assetSmallGap),
                 Text(
                   tx.createdAt,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -95,22 +95,28 @@ class _AssetTransactionRow extends StatelessWidget {
               ],
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '${tx.isIncoming ? '+' : '-'}${_formatFixed(tx.amount, 6)} ${tx.asset}',
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  '${tx.isIncoming ? '+' : '-'}${_formatFixed(tx.amount, 6)} ${tx.asset}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.walletAssetSmallGap),
-              Text(
-                tx.status,
-                style: AppTextStyles.micro.copyWith(color: color),
-              ),
-            ],
+                const SizedBox(height: _assetSmallGap),
+                Text(
+                  tx.status,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: color),
+                ),
+              ],
+            ),
           ),
         ],
       ),

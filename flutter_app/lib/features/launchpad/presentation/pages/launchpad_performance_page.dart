@@ -7,7 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -18,6 +18,26 @@ import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.d
 part '../widgets/launchpad_performance_overview.dart';
 part '../widgets/launchpad_performance_projects.dart';
 part '../widgets/launchpad_performance_chart_common.dart';
+
+const double _launchpadPerformanceVisualNavClearance = 112;
+const double _launchpadPerformanceNativeNavClearance = 88;
+const double _launchpadPerformanceLineHeightTight = 1.0;
+const double _launchpadPerformanceLineHeightCompact = 1.1;
+const double _launchpadPerformanceLineHeightLabel = 1.05;
+const double _launchpadPerformanceLineHeightBody = 1.25;
+const double _launchpadPerformanceLineHeightReadable = 1.35;
+const double _launchpadPerformanceIndicatorWidth =
+    AppSpacing.buttonStandard + AppSpacing.x4;
+const double _launchpadPerformanceChartHeight = 176;
+const double _launchpadPerformanceSparklineHeight = 164;
+const double _launchpadPerformanceAxisLabelWidth = AppSpacing.inputHeight;
+const double _launchpadPerformanceProjectIconBox = AppSpacing.inputHeight;
+const EdgeInsets _launchpadPerformanceCardPadding = EdgeInsets.all(
+  AppSpacing.x3,
+);
+const EdgeInsets _launchpadPerformanceHeroPadding = EdgeInsets.all(
+  AppSpacing.x4,
+);
 
 class LaunchpadPerformancePage extends ConsumerStatefulWidget {
   const LaunchpadPerformancePage({super.key, this.shellRenderMode});
@@ -50,11 +70,11 @@ class _LaunchpadPerformancePageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(launchpadControllerProvider).getPerformance();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _launchpadPerformanceVisualNavClearance
+        : _launchpadPerformanceNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -62,7 +82,6 @@ class _LaunchpadPerformancePageState
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
           semanticLabel: 'SC-297 LaunchpadPerformancePage scroll surface',
           header: VitHeader(
             title: snapshot.title,
@@ -84,9 +103,10 @@ class _LaunchpadPerformancePageState
                   child: SingleChildScrollView(
                     key: LaunchpadPerformancePage.contentKey,
                     physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: scrollEndPadding),
                     child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      customGap: AppSpacing.x4,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         switch (_activeTab) {
                           _PerformanceTab.overview => _OverviewTab(

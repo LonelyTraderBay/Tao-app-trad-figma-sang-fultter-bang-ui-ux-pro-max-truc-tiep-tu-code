@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpActivity(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -91,6 +93,27 @@ void main() {
     expect(find.byKey(ActivityLogPage.logKey('act001')), findsOneWidget);
     expect(find.byKey(ActivityLogPage.logKey('act006')), findsOneWidget);
     expect(find.text('113.161.88.123'), findsWidgets);
+  });
+
+  testWidgets('SC-161 first viewport reaches first activity log', (
+    tester,
+  ) async {
+    await pumpActivity(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ActivityLogPage',
+      semanticLabel: 'SC-161 ActivityLogPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ActivityLogPage.logKey('act001')),
+      minVisibleHeight: 24,
+      targetLabel: 'first activity log',
+      reason:
+          'Activity history must preview actual security/account events above '
+          'the bottom navigation after the filter and warning summary.',
+    );
   });
 
   testWidgets('SC-161 filters activity locally', (tester) async {

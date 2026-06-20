@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_challe
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_report_case_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpReportCase(
     WidgetTester tester, {
@@ -92,6 +94,24 @@ void main() {
 
     expect(find.text('Khiếu nại đã ghi nhận'), findsOneWidget);
     expect(find.text('Đã gửi yêu cầu xem xét'), findsOneWidget);
+  });
+
+  testWidgets('SC-202 first viewport reaches report review state', (
+    tester,
+  ) async {
+    await pumpReportCase(tester, caseId: 'rpt001');
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ArenaReportCasePage',
+      semanticLabel: 'SC-202 ArenaReportCasePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ArenaReportCasePage.reviewStateKey),
+      targetLabel: 'report review state',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-202 related challenge link uses challenge route', (

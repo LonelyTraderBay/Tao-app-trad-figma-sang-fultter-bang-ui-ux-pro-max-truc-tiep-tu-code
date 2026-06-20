@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpApiManagement(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -74,6 +76,27 @@ void main() {
     expect(find.text('Test Key (C\u0169)'), findsOneWidget);
     expect(find.text('T\u1EA1o l\u1EA1i Secret'), findsNWidgets(3));
     expect(find.text('T\u00E0i li\u1EC7u API'), findsOneWidget);
+  });
+
+  testWidgets('SC-163 first viewport reaches API key inventory', (
+    tester,
+  ) async {
+    await pumpApiManagement(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ApiManagementPage',
+      semanticLabel: 'SC-163 ApiManagementPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ApiManagementPage.cardKey('key1')),
+      minVisibleHeight: 24,
+      targetLabel: 'first API key card',
+      reason:
+          'API management must preview active API credentials above bottom '
+          'navigation after the high-risk access review.',
+    );
   });
 
   testWidgets('SC-163 local actions and create edge work', (tester) async {

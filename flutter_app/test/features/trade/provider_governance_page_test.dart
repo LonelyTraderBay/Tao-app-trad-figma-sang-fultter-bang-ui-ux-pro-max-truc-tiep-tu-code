@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpProviderGovernance(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -73,6 +75,17 @@ void main() {
     expect(find.text('STRATEGY CHANGE'), findsOneWidget);
     expect(find.text('RISK LEVEL'), findsOneWidget);
     expect(find.text('Request Strategy Modification'), findsOneWidget);
+  });
+
+  testWidgets('SC-081 first viewport reaches governance tabs', (tester) async {
+    await pumpProviderGovernance(tester);
+
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ProviderGovernancePage.tabKey('fees')),
+      routeName: 'ProviderGovernancePage',
+      actionLabel: 'fees governance tab',
+    );
   });
 
   testWidgets('SC-081 tabs switch to fees content', (tester) async {

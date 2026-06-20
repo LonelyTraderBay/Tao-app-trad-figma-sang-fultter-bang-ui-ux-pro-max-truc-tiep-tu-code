@@ -1,9 +1,9 @@
 part of '../pages/prediction_order_receipt_page.dart';
 
 class _MissingReceipt extends StatelessWidget {
-  const _MissingReceipt({required this.bottomInset});
+  const _MissingReceipt({required this.scrollEndPadding});
 
-  final double bottomInset;
+  final double scrollEndPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class _MissingReceipt extends StatelessWidget {
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         key: PredictionOrderReceiptPage.missingReceiptKey,
-        padding: AppSpacing.predictionReceiptScrollPadding(bottomInset),
+        padding: AppSpacing.predictionReceiptScrollPadding(scrollEndPadding),
         child: const VitEmptyState(
           title: 'Không tìm thấy',
           message: 'Lệnh không tồn tại hoặc đã bị xoá',
@@ -23,10 +23,13 @@ class _MissingReceipt extends StatelessWidget {
 }
 
 class _ReceiptContent extends StatelessWidget {
-  const _ReceiptContent({required this.snapshot, required this.bottomInset});
+  const _ReceiptContent({
+    required this.snapshot,
+    required this.scrollEndPadding,
+  });
 
   final PredictionOrderReceiptSnapshot snapshot;
-  final double bottomInset;
+  final double scrollEndPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +39,12 @@ class _ReceiptContent extends StatelessWidget {
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         key: PredictionOrderReceiptPage.contentKey,
-        padding: AppSpacing.predictionReceiptScrollPadding(bottomInset),
+        padding: AppSpacing.predictionReceiptScrollPadding(scrollEndPadding),
         child: VitPageContent(
-          padding: VitContentPadding.relaxed,
-          customGap: AppSpacing.predictionReceiptContentGap,
+          density: VitDensity.compact,
           children: [
             _ReceiptHero(receipt: receipt),
+            _OrderSummary(receipt: receipt),
             if (snapshot.highRiskContractId != null)
               VitHighRiskStatePanel(
                 state: VitHighRiskUiState.success,
@@ -50,7 +53,6 @@ class _ReceiptContent extends StatelessWidget {
                     'Submitted status, receipt detail, portfolio history and support recovery stay bound to the shared prediction contract.',
                 contractId: snapshot.highRiskContractId,
               ),
-            _OrderSummary(receipt: receipt),
             _TimelineCard(receipt: receipt),
             _TimestampCard(receipt: receipt),
             _ShareReceiptButton(receipt: receipt),
@@ -74,12 +76,12 @@ class _ReceiptHero extends StatelessWidget {
     final status = _statusConfig(receipt.status);
 
     return VitCard(
-      padding: AppSpacing.predictionReceiptHeroPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Wrap(
-            spacing: AppSpacing.predictionReceiptHeroPillGap,
-            runSpacing: AppSpacing.predictionReceiptHeroPillGap,
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x2,
             alignment: WrapAlignment.center,
             children: [
               _SoftPill(
@@ -94,7 +96,7 @@ class _ReceiptHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionReceiptHeroOutcomeGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             receipt.outcome,
             textAlign: TextAlign.center,
@@ -102,7 +104,7 @@ class _ReceiptHero extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.predictionReceiptHeroEventGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             receipt.eventTitle,
             textAlign: TextAlign.center,
@@ -132,9 +134,20 @@ class _OrderSummary extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: AppSpacing.predictionReceiptCardPadding,
+          density: VitDensity.compact,
           child: Column(
             children: [
+              _SummaryRow(
+                label: 'Tá»•ng giÃ¡ trá»‹',
+                value: _formatMoney(receipt.total),
+                mono: true,
+              ),
+              _SummaryRow(
+                label: 'PhÃ­ (2%)',
+                key: PredictionOrderReceiptPage.feeSummaryKey,
+                value: _formatMoney(receipt.fee),
+                mono: true,
+              ),
               _SummaryRow(
                 label: 'Loại lệnh',
                 value: receipt.orderType == 'market' ? 'Market' : 'Limit',
@@ -157,16 +170,18 @@ class _OrderSummary extends StatelessWidget {
                   value: _formatPrice(receipt.avgPrice),
                   mono: true,
                 ),
-              _SummaryRow(
-                label: 'Tổng giá trị',
-                value: _formatMoney(receipt.total),
-                mono: true,
-              ),
-              _SummaryRow(
-                label: 'Phí (2%)',
-                value: _formatMoney(receipt.fee),
-                mono: true,
-              ),
+              if (receipt.id.isEmpty) ...[
+                _SummaryRow(
+                  label: 'Tổng giá trị',
+                  value: _formatMoney(receipt.total),
+                  mono: true,
+                ),
+                _SummaryRow(
+                  label: 'Phí (2%)',
+                  value: _formatMoney(receipt.fee),
+                  mono: true,
+                ),
+              ],
               if (receipt.status != 'canceled' && receipt.status != 'rejected')
                 _FillProgress(percent: fillPct),
             ],
@@ -199,7 +214,7 @@ class _TimelineCard extends StatelessWidget {
       accentColor: AppColors.buy,
       children: [
         VitCard(
-          padding: AppSpacing.predictionReceiptCardPadding,
+          density: VitDensity.compact,
           child: Column(
             children: [
               for (var i = 0; i < timeline.length; i++)
@@ -223,7 +238,7 @@ class _TimestampCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionReceiptCardPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           _SummaryRow(label: 'Tạo lúc', value: receipt.createdAt),
@@ -266,7 +281,7 @@ class _ShareReceiptButton extends StatelessWidget {
           onTap: () {},
           borderRadius: AppRadii.inputRadius,
           child: SizedBox(
-            height: AppSpacing.inputHeight,
+            height: VitDensity.compact.controlHeight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -275,7 +290,7 @@ class _ShareReceiptButton extends StatelessWidget {
                   color: _predictionPrimary,
                   size: AppSpacing.predictionReceiptShareIcon,
                 ),
-                const SizedBox(width: AppSpacing.predictionReceiptShareIconGap),
+                const SizedBox(width: AppSpacing.x2),
                 Flexible(
                   child: Text(
                     'Chia sẻ chi tiết lệnh',
@@ -302,7 +317,7 @@ class _DisclosureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionReceiptDisclosurePadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -311,7 +326,7 @@ class _DisclosureCard extends StatelessWidget {
             color: AppColors.accent,
             size: AppSpacing.predictionReceiptDisclosureIcon,
           ),
-          const SizedBox(width: AppSpacing.predictionReceiptDisclosureGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               'Probability không phải certainty. Giá thị trường dự đoán phản ánh ước lượng cộng đồng và có thể thay đổi bất cứ lúc nào. Đây không phải lời khuyên đầu tư.',
@@ -340,7 +355,7 @@ class _ReceiptActions extends StatelessWidget {
           variant: VitCtaButtonVariant.auth,
           child: const Text('Xem sự kiện'),
         ),
-        const SizedBox(height: AppSpacing.predictionReceiptActionGap),
+        const SizedBox(height: AppSpacing.x2),
         VitCtaButton(
           key: PredictionOrderReceiptPage.viewPortfolioKey,
           onPressed: () => context.go(AppRoutePaths.profilePredictions),

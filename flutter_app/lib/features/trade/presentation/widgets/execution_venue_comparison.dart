@@ -7,16 +7,12 @@ class _ComparisonTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Venue Comparison',
+      density: VitDensity.compact,
       children: [
-        const _SectionLabel('Venue Comparison'),
-        const SizedBox(height: AppSpacing.executionVenueSummaryGap),
-        for (var index = 0; index < venues.length; index++) ...[
+        for (var index = 0; index < venues.length; index++)
           _VenueCard(venue: venues[index], rank: index + 1),
-          if (index != venues.length - 1)
-            const SizedBox(height: AppSpacing.executionVenueSummaryGap),
-        ],
       ],
     );
   }
@@ -33,7 +29,7 @@ class _VenueCard extends StatelessWidget {
     final isWinner = rank == 1;
     return VitCard(
       key: ExecutionVenueAnalysisPage.venueKey(venue.venue),
-      padding: AppSpacing.executionVenueCardPadding,
+      density: VitDensity.compact,
       borderColor: _venueBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -52,7 +48,6 @@ class _VenueCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: isWinner ? _venueAmber : AppColors.text2,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.executionVenueLineHeightTight,
                   ),
                 ),
               ),
@@ -68,7 +63,6 @@ class _VenueCard extends StatelessWidget {
                       style: AppTextStyles.body.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.executionVenueLineHeightTight,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x3),
@@ -78,7 +72,6 @@ class _VenueCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.executionVenueLineHeightTight,
                       ),
                     ),
                   ],
@@ -92,7 +85,7 @@ class _VenueCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.executionVenuePanelPaddingValue),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -140,22 +133,19 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.executionVenueMetricBoxHeight,
-      padding: AppSpacing.executionVenueMetricBoxPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.executionVenueLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.executionVenueMetricGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -164,7 +154,6 @@ class _MetricBox extends StatelessWidget {
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.executionVenueLineHeightTight,
             ),
           ),
         ],
@@ -180,17 +169,10 @@ class _CostsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const _SectionLabel('Cost Breakdown'),
-        const SizedBox(height: AppSpacing.executionVenueSummaryGap),
-        for (final venue in venues) ...[
-          _CostCard(venue: venue),
-          if (venue != venues.last)
-            const SizedBox(height: AppSpacing.executionVenueSummaryGap),
-        ],
-      ],
+    return VitPageSection(
+      label: 'Cost Breakdown',
+      density: VitDensity.compact,
+      children: [for (final venue in venues) _CostCard(venue: venue)],
     );
   }
 }
@@ -203,7 +185,6 @@ class _CostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.executionVenuePanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -214,33 +195,33 @@ class _CostCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.executionVenueSummaryGap),
+          const SizedBox(height: AppSpacing.x2),
           _ProgressMetric(
             label: 'Trading Fee',
             value: '${venue.avgFee.toStringAsFixed(2)}%',
             factor: venue.avgFee / .12,
             color: _venuePrimary,
           ),
-          const SizedBox(height: AppSpacing.executionVenueProgressGap),
+          const SizedBox(height: AppSpacing.x2),
           _ProgressMetric(
             label: 'Spread Cost',
             value: '${venue.avgSpread.toStringAsFixed(1)} bps',
             factor: venue.avgSpread / 3.2,
             color: _venueGreen,
           ),
-          const SizedBox(height: AppSpacing.executionVenueProgressGap),
+          const SizedBox(height: AppSpacing.x2),
           _ProgressMetric(
             label: 'Market Impact',
             value: '${venue.marketImpact.toStringAsFixed(1)} bps',
             factor: venue.marketImpact / 1.6,
             color: _venueAmber,
           ),
-          const SizedBox(height: AppSpacing.executionVenueSummaryGap),
+          const SizedBox(height: AppSpacing.x2),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: _venueBorder,
           ),
-          const SizedBox(height: AppSpacing.executionVenueSummaryGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(

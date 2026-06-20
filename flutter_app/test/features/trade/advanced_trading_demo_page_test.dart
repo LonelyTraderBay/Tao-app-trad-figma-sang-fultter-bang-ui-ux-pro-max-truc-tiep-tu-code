@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAdvancedDemo(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -63,6 +65,27 @@ void main() {
     expect(find.text('Position Management Features'), findsOneWidget);
     expect(find.text('Mock Position (Demo)'), findsOneWidget);
     expect(find.text('BTC/USDT · LONG'), findsOneWidget);
+  });
+
+  testWidgets('SC-088 first viewport reaches first position action', (
+    tester,
+  ) async {
+    await pumpAdvancedDemo(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'AdvancedTradingDemoPage',
+      semanticLabel: 'SC-088 AdvancedTradingDemoPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      AdvancedTradingDemoPage.actionKey('partial-close').asFinder(),
+      minVisibleHeight: 24,
+      targetLabel: 'first advanced position action',
+      reason:
+          'Advanced trading demo must expose the first position action above '
+          'bottom navigation after mode and tab controls.',
+    );
   });
 
   testWidgets('SC-088 local tabs and demo controls update', (tester) async {

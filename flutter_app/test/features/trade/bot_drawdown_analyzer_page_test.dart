@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBotDrawdownAnalyzer(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,5 +72,26 @@ void main() {
     expect(find.text('Drawdown Duration Distribution'), findsOneWidget);
     expect(find.text('Major Drawdown Events'), findsOneWidget);
     expect(find.text('Drawdown Analysis'), findsOneWidget);
+  });
+
+  testWidgets('SC-129 first viewport reaches full drawdown summary', (
+    tester,
+  ) async {
+    await pumpBotDrawdownAnalyzer(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'BotDrawdownAnalyzerPage',
+      semanticLabel: 'SC-129 BotDrawdownAnalyzerPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('DD Frequency'),
+      minVisibleHeight: 12,
+      targetLabel: 'full drawdown summary',
+      reason:
+          'Drawdown analyzer should expose the complete compact summary '
+          'metric grid above bottom navigation.',
+    );
   });
 }

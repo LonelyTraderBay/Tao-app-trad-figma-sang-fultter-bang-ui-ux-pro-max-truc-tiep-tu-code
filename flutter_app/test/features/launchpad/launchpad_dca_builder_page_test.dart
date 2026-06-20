@@ -121,6 +121,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(LaunchpadDcaBuilderPage.previewKey), findsOneWidget);
+    expect(find.byKey(LaunchpadDcaBuilderPage.reviewStateKey), findsOneWidget);
+    expect(find.text('Review DCA plan'), findsOneWidget);
     expect(find.text('2 tuan/lan'), findsWidgets);
     expect(find.text('10'), findsOneWidget);
 

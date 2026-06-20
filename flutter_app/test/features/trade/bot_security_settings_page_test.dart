@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSecuritySettings(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,25 @@ void main() {
     expect(find.text('Trading Bot Key #1'), findsOneWidget);
     expect(find.text('Create New API Key'), findsOneWidget);
     expect(find.text('IP Whitelist'), findsOneWidget);
+  });
+
+  testWidgets('SC-122 first viewport reaches API key controls', (tester) async {
+    await pumpSecuritySettings(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'BotSecuritySettingsPage',
+      semanticLabel: 'SC-122 BotSecuritySettingsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Create New API Key'),
+      minVisibleHeight: 18,
+      targetLabel: 'API key create action',
+      reason:
+          'Bot security settings must expose the API key controls above bottom '
+          'navigation after the 2FA review block.',
+    );
   });
 
   testWidgets('SC-122 opens API key creation sheet', (tester) async {

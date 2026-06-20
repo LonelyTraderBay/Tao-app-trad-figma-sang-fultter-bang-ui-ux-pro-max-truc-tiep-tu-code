@@ -21,43 +21,44 @@ class _FilterChipButton extends StatelessWidget {
     return InkWell(
       borderRadius: AppRadii.xlRadius,
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: active ? color.withValues(alpha: .12) : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? color.withValues(alpha: .36)
-                : AppColors.transparent,
-          ),
-          borderRadius: AppRadii.xlRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? color : AppColors.text3,
-                fontWeight: active
-                    ? AppTextStyles.extraBold
-                    : AppTextStyles.medium,
-              ),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: active
+                  ? color.withValues(alpha: .36)
+                  : AppColors.transparent,
             ),
-            if (count != null) ...[
-              const SizedBox(width: AppSpacing.x1),
+            borderRadius: AppRadii.xlRadius,
+          ),
+        ),
+        child: Padding(
+          padding: AppSpacing.launchpadPillPadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
               Text(
-                '($count)',
-                style: AppTextStyles.micro.copyWith(
+                label,
+                style: AppTextStyles.caption.copyWith(
                   color: active ? color : AppColors.text3,
-                  fontFeatures: const [FontFeature.tabularFigures()],
+                  fontWeight: active
+                      ? AppTextStyles.extraBold
+                      : AppTextStyles.medium,
                 ),
               ),
+              if (count != null) ...[
+                const SizedBox(width: AppSpacing.x1),
+                Text(
+                  '($count)',
+                  style: AppTextStyles.micro.copyWith(
+                    color: active ? color : AppColors.text3,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -88,39 +89,42 @@ class _SmallActionButton extends StatelessWidget {
     return InkWell(
       borderRadius: AppRadii.inputRadius,
       onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: compact ? AppSpacing.x2 : AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: active ? AppColors.primary12 : AppColors.surface2,
-          border: Border.all(
-            color: active ? AppColors.primary30 : AppColors.cardBorder,
-          ),
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (icon != null) ...[
-              Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
-              const SizedBox(width: AppSpacing.x1),
-            ],
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: color,
-                fontWeight: active
-                    ? AppTextStyles.extraBold
-                    : AppTextStyles.medium,
-              ),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: active ? AppColors.primary30 : AppColors.cardBorder,
             ),
-            if (trailing != null) ...[
-              const SizedBox(width: AppSpacing.x1),
-              Icon(trailing, color: color, size: AppSpacing.launchpadIconMd),
+            borderRadius: AppRadii.inputRadius,
+          ),
+        ),
+        child: Padding(
+          padding: compact
+              ? AppSpacing.launchpadInlinePillPadding
+              : AppSpacing.launchpadPillPadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (icon != null) ...[
+                Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
+                const SizedBox(width: AppSpacing.x1),
+              ],
+              Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: color,
+                  fontWeight: active
+                      ? AppTextStyles.extraBold
+                      : AppTextStyles.medium,
+                ),
+              ),
+              if (trailing != null) ...[
+                const SizedBox(width: AppSpacing.x1),
+                Icon(trailing, color: color, size: AppSpacing.launchpadIconMd),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
@@ -144,22 +148,26 @@ class _SelectBox extends StatelessWidget {
     return InkWell(
       borderRadius: AppRadii.xsRadius,
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
-        width: AppSpacing.launchpadBox18,
-        height: AppSpacing.launchpadBox18,
-        decoration: BoxDecoration(
-          color: selected ? color : AppColors.transparent,
-          border: Border.all(color: selected ? color : AppColors.borderSolid),
-          borderRadius: AppRadii.xsRadius,
+      child: SizedBox.square(
+        dimension: AppSpacing.launchpadBox18,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: selected ? color : AppColors.transparent,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: selected ? color : AppColors.borderSolid),
+              borderRadius: AppRadii.xsRadius,
+            ),
+          ),
+          child: selected
+              ? const Center(
+                  child: Icon(
+                    Icons.check_rounded,
+                    color: AppColors.onAccent,
+                    size: AppSpacing.launchpadIconSm,
+                  ),
+                )
+              : null,
         ),
-        child: selected
-            ? const Icon(
-                Icons.check_rounded,
-                color: AppColors.onAccent,
-                size: AppSpacing.launchpadIconSm,
-              )
-            : null,
       ),
     );
   }
@@ -172,17 +180,18 @@ class _EventIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.launchpadBox30,
-      height: AppSpacing.launchpadBox30,
-      decoration: BoxDecoration(
-        color: level.color.withValues(alpha: .16),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Icon(
-        level.icon,
-        color: level.color,
-        size: AppSpacing.launchpadIconXl,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox30,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: level.color.withValues(alpha: .16),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Icon(
+          level.icon,
+          color: level.color,
+          size: AppSpacing.launchpadIconXl,
+        ),
       ),
     );
   }
@@ -195,20 +204,19 @@ class _LevelBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x1,
-        vertical: 2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: level.color.withValues(alpha: .16),
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
-      child: Text(
-        level.label.toUpperCase(),
-        style: AppTextStyles.micro.copyWith(
-          color: level.color,
-          fontWeight: AppTextStyles.heavy,
+      child: Padding(
+        padding: AppSpacing.launchpadTinyChipPadding,
+        child: Text(
+          level.label.toUpperCase(),
+          style: AppTextStyles.micro.copyWith(
+            color: level.color,
+            fontWeight: AppTextStyles.heavy,
+          ),
         ),
       ),
     );
@@ -222,18 +230,17 @@ class _TagPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: 2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      child: Padding(
+        padding: AppSpacing.launchpadLiveBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
       ),
     );
   }
@@ -244,32 +251,11 @@ class _EmptyEvents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return const VitEmptyState(
       key: LaunchpadEventLogPage.emptyKey,
-      padding: const EdgeInsets.all(AppSpacing.x6),
-      child: Column(
-        children: [
-          const Icon(
-            Icons.search_off_rounded,
-            color: AppColors.text3,
-            size: AppSpacing.launchpadIcon7xl,
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          Text(
-            'Khong tim thay event',
-            style: AppTextStyles.base.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.extraBold,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            'Thu thay doi bo loc hoac tu khoa tim kiem',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
+      title: 'Khong tim thay event',
+      message: 'Thu thay doi bo loc hoac tu khoa tim kiem',
+      icon: Icons.search_off_rounded,
     );
   }
 }

@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -21,6 +21,28 @@ part '../widgets/market_screener_results.dart';
 part '../widgets/market_screener_row_common.dart';
 
 const _marketPrimary = AppColors.primary;
+const _visualNavClearance = 90.0;
+const _nativeNavClearance = 72.0;
+const _screenerVisualNavExtra = 54.0;
+const _presetHeight = 32.0;
+const _presetIconSize = 14.0;
+const _resetIconSize = 14.0;
+const _resetMinHeight = 30.0;
+const _categoryChipHeight = 30.0;
+const _rangeInputVerticalPadding = 8.0;
+const _sortHeight = 34.0;
+const _sortChipHeight = 32.0;
+const _sortIconSize = 15.0;
+const _sortResultWidth = 58.0;
+const _rowHeight = 54.0;
+const _rowRankWidth = 20.0;
+const _rowAvatarSize = 28.0;
+const _sparklineWidth = 52.0;
+const _sparklineHeight = 20.0;
+const _sparklineStroke = 1.6;
+const _valueWidth = 76.0;
+const _trendIconSize = 12.0;
+const _emptyIconSize = 32.0;
 
 class MarketScreenerPage extends ConsumerStatefulWidget {
   const MarketScreenerPage({super.key, this.shellRenderMode});
@@ -153,15 +175,15 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
         .watch(marketControllerProvider)
         .getMarketScreener(query: appliedQuery);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final navClearance = mode.usesVisualQaFrame
+        ? _visualNavClearance
+        : _nativeNavClearance;
+    final scrollEndPadding =
+        navClearance +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.marketScreenerVisualBottomExtra
-            : AppSpacing.marketScreenerNativeBottomExtra);
+            ? _screenerVisualNavExtra
+            : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -185,11 +207,10 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
                   child: SingleChildScrollView(
                     key: MarketScreenerPage.contentKey,
                     padding: AppSpacing.marketScreenerScrollPadding(
-                      bottomInset,
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.marketScreenerPageGap,
+                      density: VitDensity.compact,
                       children: [
                         VitSearchBar(
                           key: MarketScreenerPage.searchKey,

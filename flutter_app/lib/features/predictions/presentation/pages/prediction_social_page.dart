@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -74,15 +75,13 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
         .watch(predictionsReadModelControllerProvider)
         .getSocial();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final footerPadding =
+        footerChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionSocialBottomInsetVisual
-            : AppSpacing.predictionSocialBottomInsetNative);
+        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -110,11 +109,10 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
                   child: SingleChildScrollView(
                     key: PredictionSocialPage.contentKey,
                     padding: AppSpacing.predictionSocialScrollPadding(
-                      bottomInset,
+                      footerPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionSocialContentGap,
+                      density: VitDensity.compact,
                       children: [
                         ...switch (_activeTab) {
                           _SocialTab.comments => [
@@ -155,6 +153,7 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
                           message:
                               'Comment stance, moderation context, sentiment analysis, contributor signals, share/copy feedback, and disclaimer states are reviewed before social trading signals influence a prediction decision.',
                           contractId: 'SC-040',
+                          density: VitDensity.compact,
                         ),
                       ],
                     ),

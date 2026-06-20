@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -30,6 +31,7 @@ const _armGreen = AppColors.buy;
 const _armAmber = AppColors.caution;
 const _armRed = AppColors.sell;
 const _armPrimary = AppColors.primary;
+const _armCompactChartHeight = AppSpacing.x7 + AppSpacing.x6 + AppSpacing.x6;
 
 class ArmIntegrationStatusPage extends ConsumerStatefulWidget {
   const ArmIntegrationStatusPage({super.key, this.shellRenderMode});
@@ -65,13 +67,15 @@ class _ArmIntegrationStatusPageState
         .watch(tradeReadModelControllerProvider)
         .getArmIntegrationStatus();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final chromeInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollClearance =
+        chromeInset +
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                AppSpacing.armIntegrationBottomInsetVisualExtra
-            : DeviceMetrics.nativeBottomChrome +
-                AppSpacing.armIntegrationBottomInsetNativeExtra) +
-        MediaQuery.paddingOf(context).bottom;
+            ? AppSpacing.x6 + AppSpacing.x5
+            : AppSpacing.x5 + AppSpacing.x3);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -92,16 +96,20 @@ class _ArmIntegrationStatusPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ArmIntegrationStatusPage.contentKey,
-                  padding: AppSpacing.armIntegrationScrollPadding(
-                    bottomInset,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.rowPy,
+                    right: AppSpacing.contentPad,
+                    bottom: scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.armIntegrationContentGap,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
+                        density: VitDensity.compact,
                         title: 'Review ARM integration health',
                         message:
                             'Confirm provider failover, latency limits, reporting queue impact, and next steps before retrying submissions.',

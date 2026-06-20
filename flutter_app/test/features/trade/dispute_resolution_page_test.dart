@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDisputeResolution(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -107,6 +109,27 @@ void main() {
     expect(find.text('Fee Discrepancy'), findsOneWidget);
     expect(find.text('Provider Misconduct'), findsOneWidget);
     expect(find.text('Submit Complaint'), findsOneWidget);
+  });
+
+  testWidgets('SC-082 first viewport reaches complaint type inventory', (
+    tester,
+  ) async {
+    await pumpDisputeResolution(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'DisputeResolutionPage',
+      semanticLabel: 'SC-082 DisputeResolutionPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(DisputeResolutionPage.complaintTypeSectionKey),
+      minVisibleHeight: 24,
+      targetLabel: 'complaint type section',
+      reason:
+          'Dispute intake must expose complaint type choices above the sticky '
+          'submit footer and bottom navigation.',
+    );
   });
 
   testWidgets('SC-082 submits complaint and switches to active cases', (

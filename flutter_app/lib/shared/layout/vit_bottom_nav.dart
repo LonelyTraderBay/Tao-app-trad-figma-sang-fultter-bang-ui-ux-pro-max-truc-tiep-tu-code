@@ -88,86 +88,85 @@ class VitBottomNav extends StatelessWidget {
       height: height,
       child: Material(
         type: MaterialType.transparency,
-        child: DecoratedBox(
-          decoration: const BoxDecoration(color: AppColors.transparent),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                left: AppSpacing.bottomNavHorizontalInset,
-                right: AppSpacing.bottomNavHorizontalInset,
-                bottom: bottomGap,
-                height: capsuleHeight,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: AppRadii.pillRadius,
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        AppColors.surface2.withValues(alpha: .98),
-                        AppColors.bg.withValues(alpha: .96),
-                      ],
-                    ),
-                    border: Border.all(
-                      color: AppColors.borderSolid.withValues(alpha: .46),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.bg.withValues(alpha: .45),
-                        blurRadius: AppSpacing.bottomNavSurfaceShadowBlur,
-                        offset: const Offset(
-                          0,
-                          AppSpacing.bottomNavSurfaceShadowOffsetY,
-                        ),
-                      ),
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha: .12),
-                        blurRadius: AppSpacing.bottomNavPrimaryShadowBlur,
-                        offset: const Offset(
-                          0,
-                          AppSpacing.bottomNavPrimaryShadowOffsetY,
-                        ),
-                      ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              left: AppSpacing.bottomNavHorizontalInset,
+              right: AppSpacing.bottomNavHorizontalInset,
+              bottom: bottomGap,
+              height: capsuleHeight,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.surface2.withValues(alpha: .98),
+                      AppColors.bg.withValues(alpha: .96),
                     ],
                   ),
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      final horizontalPad = constraints.maxWidth < 340
-                          ? AppSpacing.bottomNavHorizontalPadCompact
-                          : AppSpacing.bottomNavHorizontalPad;
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: horizontalPad,
-                        ),
-                        child: Row(
-                          children: [
-                            for (final item in _items)
-                              Expanded(
-                                child: _VitBottomNavButton(
-                                  item: item,
-                                  active: item.destination == activeDestination,
-                                  renderMode: renderMode,
-                                  badgeCount:
-                                      item.destination ==
-                                          VitBottomNavDestination.home
-                                      ? homeNotificationBadgeCount ??
-                                            homeBadgeCount
-                                      : 0,
-                                  onTap: () => onDestinationSelected?.call(
-                                    item.destination,
-                                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.pillRadius,
+                    side: BorderSide(
+                      color: AppColors.borderSolid.withValues(alpha: .46),
+                    ),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: AppColors.bg.withValues(alpha: .45),
+                      blurRadius: AppSpacing.bottomNavSurfaceShadowBlur,
+                      offset: const Offset(
+                        0,
+                        AppSpacing.bottomNavSurfaceShadowOffsetY,
+                      ),
+                    ),
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: .12),
+                      blurRadius: AppSpacing.bottomNavPrimaryShadowBlur,
+                      offset: const Offset(
+                        0,
+                        AppSpacing.bottomNavPrimaryShadowOffsetY,
+                      ),
+                    ),
+                  ],
+                ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final horizontalPad = constraints.maxWidth < 340
+                        ? AppSpacing.bottomNavHorizontalPadCompact
+                        : AppSpacing.bottomNavHorizontalPad;
+                    return Padding(
+                      padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: horizontalPad,
+                      ),
+                      child: Row(
+                        children: [
+                          for (final item in _items)
+                            Expanded(
+                              child: _VitBottomNavButton(
+                                item: item,
+                                active: item.destination == activeDestination,
+                                renderMode: renderMode,
+                                badgeCount:
+                                    item.destination ==
+                                        VitBottomNavDestination.home
+                                    ? homeNotificationBadgeCount ??
+                                          homeBadgeCount
+                                    : 0,
+                                onTap: () => onDestinationSelected?.call(
+                                  item.destination,
                                 ),
                               ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                            ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -237,7 +236,7 @@ class _VitBottomNavButton extends StatelessWidget {
                   top: renderMode.usesVisualQaFrame
                       ? _visualQaCenterButtonTop
                       : _nativeCenterButtonTop,
-                  child: Container(
+                  child: SizedBox(
                     key: active
                         ? Key('vit_bottom_nav_active_${item.destination.name}')
                         : null,
@@ -247,31 +246,35 @@ class _VitBottomNavButton extends StatelessWidget {
                     height: renderMode.usesVisualQaFrame
                         ? AppSpacing.bottomNavCenterButtonSizeVisual
                         : AppSpacing.bottomNavCenterButtonSizeNative,
-                    decoration: BoxDecoration(
-                      gradient: AppGradients.navCenter,
-                      borderRadius: AppRadii.lgRadius,
-                      border: Border.all(
-                        color: AppColors.primarySoft.withValues(alpha: .20),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: activeShadow.withValues(alpha: .40),
-                          blurRadius: AppSpacing.bottomNavCenterGlowBlur,
-                          offset: const Offset(
-                            0,
-                            AppSpacing.bottomNavCenterGlowOffsetY,
+                    child: DecoratedBox(
+                      decoration: ShapeDecoration(
+                        gradient: AppGradients.navCenter,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: AppRadii.lgRadius,
+                          side: BorderSide(
+                            color: AppColors.primarySoft.withValues(alpha: .20),
                           ),
                         ),
-                        BoxShadow(
-                          color: activeShadow.withValues(alpha: .20),
-                          blurRadius: AppSpacing.bottomNavCenterGlowWeakBlur,
-                        ),
-                      ],
-                    ),
-                    child: Icon(
-                      item.icon,
-                      color: AppColors.navCenterIcon,
-                      size: AppSpacing.bottomNavCenterIconSize,
+                        shadows: [
+                          BoxShadow(
+                            color: activeShadow.withValues(alpha: .40),
+                            blurRadius: AppSpacing.bottomNavCenterGlowBlur,
+                            offset: const Offset(
+                              0,
+                              AppSpacing.bottomNavCenterGlowOffsetY,
+                            ),
+                          ),
+                          BoxShadow(
+                            color: activeShadow.withValues(alpha: .20),
+                            blurRadius: AppSpacing.bottomNavCenterGlowWeakBlur,
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        item.icon,
+                        color: AppColors.navCenterIcon,
+                        size: AppSpacing.bottomNavCenterIconSize,
+                      ),
                     ),
                   ),
                 ),
@@ -328,21 +331,22 @@ class _VitBottomNavButton extends StatelessWidget {
                   if (active)
                     Positioned(
                       bottom: AppSpacing.bottomNavActiveDotOffset,
-                      child: Container(
+                      child: SizedBox.square(
                         key: Key(
                           'vit_bottom_nav_active_${item.destination.name}',
                         ),
-                        width: AppSpacing.bottomNavActiveDotSize,
-                        height: AppSpacing.bottomNavActiveDotSize,
-                        decoration: BoxDecoration(
-                          color: activeColor,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: activeShadow.withValues(alpha: .60),
-                              blurRadius: AppSpacing.bottomNavActiveDotBlur,
-                            ),
-                          ],
+                        dimension: AppSpacing.bottomNavActiveDotSize,
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: activeColor,
+                            shape: const CircleBorder(),
+                            shadows: [
+                              BoxShadow(
+                                color: activeShadow.withValues(alpha: .60),
+                                blurRadius: AppSpacing.bottomNavActiveDotBlur,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -380,24 +384,32 @@ class _NavBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ConstrainedBox(
       constraints: const BoxConstraints(
         minWidth: AppSpacing.bottomNavBadgeMinWidth,
+        minHeight: AppSpacing.bottomNavBadgeHeight,
       ),
-      height: AppSpacing.bottomNavBadgeHeight,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.bottomNavBadgeHorizontalPadding,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.sell,
-        borderRadius: AppRadii.pillRadius,
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        count > 99 ? '99+' : '$count',
-        style: AppTextStyles.navLabel.copyWith(
-          color: AppColors.onAccent,
-          fontWeight: AppTextStyles.bold,
+      child: SizedBox(
+        height: AppSpacing.bottomNavBadgeHeight,
+        child: DecoratedBox(
+          decoration: const ShapeDecoration(
+            color: AppColors.sell,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.pillRadius),
+          ),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.bottomNavBadgeHorizontalPadding,
+            ),
+            child: Center(
+              child: Text(
+                count > 99 ? '99+' : '$count',
+                style: AppTextStyles.navLabel.copyWith(
+                  color: AppColors.onAccent,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

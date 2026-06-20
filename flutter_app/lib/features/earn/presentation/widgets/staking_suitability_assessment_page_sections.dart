@@ -34,7 +34,7 @@ class _ProgressHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.x2),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
           child: SizedBox(
@@ -77,17 +77,17 @@ class _QuestionCard extends StatelessWidget {
     return VitCard(
       key: StakingSuitabilityAssessmentPage.questionCardKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: _stakingSuitabilityCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             question.question,
             style: AppTextStyles.sectionTitleXs.copyWith(
-              height: AppSpacing.stakingAssessmentQuestionLineHeight,
+              height: _stakingSuitabilityQuestionLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           if (question.type == StakingSuitabilityQuestionType.single)
             for (var i = 0; i < question.options.length; i++) ...[
               _OptionTile(
@@ -97,7 +97,7 @@ class _QuestionCard extends StatelessWidget {
                 onTap: () => onSelect(question.id, i),
               ),
               if (i != question.options.length - 1)
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x2),
             ]
           else if (question.type == StakingSuitabilityQuestionType.slider)
             _SliderQuestion(
@@ -114,7 +114,7 @@ class _QuestionCard extends StatelessWidget {
                 onSelect: (option) => onQuizSelect(q, option),
               ),
               if (q != question.quizQuestions.length - 1)
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x2),
             ],
         ],
       ),
@@ -153,7 +153,7 @@ class _OptionTile extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: AppSpacing.earnStaticSelectPadding,
+            padding: _stakingSuitabilityOptionPadding,
             child: Row(
               children: [
                 Icon(
@@ -161,15 +161,15 @@ class _OptionTile extends StatelessWidget {
                       ? Icons.radio_button_checked_rounded
                       : Icons.radio_button_unchecked_rounded,
                   color: selected ? AppColors.primary : AppColors.primary30,
-                  size: AppSpacing.iconMd,
+                  size: AppSpacing.iconSm,
                 ),
-                const SizedBox(width: AppSpacing.x3),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
                     label,
                     style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.text1,
-                      height: AppSpacing.stakingAssessmentOptionLineHeight,
+                      height: _stakingSuitabilityOptionLineHeight,
                     ),
                   ),
                 ),
@@ -203,10 +203,14 @@ class _SliderQuestion extends StatelessWidget {
               'Conservative',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            const Spacer(),
-            Text(
-              'Aggressive',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'Aggressive',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ),
             ),
           ],
         ),
@@ -245,7 +249,7 @@ class _QuizQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: _stakingSuitabilityCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -256,7 +260,7 @@ class _QuizQuestion extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           for (var i = 0; i < quiz.options.length; i++) ...[
             _QuizOption(
               key: StakingSuitabilityAssessmentPage.quizOptionKey(index, i),
@@ -294,7 +298,7 @@ class _QuizOption extends StatelessWidget {
         borderRadius: AppRadii.lgRadius,
         onTap: onTap,
         child: Padding(
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: _stakingSuitabilityOptionPadding,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
@@ -320,7 +324,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingSuitabilityAssessmentPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: _stakingSuitabilityCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -329,18 +333,18 @@ class _InfoBanner extends StatelessWidget {
             color: AppColors.primarySoft,
             size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingAssessmentBodyLineHeight,
+                    height: _stakingSuitabilityBodyLineHeight,
                   ),
                 ),
               ],

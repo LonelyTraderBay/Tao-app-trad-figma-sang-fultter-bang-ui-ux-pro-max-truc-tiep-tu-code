@@ -80,16 +80,33 @@ class _CarouselDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dot = AnimatedContainer(
+    final targetColor = active ? activeColor : inactiveColor;
+    final targetWidth = active
+        ? AppSpacing.homeAnnouncementDotActiveWidth
+        : AppSpacing.homeAnnouncementDotInactiveWidth;
+    final dot = TweenAnimationBuilder<double>(
       duration: duration,
-      width: active
-          ? AppSpacing.homeAnnouncementDotActiveWidth
-          : AppSpacing.homeAnnouncementDotInactiveWidth,
-      height: AppSpacing.homeAnnouncementDotHeight,
-      decoration: BoxDecoration(
-        color: active ? activeColor : inactiveColor,
-        borderRadius: AppRadii.pillRadius,
-      ),
+      tween: Tween<double>(end: targetWidth),
+      builder: (context, width, child) {
+        return TweenAnimationBuilder<Color?>(
+          duration: duration,
+          tween: ColorTween(end: targetColor),
+          builder: (context, color, child) {
+            return SizedBox(
+              width: width,
+              height: AppSpacing.homeAnnouncementDotHeight,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color ?? targetColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.pillRadius,
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
 
     if (onTap == null) return dot;

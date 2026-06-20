@@ -152,16 +152,12 @@ class _AuditReportCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
-          SizedBox(
+          VitCtaButton(
+            variant: VitCtaButtonVariant.secondary,
             height: AppSpacing.buttonCompact,
-            child: OutlinedButton.icon(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.open_in_new_rounded,
-                size: AppSpacing.stakingProofExternalIcon,
-              ),
-              label: const Text('Download Report (PDF)'),
-            ),
+            onPressed: () {},
+            leading: const Icon(Icons.open_in_new_rounded),
+            child: const Text('Download Report (PDF)'),
           ),
         ],
       ),
@@ -254,14 +250,12 @@ class _VerifySheetState extends State<_VerifySheet> {
           constraints: BoxConstraints(
             maxHeight: MediaQuery.sizeOf(context).height * 0.86,
           ),
-          child: Material(
+          child: VitSheetSurface(
             color: AppColors.surface,
             borderRadius: AppRadii.cardLargeRadius,
-            child: Padding(
-              padding: AppSpacing.earnPaddingX5,
-              child: SingleChildScrollView(
-                child: _proof == null ? _form(context) : _proofView(context),
-              ),
+            padding: AppSpacing.earnPaddingX5,
+            child: SingleChildScrollView(
+              child: _proof == null ? _form(context) : _proofView(context),
             ),
           ),
         ),
@@ -304,13 +298,11 @@ class _VerifySheetState extends State<_VerifySheet> {
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
         const SizedBox(height: AppSpacing.x4),
-        SizedBox(
-          height: AppSpacing.ctaHeight,
-          child: FilledButton(
-            key: StakingProofOfReservesPage.verifySubmitKey,
-            onPressed: _verify,
-            child: const Text('Verify Inclusion'),
-          ),
+        VitCtaButton(
+          key: StakingProofOfReservesPage.verifySubmitKey,
+          onPressed: _verify,
+          leading: const Icon(Icons.verified_outlined),
+          child: const Text('Verify Inclusion'),
         ),
       ],
     );
@@ -377,12 +369,10 @@ class _VerifySheetState extends State<_VerifySheet> {
           ),
         ),
         const SizedBox(height: AppSpacing.x4),
-        SizedBox(
-          height: AppSpacing.ctaHeight,
-          child: OutlinedButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
-          ),
+        VitCtaButton(
+          variant: VitCtaButtonVariant.ghost,
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Close'),
         ),
       ],
     );

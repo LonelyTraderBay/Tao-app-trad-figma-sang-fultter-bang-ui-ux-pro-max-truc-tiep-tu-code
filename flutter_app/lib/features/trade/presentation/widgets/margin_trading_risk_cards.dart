@@ -31,11 +31,11 @@ class _RiskWarningCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletAssetChartBottomGap),
+                const SizedBox(height: AppSpacing.x3),
                 for (final item in warning.items) ...[
                   _Bullet(text: item, color: _marginAmber),
                   if (item != warning.items.last)
-                    const SizedBox(height: AppSpacing.transferCardGap),
+                    const SizedBox(height: AppSpacing.x2),
                 ],
               ],
             ),
@@ -81,7 +81,7 @@ class _NegativeBalanceCard extends StatelessWidget {
                   disclosure.body,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.transferCardGap),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   disclosure.footer,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -153,7 +153,7 @@ class _BestExecutionCard extends StatelessWidget {
                   if (item != disclosure.items.last)
                     const SizedBox(height: AppSpacing.x2),
                 ],
-                const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+                const SizedBox(height: AppSpacing.x3),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: VitStatusPill(

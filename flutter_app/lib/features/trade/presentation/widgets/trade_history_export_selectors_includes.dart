@@ -24,8 +24,7 @@ class _FormatSelector extends StatelessWidget {
               onTap: () => onChanged(formats[i].id),
             ),
           ),
-          if (i < formats.length - 1)
-            const SizedBox(width: AppSpacing.tradeToolCardGap),
+          if (i < formats.length - 1) const SizedBox(width: AppSpacing.x2),
         ],
       ],
     );
@@ -53,16 +52,16 @@ class _FormatCard extends StatelessWidget {
 
     return VitCard(
       onTap: onTap,
-      height: AppSpacing.tradeToolFormatHeight,
-      padding: AppSpacing.tradeToolFormatPadding,
+      height: _exportFormatExtent,
+      padding: VitDensity.compact.cardPadding,
       borderColor: active
           ? _tradePrimary.withValues(alpha: .7)
           : AppColors.cardBorder,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: color, size: AppSpacing.tradeToolFormatIcon),
-          const SizedBox(height: AppSpacing.tradeToolInlineGap),
+          Icon(icon, color: color, size: AppSpacing.iconMd),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             format.label,
             style: AppTextStyles.body.copyWith(
@@ -70,7 +69,7 @@ class _FormatCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeToolInlineGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             format.description,
             maxLines: 1,
@@ -97,8 +96,8 @@ class _PeriodSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.tradeToolIconGap,
-      runSpacing: AppSpacing.tradeToolIconGap,
+      spacing: AppSpacing.x2,
+      runSpacing: AppSpacing.x2,
       children: [
         for (final period in periods)
           _PeriodChip(
@@ -129,8 +128,8 @@ class _PeriodChip extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
-      height: AppSpacing.tradeHistoryFilterHeight,
-      padding: AppSpacing.tradeBotChipPadding,
+      height: VitDensity.compact.controlHeight,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
       borderColor: active
           ? _tradePrimary.withValues(alpha: .8)
           : AppColors.cardBorder,
@@ -157,7 +156,10 @@ class _IncludeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeToolIncludeListPadding,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x1,
+      ),
       child: Column(
         children: [
           for (var i = 0; i < includes.length; i++) ...[
@@ -176,11 +178,7 @@ class _IncludeList extends StatelessWidget {
 }
 
 class _IncludeRow extends StatelessWidget {
-  const _IncludeRow({
-    super.key,
-    required this.include,
-    required this.onTap,
-  });
+  const _IncludeRow({super.key, required this.include, required this.onTap});
 
   final TradeExportInclude include;
   final VoidCallback onTap;
@@ -190,7 +188,7 @@ class _IncludeRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: SizedBox(
-        height: AppSpacing.tradeToolIncludeRowHeight,
+        height: VitDensity.compact.controlHeight,
         child: Row(
           children: [
             Expanded(

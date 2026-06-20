@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCopySafetyCenter(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,33 @@ void main() {
     expect(find.text('Basic'), findsOneWidget);
     expect(find.text('Verified'), findsOneWidget);
     expect(find.text('Pro'), findsOneWidget);
+  });
+
+  testWidgets('SC-083 first viewport reaches safety tabs', (tester) async {
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.tradeCopySafetyCenter,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-083 CopySafetyCenterPage',
+      semanticLabel: 'SC-083 CopySafetyCenterPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(CopySafetyCenterPage.tabKey('verification')),
+      targetLabel: 'the safety tabs',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-083 metrics tab expands trust metric details', (

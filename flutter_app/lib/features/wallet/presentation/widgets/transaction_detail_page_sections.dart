@@ -21,14 +21,14 @@ class _TransactionDetailContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SummaryCard(tx: tx, type: type, status: status),
-        const SizedBox(height: AppSpacing.walletTransactionSummaryTopGap),
+        const SizedBox(height: _detailGap),
         _ProgressCard(tx: tx),
-        const SizedBox(height: AppSpacing.walletTransactionSummaryTopGap),
+        const SizedBox(height: _detailGap),
         _DetailsCard(rows: details, onCopy: onCopy),
-        const SizedBox(height: AppSpacing.walletTransactionProgressBottomGap),
+        const SizedBox(height: _detailGap),
         if (tx.txHash != null) ...[
           const _ExplorerButton(),
-          const SizedBox(height: AppSpacing.walletTransactionDetailsBottomPad),
+          const SizedBox(height: _detailGap),
         ],
         _SupportButton(onTap: onSupport),
       ],
@@ -50,14 +50,14 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _VitCardSurface(
-      padding: AppSpacing.walletTransactionSummaryPadding,
+      padding: _detailCardPadding,
       child: Column(
         children: [
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            width: AppSpacing.walletTransactionSummaryIconSize,
-            height: AppSpacing.walletTransactionSummaryIconSize,
+            width: _detailIconBox,
+            height: _detailIconBox,
             alignment: Alignment.center,
             borderColor: type.color.withValues(alpha: .22),
             child: Icon(
@@ -66,14 +66,12 @@ class _SummaryCard extends StatelessWidget {
               size: AppSpacing.walletTransactionSummaryStatusIcon,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletTransactionSummaryTopGap),
+          const SizedBox(height: _detailGap),
           Text(
             type.label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(
-            height: AppSpacing.walletTransactionSummarySectionVPad,
-          ),
+          const SizedBox(height: _detailTinyGap),
           Text(
             '${type.isDebit ? '-' : '+'}${_formatAmount(tx)} ${tx.asset}',
             textAlign: TextAlign.center,
@@ -83,14 +81,12 @@ class _SummaryCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(
-            height: AppSpacing.walletTransactionSummarySectionVPad,
-          ),
+          const SizedBox(height: _detailTinyGap),
           VitStatusPill(
             label: status.label,
             icon: status.icon,
             status: _detailPillStatus(tx.status),
-            size: VitStatusPillSize.lg,
+            size: VitStatusPillSize.md,
           ),
         ],
       ),
@@ -125,7 +121,7 @@ class _ProgressCard extends StatelessWidget {
     ];
 
     return _VitCardSurface(
-      padding: AppSpacing.walletTransactionProgressCardPadding,
+      padding: _detailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -133,7 +129,7 @@ class _ProgressCard extends StatelessWidget {
             'Tiến trình',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: AppSpacing.walletTransactionStepSpacing),
+          const SizedBox(height: _detailGap),
           for (var i = 0; i < steps.length; i++)
             _ProgressRow(step: steps[i], isLast: i == steps.length - 1),
         ],
@@ -163,20 +159,17 @@ class _ProgressRow extends StatelessWidget {
             ClipRRect(
               borderRadius: AppRadii.pillRadius,
               child: SizedBox(
-                width: AppSpacing.walletTransactionProgressDotSize,
-                height: AppSpacing.walletTransactionProgressDotSize,
+                width: _detailProgressDot,
+                height: _detailProgressDot,
                 child: ColoredBox(color: color),
               ),
             ),
             if (!isLast)
               Padding(
-                padding: AppSpacing.zeroInsets.copyWith(
-                  top: AppSpacing.walletTransactionProgressLineSpacing,
-                  bottom: AppSpacing.walletTransactionProgressLineSpacing,
-                ),
+                padding: _detailLinePadding,
                 child: SizedBox(
-                  width: AppSpacing.walletTransactionProgressLineWidth,
-                  height: AppSpacing.walletTransactionStepLineHeight,
+                  width: _detailProgressLineWidth,
+                  height: _detailProgressLineHeight,
                   child: ColoredBox(
                     color: step.done ? _detailGreen : AppColors.borderSolid,
                   ),
@@ -184,10 +177,10 @@ class _ProgressRow extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(width: AppSpacing.walletTransactionSummarySectionVPad),
+        const SizedBox(width: _detailInlineGap),
         Padding(
           padding: AppSpacing.zeroInsets.copyWith(
-            bottom: isLast ? 0 : AppSpacing.walletTransactionSummarySectionVPad,
+            bottom: isLast ? 0 : _detailGap,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,9 +195,7 @@ class _ProgressRow extends StatelessWidget {
                 ),
               ),
               if (step.time != null) ...[
-                const SizedBox(
-                  height: AppSpacing.walletTransactionProgressVerticalGap,
-                ),
+                const SizedBox(height: _detailTinyGap),
                 Text(
                   step.time!,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -232,7 +223,7 @@ class _DetailsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: AppSpacing.walletTransactionSummaryHeaderPadding,
+            padding: _detailHeaderPadding,
             child: Text(
               'Thông tin chi tiết',
               style: AppTextStyles.body.copyWith(
@@ -265,11 +256,9 @@ class _DetailInfoRow extends StatelessWidget {
           color: AppColors.divider,
         ),
         ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.walletTransactionInfoRowMinHeight,
-          ),
+          constraints: const BoxConstraints(minHeight: _detailInfoRowMinHeight),
           child: Padding(
-            padding: AppSpacing.walletTransactionDetailRowPadding,
+            padding: _detailRowPadding,
             child: Row(
               children: [
                 Expanded(
@@ -280,7 +269,7 @@ class _DetailInfoRow extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.walletHistoryFilterGap),
+                const SizedBox(width: _detailInlineGap),
                 Flexible(
                   child: Text(
                     row.value,
@@ -295,7 +284,7 @@ class _DetailInfoRow extends StatelessWidget {
                   ),
                 ),
                 if (row.copyable) ...[
-                  const SizedBox(width: AppSpacing.walletHistoryEndListGap),
+                  const SizedBox(width: _detailTinyGap),
                   VitIconButton(
                     key: TransactionDetailPage.copyTxIdKey,
                     icon: Icons.copy_rounded,
@@ -320,7 +309,7 @@ class _ExplorerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: TransactionDetailPage.explorerKey,
-      height: AppSpacing.walletTransactionExplorerHeight,
+      height: _detailExplorerHeight,
       alignment: Alignment.center,
       variant: VitCardVariant.inner,
       borderColor: _detailPrimary.withValues(alpha: .28),
@@ -332,7 +321,7 @@ class _ExplorerButton extends StatelessWidget {
             color: _detailPrimary,
             size: AppSpacing.walletTransactionActionIcon,
           ),
-          const SizedBox(width: AppSpacing.rowGapCompact),
+          const SizedBox(width: _detailTinyGap),
           Text(
             'Xem trên Explorer',
             style: AppTextStyles.caption.copyWith(

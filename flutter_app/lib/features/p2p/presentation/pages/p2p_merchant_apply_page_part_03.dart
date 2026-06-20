@@ -8,14 +8,10 @@ class _StepIntro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      density: VitDensity.compact,
       children: [
-        Text(
-          title,
-          style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
-        ),
-        const SizedBox(height: AppSpacing.x2),
+        VitModuleSectionHeader(title: title, accentColor: AppModuleAccents.p2p),
         Text(
           subtitle,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -102,9 +98,7 @@ class _MultilineInput extends StatelessWidget {
             ),
           ),
           child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: AppSpacing.buttonHero,
-            ),
+            constraints: const BoxConstraints(minHeight: AppSpacing.buttonHero),
             child: Padding(
               padding: AppSpacing.p2pMerchantApplyInputPadding,
               child: TextField(
@@ -142,7 +136,7 @@ class _AgreementCard extends StatelessWidget {
       key: P2PMerchantApplyPage.agreementKey,
       variant: VitCardVariant.inner,
       borderColor: accepted ? AppColors.buy20 : AppColors.borderSolid,
-      padding: AppSpacing.p2pMerchantApplyCardPadding,
+      padding: VitDensity.compact.cardPadding,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +170,7 @@ class _AgreementCard extends StatelessWidget {
               'Tôi xác nhận thông tin là chính xác, đồng ý với Điều khoản Merchant và Chính sách P2P của VitTrade. Tôi hiểu rằng vi phạm có thể dẫn đến thu hồi tư cách Merchant.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.p2pMerchantApplyReadableLineHeight,
+                height: _p2pMerchantApplyReadableLineHeight,
               ),
             ),
           ),
@@ -206,7 +200,7 @@ class _InfoBanner extends StatelessWidget {
         side: BorderSide(color: color.withValues(alpha: .22)),
       ),
       child: Padding(
-        padding: AppSpacing.p2pMerchantApplyInfoPadding,
+        padding: VitDensity.compact.cardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -217,7 +211,7 @@ class _InfoBanner extends StatelessWidget {
                 text,
                 style: AppTextStyles.micro.copyWith(
                   color: color,
-                  height: AppSpacing.p2pMerchantApplyReadableLineHeight,
+                  height: _p2pMerchantApplyReadableLineHeight,
                   fontWeight: AppTextStyles.medium,
                 ),
               ),

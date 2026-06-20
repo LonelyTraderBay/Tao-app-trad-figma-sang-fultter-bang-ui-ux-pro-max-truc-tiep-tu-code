@@ -34,7 +34,7 @@ class _ArticleSheet extends StatelessWidget {
                   padding: AppSpacing.newsSheetHandleMargin,
                   child: SizedBox(
                     width: AppSpacing.newsSheetHandleWidth,
-                    height: AppSpacing.newsSheetHandleHeight,
+                    height: _newsSheetHandleHeight,
                     child: DecoratedBox(
                       decoration: const ShapeDecoration(
                         color: AppColors.borderSolid,
@@ -69,18 +69,18 @@ class _ArticleSheet extends StatelessWidget {
                                   style: AppTextStyles.captionSm.copyWith(
                                     color: type.color,
                                     fontWeight: AppTextStyles.bold,
-                                    height: AppSpacing.newsLineHeightTight,
+                                    height: _newsTightLineHeight,
                                   ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.newsFeedGap),
+                        const SizedBox(height: AppSpacing.x2),
                         Text(
                           article.title,
                           style: AppTextStyles.sectionTitle.copyWith(
-                            height: AppSpacing.newsSheetTitleLineHeight,
+                            height: _newsSheetTitleLineHeight,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x3),
@@ -100,10 +100,10 @@ class _ArticleSheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.sectionGapCompact),
+                        const SizedBox(height: AppSpacing.x3),
                         VitCard(
                           width: double.infinity,
-                          padding: AppSpacing.newsSheetSummaryPadding,
+                          density: VitDensity.compact,
                           variant: VitCardVariant.inner,
                           borderColor: _newsPrimary.withValues(alpha: .12),
                           child: Text(
@@ -111,15 +111,15 @@ class _ArticleSheet extends StatelessWidget {
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.text2,
                               fontStyle: FontStyle.italic,
-                              height: AppSpacing.newsSheetSummaryLineHeight,
+                              height: _newsSheetSummaryLineHeight,
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.sectionGapCompact),
+                        const SizedBox(height: AppSpacing.x3),
                         Text(
                           article.content,
                           style: AppTextStyles.body.copyWith(
-                            height: AppSpacing.newsSheetBodyLineHeight,
+                            height: _newsSheetBodyLineHeight,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.newsSectionBreak),
@@ -131,10 +131,10 @@ class _ArticleSheet extends StatelessWidget {
                               _TagChip(label: tag),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.sectionGap),
+                        const SizedBox(height: AppSpacing.x4),
                         VitCtaButton(
                           key: NewsPage.closeSheetKey,
-                          height: AppSpacing.inputHeight,
+                          height: VitDensity.compact.controlHeight,
                           onPressed: () => Navigator.of(context).pop(),
                           child: Text(
                             'Đóng',

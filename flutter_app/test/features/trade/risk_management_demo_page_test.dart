@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskManagement(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -90,6 +92,35 @@ void main() {
     expect(find.text('Position Sizing Calculator'), findsWidgets);
     expect(find.text('Lợi ích chính'), findsOneWidget);
     expect(find.text('Implementation Status'), findsOneWidget);
+  });
+
+  testWidgets('SC-060 first viewport reaches first risk feature', (
+    tester,
+  ) async {
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.tradeRiskManagement,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-060 RiskManagementDemoPage',
+      semanticLabel: 'SC-060 RiskManagementDemoPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(RiskManagementDemoPage.featureKey('oco')),
+      targetLabel: 'the OCO risk feature card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-060 tab switching shows positions and calculator', (

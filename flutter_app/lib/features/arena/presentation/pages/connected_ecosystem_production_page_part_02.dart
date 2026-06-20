@@ -11,7 +11,7 @@ class _FlowCard extends StatelessWidget {
     final color = _toneColor(flow.tone);
     return VitCard(
       borderColor: color.withValues(alpha: .22),
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +41,7 @@ class _FlowCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           for (var i = 0; i < flow.steps.length; i++)
             _FlowStepRow(
               flowId: flow.id,
@@ -117,7 +117,7 @@ class _FlowStepRow extends StatelessWidget {
             if (!isLast)
               SizedBox(
                 width: AppSpacing.arenaEcosystemFlowLineWidth,
-                height: AppSpacing.arenaEcosystemFlowLineHeight,
+                height: _ecosystemFlowConnectorHeight,
                 child: ColoredBox(
                   color: (step.isBridge ? color : AppColors.borderSolid)
                       .withValues(alpha: .35),
@@ -158,15 +158,26 @@ class _FlowStepRow extends StatelessWidget {
                   step.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaEcosystemCheckLineHeight,
+                    height: _ecosystemCheckLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
-                _SmallTextAction(
-                  label: step.route,
-                  icon: Icons.chevron_right_rounded,
-                  color: color,
-                  onTap: () => onRoute(step.route),
+                VitCtaButton(
+                  fullWidth: false,
+                  height: VitDensity.compact.controlHeight,
+                  variant: VitCtaButtonVariant.ghost,
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.x2,
+                  ),
+                  leading: Icon(Icons.chevron_right_rounded, color: color),
+                  onPressed: () => onRoute(step.route),
+                  child: Text(
+                    step.route,
+                    style: AppTextStyles.micro.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -190,46 +201,39 @@ class _RegistrySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Shared vs Separate Registry',
+      accentColor: AppModuleAccents.predictions,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'Shared vs Separate Registry',
-          accentColor: AppModuleAccents.predictions,
-        ),
-        const SizedBox(height: AppSpacing.x2),
         Text(
           'Ranh giới rõ ràng: items nào được share, items nào phải tách biệt.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaEcosystemIntroLineHeight,
+            height: _ecosystemIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
         _RegistryBoard(
           title: 'Shared (Connect by Content)',
           items: sharedItems,
           color: AppColors.buy,
           icon: Icons.link_rounded,
         ),
-        const SizedBox(height: AppSpacing.x4),
         _RegistryBoard(
           title: 'Separate (Never Merge)',
           items: separateItems,
           color: AppColors.sell,
           icon: Icons.shield_outlined,
         ),
-        const SizedBox(height: AppSpacing.x5),
-        const VitModuleSectionHeader(
-          title: 'Forbidden UX Patterns',
+        VitPageSection(
+          label: 'Forbidden UX Patterns',
           accentColor: AppColors.sell,
+          density: VitDensity.compact,
+          children: [
+            for (final pattern in forbiddenPatterns)
+              _ForbiddenPatternCard(pattern: pattern),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x3),
-        for (final pattern in forbiddenPatterns) ...[
-          _ForbiddenPatternCard(pattern: pattern),
-          if (pattern != forbiddenPatterns.last)
-            const SizedBox(height: AppSpacing.x3),
-        ],
       ],
     );
   }
@@ -252,7 +256,7 @@ class _RegistryBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: color.withValues(alpha: .22),
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -271,10 +275,10 @@ class _RegistryBoard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           for (final item in items) ...[
             _RegistryItemRow(item: item, color: color),
-            if (item != items.last) const SizedBox(height: AppSpacing.x3),
+            if (item != items.last) const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -315,7 +319,7 @@ class _RegistryItemRow extends StatelessWidget {
                 item.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.arenaEcosystemCheckLineHeight,
+                  height: _ecosystemCheckLineHeight,
                 ),
               ),
             ],
@@ -337,7 +341,7 @@ class _ForbiddenPatternCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .20),
-      padding: AppSpacing.arenaPaddingX3,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -373,7 +377,7 @@ class _ForbiddenPatternCard extends StatelessWidget {
                   pattern.reason,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.arenaEcosystemCheckLineHeight,
+                    height: _ecosystemCheckLineHeight,
                   ),
                 ),
               ],
@@ -398,14 +402,11 @@ class _HandoffSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Dev / QA Handoff Pack',
+      accentColor: AppColors.primary,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'Dev / QA Handoff Pack',
-          accentColor: AppColors.primary,
-        ),
-        const SizedBox(height: AppSpacing.x3),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -423,7 +424,6 @@ class _HandoffSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
         if (activeBoard == 'routes')
           _RouteRegistry(routes: snapshot.routeRegistry)
         else if (activeBoard == 'components')
@@ -450,51 +450,14 @@ class _BoardChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        key: ConnectedEcosystemProductionPage.handoffKey(board.id),
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: SizedBox(
-          height: AppSpacing.arenaEcosystemBoardChipHeight,
-          child: Material(
-            color: active
-                ? AppColors.primary.withValues(alpha: .14)
-                : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.mdRadius,
-              side: BorderSide(
-                color: active
-                    ? AppColors.primary.withValues(alpha: .45)
-                    : AppColors.cardBorder,
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.arenaPresetChipPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    board.icon,
-                    color: active ? AppColors.primary : AppColors.text2,
-                    size: AppSpacing.arenaEcosystemSmallIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    board.label,
-                    style: AppTextStyles.micro.copyWith(
-                      color: active ? AppColors.primary : AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitStatusPill(
+      key: ConnectedEcosystemProductionPage.handoffKey(board.id),
+      label: board.label,
+      icon: board.icon,
+      status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
+      size: VitStatusPillSize.md,
+      outline: !active,
+      onTap: onTap,
     );
   }
 }

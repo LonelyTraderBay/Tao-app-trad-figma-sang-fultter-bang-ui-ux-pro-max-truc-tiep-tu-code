@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpClientMoneyProtection(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -72,6 +74,27 @@ void main() {
     expect(find.text('\$45,230.50'), findsOneWidget);
     expect(find.text('Segregated Bank Accounts'), findsOneWidget);
     expect(find.text('In Case of Insolvency'), findsOneWidget);
+  });
+
+  testWidgets('SC-102 first viewport reaches protection overview', (
+    tester,
+  ) async {
+    await pumpClientMoneyProtection(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ClientMoneyProtectionPage',
+      semanticLabel: 'SC-102 ClientMoneyProtectionPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ClientMoneyProtectionPage.overviewSectionKey),
+      minVisibleHeight: 24,
+      targetLabel: 'client money protection overview',
+      reason:
+          'Client money protection must show the segregation/protection '
+          'overview above bottom navigation after the balance summary.',
+    );
   });
 
   testWidgets('SC-102 reconciliation edge opens SC-103', (tester) async {

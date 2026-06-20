@@ -31,6 +31,9 @@ class LaunchpadBridgeComparePage extends ConsumerStatefulWidget {
   static const sortKeyPrefix = 'sc305_launchpad_bridge_compare_sort_';
   static const footerKey = Key('sc305_launchpad_bridge_compare_footer');
   static const confirmKey = Key('sc305_launchpad_bridge_compare_confirm');
+  static const confirmStateKey = Key(
+    'sc305_launchpad_bridge_compare_confirm_state',
+  );
   static const riskKey = Key('sc305_launchpad_bridge_compare_risk');
 
   static Key sortKey(String value) => Key('$sortKeyPrefix$value');

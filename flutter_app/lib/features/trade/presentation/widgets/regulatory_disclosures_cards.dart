@@ -20,7 +20,7 @@ class _DisclosureCard extends StatelessWidget {
     final accent = color ?? AppColors.text1;
     return VitCard(
       width: double.infinity,
-      padding: AppSpacing.cardPaddingCompact,
+      density: VitDensity.compact,
       variant: tint == null ? VitCardVariant.standard : VitCardVariant.inner,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +30,7 @@ class _DisclosureCard extends StatelessWidget {
             children: [
               if (icon != null) ...[
                 Icon(icon, color: accent, size: AppSpacing.tradeBotSmallIcon),
-                const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+                const SizedBox(width: AppSpacing.x2),
               ],
               Expanded(
                 child: Text(
@@ -38,30 +38,27 @@ class _DisclosureCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: accent,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightShort,
                   ),
                 ),
               ),
             ],
           ),
           if (block.body.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.tradeBotLabelGap),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               block.body,
               style: AppTextStyles.micro.copyWith(
                 color: color ?? AppColors.text3,
-                height: AppSpacing.tradeBotLineHeightReadable,
               ),
             ),
           ],
           if (block.items.isNotEmpty) ...[
-            if (block.body.isNotEmpty)
-              const SizedBox(height: AppSpacing.tradeBotSmallGap),
+            if (block.body.isNotEmpty) const SizedBox(height: AppSpacing.x1),
             for (var index = 0; index < block.items.length; index++) ...[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(width: AppSpacing.tradeBotCardGap),
+                  const SizedBox(width: AppSpacing.x2),
                   Expanded(
                     child: Text(
                       numbered || block.items[index].startsWith(RegExp(r'\d\.'))
@@ -69,7 +66,6 @@ class _DisclosureCard extends StatelessWidget {
                           : '* ${block.items[index]}',
                       style: AppTextStyles.micro.copyWith(
                         color: color ?? AppColors.text3,
-                        height: AppSpacing.tradeBotLineHeightLoose,
                       ),
                     ),
                   ),
@@ -94,7 +90,7 @@ class _CommitmentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      density: VitDensity.compact,
       borderColor: _legalPrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,14 +100,13 @@ class _CommitmentCard extends StatelessWidget {
             color: _legalPrimary,
             size: AppSpacing.tradeBotSmallIcon,
           ),
-          const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _legalPrimary,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.tradeBotLineHeightReadable,
               ),
             ),
           ),
@@ -131,7 +126,7 @@ class _WarningList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.cardPaddingCompact,
+      density: VitDensity.compact,
       borderColor: AppColors.warningBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,7 +138,7 @@ class _WarningList extends StatelessWidget {
                 color: _legalAmber,
                 size: AppSpacing.tradeBotSmallIcon,
               ),
-              const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+              const SizedBox(width: AppSpacing.x2),
               Text(
                 title,
                 style: AppTextStyles.micro.copyWith(
@@ -153,19 +148,16 @@ class _WarningList extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           for (final item in items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(width: AppSpacing.tradeBotCardGap),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
                     '* $item',
-                    style: AppTextStyles.micro.copyWith(
-                      color: _legalAmber,
-                      height: AppSpacing.tradeBotLineHeightMedium,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: _legalAmber),
                   ),
                 ),
               ],
@@ -186,7 +178,7 @@ class _LeverageRules extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.cardPaddingCompact,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -195,28 +187,20 @@ class _LeverageRules extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightCaption,
             ),
           ),
-          const SizedBox(height: AppSpacing.rowGapRegular),
+          const SizedBox(height: AppSpacing.x2),
           for (final rule in rules) ...[
             Text(
               rule.title,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.tradeBotLineHeightCaption,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
             const SizedBox(height: AppSpacing.x1),
             Text(
               rule.body,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: AppSpacing.tradeBotLineHeightBody,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            if (rule != rules.last)
-              const SizedBox(height: AppSpacing.tradeBotRowGap),
+            if (rule != rules.last) const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),

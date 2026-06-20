@@ -95,8 +95,7 @@ class _ConfirmTransferView extends StatelessWidget {
             Expanded(
               child: _ConfirmButton(
                 label: 'Quay lại',
-                background: AppColors.surface2,
-                color: AppColors.text1,
+                variant: VitCtaButtonVariant.secondary,
                 onTap: onEdit,
               ),
             ),
@@ -105,8 +104,7 @@ class _ConfirmTransferView extends StatelessWidget {
               child: _ConfirmButton(
                 buttonKey: P2PWalletTransferPage.confirmKey,
                 label: 'Xác nhận',
-                background: AppModuleAccents.p2p,
-                color: AppColors.onAccent,
+                variant: VitCtaButtonVariant.primary,
                 onTap: onConfirm,
               ),
             ),
@@ -139,17 +137,26 @@ class _ConfirmRow extends StatelessWidget {
           Expanded(
             child: Text(
               label,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
           ),
-          Text(
-            value,
-            style: (large ? AppTextStyles.sectionTitle : AppTextStyles.caption)
-                .copyWith(
-                  color: valueColor ?? AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
+          Flexible(
+            flex: large ? 2 : 1,
+            child: Text(
+              value,
+              maxLines: large ? 2 : 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.end,
+              style:
+                  (large ? AppTextStyles.sectionTitle : AppTextStyles.caption)
+                      .copyWith(
+                        color: valueColor ?? AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+            ),
           ),
         ],
       ),
@@ -161,39 +168,23 @@ class _ConfirmButton extends StatelessWidget {
   const _ConfirmButton({
     this.buttonKey,
     required this.label,
-    required this.background,
-    required this.color,
+    required this.variant,
     required this.onTap,
   });
 
   final Key? buttonKey;
   final String label;
-  final Color background;
-  final Color color;
+  final VitCtaButtonVariant variant;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitCtaButton(
       key: buttonKey,
-      color: background,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.lgRadius,
-        child: SizedBox(
-          height: AppSpacing.inputHeight,
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.baseMedium.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
+      onPressed: onTap,
+      height: AppSpacing.inputHeight,
+      variant: variant,
+      child: Text(label),
     );
   }
 }

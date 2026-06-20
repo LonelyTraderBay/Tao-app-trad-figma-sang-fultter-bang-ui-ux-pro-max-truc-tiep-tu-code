@@ -234,7 +234,7 @@ void _paintText(
       text: text,
       style: style.copyWith(
         fontWeight: AppTextStyles.medium,
-        height: AppSpacing.tradeBotLineHeightTight,
+        height: _analyticsPainterLineHeight,
         decoration: TextDecoration.none,
       ),
     ),

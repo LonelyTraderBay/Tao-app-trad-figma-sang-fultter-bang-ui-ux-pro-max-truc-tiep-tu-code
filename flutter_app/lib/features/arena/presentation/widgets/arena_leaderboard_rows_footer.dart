@@ -19,12 +19,12 @@ class _LeaderboardRow extends StatelessWidget {
           : ArenaLeaderboardPage.creatorRowKey,
       onTap: onTap,
       child: Padding(
-        padding: AppSpacing.arenaLeaderboardRowPadding,
+        padding: _leaderboardRowPadding,
         child: Row(
           children: [
             if (!rising) ...[
               SizedBox(
-                width: AppSpacing.arenaLeaderboardRowRankWidth,
+                width: _leaderboardRowRankWidth,
                 child: Text(
                   '${entry.rank}',
                   textAlign: TextAlign.center,
@@ -38,8 +38,8 @@ class _LeaderboardRow extends StatelessWidget {
               const SizedBox(width: AppSpacing.x3),
             ],
             SizedBox(
-              width: AppSpacing.arenaLeaderboardRowAvatar,
-              height: AppSpacing.arenaLeaderboardRowAvatar,
+              width: _leaderboardRowAvatar,
+              height: _leaderboardRowAvatar,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: (rising ? AppColors.warn : AppColors.accent)
@@ -52,7 +52,7 @@ class _LeaderboardRow extends StatelessWidget {
                   child: Icon(
                     _leaderboardIcon(entry.icon),
                     color: rising ? AppColors.warn : AppColors.accent,
-                    size: AppSpacing.arenaLeaderboardRowIcon,
+                    size: _leaderboardRowIcon,
                   ),
                 ),
               ),
@@ -78,7 +78,7 @@ class _LeaderboardRow extends StatelessWidget {
                           const Icon(
                             Icons.shield_outlined,
                             color: AppColors.buy,
-                            size: AppSpacing.arenaLeaderboardFairPlayIcon,
+                            size: _leaderboardFairPlayIcon,
                           ),
                           const SizedBox(width: AppSpacing.x1),
                         ],
@@ -106,7 +106,7 @@ class _LeaderboardRow extends StatelessWidget {
                   const Icon(
                     Icons.local_fire_department_outlined,
                     color: AppColors.warn,
-                    size: AppSpacing.arenaLeaderboardRisingIcon,
+                    size: _leaderboardRisingIcon,
                   ),
                   const SizedBox(width: AppSpacing.x1),
                   Text(
@@ -142,7 +142,7 @@ class _CompactLeaderboardState extends StatelessWidget {
   Widget build(BuildContext context) {
     final label = activeTab == _LeaderboardTab.players ? 'Players' : 'Teams';
     return VitCard(
-      padding: AppSpacing.arenaLeaderboardCompactStatePadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Icon(
@@ -150,7 +150,7 @@ class _CompactLeaderboardState extends StatelessWidget {
                 ? Icons.groups_rounded
                 : Icons.diversity_3_rounded,
             color: AppColors.text3,
-            size: AppSpacing.arenaLeaderboardCompactIcon,
+            size: _leaderboardCompactIcon,
           ),
           const SizedBox(height: AppSpacing.x3),
           Text(
@@ -186,14 +186,14 @@ class _ArenaFooter extends StatelessWidget {
             onTap: onRules,
             borderRadius: AppRadii.smRadius,
             child: Padding(
-              padding: AppSpacing.arenaLeaderboardFooterActionPadding,
+              padding: _leaderboardFooterActionPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(
                     Icons.menu_book_outlined,
                     color: AppColors.primary,
-                    size: AppSpacing.arenaLeaderboardFooterIcon,
+                    size: _leaderboardFooterIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Text(
@@ -201,7 +201,7 @@ class _ArenaFooter extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.primary,
                       fontWeight: AppTextStyles.medium,
-                      height: AppSpacing.arenaLeaderboardLineHeight,
+                      height: _leaderboardLineHeight,
                     ),
                   ),
                 ],
@@ -211,14 +211,14 @@ class _ArenaFooter extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: AppSpacing.arenaLeaderboardFooterCardPadding,
+          density: VitDensity.compact,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.accent,
-                size: AppSpacing.arenaLeaderboardFooterShieldIcon,
+                size: _leaderboardFooterShieldIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -226,7 +226,7 @@ class _ArenaFooter extends StatelessWidget {
                   disclaimer,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaLeaderboardFooterLineHeight,
+                    height: _leaderboardFooterLineHeight,
                   ),
                 ),
               ),

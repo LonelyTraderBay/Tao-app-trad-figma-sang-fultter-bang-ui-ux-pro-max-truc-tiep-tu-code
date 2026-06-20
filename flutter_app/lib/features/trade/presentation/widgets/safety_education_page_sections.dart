@@ -8,8 +8,7 @@ class _HeroBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotApiKeyCardMinHeight,
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
       borderColor: _safetyPrimary,
       child: Row(
         children: [
@@ -39,18 +38,14 @@ class _HeroBanner extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: _safetyPrimary,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   snapshot.heroDescription,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: _safetyPrimary,
-                    height: AppSpacing.tradeBotLineHeightReadable,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: _safetyPrimary),
                 ),
               ],
             ),
@@ -76,8 +71,7 @@ class _SafetyTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.tradeBotDisputeTabsHeight,
-      padding: AppSpacing.zeroInsets,
+      density: VitDensity.compact,
       child: VitTabBar(
         variant: VitTabBarVariant.segment,
         tabs: [
@@ -108,26 +102,21 @@ class _ScamsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         Text(
           '${scams.length} loại scam phổ biến trong copy trading. Tap để xem chi tiết.',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            height: AppSpacing.tradeBotLineHeightLoose,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.tradeBotStatusGap),
-        for (final scam in scams) ...[
+        for (final scam in scams)
           _ScamCard(
             scam: scam,
             expanded: expandedId == scam.id,
             onTap: () => onToggle(scam.id),
           ),
-          if (scam != scams.last)
-            const SizedBox(height: AppSpacing.tradeBotStatusGap),
-        ],
       ],
     );
   }
@@ -148,15 +137,17 @@ class _ScamCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.cardBorder,
-      padding: AppSpacing.zeroInsets,
+      density: VitDensity.compact,
       child: Column(
         children: [
           VitCard(
             key: SafetyEducationPage.scamKey(scam.id),
             onTap: onTap,
             variant: VitCardVariant.ghost,
-            height: AppSpacing.tradeBotSecurityCardMinHeight,
-            padding: AppSpacing.tradeBotDisputeNoticePadding,
+            constraints: const BoxConstraints(
+              minHeight: AppSpacing.tradeBotControlTall,
+            ),
+            density: VitDensity.compact,
             child: Row(
               children: [
                 const Icon(
@@ -177,17 +168,15 @@ class _ScamCard extends StatelessWidget {
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotTinyGap),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         scam.description,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.tradeBotLineHeightCaption,
                         ),
                       ),
                     ],
@@ -231,7 +220,7 @@ class _ScamExpandedContent extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       width: double.infinity,
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -240,7 +229,7 @@ class _ScamExpandedContent extends StatelessWidget {
             items: examples,
             color: AppColors.text3,
           ),
-          const SizedBox(height: AppSpacing.tradeBotStatusGap),
+          const SizedBox(height: AppSpacing.x2),
           _ExpandedList(
             title: 'Cách tránh:',
             items: howToAvoid,
@@ -276,17 +265,13 @@ class _ExpandedList extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotSmallGap),
+        const SizedBox(height: AppSpacing.x1),
         for (final item in items) ...[
           Text(
             '$bullet $item',
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              height: AppSpacing.tradeBotLineHeightMedium,
-            ),
+            style: AppTextStyles.micro.copyWith(color: color),
           ),
           if (item != items.last) const SizedBox(height: AppSpacing.x1),
         ],
@@ -302,26 +287,21 @@ class _RedFlagsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         Text(
           'Checklist để đánh giá provider trước khi copy. Nếu có ≥2 red flags nghiêm trọng, KHÔNG nên copy.',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text2,
-            height: AppSpacing.tradeBotLineHeightLoose,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.tradeBotStatusGap),
-        for (final severity in ['critical', 'warning', 'caution']) ...[
+        for (final severity in ['critical', 'warning', 'caution'])
           _SeveritySection(
             title: _severityTitle(severity),
             color: _severityColor(severity),
             flags: flags.where((flag) => flag.severity == severity).toList(),
           ),
-          if (severity != 'caution')
-            const SizedBox(height: AppSpacing.tradeBotStatusGap),
-        ],
       ],
     );
   }

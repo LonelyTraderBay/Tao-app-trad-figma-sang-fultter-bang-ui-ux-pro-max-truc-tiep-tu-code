@@ -23,14 +23,14 @@ class LaunchpadDcaHistorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: sectionKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           VitCard(
             key: chartKey,
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.launchpadPaddingX4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -95,11 +95,11 @@ class _ExecutionBars extends StatelessWidget {
                           ? 0
                           : (execution.tokens / maxTokens).clamp(.2, 1),
                       alignment: Alignment.bottomCenter,
-                      child: Container(
-                        decoration: BoxDecoration(
+                      child: DecoratedBox(
+                        decoration: const ShapeDecoration(
                           color: AppColors.primary,
-                          borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(AppRadii.sm),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.smRadius,
                           ),
                         ),
                       ),
@@ -132,7 +132,7 @@ class _ExecutionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
           const Icon(Icons.check_circle_outline_rounded, color: AppColors.buy),

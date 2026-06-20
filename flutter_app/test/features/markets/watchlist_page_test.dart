@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpWatchlist(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,27 @@ void main() {
     expect(find.byKey(WatchlistPage.cardKey('ethusdt')), findsOneWidget);
     expect(find.byKey(WatchlistPage.cardKey('solusdt')), findsOneWidget);
     expect(find.text('Chờ mốc \$3800'), findsOneWidget);
+  });
+
+  testWidgets('SC-012 first viewport reaches first watchlist pair', (
+    tester,
+  ) async {
+    await pumpWatchlist(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'WatchlistPage',
+      semanticLabel: 'SC-012 WatchlistPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(WatchlistPage.cardKey('btcusdt')),
+      minVisibleHeight: 48,
+      targetLabel: 'first watchlist pair card',
+      reason:
+          'Watchlist should expose the first tracked pair above bottom '
+          'navigation after compact toolbar controls.',
+    );
   });
 
   testWidgets('SC-012 filters search and shows empty state', (tester) async {

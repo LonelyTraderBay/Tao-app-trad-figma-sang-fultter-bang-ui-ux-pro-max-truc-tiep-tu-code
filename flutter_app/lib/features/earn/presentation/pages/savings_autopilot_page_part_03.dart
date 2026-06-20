@@ -69,97 +69,95 @@ class _ActionDetailSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final typeColor = _actionTypeColor(action.type);
     return SafeArea(
-      child: Material(
+      top: false,
+      child: VitSheetSurface(
         color: AppColors.surface,
-        borderRadius: AppRadii.sheetTopLargeRadius,
-        child: Padding(
-          padding: AppSpacing.earnPaddingX5,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+        padding: AppSpacing.earnPaddingX5,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                _IconBadge(
+                  icon: _actionTypeIcon(action.type),
+                  color: typeColor,
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(action.title, style: _captionBold),
+                      Text(
+                        action.timestamp,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                _SmallPill(
+                  label: _actionStatusLabel(status),
+                  color: _actionStatusColor(status),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.x4),
+            Text(
+              action.description,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
+            const SizedBox(height: AppSpacing.x4),
+            VitCard(
+              variant: VitCardVariant.inner,
+              padding: AppSpacing.earnPaddingX3,
+              child: Column(
+                children: [
+                  for (final entry in action.details.entries)
+                    Padding(
+                      padding: AppSpacing.earnVerticalPaddingX1,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              entry.key,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                          ),
+                          Text(entry.value, style: _captionBold),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            if (onApprove != null && onSkip != null) ...[
+              const SizedBox(height: AppSpacing.x4),
               Row(
                 children: [
-                  _IconBadge(
-                    icon: _actionTypeIcon(action.type),
-                    color: typeColor,
+                  Expanded(
+                    child: VitCtaButton(
+                      onPressed: onSkip,
+                      variant: VitCtaButtonVariant.secondary,
+                      child: const Text('Bỏ qua'),
+                    ),
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(action.title, style: _captionBold),
-                        Text(
-                          action.timestamp,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ],
+                    child: VitCtaButton(
+                      onPressed: onApprove,
+                      variant: VitCtaButtonVariant.success,
+                      child: const Text('Phê duyệt'),
                     ),
-                  ),
-                  _SmallPill(
-                    label: _actionStatusLabel(status),
-                    color: _actionStatusColor(status),
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
-              Text(
-                action.description,
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
-              const SizedBox(height: AppSpacing.x4),
-              VitCard(
-                variant: VitCardVariant.inner,
-                padding: AppSpacing.earnPaddingX3,
-                child: Column(
-                  children: [
-                    for (final entry in action.details.entries)
-                      Padding(
-                        padding: AppSpacing.earnVerticalPaddingX1,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                entry.key,
-                                style: AppTextStyles.caption.copyWith(
-                                  color: AppColors.text3,
-                                ),
-                              ),
-                            ),
-                            Text(entry.value, style: _captionBold),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              if (onApprove != null && onSkip != null) ...[
-                const SizedBox(height: AppSpacing.x4),
-                Row(
-                  children: [
-                    Expanded(
-                      child: VitCtaButton(
-                        onPressed: onSkip,
-                        variant: VitCtaButtonVariant.secondary,
-                        child: const Text('Bỏ qua'),
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.x3),
-                    Expanded(
-                      child: VitCtaButton(
-                        onPressed: onApprove,
-                        variant: VitCtaButtonVariant.success,
-                        child: const Text('Phê duyệt'),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
             ],
-          ),
+          ],
         ),
       ),
     );
@@ -194,13 +192,11 @@ class _SmallPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .12),
-      borderRadius: AppRadii.xsRadius,
-      child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
-        child: Text(label, style: _microBold.copyWith(color: color)),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      size: VitStatusPillSize.sm,
+      semanticStatus: _accentSemanticStatus(color),
     );
   }
 }
@@ -219,21 +215,12 @@ class _ChoicePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: onTap,
-      style: OutlinedButton.styleFrom(
-        padding: AppSpacing.earnVerticalPaddingX2,
-        foregroundColor: selected ? AppColors.primary : AppColors.text2,
-        side: BorderSide(
-          color: selected ? AppColors.primary40 : AppColors.borderSolid,
-        ),
-        backgroundColor: selected ? AppColors.primary12 : AppColors.surface2,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-      ),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Text(label, style: _microBold),
-      ),
+    return VitStatusPill(
+      label: label,
+      status: selected ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
+      size: VitStatusPillSize.md,
+      outline: !selected,
+      onTap: onTap,
     );
   }
 }
@@ -245,25 +232,7 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: AppSpacing.savingsAutoPilotSectionMarkerWidth,
-          height: AppSpacing.savingsAutoPilotSectionMarkerHeight,
-          child: const Material(
-            color: AppColors.primary,
-            borderRadius: AppRadii.pillRadius,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            label,
-            style: _captionBold.copyWith(color: AppColors.text2),
-          ),
-        ),
-      ],
-    );
+    return VitModuleSectionHeader(title: label);
   }
 }
 
@@ -275,30 +244,21 @@ class _InfoCallout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = _toneColor(tone);
-    return VitCard(
-      variant: VitCardVariant.ghost,
-      borderColor: color.withValues(alpha: .18),
-      padding: AppSpacing.earnPaddingX3,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            Icons.info_outline_rounded,
-            color: color,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
-          ),
-        ],
-      ),
+    return VitHighRiskStatePanel(
+      state: VitHighRiskUiState.riskReview,
+      title: 'AutoPilot risk review',
+      message: text,
     );
   }
+}
+
+VitStatusPillStatus? _accentSemanticStatus(Color color) {
+  if (color == AppColors.buy) return VitStatusPillStatus.success;
+  if (color == AppColors.warn) return VitStatusPillStatus.warning;
+  if (color == AppColors.sell) return VitStatusPillStatus.error;
+  if (color == AppColors.primary) return VitStatusPillStatus.info;
+  if (color == AppColors.accent) return VitStatusPillStatus.purple;
+  return null;
 }
 
 SavingsAutoPilotModeDraft _modeById(
@@ -345,6 +305,14 @@ Color _statusColor(SavingsAutoPilotStatus status) {
     SavingsAutoPilotStatus.active => AppColors.buy,
     SavingsAutoPilotStatus.paused => AppColors.warn,
     SavingsAutoPilotStatus.inactive => AppColors.text3,
+  };
+}
+
+VitStatusPillStatus _statusPillStatus(SavingsAutoPilotStatus status) {
+  return switch (status) {
+    SavingsAutoPilotStatus.active => VitStatusPillStatus.success,
+    SavingsAutoPilotStatus.paused => VitStatusPillStatus.warning,
+    SavingsAutoPilotStatus.inactive => VitStatusPillStatus.neutral,
   };
 }
 

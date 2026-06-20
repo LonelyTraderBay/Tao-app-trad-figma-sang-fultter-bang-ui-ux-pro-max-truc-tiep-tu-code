@@ -6,10 +6,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -30,6 +30,16 @@ const _analyticsAmber = AppColors.caution;
 const _analyticsRed = AppColors.sell;
 const _chartAxis = AppColors.chartAxisStrong;
 const _chartTrack = AppColors.chartTrack;
+const double _analyticsVisualScrollClearance = 108;
+const double _analyticsNativeScrollClearance = 72;
+const double _analyticsSpace = AppSpacing.x2;
+const double _analyticsTinySpace = AppSpacing.x1;
+const double _analyticsChartExtent = 150;
+const double _analyticsDistributionExtent = 130;
+const double _analyticsDonutExtent = 118;
+const double _analyticsProgressExtent = 5;
+const double _analyticsMetricMinExtent = 44;
+const double _analyticsPainterLineHeight = 1;
 
 enum _AnalyticsTimeframe { sevenDays, thirtyDays, allTime }
 
@@ -37,6 +47,7 @@ class BotPerformanceAnalyticsPage extends ConsumerStatefulWidget {
   const BotPerformanceAnalyticsPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc124_bot_performance_content');
+  static const pnlChartKey = Key('sc124_bot_performance_pnl_chart');
 
   static Key timeframeKey(String id) => Key('sc124_bot_performance_tab_$id');
 
@@ -57,10 +68,10 @@ class _BotPerformanceAnalyticsPageState
         .watch(tradeReadModelControllerProvider)
         .getBotPerformanceAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 120
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? _analyticsVisualScrollClearance
+            : _analyticsNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -81,16 +92,13 @@ class _BotPerformanceAnalyticsPageState
                 child: SingleChildScrollView(
                   key: BotPerformanceAnalyticsPage.contentKey,
                   clipBehavior: Clip.none,
-                  padding: AppSpacing.tradeBotSecurityScrollPadding(
-                    bottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     fullBleed: true,
-                    customGap: 0,
                     children: [
                       _KeyMetricsCard(metrics: snapshot.metrics),
-                      const SizedBox(height: AppSpacing.x4),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: AppSpacing.tradeBotCardPadding,
@@ -103,8 +111,9 @@ class _BotPerformanceAnalyticsPageState
                               message:
                                   'PnL, win/loss distribution, strategy mix, duration and risk rating are reviewed before bot changes.',
                               contractId: 'bot-performance-analytics-review',
+                              density: VitDensity.compact,
                             ),
-                            SizedBox(height: AppSpacing.tradeBotRowGap),
+                            SizedBox(height: _analyticsSpace),
                             VitStatusPill(
                               label: 'Risk-aware analytics',
                               status: VitStatusPillStatus.info,
@@ -113,44 +122,31 @@ class _BotPerformanceAnalyticsPageState
                           ],
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x4),
                       _TimeframeTabs(
                         active: _timeframe,
                         onChanged: (timeframe) =>
                             setState(() => _timeframe = timeframe),
                       ),
-                      const SizedBox(height: AppSpacing.x5),
                       VitPageSection(
-                        customGap: 0,
+                        density: VitDensity.compact,
                         children: [
                           const _SectionLabel('Cumulative PnL'),
-                          const SizedBox(height: AppSpacing.x4),
                           _PnlChartCard(points: snapshot.pnlPoints),
-                          const SizedBox(height: AppSpacing.x5),
                           const _SectionLabel('Win/Loss Distribution'),
-                          const SizedBox(height: AppSpacing.x4),
                           _WinLossChartCard(points: snapshot.winLossPoints),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x5),
                       const _SectionLabel('Performance by Strategy'),
-                      const SizedBox(height: AppSpacing.x4),
                       _StrategyPerformanceCard(
                         strategies: snapshot.strategyPerformance,
                       ),
-                      const SizedBox(height: AppSpacing.x5),
                       const _SectionLabel('Advanced Metrics'),
-                      const SizedBox(height: AppSpacing.x4),
                       _AdvancedMetricsGrid(metrics: snapshot.metrics),
-                      const SizedBox(height: AppSpacing.x5),
                       const _SectionLabel('Trade Duration Distribution'),
-                      const SizedBox(height: AppSpacing.x4),
                       _DurationCard(
                         distribution: snapshot.durationDistribution,
                       ),
-                      const SizedBox(height: AppSpacing.x5),
                       _PerformanceSummaryCard(metrics: snapshot.metrics),
-                      const SizedBox(height: AppSpacing.x5),
                       const _RatingCard(),
                     ],
                   ),

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -56,11 +57,11 @@ class _BestExecutionReportsPageState
         .watch(tradeReadModelControllerProvider)
         .getBestExecutionReports();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,20 +90,16 @@ class _BestExecutionReportsPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: BestExecutionReportsPage.contentKey,
-                      padding: AppSpacing.contentInsets.copyWith(
-                        top:
-                            AppSpacing.x4 +
-                            AppSpacing.x1 -
-                            AppSpacing.hairlineStroke,
-                        bottom: bottomInset,
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        AppSpacing.tradeBotCardGap,
+                        AppSpacing.contentPad,
+                        scrollClearance,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
-                        customGap:
-                            AppSpacing.x4 +
-                            AppSpacing.x1 -
-                            AppSpacing.hairlineStroke,
                         fullBleed: true,
+                        density: VitDensity.compact,
                         children: [
                           const _ComplianceNotice(),
                           _SummaryGrid(summary: snapshot.summary),

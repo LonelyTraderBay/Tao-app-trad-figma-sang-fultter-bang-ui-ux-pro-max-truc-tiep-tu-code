@@ -14,7 +14,7 @@ class _UnlockEmptyState extends StatelessWidget {
             size: AppSpacing.tokenUnlocksEmptyIcon,
             color: AppColors.text3.withValues(alpha: .4),
           ),
-          const SizedBox(height: AppSpacing.tokenUnlocksEmptyGap),
+          const SizedBox(height: _unlockEmptyGap),
           Text(
             'Không có unlock phù hợp',
             style: AppTextStyles.body.copyWith(color: AppColors.text3),

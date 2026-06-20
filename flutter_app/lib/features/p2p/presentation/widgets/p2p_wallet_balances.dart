@@ -13,27 +13,19 @@ class _BalanceSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageSection(
       key: P2PWalletPage.balancesKey,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      label: 'Tài sản',
+      accentColor: AppModuleAccents.p2p,
+      density: VitDensity.compact,
       children: [
-        Text(
-          'Tài sản',
-          style: AppTextStyles.baseMedium.copyWith(
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.x3),
-        for (var index = 0; index < snapshot.balances.length; index++) ...[
+        for (final balance in snapshot.balances)
           _BalanceCard(
             snapshot: snapshot,
-            balance: snapshot.balances[index],
-            expanded: expandedAsset == snapshot.balances[index].asset,
-            onToggle: () => onToggle(snapshot.balances[index].asset),
+            balance: balance,
+            expanded: expandedAsset == balance.asset,
+            onToggle: () => onToggle(balance.asset),
           ),
-          if (index != snapshot.balances.length - 1)
-            const SizedBox(height: AppSpacing.x3),
-        ],
       ],
     );
   }
@@ -64,11 +56,11 @@ class _BalanceCard extends StatelessWidget {
             onTap: onToggle,
             borderRadius: AppRadii.cardLargeRadius,
             child: Padding(
-              padding: AppSpacing.p2pWalletCardPadding,
+              padding: _p2pWalletCardPadding,
               child: Row(
                 children: [
                   _AssetMark(symbol: balance.asset),
-                  const SizedBox(width: AppSpacing.x4),
+                  const SizedBox(width: AppSpacing.x3),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,15 +115,15 @@ class _BalanceCard extends StatelessWidget {
           ),
           if (expanded) ...[
             const Divider(
-              height: AppSpacing.dividerHairline,
+              height: _p2pWalletDividerExtent,
               color: AppColors.borderSolid,
             ),
             Padding(
-              padding: AppSpacing.p2pWalletCardPadding,
+              padding: _p2pWalletCardPadding,
               child: Column(
                 children: [
                   _BalanceBreakdown(balance: balance),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.x3),
                   Row(
                     children: [
                       Expanded(
@@ -190,13 +182,9 @@ class _AssetMark extends StatelessWidget {
       color: color.withValues(alpha: .14),
       borderRadius: AppRadii.lgRadius,
       child: SizedBox(
-        width: AppSpacing.inputHeight,
-        height: AppSpacing.inputHeight,
-        child: Icon(
-          _assetIcon(symbol),
-          color: color,
-          size: AppSpacing.iconMd,
-        ),
+        width: _p2pWalletIconBoxExtent,
+        height: _p2pWalletIconBoxExtent,
+        child: Icon(_assetIcon(symbol), color: color, size: AppSpacing.iconMd),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -53,15 +54,15 @@ class _ProviderGovernancePageState
     }
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final chromeInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollClearance =
+        chromeInset +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.providerGovernanceBottomInsetVisualExtra
-            : AppSpacing.providerGovernanceBottomInsetNativeExtra);
+            ? AppSpacing.x6 + AppSpacing.x5
+            : AppSpacing.x5 + AppSpacing.x3);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -82,36 +83,31 @@ class _ProviderGovernancePageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: ProviderGovernancePage.contentKey,
-                      padding: AppSpacing.providerGovernanceScrollPadding(
-                        bottomInset,
+                      padding: AppSpacing.zeroInsets.copyWith(
+                        left: AppSpacing.contentPad,
+                        top: AppSpacing.x2,
+                        right: AppSpacing.contentPad,
+                        bottom: scrollClearance,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
+                        density: VitDensity.compact,
                         fullBleed: true,
-                        customGap: AppSpacing.providerGovernanceContentGap,
                         children: [
                           _ProviderDashboard(stats: snapshot.stats),
-                          const SizedBox(
-                            height: AppSpacing.providerGovernanceSectionGap,
-                          ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Provider governance review',
                             message:
                                 'Review strategy change notice, follower impact, fee waterfall, compliance score, limits, and next steps before broadcasting or modifying strategy.',
                             contractId: 'SC-081 provider governance review',
-                          ),
-                          const SizedBox(
-                            height: AppSpacing.providerGovernanceControlGap,
+                            density: VitDensity.compact,
                           ),
                           _GovernanceTabs(
                             tabs: snapshot.tabs,
                             activeId: _activeTabId,
                             onChanged: (id) =>
                                 setState(() => _activeTabId = id),
-                          ),
-                          const SizedBox(
-                            height: AppSpacing.providerGovernanceTabBodyGap,
                           ),
                           if (_activeTabId == 'modifications')
                             _ModificationsTab(

@@ -37,7 +37,7 @@ class _SlashingEventCard extends StatelessWidget {
     return VitCard(
       key: StakingSlashingHistoryKeys.event(event.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -68,7 +68,7 @@ class _SlashingEventCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.earnCardPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

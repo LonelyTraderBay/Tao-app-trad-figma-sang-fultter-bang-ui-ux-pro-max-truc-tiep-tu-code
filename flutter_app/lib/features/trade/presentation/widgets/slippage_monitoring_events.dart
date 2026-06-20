@@ -7,16 +7,12 @@ class _RealtimeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
       children: [
         const _SectionLabel('Recent Slippage Events'),
-        const SizedBox(height: AppSpacing.tradeToolSectionHeaderGap),
-        for (final event in events) ...[
-          _SlippageEventCard(event: event),
-          if (event != events.last)
-            const SizedBox(height: AppSpacing.tradeToolCardGap),
-        ],
+        for (final event in events) _SlippageEventCard(event: event),
       ],
     );
   }
@@ -32,20 +28,21 @@ class _SlippageEventCard extends StatelessWidget {
     final style = _severityStyle(event.severity);
     return VitCard(
       key: SlippageMonitoringPage.eventKey(event.id),
-      padding: AppSpacing.tradeToolCardPaddingCompact,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _slipBorder.withValues(alpha: .72),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            width: AppSpacing.tradeToolIconTileSm,
-            height: AppSpacing.tradeToolIconTileSm,
+            width: AppSpacing.inputHeight - AppSpacing.x4,
+            height: AppSpacing.inputHeight - AppSpacing.x4,
             alignment: Alignment.center,
             borderColor: style.color.withValues(alpha: .24),
             child: Icon(style.icon, color: style.color, size: 19),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               children: [
@@ -69,13 +66,11 @@ class _SlippageEventCard extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                width: AppSpacing.tradeToolInlineGap,
-                              ),
+                              const SizedBox(width: AppSpacing.x2),
                               _SidePill(side: event.side),
                             ],
                           ),
-                          const SizedBox(height: AppSpacing.x3),
+                          const SizedBox(height: AppSpacing.x1),
                           Text(
                             '${event.provider} · ${event.time}',
                             style: AppTextStyles.micro.copyWith(
@@ -85,11 +80,11 @@ class _SlippageEventCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.tradeToolInlineGap),
+                    const SizedBox(width: AppSpacing.x2),
                     _SeverityPill(style: style),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.tradeToolCardGap),
+                const SizedBox(height: AppSpacing.x3),
                 Row(
                   children: [
                     Expanded(
@@ -98,14 +93,14 @@ class _SlippageEventCard extends StatelessWidget {
                         value: _formatPrice(event.expectedPrice),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.tradeToolInlineGap),
+                    const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: _EventMetric(
                         label: 'Executed',
                         value: _formatPrice(event.executedPrice),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.tradeToolInlineGap),
+                    const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: _EventMetric(
                         label: 'Slippage',
@@ -115,11 +110,14 @@ class _SlippageEventCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.tradeToolIconGap),
+                const SizedBox(height: AppSpacing.x2),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  height: AppSpacing.tradeToolMetricRowHeight,
-                  padding: AppSpacing.tradeToolMetricRowPadding,
+                  density: VitDensity.compact,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.x3,
+                    vertical: AppSpacing.x2,
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -164,8 +162,11 @@ class _EventMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.tradeToolMetricHeight,
-      padding: AppSpacing.tradeToolMetricPadding,
+      density: VitDensity.compact,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
       borderColor: color == AppColors.text2
           ? null
           : color.withValues(alpha: .18),
@@ -174,11 +175,9 @@ class _EventMetric extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,

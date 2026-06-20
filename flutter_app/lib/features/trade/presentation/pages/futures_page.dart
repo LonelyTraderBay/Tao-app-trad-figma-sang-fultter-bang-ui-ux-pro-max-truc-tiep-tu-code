@@ -21,7 +21,6 @@ part 'futures_page_part_03.dart';
 const _tradePrimary = AppColors.primary;
 const _futuresRed = AppColors.sell;
 const _futuresGreen = AppColors.buy;
-const _warningBorder = AppColors.caution20;
 
 class FuturesPage extends ConsumerStatefulWidget {
   const FuturesPage({super.key, required this.pairId, this.shellRenderMode});

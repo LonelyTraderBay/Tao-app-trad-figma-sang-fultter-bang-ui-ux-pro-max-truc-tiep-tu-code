@@ -8,29 +8,29 @@ class _LatencyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.armIntegrationLatencyPadding,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           SizedBox(
-            height: AppSpacing.armIntegrationChartHeight,
+            height: _armCompactChartHeight,
             child: CustomPaint(
               painter: _LatencyPainter(points: points),
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.armIntegrationMetricRowGap),
+          const SizedBox(height: AppSpacing.x3),
           const Divider(
             height: AppSpacing.armIntegrationDividerHeight,
             color: _armBorder,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _LegendDot(label: 'REGIS-TR', color: _armGreen),
-              SizedBox(width: AppSpacing.armIntegrationLegendGap),
+              SizedBox(width: AppSpacing.x4),
               _LegendDot(label: 'UnaVista', color: _armPrimary),
-              SizedBox(width: AppSpacing.armIntegrationLegendGap),
+              SizedBox(width: AppSpacing.x4),
               _LegendDot(label: 'Bloomberg', color: _armAmber),
             ],
           ),
@@ -48,7 +48,7 @@ class _SlaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.armIntegrationSlaPadding,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           _ProgressRow(
@@ -56,13 +56,13 @@ class _SlaCard extends StatelessWidget {
             value: '${sla.uptime.toStringAsFixed(2)}%',
             factor: sla.uptime / 100,
           ),
-          const SizedBox(height: AppSpacing.armIntegrationSlaGap),
+          const SizedBox(height: AppSpacing.x3),
           _ProgressRow(
             label: 'Latency Target (<100ms)',
             value: '${sla.latencyAvg}ms avg',
             factor: sla.latencyAvg / 100,
           ),
-          const SizedBox(height: AppSpacing.armIntegrationSlaGap),
+          const SizedBox(height: AppSpacing.x3),
           _ProgressRow(
             label: 'Failover Readiness',
             value: '${sla.failoverReadiness}%',
@@ -94,10 +94,7 @@ class _ProgressRow extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  height: AppSpacing.armIntegrationLineHeightTight,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
             Text(
@@ -106,12 +103,11 @@ class _ProgressRow extends StatelessWidget {
                 color: _armGreen,
                 fontWeight: AppTextStyles.bold,
                 fontFeatures: AppTextStyles.tabularFigures,
-                height: AppSpacing.armIntegrationLineHeightTight,
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.armIntegrationProgressLabelGap),
+        const SizedBox(height: AppSpacing.x2),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
           child: SizedBox(
@@ -151,7 +147,7 @@ class _QuickActions extends StatelessWidget {
             onTap: onQueue,
           ),
         ),
-        const SizedBox(width: AppSpacing.armIntegrationInlineGap),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: _QuickAction(
             key: ArmIntegrationStatusPage.actionKey('dashboard'),
@@ -185,15 +181,11 @@ class _QuickAction extends StatelessWidget {
     return VitCtaButton(
       onPressed: onTap,
       variant: VitCtaButtonVariant.secondary,
-      height: AppSpacing.searchBarCompactHeight,
-      leading: Icon(
-        icon,
-        color: color,
-        size: AppSpacing.armIntegrationQuickActionIcon,
-      ),
+      density: VitDensity.compact,
+      leading: Icon(icon, color: color, size: AppSpacing.iconSm),
       trailing: const Icon(
         Icons.chevron_right_rounded,
-        size: AppSpacing.armIntegrationQuickActionIcon,
+        size: AppSpacing.iconSm,
       ),
       child: Text(
         label,
@@ -202,7 +194,6 @@ class _QuickAction extends StatelessWidget {
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.armIntegrationLineHeightTight,
         ),
       ),
     );
@@ -244,10 +235,7 @@ class _LegendDot extends StatelessWidget {
         const SizedBox(width: AppSpacing.x3),
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.armIntegrationLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
     );

@@ -12,6 +12,7 @@ class _CreateSubAccountButton extends StatelessWidget {
       key: SubAccountPage.createButtonKey,
       onPressed: onTap,
       variant: VitCtaButtonVariant.secondary,
+      density: VitDensity.compact,
       leading: Icon(isOpen ? Icons.close_rounded : Icons.add_rounded),
       child: Text(
         isOpen
@@ -29,7 +30,7 @@ class _CreateSubAccountForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SubAccountPage.createFormKey,
-      padding: AppSpacing.profileSubAccountCreatePadding,
+      density: VitDensity.compact,
       borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -40,17 +41,17 @@ class _CreateSubAccountForm extends StatelessWidget {
               fontWeight: AppTextStyles.extraBold,
             ),
           ),
-          const SizedBox(height: AppSpacing.profileSubAccountCreateTitleGap),
+          const SizedBox(height: AppSpacing.x3),
           const _FormFieldPreview(
             label: 'T\u00EAn t\u00E0i kho\u1EA3n',
             value: 'VD: Grid Bot #2',
           ),
-          const SizedBox(height: AppSpacing.profileSubAccountCreateSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           const _FormPillRow(
             label: 'Lo\u1EA1i t\u00E0i kho\u1EA3n',
             values: ['Spot', 'Margin', 'Futures', 'T\u1EA5t c\u1EA3'],
           ),
-          const SizedBox(height: AppSpacing.profileSubAccountCreateSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           const _FormPillRow(
             label: 'Quy\u1EC1n h\u1EA1n',
             values: [
@@ -63,9 +64,10 @@ class _CreateSubAccountForm extends StatelessWidget {
             ],
             wrap: true,
           ),
-          const SizedBox(height: AppSpacing.profileSubAccountCreateCtaGap),
+          const SizedBox(height: AppSpacing.x3),
           VitCtaButton(
             onPressed: () {},
+            density: VitDensity.compact,
             child: const Text('T\u1EA1o t\u00E0i kho\u1EA3n'),
           ),
         ],
@@ -89,9 +91,11 @@ class _FormFieldPreview extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.profileSubAccountFormLabelGap),
-        SizedBox(
-          height: AppSpacing.inputHeight,
+        const SizedBox(height: AppSpacing.x2),
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: VitDensity.compact.controlHeight,
+          ),
           child: Material(
             color: AppColors.surface2,
             shape: RoundedRectangleBorder(
@@ -140,7 +144,7 @@ class _FormPillRow extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.profileSubAccountFormPillLabelGap),
+        const SizedBox(height: AppSpacing.x1),
         if (wrap)
           Wrap(
             spacing: AppSpacing.profileSubAccountFormPillGap,

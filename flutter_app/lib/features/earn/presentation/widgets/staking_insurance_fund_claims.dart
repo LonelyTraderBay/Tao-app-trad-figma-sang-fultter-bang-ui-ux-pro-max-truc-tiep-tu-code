@@ -30,7 +30,7 @@ class StakingInsuranceFundClaimsTab extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.primary20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -67,7 +67,7 @@ class StakingInsuranceFundClaimCard extends StatelessWidget {
     return VitCard(
       key: StakingInsuranceFundKeys.claim(claim.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
           Row(
@@ -98,7 +98,7 @@ class StakingInsuranceFundClaimCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.md,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.earnCardPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

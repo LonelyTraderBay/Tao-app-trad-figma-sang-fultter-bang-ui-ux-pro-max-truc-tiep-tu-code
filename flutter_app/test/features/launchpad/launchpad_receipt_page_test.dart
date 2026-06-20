@@ -7,13 +7,18 @@ import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.d
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_portfolio_page.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_receipt_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
 void main() {
-  Future<void> pumpReceipt(WidgetTester tester) async {
+  void configurePhoneView(WidgetTester tester) {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
+  }
+
+  Future<void> pumpReceipt(WidgetTester tester) async {
+    configurePhoneView(tester);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -22,6 +27,17 @@ void main() {
             initialLocation: AppRoutePaths.launchpadReceiptSub001,
           ),
         ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> pumpKnownReceipt(WidgetTester tester) async {
+    configurePhoneView(tester);
+
+    await tester.pumpWidget(
+      const ProviderScope(
+        child: MaterialApp(home: LaunchpadReceiptPage(subscriptionId: 'sub1')),
       ),
     );
     await tester.pumpAndSettle();
@@ -81,6 +97,21 @@ void main() {
       find.text('Vui lòng kiểm tra kết nối mạng và thử lại.'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('SC-301 renders shared financial-safety receipt panel', (
+    tester,
+  ) async {
+    await pumpKnownReceipt(tester);
+
+    expect(find.byType(LaunchpadReceiptPage), findsOneWidget);
+    expect(find.byType(VitHighRiskStatePanel), findsOneWidget);
+    expect(find.text('Receipt reviewed'), findsOneWidget);
+    final panel = tester.widget<VitHighRiskStatePanel>(
+      find.byType(VitHighRiskStatePanel),
+    );
+    expect(panel.state, VitHighRiskUiState.success);
+    expect(panel.contractId, 'sub1');
   });
 
   testWidgets('SC-301 header back returns to launchpad portfolio', (

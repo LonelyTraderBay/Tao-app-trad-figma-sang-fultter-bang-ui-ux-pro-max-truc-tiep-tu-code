@@ -12,54 +12,64 @@ class _AddAddressSheet extends StatelessWidget {
       color: AppColors.dynamicIslandBg.withValues(alpha: .72),
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: Container(
+        child: ConstrainedBox(
           constraints: const BoxConstraints(
             maxWidth: AppSpacing.launchpadSheetMaxWidth,
           ),
-          padding: const EdgeInsets.all(AppSpacing.x5),
-          decoration: const BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(AppRadii.cardLarge),
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
+              color: AppColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.sheetTopLargeRadius,
+              ),
             ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Center(
-                child: Container(
-                  width: AppSpacing.launchpadBox44,
-                  height: AppSpacing.launchpadSheetHandleHeight,
-                  decoration: BoxDecoration(
-                    color: AppColors.borderSolid,
-                    borderRadius: AppRadii.xlRadius,
+            child: Padding(
+              padding: AppSpacing.launchpadPaddingX5,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Center(
+                    child: SizedBox(
+                      width: AppSpacing.launchpadBox44,
+                      height: AppSpacing.launchpadSheetHandleHeight,
+                      child: DecoratedBox(
+                        decoration: const ShapeDecoration(
+                          color: AppColors.borderSolid,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.xlRadius,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(height: AppSpacing.x5),
+                  Text(
+                    'Them dia chi moi',
+                    style: AppTextStyles.sectionTitle.copyWith(
+                      color: AppColors.text1,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x2),
+                  Text(
+                    'Address mutation se can KYC submission-step va preview confirm truoc khi ghi len backend.',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x4),
+                  VitCtaButton(
+                    key: LaunchpadAddressBookPage.addSheetCloseKey,
+                    onPressed: onClose,
+                    leading: const Icon(
+                      Icons.close_rounded,
+                      color: AppColors.onAccent,
+                    ),
+                    child: const Text('Dong'),
+                  ),
+                ],
               ),
-              const SizedBox(height: AppSpacing.x5),
-              Text(
-                'Them dia chi moi',
-                style: AppTextStyles.sectionTitle.copyWith(
-                  color: AppColors.text1,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x2),
-              Text(
-                'Address mutation se can KYC submission-step va preview confirm truoc khi ghi len backend.',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
-              const SizedBox(height: AppSpacing.x4),
-              VitCtaButton(
-                key: LaunchpadAddressBookPage.addSheetCloseKey,
-                onPressed: onClose,
-                leading: const Icon(
-                  Icons.close_rounded,
-                  color: AppColors.onAccent,
-                ),
-                child: const Text('Dong'),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -72,14 +82,14 @@ class _InfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return VitCard(
       key: LaunchpadAddressBookPage.infoKey,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppColors.primary08,
-        border: Border.all(color: AppColors.primary20),
-        borderRadius: AppRadii.inputRadius,
-      ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: AppColors.primary20,
+      background: const ColoredBox(color: AppColors.primary08),
+      padding: AppSpacing.launchpadPaddingX3,
+      clip: true,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -123,25 +133,28 @@ class _FilterChip extends StatelessWidget {
     return InkWell(
       borderRadius: AppRadii.xlRadius,
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: active ? color.withValues(alpha: .12) : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? color.withValues(alpha: .32)
-                : AppColors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.xlRadius,
+            side: BorderSide(
+              color: active
+                  ? color.withValues(alpha: .32)
+                  : AppColors.transparent,
+            ),
           ),
-          borderRadius: AppRadii.xlRadius,
         ),
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? color : AppColors.text3,
-            fontWeight: active ? AppTextStyles.extraBold : AppTextStyles.medium,
+        child: Padding(
+          padding: AppSpacing.launchpadPillPadding,
+          child: Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: active ? color : AppColors.text3,
+              fontWeight: active
+                  ? AppTextStyles.extraBold
+                  : AppTextStyles.medium,
+            ),
           ),
         ),
       ),
@@ -165,15 +178,8 @@ class _StatPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x2,
-        ),
-        decoration: BoxDecoration(
-          color: AppColors.surface2,
-          borderRadius: AppRadii.xlRadius,
-        ),
+      child: VitCardStat(
+        padding: AppSpacing.launchpadInlinePillPadding,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -208,18 +214,23 @@ class _ChainIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.launchpadBox44,
-      height: AppSpacing.launchpadBox44,
-      decoration: BoxDecoration(
-        color: address.accent.withValues(alpha: .16),
-        border: Border.all(color: address.accent.withValues(alpha: .28)),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Icon(
-        _chainIcon(address.iconKey),
-        color: address.accent,
-        size: AppSpacing.launchpadIcon3xl,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox44,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: address.accent.withValues(alpha: .16),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.lgRadius,
+            side: BorderSide(color: address.accent.withValues(alpha: .28)),
+          ),
+        ),
+        child: Center(
+          child: Icon(
+            _chainIcon(address.iconKey),
+            color: address.accent,
+            size: AppSpacing.launchpadIcon3xl,
+          ),
+        ),
       ),
     );
   }
@@ -233,20 +244,19 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: 2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.extraBold,
+      child: Padding(
+        padding: AppSpacing.launchpadLiveBadgePadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.extraBold,
+          ),
         ),
       ),
     );
@@ -262,7 +272,7 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+      padding: AppSpacing.launchpadVerticalPaddingX1,
       child: Row(
         children: [
           Expanded(

@@ -20,45 +20,43 @@ class TransferWalletCard extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
-        height: AppSpacing.transferCardHeight,
+        height: _transferWalletCardHeight,
         child: Padding(
-          padding: AppSpacing.transferCardPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: _transferTilePadding,
+          child: Row(
             children: [
-              Text(
-                label,
-                style: AppTextStyles.badge.copyWith(color: AppColors.text3),
+              SizedBox(
+                width: 34,
+                child: Text(
+                  label,
+                  style: AppTextStyles.badge.copyWith(color: AppColors.text3),
+                ),
               ),
-              const SizedBox(height: AppSpacing.transferTileGap),
-              Row(
-                children: [
-                  _WalletIcon(wallet: wallet, color: color),
-                  const SizedBox(
-                    width: AppSpacing.searchBarHorizontalTrailingPadding,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(wallet.name, style: AppTextStyles.baseMedium),
-                        const SizedBox(height: AppSpacing.x2),
-                        Text(
-                          'Số dư: ${formatTransferUsd(wallet.balanceUsd)}',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text2,
-                          ),
-                        ),
-                      ],
+              const SizedBox(width: _transferTinyGap),
+              _WalletIcon(wallet: wallet, color: color),
+              const SizedBox(width: _transferInlineGap),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(wallet.name, style: AppTextStyles.baseMedium),
+                    const SizedBox(height: _transferTinyGap),
+                    Text(
+                      'Số dư: ${formatTransferUsd(wallet.balanceUsd)}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                      ),
                     ),
-                  ),
-                  const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.transferActionIcon,
-                  ),
-                ],
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.keyboard_arrow_down_rounded,
+                color: AppColors.text3,
+                size: _transferActionIcon,
               ),
             ],
           ),
@@ -82,14 +80,14 @@ class _WalletIcon extends StatelessWidget {
       _ => Icons.bar_chart_rounded,
     };
     return VitCard(
-      width: AppSpacing.transferIcon,
-      height: AppSpacing.transferIcon,
+      width: _transferIconBox,
+      height: _transferIconBox,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
       background: ColoredBox(color: color.withValues(alpha: .13)),
       alignment: Alignment.center,
       clip: true,
-      child: Icon(icon, color: color, size: AppSpacing.transferActionIcon),
+      child: Icon(icon, color: color, size: _transferActionIcon),
     );
   }
 }
@@ -107,17 +105,17 @@ class TransferSwapButton extends StatelessWidget {
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
         child: SizedBox(
-          width: AppSpacing.transferSwapButton,
-          height: AppSpacing.transferSwapButton,
+          width: _transferSwapButtonSize,
+          height: _transferSwapButtonSize,
           child: Material(
             color: _transferPrimary,
-            elevation: AppSpacing.transferSwapButtonShadowOffset,
+            elevation: 2,
             shadowColor: _transferPrimary.withValues(alpha: .38),
             shape: const CircleBorder(),
-            child: Icon(
+            child: const Icon(
               Icons.swap_vert_rounded,
               color: AppColors.onAccent,
-              size: AppSpacing.transferActionIcon + AppSpacing.x1,
+              size: _transferActionIcon,
             ),
           ),
         ),

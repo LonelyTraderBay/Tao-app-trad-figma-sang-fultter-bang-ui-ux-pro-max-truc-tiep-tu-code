@@ -6,8 +6,7 @@ class _ApiDocsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.profileApiDocsHeight,
-      padding: AppSpacing.profileApiDocsPadding,
+      density: VitDensity.compact,
       borderColor: _apiBorder,
       child: Row(
         children: [
@@ -24,7 +23,7 @@ class _ApiDocsCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.profileApiDocsGap),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +35,7 @@ class _ApiDocsCard extends StatelessWidget {
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.profileApiDocsTitleGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Xem h\u01B0\u1EDBng d\u1EABn t\u00EDch h\u1EE3p v\u00E0 endpoint',
                   maxLines: 1,

@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -19,6 +19,29 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_kyc_requirements_page_sections.dart';
 part '../widgets/p2p_kyc_requirements_page_common.dart';
+
+const double _p2pKycVisualNavClearance = 112;
+const double _p2pKycNativeNavClearance = 88;
+const double _p2pKycIconBoxExtent = AppSpacing.inputHeight - AppSpacing.x2;
+const double _p2pKycRequirementIconBoxExtent = AppSpacing.x6;
+const double _p2pKycReadableLineHeight = 1.35;
+const double _p2pKycTitleLineHeight = 1.0;
+const double _p2pKycSmallIconExtent = AppSpacing.p2pHomeSmallIcon;
+const double _p2pKycChecklistIconExtent = AppSpacing.p2pHomeVerifiedIcon;
+const double _p2pKycDividerExtent = AppSpacing.dividerHairline;
+const double _p2pKycCtaHeight = AppSpacing.ctaHeight - AppSpacing.x1;
+const EdgeInsets _p2pKycCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pKycNoticePadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pKycTierSectionPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pKycTierActionPadding = EdgeInsets.fromLTRB(
+  AppSpacing.x3,
+  AppSpacing.zero,
+  AppSpacing.x3,
+  AppSpacing.x3,
+);
+const EdgeInsets _p2pKycChecklistIconPadding = EdgeInsets.only(
+  top: AppSpacing.x1,
+);
 
 class P2PKycRequirementsPage extends ConsumerWidget {
   const P2PKycRequirementsPage({super.key, this.shellRenderMode});
@@ -37,12 +60,11 @@ class P2PKycRequirementsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pKycRequirementsProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.p2pKycBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pKycBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _p2pKycVisualNavClearance
+        : _p2pKycNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -66,14 +88,19 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.p2pKycScrollPadding(bottomInset),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      scrollEndPadding,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _KycHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: AppSpacing.x3),
                         _KycNotice(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         for (final tier in snapshot.tiers) ...[
                           _KycTierCard(
                             tier: tier,
@@ -87,13 +114,13 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                                 : null,
                           ),
                           if (tier != snapshot.tiers.last)
-                            const SizedBox(height: AppSpacing.x4),
+                            const SizedBox(height: AppSpacing.x3),
                         ],
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         _KycSupportCard(snapshot: snapshot),
                         VitPageContent(
                           padding: VitContentPadding.compact,
-                          customGap: AppSpacing.p2pKycContentGap,
+                          density: VitDensity.compact,
                           children: const [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
@@ -101,6 +128,7 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                               message:
                                   'Current tier, locked requirements, available upgrade action, support path, and P2P limit impact remain visible before starting verification.',
                               contractId: 'SC-247',
+                              density: VitDensity.compact,
                             ),
                           ],
                         ),

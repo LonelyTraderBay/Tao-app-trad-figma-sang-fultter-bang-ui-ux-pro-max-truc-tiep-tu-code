@@ -54,48 +54,54 @@ class VitBanner extends StatelessWidget {
       VitBannerVariant.error => _BannerPalette.error,
     };
 
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: 10,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: palette.background,
-        border: Border.all(color: palette.border),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: palette.border),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: detail == null
-            ? CrossAxisAlignment.center
-            : CrossAxisAlignment.start,
-        children: [
-          if (icon != null) ...[
-            Icon(icon, color: palette.foreground, size: 16),
-            const SizedBox(width: AppSpacing.x3),
-          ],
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  message,
-                  style: AppTextStyles.caption.copyWith(
-                    color: palette.foreground,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-                if (detail != null) ...[
-                  const SizedBox(height: AppSpacing.x1),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x4,
+          vertical: AppSpacing.x2 + AppSpacing.x2,
+        ),
+        child: Row(
+          crossAxisAlignment: detail == null
+              ? CrossAxisAlignment.center
+              : CrossAxisAlignment.start,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, color: palette.foreground, size: 16),
+              const SizedBox(width: AppSpacing.x3),
+            ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
                   Text(
-                    detail!,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                    message,
+                    style: AppTextStyles.caption.copyWith(
+                      color: palette.foreground,
+                      fontWeight: AppTextStyles.medium,
+                    ),
                   ),
+                  if (detail != null) ...[
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      detail!,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

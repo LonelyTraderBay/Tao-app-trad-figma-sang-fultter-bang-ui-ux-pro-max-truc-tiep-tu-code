@@ -29,7 +29,7 @@ class _SocialTabBar extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.predictionSocialTabsHeight,
+        height: VitDensity.compact.controlHeight,
         child: Stack(
           children: [
             Row(
@@ -61,8 +61,7 @@ class _SocialTabBar extends StatelessWidget {
                               color: _predictionPrimary,
                               borderRadius: AppRadii.hairlineRadius,
                               child: SizedBox(
-                                height: AppSpacing
-                                    .predictionSocialTabIndicatorHeight,
+                                height: AppSpacing.dividerHairline,
                                 width: activeTab == item.tab
                                     ? AppSpacing
                                           .predictionSocialTabIndicatorWidth
@@ -100,7 +99,7 @@ class _EventInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionSocialCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -108,7 +107,7 @@ class _EventInfoCard extends StatelessWidget {
             snapshot.eventTitle,
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: AppSpacing.predictionSocialEventTitleGap),
+          const SizedBox(height: AppSpacing.x1),
           Row(
             children: [
               const Icon(
@@ -158,7 +157,7 @@ class _NewCommentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasComment = controller.text.trim().isNotEmpty;
     return VitCard(
-      padding: AppSpacing.predictionSocialCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -168,7 +167,7 @@ class _NewCommentCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.predictionSocialCommentTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               for (final stance in PredictionSocialStance.values) ...[
@@ -184,7 +183,7 @@ class _NewCommentCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionSocialInputGap),
+          const SizedBox(height: AppSpacing.x2),
           VitInput(
             fieldKey: PredictionSocialPage.commentFieldKey,
             controller: controller,
@@ -192,9 +191,9 @@ class _NewCommentCard extends StatelessWidget {
             hintText: 'Chia se y kien cua ban...',
             textStyle: AppTextStyles.body,
           ),
-          const SizedBox(height: AppSpacing.predictionSocialPostButtonGap),
+          const SizedBox(height: AppSpacing.x2),
           VitCtaButton(
-            height: AppSpacing.predictionSocialPostButtonHeight,
+            density: VitDensity.compact,
             onPressed: hasComment ? () {} : null,
             leading: const Icon(Icons.send_outlined),
             child: const Text('Dang binh luan'),
@@ -220,7 +219,7 @@ class _StanceButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _stanceColor(stance);
     return SizedBox(
-      height: AppSpacing.predictionSocialStanceHeight,
+      height: VitDensity.compact.controlHeight,
       child: Material(
         color: selected ? color : AppColors.bg,
         borderRadius: AppRadii.inputRadius,

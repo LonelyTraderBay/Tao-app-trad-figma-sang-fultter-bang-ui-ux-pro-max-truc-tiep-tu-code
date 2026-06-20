@@ -10,16 +10,16 @@ class _CriticalWarning extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: _confirmationRed,
-      padding: AppSpacing.copyConfirmationCardPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: _confirmationRed,
-            size: AppSpacing.copyConfirmationWarningIcon,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.copyConfirmationRowGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,12 +31,11 @@ class _CriticalWarning extends StatelessWidget {
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.copyConfirmationLabelGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Copy Trading có rủi ro cao. Bạn có thể mất toàn bộ số tiền \$${snapshot.configuration.copyCapital.toStringAsFixed(0)} đã cam kết.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.sellSoft,
-                    height: AppSpacing.copyConfirmationLineHeightReadable,
                   ),
                 ),
               ],
@@ -56,11 +55,11 @@ class _ProviderSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.copyConfirmationCardPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           CircleAvatar(
-            radius: AppSpacing.copyConfirmationProviderAvatarRadius,
+            radius: AppSpacing.x5,
             backgroundColor: _confirmationPrimary.withValues(alpha: .16),
             child: Text(
               provider.avatar,
@@ -70,7 +69,7 @@ class _ProviderSummary extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.copyConfirmationRowGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,14 +78,14 @@ class _ProviderSummary extends StatelessWidget {
                   'Bạn sắp copy',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.copyConfirmationTinyGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   provider.name,
                   style: AppTextStyles.baseMedium.copyWith(
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.copyConfirmationTinyGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'ROI +${provider.totalPnlPct.toStringAsFixed(1)}% · Max DD ${provider.maxDrawdown.toStringAsFixed(1)}%',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -111,10 +110,11 @@ class _ConfigurationSummary extends StatelessWidget {
     return VitPageSection(
       label: 'Cấu hình',
       accentColor: _confirmationPrimary,
+      density: VitDensity.compact,
       children: [
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.copyConfirmationCardPadding,
+          density: VitDensity.compact,
           child: Column(
             children: [
               _SummaryRow(
@@ -164,10 +164,11 @@ class _SuitabilityReviewCard extends StatelessWidget {
       key: CopyConfirmationPage.suitabilityKey,
       label: 'Suitability & limits review',
       accentColor: AppColors.warn,
+      density: VitDensity.compact,
       children: [
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.copyConfirmationCardPadding,
+          density: VitDensity.compact,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -186,13 +187,10 @@ class _SuitabilityReviewCard extends StatelessWidget {
                 label: 'Provider limit',
                 value: 'Max 20% portfolio per provider',
               ),
-              const SizedBox(height: AppSpacing.copyConfirmationLabelGap),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 'Confirm this amount fits your risk tolerance, provider drawdown, and portfolio limit before cooling-off starts.',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  height: AppSpacing.copyConfirmationLineHeightReadable,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ],
           ),
@@ -213,9 +211,10 @@ class _FeeBreakdown extends StatelessWidget {
     return VitPageSection(
       label: 'Chi phí & Phí',
       accentColor: AppColors.warn,
+      density: VitDensity.compact,
       children: [
         VitCard(
-          padding: AppSpacing.copyConfirmationCardPadding,
+          density: VitDensity.compact,
           child: Column(
             children: [
               _SummaryRow(
@@ -232,7 +231,7 @@ class _FeeBreakdown extends StatelessWidget {
               ),
               const Divider(
                 color: AppColors.divider,
-                height: AppSpacing.copyConfirmationDividerHeight,
+                thickness: AppSpacing.hairlineStroke,
               ),
               _SummaryRow(
                 label: 'Tổng phí cố định tháng đầu',
@@ -257,6 +256,7 @@ class _ScenarioSection extends StatelessWidget {
     return VitPageSection(
       label: 'Kịch bản dự kiến (30 ngày)',
       accentColor: _confirmationGreen,
+      density: VitDensity.compact,
       children: [
         for (final scenario in scenarios) _ScenarioCard(scenario: scenario),
       ],
@@ -278,7 +278,7 @@ class _ScenarioCard extends StatelessWidget {
     };
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.copyConfirmationSoftPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           _SummaryRow(
@@ -310,7 +310,7 @@ class _MaxLossCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: _confirmationRed,
-      padding: AppSpacing.copyConfirmationCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -321,13 +321,10 @@ class _MaxLossCard extends StatelessWidget {
               fontWeight: AppTextStyles.extraBold,
             ),
           ),
-          const SizedBox(height: AppSpacing.copyConfirmationLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             'Bạn có thể mất tối đa \$${snapshot.maxLossAmount.toStringAsFixed(0)} nếu provider gặp drawdown nghiêm trọng.',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.sellSoft,
-              height: AppSpacing.copyConfirmationLineHeightReadable,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.sellSoft),
           ),
         ],
       ),
@@ -351,6 +348,7 @@ class _ConsentSection extends StatelessWidget {
     return VitPageSection(
       label: 'Xác nhận & Đồng ý',
       accentColor: _confirmationRed,
+      density: VitDensity.compact,
       children: [
         for (final item in items)
           _ConsentTile(

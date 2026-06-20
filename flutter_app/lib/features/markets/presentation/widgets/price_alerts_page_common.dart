@@ -18,22 +18,22 @@ class _AddAlertButton extends StatelessWidget {
           borderRadius: AppRadii.cardRadius,
         ),
         child: SizedBox(
-          height: AppSpacing.buttonStandard,
+          height: _alertsFilterHeight,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(
                 Icons.add_rounded,
                 color: _marketPrimary,
-                size: AppSpacing.priceAlertsAddIcon,
+                size: _alertsAddIcon,
               ),
-              const SizedBox(width: AppSpacing.priceAlertsAddGap),
+              const SizedBox(width: _alertsAddGap),
               Text(
                 'T\u1EA1o c\u1EA3nh b\u00E1o m\u1EDBi',
                 style: AppTextStyles.body.copyWith(
                   color: _marketPrimary,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.marketLineHeightTight,
+                  height: _alertsLineHeightTight,
                 ),
               ),
             ],

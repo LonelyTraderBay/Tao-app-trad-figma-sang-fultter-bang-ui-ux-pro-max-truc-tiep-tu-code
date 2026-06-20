@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBotHistory(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -76,6 +78,25 @@ void main() {
     expect(find.text('All (7)'), findsOneWidget);
     expect(find.text('Trades (7)'), findsOneWidget);
     expect(find.text('DCA Bot #1 - DCA'), findsWidgets);
+  });
+
+  testWidgets('SC-123 first viewport reaches first trade card', (tester) async {
+    await pumpBotHistory(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'BotHistoryPage',
+      semanticLabel: 'SC-123 BotHistoryPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('DCA Bot #1 - DCA').first,
+      minVisibleHeight: 12,
+      targetLabel: 'first bot history trade card',
+      reason:
+          'Bot history should expose the first concrete trade record above '
+          'bottom navigation on the QA phone viewport.',
+    );
   });
 
   testWidgets('SC-123 filters sell trades', (tester) async {

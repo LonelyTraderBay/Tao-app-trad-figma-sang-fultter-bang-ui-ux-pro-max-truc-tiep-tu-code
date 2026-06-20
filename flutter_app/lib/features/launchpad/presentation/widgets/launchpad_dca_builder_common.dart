@@ -24,15 +24,17 @@ class LaunchpadDcaHeaderCreateButton extends StatelessWidget {
       width: AppSpacing.launchpadBox36,
       height: AppSpacing.launchpadBox36,
       child: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: ShapeDecoration(
           color: AppColors.searchBg,
-          border: Border.all(color: AppColors.border),
-          borderRadius: AppRadii.smRadius,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: AppColors.border),
+            borderRadius: AppRadii.smRadius,
+          ),
         ),
         child: IconButton(
           key: buttonKey,
           onPressed: onTap,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           icon: const Icon(
             Icons.add_rounded,
             color: AppColors.text1,
@@ -58,20 +60,22 @@ class LaunchpadDcaTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: tabsKey,
       color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
-      child: VitTabBar(
-        tabs: const [
-          VitTabItem(key: 'strategies', label: 'Chien luoc'),
-          VitTabItem(key: 'history', label: 'Lich su'),
-          VitTabItem(key: 'create', label: 'Tao moi'),
-        ],
-        activeKey: activeTab.name,
-        onChanged: (key) =>
-            onChanged(LaunchpadDcaBuilderTab.values.byName(key)),
-        variant: VitTabBarVariant.underline,
+      child: Padding(
+        padding: AppSpacing.launchpadHorizontalContentPadding,
+        child: VitTabBar(
+          tabs: const [
+            VitTabItem(key: 'strategies', label: 'Chien luoc'),
+            VitTabItem(key: 'history', label: 'Lich su'),
+            VitTabItem(key: 'create', label: 'Tao moi'),
+          ],
+          activeKey: activeTab.name,
+          onChanged: (key) =>
+              onChanged(LaunchpadDcaBuilderTab.values.byName(key)),
+          variant: VitTabBarVariant.underline,
+        ),
       ),
     );
   }

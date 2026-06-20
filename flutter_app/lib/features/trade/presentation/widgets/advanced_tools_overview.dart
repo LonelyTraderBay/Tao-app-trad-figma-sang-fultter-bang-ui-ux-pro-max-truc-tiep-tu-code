@@ -15,7 +15,7 @@ class _IntroCard extends StatelessWidget {
             color: _toolsPrimary,
             size: AppSpacing.tradeToolIconTileSm,
           ),
-          const SizedBox(width: AppSpacing.tradeToolCardGap),
+          const SizedBox(width: _toolsCardSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +31,7 @@ class _IntroCard extends StatelessWidget {
                   '3 công cụ nâng cao cho pro traders: trade nhanh hơn với ladder, quản lý nhiều lệnh cùng lúc, và shortcuts để tăng tốc 3x.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.55,
+                    height: _toolsReadableLineHeight,
                   ),
                 ),
               ],
@@ -57,7 +57,6 @@ class _FeatureCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: _Panel(
-        padding: AppSpacing.tradeToolRiskIntroPadding,
         child: Row(
           children: [
             _IconTile(
@@ -65,7 +64,7 @@ class _FeatureCard extends StatelessWidget {
               color: color,
               size: AppSpacing.tradeToolIconTileMd,
             ),
-            const SizedBox(width: AppSpacing.tradeToolCardGap),
+            const SizedBox(width: _toolsCardSpace),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,13 +80,13 @@ class _FeatureCard extends StatelessWidget {
                     feature.description,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      height: 1.5,
+                      height: _toolsBodyLineHeight,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeToolInlineGap),
+            const SizedBox(width: _toolsSpace),
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
@@ -119,7 +118,7 @@ class _SpeedCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(Icons.trending_up_rounded, color: AppColors.buy, size: 18),
-          const SizedBox(width: AppSpacing.tradeToolIconGap),
+          const SizedBox(width: _toolsSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +135,7 @@ class _SpeedCard extends StatelessWidget {
                   'Pro traders sử dụng Phase 3 tools đặt lệnh trung bình 3-5 giây thay vì 10-15 giây. Master shortcuts để trade nhanh như market makers.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: 1.5,
+                    height: _toolsBodyLineHeight,
                   ),
                 ),
               ],
@@ -186,11 +185,10 @@ class _BenefitsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: _toolsSpace),
           for (final item in _items) ...[
             _BenefitItem(icon: item.$1, title: item.$2, description: item.$3),
-            if (item != _items.last)
-              const SizedBox(height: AppSpacing.tradeToolCardGap),
+            if (item != _items.last) const SizedBox(height: _toolsSpace),
           ],
         ],
       ),
@@ -215,7 +213,7 @@ class _BenefitItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, color: _toolsPrimary, size: 18),
-        const SizedBox(width: AppSpacing.tradeToolIconGap),
+        const SizedBox(width: _toolsSpace),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,7 +225,7 @@ class _BenefitItem extends StatelessWidget {
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeToolMicroGap),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 description,
                 style: AppTextStyles.micro.copyWith(
@@ -260,7 +258,7 @@ class _ProgressCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: _toolsSpace),
           for (final item in items) ...[
             Row(
               children: [
@@ -275,8 +273,7 @@ class _ProgressCard extends StatelessWidget {
                 _StatusPill(complete: item.complete),
               ],
             ),
-            if (item != items.last)
-              const SizedBox(height: AppSpacing.tradeToolInlineGap),
+            if (item != items.last) const SizedBox(height: _toolsSpace),
           ],
         ],
       ),

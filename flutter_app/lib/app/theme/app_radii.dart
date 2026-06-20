@@ -21,6 +21,8 @@ final class AppRadii {
   static const double avatar = 999;
   static const double chart = 13;
   static const double chartBar = 4;
+  static const double dynamicIsland = 22;
+  static const double statusSignal = 0.75;
   static const double predictionDetailChartVolumeBar = hairline;
   static const double predictionDetailOrderBookRow = chartBar;
   static const double disputeBubble = 16;
@@ -41,6 +43,10 @@ final class AppRadii {
   );
   static const Radius statusBarCorner = Radius.circular(
     walletHistoryStatusBadge,
+  );
+  static const Radius statusSignalCorner = Radius.circular(statusSignal);
+  static const BorderRadius statusSignalRadius = BorderRadius.all(
+    statusSignalCorner,
   );
   static const BorderRadius smRadius = BorderRadius.all(Radius.circular(sm));
   static const Radius smCorner = Radius.circular(sm);
@@ -91,6 +97,17 @@ final class AppRadii {
       BorderRadius.all(Radius.circular(predictionDetailChartVolumeBar));
   static const BorderRadius predictionDetailOrderBookRowRadius =
       BorderRadius.all(Radius.circular(predictionDetailOrderBookRow));
+  static const BorderRadius dynamicIslandRadius = BorderRadius.all(
+    Radius.circular(dynamicIsland),
+  );
+  static const BorderRadius statusBatteryBodyRadius = BorderRadius.all(
+    statusBarCorner,
+  );
+  static const BorderRadius statusBatteryFillRadius = hairlineRadius;
+  static const BorderRadius statusBatteryTerminalRadius = BorderRadius.only(
+    topRight: hairlineCorner,
+    bottomRight: hairlineCorner,
+  );
   static const BorderRadius deviceRadius = BorderRadius.all(
     Radius.circular(device),
   );

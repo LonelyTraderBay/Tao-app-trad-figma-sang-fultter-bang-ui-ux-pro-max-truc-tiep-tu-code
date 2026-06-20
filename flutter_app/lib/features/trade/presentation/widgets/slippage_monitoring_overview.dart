@@ -9,16 +9,17 @@ class _CriticalAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeToolAlertPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.text1,
-            size: AppSpacing.tradeToolAlertIcon,
+            size: AppSpacing.iconMd,
           ),
-          const SizedBox(width: AppSpacing.tradeToolIconGap),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +31,7 @@ class _CriticalAlert extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.formFieldLabelGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Slippage exceeded 1% threshold. Review affected trades and consider provider adjustments.',
                   style: AppTextStyles.micro.copyWith(
@@ -93,8 +94,7 @@ class _StatsGrid extends StatelessWidget {
       children: [
         for (final card in cards) ...[
           Expanded(child: _StatCard(card: card)),
-          if (card != cards.last)
-            const SizedBox(width: AppSpacing.tradeToolCardGap),
+          if (card != cards.last) const SizedBox(width: AppSpacing.x2),
         ],
       ],
     );
@@ -109,8 +109,8 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeToolStatCardHeight,
-      padding: AppSpacing.tradeBotControlPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _slipBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,40 +125,26 @@ class _StatCard extends StatelessWidget {
                   card.$3,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeToolInlineGap),
-          SizedBox(
-            height: AppSpacing.tradeToolStatValueHeight,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  card.$4,
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                ),
+          const SizedBox(height: AppSpacing.x1),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              card.$4,
+              style: AppTextStyles.body.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
           ),
-          const Spacer(),
-          Text(
-            card.$5,
-            style: AppTextStyles.micro.copyWith(
-              color: card.$6,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
-          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(card.$5, style: AppTextStyles.micro.copyWith(color: card.$6)),
         ],
       ),
     );
@@ -201,8 +187,8 @@ class _Tabs extends StatelessWidget {
       ),
     ];
     return VitCard(
-      height: AppSpacing.tradeToolTabHeight,
-      padding: AppSpacing.tradeSegmentedPadding,
+      density: VitDensity.tool,
+      padding: const EdgeInsets.all(AppSpacing.x1),
       child: VitTabBar(
         tabs: tabs,
         activeKey: activeId,

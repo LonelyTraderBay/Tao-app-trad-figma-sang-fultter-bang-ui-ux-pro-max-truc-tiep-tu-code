@@ -9,8 +9,13 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_login_hist
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_security_center_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
-  Future<void> pumpSecurityCenter(WidgetTester tester) async {
+  Future<void> pumpSecurityCenter(
+    WidgetTester tester, {
+    String initialLocation = AppRoutePaths.p2pSecurityCenter,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -19,9 +24,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         child: VitTradeApp(
-          routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.p2pSecurityCenter,
-          ),
+          routerConfig: createAppRouter(initialLocation: initialLocation),
         ),
       ),
     );
@@ -90,6 +93,46 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(P2P2FASettingsPage), findsOneWidget);
+  });
+
+  testWidgets('SC-253 first viewport reaches security features', (
+    tester,
+  ) async {
+    await pumpSecurityCenter(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-253 P2PSecurityCenterPage',
+      semanticLabel: 'SC-253 P2PSecurityCenterPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(P2PSecurityCenterPage.featuresKey),
+      targetLabel: 'security feature list',
+      minVisibleHeight: 18,
+    );
+  });
+
+  testWidgets('SC-253 whitelist route first viewport reaches device review', (
+    tester,
+  ) async {
+    await pumpSecurityCenter(
+      tester,
+      initialLocation: AppRoutePaths.p2pSecurityWhitelist,
+    );
+
+    expect(find.byType(P2PWhitelistModePage), findsOneWidget);
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-253 P2PWhitelistModePage',
+      semanticLabel: 'SC-253 P2PWhitelistModePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(P2PWhitelistModePage.devicesKey),
+      targetLabel: 'trusted device review action',
+      minVisibleHeight: 18,
+    );
   });
 
   testWidgets('SC-253 view all opens login history edge', (tester) async {

@@ -183,8 +183,8 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                 key: ResetPasswordPage.contentKey,
                 padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
-                  padding: VitContentPadding.relaxed,
-                  gap: VitContentGap.relaxed,
+                  padding: VitContentPadding.defaultPadding,
+                  gap: VitContentGap.defaultGap,
                   children: _success
                       ? _successContent
                       : challenge == null

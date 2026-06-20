@@ -21,7 +21,7 @@ class StakingRecommendationsHeroCard extends StatelessWidget {
       key: StakingRecommendationsKeys.hero,
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,7 +64,7 @@ class StakingRecommendationsProfileCard extends StatelessWidget {
     return VitCard(
       key: StakingRecommendationsKeys.profile,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -147,12 +147,12 @@ class StakingRecommendationsProfileMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.earnCardPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -193,7 +193,7 @@ class StakingRecommendationsAmountSimulator extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -217,10 +217,7 @@ class StakingRecommendationsAmountSimulator extends StatelessWidget {
               isDense: true,
               filled: true,
               fillColor: AppColors.surface2,
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: AppSpacing.x4,
-                vertical: AppSpacing.x3,
-              ),
+              contentPadding: AppSpacing.earnCardPaddingX4X3,
               enabledBorder: OutlineInputBorder(
                 borderRadius: AppRadii.inputRadius,
                 borderSide: BorderSide(color: AppColors.borderSolid),

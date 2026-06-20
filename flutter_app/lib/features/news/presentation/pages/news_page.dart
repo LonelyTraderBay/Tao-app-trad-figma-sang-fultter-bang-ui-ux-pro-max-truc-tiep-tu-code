@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/news_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -20,6 +20,21 @@ part '../widgets/news_page_sections.dart';
 part '../widgets/news_page_common.dart';
 
 const _newsPrimary = AppColors.primary;
+const _visualNavClearance = 90.0;
+const _nativeNavClearance = 72.0;
+const _visualScrollExtra = 54.0;
+const _nativeScrollExtra = 20.0;
+const _newsFilterBarHeight = 52.0;
+const _newsFilterChipHeight = 30.0;
+const _newsArticleAvatarSize = 34.0;
+const _newsEmptyIconSize = 36.0;
+const _newsTightLineHeight = 1.0;
+const _newsTitleLineHeight = 1.12;
+const _newsSummaryLineHeight = 1.2;
+const _newsSheetHandleHeight = 4.0;
+const _newsSheetTitleLineHeight = 1.18;
+const _newsSheetSummaryLineHeight = 1.28;
+const _newsSheetBodyLineHeight = 1.42;
 
 extension _NewsArticleTypePresentationColor on NewsArticleType {
   Color get color => switch (this) {
@@ -58,13 +73,13 @@ class _NewsPageState extends ConsumerState<NewsPage> {
         .watch(newsControllerProvider)
         .getNews(type: _activeType);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final navClearance = mode.usesVisualQaFrame
+        ? _visualNavClearance
+        : _nativeNavClearance;
+    final scrollEndPadding =
+        navClearance +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame ? _visualScrollExtra : _nativeScrollExtra);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -95,40 +110,49 @@ class _NewsPageState extends ConsumerState<NewsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: NewsPage.contentKey,
-                    padding: AppSpacing.newsScrollPadding(bottomInset),
+                    padding: EdgeInsets.only(bottom: scrollEndPadding),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.newsFeedGap,
+                      density: VitDensity.compact,
                       children: [
                         if (snapshot.screenState == NewsScreenState.empty)
                           const _NewsEmptyState()
                         else ...[
-                          if (snapshot.pinnedArticles.isNotEmpty) ...[
-                            _SectionLabel(
-                              icon: Icons.push_pin_rounded,
-                              label: 'GHIM (${snapshot.pinnedArticles.length})',
-                              color: _newsPrimary,
+                          if (snapshot.pinnedArticles.isNotEmpty)
+                            VitPageSection(
+                              density: VitDensity.compact,
+                              children: [
+                                VitModuleSectionHeader(
+                                  title:
+                                      'GHIM (${snapshot.pinnedArticles.length})',
+                                  accentColor: _newsPrimary,
+                                ),
+                                for (final article in snapshot.pinnedArticles)
+                                  _NewsArticleCard(
+                                    key: NewsPage.articleCardKey(article.id),
+                                    article: article,
+                                    pinned: true,
+                                    onTap: () =>
+                                        _showArticleSheet(context, article),
+                                  ),
+                              ],
                             ),
-                            for (final article in snapshot.pinnedArticles)
-                              _NewsArticleCard(
-                                key: NewsPage.articleCardKey(article.id),
-                                article: article,
-                                pinned: true,
-                                onTap: () =>
-                                    _showArticleSheet(context, article),
-                              ),
-                          ],
-                          if (snapshot.normalArticles.isNotEmpty) ...[
-                            const SizedBox(height: AppSpacing.newsSectionBreak),
-                            const _SectionLabel(label: 'TIN TỨC KHÁC'),
-                            for (final article in snapshot.normalArticles)
-                              _NewsArticleCard(
-                                key: NewsPage.articleCardKey(article.id),
-                                article: article,
-                                onTap: () =>
-                                    _showArticleSheet(context, article),
-                              ),
-                          ],
+                          if (snapshot.normalArticles.isNotEmpty)
+                            VitPageSection(
+                              density: VitDensity.compact,
+                              children: [
+                                const VitModuleSectionHeader(
+                                  title: 'TIN TỨC KHÁC',
+                                  accentColor: AppColors.text2,
+                                ),
+                                for (final article in snapshot.normalArticles)
+                                  _NewsArticleCard(
+                                    key: NewsPage.articleCardKey(article.id),
+                                    article: article,
+                                    onTap: () =>
+                                        _showArticleSheet(context, article),
+                                  ),
+                              ],
+                            ),
                         ],
                       ],
                     ),

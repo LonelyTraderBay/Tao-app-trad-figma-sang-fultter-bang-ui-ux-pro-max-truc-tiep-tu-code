@@ -9,7 +9,7 @@ class _CaseSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final accentColor = _targetColor(reportCase.targetType);
     return VitCard(
-      padding: AppSpacing.arenaReportCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -79,7 +79,7 @@ class _ReportReasonCard extends StatelessWidget {
       title: 'Lý do báo cáo',
       accentColor: AppColors.sell,
       child: VitCard(
-        padding: AppSpacing.arenaReportCardPadding,
+        density: VitDensity.compact,
         borderColor: AppColors.sell20,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +87,7 @@ class _ReportReasonCard extends StatelessWidget {
             const Icon(
               Icons.flag_outlined,
               color: AppColors.sell,
-              size: AppSpacing.arenaReportInlineIcon,
+              size: _reportInlineIcon,
             ),
             const SizedBox(width: AppSpacing.x3),
             Expanded(
@@ -96,7 +96,7 @@ class _ReportReasonCard extends StatelessWidget {
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.arenaReportBodyLineHeight,
+                  height: _reportBodyLineHeight,
                 ),
               ),
             ),
@@ -118,7 +118,7 @@ class _TimelineCard extends StatelessWidget {
       title: 'Tiến trình xử lý',
       accentColor: AppColors.buy,
       child: VitCard(
-        padding: AppSpacing.arenaReportCardPadding,
+        density: VitDensity.compact,
         child: Column(
           children: [
             for (var index = 0; index < reportCase.timeline.length; index++)
@@ -146,14 +146,14 @@ class _TimelineRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.arenaReportTimelineColumnWidth,
+          width: _reportTimelineColumnWidth,
           child: Column(
             children: [
               Padding(
-                padding: AppSpacing.arenaReportTimelineDotMargin,
+                padding: _reportTimelineDotMargin,
                 child: SizedBox(
-                  width: AppSpacing.arenaReportTimelineDot,
-                  height: AppSpacing.arenaReportTimelineDot,
+                  width: _reportTimelineDot,
+                  height: _reportTimelineDot,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
                       color: dotColor,
@@ -162,8 +162,7 @@ class _TimelineRow extends StatelessWidget {
                             ? BorderSide.none
                             : const BorderSide(
                                 color: AppColors.borderSolid,
-                                width:
-                                    AppSpacing.arenaReportTimelineBorderWidth,
+                                width: _reportTimelineBorderWidth,
                               ),
                       ),
                     ),
@@ -172,8 +171,8 @@ class _TimelineRow extends StatelessWidget {
               ),
               if (!isLast)
                 SizedBox(
-                  width: AppSpacing.arenaReportTimelineLineWidth,
-                  height: AppSpacing.arenaReportTimelineLineHeight,
+                  width: _reportTimelineLineWidth,
+                  height: _reportTimelineLineHeight,
                   child: ColoredBox(
                     color: step.done ? AppColors.buy20 : AppColors.divider,
                   ),
@@ -186,7 +185,7 @@ class _TimelineRow extends StatelessWidget {
           child: Padding(
             padding: isLast
                 ? AppSpacing.zeroInsets
-                : AppSpacing.arenaReportTimelineBodyPadding,
+                : _reportTimelineBodyPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -197,11 +196,11 @@ class _TimelineRow extends StatelessWidget {
                     fontWeight: step.done
                         ? AppTextStyles.medium
                         : AppTextStyles.normal,
-                    height: AppSpacing.arenaReportBodyLineHeight,
+                    height: _reportBodyLineHeight,
                   ),
                 ),
                 if (step.date.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.arenaReportTimelineDateGap),
+                  const SizedBox(height: _reportTimelineDateGap),
                   Text(
                     step.date,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -227,7 +226,7 @@ class _ActionTakenCard extends StatelessWidget {
       title: 'Hành động đã thực hiện',
       accentColor: AppColors.warn,
       child: VitCard(
-        padding: AppSpacing.arenaReportCardPadding,
+        density: VitDensity.compact,
         child: Column(
           children: [
             Row(
@@ -251,7 +250,7 @@ class _ActionTakenCard extends StatelessWidget {
                         reportCase.actionTaken!,
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
-                          height: AppSpacing.arenaReportActionLineHeight,
+                          height: _reportActionLineHeight,
                         ),
                       ),
                     ],

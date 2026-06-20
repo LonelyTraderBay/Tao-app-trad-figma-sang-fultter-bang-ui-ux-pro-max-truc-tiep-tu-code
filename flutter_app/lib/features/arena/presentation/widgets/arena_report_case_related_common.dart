@@ -13,8 +13,8 @@ class _RelatedReports extends StatelessWidget {
       children: [
         for (final report in reports)
           Padding(
-            padding: AppSpacing.arenaReportRelatedItemPadding(
-              isLast: report == reports.last,
+            padding: EdgeInsets.only(
+              bottom: report == reports.last ? 0 : AppSpacing.x3,
             ),
             child: VitCard(
               key: ArenaReportCasePage.relatedReportKey(report.id),
@@ -22,7 +22,7 @@ class _RelatedReports extends StatelessWidget {
                 HapticFeedback.selectionClick();
                 context.go(AppRoutePaths.arenaReportCase(report.id));
               },
-              padding: AppSpacing.arenaReportInnerPadding,
+              density: VitDensity.compact,
               child: Row(
                 children: [
                   Expanded(
@@ -71,14 +71,14 @@ class _DisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.arenaReportInnerPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppColors.accent,
-            size: AppSpacing.arenaReportInlineIcon,
+            size: _reportInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -86,7 +86,7 @@ class _DisclaimerCard extends StatelessWidget {
               disclaimer,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.arenaReportNoticeLineHeight,
+                height: _reportNoticeLineHeight,
               ),
             ),
           ),
@@ -115,8 +115,8 @@ class _SectionBlock extends StatelessWidget {
         Row(
           children: [
             SizedBox(
-              width: AppSpacing.arenaReportMarkerWidth,
-              height: AppSpacing.arenaReportMarkerHeight,
+              width: _reportMarkerWidth,
+              height: _reportMarkerHeight,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: accentColor,
@@ -152,8 +152,8 @@ class _ToneIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.arenaReportToneIconBox,
-      height: AppSpacing.arenaReportToneIconBox,
+      width: _reportToneIconBox,
+      height: _reportToneIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: 0.12),
@@ -163,7 +163,7 @@ class _ToneIcon extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Icon(icon, color: color, size: AppSpacing.arenaReportToneIcon),
+          child: Icon(icon, color: color, size: _reportToneIcon),
         ),
       ),
     );

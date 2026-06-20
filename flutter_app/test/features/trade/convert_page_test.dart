@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpConvert(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -104,6 +106,24 @@ void main() {
     expect(find.text('1 USDT = 0.000015 BTC'), findsOneWidget);
     expect(find.text('Slippage tolerance'), findsOneWidget);
     expect(find.text('Giao dịch gần đây'), findsOneWidget);
+  });
+
+  testWidgets('SC-056 first viewport reaches first favorite pair', (
+    tester,
+  ) async {
+    await pumpConvert(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-056 ConvertPage',
+      semanticLabel: 'SC-056 ConvertPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ConvertPage.favoriteKey('USDT/BTC')),
+      targetLabel: 'the first favorite convert pair',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-056 favorite pair and swap actions stay local', (

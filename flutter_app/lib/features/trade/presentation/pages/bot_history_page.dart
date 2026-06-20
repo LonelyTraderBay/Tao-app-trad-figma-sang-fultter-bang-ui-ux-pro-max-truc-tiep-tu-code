@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +23,10 @@ const _historyBackground = AppColors.bg;
 const _historyPrimary = AppColors.primary;
 const _historyGreen = AppColors.buy;
 const _historyRed = AppColors.sell;
+const double _historyFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _historyNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
 
 enum _HistoryFilter { all, buy, sell }
 
@@ -59,11 +63,10 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
       (sum, trade) => sum + trade.fee,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetNative
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.tradeBotBottomInsetNative) +
+            ? _historyFramedScrollClearance
+            : _historyNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -87,15 +90,12 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: BotHistoryPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
+                  bottomInset: scrollEndClearance,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: AppSpacing.tradeBotCardGap,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _StatsCard(
                         totalTrades: filteredTrades.length,
@@ -112,6 +112,7 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
                         title: 'Trades (${filteredTrades.length})',
                         variant: VitSectionHeaderVariant.accentBar,
                         accentColor: _historyPrimary,
+                        density: VitDensity.compact,
                       ),
                       if (filteredTrades.isEmpty)
                         const _EmptyHistory()
@@ -121,13 +122,17 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
                       _ExportNote(onTap: _handleExport),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
+                        padding: EdgeInsetsDirectional.symmetric(
+                          horizontal: AppSpacing.x3,
+                          vertical: AppSpacing.x2,
+                        ),
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'History export review',
                           message:
                               'Trade filters, realized PnL, fee totals, export scope and receipt next step are reviewed before records are generated.',
                           contractId: 'bot-history-export-review',
+                          density: VitDensity.compact,
                         ),
                       ),
                     ],

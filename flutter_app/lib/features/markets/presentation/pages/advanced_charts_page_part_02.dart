@@ -28,7 +28,7 @@ class _IndicatorCard extends StatelessWidget {
           InkWell(
             onTap: onToggleExpanded,
             child: Padding(
-              padding: AppSpacing.marketAdvancedIndicatorHeaderPadding,
+              padding: _advancedIndicatorHeaderPadding,
               child: Row(
                 children: [
                   Material(
@@ -37,7 +37,7 @@ class _IndicatorCard extends StatelessWidget {
                       borderRadius: AppRadii.smRadius,
                     ),
                     child: SizedBox.square(
-                      dimension: AppSpacing.marketAdvancedIndicatorAvatar,
+                      dimension: _advancedIndicatorAvatar,
                       child: Center(
                         child: Text(
                           indicator.shortName.length <= 3
@@ -51,7 +51,7 @@ class _IndicatorCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.marketAnalyticsGap),
+                  const SizedBox(width: _advancedGap),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,9 +65,7 @@ class _IndicatorCard extends StatelessWidget {
                                 fontWeight: AppTextStyles.bold,
                               ),
                             ),
-                            const SizedBox(
-                              width: AppSpacing.marketAnalyticsCompactGap,
-                            ),
+                            const SizedBox(width: _advancedCompactGap),
                             _CategoryBadge(category: category),
                           ],
                         ),
@@ -83,7 +81,7 @@ class _IndicatorCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.marketAnalyticsGap),
+                  const SizedBox(width: _advancedGap),
                   _IndicatorToggle(
                     key: AdvancedChartsPage.indicatorToggleKey(indicator.id),
                     active: active,
@@ -133,7 +131,7 @@ class _IndicatorList extends StatelessWidget {
             onToggleExpanded: () => onToggleExpanded(indicator),
           ),
           if (indicator != indicators.last)
-            const SizedBox(height: AppSpacing.marketAnalyticsMicroGap),
+            const SizedBox(height: _advancedMicroGap),
         ],
       ],
     );
@@ -152,12 +150,12 @@ class _CategoryBadge extends StatelessWidget {
       color: color.withValues(alpha: .08),
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       child: Padding(
-        padding: AppSpacing.marketAdvancedCategoryBadgePadding,
+        padding: _advancedCategoryBadgePadding,
         child: Text(
           category?.label ?? 'Khác',
           style: AppTextStyles.micro.copyWith(
             color: color,
-            height: AppSpacing.marketLineHeightCaption,
+            height: _advancedLineHeightCaption,
           ),
         ),
       ),
@@ -189,12 +187,12 @@ class _IndicatorToggle extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
         child: SizedBox.square(
-          dimension: AppSpacing.marketAdvancedToggleSize,
+          dimension: _advancedToggleSize,
           child: Center(
             child: active
                 ? Icon(
                     Icons.check_rounded,
-                    size: AppSpacing.marketAdvancedToggleIcon,
+                    size: _advancedToggleIcon,
                     color: color,
                   )
                 : Text(
@@ -220,7 +218,7 @@ class _IndicatorDetails extends StatelessWidget {
       children: [
         const Divider(height: AppSpacing.dividerHairline),
         Padding(
-          padding: AppSpacing.marketAdvancedDetailsPadding,
+          padding: _advancedDetailsPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -229,10 +227,10 @@ class _IndicatorDetails extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
               if (indicator.params.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.marketAnalyticsCompactGap),
+                const SizedBox(height: _advancedCompactGap),
                 Wrap(
-                  spacing: AppSpacing.marketAnalyticsCompactGap,
-                  runSpacing: AppSpacing.marketAnalyticsCompactGap,
+                  spacing: _advancedCompactGap,
+                  runSpacing: _advancedCompactGap,
                   children: [
                     for (final param in indicator.params)
                       Material(
@@ -241,7 +239,7 @@ class _IndicatorDetails extends StatelessWidget {
                           borderRadius: AppRadii.smRadius,
                         ),
                         child: Padding(
-                          padding: AppSpacing.marketAdvancedParamPadding,
+                          padding: _advancedParamPadding,
                           child: RichText(
                             text: TextSpan(
                               style: AppTextStyles.micro,
@@ -282,16 +280,16 @@ class _DrawingInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _marketPrimary.withValues(alpha: .15),
-      padding: AppSpacing.marketAdvancedCardPadding,
+      padding: _advancedCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.edit_rounded,
-            size: AppSpacing.marketAdvancedInfoIcon,
+            size: _advancedInfoIcon,
             color: _marketPrimary,
           ),
-          const SizedBox(width: AppSpacing.marketAnalyticsGap),
+          const SizedBox(width: _advancedGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,12 +301,12 @@ class _DrawingInfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
+                const SizedBox(height: _advancedTinyGap),
                 Text(
                   'Chọn công cụ bên dưới để vẽ trên biểu đồ. Hỗ trợ đường xu hướng, kênh giá, Fibonacci và đo lường.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.marketLineHeightReadable,
+                    height: _advancedLineHeightReadable,
                   ),
                 ),
               ],
@@ -329,26 +327,26 @@ class _DrawingToolsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: AppSpacing.marketAdvancedGridColumns,
+      crossAxisCount: _advancedGridColumns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: AppSpacing.marketAnalyticsCompactGap,
-      crossAxisSpacing: AppSpacing.marketAnalyticsCompactGap,
-      childAspectRatio: AppSpacing.marketAdvancedGridAspectRatio,
+      mainAxisSpacing: _advancedCompactGap,
+      crossAxisSpacing: _advancedCompactGap,
+      childAspectRatio: _advancedGridAspectRatio,
       children: [
         for (final tool in tools)
           VitCard(
             key: AdvancedChartsPage.drawingToolKey(tool.id),
-            padding: AppSpacing.marketAdvancedCardPaddingCompact,
+            padding: _advancedCardPaddingCompact,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   tool.icon,
-                  size: AppSpacing.marketAdvancedToolIcon,
+                  size: _advancedToolIcon,
                   color: AppColors.text1,
                 ),
-                const SizedBox(height: AppSpacing.marketOverviewMiniHeaderGap),
+                const SizedBox(height: _advancedMiniHeaderGap),
                 Text(
                   tool.name,
                   maxLines: 2,
@@ -357,10 +355,10 @@ class _DrawingToolsGrid extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.marketLineHeightCaption,
+                    height: _advancedLineHeightCaption,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
+                const SizedBox(height: _advancedTinyGap),
                 Text(
                   _categoryFor(categories, tool.categoryId)?.label ?? '',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -402,7 +400,7 @@ class _TipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.marketAdvancedCardPadding,
+      padding: _advancedCardPadding,
       child: Column(
         children: [
           for (var index = 0; index < _tips.length; index += 1) ...[
@@ -410,10 +408,10 @@ class _TipsCard extends StatelessWidget {
               children: [
                 Icon(
                   _tips[index].$1,
-                  size: AppSpacing.marketAdvancedTipIcon,
+                  size: _advancedTipIcon,
                   color: AppColors.text2,
                 ),
-                const SizedBox(width: AppSpacing.marketAnalyticsGap),
+                const SizedBox(width: _advancedGap),
                 Expanded(
                   child: Text(
                     _tips[index].$2,
@@ -424,8 +422,7 @@ class _TipsCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (index != _tips.length - 1)
-              const SizedBox(height: AppSpacing.marketAnalyticsGap),
+            if (index != _tips.length - 1) const SizedBox(height: _advancedGap),
           ],
         ],
       ),
@@ -440,22 +437,22 @@ class _SignalDisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warn.withValues(alpha: .16),
-      padding: AppSpacing.marketAdvancedCardPaddingCompact,
+      padding: _advancedCardPaddingCompact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            size: AppSpacing.marketAdvancedDisclaimerIcon,
+            size: _advancedDisclaimerIcon,
             color: AppColors.warn,
           ),
-          const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+          const SizedBox(width: _advancedCompactGap),
           Expanded(
             child: Text(
               'Tín hiệu kỹ thuật chỉ mang tính tham khảo. Không phải khuyến nghị đầu tư.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.marketLineHeightReadable,
+                height: _advancedLineHeightReadable,
               ),
             ),
           ),

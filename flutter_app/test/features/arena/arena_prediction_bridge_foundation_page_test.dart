@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/my_arena_pag
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/predictions_portfolio_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBridge(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,24 @@ void main() {
     expect(find.text('Allowed vs Not Allowed'), findsOneWidget);
     expect(find.text('Allowed'), findsOneWidget);
     expect(find.text('Not Allowed'), findsOneWidget);
+  });
+
+  testWidgets('SC-207 first viewport reaches first bridge principle', (
+    tester,
+  ) async {
+    await pumpBridge(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ArenaPredictionBridgeFoundationPage',
+      semanticLabel: 'SC-207 ArenaPredictionBridgeFoundationPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Connect by content, not by value'),
+      targetLabel: 'first bridge principle',
+      minVisibleHeight: 18,
+    );
   });
 
   testWidgets('SC-207 switches bridge foundation tabs', (tester) async {

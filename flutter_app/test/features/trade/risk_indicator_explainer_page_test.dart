@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskIndicator(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,5 +77,17 @@ void main() {
     expect(find.text('THIS PRODUCT'), findsOneWidget);
     expect(find.text('Provider Risk'), findsOneWidget);
     expect(find.text('Operational Risk'), findsOneWidget);
+  });
+
+  testWidgets('SC-110 first viewport reaches risk scale details', (
+    tester,
+  ) async {
+    await pumpRiskIndicator(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(RiskIndicatorExplainerPage.levelKey(1)),
+      targetLabel: 'the first risk scale level',
+    );
   });
 }

@@ -7,11 +7,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +23,15 @@ import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 part 'dca_rebalance_config_page_part_01.dart';
 part 'dca_rebalance_config_page_part_02.dart';
 part 'dca_rebalance_config_page_part_03.dart';
+
+const _dcaRebalanceVisualNavClearance = 114.0;
+const _dcaRebalanceNativeNavClearance = 88.0;
+const _dcaRebalancePreviewNavClearance = 72.0;
+const _dcaRebalanceBodyLineHeight = AppSpacing.dcaRebalanceBodyLineHeight;
+const _dcaRebalanceCompactLineHeight = AppSpacing.dcaRebalanceCompactLineHeight;
+const _dcaRebalanceTightLineHeight = AppSpacing.dcaRebalanceTightLineHeight;
+const _dcaRebalanceToggleHeight = AppSpacing.dcaRebalanceToggleHeight;
+const _dcaRebalanceToggleThumb = AppSpacing.dcaRebalanceToggleThumb;
 
 class DCARebalanceConfig extends ConsumerStatefulWidget {
   const DCARebalanceConfig({super.key, this.shellRenderMode});
@@ -66,12 +75,11 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
     _initialize(snapshot);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom +
-        AppSpacing.x7;
+    final navClearance = mode.usesVisualQaFrame
+        ? _dcaRebalanceVisualNavClearance
+        : _dcaRebalanceNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -98,10 +106,10 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
                       child: SingleChildScrollView(
                         key: DCARebalanceConfig.contentKey,
                         physics: const BouncingScrollPhysics(),
-                        padding: AppSpacing.dcaBottomInsetPadding(bottomInset),
+                        padding: EdgeInsets.only(bottom: scrollEndPadding),
                         child: VitPageContent(
-                          padding: VitContentPadding.relaxed,
-                          customGap: AppSpacing.x5,
+                          padding: VitContentPadding.compact,
+                          density: VitDensity.compact,
                           children: [
                             const _InfoBanner(),
                             _AllocationSummary(
@@ -166,6 +174,7 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
                               message:
                                   'Target allocations, strategy, threshold, frequency, advanced settings, auto-execute risk, preview sheet, fees, and disabled save state remain visible before saving rebalance automation.',
                               contractId: 'SC-170',
+                              density: VitDensity.compact,
                             ),
                           ],
                         ),

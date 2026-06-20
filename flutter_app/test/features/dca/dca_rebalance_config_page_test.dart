@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_rebalance_config_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRebalanceConfig(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -65,6 +67,24 @@ void main() {
     expect(find.text('Chiến lược'), findsOneWidget);
     expect(find.byKey(DCARebalanceConfig.previewKey), findsOneWidget);
     expect(find.byKey(DCARebalanceConfig.saveKey), findsOneWidget);
+  });
+
+  testWidgets('SC-170 first viewport reaches first allocation slider', (
+    tester,
+  ) async {
+    await pumpRebalanceConfig(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-170 DCARebalanceConfig',
+      semanticLabel: 'SC-170 DCARebalanceConfig',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(DCARebalanceConfig.targetSliderKey('target-btc')),
+      routeName: 'SC-170 DCARebalanceConfig',
+      actionLabel: 'the first target allocation slider',
+    );
   });
 
   testWidgets('SC-170 strategy and advanced controls update local state', (

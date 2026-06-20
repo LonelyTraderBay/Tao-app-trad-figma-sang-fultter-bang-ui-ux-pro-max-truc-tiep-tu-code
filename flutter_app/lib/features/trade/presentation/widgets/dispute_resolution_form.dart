@@ -25,26 +25,24 @@ class _FileComplaintTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final uploadTopGap = DeviceMetrics.height > 956
-        ? AppSpacing.tradeBotDisputeUploadTallGap
-        : AppSpacing.tradeBotDisputeUploadCompactGap;
-
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: AppSpacing.tradeBotCardGap,
+      density: VitDensity.compact,
       children: [
         _NoticeCard(title: snapshot.noticeTitle, body: snapshot.noticeBody),
         const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
+          density: VitDensity.compact,
           title: 'Review dispute complaint',
           message:
               'Confirm complaint type, provider, evidence, and issue details before submitting a formal dispute case.',
           contractId: 'Copy trading dispute intake',
         ),
         VitPageSection(
+          key: DisputeResolutionPage.complaintTypeSectionKey,
           label: 'Complaint Type',
-          customGap: AppSpacing.tradeBotRowGap,
+          density: VitDensity.compact,
           children: [
             for (final type in snapshot.complaintTypes)
               _ComplaintTypeCard(
@@ -56,6 +54,7 @@ class _FileComplaintTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Provider',
+          density: VitDensity.compact,
           children: [
             _ProviderSelect(
               providers: snapshot.providers,
@@ -66,7 +65,7 @@ class _FileComplaintTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Details',
-          customGap: AppSpacing.tradeBotLabelGap,
+          density: VitDensity.compact,
           children: [
             const _FieldLabel('Subject'),
             _TextFieldShell(
@@ -74,10 +73,7 @@ class _FileComplaintTab extends StatelessWidget {
               controller: subjectController,
               hint: 'Brief summary of the issue',
             ),
-            const Padding(
-              padding: AppSpacing.tradeBotDisputeDescriptionLabelPadding,
-              child: _FieldLabel('Description'),
-            ),
+            const _FieldLabel('Description'),
             _TextFieldShell(
               key: DisputeResolutionPage.descriptionKey,
               controller: descriptionController,
@@ -88,8 +84,9 @@ class _FileComplaintTab extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: AppSpacing.x2),
         Padding(
-          padding: AppSpacing.tradeBotDisputeUploadPadding(uploadTopGap),
+          padding: const EdgeInsets.only(top: AppSpacing.x1),
           child: _UploadEvidenceButton(
             attached: evidenceAttached,
             onPressed: onUpload,
@@ -109,8 +106,7 @@ class _NoticeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(minHeight: 74),
-      padding: AppSpacing.tradeBotDisputeNoticePadding,
+      density: VitDensity.compact,
       borderColor: _disputePrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,16 +126,12 @@ class _NoticeCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: _disputePrimary,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightCaption,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   body,
-                  style: AppTextStyles.micro.copyWith(
-                    color: _disputePrimary,
-                    height: AppSpacing.tradeBotLineHeightMedium,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: _disputePrimary),
                 ),
               ],
             ),
@@ -166,8 +158,10 @@ class _ComplaintTypeCard extends StatelessWidget {
     return VitCard(
       key: DisputeResolutionPage.complaintTypeKey(option.value),
       variant: VitCardVariant.inner,
-      height: AppSpacing.tradeBotDisputeComplaintHeight,
-      padding: AppSpacing.tradeBotDisputeComplaintPadding,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotOptionMinHeight,
+      ),
+      density: VitDensity.compact,
       borderColor: selected ? _disputePrimary : _disputeFieldBorder,
       onTap: onPressed,
       child: Column(
@@ -181,17 +175,15 @@ class _ComplaintTypeCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: selected ? _disputePrimary : AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             option.description,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: selected ? _disputePrimary : AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -217,7 +209,9 @@ class _ProviderSelect extends StatelessWidget {
       key: DisputeResolutionPage.providerKey,
       variant: VitCardVariant.inner,
       borderColor: _disputeFieldBorder,
-      height: AppSpacing.tradeBotDisputeProviderHeight,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.tradeBotControlCompact,
+      ),
       padding: AppSpacing.tradeBotDisputeProviderPadding,
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
@@ -232,15 +226,9 @@ class _ProviderSelect extends StatelessWidget {
           ),
           hint: Text(
             'Select provider...',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text1,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text1),
           items: [
             for (final provider in providers)
               DropdownMenuItem<String>(
@@ -284,17 +272,13 @@ class _TextFieldShell extends StatelessWidget {
       minLines: minLines,
       maxLines: maxLines,
       cursorColor: _disputePrimary,
-      style: AppTextStyles.caption.copyWith(
-        color: AppColors.text1,
-        height: AppSpacing.tradeBotLineHeightCaption,
-      ),
+      style: AppTextStyles.caption.copyWith(color: AppColors.text1),
       decoration: InputDecoration(
         isDense: true,
         hintText: hint,
         hintStyle: AppTextStyles.caption.copyWith(
           color: AppColors.text3,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.tradeBotLineHeightCaption,
         ),
         filled: true,
         fillColor: _disputeField,
@@ -329,7 +313,7 @@ class _UploadEvidenceButton extends StatelessWidget {
       variant: attached
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.secondary,
-      height: AppSpacing.tradeBotDisputeEvidenceHeight,
+      density: VitDensity.compact,
       leading: Icon(
         attached ? Icons.check_circle_outline_rounded : Icons.upload_rounded,
       ),
@@ -351,7 +335,7 @@ class _SubmitButton extends StatelessWidget {
     return VitCtaButton(
       key: DisputeResolutionPage.submitKey,
       onPressed: enabled ? onPressed : null,
-      height: AppSpacing.tradeBotSheetActionHeight,
+      density: VitDensity.compact,
       leading: const Icon(Icons.send_outlined),
       child: const Text('Submit Complaint'),
     );

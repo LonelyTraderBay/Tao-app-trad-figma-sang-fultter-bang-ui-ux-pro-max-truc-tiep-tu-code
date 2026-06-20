@@ -7,17 +7,19 @@ class _ComplianceNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.productGovernanceNoticePadding,
+    return VitCard(
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
+      borderColor: _govGreen.withValues(alpha: .24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.check_circle_outline,
             color: AppColors.text1,
-            size: AppSpacing.productGovernanceNoticeIcon,
+            size: AppSpacing.inputPrefixIcon,
           ),
-          const SizedBox(width: AppSpacing.productGovernanceInlineGap),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,16 +29,14 @@ class _ComplianceNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.productGovernanceLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.productGovernancePillGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${snapshot.products.length}/3 products have approved target markets. Next review: ${snapshot.nextReviewLabel}.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.productGovernanceLineHeightTight,
                   ),
                 ),
               ],
@@ -72,7 +72,7 @@ class _Stats extends StatelessWidget {
               accentColor: card.$4,
             ),
           ),
-          if (card != cards.last) const SizedBox(width: AppSpacing.x4),
+          if (card != cards.last) const SizedBox(width: AppSpacing.x2),
         ],
       ],
     );
@@ -93,7 +93,7 @@ class _Tabs extends StatelessWidget {
       ('distribution', 'Distribution'),
     ];
     return VitCard(
-      height: AppSpacing.x7 + AppSpacing.x2,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,

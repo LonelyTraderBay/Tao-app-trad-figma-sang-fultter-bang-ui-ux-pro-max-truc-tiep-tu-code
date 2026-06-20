@@ -14,78 +14,81 @@ class _ChatHeader extends StatelessWidget {
           MediaQuery.paddingOf(context).top,
         ),
         child: Row(
-        children: [
-          _RoundIconButton(
-            icon: Icons.arrow_back_rounded,
-            onPressed: () =>
-                context.go(AppRoutePaths.p2pOrder(snapshot.orderId)),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              CircleAvatar(
-                radius: AppSpacing.p2pChatHeaderAvatarRadius,
-                backgroundColor: AppColors.accent,
-                child: Text(
-                  snapshot.merchantInitial,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.onAccent,
-                    fontWeight: AppTextStyles.bold,
+          children: [
+            _RoundIconButton(
+              icon: Icons.arrow_back_rounded,
+              tooltip: 'Back to P2P order detail',
+              onPressed: () =>
+                  context.go(AppRoutePaths.p2pOrder(snapshot.orderId)),
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                CircleAvatar(
+                  radius: AppSpacing.p2pChatHeaderAvatarRadius,
+                  backgroundColor: AppColors.accent,
+                  child: Text(
+                    snapshot.merchantInitial,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                right: AppSpacing.p2pChatOnlineBadgeOffset,
-                bottom: AppSpacing.p2pChatOnlineBadgeOffset,
-                child: SizedBox.square(
-                  dimension: AppSpacing.p2pChatOnlineBadgeSize,
-                  child: Material(
-                    color: AppColors.buy,
-                    shape: const CircleBorder(
-                      side: BorderSide(
-                        color: AppColors.surface,
-                        width: AppSpacing.p2pChatOnlineBadgeBorder,
+                Positioned(
+                  right: AppSpacing.p2pChatOnlineBadgeOffset,
+                  bottom: AppSpacing.p2pChatOnlineBadgeOffset,
+                  child: SizedBox.square(
+                    dimension: AppSpacing.p2pChatOnlineBadgeSize,
+                    child: Material(
+                      color: AppColors.buy,
+                      shape: const CircleBorder(
+                        side: BorderSide(
+                          color: AppColors.surface,
+                          width: AppSpacing.p2pChatOnlineBadgeBorder,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.merchant,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                Text(
-                  snapshot.activeLabel,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.buy),
-                ),
               ],
             ),
-          ),
-          _SmallHeaderButton(
-            key: P2PChatPage.detailKey,
-            label: 'Chi tiết',
-            onPressed: () =>
-                context.go(AppRoutePaths.p2pOrder(snapshot.orderId)),
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          _RoundIconButton(
-            key: P2PChatPage.e2eKey,
-            icon: Icons.lock_outline_rounded,
-            color: AppColors.buy,
-            onPressed: () => context.go(AppRoutePaths.p2pE2EInfo),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    snapshot.merchant,
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  Text(
+                    snapshot.activeLabel,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.buy),
+                  ),
+                ],
+              ),
+            ),
+            _SmallHeaderButton(
+              key: P2PChatPage.detailKey,
+              tooltip: 'Open P2P order detail',
+              label: 'Chi tiết',
+              onPressed: () =>
+                  context.go(AppRoutePaths.p2pOrder(snapshot.orderId)),
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            _RoundIconButton(
+              key: P2PChatPage.e2eKey,
+              icon: Icons.lock_outline_rounded,
+              tooltip: 'Open E2E encryption info',
+              color: AppColors.buy,
+              onPressed: () => context.go(AppRoutePaths.p2pE2EInfo),
+            ),
+          ],
         ),
       ),
     );
@@ -217,34 +220,12 @@ class _EncryptionPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      child: Material(
-        color: AppColors.buy10,
-        borderRadius: AppRadii.inputRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.inputRadius,
-          child: Padding(
-            padding: AppSpacing.p2pChatEncryptionPillPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.lock_outline_rounded,
-                  color: AppColors.buy,
-                  size: AppSpacing.p2pChatTinyIcon,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  label,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.buy,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      child: VitStatusPill(
+        label: label,
+        status: VitStatusPillStatus.success,
+        icon: Icons.lock_outline_rounded,
+        size: VitStatusPillSize.sm,
+        onTap: onTap,
       ),
     );
   }

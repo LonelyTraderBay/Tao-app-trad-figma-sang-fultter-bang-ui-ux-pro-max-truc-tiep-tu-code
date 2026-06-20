@@ -9,7 +9,7 @@ class _SubmissionFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.complaintSubmissionFooterHeight,
+      height: _submissionFooterHeight,
       radius: VitCardRadius.sm,
       padding: AppSpacing.complaintSubmissionFooterPadding,
       borderColor: _submissionBorder.withValues(alpha: .35),
@@ -35,7 +35,7 @@ class _FieldLabel extends StatelessWidget {
       text,
       style: AppTextStyles.navLabel.copyWith(
         color: AppColors.text2,
-        height: AppSpacing.complaintSubmissionLineHeightTight,
+        height: _submissionLineTight,
       ),
     );
   }
@@ -65,6 +65,7 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       padding: padding,
       borderColor: _submissionBorder.withValues(alpha: .76),
       child: child,

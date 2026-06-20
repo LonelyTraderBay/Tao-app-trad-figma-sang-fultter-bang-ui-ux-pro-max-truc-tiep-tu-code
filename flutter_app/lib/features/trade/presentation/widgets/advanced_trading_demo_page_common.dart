@@ -10,7 +10,7 @@ class _AnalyticsTab extends StatelessWidget {
     return Column(
       children: [
         _MetricsCard(title: 'PnL Summary', metrics: snapshot.pnlSummary),
-        const SizedBox(height: AppSpacing.tradeToolPageTopGap),
+        const SizedBox(height: _advancedSpace),
         _MetricsCard(
           title: 'Performance Stats',
           metrics: snapshot.performanceMetrics,
@@ -40,7 +40,7 @@ class _MetricsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: _advancedSpace),
           for (final metric in metrics) ...[
             _ValueRow(
               label: metric.label,
@@ -48,7 +48,7 @@ class _MetricsCard extends StatelessWidget {
               tone: metric.tone,
             ),
             if (metric != metrics.last)
-              const SizedBox(height: AppSpacing.tradeToolInlineGap),
+              const SizedBox(height: _advancedTinySpace),
           ],
         ],
       ),
@@ -123,6 +123,7 @@ class _Panel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: padding,
+      density: VitDensity.compact,
       borderColor: AppColors.cardBorder,
       child: child,
     );
@@ -137,17 +138,20 @@ class _DemoSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomInset =
-        DeviceMetrics.nativeBottomChrome +
-        MediaQuery.paddingOf(context).bottom +
-        AppSpacing.tradeToolBottomInsetRiskNative;
+    final sheetClearance =
+        _advancedSheetClearance + MediaQuery.paddingOf(context).bottom;
     return Positioned.fill(
       child: ColoredBox(
         color: AppColors.modalScrim,
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: AppSpacing.tradeToolScrollPadding(bottomInset),
+            padding: EdgeInsets.fromLTRB(
+              AppSpacing.contentPad,
+              0,
+              AppSpacing.contentPad,
+              sheetClearance,
+            ),
             child: VitSheetPanel(
               title: title,
               child: SingleChildScrollView(
@@ -161,10 +165,10 @@ class _DemoSheet extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: _advancedSpace),
                     VitCtaButton(
                       onPressed: onClose,
-                      height: AppSpacing.tradeToolRiskTabHeight,
+                      height: _advancedSheetActionExtent,
                       child: Text(
                         'Đóng',
                         style: AppTextStyles.body.copyWith(

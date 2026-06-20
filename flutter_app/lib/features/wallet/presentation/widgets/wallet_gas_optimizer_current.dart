@@ -20,7 +20,7 @@ class _GasTabs extends StatelessWidget {
     return Material(
       color: _gasPanel,
       child: SizedBox(
-        height: AppSpacing.walletGasTabsHeight,
+        height: 48,
         child: Column(
           children: [
             Expanded(
@@ -58,9 +58,7 @@ class _CurrentGasTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-      padding: VitContentPadding.none,
-      fullBleed: true,
-      customGap: AppSpacing.walletGasContentGap,
+      density: VitDensity.compact,
       children: [
         _GasStatusCard(snapshot: snapshot),
         const _SectionLabel(label: 'Chon toc do giao dich'),
@@ -94,8 +92,7 @@ class _GasStatusCard extends StatelessWidget {
         : (isHigh ? 'High Gas Prices' : 'Normal Gas Prices');
 
     return VitCard(
-      height: AppSpacing.walletGasStatusHeight,
-      padding: AppSpacing.walletGasStatusPadding,
+      density: VitDensity.compact,
       borderColor: color.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +118,7 @@ class _GasStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           Text.rich(
             TextSpan(
               text: 'Current gas ',
@@ -177,8 +174,7 @@ class _GasLevelCard extends StatelessWidget {
     return VitCard(
       key: WalletGasOptimizerPage.speedKey(level.speed),
       onTap: onTap,
-      height: AppSpacing.walletGasLevelHeight,
-      padding: AppSpacing.walletGasLevelPadding,
+      density: VitDensity.compact,
       borderColor: selected ? _gasPrimary : _gasBorder,
       child: Column(
         children: [
@@ -202,14 +198,12 @@ class _GasLevelCard extends StatelessWidget {
                           ),
                         ),
                         if (level.recommended) ...[
-                          const SizedBox(
-                            width: AppSpacing.walletGasLevelBadgeGap,
-                          ),
+                          const SizedBox(width: AppSpacing.x2),
                           const _RecommendedBadge(),
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.walletGasLevelMetaGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       level.timeEstimate,
                       style: AppTextStyles.badge.copyWith(
@@ -229,7 +223,7 @@ class _GasLevelCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.walletGasLevelValueGap),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     '~\$${level.usd.toStringAsFixed(2)}',
                     style: AppTextStyles.badge.copyWith(
@@ -241,11 +235,11 @@ class _GasLevelCard extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           ClipRRect(
             borderRadius: AppRadii.hairlineRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.walletGasLevelProgressHeight,
+              minHeight: 5,
               value: level.gwei / 50,
               color: color,
               backgroundColor: _gasBackground,
@@ -282,8 +276,7 @@ class _ComparisonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.walletGasComparisonHeight,
-      padding: AppSpacing.walletGasComparisonPadding,
+      density: VitDensity.compact,
       borderColor: _gasBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -294,11 +287,11 @@ class _ComparisonCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletGasComparisonTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           for (var i = 0; i < comparisons.length; i++) ...[
             _ComparisonRow(comparison: comparisons[i]),
             if (i != comparisons.length - 1)
-              const SizedBox(height: AppSpacing.walletGasComparisonRowGap),
+              const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -314,6 +307,7 @@ class _ComparisonRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      key: WalletGasOptimizerPage.comparisonKey(comparison.type),
       children: [
         Expanded(
           child: Column(
@@ -326,7 +320,7 @@ class _ComparisonRow extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.walletGasComparisonTextGap),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 '${_withCommas(comparison.gas.toString())} gas',
                 style: AppTextStyles.badge.copyWith(
@@ -358,7 +352,7 @@ class _RefreshButton extends StatelessWidget {
       key: WalletGasOptimizerPage.refreshKey,
       onPressed: () {},
       variant: VitCtaButtonVariant.ghost,
-      height: AppSpacing.walletGasRefreshHeight,
+      height: VitDensity.compact.controlHeight,
       leading: const Icon(Icons.refresh_rounded),
       child: Text(
         'Refresh Prices',

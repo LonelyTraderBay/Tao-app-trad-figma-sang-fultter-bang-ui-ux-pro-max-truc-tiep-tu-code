@@ -18,16 +18,16 @@ class _KycTierCard extends StatelessWidget {
       onTap: isLocked ? () => context.go(AppRoutePaths.profileKyc) : () {},
       behavior: HitTestBehavior.opaque,
       child: VitCard(
-        height: AppSpacing.buttonStandard + AppSpacing.x4,
-        padding: AppSpacing.walletAddressAddInputPadding,
+        height: _limitsTierHeight,
+        padding: _limitsTierPadding,
         borderColor: isCurrent
             ? tierColor.withValues(alpha: .45)
             : _limitsBorder,
         child: Row(
           children: [
             VitCard(
-              width: AppSpacing.walletAddressIconSize,
-              height: AppSpacing.walletAddressIconSize,
+              width: _limitsIconBox,
+              height: _limitsIconBox,
               variant: VitCardVariant.ghost,
               radius: VitCardRadius.lg,
               borderColor: tierColor.withValues(alpha: isCurrent ? .45 : .26),
@@ -46,7 +46,7 @@ class _KycTierCard extends StatelessWidget {
                 size: AppSpacing.transferActionIcon,
               ),
             ),
-            const SizedBox(width: AppSpacing.walletAddressPrimaryGap),
+            const SizedBox(width: _limitsInlineGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -61,9 +61,7 @@ class _KycTierCard extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(
-                        width: AppSpacing.walletAddressStatsValueGap,
-                      ),
+                      const SizedBox(width: _limitsTinyGap),
                       Flexible(
                         child: Text(
                           tier.name,
@@ -76,7 +74,7 @@ class _KycTierCard extends StatelessWidget {
                         ),
                       ),
                       if (isCurrent) ...[
-                        const SizedBox(width: AppSpacing.walletAddressStatsGap),
+                        const SizedBox(width: _limitsTinyGap),
                         VitAccentPill(
                           label: 'HI\u1EC6N T\u1EA0I',
                           accentColor: tierColor,
@@ -84,7 +82,7 @@ class _KycTierCard extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
+                  const SizedBox(height: _limitsTinyGap),
                   Text(
                     tier.dailyLimit > 0
                         ? '${_formatUsd(tier.dailyLimit)}/ng\u00E0y'
@@ -116,7 +114,7 @@ class _FaqCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      padding: _limitsCardPadding,
       borderColor: _limitsBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +126,7 @@ class _FaqCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletWithdrawPrimaryGap),
+          const SizedBox(height: _limitsGap),
           for (var i = 0; i < faqs.length; i++) ...[
             Text(
               faqs[i].question,
@@ -137,18 +135,18 @@ class _FaqCard extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.walletAddressStatsGap),
+            const SizedBox(height: _limitsTinyGap),
             Text(
               faqs[i].answer,
               style: AppTextStyles.micro.copyWith(color: _limitsMuted),
             ),
             if (i != faqs.length - 1) ...[
-              const SizedBox(height: AppSpacing.walletWithdrawSectionGap),
+              const SizedBox(height: _limitsGap),
               const Divider(
                 height: AppSpacing.dividerHairline,
                 color: AppColors.divider,
               ),
-              const SizedBox(height: AppSpacing.walletWithdrawSectionGap),
+              const SizedBox(height: _limitsGap),
             ],
           ],
         ],

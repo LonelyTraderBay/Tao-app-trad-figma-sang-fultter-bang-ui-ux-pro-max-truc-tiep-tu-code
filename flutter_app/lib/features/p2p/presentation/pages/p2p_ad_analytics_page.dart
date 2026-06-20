@@ -6,11 +6,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,6 +22,30 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 part 'p2p_ad_analytics_page_part_01.dart';
 part 'p2p_ad_analytics_page_part_02.dart';
 part 'p2p_ad_analytics_page_part_03.dart';
+
+const double _p2pAdAnalyticsVisualNavClearance = 112;
+const double _p2pAdAnalyticsNativeNavClearance = 88;
+const double _p2pAdAnalyticsIdentityExtent =
+    AppSpacing.p2pMarketplaceAnalyticsIdentityHeight;
+const double _p2pAdAnalyticsMetricCardExtent =
+    AppSpacing.p2pMarketplaceAnalyticsMetricCardHeight;
+const double _p2pAdAnalyticsMetricIconExtent = AppSpacing.x6;
+const double _p2pAdAnalyticsQuickStatsExtent =
+    AppSpacing.p2pMarketplaceAnalyticsQuickStatsHeight;
+const double _p2pAdAnalyticsLegendDotExtent =
+    AppSpacing.p2pMarketplaceAnalyticsLegendDot;
+const double _p2pAdAnalyticsDividerExtent =
+    AppSpacing.p2pMarketplaceAnalyticsDividerHeight;
+const double _p2pAdAnalyticsChartLargeExtent =
+    AppSpacing.p2pMarketplaceAnalyticsChartLargeHeight;
+const double _p2pAdAnalyticsChartTallExtent =
+    AppSpacing.p2pMarketplaceAnalyticsChartTallHeight;
+const double _p2pAdAnalyticsRadarExtent =
+    AppSpacing.p2pMarketplaceAnalyticsRadarHeight;
+const double _p2pAdAnalyticsTightLine =
+    AppSpacing.p2pMarketplaceAnalyticsTightLineHeight;
+const double _p2pAdAnalyticsBodyLine =
+    AppSpacing.p2pMarketplaceAnalyticsBodyLineHeight;
 
 class P2PAdAnalyticsPage extends ConsumerWidget {
   const P2PAdAnalyticsPage({
@@ -40,13 +64,11 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pAdAnalyticsProvider(adId));
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pMarketplaceAnalyticsBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pMarketplaceAnalyticsBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _p2pAdAnalyticsVisualNavClearance
+        : _p2pAdAnalyticsNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -71,13 +93,16 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PAdAnalyticsPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.p2pMarketplaceAnalyticsScrollPadding(
-                      bottomInset,
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.x4,
+                      density: VitDensity.compact,
                       children: [
                         _AdIdentityCard(snapshot: snapshot),
                         _KpiGrid(snapshot: snapshot),
@@ -90,13 +115,14 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
                         _CompetitorCard(rows: snapshot.competitorComparison),
                         _TipsCard(tips: snapshot.optimizationTips),
                         const VitPageSection(
-                          customGap: 0,
+                          density: VitDensity.compact,
                           children: [
                             VitCard(
                               variant: VitCardVariant.inner,
                               padding: AppSpacing
                                   .p2pMarketplaceAnalyticsCompactPadding,
                               child: VitHighRiskStatePanel(
+                                density: VitDensity.compact,
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'Ad performance review',
                                 message:

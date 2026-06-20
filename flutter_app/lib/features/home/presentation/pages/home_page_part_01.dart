@@ -114,15 +114,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     final notificationUnreadCount = ref.watch(notificationUnreadCountProvider);
     final shellRenderMode = widget.shellRenderMode ?? defaultShellRenderMode();
     final nativeShell = !shellRenderMode.usesVisualQaFrame;
-    final bottomChrome = shellRenderMode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomScrollInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
-        (nativeShell
-            ? AppSpacing.homeBottomSheetScrollInset
-            : AppSpacing.homeBottomSheetScrollInsetVisual);
+    final scrollEndClearance =
+        (nativeShell ? _nativeScrollClearance : _framedScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: nativeShell ? VitPageVariant.flush : VitPageVariant.defaultPage,
@@ -141,13 +135,10 @@ class _HomePageState extends ConsumerState<HomePage> {
               _handleHomeScrollNotification(notification, visibleAnnouncements),
           child: VitInsetScrollView(
             key: HomePage.contentKey,
-            bottomInset: bottomScrollInset,
+            bottomInset: scrollEndClearance,
             child: VitPageContent(
               padding: VitContentPadding.compact,
-              gap: VitContentGap.defaultGap,
-              customGap: nativeShell
-                  ? AppSpacing.homeNativeShellCustomGap
-                  : null,
+              density: VitDensity.compact,
               children: [
                 if (visibleAnnouncements.isNotEmpty)
                   _AnnouncementBanner(
@@ -353,7 +344,7 @@ class _PortfolioCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.homeSectionInnerGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             balanceHidden
                 ? '••••••'
@@ -363,7 +354,7 @@ class _PortfolioCard extends StatelessWidget {
               letterSpacing: 0,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           if (!balanceHidden)
             Row(
               children: [
@@ -383,12 +374,12 @@ class _PortfolioCard extends StatelessWidget {
                 ),
               ],
             ),
-          const SizedBox(height: AppSpacing.homeActionRowGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
                 child: VitCtaButton(
-                  height: AppSpacing.homeHeroActionHeight,
+                  height: _heroActionExtent,
                   density: VitDensity.compact,
                   fullWidth: true,
                   onPressed: () => onNavigate('/wallet/deposit/USDT'),
@@ -396,10 +387,10 @@ class _PortfolioCard extends StatelessWidget {
                   child: const Text('Nạp'),
                 ),
               ),
-              const SizedBox(width: AppSpacing.homePortfolioActionSpacing),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: VitCtaButton(
-                  height: AppSpacing.homeHeroActionHeight,
+                  height: _heroActionExtent,
                   density: VitDensity.compact,
                   fullWidth: true,
                   variant: VitCtaButtonVariant.secondary,
@@ -408,10 +399,10 @@ class _PortfolioCard extends StatelessWidget {
                   child: const Text('Rút'),
                 ),
               ),
-              const SizedBox(width: AppSpacing.homePortfolioActionSpacing),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: VitCtaButton(
-                  height: AppSpacing.homeHeroActionHeight,
+                  height: _heroActionExtent,
                   density: VitDensity.compact,
                   fullWidth: true,
                   variant: VitCtaButtonVariant.secondary,
@@ -475,7 +466,7 @@ class _MarketTickerSection extends StatelessWidget {
             leading: VitAssetAvatar(
               label: pair.baseAsset,
               accentColor: pair.logoColor,
-              size: AppSpacing.homeTrendingIconSize,
+              size: _assetAvatarExtent,
               radius: AppRadii.xsRadius,
             ),
             title: pair.symbol,
@@ -550,13 +541,12 @@ class _RecentProductsSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         SizedBox(
           key: HomePage.recentProductsKey,
-          height: AppSpacing.homeRecentProductHeight,
+          height: _recentProductExtent,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
             itemCount: recentProducts.length,
-            separatorBuilder: (_, _) =>
-                const SizedBox(width: AppSpacing.homeSectionCtaGap),
+            separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.x3),
             itemBuilder: (context, index) {
               final product = recentProducts[index];
               return _RecentProductTile(
@@ -580,7 +570,7 @@ class _RecentProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.homeRecentProductWidth,
+      width: _recentProductWidth,
       child: VitCompactProductCard(
         key: HomePage.recentProductKey(product.id),
         icon: product.icon,

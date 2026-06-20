@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -15,6 +15,23 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+
+const double _p2pE2EVisualNavClearance = 112;
+const double _p2pE2ENativeNavClearance = 88;
+const double _p2pE2EHeroIconExtent = AppSpacing.inputHeight + AppSpacing.x2;
+const double _p2pE2EEndpointAvatarExtent =
+    AppSpacing.inputHeight - AppSpacing.x1;
+const double _p2pE2EStepNodeExtent = AppSpacing.iconLg;
+const double _p2pE2EConnectorExtent = AppSpacing.x3;
+const double _p2pE2EConnectorThickness = AppSpacing.hairlineStroke;
+const double _p2pE2ELockExtent = AppSpacing.x7;
+const double _p2pE2ELockIconExtent = AppSpacing.p2pHomeInlineIcon;
+const double _p2pE2EBodyLineHeight = 1.45;
+const double _p2pE2EStepLineHeight = 1.35;
+const double _p2pE2EFingerprintLineHeight = 1.55;
+const double _p2pE2EFingerprintLetterSpacing = AppSpacing.hairlineStroke;
+const EdgeInsets _p2pE2ECardPadding = AppSpacing.p2pWalletCompactCardPadding;
+const EdgeInsets _p2pE2EServerPadding = AppSpacing.p2pWalletNoticePadding;
 
 class P2PE2EInfoPage extends ConsumerWidget {
   const P2PE2EInfoPage({super.key, this.shellRenderMode});
@@ -36,12 +53,11 @@ class P2PE2EInfoPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pE2EInfoProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.p2pE2EBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pE2EBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _p2pE2EVisualNavClearance
+        : _p2pE2ENativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -65,22 +81,26 @@ class P2PE2EInfoPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.p2pE2EScrollPadding(bottomInset),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: AppSpacing.p2pE2EContentGap,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         _Hero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         _EncryptionDiagram(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.x2),
                         _InfoItems(items: snapshot.infoItems),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.x2),
                         _FingerprintCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.x2),
                         _HowItWorks(steps: snapshot.steps),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.x2),
                         _ServerInfo(snapshot: snapshot),
                       ],
                     ),
@@ -106,8 +126,8 @@ class _Hero extends StatelessWidget {
       key: P2PE2EInfoPage.heroKey,
       children: [
         SizedBox(
-          width: AppSpacing.p2pE2EHeroIconBox,
-          height: AppSpacing.p2pE2EHeroIconBox,
+          width: _p2pE2EHeroIconExtent,
+          height: _p2pE2EHeroIconExtent,
           child: Material(
             color: AppColors.buy.withValues(alpha: .12),
             borderRadius: AppRadii.cardLargeRadius,
@@ -118,7 +138,7 @@ class _Hero extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           snapshot.heroTitle,
           textAlign: TextAlign.center,
@@ -149,7 +169,7 @@ class _EncryptionDiagram extends StatelessWidget {
       key: P2PE2EInfoPage.diagramKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.p2pE2ECardPadding,
+      padding: _p2pE2ECardPadding,
       child: Column(
         children: [
           Row(
@@ -192,8 +212,8 @@ class _EndpointAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.p2pE2EEndpointAvatarSize,
-      height: AppSpacing.p2pE2EEndpointAvatarSize,
+      width: _p2pE2EEndpointAvatarExtent,
+      height: _p2pE2EEndpointAvatarExtent,
       child: Material(
         color: color,
         shape: const CircleBorder(),
@@ -219,26 +239,26 @@ class _SecureConnector extends StatelessWidget {
     return Row(
       children: [
         const SizedBox(
-          width: AppSpacing.p2pE2EConnectorWidth,
-          height: AppSpacing.p2pE2EConnectorHeight,
+          width: _p2pE2EConnectorExtent,
+          height: _p2pE2EConnectorThickness,
           child: ColoredBox(color: AppColors.buy),
         ),
         SizedBox(
-          width: AppSpacing.p2pE2ELockBox,
-          height: AppSpacing.p2pE2ELockBox,
+          width: _p2pE2ELockExtent,
+          height: _p2pE2ELockExtent,
           child: Material(
             color: AppColors.buy.withValues(alpha: .12),
             shape: const CircleBorder(),
             child: const Icon(
               Icons.lock_outline_rounded,
               color: AppColors.buy,
-              size: AppSpacing.p2pE2ELockIcon,
+              size: _p2pE2ELockIconExtent,
             ),
           ),
         ),
         const SizedBox(
-          width: AppSpacing.p2pE2EConnectorWidth,
-          height: AppSpacing.p2pE2EConnectorHeight,
+          width: _p2pE2EConnectorExtent,
+          height: _p2pE2EConnectorThickness,
           child: ColoredBox(color: AppColors.buy),
         ),
       ],
@@ -259,7 +279,7 @@ class _InfoItems extends StatelessWidget {
       children: [
         for (var index = 0; index < items.length; index++) ...[
           _InfoItemCard(item: items[index]),
-          if (index != items.length - 1) const SizedBox(height: AppSpacing.x3),
+          if (index != items.length - 1) const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -278,13 +298,13 @@ class _InfoItemCard extends StatelessWidget {
     return VitCard(
       key: P2PE2EInfoPage.infoItemKey(item.id),
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pE2ECardPadding,
+      padding: _p2pE2ECardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.inputHeight,
-            height: AppSpacing.inputHeight,
+            width: _p2pE2EEndpointAvatarExtent,
+            height: _p2pE2EEndpointAvatarExtent,
             child: Material(
               color: color.withValues(alpha: .12),
               borderRadius: AppRadii.lgRadius,
@@ -309,7 +329,7 @@ class _InfoItemCard extends StatelessWidget {
                   style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text3,
                     fontWeight: AppTextStyles.normal,
-                    height: AppSpacing.p2pE2EBodyLineHeight,
+                    height: _p2pE2EBodyLineHeight,
                   ),
                 ),
               ],
@@ -331,7 +351,7 @@ class _FingerprintCard extends StatelessWidget {
     return VitCard(
       key: P2PE2EInfoPage.fingerprintKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pE2ECardPadding,
+      padding: _p2pE2ECardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -354,17 +374,17 @@ class _FingerprintCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             snapshot.fingerprint,
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              letterSpacing: AppSpacing.p2pE2EFingerprintLetterSpacing,
-              height: AppSpacing.p2pE2EFingerprintLineHeight,
+              letterSpacing: _p2pE2EFingerprintLetterSpacing,
+              height: _p2pE2EFingerprintLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             snapshot.fingerprintHint,
             textAlign: TextAlign.center,
@@ -386,7 +406,7 @@ class _HowItWorks extends StatelessWidget {
     return VitCard(
       key: P2PE2EInfoPage.stepsKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pE2ECardPadding,
+      padding: _p2pE2ECardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -397,11 +417,11 @@ class _HowItWorks extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           for (var index = 0; index < steps.length; index++) ...[
             _StepRow(step: steps[index]),
             if (index != steps.length - 1)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -421,13 +441,11 @@ class _StepRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.p2pE2EStepNodeSize,
-          height: AppSpacing.p2pE2EStepNodeSize,
+          width: _p2pE2EStepNodeExtent,
+          height: _p2pE2EStepNodeExtent,
           child: Material(
             color: AppColors.buy.withValues(alpha: .12),
-            shape: const CircleBorder(
-              side: BorderSide(color: AppColors.buy20),
-            ),
+            shape: const CircleBorder(side: BorderSide(color: AppColors.buy20)),
             child: Center(
               child: Text(
                 step.step,
@@ -456,7 +474,7 @@ class _StepRow extends StatelessWidget {
                 step.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.p2pE2EStepLineHeight,
+                  height: _p2pE2EStepLineHeight,
                 ),
               ),
             ],
@@ -482,7 +500,7 @@ class _ServerInfo extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .18)),
       ),
       child: Padding(
-        padding: AppSpacing.p2pE2EServerPadding,
+        padding: _p2pE2EServerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -497,7 +515,7 @@ class _ServerInfo extends StatelessWidget {
                 snapshot.serverNote,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.p2pE2EBodyLineHeight,
+                  height: _p2pE2EBodyLineHeight,
                 ),
               ),
             ),

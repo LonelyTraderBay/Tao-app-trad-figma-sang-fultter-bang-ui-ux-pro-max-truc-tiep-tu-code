@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -35,6 +36,7 @@ class DisputeResolutionPage extends ConsumerStatefulWidget {
   static const subjectKey = Key('sc082_subject');
   static const descriptionKey = Key('sc082_description');
   static const uploadKey = Key('sc082_upload_evidence');
+  static const complaintTypeSectionKey = Key('sc082_complaint_type_section');
 
   static Key complaintTypeKey(String id) => Key('sc082_complaint_type_$id');
   static Key tabKey(String id) => Key('sc082_tab_$id');
@@ -84,18 +86,16 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
         .watch(tradeReadModelControllerProvider)
         .getDisputeResolution();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final activeBottomInset = mode.usesVisualQaFrame
-        ? DeviceMetrics.nativeBottomChrome +
-              AppSpacing.tradeBotDisputeFooterNativeGap
-        : DeviceMetrics.nativeBottomChrome +
-              MediaQuery.paddingOf(context).bottom +
-              AppSpacing.tradeBotDisputeFooterNativeGap;
-    final footerBottomOffset = mode.usesVisualQaFrame
+    final safeBottom = MediaQuery.paddingOf(context).bottom;
+    final nativeFooterClearance =
+        DeviceMetrics.nativeBottomChrome + safeBottom + AppSpacing.x5;
+    final visualFooterOffset = mode.usesVisualQaFrame
         ? DeviceMetrics.height > 956
               ? DeviceMetrics.height - 956
-              : DeviceMetrics.nativeBottomChrome +
-                    AppSpacing.tradeBotDisputeFooterVisualGap
-        : activeBottomInset;
+              : DeviceMetrics.nativeBottomChrome + AppSpacing.x4
+        : nativeFooterClearance;
+    final footerOffset = visualFooterOffset;
+    final scrollClearance = footerOffset + AppSpacing.x7;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -122,18 +122,15 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: DisputeResolutionPage.contentKey,
-                      padding: AppSpacing.tradeBotDisputeScrollPadding(
-                        _activeTabId == 'file'
-                            ? AppSpacing.tradeBotDisputeFileTopGap
-                            : AppSpacing.tradeBotDisputeCasesTopGap,
-                        _activeTabId == 'file'
-                            ? AppSpacing.tradeBotDisputeFileBottomGap
-                            : activeBottomInset +
-                                  AppSpacing.tradeBotDisputeCasesBottomGap,
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        _activeTabId == 'file' ? AppSpacing.x3 : AppSpacing.x4,
+                        AppSpacing.contentPad,
+                        scrollClearance,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
-                        customGap: 0,
+                        density: VitDensity.compact,
                         fullBleed: true,
                         children: [
                           if (_activeTabId == 'file')
@@ -168,7 +165,7 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
               Positioned(
                 left: 0,
                 right: 0,
-                bottom: footerBottomOffset,
+                bottom: footerOffset,
                 child: VitStickyFooter(
                   backgroundColor: _disputeFooter,
                   child: _SubmitButton(

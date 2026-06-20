@@ -218,85 +218,89 @@ class _SettingsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageSection(
       key: SavingsAutoPilotPage.settingsKey,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      customGap: AppSpacing.x4,
       children: [
-        const _SectionTitle(label: 'Chế độ AutoPilot'),
-        const SizedBox(height: AppSpacing.x3),
-        for (final item in snapshot.modes) ...[
-          _ModeCard(
-            item: item,
-            selected: item.id == mode,
-            onTap: () => onModeChanged(item.id),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-        ],
-        const SizedBox(height: AppSpacing.x4),
-        const _SectionTitle(label: 'Ngân sách hằng tháng (USD)'),
-        const SizedBox(height: AppSpacing.x3),
-        _BudgetCard(selected: monthlyBudgetUsd, onChanged: onBudgetChanged),
-        const SizedBox(height: AppSpacing.x5),
-        const _SectionTitle(label: 'Modules tự động'),
-        const SizedBox(height: AppSpacing.x3),
-        for (final module in snapshot.modules) ...[
-          _SwitchRow(
-            icon: _iconFor(module.iconKey),
-            color: _toneColor(module.tone),
-            title: module.label,
-            subtitle: module.description,
-            value: moduleEnabled(module),
-            onChanged: (value) => onModuleChanged(module.id, value),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-        ],
-        const SizedBox(height: AppSpacing.x5),
-        const _SectionTitle(label: 'An toàn & Kiểm soát'),
-        const SizedBox(height: AppSpacing.x3),
-        _SwitchRow(
-          icon: Icons.security_rounded,
-          color: AppColors.primary,
-          title: 'Phê duyệt thủ công',
-          subtitle: 'Yêu cầu xác nhận trước khi chuyển SP',
-          value: approvalRequired,
-          onChanged: onApprovalChanged,
+        VitPageSection(
+          label: 'Chế độ AutoPilot',
+          children: [
+            for (final item in snapshot.modes)
+              _ModeCard(
+                item: item,
+                selected: item.id == mode,
+                onTap: () => onModeChanged(item.id),
+              ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x2),
-        _SwitchRow(
-          icon: Icons.notifications_active_outlined,
-          color: AppColors.warn,
-          title: 'Thông báo hành động',
-          subtitle: 'Nhận thông báo khi AutoPilot hành động',
-          value: notificationsEnabled,
-          onChanged: onNotificationChanged,
+        VitPageSection(
+          label: 'Ngân sách hằng tháng (USD)',
+          children: [
+            _BudgetCard(selected: monthlyBudgetUsd, onChanged: onBudgetChanged),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x5),
-        const _SectionTitle(label: 'Tham số rủi ro'),
-        const SizedBox(height: AppSpacing.x3),
-        _RiskParameter(
-          label: 'Ngưỡng rebalance',
-          value: '${snapshot.config.rebalanceThresholdPct}%',
-          minLabel: '3% (nhạy)',
-          maxLabel: '25% (ổn định)',
-          color: AppColors.primary,
+        VitPageSection(
+          label: 'Modules tự động',
+          children: [
+            for (final module in snapshot.modules)
+              _SwitchRow(
+                icon: _iconFor(module.iconKey),
+                color: _toneColor(module.tone),
+                title: module.label,
+                subtitle: module.description,
+                value: moduleEnabled(module),
+                onChanged: (value) => onModuleChanged(module.id, value),
+              ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x3),
-        _RiskParameter(
-          label: 'Min APY gain cho switch',
-          value: '${snapshot.config.switchMinApyGainPct.toStringAsFixed(1)}%',
-          minLabel: '0.1% (nhạy)',
-          maxLabel: '3.0% (thận trọng)',
-          color: AppColors.accent,
+        VitPageSection(
+          label: 'An toàn & Kiểm soát',
+          children: [
+            _SwitchRow(
+              icon: Icons.security_rounded,
+              color: AppColors.primary,
+              title: 'Phê duyệt thủ công',
+              subtitle: 'Yêu cầu xác nhận trước khi chuyển SP',
+              value: approvalRequired,
+              onChanged: onApprovalChanged,
+            ),
+            _SwitchRow(
+              icon: Icons.notifications_active_outlined,
+              color: AppColors.warn,
+              title: 'Thông báo hành động',
+              subtitle: 'Nhận thông báo khi AutoPilot hành động',
+              value: notificationsEnabled,
+              onChanged: onNotificationChanged,
+            ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x3),
-        _RiskParameter(
-          label: 'Max single-asset',
-          value: '${snapshot.config.maxSingleAssetPct}%',
-          minLabel: '20% (đa dạng)',
-          maxLabel: '80% (tập trung)',
-          color: AppColors.sell,
+        VitPageSection(
+          label: 'Tham số rủi ro',
+          children: [
+            _RiskParameter(
+              label: 'Ngưỡng rebalance',
+              value: '${snapshot.config.rebalanceThresholdPct}%',
+              minLabel: '3% (nhạy)',
+              maxLabel: '25% (ổn định)',
+              color: AppColors.primary,
+            ),
+            _RiskParameter(
+              label: 'Min APY gain cho switch',
+              value:
+                  '${snapshot.config.switchMinApyGainPct.toStringAsFixed(1)}%',
+              minLabel: '0.1% (nhạy)',
+              maxLabel: '3.0% (thận trọng)',
+              color: AppColors.accent,
+            ),
+            _RiskParameter(
+              label: 'Max single-asset',
+              value: '${snapshot.config.maxSingleAssetPct}%',
+              minLabel: '20% (đa dạng)',
+              maxLabel: '80% (tập trung)',
+              color: AppColors.sell,
+            ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x4),
         _InfoCallout(text: snapshot.disclaimer, tone: EarnRiskLevel.high),
       ],
     );

@@ -17,7 +17,7 @@ class _PriceComparison extends StatelessWidget {
             iconColor: _marginPrimary,
             title: 'Giá tham chiếu',
           ),
-          const SizedBox(height: AppSpacing.rowPy),
+          const SizedBox(height: AppSpacing.x3),
           VitCard(
             padding: AppSpacing.zeroInsets.copyWith(
               left: AppSpacing.x4,
@@ -47,7 +47,7 @@ class _PriceComparison extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -63,7 +63,7 @@ class _PriceComparison extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -80,7 +80,7 @@ class _PriceComparison extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           _InfoBanner(
             text:
                 'Mark Price được dùng để tính PnL và thanh lý, giúp tránh manipulation từ flash crash.',
@@ -160,7 +160,8 @@ class _PairCard extends StatelessWidget {
                 label: snapshot.defaultMode.toUpperCase(),
                 color: _marginPrimary,
               ),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.x2),
+              const Expanded(child: SizedBox.shrink()),
               VitCard(
                 width: AppSpacing.rowPy,
                 height: AppSpacing.x3,
@@ -174,7 +175,7 @@ class _PairCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAddressAddFormSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Text(

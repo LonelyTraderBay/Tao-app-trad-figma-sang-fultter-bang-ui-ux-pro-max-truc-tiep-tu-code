@@ -14,13 +14,16 @@ class _LabelValue extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const Spacer(),
-        Text(
-          value,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text1,
-            fontFeatures: AppTextStyles.tabularFigures,
-            fontWeight: AppTextStyles.bold,
+        Expanded(
+          child: Text(
+            value,
+            textAlign: TextAlign.right,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontFeatures: AppTextStyles.tabularFigures,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
         ),
       ],
@@ -75,7 +78,8 @@ class _PctButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      height: AppSpacing.tradePctButtonHeight,
+      density: VitDensity.compact,
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
       alignment: Alignment.center,
       radius: VitCardRadius.sm,
       borderColor: AppColors.borderSolid,
@@ -93,8 +97,8 @@ class _TpslSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeTpslHeight,
-      padding: AppSpacing.tradeTpslPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       borderColor: AppColors.borderSolid,
       child: Row(
@@ -102,9 +106,9 @@ class _TpslSwitch extends StatelessWidget {
           const Icon(
             Icons.shield_outlined,
             color: AppColors.text3,
-            size: AppSpacing.tradeTpslIcon,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.tradeTpslGap),
+          const SizedBox(width: AppSpacing.x2),
           Text(
             'TP/SL',
             style: AppTextStyles.caption.copyWith(
@@ -112,7 +116,7 @@ class _TpslSwitch extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeTpslGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               'Take Profit / Stop Loss',
@@ -139,21 +143,22 @@ class _FeeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeFeeCardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           _LabelValue(
             label: 'Thành tiền',
             value: '\$${preview.total.toStringAsFixed(2)}',
           ),
-          const SizedBox(height: AppSpacing.tradeFeeRowGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Text(
                 'Phí (Maker)',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(width: AppSpacing.tradeTpslGap),
+              const SizedBox(width: AppSpacing.x2),
               const VitAccentPill(
                 label: 'VIP 1',
                 accentColor: AppColors.primary,
@@ -165,7 +170,7 @@ class _FeeCard extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeTpslGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   '0.085% ≈ \$${preview.fee.toStringAsFixed(2)}',
@@ -191,12 +196,13 @@ class _OpenOrdersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-      padding: VitContentPadding.relaxed,
-      customGap: AppSpacing.tradeListGap,
+      padding: VitContentPadding.compact,
+      density: VitDensity.compact,
       children: [
         for (final order in orders)
           VitCard(
-            padding: AppSpacing.tradeListCardPadding,
+            density: VitDensity.compact,
+            padding: AppSpacing.cardPaddingCompact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -204,7 +210,7 @@ class _OpenOrdersList extends StatelessWidget {
                   label: order.symbol,
                   value: order.side == TradeOrderSide.buy ? 'MUA' : 'BÁN',
                 ),
-                const SizedBox(height: AppSpacing.tradeTpslGap),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   '${order.amount} @ ${order.price.toStringAsFixed(2)}',
                   style: AppTextStyles.caption,
@@ -223,8 +229,8 @@ class _HistoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-      padding: VitContentPadding.relaxed,
-      customGap: AppSpacing.tradeListGap,
+      padding: VitContentPadding.compact,
+      density: VitDensity.compact,
       children: [
         for (final label in const [
           'BTC/USDT · MUA · Đã khớp',
@@ -232,7 +238,8 @@ class _HistoryList extends StatelessWidget {
         ])
           VitCard(
             onTap: () => context.go(AppRoutePaths.tradeOrderReceipt),
-            padding: AppSpacing.tradeListCardPadding,
+            density: VitDensity.compact,
+            padding: AppSpacing.cardPaddingCompact,
             child: Text(label, style: AppTextStyles.body),
           ),
       ],

@@ -18,8 +18,8 @@ class _ResultsState extends StatelessWidget {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      customGap: AppSpacing.x5,
       children: [
         Text.rich(
           TextSpan(
@@ -37,8 +37,7 @@ class _ResultsState extends StatelessWidget {
           ),
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        if (results.predictions.isNotEmpty) ...[
+        if (results.predictions.isNotEmpty)
           _ResultSection(
             icon: Icons.track_changes_rounded,
             label: 'Prediction Events',
@@ -49,9 +48,7 @@ class _ResultsState extends StatelessWidget {
                 _PredictionResultCard(event: event),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
-        ],
-        if (results.arenaModes.isNotEmpty) ...[
+        if (results.arenaModes.isNotEmpty)
           _ResultSection(
             icon: Icons.bolt_rounded,
             label: 'Arena Modes',
@@ -62,9 +59,7 @@ class _ResultsState extends StatelessWidget {
                 _ArenaModeResultCard(mode: mode),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
-        ],
-        if (results.arenaRooms.isNotEmpty) ...[
+        if (results.arenaRooms.isNotEmpty)
           _ResultSection(
             icon: Icons.groups_rounded,
             label: 'Arena Rooms',
@@ -75,9 +70,7 @@ class _ResultsState extends StatelessWidget {
                 _ArenaRoomResultCard(room: room),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
-        ],
-        if (results.creators.isNotEmpty) ...[
+        if (results.creators.isNotEmpty)
           _ResultSection(
             icon: Icons.person_rounded,
             label: 'Creators',
@@ -88,9 +81,7 @@ class _ResultsState extends StatelessWidget {
                 _CreatorResultCard(creator: creator),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
-        ],
-        if (results.tradingPairs.isNotEmpty) ...[
+        if (results.tradingPairs.isNotEmpty)
           _ResultSection(
             icon: Icons.bar_chart_rounded,
             label: 'Trading Pairs',
@@ -101,8 +92,6 @@ class _ResultsState extends StatelessWidget {
                 _TradingPairResultCard(pair: pair),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
-        ],
         _BoundaryDisclosure(notes: snapshot.contractNotes),
       ],
     );
@@ -126,8 +115,8 @@ class _ResultSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      customGap: AppSpacing.x3,
       children: [
         Row(
           children: [
@@ -157,10 +146,7 @@ class _ResultSection extends StatelessWidget {
             _CountBadge(count: count),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
-        ...children.expand(
-          (child) => [child, const SizedBox(height: AppSpacing.x3)],
-        ),
+        ...children,
       ],
     );
   }

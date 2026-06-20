@@ -11,8 +11,7 @@ class _TrendingList extends StatelessWidget {
       children: [
         for (final token in tokens) ...[
           _SentimentRow(token: token),
-          if (token != tokens.last)
-            const SizedBox(height: AppSpacing.socialSentimentListGap),
+          if (token != tokens.last) const SizedBox(height: _sentimentListGap),
         ],
       ],
     );
@@ -27,11 +26,11 @@ class _SentimentRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.socialSentimentRowPadding,
+      padding: _sentimentRowPadding,
       child: Row(
         children: [
           CircleAvatar(
-            radius: AppSpacing.socialSentimentAvatarLg / 2,
+            radius: _sentimentAvatarLg / 2,
             backgroundColor: token.color.withValues(alpha: .16),
             child: Text(
               token.symbol.substring(0, math.min(2, token.symbol.length)),
@@ -41,7 +40,7 @@ class _SentimentRow extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.socialSentimentRowGap),
+          const SizedBox(width: _sentimentRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +84,7 @@ class _SentimentRow extends StatelessWidget {
               Icon(
                 Icons.circle,
                 color: _sentimentColor(token.sentimentScore),
-                size: AppSpacing.socialSentimentStatusDot,
+                size: _sentimentStatusDot,
               ),
             ],
           ),
@@ -120,7 +119,7 @@ class _SentimentSortChips extends StatelessWidget {
               onTap: () => onSelected(entry.key),
             ),
             if (entry.key != chips.keys.last)
-              const SizedBox(width: AppSpacing.socialSentimentSortGap),
+              const SizedBox(width: _sentimentSortGap),
           ],
         ],
       ),
@@ -149,7 +148,7 @@ class _SortChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: Padding(
-          padding: AppSpacing.socialSentimentSortChipPadding,
+          padding: _sentimentSortChipPadding,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
@@ -171,13 +170,13 @@ class _TokenDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.socialSentimentTokenDetailPadding,
+      padding: _sentimentTokenDetailPadding,
       child: Column(
         children: [
           Row(
             children: [
               CircleAvatar(
-                radius: AppSpacing.socialSentimentAvatarMd / 2,
+                radius: _sentimentAvatarMd / 2,
                 backgroundColor: token.color.withValues(alpha: .16),
                 child: Text(
                   token.symbol.substring(0, math.min(2, token.symbol.length)),
@@ -187,7 +186,7 @@ class _TokenDetailCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.socialSentimentRowGap),
+              const SizedBox(width: _sentimentRowGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,12 +215,12 @@ class _TokenDetailCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.socialSentimentRowGap),
+          const SizedBox(height: _sentimentRowGap),
           ClipRRect(
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
               width: double.infinity,
-              height: AppSpacing.socialSentimentSplitBarHeight,
+              height: _sentimentSplitBarHeight,
               child: Row(
                 children: [
                   Expanded(
@@ -240,7 +239,7 @@ class _TokenDetailCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.socialSentimentTokenMetricGap),
+          const SizedBox(height: _sentimentTokenMetricGap),
           Row(
             children: [
               _TokenMetric('Đề cập 24h', _formatCompact(token.mentions24h)),

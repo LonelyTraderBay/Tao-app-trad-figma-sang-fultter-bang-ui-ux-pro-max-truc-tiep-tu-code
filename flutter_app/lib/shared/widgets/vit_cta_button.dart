@@ -30,7 +30,9 @@ class VitCtaButton extends StatelessWidget {
     this.density = VitDensity.standard,
     this.leading,
     this.trailing,
-    this.padding = const EdgeInsets.symmetric(horizontal: AppSpacing.x5),
+    this.padding = const EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x5,
+    ),
   });
 
   final Widget child;
@@ -113,14 +115,16 @@ class VitCtaButton extends StatelessWidget {
         color: AppColors.transparent,
         borderRadius: AppRadii.inputRadius,
         child: Ink(
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: style.background,
             gradient: style.gradient,
-            borderRadius: AppRadii.inputRadius,
-            border: style.border == null
-                ? null
-                : Border.all(color: style.border!),
-            boxShadow: style.shadow == null
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: style.border == null
+                  ? BorderSide.none
+                  : BorderSide(color: style.border!),
+            ),
+            shadows: style.shadow == null
                 ? null
                 : [
                     BoxShadow(

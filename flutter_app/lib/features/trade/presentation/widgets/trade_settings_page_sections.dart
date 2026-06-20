@@ -15,7 +15,7 @@ class _SettingsSection extends StatelessWidget {
           title: title,
           variant: VitSectionHeaderVariant.accentBar,
         ),
-        const SizedBox(height: AppSpacing.tradeBotRowGap),
+        const SizedBox(height: _settingsTinySpace),
         child,
       ],
     );
@@ -23,7 +23,7 @@ class _SettingsSection extends StatelessWidget {
 }
 
 class _SettingsCard extends StatelessWidget {
-  const _SettingsCard({required this.children, this.gap = 18});
+  const _SettingsCard({required this.children, this.gap = _settingsSpace});
 
   final List<Widget> children;
   final double gap;
@@ -31,7 +31,8 @@ class _SettingsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -54,7 +55,7 @@ class _OrderDefaultsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SettingsCard(
-      gap: 18,
+      gap: _settingsSpace,
       children: [
         _ChoiceBlock(
           label: 'Loại lệnh mặc định',
@@ -78,7 +79,7 @@ class _OrderDefaultsCard extends StatelessWidget {
             _ChoiceOption(id: '2.0', label: '2%'),
           ],
           activeId: settings.defaultSlippage.toStringAsFixed(1),
-          height: 30,
+          height: _settingsChipHeightSm,
           keyBuilder: (id) => TradeSettingsPage.slippageKey(double.parse(id)),
           onChanged: (id) =>
               onChanged(settings.copyWith(defaultSlippage: double.parse(id))),
@@ -193,7 +194,7 @@ class _DisplayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SettingsCard(
-      gap: 18,
+      gap: _settingsSpace,
       children: [
         _SettingRow(
           label: 'Hiển thị Order Book',
@@ -239,7 +240,7 @@ class _DisplayCard extends StatelessWidget {
             _ChoiceOption(id: '1D', label: '1D'),
           ],
           activeId: settings.chartTimeframe,
-          height: 30,
+          height: _settingsChipHeightSm,
           keyBuilder: TradeSettingsPage.timeframeKey,
           onChanged: (id) => onChanged(settings.copyWith(chartTimeframe: id)),
         ),
@@ -252,7 +253,7 @@ class _DisplayCard extends StatelessWidget {
             _ChoiceOption(id: '6', label: '6'),
           ],
           activeId: settings.priceDecimals,
-          height: 30,
+          height: _settingsChipHeightSm,
           keyBuilder: TradeSettingsPage.decimalsKey,
           onChanged: (id) => onChanged(settings.copyWith(priceDecimals: id)),
         ),
@@ -276,7 +277,7 @@ class _ChoiceBlock extends StatelessWidget {
     required this.onChanged,
     required this.keyBuilder,
     this.trailing,
-    this.height = 36,
+    this.height = _settingsChipHeight,
   });
 
   final String label;
@@ -300,7 +301,7 @@ class _ChoiceBlock extends StatelessWidget {
                 style: AppTextStyles.captionSm.copyWith(
                   color: AppColors.textMutedLight,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightCaption,
+                  height: _settingsLineTight,
                 ),
               ),
             ),
@@ -310,13 +311,13 @@ class _ChoiceBlock extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: _tradePrimary,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightCaption,
+                  height: _settingsLineTight,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.tradeBotSmallGap),
+        const SizedBox(height: _settingsTinySpace),
         Row(
           children: [
             for (var i = 0; i < options.length; i++) ...[
@@ -330,7 +331,7 @@ class _ChoiceBlock extends StatelessWidget {
                 ),
               ),
               if (i < options.length - 1)
-                const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                const SizedBox(width: _settingsTinySpace),
             ],
           ],
         ),

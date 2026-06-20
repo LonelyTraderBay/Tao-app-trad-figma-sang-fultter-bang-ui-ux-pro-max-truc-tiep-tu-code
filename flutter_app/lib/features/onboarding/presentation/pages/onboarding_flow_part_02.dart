@@ -15,7 +15,7 @@ class _GoalsStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-      padding: VitContentPadding.relaxed,
+      padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
         _StepHeading(
@@ -73,8 +73,8 @@ class _CompleteStep extends StatelessWidget {
         .toList(growable: false);
 
     return VitPageContent(
-      padding: VitContentPadding.relaxed,
-      gap: VitContentGap.relaxed,
+      padding: VitContentPadding.defaultPadding,
+      gap: VitContentGap.defaultGap,
       children: [
         const SizedBox(height: AppSpacing.x5),
         const _HeroIcon(

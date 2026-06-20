@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpEditProfile(
     WidgetTester tester, {
@@ -76,6 +78,25 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('L\u01B0u thay \u0111\u1ED5i'), findsOneWidget);
+  });
+
+  testWidgets('SC-157 first viewport reaches save action', (tester) async {
+    await pumpEditProfile(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'EditProfilePage',
+      semanticLabel: 'SC-157 EditProfilePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(EditProfilePage.saveKey),
+      minVisibleHeight: 24,
+      targetLabel: 'save profile action',
+      reason:
+          'Edit profile must keep the primary save action visible above '
+          'bottom navigation after the avatar and required profile fields.',
+    );
   });
 
   testWidgets('SC-157 local edit, camera, save and back edges are safe', (

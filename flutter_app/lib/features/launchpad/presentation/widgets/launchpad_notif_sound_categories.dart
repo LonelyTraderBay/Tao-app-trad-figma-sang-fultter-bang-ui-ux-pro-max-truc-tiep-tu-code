@@ -92,12 +92,12 @@ class _CategoryCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadNotifSoundPage.categoryKey(category.id),
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.launchpadPaddingX4,
             child: Row(
               children: [
                 _IconBubble(
@@ -140,7 +140,7 @@ class _CategoryCard extends StatelessWidget {
                   onTap: onExpand,
                   borderRadius: AppRadii.smRadius,
                   child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.x1),
+                    padding: AppSpacing.launchpadPaddingX2,
                     child: Icon(
                       expanded
                           ? Icons.keyboard_arrow_up_rounded
@@ -190,125 +190,144 @@ class _ExpandedCategorySettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.x4,
-        AppSpacing.x3,
-        AppSpacing.x4,
-        AppSpacing.x4,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Kiểu âm thanh',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Wrap(
-            spacing: AppSpacing.x2,
-            runSpacing: AppSpacing.x2,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Divider(
+          height: AppSpacing.launchpadDividerWidth,
+          thickness: AppSpacing.launchpadDividerWidth,
+          color: AppColors.divider,
+        ),
+        Padding(
+          padding: AppSpacing.launchpadPaddingX4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (final soundType in soundTypes)
-                _SoundTypeChip(
-                  categoryId: category.id,
-                  soundType: soundType,
-                  active: state.soundType == soundType.value,
-                  accent: category.accent,
-                  onTap: () => onSoundType(soundType.value),
-                ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Âm lượng',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ),
               Text(
-                '${state.volume.round()}%',
+                'Kiểu âm thanh',
                 style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text1,
+                  color: AppColors.text3,
                   fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
-            ],
-          ),
-          SliderTheme(
-            data: SliderTheme.of(context).copyWith(
-              activeTrackColor: category.accent,
-              inactiveTrackColor: AppColors.surface2,
-              thumbColor: category.accent,
-              overlayColor: category.accent.withValues(alpha: .12),
-              trackHeight: 4,
-            ),
-            child: Slider(
-              value: state.volume,
-              min: 0,
-              max: 100,
-              onChanged: onVolume,
-            ),
-          ),
-          InkWell(
-            key: LaunchpadNotifSoundPage.previewKey(category.id),
-            onTap: onPreview,
-            borderRadius: AppRadii.inputRadius,
-            child: Container(
-              height: AppSpacing.ctaHeight,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-              decoration: BoxDecoration(
-                color: AppColors.surface2,
-                border: Border.all(color: AppColors.cardBorder),
-                borderRadius: AppRadii.inputRadius,
-              ),
-              child: Row(
+              const SizedBox(height: AppSpacing.x2),
+              Wrap(
+                spacing: AppSpacing.x2,
+                runSpacing: AppSpacing.x2,
                 children: [
-                  Icon(
-                    playingPreview
-                        ? Icons.check_circle_outline_rounded
-                        : Icons.play_arrow_rounded,
-                    color: playingPreview ? AppColors.buy : category.accent,
-                    size: AppSpacing.iconSm,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    playingPreview ? 'Đang phát...' : 'Nghe thử',
-                    style: AppTextStyles.caption.copyWith(
-                      color: playingPreview ? AppColors.buy : AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
+                  for (final soundType in soundTypes)
+                    _SoundTypeChip(
+                      categoryId: category.id,
+                      soundType: soundType,
+                      active: state.soundType == soundType.value,
+                      accent: category.accent,
+                      onTap: () => onSoundType(soundType.value),
                     ),
-                  ),
-                  if (playingPreview) ...[
-                    const Spacer(),
-                    for (var i = 0; i < 4; i++)
-                      Container(
-                        width: AppSpacing.launchpadVerticalMarkerWidth,
-                        height:
-                            AppSpacing.launchpadSoundBarBaseHeight +
-                            i * AppSpacing.launchpadSoundBarHeightStep,
-                        margin: const EdgeInsets.only(left: AppSpacing.x1),
-                        decoration: BoxDecoration(
-                          color: category.accent,
-                          borderRadius: AppRadii.xsRadius,
-                        ),
-                      ),
-                  ],
                 ],
               ),
-            ),
+              const SizedBox(height: AppSpacing.x4),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Âm lượng',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '${state.volume.round()}%',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ],
+              ),
+              SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  activeTrackColor: category.accent,
+                  inactiveTrackColor: AppColors.surface2,
+                  thumbColor: category.accent,
+                  overlayColor: category.accent.withValues(alpha: .12),
+                  trackHeight: AppSpacing.launchpadGapXxs,
+                ),
+                child: Slider(
+                  value: state.volume,
+                  min: 0,
+                  max: 100,
+                  onChanged: onVolume,
+                ),
+              ),
+              InkWell(
+                key: LaunchpadNotifSoundPage.previewKey(category.id),
+                onTap: onPreview,
+                borderRadius: AppRadii.inputRadius,
+                child: SizedBox(
+                  height: AppSpacing.ctaHeight,
+                  child: DecoratedBox(
+                    decoration: const ShapeDecoration(
+                      color: AppColors.surface2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.inputRadius,
+                        side: BorderSide(color: AppColors.cardBorder),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: AppSpacing.launchpadPaddingX4,
+                      child: Row(
+                        children: [
+                          Icon(
+                            playingPreview
+                                ? Icons.check_circle_outline_rounded
+                                : Icons.play_arrow_rounded,
+                            color: playingPreview
+                                ? AppColors.buy
+                                : category.accent,
+                            size: AppSpacing.iconSm,
+                          ),
+                          const SizedBox(width: AppSpacing.x2),
+                          Text(
+                            playingPreview ? 'Đang phát...' : 'Nghe thử',
+                            style: AppTextStyles.caption.copyWith(
+                              color: playingPreview
+                                  ? AppColors.buy
+                                  : AppColors.text2,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                          if (playingPreview) ...[
+                            const Spacer(),
+                            for (var i = 0; i < 4; i++) ...[
+                              const SizedBox(width: AppSpacing.x1),
+                              SizedBox(
+                                width: AppSpacing.launchpadVerticalMarkerWidth,
+                                height:
+                                    AppSpacing.launchpadSoundBarBaseHeight +
+                                    i * AppSpacing.launchpadSoundBarHeightStep,
+                                child: DecoratedBox(
+                                  decoration: ShapeDecoration(
+                                    color: category.accent,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: AppRadii.xsRadius,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -334,25 +353,26 @@ class _SoundTypeChip extends StatelessWidget {
       key: LaunchpadNotifSoundPage.soundTypeKey(categoryId, soundType.value),
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: active ? accent.withValues(alpha: .12) : AppColors.surface2,
-          border: Border.all(
-            color: active
-                ? accent.withValues(alpha: .35)
-                : AppColors.cardBorder,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.mdRadius,
+            side: BorderSide(
+              color: active
+                  ? accent.withValues(alpha: .35)
+                  : AppColors.cardBorder,
+            ),
           ),
-          borderRadius: AppRadii.mdRadius,
         ),
-        child: Text(
-          soundType.label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? accent : AppColors.text3,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
+        child: Padding(
+          padding: AppSpacing.launchpadPillPadding,
+          child: Text(
+            soundType.label,
+            style: AppTextStyles.micro.copyWith(
+              color: active ? accent : AppColors.text3,
+              fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
+            ),
           ),
         ),
       ),

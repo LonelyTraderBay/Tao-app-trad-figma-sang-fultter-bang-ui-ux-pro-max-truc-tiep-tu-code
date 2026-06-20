@@ -11,7 +11,7 @@ class _SentimentTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.socialSentimentTabsHeight,
+        height: _sentimentTabsHeight,
         child: Row(
           children: [
             _UnderlinedTab(
@@ -76,7 +76,7 @@ class _UnderlinedTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: AppSpacing.socialSentimentTabIndicatorHeight,
+              height: _sentimentTabIndicatorHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: _marketPrimary),
@@ -100,7 +100,7 @@ class _SentimentHero extends StatelessWidget {
     final gaugePct = ((global.overallScore + 100) / 2).clamp(0, 100) / 100;
     return VitCard(
       width: double.infinity,
-      padding: AppSpacing.socialSentimentHeroPadding,
+      padding: _sentimentHeroPadding,
       borderColor: _marketPrimary.withValues(alpha: .2),
       child: Column(
         children: [
@@ -124,7 +124,7 @@ class _SentimentHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.socialSentimentHeroHeaderGap),
+          const SizedBox(height: _sentimentHeroHeaderGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -132,9 +132,9 @@ class _SentimentHero extends StatelessWidget {
                 '${global.overallScore}',
                 style: AppTextStyles.heroNumber.copyWith(color: scoreColor),
               ),
-              const SizedBox(width: AppSpacing.socialSentimentHeroScoreGap),
+              const SizedBox(width: _sentimentHeroScoreGap),
               Padding(
-                padding: AppSpacing.socialSentimentHeroScorePadding,
+                padding: _sentimentHeroScorePadding,
                 child: Text(
                   '/ 100',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -142,12 +142,12 @@ class _SentimentHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.socialSentimentHeroGaugeGap),
+          const SizedBox(height: _sentimentHeroGaugeGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: SizedBox(
               width: double.infinity,
-              height: AppSpacing.socialSentimentHeroGaugeHeight,
+              height: _sentimentHeroGaugeHeight,
               child: Stack(
                 children: [
                   const ColoredBox(
@@ -166,7 +166,7 @@ class _SentimentHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.socialSentimentHeroLegendGap),
+          const SizedBox(height: _sentimentHeroLegendGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -209,7 +209,7 @@ class _SentimentStats extends StatelessWidget {
             subColor: AppColors.buy,
           ),
         ),
-        const SizedBox(width: AppSpacing.socialSentimentStatGap),
+        const SizedBox(width: _sentimentStatGap),
         Expanded(
           child: _StatCard(
             icon: Icons.tag_rounded,
@@ -245,18 +245,14 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.socialSentimentStatPadding,
+      padding: _sentimentStatPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                icon,
-                size: AppSpacing.socialSentimentStatIcon,
-                color: iconColor,
-              ),
-              const SizedBox(width: AppSpacing.socialSentimentStatIconGap),
+              Icon(icon, size: _sentimentStatIcon, color: iconColor),
+              const SizedBox(width: _sentimentStatIconGap),
               Expanded(
                 child: Text(
                   label,
@@ -265,14 +261,14 @@ class _StatCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.socialSentimentStatValueGap),
+          const SizedBox(height: _sentimentStatValueGap),
           Text(
             value,
             style: AppTextStyles.baseMedium.copyWith(
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.socialSentimentStatSubGap),
+          const SizedBox(height: _sentimentStatSubGap),
           Text(sub, style: AppTextStyles.micro.copyWith(color: subColor)),
         ],
       ),

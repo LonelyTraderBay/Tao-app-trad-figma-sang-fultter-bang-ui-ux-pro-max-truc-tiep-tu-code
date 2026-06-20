@@ -40,7 +40,7 @@ class _EmptyStateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionTournamentEmptyPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Icon(
@@ -48,15 +48,13 @@ class _EmptyStateCard extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.predictionTournamentEmptyIcon,
           ),
-          const SizedBox(height: AppSpacing.predictionTournamentEmptyTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             title,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           if (message != null) ...[
-            const SizedBox(
-              height: AppSpacing.predictionTournamentEmptyMessageGap,
-            ),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               message!,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -78,6 +76,7 @@ class _FinalLeaderboard extends StatelessWidget {
     return VitPageSection(
       label: 'Final Leaderboard - Macro Economics Pro',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         for (final entry in entries) _LeaderboardEntryCard(entry: entry),
       ],
@@ -98,7 +97,7 @@ class _LeaderboardEntryCard extends StatelessWidget {
       borderColor: ranked
           ? AppColors.buy.withValues(alpha: .18)
           : AppColors.border,
-      padding: AppSpacing.predictionTournamentLeaderboardPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           SizedBox(
@@ -126,9 +125,7 @@ class _LeaderboardEntryCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionTournamentLeaderboardScoreGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${entry.score} points',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),

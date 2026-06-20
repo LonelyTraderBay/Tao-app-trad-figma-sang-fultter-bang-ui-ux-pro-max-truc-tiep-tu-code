@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCopySettings(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -79,6 +81,18 @@ void main() {
     expect(find.text('+20%'), findsOneWidget);
     expect(find.text('Giới hạn rủi ro'), findsOneWidget);
     expect(find.text('Circuit Breaker'), findsOneWidget);
+  });
+
+  testWidgets('SC-067 first viewport reaches risk limits section', (
+    tester,
+  ) async {
+    await pumpCopySettings(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.text('Giới hạn rủi ro'),
+      targetLabel: 'risk limits section',
+    );
   });
 
   testWidgets('SC-067 copy mode buttons update fixed-ratio visibility', (

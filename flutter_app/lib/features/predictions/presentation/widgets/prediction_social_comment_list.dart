@@ -10,6 +10,7 @@ class _CommentsSection extends StatelessWidget {
     return VitPageSection(
       label: '${snapshot.totalComments} binh luan',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         for (final comment in snapshot.comments) _CommentCard(comment: comment),
       ],
@@ -35,7 +36,7 @@ class _CommentCard extends StatelessWidget {
             borderColor: comment.isPinned
                 ? AppColors.primary15
                 : AppColors.border,
-            padding: AppSpacing.predictionSocialCardPadding,
+            density: VitDensity.compact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -54,19 +55,15 @@ class _CommentCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionSocialCommentBodyGap,
-                ),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   comment.content,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionSocialCommentBodyGap,
-                ),
+                const SizedBox(height: AppSpacing.x2),
                 _CommentActions(comment: comment, reply: reply),
                 if (comment.replies.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.predictionSocialReplyGap),
+                  const SizedBox(height: AppSpacing.x2),
                   for (final child in comment.replies)
                     _CommentCard(comment: child, reply: true),
                 ],
@@ -108,7 +105,7 @@ class _CommentUser extends StatelessWidget {
               const _SmallBadge(label: 'PINNED', color: _predictionPrimary),
           ],
         ),
-        const SizedBox(height: AppSpacing.predictionSocialUserMetaGap),
+        const SizedBox(height: AppSpacing.x1),
         Row(
           children: [
             const Icon(
@@ -271,7 +268,7 @@ class _CommentDisclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary15,
-      padding: AppSpacing.predictionSocialCompactPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -8,7 +8,6 @@ class _SriExplanationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -17,24 +16,18 @@ class _SriExplanationCard extends StatelessWidget {
             'of this product compared to other products. It shows how likely '
             'it is that the product will lose money because of movements in '
             'the markets or because we are not able to pay you.',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: AppSpacing.tradeBotLineHeightRelaxed,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.tradeToolContentGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: AppSpacing.tradeBotNoticeIconTopPadding,
-                child: Icon(
-                  Icons.info_outline_rounded,
-                  color: AppColors.text1,
-                  size: AppSpacing.tradeBotSmallIcon,
-                ),
+              const Icon(
+                Icons.info_outline_rounded,
+                color: AppColors.text1,
+                size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   'The risk indicator assumes you keep the product for '
@@ -43,7 +36,6 @@ class _SriExplanationCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightCompact,
                   ),
                 ),
               ),
@@ -66,15 +58,13 @@ class _RiskLevelCard extends StatelessWidget {
     final color = _colorForTier(level.tier);
     return _Card(
       key: RiskIndicatorExplainerPage.levelKey(level.level),
-      padding: AppSpacing.tradeBotCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.lg,
-            width: AppSpacing.tradeBotQuestionIconBox,
-            height: AppSpacing.tradeBotQuestionIconBox,
+            density: VitDensity.compact,
             alignment: Alignment.center,
             clip: true,
             borderColor: color.withValues(alpha: .18),
@@ -84,11 +74,10 @@ class _RiskLevelCard extends StatelessWidget {
               style: AppTextStyles.baseMedium.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardGap),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,12 +92,11 @@ class _RiskLevelCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.tradeBotLineHeightShort,
                         ),
                       ),
                     ),
                     if (isProductLevel) ...[
-                      const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+                      const SizedBox(width: AppSpacing.x2),
                       const VitAccentPill(
                         label: 'THIS PRODUCT',
                         accentColor: _riskPrimary,
@@ -116,25 +104,19 @@ class _RiskLevelCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   level.description,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightShort,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Examples: ${level.examples.join(', ')}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -152,19 +134,12 @@ class _AdditionalRisksCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 164),
-      child: _Card(
-        padding: AppSpacing.tradeBotCardPaddingLoose,
-        child: Column(
-          children: [
-            for (final risk in risks) ...[
-              _AdditionalRiskRow(risk: risk),
-              if (risk != risks.last)
-                const SizedBox(height: AppSpacing.tradeBotStatusGap),
-            ],
-          ],
-        ),
+    return _Card(
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        density: VitDensity.compact,
+        fullBleed: true,
+        children: [for (final risk in risks) _AdditionalRiskRow(risk: risk)],
       ),
     );
   }
@@ -181,15 +156,12 @@ class _AdditionalRiskRow extends StatelessWidget {
       key: RiskIndicatorExplainerPage.additionalRiskKey(risk.title),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: AppSpacing.tradeBotNoticeIconTopPadding,
-          child: Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.text1,
-            size: AppSpacing.tradeBotSmallIcon,
-          ),
+        const Icon(
+          Icons.warning_amber_rounded,
+          color: AppColors.text1,
+          size: AppSpacing.iconSm,
         ),
-        const SizedBox(width: AppSpacing.tradeBotSmallGap),
+        const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,16 +171,12 @@ class _AdditionalRiskRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 risk.description,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.tradeBotLineHeightCompact,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -219,15 +187,14 @@ class _AdditionalRiskRow extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  const _Card({super.key, required this.child, required this.padding});
+  const _Card({super.key, required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: padding,
+      density: VitDensity.compact,
       borderColor: _riskBorder.withValues(alpha: .76),
       child: child,
     );

@@ -5,13 +5,14 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -24,10 +25,22 @@ part '../widgets/order_receipt_page_common.dart';
 
 const _tradePrimary = AppColors.primary;
 const _footerBackground = AppColors.surface;
+const double _receiptFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _receiptNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _receiptFramedFooterClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _receiptNativeFooterClearance =
+    AppSpacing.buttonStandard + AppSpacing.x3;
+const double _receiptHeroExtent = AppSpacing.buttonCompact + AppSpacing.x3;
+const double _receiptDetailLabelExtent = AppSpacing.buttonStandard * 2;
+const double _receiptCopyActionExtent = AppSpacing.buttonCompact;
 
 class OrderReceiptPage extends ConsumerStatefulWidget {
   const OrderReceiptPage({super.key, this.shellRenderMode});
 
+  static const contentKey = Key('sc051_order_receipt_content');
   static const openOrdersKey = Key('sc051_open_orders');
   static const copyOrderIdKey = Key('sc051_copy_order_id');
   static const shareKey = Key('sc051_share');
@@ -50,9 +63,16 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
         .getOrderReceipt();
     final receipt = snapshot.receipt;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
+    final footerSafePadding =
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame
+            ? _receiptFramedFooterClearance
+            : _receiptNativeFooterClearance);
+    final scrollEndClearance =
+        (mode.usesVisualQaFrame
+            ? _receiptFramedScrollClearance
+            : _receiptNativeScrollClearance) +
+        footerSafePadding;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -70,31 +90,32 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    bottom: AppSpacing.tradeReceiptScrollBottom,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                child: VitInsetScrollView(
+                  key: OrderReceiptPage.contentKey,
+                  bottomInset: scrollEndClearance,
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _SuccessHero(receipt: receipt),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeReceiptRiskPadding,
+                        padding: EdgeInsetsDirectional.symmetric(
+                          horizontal: AppSpacing.x3,
+                          vertical: AppSpacing.x2,
+                        ),
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.success,
                           title: 'Order receipt confirmed',
                           message:
                               'Order id, fill status, fees, risk impact, support path and next steps are available after execution.',
                           contractId: 'order-receipt-success',
+                          density: VitDensity.compact,
                         ),
                       ),
                       _ReceiptCard(receipt: receipt),
-                      const SizedBox(height: AppSpacing.tradeSectionGap),
                       _WarningNotice(),
-                      const SizedBox(height: AppSpacing.tradeReceiptFooterGap),
                       _OrderSupportLink(supportRoute: snapshot.supportRoute),
-                      const SizedBox(height: AppSpacing.tradeReceiptFooterGap),
                       const TradeBodyReviewSection(
                         title: 'Receipt body review',
                         message: 'Order receipt body reviewed',
@@ -116,8 +137,8 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
                 onShare: () => setState(() => _sharePressed = true),
                 onContinue: () =>
                     context.go(AppRoutePaths.tradePair('btcusdt')),
+                bottomPadding: footerSafePadding,
               ),
-              SizedBox(height: bottomChrome),
             ],
           ),
         ),

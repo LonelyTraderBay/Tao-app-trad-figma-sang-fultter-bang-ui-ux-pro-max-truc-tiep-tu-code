@@ -9,8 +9,7 @@ class _AppInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SettingsPage.appInfoKey,
-      height: AppSpacing.settingsAppInfoHeight,
-      padding: AppSpacing.settingsAppInfoPadding,
+      density: VitDensity.compact,
       radius: VitCardRadius.lg,
       borderColor: _settingsBorder,
       child: Column(
@@ -23,33 +22,31 @@ class _AppInfoCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.settingsAppInfoTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           for (final row in rows) ...[
-            SizedBox(
-              height: AppSpacing.settingsAppInfoRowHeight,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      row.label,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.settingsAppInfoValueGap),
-                  Text(
-                    row.value,
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    row.label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.medium,
+                      color: AppColors.text2,
                     ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: AppSpacing.settingsAppInfoValueGap),
+                Text(
+                  row.value,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.medium,
+                  ),
+                ),
+              ],
             ),
+            if (row != rows.last) const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),

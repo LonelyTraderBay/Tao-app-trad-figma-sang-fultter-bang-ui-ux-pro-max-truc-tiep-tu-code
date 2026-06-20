@@ -10,7 +10,8 @@ class _TopTradersCard extends StatelessWidget {
     return _AnalyticsCard(
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotStatusGap,
+        fullBleed: true,
+        density: VitDensity.compact,
         children: [
           _CardHeader(
             icon: Icons.visibility_rounded,
@@ -19,11 +20,7 @@ class _TopTradersCard extends StatelessWidget {
             badge: 'Long',
           ),
           VitCard(
-            height:
-                AppSpacing.inputHeight +
-                AppSpacing.x7 +
-                AppSpacing.tradeBotNarrowIconGap,
-            padding: AppSpacing.tradeBotCardPadding,
+            density: VitDensity.compact,
             variant: VitCardVariant.inner,
             borderColor: _analyticsGreen.withValues(alpha: .2),
             child: Column(
@@ -31,10 +28,7 @@ class _TopTradersCard extends StatelessWidget {
               children: [
                 Text(
                   'Top traders dang Long',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
                 Text(
                   '${data.longPct.toStringAsFixed(1)}%',
@@ -42,22 +36,18 @@ class _TopTradersCard extends StatelessWidget {
                     color: _analyticsGreen,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
                 Text(
                   'of top traders are long',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
           _RatioBar(longPct: data.longPct),
           VitCard(
-            padding: AppSpacing.tradeBotCompactCardPadding,
+            density: VitDensity.compact,
             variant: VitCardVariant.inner,
             child: Row(
               children: [
@@ -69,40 +59,26 @@ class _TopTradersCard extends StatelessWidget {
                         '24h Change',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotLabelGap),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         'Shifted ${data.change24h.toStringAsFixed(1)}% to Long',
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.tradeBotLineHeightCaption,
                         ),
                       ),
                     ],
                   ),
                 ),
-                VitCard(
-                  width:
-                      AppSpacing.tradeBotControlCompact -
-                      AppSpacing.hairlineStroke,
-                  height:
-                      AppSpacing.tradeBotControlCompact -
-                      AppSpacing.hairlineStroke,
-                  padding: AppSpacing.zeroInsets,
-                  variant: VitCardVariant.ghost,
-                  radius: VitCardRadius.lg,
-                  clip: true,
-                  background: ColoredBox(
-                    color: _analyticsGreen.withValues(alpha: .12),
-                  ),
+                CircleAvatar(
+                  radius: AppSpacing.x4,
+                  backgroundColor: _analyticsGreen.withValues(alpha: .12),
                   child: const Icon(
                     Icons.trending_up_rounded,
                     color: _analyticsGreen,
-                    size:
-                        AppSpacing.tradeBotHeroIcon - AppSpacing.hairlineStroke,
+                    size: AppSpacing.iconMd,
                   ),
                 ),
               ],
@@ -130,7 +106,8 @@ class _FundingRateCard extends StatelessWidget {
     return _AnalyticsCard(
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotCardGap,
+        fullBleed: true,
+        density: VitDensity.compact,
         children: [
           _CardHeader(
             icon: Icons.attach_money_rounded,
@@ -140,8 +117,7 @@ class _FundingRateCard extends StatelessWidget {
             badgeColor: _analyticsRed,
           ),
           VitCard(
-            height: AppSpacing.x7 - AppSpacing.dividerHairline,
-            padding: AppSpacing.tradeReceiptSupportPadding,
+            density: VitDensity.compact,
             variant: VitCardVariant.inner,
             child: Row(
               children: [
@@ -163,7 +139,6 @@ class _FundingRateCard extends StatelessWidget {
                       color: _analyticsPrimary,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
-                      height: AppSpacing.tradeBotLineHeightTight,
                     ),
                   ),
                 ),
@@ -179,7 +154,7 @@ class _FundingRateCard extends StatelessWidget {
                   color: _analyticsRed,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MetricBubble(
                   label: '24h Avg',
@@ -187,7 +162,7 @@ class _FundingRateCard extends StatelessWidget {
                   color: _analyticsGreen,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MetricBubble(
                   label: 'Range',
@@ -197,14 +172,13 @@ class _FundingRateCard extends StatelessWidget {
             ],
           ),
           VitCard(
-            height:
-                AppSpacing.tradeBotClientMetricHeight +
-                AppSpacing.tradeBotStatusGap +
-                AppSpacing.hairlineStroke * 2,
-            padding: AppSpacing.tradeBotCompactPanelPadding,
+            density: VitDensity.compact,
             variant: VitCardVariant.inner,
-            child: CustomPaint(
-              painter: _FundingLinePainter(values: data.historyPct),
+            child: AspectRatio(
+              aspectRatio: 4.4,
+              child: CustomPaint(
+                painter: _FundingLinePainter(values: data.historyPct),
+              ),
             ),
           ),
           _InfoStrip(
@@ -227,12 +201,14 @@ class _LiquidationsTab extends StatelessWidget {
     final stats = snapshot.liquidationStats;
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: AppSpacing.tradeBotCardGap,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _AnalyticsCard(
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: AppSpacing.tradeBotRowGap,
+            fullBleed: true,
+            density: VitDensity.compact,
             children: [
               const _CardHeader(
                 icon: Icons.flash_on_rounded,
@@ -248,7 +224,7 @@ class _LiquidationsTab extends StatelessWidget {
                       color: AppColors.text1,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                  const SizedBox(width: AppSpacing.x2),
                   Expanded(
                     child: _MetricBubble(
                       label: 'Long Liq',
@@ -256,7 +232,7 @@ class _LiquidationsTab extends StatelessWidget {
                       color: _analyticsGreen,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                  const SizedBox(width: AppSpacing.x2),
                   Expanded(
                     child: _MetricBubble(
                       label: 'Short Liq',
@@ -280,7 +256,8 @@ class _LiquidationsTab extends StatelessWidget {
         _AnalyticsCard(
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: AppSpacing.tradeBotSmallGap,
+            fullBleed: true,
+            density: VitDensity.compact,
             children: [
               const _CardHeader(
                 icon: Icons.grid_view_rounded,
@@ -295,7 +272,8 @@ class _LiquidationsTab extends StatelessWidget {
         _AnalyticsCard(
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: AppSpacing.tradeBotSmallGap,
+            fullBleed: true,
+            density: VitDensity.compact,
             children: [
               const _CardHeader(
                 icon: Icons.history_rounded,
@@ -323,12 +301,14 @@ class _SentimentTab extends StatelessWidget {
     final sentiment = snapshot.sentiment;
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: AppSpacing.tradeBotCardGap,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _AnalyticsCard(
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: AppSpacing.tradeBotPanelGap,
+            fullBleed: true,
+            density: VitDensity.compact,
             children: [
               const _CardHeader(
                 icon: Icons.psychology_outlined,
@@ -339,13 +319,8 @@ class _SentimentTab extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    SizedBox(
-                      width:
-                          AppSpacing.tradeBotRiskRingSize +
-                          AppSpacing.tradeBotDisputeDropdownIcon,
-                      height:
-                          AppSpacing.tradeBotRiskRingSize +
-                          AppSpacing.tradeBotDisputeDropdownIcon,
+                    SizedBox.square(
+                      dimension: AppSpacing.tradeBotRiskRingSize,
                       child: CircularProgressIndicator(
                         value: sentiment.score / 100,
                         strokeWidth: AppSpacing.tradeBotCardIconGap,
@@ -360,7 +335,6 @@ class _SentimentTab extends StatelessWidget {
                           '${sentiment.score}',
                           style: AppTextStyles.heroNumber.copyWith(
                             color: _analyticsAmber,
-                            height: AppSpacing.tradeBotLineHeightTight,
                           ),
                         ),
                         Text(
@@ -381,7 +355,8 @@ class _SentimentTab extends StatelessWidget {
         _AnalyticsCard(
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: AppSpacing.tradeBotSmallGap,
+            fullBleed: true,
+            density: VitDensity.compact,
             children: [
               Text(
                 'How Sentiment is Calculated',
@@ -398,7 +373,8 @@ class _SentimentTab extends StatelessWidget {
         _AnalyticsCard(
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: AppSpacing.tradeBotSmallGap,
+            fullBleed: true,
+            density: VitDensity.compact,
             children: [
               Text(
                 'Trading Implications',
@@ -439,24 +415,20 @@ class _CardHeader extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, color: iconColor, size: AppSpacing.ctaLoadingIcon),
-        const SizedBox(width: AppSpacing.tradeBotSmallGap),
+        const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
             title,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ),
         if (trailing != null)
           Text(
             trailing!,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           )
         else if (badge != null)
           _SmallBadge(label: badge!, color: badgeColor),
@@ -473,7 +445,7 @@ class _AnalyticsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
       borderColor: _analyticsBorder.withValues(alpha: .72),
       child: child,
     );

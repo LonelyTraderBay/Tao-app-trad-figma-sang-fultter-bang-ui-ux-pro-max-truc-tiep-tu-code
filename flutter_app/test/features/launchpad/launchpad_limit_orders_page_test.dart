@@ -7,9 +7,13 @@ import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.d
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_limit_orders_page.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_empty_state.dart';
 
 void main() {
-  Future<void> pumpLimitOrders(WidgetTester tester) async {
+  Future<void> pumpLimitOrders(
+    WidgetTester tester, {
+    LaunchpadRepository? repository,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -17,6 +21,10 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          if (repository != null)
+            launchpadRepositoryProvider.overrideWithValue(repository),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(
             initialLocation: AppRoutePaths.launchpadLimitOrders,
@@ -77,6 +85,19 @@ void main() {
     expect(find.text('Buy AVAX'), findsOneWidget);
     expect(find.text(r'$4.2K'), findsOneWidget);
     expect(find.text('PARTIAL OK'), findsWidgets);
+  });
+
+  testWidgets('SC-315 renders shared empty state for no active orders', (
+    tester,
+  ) async {
+    await pumpLimitOrders(
+      tester,
+      repository: const _EmptyLimitOrdersRepository(),
+    );
+
+    expect(find.byType(VitEmptyState), findsOneWidget);
+    expect(find.text('No active orders'), findsOneWidget);
+    expect(find.text('Create a limit order to get started'), findsOneWidget);
   });
 
   testWidgets('SC-315 switches to history tab', (tester) async {
@@ -162,4 +183,38 @@ void main() {
 
     expect(find.byType(LaunchpadPage), findsOneWidget);
   });
+}
+
+final class _EmptyLimitOrdersRepository implements LaunchpadRepository {
+  const _EmptyLimitOrdersRepository();
+
+  @override
+  LaunchpadLimitOrdersSnapshot getLimitOrders() {
+    return const LaunchpadLimitOrdersSnapshot(
+      endpoint: '/api/mobile/launchpad/launchpad-limit-orders',
+      actionDraft:
+          'POST /orders/:id/action where applicable; POST /launchpad/subscribe|claim|bridge where applicable',
+      title: 'Limit Orders',
+      backRoute: AppRoutePaths.launchpad,
+      tabs: ['Hoat dong', 'Lich su', 'Tao lenh'],
+      orders: [],
+      filled24h: 0,
+      totalValueLabel: r'$0',
+      contractNotes:
+          'Empty-state test double for active/history orders and screenState coverage.',
+      supportedStates: {
+        LaunchpadScreenState.loading,
+        LaunchpadScreenState.empty,
+        LaunchpadScreenState.error,
+        LaunchpadScreenState.offline,
+        LaunchpadScreenState.submitting,
+        LaunchpadScreenState.success,
+      },
+    );
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) {
+    return super.noSuchMethod(invocation);
+  }
 }

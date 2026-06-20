@@ -12,6 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPairDetail(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -73,6 +75,25 @@ void main() {
     expect(find.text('Mua dinh ky BTC'), findsOneWidget);
     expect(find.text('Thong tin BTC'), findsOneWidget);
     expect(find.text('Do sau thi truong'), findsOneWidget);
+  });
+
+  testWidgets('SC-044 first viewport reaches the pair chart', (tester) async {
+    await pumpPairDetail(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'PairDetailPage',
+      semanticLabel: 'SC-044 PairDetailPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PairDetailPage.chartContentKey),
+      minVisibleHeight: 48,
+      targetLabel: 'pair detail chart',
+      reason:
+          'Pair detail should expose the live market chart above bottom '
+          'navigation after the compact price and tab controls.',
+    );
   });
 
   testWidgets('SC-044 switches order book and trades tabs', (tester) async {

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -57,13 +58,11 @@ class _ExecutionVenueAnalysisPageState
         .getExecutionVenueAnalysis();
     final venues = _sorted(snapshot.venues);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.executionVenueBottomInsetVisualExtra
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.executionVenueBottomInsetNativeExtra) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -93,41 +92,33 @@ class _ExecutionVenueAnalysisPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: ExecutionVenueAnalysisPage.contentKey,
-                      padding: AppSpacing.executionVenueScrollPadding(
-                        bottomInset,
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        AppSpacing.tradeBotCardGap,
+                        AppSpacing.contentPad,
+                        scrollClearance,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: AppSpacing.executionVenueContentGap,
+                        density: VitDensity.compact,
                         children: [
                           _SummaryGrid(summary: snapshot.summary),
-                          const SizedBox(
-                            height: AppSpacing.executionVenueSectionGap,
-                          ),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
+                            density: VitDensity.compact,
                             title: 'Execution venue review',
                             message:
                                 'Compare fill quality, total cost, speed, venue concentration, fee impact, and next-step export before changing routing decisions.',
                             contractId: 'SC-097 venue analysis review',
                           ),
-                          const SizedBox(
-                            height: AppSpacing.executionVenueControlGap,
-                          ),
                           _SortSelector(
                             activeId: _sort,
                             onChanged: (id) => setState(() => _sort = id),
                           ),
-                          const SizedBox(
-                            height: AppSpacing.executionVenueControlGap,
-                          ),
                           _Tabs(
                             activeId: _tab,
                             onChanged: (id) => setState(() => _tab = id),
-                          ),
-                          const SizedBox(
-                            height: AppSpacing.executionVenueTabBodyGap,
                           ),
                           if (_tab == 'comparison')
                             _ComparisonTab(venues: venues)

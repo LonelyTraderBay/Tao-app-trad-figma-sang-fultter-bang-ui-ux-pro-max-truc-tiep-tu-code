@@ -8,49 +8,64 @@ class _PerformanceTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Row(
-        key: LaunchpadPerformancePage.tabsKey,
+    return ColoredBox(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          for (final tab in _PerformanceTab.values)
-            Expanded(
-              child: InkWell(
-                key: LaunchpadPerformancePage.tabKey(tab.id),
-                onTap: () => onChanged(tab),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: AppSpacing.x4),
-                  child: Column(
-                    children: [
-                      Text(
-                        tab.label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: tab == activeTab
-                              ? AppColors.primary
-                              : AppColors.text3,
-                          fontWeight: AppTextStyles.bold,
-                        ),
+          Row(
+            key: LaunchpadPerformancePage.tabsKey,
+            children: [
+              for (final tab in _PerformanceTab.values)
+                Expanded(
+                  child: InkWell(
+                    key: LaunchpadPerformancePage.tabKey(tab.id),
+                    onTap: () => onChanged(tab),
+                    child: Padding(
+                      padding: AppSpacing.launchpadTopPaddingX3,
+                      child: Column(
+                        children: [
+                          Text(
+                            tab.label,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.caption.copyWith(
+                              color: tab == activeTab
+                                  ? AppColors.primary
+                                  : AppColors.text3,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.x3),
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 160),
+                            child: SizedBox(
+                              height: AppSpacing.launchpadGapXxs,
+                              width: tab == activeTab
+                                  ? _launchpadPerformanceIndicatorWidth
+                                  : AppSpacing.zero,
+                              child: const DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: AppColors.primary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: AppRadii.xsRadius,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: AppSpacing.x4),
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 160),
-                        height: AppSpacing.launchpadGapXxs,
-                        width: tab == activeTab ? 116 : 0,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: AppRadii.xsRadius,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
+            ],
+          ),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            thickness: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
         ],
       ),
     );
@@ -73,7 +88,7 @@ class _OverviewTab extends StatelessWidget {
           variant: VitCardVariant.hero,
           radius: VitCardRadius.lg,
           borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: _launchpadPerformanceHeroPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -97,7 +112,7 @@ class _OverviewTab extends StatelessWidget {
                   color: AppColors.portfolioTextMuted,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: AppSpacing.x4),
               Row(
                 children: [
                   Expanded(
@@ -131,7 +146,7 @@ class _OverviewTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         Row(
           key: LaunchpadPerformancePage.bestWorstKey,
           children: [
@@ -144,7 +159,7 @@ class _OverviewTab extends StatelessWidget {
                 color: AppColors.buy,
               ),
             ),
-            const SizedBox(width: AppSpacing.x4),
+            const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: _BestWorstCard(
                 icon: Icons.trending_down_rounded,
@@ -156,7 +171,7 @@ class _OverviewTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         _RoiDistribution(projects: snapshot.projects),
       ],
     );
@@ -179,10 +194,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x4,
-      ),
+      padding: _launchpadPerformanceCardPadding,
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconSm),
@@ -202,7 +214,7 @@ class _HeroMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              height: AppSpacing.launchpadLineHeightBody,
+              height: _launchpadPerformanceLineHeightBody,
             ),
           ),
         ],
@@ -230,11 +242,11 @@ class _BestWorstCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: _launchpadPerformanceCardPadding,
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             eyebrow,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -273,7 +285,7 @@ class _RoiDistribution extends StatelessWidget {
     return VitCard(
       key: LaunchpadPerformancePage.distributionKey,
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: _launchpadPerformanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -283,14 +295,14 @@ class _RoiDistribution extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           SizedBox(
-            height: AppSpacing.launchpadPerformanceChartHeight,
+            height: _launchpadPerformanceChartHeight,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 SizedBox(
-                  width: AppSpacing.launchpadBox42,
+                  width: _launchpadPerformanceAxisLabelWidth,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -300,7 +312,7 @@ class _RoiDistribution extends StatelessWidget {
                           label,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            height: AppSpacing.launchpadLineHeightTight,
+                            height: _launchpadPerformanceLineHeightTight,
                           ),
                         ),
                     ],
@@ -349,9 +361,11 @@ class _RoiBar extends StatelessWidget {
             heightFactor: heightFactor.clamp(.10, 1.0),
             alignment: Alignment.bottomCenter,
             child: DecoratedBox(
-              decoration: BoxDecoration(
+              decoration: ShapeDecoration(
                 color: project.roiAth >= 0 ? AppColors.buy : AppColors.sell,
-                borderRadius: AppRadii.mdRadius,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
               ),
               child: const SizedBox.expand(),
             ),
@@ -364,7 +378,7 @@ class _RoiBar extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.launchpadLineHeightTight,
+            height: _launchpadPerformanceLineHeightTight,
           ),
         ),
       ],

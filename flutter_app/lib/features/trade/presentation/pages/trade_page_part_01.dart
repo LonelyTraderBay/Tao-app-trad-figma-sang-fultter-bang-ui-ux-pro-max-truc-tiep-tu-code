@@ -27,15 +27,15 @@ class _TradePageState extends ConsumerState<TradePage> {
     final snapshot = ref.watch(tradeScreenProvider(widget.pairId));
     final pair = snapshot.pair;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final chromeInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollClearance =
+        chromeInset +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.tradeBottomInsetVisual
-            : AppSpacing.tradeBottomInsetNative);
+            ? AppSpacing.x6 + AppSpacing.x5
+            : AppSpacing.x5 + AppSpacing.x3);
     final amount = double.tryParse(_amountController.text) ?? 0;
     final price = double.tryParse(_priceController.text) ?? pair.price;
     final draft = TradeOrderDraft(
@@ -60,9 +60,11 @@ class _TradePageState extends ConsumerState<TradePage> {
         type: MaterialType.transparency,
         child: SingleChildScrollView(
           key: TradePage.contentKey,
-          padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          padding: AppSpacing.zeroInsets.copyWith(bottom: scrollClearance),
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            density: VitDensity.compact,
+            fullBleed: true,
             children: [
               _TradeHeader(
                 pair: pair,
@@ -81,7 +83,10 @@ class _TradePageState extends ConsumerState<TradePage> {
                 onSelected: (value) => setState(() => _dataTab = value),
               ),
               Padding(
-                padding: AppSpacing.tradeMarketPanelPadding,
+                padding: AppSpacing.zeroInsets.copyWith(
+                  left: AppSpacing.contentPad,
+                  right: AppSpacing.contentPad,
+                ),
                 child: _MarketDataPanel(
                   active: _dataTab,
                   snapshot: snapshot,
@@ -89,14 +94,13 @@ class _TradePageState extends ConsumerState<TradePage> {
                 ),
               ),
               Padding(
-                padding: AppSpacing.tradeHorizontalInsets,
+                padding: AppSpacing.contentInsets,
                 child: _OrderTabs(
                   active: _activeTab,
                   openCount: snapshot.orders.length + 2,
                   onSelected: (value) => setState(() => _activeTab = value),
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeSectionGap),
               if (_activeTab == 'order')
                 _OrderForm(
                   side: _side,
@@ -133,11 +137,11 @@ class _TradePageState extends ConsumerState<TradePage> {
               else
                 _HistoryList(),
               if (snapshot.highRiskContractId != null) ...[
-                const SizedBox(height: AppSpacing.tradeSectionGap),
                 Padding(
-                  padding: AppSpacing.tradeRiskPanelPadding,
+                  padding: AppSpacing.contentInsets,
                   child: VitHighRiskStatePanel(
                     state: VitHighRiskUiState.riskReview,
+                    density: VitDensity.compact,
                     title: 'Spot order risk states active',
                     message:
                         'Setup, preview, confirmation, submission, receipt and support use the shared high-risk flow contract.',
@@ -376,10 +380,13 @@ class _QuickNavRow extends StatelessWidget {
     ];
 
     return SizedBox(
-      height: AppSpacing.tradeQuickNavHeight,
+      height: _tradeCompactQuickNavHeight,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        padding: AppSpacing.tradeQuickNavPadding,
+        padding: AppSpacing.zeroInsets.copyWith(
+          left: AppSpacing.contentPad,
+          right: AppSpacing.contentPad,
+        ),
         children: [
           for (final item in items)
             _QuickNavChip(
@@ -433,13 +440,17 @@ class _QuickNavChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.zeroInsets.copyWith(
-        right: AppSpacing.tradeQuickNavGap,
-      ),
+      padding: AppSpacing.zeroInsets.copyWith(right: AppSpacing.x2),
       child: VitCard(
         onTap: onTap,
-        width: AppSpacing.tradeQuickChipWidth,
-        padding: AppSpacing.tradeQuickChipPadding,
+        width: _tradeCompactQuickChipWidth,
+        density: VitDensity.tool,
+        padding: AppSpacing.zeroInsets.copyWith(
+          left: AppSpacing.x3,
+          top: AppSpacing.x2,
+          right: AppSpacing.x3,
+          bottom: AppSpacing.x2,
+        ),
         radius: VitCardRadius.sm,
         borderColor: color.withValues(alpha: .24),
         child: Column(
@@ -447,8 +458,8 @@ class _QuickNavChip extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, color: color, size: AppSpacing.tradeQuickChipIcon),
-                const SizedBox(width: AppSpacing.tradeQuickChipIconGap),
+                Icon(icon, color: color, size: AppSpacing.iconSm),
+                const SizedBox(width: AppSpacing.x1),
                 Expanded(
                   child: Text(
                     label,
@@ -462,12 +473,12 @@ class _QuickNavChip extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.tradeQuickChipBadgeGap),
+            const SizedBox(height: AppSpacing.x1),
             Align(
               alignment: Alignment.centerLeft,
               child: ConstrainedBox(
                 constraints: const BoxConstraints(
-                  maxWidth: AppSpacing.tradeQuickChipBadgeMaxWidth,
+                  maxWidth: AppSpacing.x7 + AppSpacing.x5,
                 ),
                 child: VitAccentPill(label: badge, accentColor: color),
               ),
@@ -493,10 +504,10 @@ class _DataTabs extends StatelessWidget {
       ('trades', 'Giao dịch', TradePage.tradesTabKey),
     ];
     return Padding(
-      padding: AppSpacing.tradeDataTabsPadding,
+      padding: AppSpacing.contentInsets,
       child: VitCard(
-        height: AppSpacing.tradeDataTabsHeight,
-        padding: AppSpacing.tradeSegmentedPadding,
+        density: VitDensity.tool,
+        padding: const EdgeInsets.all(AppSpacing.x1),
         variant: VitCardVariant.inner,
         radius: VitCardRadius.sm,
         child: Row(
@@ -545,7 +556,7 @@ class _ChartPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final pairRoute = variant == TradeChartVariant.pairRoute;
     return VitCard(
-      height: AppSpacing.tradeChartHeight,
+      height: _tradeCompactChartHeight,
       borderColor: _tradePrimary.withValues(alpha: .35),
       clip: true,
       child: Stack(

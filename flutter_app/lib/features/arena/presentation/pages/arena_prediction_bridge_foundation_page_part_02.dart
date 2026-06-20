@@ -13,24 +13,20 @@ class _TopicsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: '2 - Shared Topic Taxonomy',
+      accentColor: AppModuleAccents.arena,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: '2 - Shared Topic Taxonomy',
-          accentColor: AppModuleAccents.arena,
-        ),
-        const SizedBox(height: AppSpacing.x4),
         Text(
           '8 topics dùng chung cho cả Arena và Prediction Markets. Bridge chỉ qua topic, không qua value.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaBridgeIntroLineHeight,
+            height: _bridgeIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          density: VitDensity.compact,
           child: Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -44,12 +40,8 @@ class _TopicsSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final topic in snapshot.topics.take(4)) ...[
+        for (final topic in snapshot.topics.take(4))
           _TopicMappingCard(topic: topic),
-          if (topic != snapshot.topics.take(4).last)
-            const SizedBox(height: AppSpacing.x3),
-        ],
       ],
     );
   }
@@ -68,40 +60,14 @@ class _TopicChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tone = _toneColor(topic.tone);
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        key: ArenaPredictionBridgeFoundationPage.topicKey(topic.id),
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.arenaBridgeTopicMinHeight,
-          ),
-          child: Material(
-            color: tone.withValues(alpha: selected ? .20 : .10),
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: tone.withValues(alpha: selected ? .50 : .20),
-                width: selected ? 1.5 : 1,
-              ),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Padding(
-              padding: AppSpacing.arenaPresetChipPadding,
-              child: Text(
-                topic.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: tone,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitStatusPill(
+      key: ArenaPredictionBridgeFoundationPage.topicKey(topic.id),
+      label: topic.label,
+      icon: _toneIcon(topic.tone),
+      status: _toneStatus(topic.tone),
+      size: VitStatusPillSize.md,
+      outline: !selected,
+      onTap: onTap,
     );
   }
 }
@@ -115,12 +81,12 @@ class _TopicMappingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.arenaPaddingX3,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _InlineTitle(icon: Icons.topic_outlined, title: topic.label),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           _MiniMetric(label: 'Prediction', value: topic.predictionUsage),
           const SizedBox(height: AppSpacing.x2),
           _MiniMetric(label: 'Arena', value: topic.arenaUsage),
@@ -139,42 +105,33 @@ class _BoundarySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: '3 - Module Boundary Components',
+      accentColor: AppColors.sell,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: '3 - Module Boundary Components',
-          accentColor: AppColors.sell,
-        ),
-        const SizedBox(height: AppSpacing.x4),
         Text(
           'Banner, badge và info row bắt buộc khi hiển thị content cross-module.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaBridgeIntroLineHeight,
+            height: _bridgeIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final banner in snapshot.boundaryBanners) ...[
+        for (final banner in snapshot.boundaryBanners)
           _BoundaryBanner(banner: banner),
-          if (banner != snapshot.boundaryBanners.last)
-            const SizedBox(height: AppSpacing.x3),
-        ],
-        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          density: VitDensity.compact,
           child: Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
             children: [
               for (final badge in snapshot.badges)
-                _BridgeBadge(label: badge.label, tone: badge.tone),
+                _bridgeBadge(label: badge.label, tone: badge.tone),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          density: VitDensity.compact,
           child: Column(
             children: [
               for (final row in snapshot.infoRows) ...[
@@ -201,7 +158,7 @@ class _BoundaryBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: tone.withValues(alpha: .22),
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -224,7 +181,7 @@ class _BoundaryBanner extends StatelessWidget {
                   banner.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaBridgeBodyLineHeight,
+                    height: _bridgeBodyLineHeight,
                   ),
                 ),
               ],
@@ -249,28 +206,20 @@ class _BridgeComponentsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: '4 - Bridge Components',
+      accentColor: AppColors.primary,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: '4 - Bridge Components',
-          accentColor: AppColors.primary,
-        ),
-        const SizedBox(height: AppSpacing.x4),
         Text(
           '4 reusable bridge components. Mỗi component đều có mandatory disclosure badge.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaBridgeIntroLineHeight,
+            height: _bridgeIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final component in snapshot.bridgeComponents) ...[
+        for (final component in snapshot.bridgeComponents)
           _ComponentDemoCard(component: component),
-          if (component != snapshot.bridgeComponents.last)
-            const SizedBox(height: AppSpacing.x4),
-        ],
-        const SizedBox(height: AppSpacing.x4),
         _DualStatsCard(
           stats: snapshot.dualStats,
           onPredictionTap: onPredictionTap,
@@ -289,7 +238,7 @@ class _ComponentDemoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -304,7 +253,7 @@ class _ComponentDemoCard extends StatelessWidget {
                   ),
                 ),
               ),
-              _BridgeBadge(label: component.badgeLabel, tone: component.tone),
+              _bridgeBadge(label: component.badgeLabel, tone: component.tone),
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -312,7 +261,7 @@ class _ComponentDemoCard extends StatelessWidget {
             component.description,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.arenaBridgeBodyLineHeight,
+              height: _bridgeBodyLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -342,7 +291,7 @@ class _DualStatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary.withValues(alpha: .24),
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -406,64 +355,48 @@ class _ModuleStatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _toneColor(tone);
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.arenaBridgeStatMinHeight,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .20),
+      density: VitDensity.compact,
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            _toneIcon(tone),
+            color: color,
+            size: AppSpacing.arenaBridgeActionIcon,
           ),
-          child: Material(
-            color: color.withValues(alpha: .08),
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: color.withValues(alpha: .20)),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Padding(
-              padding: AppSpacing.arenaPaddingX3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    _toneIcon(tone),
-                    color: color,
-                    size: AppSpacing.arenaBridgeActionIcon,
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: color,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    value,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.body.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    detail,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-        ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            detail,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
       ),
     );
   }
@@ -476,27 +409,19 @@ class _ExamplesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: '5 - Example Usage Frames',
+      accentColor: AppColors.buy,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: '5 - Example Usage Frames',
-          accentColor: AppColors.buy,
-        ),
-        const SizedBox(height: AppSpacing.x4),
         Text(
           '4 frame demo: A-C là đúng cách, D là sai cách.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaBridgeIntroLineHeight,
+            height: _bridgeIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final example in snapshot.examples) ...[
-          _ExampleCard(example: example),
-          if (example != snapshot.examples.last)
-            const SizedBox(height: AppSpacing.x4),
-        ],
+        for (final example in snapshot.examples) _ExampleCard(example: example),
       ],
     );
   }

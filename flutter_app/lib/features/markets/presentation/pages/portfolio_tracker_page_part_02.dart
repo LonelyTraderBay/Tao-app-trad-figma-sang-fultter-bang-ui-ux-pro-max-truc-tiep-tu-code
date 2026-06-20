@@ -39,7 +39,7 @@ class _TopHoldings extends StatelessWidget {
             onTap: () => onTap(holding),
           ),
           if (holding != holdings.last)
-            const SizedBox(height: AppSpacing.portfolioTrackerSectionGap),
+            const SizedBox(height: _portfolioSectionGap),
         ],
       ],
     );
@@ -63,14 +63,11 @@ class _HoldingRow extends StatelessWidget {
     final pnlColor = holding.pnlPct >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
       onTap: onTap,
-      padding: AppSpacing.portfolioTrackerHoldingRowPadding,
+      padding: _portfolioHoldingRowPadding,
       child: Row(
         children: [
-          _TokenBadge(
-            holding: holding,
-            size: AppSpacing.portfolioTrackerHoldingAvatarMd,
-          ),
-          const SizedBox(width: AppSpacing.portfolioTrackerHoldingRowGap),
+          _TokenBadge(holding: holding, size: _portfolioHoldingAvatarMd),
+          const SizedBox(width: _portfolioHoldingRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,18 +87,18 @@ class _HoldingRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: AppSpacing.portfolioTrackerHoldingSparklineWidth,
-            height: AppSpacing.portfolioTrackerHoldingSparklineHeight,
+            width: _portfolioHoldingSparklineWidth,
+            height: _portfolioHoldingSparklineHeight,
             child: VitSparkline(
               values: holding.sparkline,
               color: holding.change24h >= 0 ? AppColors.buy : AppColors.sell,
               showFill: false,
-              strokeWidth: AppSpacing.portfolioTrackerSparklineStroke,
+              strokeWidth: _portfolioSparklineStroke,
             ),
           ),
-          const SizedBox(width: AppSpacing.portfolioTrackerHoldingSparklineGap),
+          const SizedBox(width: _portfolioHoldingSparklineGap),
           SizedBox(
-            width: AppSpacing.portfolioTrackerHoldingValueWidth,
+            width: _portfolioHoldingValueWidth,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -140,7 +137,7 @@ class _RiskCard extends StatelessWidget {
     final balanced = stats.stableAllocation > 20;
     final color = balanced ? AppColors.buy : AppColors.warn;
     return VitCard(
-      padding: AppSpacing.portfolioTrackerRiskPadding,
+      padding: _portfolioRiskPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -164,7 +161,7 @@ class _RiskCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.portfolioTrackerRiskTitleGap),
+          const SizedBox(height: _portfolioRiskTitleGap),
           Row(
             children: [
               Expanded(
@@ -182,24 +179,22 @@ class _RiskCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: AppSpacing.portfolioTrackerRiskProgressLabelGap,
-          ),
+          const SizedBox(height: _portfolioRiskProgressLabelGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.portfolioTrackerRiskProgressHeight,
+              minHeight: _portfolioRiskProgressHeight,
               value: stats.stableAllocation / 100,
               backgroundColor: AppColors.surface2,
               valueColor: const AlwaysStoppedAnimation(AppColors.buy),
             ),
           ),
-          const SizedBox(height: AppSpacing.portfolioTrackerRiskCopyGap),
+          const SizedBox(height: _portfolioRiskCopyGap),
           Text(
             'Danh mục có ${stats.stableAllocation.toStringAsFixed(1)}% stablecoin, giúp giảm biến động. Khuyến nghị duy trì ít nhất 10-20% stablecoin cho quản lý rủi ro.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.portfolioTrackerRiskLineHeight,
+              height: _portfolioRiskLineHeight,
             ),
           ),
         ],
@@ -233,7 +228,7 @@ class _SortChips extends StatelessWidget {
               onTap: () => onSelected(entry.key),
             ),
             if (entry.key != chips.keys.last)
-              const SizedBox(width: AppSpacing.portfolioTrackerChipGap),
+              const SizedBox(width: _portfolioChipGap),
           ],
         ],
       ),
@@ -258,8 +253,7 @@ class _TimeFilterChips extends StatelessWidget {
             active: active == filter,
             onTap: () => onSelected(filter),
           ),
-          if (filter != filters.last)
-            const SizedBox(width: AppSpacing.portfolioTrackerChipGap),
+          if (filter != filters.last) const SizedBox(width: _portfolioChipGap),
         ],
       ],
     );
@@ -296,7 +290,7 @@ class _ChipButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: Padding(
-          padding: AppSpacing.portfolioTrackerChipPadding,
+          padding: _portfolioChipPadding,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
@@ -326,16 +320,13 @@ class _HoldingDetailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: AppSpacing.portfolioTrackerHoldingDetailPadding,
+      padding: _portfolioHoldingDetailPadding,
       child: Column(
         children: [
           Row(
             children: [
-              _TokenBadge(
-                holding: holding,
-                size: AppSpacing.portfolioTrackerHoldingAvatarLg,
-              ),
-              const SizedBox(width: AppSpacing.portfolioTrackerHoldingRowGap),
+              _TokenBadge(holding: holding, size: _portfolioHoldingAvatarLg),
+              const SizedBox(width: _portfolioHoldingRowGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -374,7 +365,7 @@ class _HoldingDetailCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.portfolioTrackerHoldingDetailGap),
+          const SizedBox(height: _portfolioHoldingDetailGap),
           Row(
             children: [
               _HoldingMetric(
@@ -425,7 +416,7 @@ class _HoldingMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.portfolioTrackerHoldingMetricGap),
+          const SizedBox(height: _portfolioHoldingMetricGap),
           Text(
             value,
             maxLines: 1,
@@ -450,7 +441,7 @@ class _PerformanceChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.portfolioTrackerChartCardPadding,
+      padding: _portfolioChartCardPadding,
       child: Column(
         children: [
           Row(
@@ -473,9 +464,9 @@ class _PerformanceChartCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.portfolioTrackerChartTitleGap),
+          const SizedBox(height: _portfolioChartTitleGap),
           SizedBox(
-            height: AppSpacing.portfolioTrackerChartHeight,
+            height: _portfolioChartHeight,
             width: double.infinity,
             child: CustomPaint(painter: _PerformancePainter(points: points)),
           ),

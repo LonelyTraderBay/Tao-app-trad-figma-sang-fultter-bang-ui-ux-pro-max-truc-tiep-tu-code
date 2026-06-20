@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/connected_ec
 import 'package:vit_trade_flutter/features/markets/presentation/pages/market_list_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpEcosystem(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,26 @@ void main() {
     await tester.ensureVisible(find.text('Summary'));
     expect(find.text('Total screens'), findsOneWidget);
     expect(find.text('Bridge components'), findsOneWidget);
+  });
+
+  testWidgets('SC-208 first viewport reaches first canonical screen card', (
+    tester,
+  ) async {
+    await pumpEcosystem(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ConnectedEcosystemProductionPage',
+      semanticLabel: 'SC-208 ConnectedEcosystemProductionPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(
+        ConnectedEcosystemProductionPage.screenKey('HomePage_vFinal_Connected'),
+      ),
+      targetLabel: 'first canonical screen card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-208 switches connected ecosystem tabs', (tester) async {

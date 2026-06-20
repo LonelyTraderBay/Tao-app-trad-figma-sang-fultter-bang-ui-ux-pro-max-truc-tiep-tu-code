@@ -8,7 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -26,6 +26,43 @@ part '../widgets/launchpad_webhooks_form_controls.dart';
 part '../widgets/launchpad_webhooks_common_widgets.dart';
 
 enum _WebhookTab { subscriptions, deliveries }
+
+const double _launchpadWebhooksVisualNavClearance = 112;
+const double _launchpadWebhooksNativeNavClearance = 88;
+const double _launchpadWebhooksLineHeightTight = 1.0;
+const double _launchpadWebhooksLineHeightShort = 1.2;
+const double _launchpadWebhooksDividerHeight = AppSpacing.hairlineStroke;
+const double _launchpadWebhooksMarkerWidth = AppSpacing.x1;
+const double _launchpadWebhooksPrimaryIconBox = AppSpacing.inputHeight;
+const double _launchpadWebhooksDeliveryIconBox = AppSpacing.x6;
+const double _launchpadWebhooksIconLg = AppSpacing.iconSm;
+const double _launchpadWebhooksIcon2xl = AppSpacing.iconMd;
+const double _launchpadWebhooksEmptyIcon = AppSpacing.iconLg;
+const double _launchpadWebhooksCopyButtonExtent = AppSpacing.x5;
+const double _launchpadWebhooksActionButtonHeight =
+    AppSpacing.buttonCompact + AppSpacing.x1;
+const double _launchpadWebhooksSheetMaxWidth = 440;
+const double _launchpadWebhooksSheetHandleWidth =
+    AppSpacing.inputHeight - AppSpacing.x1;
+const double _launchpadWebhooksSheetHandleHeight =
+    AppSpacing.x1 + AppSpacing.hairlineStroke;
+const EdgeInsets _launchpadWebhooksHeaderStatsPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  AppSpacing.x1,
+);
+const EdgeInsets _launchpadWebhooksCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _launchpadWebhooksCompactCardPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _launchpadWebhooksSheetPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  AppSpacing.x4,
+);
 
 class LaunchpadWebhooksPage extends ConsumerStatefulWidget {
   const LaunchpadWebhooksPage({super.key, this.shellRenderMode});
@@ -85,11 +122,11 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(launchpadControllerProvider).getWebhooks();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _launchpadWebhooksVisualNavClearance
+        : _launchpadWebhooksNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
     final stats = _WebhookStats.from(_subscriptions, snapshot.deliveries);
 
     return VitPageLayout(
@@ -100,7 +137,6 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
               semanticLabel: 'SC-310 LaunchpadWebhooksPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
@@ -110,7 +146,7 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: AppSpacing.launchpadHeaderStatsPadding,
+                    padding: _launchpadWebhooksHeaderStatsPadding,
                     child: _StatsGrid(
                       key: LaunchpadWebhooksPage.statsKey,
                       stats: stats,
@@ -123,7 +159,7 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Divider(
-                          height: AppSpacing.launchpadDividerHeight,
+                          height: _launchpadWebhooksDividerHeight,
                           color: AppColors.divider,
                         ),
                         Padding(
@@ -135,7 +171,7 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
                           ),
                         ),
                         const Divider(
-                          height: AppSpacing.launchpadDividerHeight,
+                          height: _launchpadWebhooksDividerHeight,
                           color: AppColors.divider,
                         ),
                       ],
@@ -149,9 +185,10 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
                       child: SingleChildScrollView(
                         key: LaunchpadWebhooksPage.contentKey,
                         physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.only(bottom: scrollEndPadding),
                         child: VitPageContent(
-                          padding: VitContentPadding.defaultPadding,
-                          customGap: AppSpacing.x4,
+                          padding: VitContentPadding.compact,
+                          density: VitDensity.compact,
                           children: [
                             if (_activeTab == _WebhookTab.subscriptions) ...[
                               _CreateWebhookCard(

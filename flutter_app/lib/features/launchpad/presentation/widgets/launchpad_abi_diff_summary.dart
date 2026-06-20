@@ -12,7 +12,7 @@ class _RiskHero extends StatelessWidget {
       key: LaunchpadAbiDiffPage.heroKey,
       variant: VitCardVariant.hero,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -73,7 +73,7 @@ class _RiskHero extends StatelessWidget {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+                padding: AppSpacing.launchpadHorizontalPaddingX3,
                 child: Icon(
                   Icons.bolt_rounded,
                   color: AppColors.portfolioTextMuted,
@@ -104,24 +104,27 @@ class _RiskScoreRing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.launchpadBox64,
-      height: AppSpacing.launchpadBox64,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: color,
-          width: AppSpacing.launchpadBorderWidthStrong,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox64,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .08),
+          shape: CircleBorder(
+            side: BorderSide(
+              color: color,
+              width: AppSpacing.launchpadBorderWidthStrong,
+            ),
+          ),
         ),
-        color: color.withValues(alpha: .08),
-      ),
-      child: Text(
-        '$score',
-        style: AppTextStyles.base.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.heavy,
-          fontFeatures: const [FontFeature.tabularFigures()],
+        child: Center(
+          child: Text(
+            '$score',
+            style: AppTextStyles.base.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.heavy,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
         ),
       ),
     );
@@ -143,40 +146,44 @@ class _ImplCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .08),
-        border: Border.all(color: color.withValues(alpha: .18)),
-        borderRadius: AppRadii.inputRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(color: color.withValues(alpha: .18)),
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.portfolioTextMuted,
-              fontWeight: AppTextStyles.extraBold,
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX3,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.portfolioTextMuted,
+                fontWeight: AppTextStyles.extraBold,
+              ),
             ),
-          ),
-          Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: color == AppColors.buy ? color : AppColors.text1,
-              fontWeight: AppTextStyles.heavy,
+            Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: color == AppColors.buy ? color : AppColors.text1,
+                fontWeight: AppTextStyles.heavy,
+              ),
             ),
-          ),
-          Text(
-            address,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.portfolioTextMuted,
-              fontWeight: FontWeight.w700,
+            Text(
+              address,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.portfolioTextMuted,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -211,10 +218,7 @@ class _SummaryStats extends StatelessWidget {
               borderColor: activeFilter == stat.$1
                   ? stat.$1.color.withValues(alpha: .42)
                   : null,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x2,
-                vertical: AppSpacing.x3,
-              ),
+              padding: AppSpacing.launchpadTierChipPadding,
               child: Column(
                 key: LaunchpadAbiDiffPage.statKey(stat.$1.value),
                 children: [
@@ -290,7 +294,7 @@ class _UpgradeMetadata extends StatelessWidget {
     ];
     return VitCard(
       key: LaunchpadAbiDiffPage.metadataKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -343,45 +347,47 @@ class _MetaRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
+        shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              row.label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-          ),
-          Flexible(
-            child: Text(
-              row.value,
-              textAlign: TextAlign.right,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.heavy,
-                fontFeatures: const [FontFeature.tabularFigures()],
+      child: Padding(
+        padding: AppSpacing.launchpadVerticalPaddingX2,
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                row.label,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
             ),
-          ),
-          if (onCopy != null) ...[
-            const SizedBox(width: AppSpacing.x1),
-            InkWell(
-              key: LaunchpadAbiDiffPage.copyKey(row.label),
-              borderRadius: AppRadii.xsRadius,
-              onTap: onCopy,
-              child: Icon(
-                copied ? Icons.check_rounded : Icons.copy_rounded,
-                color: copied ? AppColors.buy : AppColors.text3,
-                size: AppSpacing.launchpadIconMd,
+            Flexible(
+              child: Text(
+                row.value,
+                textAlign: TextAlign.right,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.heavy,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
               ),
             ),
+            if (onCopy != null) ...[
+              const SizedBox(width: AppSpacing.x1),
+              InkWell(
+                key: LaunchpadAbiDiffPage.copyKey(row.label),
+                borderRadius: AppRadii.xsRadius,
+                onTap: onCopy,
+                child: Icon(
+                  copied ? Icons.check_rounded : Icons.copy_rounded,
+                  color: copied ? AppColors.buy : AppColors.text3,
+                  size: AppSpacing.launchpadIconMd,
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -406,37 +412,40 @@ class _FilterRow extends StatelessWidget {
           key: LaunchpadAbiDiffPage.functionsOnlyKey,
           borderRadius: AppRadii.inputRadius,
           onTap: onChanged,
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
-            ),
-            decoration: BoxDecoration(
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
               color: active ? AppColors.primary12 : AppColors.surface2,
-              border: Border.all(
-                color: active ? AppColors.primary30 : AppColors.cardBorder,
-              ),
-              borderRadius: AppRadii.inputRadius,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.code_rounded,
-                  color: active ? AppModuleAccents.launchpad : AppColors.text3,
-                  size: AppSpacing.launchpadIconMd,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.inputRadius,
+                side: BorderSide(
+                  color: active ? AppColors.primary30 : AppColors.cardBorder,
                 ),
-                const SizedBox(width: AppSpacing.x1),
-                Text(
-                  'Functions only',
-                  style: AppTextStyles.caption.copyWith(
+              ),
+            ),
+            child: Padding(
+              padding: AppSpacing.launchpadPillPadding,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.code_rounded,
                     color: active
                         ? AppModuleAccents.launchpad
                         : AppColors.text3,
-                    fontWeight: FontWeight.w700,
+                    size: AppSpacing.launchpadIconMd,
                   ),
-                ),
-              ],
+                  const SizedBox(width: AppSpacing.x1),
+                  Text(
+                    'Functions only',
+                    style: AppTextStyles.caption.copyWith(
+                      color: active
+                          ? AppModuleAccents.launchpad
+                          : AppColors.text3,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

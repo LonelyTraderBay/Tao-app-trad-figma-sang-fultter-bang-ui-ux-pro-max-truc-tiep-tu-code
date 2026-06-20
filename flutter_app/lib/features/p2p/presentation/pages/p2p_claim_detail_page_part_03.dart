@@ -10,7 +10,7 @@ class _ReviewerNoteCard extends StatelessWidget {
     final isSystem = note.role == 'Tự động';
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pClaimCardPadding,
+      padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -56,7 +56,7 @@ class _ReviewerNoteCard extends StatelessWidget {
                   note.content,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pClaimBodyLineHeight,
+                    height: _p2pClaimBodyLine,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -84,13 +84,13 @@ class _NotificationsCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.notificationsKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pClaimCardPadding,
+      padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.x7,
-            height: AppSpacing.x7,
+            width: _p2pClaimIconBoxExtent,
+            height: _p2pClaimIconBoxExtent,
             child: Material(
               color: AppColors.primary12,
               shape: const CircleBorder(),
@@ -233,7 +233,7 @@ class _FeedbackBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.p2pClaimCardPadding,
+      padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Row(
         children: [
           const Icon(

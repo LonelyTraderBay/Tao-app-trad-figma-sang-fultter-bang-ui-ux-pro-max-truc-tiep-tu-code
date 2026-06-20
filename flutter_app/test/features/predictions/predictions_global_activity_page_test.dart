@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpActivity(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -118,6 +120,19 @@ void main() {
     expect(
       find.byKey(PredictionsGlobalActivityPage.activityKey('ga-0')),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-034 first viewport reaches the first activity row', (
+    tester,
+  ) async {
+    await pumpActivity(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PredictionsGlobalActivityPage.activityKey('ga-0')),
+      targetLabel: 'the first global activity row',
+      minVisibleHeight: 40,
     );
   });
 

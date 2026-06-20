@@ -7,19 +7,18 @@ class _DrawdownTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
       children: [
         _SectionLabel(label: 'Underwater Chart'),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         SizedBox(
-          height: AppSpacing.tradeBotAttributionDrawdownChartHeight,
+          height: _attributionChartHeight,
           child: CustomPaint(
             painter: _DrawdownPainter(snapshot.drawdowns),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotPanelGap),
         Row(
           children: [
             Expanded(
@@ -30,7 +29,7 @@ class _DrawdownTab extends StatelessWidget {
                 valueColor: _attributionRed,
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeBotCardGap),
+            const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: _MetricTile(
                 label: 'Avg Drawdown',
@@ -41,7 +40,6 @@ class _DrawdownTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         _NoticePanel(
           color: AppColors.caution,
           text:
@@ -59,25 +57,23 @@ class _ProjectionTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
       children: [
         _SectionLabel(label: 'Monte Carlo Simulation (30 ngày)'),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _NoticePanel(
           color: _attributionPrimary,
           text:
               '50 kịch bản ngẫu nhiên dựa trên volatility lịch sử. Vùng tím thể hiện khoảng xác suất tham khảo.',
         ),
-        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         SizedBox(
-          height: AppSpacing.tradeBotAttributionProjectionChartHeight,
+          height: _attributionChartHeight,
           child: CustomPaint(
             painter: _ProjectionPainter(snapshot.monteCarloPaths),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         Row(
           children: [
             Expanded(
@@ -87,7 +83,7 @@ class _ProjectionTab extends StatelessWidget {
                 color: _attributionRed,
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeBotSmallGap),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: _ProjectionTile(
                 label: '50th Percentile',
@@ -95,7 +91,7 @@ class _ProjectionTab extends StatelessWidget {
                 color: _attributionPurple,
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeBotSmallGap),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: _ProjectionTile(
                 label: '95th Percentile',
@@ -117,28 +113,28 @@ class _CorrelationTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
       children: [
         _SectionLabel(label: 'Daily Returns Correlation'),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         SizedBox(
-          height: AppSpacing.tradeBotAttributionCorrelationChartHeight,
+          height: _attributionChartHeight,
           child: CustomPaint(
             painter: _CorrelationPainter(snapshot.correlationPoints),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotPanelGap),
         VitCard(
-          padding: AppSpacing.tradeBotControlPadding,
+          density: VitDensity.compact,
+          padding: AppSpacing.cardPaddingCompact,
           child: Column(
             children: [
               _KeyValueRow(
                 label: 'Correlation coefficient (R)',
                 value: math.sqrt(snapshot.rSquared).toStringAsFixed(2),
               ),
-              const SizedBox(height: AppSpacing.tradeBotCardGap),
+              const SizedBox(height: AppSpacing.x2),
               _KeyValueRow(
                 label: 'R² (explained variance)',
                 value: '${(snapshot.rSquared * 100).toStringAsFixed(0)}%',
@@ -146,7 +142,6 @@ class _CorrelationTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         _NoticePanel(
           color: _attributionPrimary,
           text:
@@ -167,7 +162,8 @@ class _InfoPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.tradeBotAttributionPanelPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _attributionPrimary,
       background: ColoredBox(color: _attributionPrimary.withValues(alpha: .10)),
       child: Row(
@@ -176,16 +172,13 @@ class _InfoPanel extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _attributionPrimary,
-            size: AppSpacing.tradeBotSmallIcon + AppSpacing.hairlineStroke,
+            size: AppSpacing.inputPrefixIcon,
           ),
-          const SizedBox(width: AppSpacing.tradeBotSmallGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: RichText(
               text: TextSpan(
-                style: AppTextStyles.micro.copyWith(
-                  color: _attributionPrimary,
-                  height: AppSpacing.tradeBotLineHeightReadable,
-                ),
+                style: AppTextStyles.micro.copyWith(color: _attributionPrimary),
                 children: [
                   TextSpan(
                     text: 'Giải thích\n',
@@ -232,7 +225,8 @@ class _ContributionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotInnerPanelPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Row(
@@ -255,12 +249,12 @@ class _ContributionBar extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: AppSpacing.x2),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
               value: ratio.clamp(0, 1),
-              minHeight: AppSpacing.tradeBotAttributionProgressHeight,
+              minHeight: AppSpacing.x1,
               color: color,
               backgroundColor: AppColors.surface3,
             ),
@@ -286,7 +280,8 @@ class _ProjectionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotAttributionProjectionPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: color.withValues(alpha: .24),
       child: Column(
         children: [
@@ -297,7 +292,7 @@ class _ProjectionTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: color),
           ),
-          const SizedBox(height: AppSpacing.tradeBotLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             '\$${value.toStringAsFixed(0)}',
             style: AppTextStyles.baseMedium.copyWith(

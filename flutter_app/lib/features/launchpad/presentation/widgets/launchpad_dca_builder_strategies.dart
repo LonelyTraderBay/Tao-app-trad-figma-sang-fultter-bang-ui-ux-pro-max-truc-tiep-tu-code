@@ -23,7 +23,7 @@ class LaunchpadDcaStrategiesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: sectionKey,
       child: VitPageSection(
         label: 'Cac chien luoc',
@@ -51,7 +51,7 @@ class _StrategyCard extends StatelessWidget {
     final isActive = strategy.status == LaunchpadDcaStrategyStatus.active;
     return VitCard(
       key: cardKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         children: [
           Row(
@@ -142,18 +142,18 @@ class _TrendIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.launchpadBox40,
-      height: AppSpacing.launchpadBox40,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: accent.withValues(alpha: .12),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Icon(
-        Icons.trending_up_rounded,
-        color: accent,
-        size: AppSpacing.launchpadIcon3xl,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox40,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: accent.withValues(alpha: .12),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Icon(
+          Icons.trending_up_rounded,
+          color: accent,
+          size: AppSpacing.launchpadIcon3xl,
+        ),
       ),
     );
   }
@@ -176,9 +176,9 @@ class _MiniIconButton extends StatelessWidget {
       width: AppSpacing.launchpadBox32,
       height: AppSpacing.launchpadBox32,
       child: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.bg,
-          borderRadius: AppRadii.smRadius,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: IconButton(
           onPressed: onTap,
@@ -272,31 +272,30 @@ class _PnlBand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = strategy.pnl >= 0 ? AppColors.buy : AppColors.sell;
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .10),
-        borderRadius: AppRadii.inputRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              'P/L',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      child: Padding(
+        padding: AppSpacing.launchpadPillPadding,
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                'P/L',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
             ),
-          ),
-          Text(
-            '${strategy.pnl >= 0 ? '+' : ''}${strategy.pnlPercent.toStringAsFixed(2)}% (${strategy.pnl >= 0 ? r'$' : r'-$'}${strategy.pnl.abs().toStringAsFixed(2)})',
-            style: AppTextStyles.caption.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
+            Text(
+              '${strategy.pnl >= 0 ? '+' : ''}${strategy.pnlPercent.toStringAsFixed(2)}% (${strategy.pnl >= 0 ? r'$' : r'-$'}${strategy.pnl.abs().toStringAsFixed(2)})',
+              style: AppTextStyles.caption.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -315,12 +314,12 @@ class _StatusPill extends StatelessWidget {
       LaunchpadDcaStrategyStatus.completed => AppColors.text3,
     };
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+        padding: AppSpacing.launchpadBadgePadding,
         child: Text(
           status.name.toUpperCase(),
           style: AppTextStyles.chartLabelTiny.copyWith(

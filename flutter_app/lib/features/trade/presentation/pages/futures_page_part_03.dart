@@ -1,103 +1,5 @@
 part of 'futures_page.dart';
 
-class _RiskWarning extends StatelessWidget {
-  const _RiskWarning();
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletAssetHeroTopGap,
-        top: AppSpacing.walletAssetHeroTopGap,
-        right: AppSpacing.walletAssetHeroTopGap,
-        bottom: AppSpacing.rowGapRegular,
-      ),
-      borderColor: _warningBorder,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.primary,
-            size: AppSpacing.walletAssetSectionGap,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              'Giao dịch hợp đồng tương lai có rủi ro cao. Bạn có thể mất toàn bộ ký quỹ. Chỉ giao dịch số tiền bạn có thể chấp nhận mất.',
-              style: AppTextStyles.captionSm.copyWith(
-                color: AppColors.primary,
-                height: 1.45,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _FuturesSafetyChecklist extends StatelessWidget {
-  const _FuturesSafetyChecklist();
-
-  @override
-  Widget build(BuildContext context) {
-    final items = [
-      'Leverage limit and margin are reviewed before confirmation.',
-      'Liquidation price and fee preview are visible before opening risk.',
-    ];
-    return VitCard(
-      variant: VitCardVariant.inner,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletAssetHeroTopGap,
-        top: AppSpacing.walletAssetHeroTopGap,
-        right: AppSpacing.walletAssetHeroTopGap,
-        bottom: AppSpacing.rowGapRegular,
-      ),
-      borderColor: _warningBorder,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Futures order review',
-            style: AppTextStyles.captionSm.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              height: AppSpacing.futuresSafetyTitleLineHeight,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.transferCardGap),
-          for (final item in items) ...[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Icon(
-                  Icons.check_circle_outline_rounded,
-                  color: AppColors.primary,
-                  size: AppSpacing.rowPy,
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Text(
-                    item,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      height: 1.4,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            if (item != items.last)
-              const SizedBox(height: AppSpacing.transferTileGap),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
 class _PositionsTab extends StatelessWidget {
   const _PositionsTab({required this.snapshot});
 
@@ -314,8 +216,10 @@ class _OrdersTab extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.walletAssetSectionGap),
-          TextButton(
+          VitCtaButton(
             onPressed: onTrade,
+            fullWidth: false,
+            height: AppSpacing.inputHeight - AppSpacing.x3,
             child: const Text('Quay lại giao dịch'),
           ),
         ],

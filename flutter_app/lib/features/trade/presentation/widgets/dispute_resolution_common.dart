@@ -25,8 +25,7 @@ class _CaseTimeline extends StatelessWidget {
                 ? disputeCase.updatedDate
                 : '',
           ),
-          if (step != steps.last)
-            const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          if (step != steps.last) const SizedBox(height: AppSpacing.x1),
         ],
       ],
     );
@@ -64,16 +63,12 @@ class _TimelineRow extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: done ? AppColors.text1 : AppColors.text3,
                   fontWeight: done ? AppTextStyles.bold : AppTextStyles.normal,
-                  height: AppSpacing.tradeBotLineHeightCaption,
                 ),
               ),
               if (date.isNotEmpty)
                 Text(
                   date,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightCaption,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
             ],
           ),
@@ -93,13 +88,10 @@ class _RefundPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.tradeBotClientMoneyRowPadding,
+      density: VitDensity.compact,
       child: Text(
         '\$5 refund issued to your account',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.buy,
-          height: AppSpacing.tradeBotLineHeightBody,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.buy),
       ),
     );
   }
@@ -130,10 +122,7 @@ class _FieldLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTextStyles.micro.copyWith(
-        color: AppColors.text2,
-        height: AppSpacing.tradeBotLineHeightTight,
-      ),
+      style: AppTextStyles.micro.copyWith(color: AppColors.text2),
     );
   }
 }

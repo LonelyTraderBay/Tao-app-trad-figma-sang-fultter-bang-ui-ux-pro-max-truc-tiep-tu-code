@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -19,6 +19,21 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_security_center_score_features.dart';
 part '../widgets/p2p_security_center_actions_events.dart';
+
+const double _p2pSecurityVisualNavClearance = 112;
+const double _p2pSecurityNativeNavClearance = 88;
+const double _p2pSecurityScoreBox = 108;
+const double _p2pSecurityScoreTrack = 98;
+const double _p2pSecurityIconBox = AppSpacing.p2pSecurityCenterIconBox;
+const double _p2pSecurityDividerExtent = AppSpacing.dividerHairline;
+const double _p2pSecurityNumberLine =
+    AppSpacing.p2pSecurityCenterNumberLineHeight;
+const double _p2pSecurityBodyLine = AppSpacing.p2pSecurityCenterBodyLineHeight;
+const double _p2pSecurityCompactLine =
+    AppSpacing.p2pSecurityCenterCompactLineHeight;
+const double _p2pSecurityLabelLine =
+    AppSpacing.p2pSecurityCenterLabelLineHeight;
+const EdgeInsets _p2pSecurityCompactPadding = EdgeInsets.all(AppSpacing.x3);
 
 class P2PSecurityCenterPage extends ConsumerWidget {
   const P2PSecurityCenterPage({super.key, this.shellRenderMode});
@@ -40,11 +55,11 @@ class P2PSecurityCenterPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pSecurityCenterProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _p2pSecurityVisualNavClearance
+        : _p2pSecurityNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -77,14 +92,17 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.p2pSecurityCenterScrollPadding(
-                      bottomInset,
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _SecurityScoreCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         _SecurityFeatures(
                           features: snapshot.features,
                           onOpen: (route) {
@@ -99,7 +117,7 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                             context.go(route);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x6),
+                        const SizedBox(height: AppSpacing.x4),
                         _RecentEvents(events: snapshot.recentEvents),
                         const SizedBox(height: AppSpacing.x3),
                         VitCard(
@@ -135,9 +153,10 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                         ),
                         VitPageContent(
                           padding: VitContentPadding.compact,
-                          customGap: 0,
+                          density: VitDensity.compact,
                           children: const [
                             VitHighRiskStatePanel(
+                              density: VitDensity.compact,
                               state: VitHighRiskUiState.riskReview,
                               title: 'Security center state review',
                               message:
@@ -178,11 +197,11 @@ class P2PWhitelistModePage extends ConsumerWidget {
         .firstWhere((feature) => feature.id == 'anti_phishing')
         .route;
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _p2pSecurityVisualNavClearance
+        : _p2pSecurityNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -203,15 +222,18 @@ class P2PWhitelistModePage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.p2pSecurityCenterScrollPadding(
-                    bottomInset,
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    scrollEndPadding,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       VitCard(
                         radius: VitCardRadius.lg,
-                        padding: AppSpacing.p2pSecurityCenterCardPadding,
+                        padding: _p2pSecurityCompactPadding,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -219,7 +241,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                               icon: Icons.shield_outlined,
                               color: AppModuleAccents.p2p,
                             ),
-                            const SizedBox(height: AppSpacing.x4),
+                            const SizedBox(height: AppSpacing.x3),
                             Text(
                               'Trusted device whitelist',
                               style: AppTextStyles.sectionTitle,
@@ -229,14 +251,13 @@ class P2PWhitelistModePage extends ConsumerWidget {
                               'Only reviewed devices and protected payment sessions can continue sensitive P2P actions.',
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height:
-                                    AppSpacing.p2pSecurityCenterBodyLineHeight,
+                                height: _p2pSecurityBodyLine,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.x3),
                       _WhitelistAction(
                         key: devicesKey,
                         icon: Icons.desktop_windows_rounded,
@@ -260,8 +281,9 @@ class P2PWhitelistModePage extends ConsumerWidget {
                           context.go(antiPhishingRoute);
                         },
                       ),
-                      const SizedBox(height: AppSpacing.x5),
+                      const SizedBox(height: AppSpacing.x4),
                       VitCtaButton(
+                        density: VitDensity.compact,
                         onPressed: () {
                           HapticFeedback.selectionClick();
                           context.go('/p2p/security/center');
@@ -270,9 +292,10 @@ class P2PWhitelistModePage extends ConsumerWidget {
                       ),
                       VitPageContent(
                         padding: VitContentPadding.compact,
-                        customGap: 0,
+                        density: VitDensity.compact,
                         children: const [
                           VitHighRiskStatePanel(
+                            density: VitDensity.compact,
                             state: VitHighRiskUiState.riskReview,
                             title: 'Whitelist mode state review',
                             message:

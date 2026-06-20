@@ -116,74 +116,94 @@ class VitStatusPill extends StatelessWidget {
     final metrics = _metrics;
     final hasCount = count != null && count! > 0;
 
-    Widget content = Container(
+    Widget content = SizedBox(
       height: metrics.height,
-      padding: EdgeInsets.symmetric(horizontal: metrics.paddingX),
-      decoration: BoxDecoration(
-        color: outline ? AppColors.transparent : palette.background,
-        border: Border.all(color: palette.border),
-        borderRadius: AppRadii.pillRadius,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (pulse) ...[
-            Container(
-              width: metrics.iconSize * 0.6,
-              height: metrics.iconSize * 0.6,
-              decoration: BoxDecoration(
-                color: palette.foreground,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: palette.border,
-                    blurRadius: AppSpacing.statusPillBadgeBlur,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(width: metrics.gap),
-          ] else if (icon != null) ...[
-            Icon(icon, color: palette.foreground, size: metrics.iconSize),
-            SizedBox(width: metrics.gap),
-          ],
-          Flexible(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: metrics.labelStyle.copyWith(
-                color: palette.foreground,
-                fontWeight: AppTextStyles.medium,
-              ),
-            ),
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: outline ? AppColors.transparent : palette.background,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.pillRadius,
+            side: BorderSide(color: palette.border),
           ),
-          if (hasCount) ...[
-            SizedBox(width: metrics.gap),
-            Container(
-              constraints: BoxConstraints(
-                minWidth:
-                    metrics.height * AppSpacing.statusPillCountMinWidthFactor,
-              ),
-              height: metrics.height * AppSpacing.statusPillCountHeightFactor,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.statusPillCountPadding,
-              ),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: palette.foreground,
-                borderRadius: AppRadii.pillRadius,
-              ),
-              child: Text(
-                count! > 99 ? '99+' : '${count!}',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.onAccent,
-                  fontWeight: AppTextStyles.bold,
+        ),
+        child: Padding(
+          padding: EdgeInsetsDirectional.symmetric(
+            horizontal: metrics.paddingX,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (pulse) ...[
+                SizedBox.square(
+                  dimension: metrics.iconSize * 0.6,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: palette.foreground,
+                      shape: const CircleBorder(),
+                      shadows: [
+                        BoxShadow(
+                          color: palette.border,
+                          blurRadius: AppSpacing.statusPillBadgeBlur,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: metrics.gap),
+              ] else if (icon != null) ...[
+                Icon(icon, color: palette.foreground, size: metrics.iconSize),
+                SizedBox(width: metrics.gap),
+              ],
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: metrics.labelStyle.copyWith(
+                    color: palette.foreground,
+                    fontWeight: AppTextStyles.medium,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ],
+              if (hasCount) ...[
+                SizedBox(width: metrics.gap),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth:
+                        metrics.height *
+                        AppSpacing.statusPillCountMinWidthFactor,
+                  ),
+                  child: SizedBox(
+                    height:
+                        metrics.height * AppSpacing.statusPillCountHeightFactor,
+                    child: DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: palette.foreground,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: AppRadii.pillRadius,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.symmetric(
+                          horizontal: AppSpacing.statusPillCountPadding,
+                        ),
+                        child: Center(
+                          child: Text(
+                            count! > 99 ? '99+' : '${count!}',
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.onAccent,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
       ),
     );
 

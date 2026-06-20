@@ -16,8 +16,7 @@ class _ScreenerResults extends StatelessWidget {
             rank: index + 1,
             onTap: () => onPairTap(pairs[index]),
           ),
-          if (index != pairs.length - 1)
-            const SizedBox(height: AppSpacing.marketScreenerRowGap),
+          if (index != pairs.length - 1) const SizedBox(height: AppSpacing.x1),
         ],
       ],
     );
@@ -48,13 +47,13 @@ class _ScreenerRow extends StatelessWidget {
         color: AppColors.surface,
         borderRadius: AppRadii.cardRadius,
         child: SizedBox(
-          height: AppSpacing.marketScreenerRowHeight,
+          height: _rowHeight,
           child: Padding(
-            padding: AppSpacing.marketScreenerRowPadding,
+            padding: const EdgeInsetsDirectional.fromSTEB(10, 6, 10, 6),
             child: Row(
               children: [
                 SizedBox(
-                  width: AppSpacing.marketScreenerRowRankWidth,
+                  width: _rowRankWidth,
                   child: Text(
                     '$rank',
                     textAlign: TextAlign.center,
@@ -64,9 +63,9 @@ class _ScreenerRow extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.marketScreenerRowGapMain),
+                const SizedBox(width: AppSpacing.x2),
                 _ScreenerAvatar(pair: pair),
-                const SizedBox(width: AppSpacing.marketScreenerRowGapMain),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -78,35 +77,35 @@ class _ScreenerRow extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.body.copyWith(
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.marketScreenerRowTitleLineHeight,
+                          height: 1.06,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.marketScreenerTextGap),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         _formatCompactUsd(pair.marketCap),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.marketScreenerRowMetaLineHeight,
+                          height: 1.18,
                         ),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  width: AppSpacing.marketScreenerSparklineWidth,
-                  height: AppSpacing.marketScreenerSparklineHeight,
+                  width: _sparklineWidth,
+                  height: _sparklineHeight,
                   child: VitSparkline(
                     values: pair.sparklineData,
                     color: color,
                     showFill: false,
-                    strokeWidth: AppSpacing.marketScreenerSparklineStroke,
+                    strokeWidth: _sparklineStroke,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.marketScreenerSparklineGap),
+                const SizedBox(width: AppSpacing.x2),
                 SizedBox(
-                  width: AppSpacing.marketScreenerValueWidth,
+                  width: _valueWidth,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -118,10 +117,10 @@ class _ScreenerRow extends StatelessWidget {
                         style: AppTextStyles.body.copyWith(
                           fontWeight: AppTextStyles.bold,
                           fontFeatures: AppTextStyles.tabularFigures,
-                          height: AppSpacing.marketScreenerRowTitleLineHeight,
+                          height: 1.06,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.marketScreenerTextGap),
+                      const SizedBox(height: AppSpacing.x1),
                       Align(
                         alignment: Alignment.centerRight,
                         child: FittedBox(
@@ -134,19 +133,16 @@ class _ScreenerRow extends StatelessWidget {
                                     ? Icons.arrow_upward_rounded
                                     : Icons.arrow_downward_rounded,
                                 color: color,
-                                size: AppSpacing.marketScreenerTrendIcon,
+                                size: _trendIconSize,
                               ),
-                              const SizedBox(
-                                width: AppSpacing.marketScreenerTrendGap,
-                              ),
+                              const SizedBox(width: AppSpacing.x1),
                               Text(
                                 '${up ? '+' : ''}${pair.change24h.toStringAsFixed(2)}%',
                                 style: AppTextStyles.caption.copyWith(
                                   color: color,
                                   fontWeight: AppTextStyles.medium,
                                   fontFeatures: AppTextStyles.tabularFigures,
-                                  height:
-                                      AppSpacing.marketScreenerTrendLineHeight,
+                                  height: 1.12,
                                 ),
                               ),
                             ],
@@ -175,7 +171,7 @@ class _ScreenerAvatar extends StatelessWidget {
     return VitAssetAvatar(
       label: pair.baseAsset,
       accentColor: pair.logoColor,
-      size: AppSpacing.marketScreenerRowAvatar,
+      size: _rowAvatarSize,
     );
   }
 }

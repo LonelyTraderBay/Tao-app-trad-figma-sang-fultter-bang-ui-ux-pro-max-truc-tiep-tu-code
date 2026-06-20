@@ -13,7 +13,7 @@ class _EarningsTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnPaddingX5,
+          padding: _savingsPortfolioCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -32,8 +32,15 @@ class _EarningsTab extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const Spacer(),
-                  _StatusPill(label: '+0.752%', color: AppColors.buy),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: _StatusPill(
+                        label: '+0.752%',
+                        color: AppColors.buy,
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: AppSpacing.x4),
@@ -51,12 +58,12 @@ class _EarningsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        _SectionLabel(label: 'Lãi theo tài sản', color: AppColors.accent),
         const SizedBox(height: AppSpacing.x3),
+        _SectionLabel(label: 'Lãi theo tài sản', color: AppColors.accent),
+        const SizedBox(height: AppSpacing.x2),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnPaddingX4,
+          padding: _savingsPortfolioCardPadding,
           child: Column(
             children: [
               for (final position in snapshot.positions) ...[
@@ -91,7 +98,7 @@ class _SectionLabel extends StatelessWidget {
           ),
           child: const SizedBox(
             width: AppSpacing.savingsPortfolioSectionMarkerWidth,
-            height: AppSpacing.savingsPortfolioSectionMarkerHeight,
+            height: _savingsPortfolioSectionMarkerExtent,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -240,6 +247,8 @@ class _StatusPill extends StatelessWidget {
         padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
@@ -274,7 +283,7 @@ class _DaysPill extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: color,
-              height: AppSpacing.savingsPortfolioDaysLineHeight,
+              height: _savingsPortfolioDaysLineHeight,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -342,7 +351,7 @@ class _SecondaryButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
         child: SizedBox(
-          height: AppSpacing.savingsPortfolioSecondaryButtonHeight,
+          height: _savingsPortfolioSecondaryButtonExtent,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               shape: RoundedRectangleBorder(

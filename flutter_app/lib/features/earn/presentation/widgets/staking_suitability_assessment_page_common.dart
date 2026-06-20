@@ -21,6 +21,7 @@ class _ResultView extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitHighRiskStatePanel(
+          density: VitDensity.compact,
           state: VitHighRiskUiState.success,
           title: 'Suitability result ready',
           message:
@@ -31,7 +32,7 @@ class _ResultView extends ConsumerWidget {
           key: StakingSuitabilityAssessmentPage.resultCardKey,
           radius: VitCardRadius.lg,
           borderColor: color.withValues(alpha: 0.6),
-          padding: AppSpacing.earnCardPaddingX5,
+          padding: _stakingSuitabilityCardPadding,
           child: Column(
             children: [
               DecoratedBox(
@@ -45,8 +46,8 @@ class _ResultView extends ConsumerWidget {
                   ),
                 ),
                 child: SizedBox(
-                  width: AppSpacing.stakingAssessmentScoreRing,
-                  height: AppSpacing.stakingAssessmentScoreRing,
+                  width: _stakingSuitabilityScoreRing,
+                  height: _stakingSuitabilityScoreRing,
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -68,19 +69,19 @@ class _ResultView extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x3),
               Text(
                 '${profile.label} Investor',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.sectionTitle.copyWith(color: color),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 profile.description,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.stakingAssessmentBodyLineHeight,
+                  height: _stakingSuitabilityBodyLineHeight,
                 ),
               ),
             ],
@@ -89,6 +90,7 @@ class _ResultView extends ConsumerWidget {
         VitPageSection(
           label: 'Recommended Products',
           accentColor: color,
+          density: VitDensity.compact,
           children: [
             for (final product in profile.products)
               _RecommendedProduct(product: product, color: color),
@@ -98,17 +100,18 @@ class _ResultView extends ConsumerWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warn15,
-            padding: AppSpacing.earnCardPaddingX4,
+            padding: _stakingSuitabilityCardPadding,
             child: Text(
               profile.warning!,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingAssessmentBodyLineHeight,
+                height: _stakingSuitabilityBodyLineHeight,
               ),
             ),
           ),
         VitCtaButton(
           key: StakingSuitabilityAssessmentPage.exploreButtonKey,
+          density: VitDensity.compact,
           onPressed: () => context.go(snapshot.stakingRoute),
           trailing: const Icon(Icons.arrow_forward_rounded),
           child: const Text('Explore Recommended Products'),
@@ -116,19 +119,20 @@ class _ResultView extends ConsumerWidget {
         VitCtaButton(
           key: StakingSuitabilityAssessmentPage.resetButtonKey,
           variant: VitCtaButtonVariant.secondary,
+          density: VitDensity.compact,
           onPressed: onReset,
           leading: const Icon(Icons.refresh_rounded),
           child: const Text('Retake Assessment'),
         ),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: _stakingSuitabilityCardPadding,
           child: Text(
             'This assessment is valid until ${snapshot.validUntil}. You must re-assess annually or if your financial situation changes significantly.',
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.stakingAssessmentFooterLineHeight,
+              height: _stakingSuitabilityFooterLineHeight,
             ),
           ),
         ),
@@ -147,7 +151,7 @@ class _RecommendedProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: _stakingSuitabilityCardPadding,
       child: Row(
         children: [
           Icon(Icons.check_circle_outline_rounded, color: color),

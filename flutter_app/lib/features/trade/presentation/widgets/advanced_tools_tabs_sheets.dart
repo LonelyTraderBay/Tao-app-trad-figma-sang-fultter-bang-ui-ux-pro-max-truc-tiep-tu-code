@@ -59,7 +59,7 @@ class _ActionTab extends StatelessWidget {
           description,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeToolCardGap),
+        const SizedBox(height: _toolsSpace),
         _GradientButton(
           key: buttonKey,
           label: label,
@@ -88,12 +88,12 @@ class _LadderSheet extends StatelessWidget {
             'BTC/USDT DOM · click price level to place instant order.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: _toolsSpace),
           for (final offset in const [150, 100, 50, 0, -50, -100]) ...[
             _LadderLevel(price: 69000 + offset),
             const SizedBox(height: AppSpacing.x2),
           ],
-          const SizedBox(height: AppSpacing.tradeToolInlineGap),
+          const SizedBox(height: _toolsSpace),
           for (final order in orders) ...[
             _SheetRow(
               label: '${order.side.name.toUpperCase()} ${order.id}',
@@ -101,7 +101,7 @@ class _LadderSheet extends StatelessWidget {
                   '${order.amount.toStringAsFixed(1)} BTC @ \$${_formatMoney(order.price)}',
             ),
           ],
-          const SizedBox(height: AppSpacing.tradeToolPageTopGap),
+          const SizedBox(height: _toolsCardSpace),
           _GradientButton(
             key: AdvancedToolsDemoPage.ladderSubmitKey,
             label: 'Place Buy Order',
@@ -131,7 +131,7 @@ class _BulkSheet extends StatelessWidget {
             '${orders.length} open orders selected for batch action.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: _toolsSpace),
           for (final order in orders) ...[
             _SheetRow(
               label: '${order.symbol} ${order.side.name.toUpperCase()}',
@@ -139,7 +139,7 @@ class _BulkSheet extends StatelessWidget {
                   '${order.remaining.toStringAsFixed(1)} @ \$${_formatMoney(order.price)}',
             ),
           ],
-          const SizedBox(height: AppSpacing.tradeToolPageTopGap),
+          const SizedBox(height: _toolsCardSpace),
           _GradientButton(
             key: AdvancedToolsDemoPage.bulkCancelKey,
             label: 'Cancel Selected Orders',
@@ -168,7 +168,7 @@ class _ShortcutsSheet extends StatelessWidget {
           for (final shortcut in shortcuts) ...[
             _SheetRow(label: shortcut.keys, value: shortcut.label),
           ],
-          const SizedBox(height: AppSpacing.tradeToolPageTopGap),
+          const SizedBox(height: _toolsCardSpace),
           _GradientButton(
             key: AdvancedToolsDemoPage.shortcutTriggerKey,
             label: 'Trigger Quick Buy',
@@ -192,7 +192,7 @@ class _LadderLevel extends StatelessWidget {
     final isAsk = price > 69000;
     final color = isAsk ? AppColors.sell : AppColors.buy;
     return VitCard(
-      height: AppSpacing.tradeToolMetricRowHeight,
+      height: _toolsMetricRowHeight,
       padding: AppSpacing.tradeToolMetricRowPadding,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,

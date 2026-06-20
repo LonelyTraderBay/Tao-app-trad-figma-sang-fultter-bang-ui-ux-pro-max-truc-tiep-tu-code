@@ -41,6 +41,18 @@ final class AppSpacing {
     horizontal: contentPad,
   );
 
+  static const double pageContentTopCompact = x3;
+  static const double pageContentTopDefault = 12;
+  static const double pageContentTopRelaxed = 16;
+  static const double pageContentGapTight = x3;
+  static const double pageContentGapDefault = 16;
+  static const double pageContentGapRelaxed = 24;
+  static const double pageContentGapLoose = 32;
+  static const double pageSectionAccentWidth = x1 + dividerHairline;
+  static const double pageSectionAccentHeight = rowPy;
+  static const double pageSectionLabelGap = formFieldLabelGap;
+  static const double pageSectionLabelBottomGap = rowGap;
+
   static const double rowGap = 8;
   static const double walletHorizontalPadding = 20;
   static const double walletAssetHeroHeight = 238;
@@ -7494,6 +7506,10 @@ final class AppSpacing {
   static const double arenaModeActionIconLargeGlyph = 22;
   static const double arenaModeActionIconGlyph = 17;
   static const double arenaModeHeroIcon = 48;
+  static const EdgeInsets arenaModeMiniStatPadding = EdgeInsets.symmetric(
+    horizontal: x2,
+    vertical: x4,
+  );
   static const double arenaModeTitleLineHeight = 1.08;
   static const double arenaModeCreatorIcon = 34;
   static const double arenaModeChevron = 18;
@@ -7504,8 +7520,13 @@ final class AppSpacing {
   static const double arenaModeQualityExtent = 62;
   static const double arenaModeQualityInfoIcon = 14;
   static const double arenaModeQualityIcon = arenaHomeActionIcon;
+  static const EdgeInsets arenaModeQualityCardPadding = EdgeInsets.symmetric(
+    horizontal: x4,
+    vertical: x3,
+  );
   static const double arenaModeTrustIcon = myArenaActionIconBox;
   static const double arenaModeTrustTextLineHeight = 1.4;
+  static const EdgeInsets arenaModePredictionCardPadding = EdgeInsets.all(x4);
   static const double arenaModePredictionInfoIcon = iconSm;
   static const double arenaModePredictionLetterSpacing =
       arenaChallengeBridgeLetterSpacing;
@@ -8110,6 +8131,16 @@ final class AppSpacing {
   static const double arenaStateCardIcon = arenaReportInlineIcon;
   static const double arenaStateCardBodyLineHeight =
       arenaStudioDescriptionLineHeight;
+  static const EdgeInsets arenaStateCardPaddingCompact = EdgeInsets.all(x3);
+  static const EdgeInsets arenaStateCardPadding = EdgeInsets.all(x4);
+  static const EdgeInsets arenaStateCardIconPadding = EdgeInsets.all(x2);
+  static const EdgeInsets arenaStateCardMetricPadding = EdgeInsets.only(
+    top: x2,
+  );
+  static const EdgeInsets arenaStateCardPillPadding = EdgeInsets.symmetric(
+    horizontal: x2,
+    vertical: x1,
+  );
   static const EdgeInsets earnPaddingX1 = EdgeInsets.all(x1);
   static const EdgeInsets earnPaddingX2 = EdgeInsets.all(x2);
   static const EdgeInsets earnPaddingX3 = EdgeInsets.all(x3);
@@ -8446,6 +8477,9 @@ final class AppSpacing {
   static const double savingsNotificationTokenSwitchHeight = statusPillHeightMd;
   static const double savingsNotificationTokenSwitchPadding =
       arenaBridgeTinyGap;
+  static const EdgeInsets savingsNotificationTokenSwitchInset = EdgeInsets.all(
+    savingsNotificationTokenSwitchPadding,
+  );
   static const double savingsNotificationTokenSwitchThumb =
       bottomNavBadgeMinWidth + savingsNotificationSeverityPadV * 2;
   static const double stakingEmergencySheetBodyLineHeight =
@@ -8786,6 +8820,9 @@ final class AppSpacing {
       stakingCustodyBodyLineHeight;
   static const double stakingRecommendationsBulletTop =
       savingsRecommendationsBulletTop;
+  static const EdgeInsets stakingRecommendationsBulletPadding = EdgeInsets.only(
+    top: stakingRecommendationsBulletTop,
+  );
   static const double stakingRecommendationsBulletLineHeight =
       stakingTransactionReportingMetricLineHeight;
   static const double stakingValidatorSelectionSearchIcon =
@@ -8890,6 +8927,9 @@ final class AppSpacing {
   );
   static const EdgeInsets dcaVerticalPaddingX3 = EdgeInsets.symmetric(
     vertical: x3,
+  );
+  static const EdgeInsets dcaVerticalPaddingX4 = EdgeInsets.symmetric(
+    vertical: x4,
   );
   static const EdgeInsets dcaChipPadding = EdgeInsets.symmetric(
     horizontal: x3,
@@ -9017,6 +9057,10 @@ final class AppSpacing {
   static const double dcaOverviewHeroFontSize = 31;
   static const double dcaOverviewHeroLineHeight = dcaMainTightLineHeight;
   static const double dcaOverviewPreviewMaxWidth = 360;
+  static const EdgeInsets dcaOverviewActionButtonPadding = EdgeInsets.symmetric(
+    horizontal: x2,
+    vertical: x3,
+  );
   static const double dcaOverviewSkeletonTitleWidth = 160;
   static const double dcaOverviewSkeletonTitleHeight = searchBarFont;
   static const double dcaOverviewSkeletonToggleSize = iconMd;

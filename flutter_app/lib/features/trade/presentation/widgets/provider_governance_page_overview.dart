@@ -9,8 +9,7 @@ class _ProviderDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      height: AppSpacing.providerGovernanceDashboardHeight,
-      padding: AppSpacing.providerGovernanceDashboardPadding,
+      density: VitDensity.compact,
       borderColor: _governancePrimary,
       child: Column(
         children: [
@@ -19,19 +18,17 @@ class _ProviderDashboard extends StatelessWidget {
               const VitCard(
                 variant: VitCardVariant.inner,
                 radius: VitCardRadius.lg,
-                width: AppSpacing.providerGovernanceDashboardIconBox,
-                height: AppSpacing.providerGovernanceDashboardIconBox,
+                width: AppSpacing.inputHeight - AppSpacing.x3,
+                height: AppSpacing.inputHeight - AppSpacing.x3,
                 borderColor: _governancePrimary,
                 alignment: Alignment.center,
                 child: Icon(
                   Icons.shield_outlined,
                   color: _governancePrimary,
-                  size: AppSpacing.providerGovernanceDashboardIcon,
+                  size: AppSpacing.iconMd,
                 ),
               ),
-              const SizedBox(
-                width: AppSpacing.providerGovernanceDashboardGap,
-              ),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,17 +38,13 @@ class _ProviderDashboard extends StatelessWidget {
                       style: AppTextStyles.body.copyWith(
                         color: _governancePrimary,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.providerGovernanceLineHeightTight,
                       ),
                     ),
-                    const SizedBox(
-                      height: AppSpacing.providerGovernanceCompactGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Managing ${stats.followers} followers',
                       style: AppTextStyles.caption.copyWith(
                         color: _governancePrimary,
-                        height: AppSpacing.providerGovernanceLineHeightTight,
                       ),
                     ),
                   ],
@@ -59,9 +52,7 @@ class _ProviderDashboard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: AppSpacing.providerGovernanceDashboardMetricGap,
-          ),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -99,18 +90,14 @@ class _DashboardStat extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: _governancePrimary,
-            height: AppSpacing.providerGovernanceLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: _governancePrimary),
         ),
-        const SizedBox(height: AppSpacing.providerGovernanceCompactGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
             color: _governancePrimary,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.providerGovernanceLineHeightTight,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -133,8 +120,8 @@ class _GovernanceTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.providerGovernanceTabHeight,
-      padding: AppSpacing.zeroInsets,
+      density: VitDensity.compact,
+      padding: const EdgeInsets.all(AppSpacing.x1),
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
         activeKey: activeId,
@@ -160,29 +147,24 @@ class _ModificationsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
+      fullBleed: true,
       children: [
         _Notice(text: snapshot.warning),
-        const SizedBox(height: AppSpacing.contentPad),
         Padding(
-          padding: AppSpacing.providerGovernanceSectionTitlePadding,
+          padding: const EdgeInsets.only(left: AppSpacing.x2),
           child: Text(
             'Strategy Modification Log',
             style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.providerGovernanceLineHeightTight,
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final modification in snapshot.modifications) ...[
+        for (final modification in snapshot.modifications)
           _ModificationCard(modification: modification),
-          if (modification != snapshot.modifications.last)
-            const SizedBox(height: AppSpacing.rowGapRegular),
-        ],
-        const SizedBox(height: AppSpacing.contentPad - AppSpacing.x1),
         _RequestButton(onPressed: onRequest),
       ],
     );
@@ -198,10 +180,7 @@ class _Notice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.providerGovernanceNoticeMinHeight,
-      ),
-      padding: AppSpacing.providerGovernanceNoticePadding,
+      density: VitDensity.compact,
       borderColor: _governanceWarningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,16 +188,15 @@ class _Notice extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: _governanceWarning,
-            size: AppSpacing.providerGovernanceNoticeIcon,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.providerGovernanceNoticeGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: _governanceWarning,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.providerGovernanceLineHeightReadable,
               ),
             ),
           ),

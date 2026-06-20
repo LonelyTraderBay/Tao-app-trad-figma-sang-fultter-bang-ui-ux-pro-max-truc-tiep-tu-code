@@ -43,115 +43,106 @@ class _ActivityRow extends StatelessWidget {
       onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
       child: Stack(
         children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: AppSpacing.predictionActivityRowMinHeight,
+          Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x1,
+              vertical: AppSpacing.x2,
             ),
-            child: Padding(
-              padding: AppSpacing.predictionActivityRowPadding,
-              child: Row(
-                children: [
-                  Material(
-                    color: AppColors.surface3,
-                    shape: const CircleBorder(),
-                    child: SizedBox.square(
-                      dimension: AppSpacing.predictionActivityAvatarBox,
-                      child: Center(
-                        child: Text(
-                          activity.avatar,
-                          style: AppTextStyles.avatarMd,
-                        ),
+            child: Row(
+              children: [
+                Material(
+                  color: AppColors.surface3,
+                  shape: const CircleBorder(),
+                  child: SizedBox.square(
+                    dimension: _activityAvatarExtent,
+                    child: Center(
+                      child: Text(
+                        activity.avatar,
+                        style: AppTextStyles.avatarMd,
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.predictionActivityRowGap),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Wrap(
-                          spacing: AppSpacing.predictionActivityActorSpacing,
-                          runSpacing:
-                              AppSpacing.predictionActivityActorRunSpacing,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            Text(
-                              activity.user,
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        spacing: AppSpacing.x1,
+                        runSpacing: AppSpacing.x1,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Text(
+                            activity.user,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
                             ),
-                            Text(
-                              isBuy ? 'bought' : 'sold',
-                              style: AppTextStyles.caption.copyWith(
-                                color: sideColor,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                            _OutcomeBadge(
-                              label: activity.outcome,
-                              color: activity.outcome == 'Yes'
-                                  ? AppColors.buy
-                                  : AppColors.sell,
-                            ),
-                          ],
-                        ),
-                        const Padding(
-                          padding: AppSpacing.predictionActivityEventGap,
-                        ),
-                        Text(
-                          event.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
                           ),
-                        ),
-                        const Padding(
-                          padding: AppSpacing.predictionActivityOrderGap,
-                        ),
-                        Text(
-                          '${_formatWhole(activity.shares)} shares @ \$${activity.price.toStringAsFixed(2)}',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text2,
-                            fontFeatures: AppTextStyles.tabularFigures,
+                          Text(
+                            isBuy ? 'bought' : 'sold',
+                            style: AppTextStyles.caption.copyWith(
+                              color: sideColor,
+                              fontWeight: AppTextStyles.bold,
+                            ),
                           ),
+                          _OutcomeBadge(
+                            label: activity.outcome,
+                            color: activity.outcome == 'Yes'
+                                ? AppColors.buy
+                                : AppColors.sell,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        event.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        '${_formatWhole(activity.shares)} shares @ \$${activity.price.toStringAsFixed(2)}',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text2,
+                          fontFeatures: AppTextStyles.tabularFigures,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: AppSpacing.predictionActivityAmountGap),
-                  SizedBox(
-                    width: AppSpacing.predictionActivityAmountWidth,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          _formatAmount(activity.amount),
-                          textAlign: TextAlign.right,
-                          style: AppTextStyles.caption.copyWith(
-                            color: sideColor,
-                            fontWeight: AppTextStyles.bold,
-                            fontFeatures: AppTextStyles.tabularFigures,
-                          ),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                SizedBox(
+                  width: _activityAmountExtent,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        _formatAmount(activity.amount),
+                        textAlign: TextAlign.right,
+                        style: AppTextStyles.caption.copyWith(
+                          color: sideColor,
+                          fontWeight: AppTextStyles.bold,
+                          fontFeatures: AppTextStyles.tabularFigures,
                         ),
-                        const Padding(
-                          padding: AppSpacing.predictionActivityTimestampGap,
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        activity.timestamp,
+                        textAlign: TextAlign.right,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
                         ),
-                        Text(
-                          activity.timestamp,
-                          textAlign: TextAlign.right,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           if (!last)
@@ -182,12 +173,14 @@ class _OutcomeBadge extends StatelessWidget {
       color: color.withValues(alpha: .14),
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.predictionActivityOutcomePadding,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x2,
+          vertical: AppSpacing.x1,
+        ),
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
-            height: AppSpacing.predictionActivityOutcomeLineHeight,
             fontWeight: AppTextStyles.bold,
           ),
         ),

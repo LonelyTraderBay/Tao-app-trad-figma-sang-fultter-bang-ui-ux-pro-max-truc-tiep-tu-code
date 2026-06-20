@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -91,15 +92,13 @@ class _PredictionMarketMakerPageState
         .watch(predictionsReadModelControllerProvider)
         .getMarketMaker();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndPadding =
+        navClearance +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionMarketMakerBottomInsetVisual
-            : AppSpacing.predictionMarketMakerBottomInsetNative);
+        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -127,14 +126,12 @@ class _PredictionMarketMakerPageState
                   child: SingleChildScrollView(
                     key: PredictionMarketMakerPage.contentKey,
                     padding: AppSpacing.predictionMarketMakerScrollPadding(
-                      bottomInset,
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionMarketMakerContentGap,
+                      density: VitDensity.compact,
                       children: _activeTab == _MarketMakerTab.provide
                           ? [
-                              _LiquidityOverview(snapshot: snapshot),
                               _AddLiquidityForm(
                                 eventController: _eventController,
                                 amountController: _amountController,
@@ -143,6 +140,7 @@ class _PredictionMarketMakerPageState
                                 onSpreadChanged: (value) =>
                                     setState(() => _spreadBps = value),
                               ),
+                              _LiquidityOverview(snapshot: snapshot),
                               const _LiquidityWarning(),
                             ]
                           : _activeTab == _MarketMakerTab.positions

@@ -15,15 +15,11 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
     );
     final allSnapshot = repo.getTokenUnlocks();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.tokenUnlocksVisualBottomExtra
-            : AppSpacing.tokenUnlocksNativeBottomExtra);
+            ? _unlockVisualScrollClearance
+            : _unlockNativeScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -50,10 +46,10 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: TokenUnlocksPage.contentKey,
-                    padding: AppSpacing.tokenUnlocksScrollPadding(bottomInset),
+                    padding: EdgeInsets.only(bottom: scrollEndClearance),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.tokenUnlocksPageGap,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         if (_tab == 'upcoming') ...[
                           _UnlockHero(snapshot: allSnapshot),
@@ -126,7 +122,7 @@ class _UnlockTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.tokenUnlocksTabsHeight,
+        height: _unlockTabsHeight,
         child: Row(
           children: [
             _UnderlinedTab(
@@ -192,7 +188,7 @@ class _UnderlinedTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: AppSpacing.tokenUnlocksTabIndicatorHeight,
+              height: _unlockTabIndicatorHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: _marketPrimary),
@@ -226,12 +222,12 @@ class _UnlockHero extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.tokenUnlocksHeroLabelGap),
+          const SizedBox(height: _unlockHeroLabelGap),
           Text(
             _formatCompactUsd(snapshot.totalValueNext30d),
             style: AppTextStyles.amountMd.copyWith(color: AppColors.text1),
           ),
-          const SizedBox(height: AppSpacing.tokenUnlocksHeroValueGap),
+          const SizedBox(height: _unlockHeroValueGap),
           Row(
             children: [
               Text(
@@ -281,7 +277,7 @@ class _UnlockFilters extends StatelessWidget {
             color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.nearest),
           ),
-          const SizedBox(width: AppSpacing.tokenUnlocksFilterGap),
+          const SizedBox(width: _unlockFilterGap),
           _FilterChipButton(
             key: TokenUnlocksPage.sortValueKey,
             label: 'Giá trị cao',
@@ -289,21 +285,21 @@ class _UnlockFilters extends StatelessWidget {
             color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.value),
           ),
-          const SizedBox(width: AppSpacing.tokenUnlocksFilterGap),
+          const SizedBox(width: _unlockFilterGap),
           _FilterChipButton(
             label: 'Tác động',
             active: sortBy == MarketUnlockSort.impact,
             color: _marketPrimary,
             onTap: () => onSortSelected(MarketUnlockSort.impact),
           ),
-          const SizedBox(width: AppSpacing.tokenUnlocksFilterGap),
+          const SizedBox(width: _unlockFilterGap),
           _FilterChipButton(
             label: 'Tất cả',
             active: impactFilter == null,
             color: AppColors.text3,
             onTap: onAllImpacts,
           ),
-          const SizedBox(width: AppSpacing.tokenUnlocksFilterGap),
+          const SizedBox(width: _unlockFilterGap),
           for (final entry in impactConfigs.entries) ...[
             _FilterChipButton(
               key: entry.key == MarketUnlockImpact.high
@@ -315,7 +311,7 @@ class _UnlockFilters extends StatelessWidget {
               onTap: () => onImpactSelected(entry.key),
             ),
             if (entry.key != impactConfigs.keys.last)
-              const SizedBox(width: AppSpacing.tokenUnlocksFilterGap),
+              const SizedBox(width: _unlockFilterGap),
           ],
         ],
       ),
@@ -390,8 +386,7 @@ class _UnlockList extends StatelessWidget {
             expanded: expandedId == unlock.id,
             onToggle: () => onToggleExpanded(unlock),
           ),
-          if (unlock != unlocks.last)
-            const SizedBox(height: AppSpacing.tokenUnlocksListGap),
+          if (unlock != unlocks.last) const SizedBox(height: _unlockListGap),
         ],
       ],
     );

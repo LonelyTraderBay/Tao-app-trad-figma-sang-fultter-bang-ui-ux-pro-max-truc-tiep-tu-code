@@ -10,7 +10,7 @@ class _RewardAssetRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.cardPadding,
+      padding: _transactionReportingCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -59,6 +59,7 @@ class _TransactionsTab extends StatelessWidget {
       key: StakingTransactionReportingPage.transactionsKey,
       label: 'All Transactions ${snapshot.defaultYear}',
       accentColor: AppColors.primarySoft,
+      density: VitDensity.compact,
       children: [
         for (final tx in snapshot.transactions) _TransactionCard(tx: tx),
       ],
@@ -75,7 +76,7 @@ class _TransactionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.cardPaddingCompact,
+      padding: _transactionReportingCardPadding,
       child: Column(
         children: [
           Row(
@@ -122,7 +123,7 @@ class _TransactionCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.x3),
             const Divider(
               color: AppColors.borderSolid,
-              height: AppSpacing.stakingTransactionReportingDividerHeight,
+              height: _transactionReportingDividerExtent,
             ),
             const SizedBox(height: AppSpacing.x3),
             Row(
@@ -164,6 +165,7 @@ class _ExportTab extends StatelessWidget {
         VitPageSection(
           label: 'Generate Tax Forms',
           accentColor: AppColors.primarySoft,
+          density: VitDensity.compact,
           children: [
             _ExportCategoryCard(
               title: 'IRS Tax Forms (PDF)',
@@ -191,7 +193,7 @@ class _ExportTab extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.warningBorder,
-          padding: AppSpacing.cardPadding,
+          padding: _transactionReportingCardPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -211,8 +213,7 @@ class _ExportTab extends StatelessWidget {
                       snapshot.taxNotice,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing
-                            .stakingTransactionReportingBodyLineHeight,
+                        height: _transactionReportingBodyLineHeight,
                       ),
                     ),
                   ],
@@ -224,6 +225,7 @@ class _ExportTab extends StatelessWidget {
         VitPageSection(
           label: 'Helpful Resources',
           accentColor: AppColors.primarySoft,
+          density: VitDensity.compact,
           children: [
             for (final resource in snapshot.resources)
               _ResourceRow(resource: resource),
@@ -254,15 +256,15 @@ class _ExportCategoryCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       onTap: onTap,
-      padding: AppSpacing.cardPadding,
+      padding: _transactionReportingCardPadding,
       child: Row(
         children: [
           Material(
             color: color.withValues(alpha: 0.12),
             borderRadius: AppRadii.lgRadius,
             child: SizedBox(
-              width: AppSpacing.ctaHeight,
-              height: AppSpacing.ctaHeight,
+              width: _transactionReportingIconBox,
+              height: _transactionReportingIconBox,
               child: Icon(icon, color: color, size: AppSpacing.iconMd),
             ),
           ),
@@ -300,7 +302,7 @@ class _ResourceRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.cardPaddingCompact,
+      padding: _transactionReportingCardPadding,
       child: Row(
         children: [
           Expanded(child: Text(resource.label, style: AppTextStyles.caption)),

@@ -21,8 +21,10 @@ class _AccentPillButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.myArenaAccentPillHeight,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: VitDensity.compact.controlHeight,
+          ),
           child: Material(
             color: color.withValues(alpha: .12),
             shape: RoundedRectangleBorder(
@@ -45,7 +47,6 @@ class _AccentPillButton extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: color,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.myArenaAccentPillLineHeight,
                     ),
                   ),
                 ],

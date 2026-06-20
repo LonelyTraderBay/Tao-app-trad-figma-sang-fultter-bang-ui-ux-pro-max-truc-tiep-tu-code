@@ -122,8 +122,7 @@ class _QuickNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.marketOverviewQuickNavHeight,
-      padding: AppSpacing.marketAnalyticsStatPadding,
+      density: VitDensity.compact,
       onTap: () => context.go(route),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +133,7 @@ class _QuickNavItem extends StatelessWidget {
             size: AppSpacing.marketOverviewQuickNavIcon,
             iconSize: AppSpacing.marketOverviewQuickNavGlyph,
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsMediumGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             label,
             maxLines: 1,
@@ -142,7 +141,7 @@ class _QuickNavItem extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.marketLineHeightTight,
+              height: 1,
             ),
           ),
         ],
@@ -208,8 +207,7 @@ class _MoverListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.marketOverviewMoverCardHeight,
-      padding: AppSpacing.marketOverviewMoverCardPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           InkWell(
@@ -232,7 +230,7 @@ class _MoverListCard extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: color,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.marketLineHeightTight,
+                        height: 1,
                       ),
                     ),
                   ),
@@ -245,11 +243,10 @@ class _MoverListCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsGap),
+          const SizedBox(height: AppSpacing.x2),
           for (final mover in movers) ...[
             _QuickMoverRow(mover: mover),
-            if (mover != movers.last)
-              const SizedBox(height: AppSpacing.marketAnalyticsBreadthGap),
+            if (mover != movers.last) const SizedBox(height: AppSpacing.x1),
           ],
         ],
       ),
@@ -279,7 +276,7 @@ class _QuickMoverRow extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: mover.color,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.marketLineHeightTight,
+                  height: 1,
                 ),
               ),
             ),
@@ -293,7 +290,7 @@ class _QuickMoverRow extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.body.copyWith(
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.marketLineHeightTight,
+              height: 1,
             ),
           ),
         ),
@@ -309,7 +306,7 @@ class _QuickMoverRow extends StatelessWidget {
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketLineHeightTight,
+              height: 1,
             ),
           ),
         ),
@@ -339,9 +336,10 @@ class _SectorPerformance extends StatelessWidget {
     return VitPageSection(
       label: 'Hiệu suất ngành',
       accentColor: _sectorPurple,
+      density: VitDensity.compact,
       children: [
         VitCard(
-          padding: AppSpacing.marketOverviewSectorListPadding,
+          density: VitDensity.compact,
           child: Column(
             children: [
               for (final sector in topSectors.take(5))
@@ -366,7 +364,7 @@ class _SectorPerformance extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: _marketPrimary,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.marketLineHeightTight,
+                          height: 1,
                         ),
                       ),
                       const SizedBox(width: AppSpacing.marketAnalyticsMicroGap),
@@ -399,84 +397,76 @@ class _SectorRow extends StatelessWidget {
     final color = positive ? AppColors.buy : AppColors.sell;
     return InkWell(
       onTap: onTap,
-      child: SizedBox(
-        height: AppSpacing.marketOverviewSectorRowHeight,
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  _IconBubble(
-                    icon: sector.icon,
-                    color: sector.color,
-                    size: AppSpacing.marketOverviewSectorIcon,
-                    iconSize: AppSpacing.marketOverviewSectorGlyph,
-                  ),
-                  const SizedBox(width: AppSpacing.marketAnalyticsGap),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          sector.nameVi,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.body.copyWith(
-                            fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.marketLineHeightShort,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: AppSpacing.marketAnalyticsSmallGap,
-                        ),
-                        Text(
-                          '${sector.coinCount} coins',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                            height: AppSpacing.marketLineHeightTight,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+            child: Row(
+              children: [
+                _IconBubble(
+                  icon: sector.icon,
+                  color: sector.color,
+                  size: AppSpacing.marketOverviewSectorIcon,
+                  iconSize: AppSpacing.marketOverviewSectorGlyph,
+                ),
+                const SizedBox(width: AppSpacing.marketAnalyticsGap),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _formatSignedPercent(sector.change24h),
-                        style: AppTextStyles.caption.copyWith(
-                          color: color,
+                        sector.nameVi,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.body.copyWith(
                           fontWeight: AppTextStyles.bold,
-                          fontFeatures: AppTextStyles.tabularFigures,
-                          height: AppSpacing.marketLineHeightTight,
+                          height: 1.15,
                         ),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.marketAnalyticsSmallGap,
-                      ),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
-                        _formatCompact(sector.totalMarketCap, prefix: r'$'),
+                        '${sector.coinCount} coins',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.marketLineHeightTight,
+                          height: 1,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.marketOverviewSectorChevron,
-                  ),
-                ],
-              ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      _formatSignedPercent(sector.change24h),
+                      style: AppTextStyles.caption.copyWith(
+                        color: color,
+                        fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                        height: 1,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      _formatCompact(sector.totalMarketCap, prefix: r'$'),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        height: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.marketOverviewSectorChevron,
+                ),
+              ],
             ),
-            const Divider(height: AppSpacing.dividerHairline),
-          ],
-        ),
+          ),
+          const Divider(height: AppSpacing.dividerHairline),
+        ],
       ),
     );
   }

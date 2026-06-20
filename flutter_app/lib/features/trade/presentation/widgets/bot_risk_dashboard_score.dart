@@ -9,7 +9,7 @@ class _RiskScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _riskColor(snapshot.riskScore);
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Row(
@@ -24,12 +24,12 @@ class _RiskScoreCard extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${snapshot.riskScore}/100',
                       style: AppTextStyles.heroNumber.copyWith(color: color),
                     ),
-                    const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       snapshot.riskLabel,
                       style: AppTextStyles.caption.copyWith(
@@ -41,8 +41,8 @@ class _RiskScoreCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: AppSpacing.tradeBotRiskRingSize,
-                height: AppSpacing.tradeBotRiskRingSize,
+                width: AppSpacing.launchpadBox64,
+                height: AppSpacing.launchpadBox64,
                 child: CustomPaint(
                   painter: _RiskRingPainter(
                     percent: snapshot.riskScore / 100,
@@ -53,8 +53,8 @@ class _RiskScoreCard extends StatelessWidget {
                       child: ColoredBox(
                         color: AppColors.surface,
                         child: SizedBox(
-                          width: AppSpacing.tradeBotRiskRingInnerSize,
-                          height: AppSpacing.tradeBotRiskRingInnerSize,
+                          width: AppSpacing.launchpadBox56,
+                          height: AppSpacing.launchpadBox56,
                           child: Icon(
                             Icons.shield_outlined,
                             color: color,
@@ -68,11 +68,11 @@ class _RiskScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+          const SizedBox(height: AppSpacing.x3),
           VitCard(
             variant: VitCardVariant.ghost,
             width: double.infinity,
-            padding: AppSpacing.tradeBotControlPadding,
+            density: VitDensity.compact,
             borderColor: color.withValues(alpha: .28),
             child: Text(
               snapshot.riskMessage,

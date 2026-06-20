@@ -12,6 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPredictions(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -97,6 +99,24 @@ void main() {
     expect(find.text('Arena Points only'), findsOneWidget);
     expect(find.text('Apple releases AR glasses in 2026?'), findsOneWidget);
     expect(find.text('Tesla stock above \$400 by mid-2026?'), findsOneWidget);
+  });
+
+  testWidgets('SC-027 first viewport previews prediction action cards', (
+    tester,
+  ) async {
+    await pumpPredictions(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-027 PredictionsHomePage',
+      semanticLabel: 'SC-027 PredictionsHomePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PredictionsHomePage.breakingMoversKey),
+      targetLabel: 'the breaking movers action card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-027 filters by tab, category, and search field', (

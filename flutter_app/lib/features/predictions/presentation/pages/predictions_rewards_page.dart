@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -67,15 +68,13 @@ class _PredictionsRewardsPageState
         .watch(predictionsReadModelControllerProvider)
         .getRewards();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndPadding =
+        navClearance +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionRewardsBottomInsetVisual
-            : AppSpacing.predictionRewardsBottomInsetNative);
+        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
     final rewards = snapshot.rewards.where((reward) {
       final categoryMatch = _category == 'All' || reward.category == _category;
       final favoriteMatch = !_favoritesOnly || _favorites.contains(reward.id);
@@ -106,33 +105,23 @@ class _PredictionsRewardsPageState
                   child: SingleChildScrollView(
                     key: PredictionsRewardsPage.contentKey,
                     padding: AppSpacing.predictionRewardsScrollPadding(
-                      bottomInset,
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionRewardsContentGap,
+                      density: VitDensity.compact,
                       children: [
-                        VitCard(
-                          padding: EdgeInsets.zero,
-                          child: _RewardsHero(snapshot: snapshot),
-                        ),
-                        const VitCard(
-                          padding: EdgeInsets.zero,
-                          child: _HowItWorksNote(),
-                        ),
-                        VitCard(
-                          padding: EdgeInsets.zero,
-                          child: _CategoryFilters(
-                            categories: ['All', ...snapshot.categories],
-                            activeCategory: _category,
-                            favoritesOnly: _favoritesOnly,
-                            onCategoryChanged: (value) => setState(() {
-                              _category = value;
-                            }),
-                            onFavoritesToggle: () => setState(() {
-                              _favoritesOnly = !_favoritesOnly;
-                            }),
-                          ),
+                        _RewardsHero(snapshot: snapshot),
+                        const _HowItWorksNote(),
+                        _CategoryFilters(
+                          categories: ['All', ...snapshot.categories],
+                          activeCategory: _category,
+                          favoritesOnly: _favoritesOnly,
+                          onCategoryChanged: (value) => setState(() {
+                            _category = value;
+                          }),
+                          onFavoritesToggle: () => setState(() {
+                            _favoritesOnly = !_favoritesOnly;
+                          }),
                         ),
                         _RewardsTable(
                           snapshot: snapshot,
@@ -176,7 +165,7 @@ class _PredictionsRewardsPageState
                   color: AppColors.text1,
                 ),
               ),
-              const Padding(padding: AppSpacing.predictionRewardsRiskSheetGap),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 'Daily rewards phụ thuộc điều kiện spread, min shares, thời '
                 'gian giữ lệnh và thanh khoản thị trường.',

@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingTransactionReportingPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.cardPadding,
+      padding: _transactionReportingCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,8 +31,7 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height:
-                        AppSpacing.stakingTransactionReportingBodyLineHeight,
+                    height: _transactionReportingBodyLineHeight,
                   ),
                 ),
               ],
@@ -66,7 +65,7 @@ class _Selectors extends StatelessWidget {
       children: [
         Expanded(
           child: VitCard(
-            padding: AppSpacing.cardPaddingCompact,
+            padding: _transactionReportingCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -87,7 +86,7 @@ class _Selectors extends StatelessWidget {
                       onYearChanged(snapshot.years[nextIndex]);
                     },
                     child: SizedBox(
-                      height: AppSpacing.ctaHeight,
+                      height: _transactionReportingControlExtent,
                       child: Padding(
                         padding: AppSpacing.zeroInsets.copyWith(
                           left: AppSpacing.x4,
@@ -122,9 +121,9 @@ class _Selectors extends StatelessWidget {
         Expanded(
           child: VitCard(
             onTap: onOpenCostBasis,
-            padding: AppSpacing.cardPaddingCompact,
+            padding: _transactionReportingCardPadding,
             child: SizedBox(
-              height: AppSpacing.stakingTransactionReportingCardMinHeight,
+              height: _transactionReportingControlExtent,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -132,7 +131,7 @@ class _Selectors extends StatelessWidget {
                     'Cost Basis',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                  const Spacer(),
+                  const SizedBox(height: AppSpacing.x2),
                   Row(
                     children: [
                       Expanded(
@@ -181,7 +180,7 @@ class _ReportingTabs extends StatelessWidget {
                   key: StakingTransactionReportingPage.tabKey(tab.name),
                   onTap: () => onChanged(tab),
                   child: Padding(
-                    padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x4),
+                    padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x3),
                     child: Column(
                       children: [
                         Text(
@@ -193,11 +192,10 @@ class _ReportingTabs extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: AppSpacing.x2),
                         SizedBox(
                           width: AppSpacing.buttonHero,
-                          height: AppSpacing
-                              .stakingTransactionReportingTabIndicatorHeight,
+                          height: _transactionReportingIndicatorExtent,
                           child: AnimatedScale(
                             duration: const Duration(milliseconds: 160),
                             scale: active == tab ? 1 : 0,
@@ -237,10 +235,11 @@ class _SummaryTab extends StatelessWidget {
           key: StakingTransactionReportingPage.summaryKey,
           label: 'Tax Summary ${snapshot.defaultYear}',
           accentColor: AppColors.primarySoft,
+          density: VitDensity.compact,
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.cardPadding,
+              padding: _transactionReportingCardPadding,
               child: Column(
                 children: [
                   _SummaryPanel(
@@ -249,9 +248,9 @@ class _SummaryTab extends StatelessWidget {
                     body:
                         'Taxed as ordinary income at your marginal tax rate (reported on Form 1099-MISC)',
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.x3),
                   _GainsPanel(summary: summary),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.x3),
                   _CostBasisPanel(summary: summary, method: costBasis),
                 ],
               ),
@@ -262,10 +261,11 @@ class _SummaryTab extends StatelessWidget {
           key: StakingTransactionReportingPage.rewardsKey,
           label: 'Staking Rewards by Asset',
           accentColor: AppColors.primarySoft,
+          density: VitDensity.compact,
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.cardPadding,
+              padding: _transactionReportingCardPadding,
               child: Column(
                 children: [
                   for (final reward in summary.rewardsByAsset) ...[
@@ -299,7 +299,7 @@ class _SummaryPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.cardPadding,
+      padding: _transactionReportingCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -318,12 +318,12 @@ class _SummaryPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             body,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.stakingTransactionReportingMetricLineHeight,
+              height: _transactionReportingMetricLineHeight,
             ),
           ),
         ],
@@ -342,7 +342,7 @@ class _GainsPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.cardPadding,
+      padding: _transactionReportingCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -362,7 +362,7 @@ class _GainsPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -387,7 +387,7 @@ class _GainsPanel extends StatelessWidget {
             'Reported on Form 8949 and Schedule D. Long-term gains taxed at lower rates.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.stakingTransactionReportingMetricLineHeight,
+              height: _transactionReportingMetricLineHeight,
             ),
           ),
         ],
@@ -407,7 +407,7 @@ class _CostBasisPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.cardPadding,
+      padding: _transactionReportingCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

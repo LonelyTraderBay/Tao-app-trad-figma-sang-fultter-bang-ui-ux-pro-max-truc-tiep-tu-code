@@ -7,7 +7,7 @@ class _HistorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadSwapAggregatorPage.historyKey,
       child: VitPageSection(
         label: 'Giao dich gan day',
@@ -15,7 +15,7 @@ class _HistorySection extends StatelessWidget {
         children: [
           for (final swap in history)
             VitCard(
-              padding: const EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.launchpadPaddingX3,
               child: Column(
                 children: [
                   Row(
@@ -105,12 +105,12 @@ class _StatusPill extends StatelessWidget {
       LaunchpadSwapStatus.failed => AppColors.sell,
     };
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+        padding: AppSpacing.launchpadBadgePadding,
         child: Text(
           status.name.toUpperCase(),
           style: AppTextStyles.chartLabelTiny.copyWith(
@@ -139,7 +139,7 @@ class _SettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadSwapAggregatorPage.settingsKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -149,7 +149,7 @@ class _SettingsSection extends StatelessWidget {
             accentColor: AppColors.primary,
             children: [
               VitCard(
-                padding: const EdgeInsets.all(AppSpacing.x4),
+                padding: AppSpacing.launchpadPaddingX4,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -216,31 +216,35 @@ class _SettingsSection extends StatelessWidget {
             label: 'An toan',
             accentColor: AppColors.accent,
             children: [
-              Container(
-                padding: const EdgeInsets.all(AppSpacing.x3),
-                decoration: BoxDecoration(
+              DecoratedBox(
+                decoration: const ShapeDecoration(
                   color: AppColors.accent08,
-                  border: Border.all(color: AppColors.accent20),
-                  borderRadius: AppRadii.cardRadius,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: AppColors.accent20),
+                    borderRadius: AppRadii.cardRadius,
+                  ),
                 ),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.info_outline_rounded,
-                      color: AppColors.accent,
-                      size: AppSpacing.launchpadIconLg,
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                    Expanded(
-                      child: Text(
-                        'Luon kiem tra dia chi hop dong va chi swap tren cac DEX uy tin. Khong chia se private key.',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text2,
-                          height: AppSpacing.launchpadLineHeightLong,
+                child: Padding(
+                  padding: AppSpacing.launchpadPaddingX3,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.info_outline_rounded,
+                        color: AppColors.accent,
+                        size: AppSpacing.launchpadIconLg,
+                      ),
+                      const SizedBox(width: AppSpacing.x2),
+                      Expanded(
+                        child: Text(
+                          'Luon kiem tra dia chi hop dong va chi swap tren cac DEX uy tin. Khong chia se private key.',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text2,
+                            height: AppSpacing.launchpadLineHeightLong,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -268,18 +272,23 @@ class _SlippageButton extends StatelessWidget {
       key: LaunchpadSwapAggregatorPage.slippageKey(value),
       onTap: onTap,
       borderRadius: AppRadii.inputRadius,
-      child: Container(
+      child: SizedBox(
         height: AppSpacing.launchpadBox40,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? AppColors.primary : AppColors.bg,
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Text(
-          '$value%',
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text1,
-            fontWeight: AppTextStyles.bold,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: active ? AppColors.primary : AppColors.bg,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              '$value%',
+              style: AppTextStyles.caption.copyWith(
+                color: active ? AppColors.onAccent : AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
           ),
         ),
       ),

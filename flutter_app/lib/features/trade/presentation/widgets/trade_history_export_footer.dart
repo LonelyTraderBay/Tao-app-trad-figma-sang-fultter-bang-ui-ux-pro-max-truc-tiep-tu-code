@@ -7,7 +7,10 @@ class _TaxNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeToolTaxNotePadding,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
       borderColor: _tradePrimary.withValues(alpha: .18),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,9 +25,7 @@ class _TaxNote extends StatelessWidget {
             child: Text(
               'File xuất phục vụ mục đích lưu trữ và khai thuế. Không phải tài liệu '
               'chính thức về thuế. Tham khảo ý kiến chuyên gia thuế cho trường hợp cụ thể.',
-              style: AppTextStyles.navLabel.copyWith(
-                color: _tradePrimary,
-              ),
+              style: AppTextStyles.navLabel.copyWith(color: _tradePrimary),
             ),
           ),
         ],
@@ -57,16 +58,17 @@ class _ExportFooter extends StatelessWidget {
     return Material(
       color: AppColors.surface2,
       child: Padding(
-        padding: exported
-            ? AppSpacing.tradeToolFooterPaddingExported
-            : AppSpacing.tradeToolFooterPaddingStandard,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x4,
+          vertical: AppSpacing.x2,
+        ),
         child: exported
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   VitCard(
                     variant: VitCardVariant.inner,
-                    height: AppSpacing.tradeToolFooterReadyHeight,
+                    height: VitDensity.compact.controlHeight,
                     alignment: Alignment.center,
                     borderColor: AppColors.buy.withValues(alpha: .2),
                     child: Row(
@@ -75,9 +77,9 @@ class _ExportFooter extends StatelessWidget {
                         const Icon(
                           Icons.check_circle_outline,
                           color: AppColors.buy,
-                          size: AppSpacing.tradeToolFooterIcon,
+                          size: AppSpacing.iconSm,
                         ),
-                        const SizedBox(width: AppSpacing.tradeToolInlineGap),
+                        const SizedBox(width: AppSpacing.x2),
                         Flexible(
                           child: Text(
                             'File đã sẵn sàng tải xuống',
@@ -92,7 +94,7 @@ class _ExportFooter extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.tradeToolIconGap),
+                  const SizedBox(height: AppSpacing.x2),
                   Row(
                     children: [
                       Expanded(
@@ -103,7 +105,7 @@ class _ExportFooter extends StatelessWidget {
                           child: const Text('Tạo mới'),
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.tradeToolCardGap),
+                      const SizedBox(width: AppSpacing.x2),
                       Expanded(
                         flex: AppSpacing.tradeToolFooterButtonFlex,
                         child: VitCtaButton(

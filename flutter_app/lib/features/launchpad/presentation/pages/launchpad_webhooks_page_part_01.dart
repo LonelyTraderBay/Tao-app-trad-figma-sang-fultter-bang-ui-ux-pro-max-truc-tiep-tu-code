@@ -93,36 +93,34 @@ class _StatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: .08),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadVerticalPaddingX3,
-        child: Column(
-          children: [
-            Text(
-              value,
-              style: AppTextStyles.base.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.launchpadLineHeightTight,
-                fontFeatures: AppTextStyles.tabularFigures,
-              ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .22),
+      background: ColoredBox(color: color.withValues(alpha: .08)),
+      padding: AppSpacing.launchpadVerticalPaddingX2,
+      child: Column(
+        children: [
+          Text(
+            value,
+            style: AppTextStyles.base.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+              height: _launchpadWebhooksLineHeightTight,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
-            const SizedBox(height: AppSpacing.x1),
-            Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.chartLabelXs.copyWith(
-                color: AppColors.text3,
-                height: AppSpacing.launchpadLineHeightShort,
-              ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.chartLabelXs.copyWith(
+              color: AppColors.text3,
+              height: _launchpadWebhooksLineHeightShort,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -136,80 +134,22 @@ class _WebhookTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _UnderlineTabButton(
-          key: LaunchpadWebhooksPage.subscriptionsTabKey,
+    return VitTabBar(
+      variant: VitTabBarVariant.underline,
+      activeKey: activeTab.name,
+      tabs: const [
+        VitTabItem(
+          key: 'subscriptions',
           label: 'subscriptions',
-          active: activeTab == _WebhookTab.subscriptions,
-          onTap: () => onChanged(_WebhookTab.subscriptions),
+          widgetKey: LaunchpadWebhooksPage.subscriptionsTabKey,
         ),
-        _UnderlineTabButton(
-          key: LaunchpadWebhooksPage.deliveriesTabKey,
+        VitTabItem(
+          key: 'deliveries',
           label: 'deliveries',
-          active: activeTab == _WebhookTab.deliveries,
-          onTap: () => onChanged(_WebhookTab.deliveries),
+          widgetKey: LaunchpadWebhooksPage.deliveriesTabKey,
         ),
       ],
-    );
-  }
-}
-
-class _UnderlineTabButton extends StatelessWidget {
-  const _UnderlineTabButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: AppSpacing.launchpadVerticalPaddingX4,
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? AppColors.primary : AppColors.text3,
-                    fontWeight: active
-                        ? AppTextStyles.bold
-                        : AppTextStyles.medium,
-                  ),
-                ),
-              ),
-              AnimatedSize(
-                duration: const Duration(milliseconds: 180),
-                child: SizedBox(
-                  height: AppSpacing.launchpadGapXxs,
-                  width: active ? 132 : 0,
-                  child: const DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: AppRadii.hairlineRadius,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      onChanged: (key) => onChanged(_WebhookTab.values.byName(key)),
     );
   }
 }
@@ -225,13 +165,13 @@ class _CreateWebhookCard extends StatelessWidget {
       key: LaunchpadWebhooksPage.createKey,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.accent30,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: _launchpadWebhooksCardPadding,
       onTap: onTap,
       child: Row(
         children: [
           const SizedBox(
-            width: AppSpacing.launchpadBox40,
-            height: AppSpacing.launchpadBox40,
+            width: _launchpadWebhooksPrimaryIconBox,
+            height: _launchpadWebhooksPrimaryIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.accent15,
@@ -300,6 +240,7 @@ class _SubscriptionsSection extends StatelessWidget {
           : VitPageSection(
               label: 'Active Subscriptions',
               accentColor: AppColors.buy,
+              density: VitDensity.compact,
               children: [
                 for (final subscription in subscriptions)
                   _SubscriptionCard(
@@ -354,7 +295,7 @@ class _SubscriptionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(
-              width: AppSpacing.launchpadVerticalMarkerWidth,
+              width: _launchpadWebhooksMarkerWidth,
               child: ColoredBox(color: statusColor),
             ),
             Expanded(
@@ -378,7 +319,7 @@ class _SubscriptionCard extends StatelessWidget {
                                   ? Icons.expand_less_rounded
                                   : Icons.expand_more_rounded,
                               color: AppColors.text3,
-                              size: AppSpacing.launchpadIcon2xl,
+                              size: _launchpadWebhooksIcon2xl,
                             ),
                           ],
                         ),
@@ -428,10 +369,11 @@ class _SubscriptionSummary extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            _StatusPill(
+            VitStatusPill(
               label: _statusLabel(subscription.status),
-              color: _statusColor(subscription.status),
+              status: _statusPillStatus(subscription.status),
               icon: _statusIcon(subscription.status),
+              size: VitStatusPillSize.sm,
             ),
           ],
         ),
@@ -446,14 +388,14 @@ class _SubscriptionSummary extends StatelessWidget {
               '${subscription.eventTypes.length} events',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.launchpadLineHeightShort,
+                height: _launchpadWebhooksLineHeightShort,
               ),
             ),
             Text(
               '${subscription.triggerCount} triggers',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.launchpadLineHeightShort,
+                height: _launchpadWebhooksLineHeightShort,
               ),
             ),
           ],
@@ -471,8 +413,8 @@ class _ChainIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.launchpadBox40,
-      height: AppSpacing.launchpadBox40,
+      width: _launchpadWebhooksPrimaryIconBox,
+      height: _launchpadWebhooksPrimaryIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: subscription.accent.withValues(alpha: .15),
@@ -483,7 +425,7 @@ class _ChainIcon extends StatelessWidget {
         child: Icon(
           Icons.hub_outlined,
           color: subscription.accent,
-          size: AppSpacing.launchpadIcon2xl,
+          size: _launchpadWebhooksIcon2xl,
         ),
       ),
     );

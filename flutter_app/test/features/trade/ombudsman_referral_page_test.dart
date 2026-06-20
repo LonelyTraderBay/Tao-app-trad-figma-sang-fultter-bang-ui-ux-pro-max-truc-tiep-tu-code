@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpOmbudsman(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -77,6 +79,27 @@ void main() {
     expect(find.text('0800 023 4567'), findsOneWidget);
     expect(find.text('How It Works'), findsOneWidget);
     expect(find.text('Submit Your Complaint'), findsOneWidget);
+  });
+
+  testWidgets('SC-114 first viewport reaches independent referral intro', (
+    tester,
+  ) async {
+    await pumpOmbudsman(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'OmbudsmanReferralPage',
+      semanticLabel: 'SC-114 OmbudsmanReferralPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Free & Independent'),
+      minVisibleHeight: 12,
+      targetLabel: 'independent referral intro',
+      reason:
+          'Ombudsman referral should expose the independent dispute resolution '
+          'intro above bottom navigation.',
+    );
   });
 
   testWidgets('SC-114 exposes external FOS website CTA', (tester) async {

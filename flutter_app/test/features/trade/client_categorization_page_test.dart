@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpClientCategorization(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -23,6 +25,24 @@ void main() {
         child: VitTradeApp(
           routerConfig: createAppRouter(
             initialLocation: AppRoutePaths.tradeCopyClientCategorization,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> pumpClientOptUp(WidgetTester tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.tradeCopyClientOptUpRequest,
           ),
         ),
       ),
@@ -78,6 +98,48 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Professional Client'), findsOneWidget);
+  });
+
+  testWidgets('SC-099 first viewport reaches current category inventory', (
+    tester,
+  ) async {
+    await pumpClientCategorization(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ClientCategorizationPage',
+      semanticLabel: 'SC-099 ClientCategorizationPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ClientCategorizationPage.categoryKey('retail')),
+      minVisibleHeight: 24,
+      targetLabel: 'current retail category card',
+      reason:
+          'Client categorization must preview category inventory above bottom '
+          'navigation after the current protection summary.',
+    );
+  });
+
+  testWidgets('SC-099 opt-up first viewport reaches criteria review', (
+    tester,
+  ) async {
+    await pumpClientOptUp(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ClientOptUpRequestPage',
+      semanticLabel: 'SC-099 ClientOptUpRequestPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ClientOptUpRequestPage.criteriaKey),
+      minVisibleHeight: 24,
+      targetLabel: 'professional criteria confirmation',
+      reason:
+          'Opt-up request must show the first required acknowledgement above '
+          'bottom navigation before the submit action.',
+    );
   });
 
   testWidgets('SC-099 switches protections, requirements, and history tabs', (

@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -25,6 +25,17 @@ part '../widgets/copy_configuration_validation_common.dart';
 const _configurationPrimary = AppColors.primary;
 const _configurationGreen = AppColors.buy;
 const _configurationRed = AppColors.sell;
+const _configurationSpace = AppSpacing.x2;
+const _configurationCardSpace = AppSpacing.x3;
+const _configurationVisualScrollClearance = 112.0;
+const _configurationNativeScrollClearance = 72.0;
+const _configurationVisualFooterClearance = 140.0;
+const _configurationNativeFooterClearance = 72.0;
+const _configurationProgressHeight = 5.0;
+const _configurationDividerHeight = 12.0;
+const _configurationPresetHeight = 34.0;
+const _configurationButtonHeight = 44.0;
+const _configurationDescriptionLineHeight = 1.24;
 
 class CopyConfigurationPage extends ConsumerStatefulWidget {
   const CopyConfigurationPage({
@@ -86,15 +97,16 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
     final preview = controller.state.preview;
     final provider = snapshot.provider!;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.copyConfigurationBottomInsetVisual
-            : AppSpacing.copyConfigurationBottomInsetNative);
+            ? _configurationVisualScrollClearance
+            : _configurationNativeScrollClearance);
+    final footerEndClearance =
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame
+            ? _configurationVisualFooterClearance
+            : _configurationNativeFooterClearance);
     final allocationPercent = draft.copyCapital / snapshot.totalPortfolio * 100;
     final resolvedBackPath = resolveSafeBackPath(
       candidate: widget.backPath,
@@ -120,16 +132,12 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyConfigurationPage.contentKey,
-                  padding: AppSpacing.copyConfigurationScrollPadding(
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _ProviderCard(provider: provider),
-                      const SizedBox(
-                        height: AppSpacing.copyConfigurationPrimaryGap,
-                      ),
                       _CapitalSection(
                         controller: _capitalController,
                         allocationPercent: allocationPercent,
@@ -138,50 +146,35 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
                         onChanged: _updateCapital,
                         onPreset: _setCapitalPercent,
                       ),
-                      const SizedBox(
-                        height: AppSpacing.copyConfigurationPrimaryGap,
-                      ),
                       _ModeSection(
                         selected: draft.copyMode,
                         copyRatio: draft.copyRatio,
                         onModeChanged: _setMode,
                         onRatioChanged: _setCopyRatio,
                       ),
-                      const SizedBox(
-                        height: AppSpacing.copyConfigurationPrimaryGap,
-                      ),
                       _RiskSection(draft: draft, onDraftChanged: _setDraft),
-                      const SizedBox(
-                        height: AppSpacing.copyConfigurationPrimaryGap,
-                      ),
                       _FeeSection(preview: preview),
-                      const SizedBox(
-                        height: AppSpacing.copyConfigurationPrimaryGap,
-                      ),
-                      if (preview.validations.isNotEmpty) ...[
+                      if (preview.validations.isNotEmpty)
                         _ValidationList(items: preview.validations),
-                        const SizedBox(
-                          height: AppSpacing.copyConfigurationPrimaryGap,
-                        ),
-                      ],
                       _SummaryCard(draft: draft),
-                      const SizedBox(
-                        height: AppSpacing.copyConfigurationPrimaryGap,
-                      ),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Copy configuration state review',
                         message:
                             'Provider summary, capital allocation, copy mode, risk controls, fee preview, validation messages, and disabled confirmation state remain visible before copy-trading confirmation.',
                         contractId: 'SC-072',
+                        density: VitDensity.compact,
                       ),
                     ],
                   ),
                 ),
               ),
               Padding(
-                padding: AppSpacing.copyConfigurationFooterPadding(
-                  bottomChrome + MediaQuery.paddingOf(context).bottom,
+                padding: EdgeInsets.fromLTRB(
+                  AppSpacing.x4,
+                  AppSpacing.x2,
+                  AppSpacing.x4,
+                  footerEndClearance,
                 ),
                 child: VitStickyFooter(
                   child: VitCtaButton(
@@ -194,6 +187,7 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
                             ),
                           ),
                     variant: VitCtaButtonVariant.auth,
+                    height: _configurationButtonHeight,
                     trailing: const Icon(Icons.chevron_right_rounded),
                     child: const Text('Xem xác nhận'),
                   ),

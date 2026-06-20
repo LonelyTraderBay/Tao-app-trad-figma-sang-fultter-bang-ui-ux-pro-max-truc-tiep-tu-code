@@ -29,6 +29,7 @@ class LaunchpadBatchClaimPage extends ConsumerStatefulWidget {
   static const warningKey = Key('sc304_launchpad_batch_claim_warning');
   static const ctaKey = Key('sc304_launchpad_batch_claim_cta');
   static const reviewKey = Key('sc304_launchpad_batch_claim_review');
+  static const reviewStateKey = Key('sc304_launchpad_batch_claim_review_state');
   static const successKey = Key('sc304_launchpad_batch_claim_success');
 
   static Key positionKey(String id) =>

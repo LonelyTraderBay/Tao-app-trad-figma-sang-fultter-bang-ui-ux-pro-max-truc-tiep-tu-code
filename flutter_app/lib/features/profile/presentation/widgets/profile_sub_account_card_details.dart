@@ -17,7 +17,7 @@ class _SubAccountDetails extends StatelessWidget {
             height: AppSpacing.profileSubAccountDetailsDividerHeight,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.profileSubAccountDetailsTopGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -43,14 +43,12 @@ class _SubAccountDetails extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.profileSubAccountDetailsMetricGap),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             'Quy\u1EC1n h\u1EA1n:',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(
-            height: AppSpacing.profileSubAccountPermissionLabelGap,
-          ),
+          const SizedBox(height: AppSpacing.x1),
           Wrap(
             spacing: AppSpacing.profileSubAccountPermissionGap,
             runSpacing: AppSpacing.profileSubAccountPermissionGap,
@@ -62,7 +60,7 @@ class _SubAccountDetails extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.profileSubAccountEmailGap),
+          const SizedBox(height: AppSpacing.x3),
           Text.rich(
             TextSpan(
               text: 'Email: ',
@@ -75,7 +73,7 @@ class _SubAccountDetails extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.profileSubAccountActionsGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -134,7 +132,7 @@ class _DetailMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.profileSubAccountDetailLabelGap),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           value,
           maxLines: 1,
@@ -164,8 +162,8 @@ class _ActionChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.profileSubAccountActionHeight,
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: VitDensity.compact.controlHeight),
       child: Material(
         color: background,
         shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_suitability_assessment_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSuitability(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -147,6 +149,24 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Question 1 of 7'), findsOneWidget);
+  });
+
+  testWidgets('SC-376 first viewport reaches first answer option', (
+    tester,
+  ) async {
+    await pumpSuitability(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-376 StakingSuitabilityAssessmentPage',
+      semanticLabel: 'SC-376 StakingSuitabilityAssessmentPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingSuitabilityAssessmentPage.optionKey('experience', 0)),
+      routeName: 'SC-376 StakingSuitabilityAssessmentPage',
+      actionLabel: 'the first suitability answer option',
+    );
   });
 
   testWidgets('SC-376 selection advances and previous returns', (tester) async {

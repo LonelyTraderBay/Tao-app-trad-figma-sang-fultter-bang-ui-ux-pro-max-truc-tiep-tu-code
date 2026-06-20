@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_flow_m
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_points_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpFlowMap(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -76,6 +78,24 @@ void main() {
     expect(find.text('/arena'), findsOneWidget);
     expect(find.text('Core Entry Points'), findsOneWidget);
     expect(find.text('Discovery Flow'), findsOneWidget);
+  });
+
+  testWidgets('SC-197 first viewport reaches first route registry row', (
+    tester,
+  ) async {
+    await pumpFlowMap(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ArenaFlowMapPage',
+      semanticLabel: 'SC-197 ArenaFlowMapPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ArenaFlowMapPage.routeKey('/arena')),
+      targetLabel: 'first route registry row',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-197 expands handoff and QA sections', (tester) async {

@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +23,48 @@ part '../widgets/arena_leaderboard_body.dart';
 part '../widgets/arena_leaderboard_rows_footer.dart';
 
 enum _LeaderboardTab { creators, players, teams }
+
+const double _leaderboardVisualScrollClearance = 108;
+const double _leaderboardNativeScrollClearance = 72;
+const double _leaderboardPodiumSideSize =
+    AppSpacing.buttonCompact + AppSpacing.x2;
+const double _leaderboardPodiumWinnerSize = AppSpacing.ctaHeight;
+const double _leaderboardPodiumBorderWidth = AppSpacing.hairlineStroke;
+const double _leaderboardPodiumShadowBlur = AppSpacing.ctaElevationBlur;
+const double _leaderboardPodiumShadowSpread = AppSpacing.ctaElevationSpread;
+const double _leaderboardPodiumIcon = AppSpacing.iconMd;
+const double _leaderboardLineHeight = 1.0;
+const double _leaderboardDividerHeight = AppSpacing.dividerHairline;
+const double _leaderboardSectionMarkerWidth = AppSpacing.pageSectionAccentWidth;
+const double _leaderboardSectionMarkerHeight = AppSpacing.rowPy + AppSpacing.x1;
+const double _leaderboardMyRankIconBox = AppSpacing.buttonCompact;
+const double _leaderboardMyRankIcon = AppSpacing.iconSm + AppSpacing.x2;
+const double _leaderboardFilterIcon = AppSpacing.iconSm;
+const double _leaderboardRowRankWidth = AppSpacing.iconLg;
+const double _leaderboardRowAvatar = AppSpacing.buttonCompact;
+const double _leaderboardRowIcon = AppSpacing.iconSm + AppSpacing.x2;
+const double _leaderboardFairPlayIcon = AppSpacing.x3 + AppSpacing.x1;
+const double _leaderboardRisingIcon = AppSpacing.iconSm;
+const double _leaderboardCompactIcon = AppSpacing.iconMd + AppSpacing.x2;
+const double _leaderboardFooterIcon = AppSpacing.iconSm + AppSpacing.x2;
+const double _leaderboardFooterShieldIcon = AppSpacing.iconSm + AppSpacing.x2;
+const double _leaderboardFooterLineHeight = 1.25;
+const EdgeInsets _leaderboardFilterPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _leaderboardRowPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x4,
+  vertical: AppSpacing.x3,
+);
+const EdgeInsets _leaderboardFooterActionPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _leaderboardPodiumPadding = EdgeInsets.only(
+  top: AppSpacing.x1,
+  bottom: AppSpacing.x3,
+);
 
 class ArenaLeaderboardPage extends ConsumerStatefulWidget {
   const ArenaLeaderboardPage({super.key, this.shellRenderMode});
@@ -50,10 +92,10 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
         .watch(arenaReadModelControllerProvider)
         .getArenaLeaderboard();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _leaderboardVisualScrollClearance
+            : _leaderboardNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -79,10 +121,12 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
                   child: SingleChildScrollView(
                     key: ArenaLeaderboardPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(
+                      scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      density: VitDensity.compact,
                       children: [
                         _MyRankCard(myRank: snapshot.myRank),
                         _MainTabs(

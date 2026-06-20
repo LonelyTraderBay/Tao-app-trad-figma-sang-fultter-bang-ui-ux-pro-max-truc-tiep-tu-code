@@ -9,7 +9,7 @@ class _AuditEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _eventColor(event);
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      padding: VitDensity.compact.cardPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,8 +17,8 @@ class _AuditEventCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.lg,
-            width: AppSpacing.walletAddressIconSize,
-            height: AppSpacing.walletAddressIconSize,
+            width: _auditEventIconExtent,
+            height: _auditEventIconExtent,
             alignment: Alignment.center,
             borderColor: color,
             child: Icon(
@@ -27,7 +27,7 @@ class _AuditEventCard extends StatelessWidget {
               size: AppSpacing.iconMd,
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: _auditSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,10 +36,10 @@ class _AuditEventCard extends StatelessWidget {
                   event.title,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.medium,
-                    height: AppSpacing.copyAuditEventTitleLineHeight,
+                    height: _auditTitleLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: _auditTinySpace),
                 Text(
                   event.description,
                   maxLines: 2,
@@ -47,13 +47,13 @@ class _AuditEventCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.medium,
-                    height: AppSpacing.copyAuditEventDescriptionLineHeight,
+                    height: _auditBodyLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.cardGap),
+                const SizedBox(height: _auditSpace),
                 _EventMetaRow(event: event, color: color),
                 if (_hasVisibleMetadata(event)) ...[
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: _auditSpace),
                   _EventMetadataPanel(event: event),
                 ],
               ],
@@ -87,7 +87,7 @@ class _EventMetaRow extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.copyAuditMetaLineHeight,
+            height: _auditMetaLineHeight,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -96,7 +96,7 @@ class _EventMetaRow extends StatelessWidget {
           '•',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.copyAuditMetaLineHeight,
+            height: _auditMetaLineHeight,
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -130,7 +130,7 @@ class _EventMetadataPanel extends StatelessWidget {
       return VitCard(
         variant: VitCardVariant.inner,
         radius: VitCardRadius.sm,
-        height: AppSpacing.copyAuditMetadataConfigHeight,
+        height: _auditMetadataConfigExtent,
         width: double.infinity,
         alignment: Alignment.centerLeft,
         padding: AppSpacing.copyAuditMetadataConfigPadding,
@@ -138,7 +138,7 @@ class _EventMetadataPanel extends StatelessWidget {
           '${metadata.oldValue} → ${metadata.newValue}',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.copyAuditMetaLineHeight,
+            height: _auditMetaLineHeight,
           ),
         ),
       );
@@ -167,7 +167,7 @@ class _EventMetadataPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAssetPillGap),
+          const SizedBox(height: _auditSpace),
           Row(
             children: [
               Expanded(
@@ -217,10 +217,10 @@ class _MetadataValue extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.copyAuditMetaLineHeight,
+            height: _auditMetaLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.formFieldLabelGap),
+        const SizedBox(height: _auditTinySpace),
         Text(
           value,
           style: AppTextStyles.numericMicro.copyWith(

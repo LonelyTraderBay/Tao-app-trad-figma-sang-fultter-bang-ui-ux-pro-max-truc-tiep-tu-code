@@ -8,7 +8,8 @@ class _ProviderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.copyConfigurationCardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
           VitAssetAvatar(
@@ -18,7 +19,7 @@ class _ProviderCard extends StatelessWidget {
             radius: AppRadii.avatarRadius,
             border: true,
           ),
-          const SizedBox(width: AppSpacing.copyConfigurationInlineGap),
+          const SizedBox(width: _configurationCardSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,14 +28,14 @@ class _ProviderCard extends StatelessWidget {
                   'Đang cấu hình copy cho',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.copyConfigurationTinyGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   provider.name,
                   style: AppTextStyles.baseMedium.copyWith(
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.copyConfigurationTinyGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'ROI +${provider.totalPnlPct.toStringAsFixed(1)}% · Max DD ${provider.maxDrawdown.toStringAsFixed(1)}%',
                   style: AppTextStyles.navLabel.copyWith(
@@ -80,6 +81,7 @@ class _CapitalSection extends StatelessWidget {
     return VitPageSection(
       label: 'Vốn copy',
       accentColor: _configurationPrimary,
+      density: VitDensity.compact,
       children: [
         VitInput(
           fieldKey: CopyConfigurationPage.capitalFieldKey,
@@ -91,7 +93,8 @@ class _CapitalSection extends StatelessWidget {
         ),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.copyConfigurationInnerPadding,
+          density: VitDensity.compact,
+          padding: AppSpacing.cardPaddingCompact,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -112,17 +115,17 @@ class _CapitalSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.copyConfigurationSmallGap),
+              const SizedBox(height: _configurationSpace),
               ClipRRect(
                 borderRadius: AppRadii.smRadius,
                 child: LinearProgressIndicator(
-                  minHeight: AppSpacing.copyConfigurationProgressHeight,
+                  minHeight: _configurationProgressHeight,
                   value: (allocationPercent / 100).clamp(0, 1),
                   backgroundColor: AppColors.borderSolid,
                   valueColor: AlwaysStoppedAnimation<Color>(allocationColor),
                 ),
               ),
-              const SizedBox(height: AppSpacing.copyConfigurationSmallGap),
+              const SizedBox(height: _configurationSpace),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -148,8 +151,7 @@ class _CapitalSection extends StatelessWidget {
                   onPressed: () => onPreset(percent),
                 ),
               ),
-              if (percent != 20)
-                const SizedBox(width: AppSpacing.copyConfigurationSmallGap),
+              if (percent != 20) const SizedBox(width: _configurationSpace),
             ],
           ],
         ),
@@ -176,6 +178,7 @@ class _ModeSection extends StatelessWidget {
     return VitPageSection(
       label: 'Chế độ copy',
       accentColor: _configurationPrimary,
+      density: VitDensity.compact,
       children: [
         for (final mode in TradeCopyConfigurationMode.values)
           _ModeTile(
@@ -186,7 +189,8 @@ class _ModeSection extends StatelessWidget {
         if (selected == TradeCopyConfigurationMode.fixed)
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.copyConfigurationInnerPadding,
+            density: VitDensity.compact,
+            padding: AppSpacing.cardPaddingCompact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

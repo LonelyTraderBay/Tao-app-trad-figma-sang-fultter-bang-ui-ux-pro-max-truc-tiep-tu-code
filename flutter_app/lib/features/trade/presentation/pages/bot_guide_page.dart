@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -48,12 +49,15 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeReadModelControllerProvider).getBotGuide();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final chromeInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollClearance =
+        chromeInset +
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.tradeBotBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+            ? AppSpacing.x6 + AppSpacing.x6
+            : AppSpacing.x5 + AppSpacing.x5);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -72,24 +76,28 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: BotGuidePage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.rowPy,
+                    right: AppSpacing.contentPad,
+                    bottom: scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 16,
+                    density: VitDensity.compact,
                     children: [
                       const _IntroBanner(),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
+                        padding: AppSpacing.cardPaddingCompact,
                         child: VitPageContent(
                           padding: VitContentPadding.none,
-                          customGap: AppSpacing.tradeBotSmallGap,
+                          density: VitDensity.compact,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
+                              density: VitDensity.compact,
                               title: 'Bot education review',
                               message:
                                   'Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.',
@@ -105,7 +113,7 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
                       ),
                       _Tabs(active: _view, onChanged: _setView),
                       VitPageSection(
-                        customGap: 0,
+                        density: VitDensity.compact,
                         children: [
                           if (_view == 'strategies')
                             _StrategiesView(

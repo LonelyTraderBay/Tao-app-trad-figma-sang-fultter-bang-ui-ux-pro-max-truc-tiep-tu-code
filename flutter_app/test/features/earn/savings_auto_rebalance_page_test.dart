@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_auto_
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRebalance(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -74,6 +76,22 @@ void main() {
     expect(find.text('Tự động tái cân bằng'), findsOneWidget);
     expect(find.byKey(SavingsAutoRebalancePage.statsKey), findsOneWidget);
     expect(find.text('Xem trước'), findsOneWidget);
+  });
+
+  testWidgets('SC-344 first viewport reaches preview action', (tester) async {
+    await pumpRebalance(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-344 SavingsAutoRebalancePage',
+      semanticLabel: 'SC-344 SavingsAutoRebalancePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(SavingsAutoRebalancePage.previewButtonKey),
+      routeName: 'SC-344 SavingsAutoRebalancePage',
+      actionLabel: 'the rebalance preview action',
+    );
   });
 
   testWidgets('SC-344 supports strategy tab state changes', (tester) async {

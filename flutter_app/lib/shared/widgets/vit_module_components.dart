@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -84,16 +85,14 @@ class VitServiceTile extends StatelessWidget {
               right: 0,
               height: AppSpacing.serviceTileTopStripeHeight,
               child: DecoratedBox(
-                decoration: BoxDecoration(
+                decoration: ShapeDecoration(
                   color: accentColor.withValues(alpha: .56),
+                  shape: const RoundedRectangleBorder(),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: density.padding,
-                horizontal: density.padding,
-              ),
+              padding: EdgeInsetsDirectional.all(density.padding),
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
@@ -106,15 +105,17 @@ class VitServiceTile extends StatelessWidget {
                           maxWidth: AppSpacing.serviceTileBadgeMaxWidth,
                         ),
                         child: DecoratedBox(
-                          decoration: BoxDecoration(
+                          decoration: ShapeDecoration(
                             color: accentColor.withValues(alpha: .14),
-                            borderRadius: AppRadii.xsRadius,
-                            border: Border.all(
-                              color: accentColor.withValues(alpha: .28),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadii.xsRadius,
+                              side: BorderSide(
+                                color: accentColor.withValues(alpha: .28),
+                              ),
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: const EdgeInsetsDirectional.symmetric(
                               horizontal:
                                   AppSpacing.serviceTileBadgePaddingHorizontal,
                               vertical:
@@ -139,20 +140,24 @@ class VitServiceTile extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: density.iconContainer,
                           height: density.iconContainer,
-                          decoration: BoxDecoration(
-                            color: accentColor.withValues(alpha: .16),
-                            borderRadius: AppRadii.mdRadius,
-                            border: Border.all(
-                              color: accentColor.withValues(alpha: .28),
+                          child: DecoratedBox(
+                            decoration: ShapeDecoration(
+                              color: accentColor.withValues(alpha: .16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: AppRadii.mdRadius,
+                                side: BorderSide(
+                                  color: accentColor.withValues(alpha: .28),
+                                ),
+                              ),
                             ),
-                          ),
-                          child: Icon(
-                            icon,
-                            color: accentColor,
-                            size: density.iconSize,
+                            child: Icon(
+                              icon,
+                              color: accentColor,
+                              size: density.iconSize,
+                            ),
                           ),
                         ),
                         SizedBox(height: density.labelGap),
@@ -184,13 +189,15 @@ class VitModuleHeroCard extends StatelessWidget {
     super.key,
     required this.child,
     required this.accentColor,
-    this.padding = const EdgeInsets.all(AppSpacing.x5),
+    this.padding,
+    this.density,
     this.onTap,
   });
 
   final Widget child;
   final Color accentColor;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
+  final VitDensity? density;
   final VoidCallback? onTap;
 
   @override
@@ -198,7 +205,11 @@ class VitModuleHeroCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: accentColor.withValues(alpha: .22),
-      padding: padding,
+      padding:
+          padding ??
+          (density == null
+              ? const EdgeInsetsDirectional.all(AppSpacing.x5)
+              : density!.cardPadding),
       onTap: onTap,
       child: child,
     );
@@ -211,12 +222,14 @@ class VitMetricCard extends StatelessWidget {
     required this.label,
     required this.value,
     this.accentColor = AppColors.primary,
+    this.density = VitDensity.standard,
     this.trailing,
   });
 
   final String label;
   final String value;
   final Color accentColor;
+  final VitDensity density;
   final Widget? trailing;
 
   @override
@@ -224,15 +237,19 @@ class VitMetricCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: density == VitDensity.standard
+          ? const EdgeInsetsDirectional.all(AppSpacing.x4)
+          : density.cardPadding,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.serviceTileAccentBarThickness,
             height: AppSpacing.serviceTileAccentBarHeight,
-            decoration: BoxDecoration(
-              color: accentColor,
-              borderRadius: AppRadii.xsRadius,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: accentColor,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -252,10 +269,15 @@ class VitMetricCard extends StatelessWidget {
                   value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.base.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                  style:
+                      (density == VitDensity.compact ||
+                                  density == VitDensity.tool
+                              ? AppTextStyles.caption
+                              : AppTextStyles.base)
+                          .copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                          ),
                 ),
               ],
             ),
@@ -275,25 +297,34 @@ class VitModuleSectionHeader extends StatelessWidget {
     super.key,
     required this.title,
     this.accentColor = AppColors.primary,
+    this.density = VitDensity.standard,
     this.actionLabel,
     this.onAction,
   });
 
   final String title;
   final Color accentColor;
+  final VitDensity density;
   final String? actionLabel;
   final VoidCallback? onAction;
+
+  bool get _isCompact =>
+      density == VitDensity.compact || density == VitDensity.tool;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: AppSpacing.serviceTileAccentBarThickness,
-          height: AppSpacing.serviceTileSectionBarHeight,
-          decoration: BoxDecoration(
-            color: accentColor,
-            borderRadius: AppRadii.xsRadius,
+          height: _isCompact
+              ? AppSpacing.pageSectionAccentHeight
+              : AppSpacing.serviceTileSectionBarHeight,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: accentColor,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -302,10 +333,14 @@ class VitModuleSectionHeader extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
+            style:
+                (_isCompact
+                        ? AppTextStyles.caption
+                        : AppTextStyles.sectionTitle)
+                    .copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
           ),
         ),
         if (actionLabel != null && onAction != null)

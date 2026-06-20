@@ -63,25 +63,22 @@ class _ActionButton extends StatelessWidget {
       onTap: HapticFeedback.selectionClick,
       borderRadius: AppRadii.cardRadius,
       child: DecoratedBox(
-        decoration: const BoxDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.portfolioBtnGhost,
-          borderRadius: AppRadii.cardRadius,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.dcaOverviewActionButtonPadding,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               DecoratedBox(
-                decoration: BoxDecoration(
+                decoration: ShapeDecoration(
                   color: spec.bg,
-                  shape: BoxShape.circle,
+                  shape: const CircleBorder(),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.x3),
+                  padding: AppSpacing.dcaPaddingX3,
                   child: Icon(
                     spec.icon,
                     color: spec.color,
@@ -245,7 +242,7 @@ class _DemoFooter extends StatelessWidget {
     return VitCard(
       key: DCAOverviewDemo.footerKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Text(
         'Component: ${snapshot.componentName} · Location: ${snapshot.componentLocation}',
         textAlign: TextAlign.center,

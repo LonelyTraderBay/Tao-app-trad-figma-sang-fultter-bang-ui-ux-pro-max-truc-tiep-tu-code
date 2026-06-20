@@ -17,7 +17,7 @@ class _AbiEntryCard extends StatelessWidget {
     final risk = entry.riskLevel;
     return VitCard(
       key: LaunchpadAbiDiffPage.entryKey(entry.name),
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       borderColor: change.color.withValues(alpha: .30),
       child: Stack(
@@ -26,9 +26,9 @@ class _AbiEntryCard extends StatelessWidget {
             left: 0,
             top: 0,
             bottom: 0,
-            child: Container(
+            child: SizedBox(
               width: AppSpacing.launchpadVerticalMarkerWidth,
-              color: change.color,
+              child: ColoredBox(color: change.color),
             ),
           ),
           Column(
@@ -37,7 +37,7 @@ class _AbiEntryCard extends StatelessWidget {
                 key: LaunchpadAbiDiffPage.expandKey(entry.name),
                 onTap: onToggle,
                 child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.x3),
+                  padding: AppSpacing.launchpadPaddingX3,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -113,17 +113,18 @@ class _ChangeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.launchpadBox30,
-      height: AppSpacing.launchpadBox30,
-      decoration: BoxDecoration(
-        color: change.color.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Icon(
-        change.icon,
-        color: change.color,
-        size: AppSpacing.launchpadIconXl,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox30,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: change.color.withValues(alpha: .14),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Icon(
+          change.icon,
+          color: change.color,
+          size: AppSpacing.launchpadIconXl,
+        ),
       ),
     );
   }
@@ -138,27 +139,31 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: 2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) ...[
-            Icon(icon, color: color, size: AppSpacing.launchpadIconXxs),
-            const SizedBox(width: AppSpacing.launchpadGapXxs),
-          ],
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.heavy,
+          Padding(
+            padding: AppSpacing.launchpadMiniChipPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (icon != null) ...[
+                  Icon(icon, color: color, size: AppSpacing.launchpadIconXxs),
+                  const SizedBox(width: AppSpacing.launchpadGapXxs),
+                ],
+                Text(
+                  label,
+                  style: AppTextStyles.micro.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.heavy,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -174,83 +179,88 @@ class _AbiEntryDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.x4,
-        AppSpacing.x2,
-        AppSpacing.x4,
-        AppSpacing.x4,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (entry.oldSignature != null)
-            _SignatureBlock(
-              label: 'Old signature',
-              value: entry.oldSignature!,
-              color: entry.changeType == LaunchpadAbiChangeType.removed
-                  ? AppColors.sell
-                  : AppColors.text2,
-            ),
-          if (entry.newSignature != null)
-            _SignatureBlock(
-              label: 'New signature',
-              value: entry.newSignature!,
-              color: entry.changeType == LaunchpadAbiChangeType.added
-                  ? AppColors.buy
-                  : AppColors.text1,
-            ),
-          if (entry.oldVisibility != null || entry.newVisibility != null)
-            _DetailLine(
-              label: 'Visibility',
-              value: _compareText(entry.oldVisibility, entry.newVisibility),
-            ),
-          if (entry.oldStateMutability != null ||
-              entry.newStateMutability != null)
-            _DetailLine(
-              label: 'State mutability',
-              value: _compareText(
-                entry.oldStateMutability,
-                entry.newStateMutability,
-              ),
-            ),
-          if (entry.riskNote != null)
-            Container(
-              margin: const EdgeInsets.only(top: AppSpacing.x2),
-              padding: const EdgeInsets.all(AppSpacing.x3),
-              decoration: BoxDecoration(
-                color: entry.riskLevel.color.withValues(alpha: .08),
-                border: Border.all(
-                  color: entry.riskLevel.color.withValues(alpha: .18),
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          shape: Border(top: BorderSide(color: AppColors.divider)),
+        ),
+        child: Padding(
+          padding: AppSpacing.launchpadPaddingX4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (entry.oldSignature != null)
+                _SignatureBlock(
+                  label: 'Old signature',
+                  value: entry.oldSignature!,
+                  color: entry.changeType == LaunchpadAbiChangeType.removed
+                      ? AppColors.sell
+                      : AppColors.text2,
                 ),
-                borderRadius: AppRadii.inputRadius,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    entry.riskLevel.icon,
-                    color: entry.riskLevel.color,
-                    size: AppSpacing.launchpadIconMd,
+              if (entry.newSignature != null)
+                _SignatureBlock(
+                  label: 'New signature',
+                  value: entry.newSignature!,
+                  color: entry.changeType == LaunchpadAbiChangeType.added
+                      ? AppColors.buy
+                      : AppColors.text1,
+                ),
+              if (entry.oldVisibility != null || entry.newVisibility != null)
+                _DetailLine(
+                  label: 'Visibility',
+                  value: _compareText(entry.oldVisibility, entry.newVisibility),
+                ),
+              if (entry.oldStateMutability != null ||
+                  entry.newStateMutability != null)
+                _DetailLine(
+                  label: 'State mutability',
+                  value: _compareText(
+                    entry.oldStateMutability,
+                    entry.newStateMutability,
                   ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: Text(
-                      entry.riskNote!,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                        height: AppSpacing.launchpadLineHeightDense,
+                ),
+              if (entry.riskNote != null)
+                Padding(
+                  padding: AppSpacing.launchpadTopPaddingX2,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: entry.riskLevel.color.withValues(alpha: .08),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.inputRadius,
+                        side: BorderSide(
+                          color: entry.riskLevel.color.withValues(alpha: .18),
+                        ),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: AppSpacing.launchpadPaddingX3,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            entry.riskLevel.icon,
+                            color: entry.riskLevel.color,
+                            size: AppSpacing.launchpadIconMd,
+                          ),
+                          const SizedBox(width: AppSpacing.x2),
+                          Expanded(
+                            child: Text(
+                              entry.riskNote!,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text2,
+                                height: AppSpacing.launchpadLineHeightDense,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-        ],
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -270,7 +280,7 @@ class _SignatureBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x2),
+      padding: AppSpacing.launchpadTopPaddingX2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -279,19 +289,25 @@ class _SignatureBlock extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x1),
-          Container(
+          SizedBox(
             width: double.infinity,
-            padding: const EdgeInsets.all(AppSpacing.x2),
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.inputRadius,
-            ),
-            child: Text(
-              value,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.extraBold,
-                height: AppSpacing.launchpadLineHeightDense,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.surface2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.inputRadius,
+                ),
+              ),
+              child: Padding(
+                padding: AppSpacing.launchpadPaddingX2,
+                child: Text(
+                  value,
+                  style: AppTextStyles.micro.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.extraBold,
+                    height: AppSpacing.launchpadLineHeightDense,
+                  ),
+                ),
               ),
             ),
           ),
@@ -310,7 +326,7 @@ class _DetailLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x2),
+      padding: AppSpacing.launchpadTopPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -337,33 +353,37 @@ class _RiskWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: LaunchpadAbiDiffPage.warningKey,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.warn08,
-        border: Border.all(color: AppColors.warn15),
-        borderRadius: AppRadii.inputRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: const BorderSide(color: AppColors.warn15),
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.launchpadIconXl,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              'Day la so sanh ABI tu dong. Can kiem tra source code thuc te de hieu day du anh huong cua cac thay doi.',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.launchpadLineHeightReadable,
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX3,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.launchpadIconXl,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                'Day la so sanh ABI tu dong. Can kiem tra source code thuc te de hieu day du anh huong cua cac thay doi.',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  height: AppSpacing.launchpadLineHeightReadable,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

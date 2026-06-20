@@ -204,9 +204,10 @@ void main() {
     final surface = tester.widget<DecoratedBox>(
       find.byType(DecoratedBox).first,
     );
-    final decoration = surface.decoration as BoxDecoration;
+    final decoration = surface.decoration as ShapeDecoration;
+    final border = decoration.shape as Border;
     expect(decoration.color, AppTopHeaderTokens.transparentSurfaceColor);
-    expect(decoration.border, isNull);
+    expect(border.bottom, BorderSide.none);
   });
 }
 

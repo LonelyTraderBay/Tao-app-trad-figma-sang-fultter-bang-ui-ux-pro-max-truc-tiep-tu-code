@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -58,11 +59,15 @@ class _BotSuitabilityAssessmentPageState
     final controller = ref.watch(tradeBotSuitabilityControllerProvider);
     final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final chromeInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollClearance =
+        chromeInset +
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotFooterBottomInsetNative
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.tradeBotBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+            ? AppSpacing.x6 + AppSpacing.x6
+            : AppSpacing.x5 + AppSpacing.x5);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,16 +88,20 @@ class _BotSuitabilityAssessmentPageState
                   key: _showResult
                       ? BotSuitabilityAssessmentPage.resultContentKey
                       : BotSuitabilityAssessmentPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.rowPy,
+                    right: AppSpacing.contentPad,
+                    bottom: scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.tradeBotContentGap,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
+                        density: VitDensity.compact,
                         title: 'Review bot suitability risk',
                         message:
                             'Confirm knowledge, risk limits, automation exposure, and next steps before enabling trading bots.',

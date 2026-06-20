@@ -318,23 +318,13 @@ class _RouteConfirmOverlay extends StatelessWidget {
                         value: '${route.securityScore}/100',
                       ),
                       const SizedBox(height: AppSpacing.x4),
-                      DecoratedBox(
-                        decoration: const ShapeDecoration(
-                          color: AppColors.primary08,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: AppRadii.mdRadius,
-                            side: BorderSide(color: AppColors.primary12),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: AppSpacing.launchpadPaddingX3,
-                          child: Text(
-                            'Đây là chế độ mô phỏng. Kết quả thực tế có thể khác theo điều kiện thị trường.',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text2,
-                            ),
-                          ),
-                        ),
+                      VitHighRiskStatePanel(
+                        key: LaunchpadBridgeComparePage.confirmStateKey,
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review bridge route',
+                        message:
+                            'Review output, fee, speed, security, and chain.',
+                        contractId: 'SC-305 / ${route.provider}',
                       ),
                       const SizedBox(height: AppSpacing.x4),
                       VitCtaButton(

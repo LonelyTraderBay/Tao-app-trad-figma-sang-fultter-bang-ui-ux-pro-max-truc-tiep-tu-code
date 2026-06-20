@@ -5,11 +5,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,10 +22,30 @@ import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_
 part '../widgets/arena_safety_center_page_sections.dart';
 part '../widgets/arena_safety_center_page_common.dart';
 
+const double _safetyVisualScrollClearance = 108;
+const double _safetyNativeScrollClearance = 72;
+const double _safetyBodyLineHeight = 1.28;
+const double _safetyNoticeLineHeight = 1.3;
+const double _safetyCheckLineHeight = 1.25;
+const double _safetySectionTitleLineHeight = 1.2;
+const double _safetyMarkerWidth = AppSpacing.pageSectionAccentWidth;
+const double _safetyMarkerHeight = AppSpacing.rowPy + AppSpacing.x1;
+const double _safetyIconBox = AppSpacing.buttonCompact;
+const double _safetyIcon = AppSpacing.iconSm + AppSpacing.x2;
+const double _safetySmallIcon = AppSpacing.iconSm + AppSpacing.hairlineStroke;
+const double _safetyProcessColumnWidth = AppSpacing.buttonCompact;
+const double _safetyProcessStepBox = AppSpacing.iconMd + AppSpacing.x2;
+const double _safetyProcessLineWidth = AppSpacing.dividerHairline;
+const double _safetyProcessLineHeight = AppSpacing.x5;
+const double _safetyInfoIcon = AppSpacing.iconSm + AppSpacing.x2;
+const double _safetyDividerHeight = AppSpacing.dividerHairline;
+const double _safetyFooterIcon = AppSpacing.iconSm + AppSpacing.x2;
+
 class ArenaSafetyCenterPage extends ConsumerWidget {
   const ArenaSafetyCenterPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc198_safety_content');
+  static const firstCommunityRuleKey = Key('sc198_first_community_rule');
   static const blockedLinkKey = Key('sc198_blocked_link');
   static const reportsLinkKey = Key('sc198_reports_link');
   static const acknowledgeKey = Key('sc198_acknowledge');
@@ -38,10 +58,10 @@ class ArenaSafetyCenterPage extends ConsumerWidget {
         .watch(arenaReadModelControllerProvider)
         .getArenaSafetyCenter();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _safetyVisualScrollClearance
+            : _safetyNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -67,18 +87,26 @@ class ArenaSafetyCenterPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(
+                      scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      density: VitDensity.compact,
                       children: [
                         _SafetyHero(snapshot: snapshot),
                         _SafetySection(
                           title: 'Quy tắc cộng đồng',
                           accentColor: AppColors.primary,
                           children: [
-                            for (final rule in snapshot.communityRules)
-                              _RuleCard(rule: rule),
+                            for (final entry
+                                in snapshot.communityRules.asMap().entries)
+                              _RuleCard(
+                                key: entry.key == 0
+                                    ? firstCommunityRuleKey
+                                    : null,
+                                rule: entry.value,
+                              ),
                           ],
                         ),
                         _SafetySection(

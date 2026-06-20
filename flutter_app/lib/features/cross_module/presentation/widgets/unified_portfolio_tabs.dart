@@ -23,12 +23,12 @@ class UnifiedPortfolioTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
+        shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
+        padding: AppSpacing.crossModuleTabBarPadding,
         child: Row(
           children: [
             for (final tab in tabs)
@@ -41,9 +41,7 @@ class UnifiedPortfolioTabs extends StatelessWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: AppSpacing.x4,
-                          ),
+                          padding: AppSpacing.crossModuleTabLabelPadding,
                           child: Text(
                             tab.label,
                             style: AppTextStyles.caption.copyWith(
@@ -54,13 +52,25 @@ class UnifiedPortfolioTabs extends StatelessWidget {
                             ),
                           ),
                         ),
-                        AnimatedContainer(
+                        TweenAnimationBuilder<double>(
                           duration: const Duration(milliseconds: 160),
-                          height: 2,
-                          width: tab.tab == active ? AppSpacing.buttonHero : 0,
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: AppRadii.xlRadius,
+                          tween: Tween<double>(
+                            end: tab.tab == active ? AppSpacing.buttonHero : 0,
+                          ),
+                          builder: (context, width, child) {
+                            return SizedBox(
+                              height: AppSpacing.tabBarUnderlineHeight,
+                              width: width,
+                              child: child,
+                            );
+                          },
+                          child: const DecoratedBox(
+                            decoration: ShapeDecoration(
+                              color: AppColors.primary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: AppRadii.xlRadius,
+                              ),
+                            ),
                           ),
                         ),
                       ],

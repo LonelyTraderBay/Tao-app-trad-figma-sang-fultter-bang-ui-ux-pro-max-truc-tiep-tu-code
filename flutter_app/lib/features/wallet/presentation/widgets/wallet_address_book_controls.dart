@@ -47,7 +47,7 @@ class _NetworkFilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.walletAddressFilterHeight,
+      height: _bookFilterHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
@@ -61,9 +61,9 @@ class _NetworkFilterBar extends StatelessWidget {
             child: VitCard(
               variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
               radius: VitCardRadius.sm,
-              height: AppSpacing.walletAddressFilterHeight,
+              height: _bookFilterHeight,
               alignment: Alignment.center,
-              padding: AppSpacing.walletAddressFilterPadding,
+              padding: _bookFilterPadding,
               borderColor: selected
                   ? AppColors.primary60
                   : AppColors.transparent,
@@ -77,8 +77,7 @@ class _NetworkFilterBar extends StatelessWidget {
             ),
           );
         },
-        separatorBuilder: (_, _) =>
-            const SizedBox(width: AppSpacing.walletAddressFilterGap),
+        separatorBuilder: (_, _) => const SizedBox(width: _bookInlineGap),
         itemCount: filters.length,
       ),
     );
@@ -112,7 +111,7 @@ class _AddressStats extends StatelessWidget {
           Expanded(
             child: VitCard(
               variant: VitCardVariant.inner,
-              height: AppSpacing.walletAddressStatsHeight,
+              height: _bookStatsHeight,
               borderColor: AppColors.overlayStroke,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +123,7 @@ class _AddressStats extends StatelessWidget {
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
+                  const SizedBox(height: _bookTinyGap),
                   Text(
                     stats[i].$2,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -133,8 +132,7 @@ class _AddressStats extends StatelessWidget {
               ),
             ),
           ),
-          if (i != stats.length - 1)
-            const SizedBox(width: AppSpacing.walletAddressStatsGap),
+          if (i != stats.length - 1) const SizedBox(width: _bookInlineGap),
         ],
       ],
     );
@@ -153,12 +151,8 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       children: [
         if (icon != null) ...[
-          Icon(
-            icon,
-            color: iconColor,
-            size: AppSpacing.walletAddressSectionIcon,
-          ),
-          const SizedBox(width: AppSpacing.walletAddressSectionGap),
+          Icon(icon, color: iconColor, size: AppSpacing.iconSm),
+          const SizedBox(width: _bookTinyGap),
         ],
         Text(
           label,

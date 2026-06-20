@@ -6,14 +6,18 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/login_page.dart';
 import 'package:vit_trade_flutter/features/enterprise_states/data/enterprise_states_repository.dart';
 import 'package:vit_trade_flutter/features/enterprise_states/presentation/pages/enterprise_states_page.dart';
+import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/market_list_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/kyc_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
-  Future<void> pumpEnterpriseStates(WidgetTester tester) async {
+  Future<void> pumpEnterpriseStates(
+    WidgetTester tester, {
+    Size viewport = const Size(440, 956),
+  }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -78,6 +82,23 @@ void main() {
     expect(find.text(snapshot.banners.first.title), findsOneWidget);
   });
 
+  testWidgets('SC-320 uses full-width workspace at 360x800', (tester) async {
+    await pumpEnterpriseStates(tester, viewport: const Size(360, 800));
+
+    expect(find.byType(EnterpriseStatesPage), findsOneWidget);
+    expect(find.byKey(EnterpriseStatesPage.contentKey), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+
+    final contentRect = tester.getRect(
+      find.byKey(EnterpriseStatesPage.contentKey),
+    );
+    expect(contentRect.left, closeTo(0, 0.5));
+    expect(contentRect.right, closeTo(360, 0.5));
+    expect(contentRect.top, greaterThanOrEqualTo(0));
+    expect(contentRect.bottom, lessThanOrEqualTo(800));
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('SC-320 switches preview states locally', (tester) async {
     await pumpEnterpriseStates(tester);
 
@@ -104,6 +125,16 @@ void main() {
 
     expect(find.byIcon(Icons.verified_user_outlined), findsOneWidget);
     expect(find.byKey(EnterpriseStatesPage.kycCtaKey), findsOneWidget);
+  });
+
+  testWidgets('SC-320 back control returns to Home', (tester) async {
+    await pumpEnterpriseStates(tester);
+
+    await tester.tap(find.byKey(EnterpriseStatesPage.backKey));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.byType(HomePage), findsOneWidget);
   });
 
   testWidgets(

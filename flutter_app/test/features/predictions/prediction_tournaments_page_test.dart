@@ -10,12 +10,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTournaments(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -80,6 +79,24 @@ void main() {
     expect(find.text('Politics Prediction Challenge'), findsOneWidget);
   });
 
+  testWidgets('SC-042 first viewport reaches featured tournament content', (
+    tester,
+  ) async {
+    await pumpTournaments(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-042 PredictionTournamentsPage',
+      semanticLabel: 'SC-042 PredictionTournamentsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Crypto Masters Q1 2026'),
+      targetLabel: 'the featured tournament title',
+      minVisibleHeight: 12,
+    );
+  });
+
   testWidgets('SC-042 tabs switch mine and ended content locally', (
     tester,
   ) async {
@@ -113,6 +130,17 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(PredictionTournamentDetailPage), findsOneWidget);
     expect(find.text('Crypto Masters Q1 2026'), findsWidgets);
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-042 PredictionTournamentDetailPage',
+      semanticLabel: 'SC-042 PredictionTournamentDetailPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Prize Pool'),
+      targetLabel: 'the tournament detail stat grid',
+      minVisibleHeight: 12,
+    );
   });
 
   testWidgets('SC-042 back button returns to Predictions home', (tester) async {

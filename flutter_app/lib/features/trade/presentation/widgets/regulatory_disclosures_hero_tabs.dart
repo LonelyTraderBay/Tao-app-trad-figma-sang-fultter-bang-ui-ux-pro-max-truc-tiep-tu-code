@@ -9,22 +9,20 @@ class _LegalHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.regulatoryDisclosuresHeroPadding,
+      density: VitDensity.compact,
       borderColor: _legalPrimary,
       child: Row(
         children: [
-          const VitCard(
-            width: AppSpacing.regulatoryDisclosuresHeroIconBox,
-            height: AppSpacing.regulatoryDisclosuresHeroIconBox,
-            variant: VitCardVariant.inner,
-            alignment: Alignment.center,
+          const CircleAvatar(
+            radius: AppSpacing.x4,
+            backgroundColor: AppColors.surface2,
             child: Icon(
               Icons.balance_rounded,
               color: _legalPrimary,
               size: AppSpacing.regulatoryDisclosuresHeroIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.regulatoryDisclosuresHeroGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,21 +34,14 @@ class _LegalHero extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: _legalPrimary,
                     fontWeight: AppTextStyles.bold,
-                    height:
-                        AppSpacing.regulatoryDisclosuresHeroTitleLineHeight,
                   ),
                 ),
-                const SizedBox(
-                  height: AppSpacing.regulatoryDisclosuresHeroSubtitleGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   snapshot.heroDescription,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: _legalPrimary,
-                    height: AppSpacing.regulatoryDisclosuresLineHeightCompact,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: _legalPrimary),
                 ),
               ],
             ),
@@ -75,8 +66,8 @@ class _LegalTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.x7 + AppSpacing.x2,
       variant: VitCardVariant.inner,
+      density: VitDensity.compact,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
         activeKey: activeId,

@@ -6,10 +6,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -27,6 +27,10 @@ const _analyticsBackground = AppColors.bg;
 const _analyticsPrimary = AppColors.primary;
 const _analyticsGreen = AppColors.buy;
 const _analyticsRed = AppColors.sell;
+const _walletAnalyticsVisualNavClearance = 114.0;
+const _walletAnalyticsNativeNavClearance = 88.0;
+const _walletAnalyticsChartAspectRatio = 1.85;
+const _walletAnalyticsAssetProgressHeight = 4.0;
 
 class PortfolioAnalyticsPage extends ConsumerStatefulWidget {
   const PortfolioAnalyticsPage({super.key, this.shellRenderMode});
@@ -57,13 +61,11 @@ class _PortfolioAnalyticsPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(walletPortfolioAnalyticsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletAnalyticsBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletAnalyticsBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _walletAnalyticsVisualNavClearance
+        : _walletAnalyticsNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,11 +85,10 @@ class _PortfolioAnalyticsPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: PortfolioAnalyticsPage.contentKey,
-                  padding: AppSpacing.walletAnalyticsScrollPadding(bottomInset),
+                  padding: EdgeInsets.only(bottom: scrollEndPadding),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    customGap: AppSpacing.walletAnalyticsContentGap,
-                    fullBleed: true,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _ValueSummary(snapshot: snapshot),
                       _ViewSwitcher(

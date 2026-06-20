@@ -13,7 +13,7 @@ class _AssessmentTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnPaddingX4,
+          padding: _stakingRiskCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -21,21 +21,20 @@ class _AssessmentTab extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox.square(
-                    dimension:
-                        AppSpacing.stakingRiskDisclosureAssessmentIconBox,
+                    dimension: _stakingRiskAssessmentIconBox,
                     child: Material(
                       color: AppColors.primary12,
                       shape: const RoundedRectangleBorder(
                         borderRadius: AppRadii.cardLargeRadius,
                         side: BorderSide(
                           color: AppColors.primary30,
-                          width: AppSpacing.stakingRiskDisclosureBorderWidth,
+                          width: _stakingRiskBorderWidth,
                         ),
                       ),
                       child: const Icon(
                         Icons.balance_rounded,
                         color: AppColors.primary,
-                        size: AppSpacing.stakingRiskDisclosureAssessmentIcon,
+                        size: _stakingRiskAssessmentIcon,
                       ),
                     ),
                   ),
@@ -68,13 +67,13 @@ class _AssessmentTab extends StatelessWidget {
                 snapshot.assessmentBody,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.stakingRiskDisclosureBodyLineHeight,
+                  height: _stakingRiskBodyLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),
               VitCtaButton(
                 key: StakingRiskDisclosurePage.assessmentCtaKey,
-                height: AppSpacing.stakingRiskDisclosureCtaHeight,
+                height: _stakingRiskCtaHeight,
                 onPressed: onStart,
                 trailing: const Icon(Icons.chevron_right_rounded),
                 child: Text(snapshot.assessmentCta),
@@ -82,13 +81,13 @@ class _AssessmentTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         _SectionLabel(snapshot.faqTitle),
         const SizedBox(height: AppSpacing.x3),
         for (final faq in snapshot.faqs) ...[
           VitCard(
             radius: VitCardRadius.lg,
-            padding: AppSpacing.earnPaddingX4,
+            padding: _stakingRiskCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -104,7 +103,7 @@ class _AssessmentTab extends StatelessWidget {
                   faq.answer,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingRiskDisclosureNoticeLineHeight,
+                    height: _stakingRiskNoticeLineHeight,
                   ),
                 ),
               ],
@@ -127,8 +126,8 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         const SizedBox(
-          width: AppSpacing.stakingRiskDisclosureSectionMarkerWidth,
-          height: AppSpacing.stakingRiskDisclosureSectionMarkerHeight,
+          width: _stakingRiskSectionMarkerWidth,
+          height: _stakingRiskSectionMarkerHeight,
           child: Material(
             color: AppColors.primary,
             borderRadius: AppRadii.xsRadius,
@@ -140,7 +139,7 @@ class _SectionLabel extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingRiskDisclosureCompactLineHeight,
+            height: _stakingRiskCompactLineHeight,
           ),
         ),
       ],
@@ -170,7 +169,7 @@ class _RiskLevelBadge extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingRiskDisclosureCompactLineHeight,
+            height: _stakingRiskCompactLineHeight,
           ),
         ),
       ),

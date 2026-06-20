@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -27,6 +27,15 @@ const _hubHeroBorder = AppColors.primary20;
 const _hubBorder = AppColors.borderSolid;
 const _hubPrimary = AppColors.primary;
 const _hubGreen = AppColors.buy;
+const _hubSpace = AppSpacing.x2;
+const _hubTinySpace = AppSpacing.x1;
+const _hubVisualScrollClearance = 112.0;
+const _hubNativeScrollClearance = 72.0;
+const _hubHeroIconTile = 44.0;
+const _hubIconTile = 34.0;
+const _hubLineTight = 1.2;
+const _hubLineBody = 1.24;
+const _hubComplianceGridExtent = 34.0;
 
 class MarginTradingHubPage extends ConsumerWidget {
   const MarginTradingHubPage({super.key, this.shellRenderMode});
@@ -43,11 +52,11 @@ class MarginTradingHubPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getMarginTradingHub();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? _hubVisualScrollClearance
+            : _hubNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -67,33 +76,23 @@ class MarginTradingHubPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    left: AppSpacing.contentPad,
-                    top: AppSpacing.rowPy,
-                    right: AppSpacing.contentPad,
-                    bottom: bottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: 0,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _HeroCard(stats: snapshot.stats),
-                      const SizedBox(height: AppSpacing.walletAssetSectionGap),
                       _NavigationCard(items: snapshot.menuItems),
-                      const SizedBox(height: AppSpacing.rowPy),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Margin suite risk review',
                         message:
                             'Review leverage limits, liquidation risk, fees, available margin, and next steps before opening any margin workflow.',
                         contractId: 'SC-090 margin hub review',
+                        density: VitDensity.compact,
                       ),
-                      const SizedBox(height: AppSpacing.rowPy),
-                      for (final feature in snapshot.features) ...[
+                      for (final feature in snapshot.features)
                         _FeatureCard(feature: feature),
-                        const SizedBox(height: AppSpacing.rowPy),
-                      ],
                       _ComplianceCard(compliance: snapshot.compliance),
                     ],
                   ),

@@ -10,7 +10,7 @@ class _StepsBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: AppSpacing.tradeBotSmallGap,
+      density: VitDensity.compact,
       children: [
         Text(
           'How It Works:',
@@ -21,7 +21,7 @@ class _StepsBlock extends StatelessWidget {
         ),
         VitPageContent(
           padding: VitContentPadding.none,
-          customGap: AppSpacing.tradeBotSmallGap,
+          density: VitDensity.compact,
           children: [
             for (var i = 0; i < steps.length; i++)
               _StepRow(index: i, color: color, text: steps[i]),
@@ -83,11 +83,12 @@ class _BulletsBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotInnerPanelPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotSmallGap,
+        density: VitDensity.compact,
         children: [
           Text(
             title,
@@ -98,7 +99,7 @@ class _BulletsBlock extends StatelessWidget {
           ),
           VitPageContent(
             padding: VitContentPadding.none,
-            customGap: AppSpacing.formFieldLabelGap,
+            density: VitDensity.compact,
             children: [
               for (final item in items)
                 _BulletRow(item: item, color: titleColor),
@@ -122,7 +123,7 @@ class _BulletRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(Icons.circle, color: color, size: AppSpacing.x2),
-        const SizedBox(width: AppSpacing.tradeBotSmallGap),
+        const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
             item,
@@ -142,11 +143,12 @@ class _BestForBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotInnerPanelPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotTinyGap,
+        density: VitDensity.compact,
         children: [
           Text(
             'BEST FOR:',
@@ -180,12 +182,13 @@ class _ExampleBlock extends StatelessWidget {
       ('Profit:', example.profit, _guideGreen),
     ];
     return VitCard(
-      padding: AppSpacing.tradeBotInnerPanelPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .30),
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotSmallGap,
+        density: VitDensity.compact,
         children: [
           Text(
             'Example',
@@ -197,7 +200,7 @@ class _ExampleBlock extends StatelessWidget {
           for (var i = 0; i < rows.length; i++) ...[
             if (i == 3)
               const Divider(
-                height: AppSpacing.tradeBotCardIconGap,
+                height: AppSpacing.x3,
                 thickness: AppSpacing.dividerHairline,
                 color: AppColors.divider,
               ),
@@ -205,8 +208,7 @@ class _ExampleBlock extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width:
-                      AppSpacing.inputHeight + AppSpacing.tradeBotRowGap,
+                  width: AppSpacing.x7,
                   child: Text(
                     rows[i].$1,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),

@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,6 +22,21 @@ part '../widgets/predictions_leaderboard_podium_rankings.dart';
 part '../widgets/predictions_leaderboard_rows_wins.dart';
 
 const _predictionPrimary = AppColors.primary;
+const _boardSpace = AppSpacing.x2;
+const _boardTinySpace = AppSpacing.x1;
+const _boardVisualScrollClearance = 112.0;
+const _boardNativeScrollClearance = 72.0;
+const _boardControlExtent = 40.0;
+const _boardPodiumExtent = 168.0;
+const _boardPodiumColumns = [70.0, 88.0, 60.0];
+const _boardRankHeaderExtent = 34.0;
+const _boardRankRowExtent = 50.0;
+const _boardRankSlot = 28.0;
+const _boardMetricSlot = 76.0;
+const _boardWinRateSlot = 50.0;
+const _boardBadgeExtent = 20.0;
+const _boardWinTile = 36.0;
+const _boardLineTight = 1.2;
 
 class PredictionsLeaderboardPage extends ConsumerStatefulWidget {
   const PredictionsLeaderboardPage({super.key, this.shellRenderMode});
@@ -57,15 +72,11 @@ class _PredictionsLeaderboardPageState
         .watch(predictionsReadModelControllerProvider)
         .getLeaderboard(timeFilter: _timeFilter, metric: _metric);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.predictionLeaderboardBottomInsetVisual
-            : AppSpacing.predictionLeaderboardBottomInsetNative);
+            ? _boardVisualScrollClearance
+            : _boardNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,12 +100,10 @@ class _PredictionsLeaderboardPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsLeaderboardPage.contentKey,
-                    padding: AppSpacing.predictionLeaderboardScrollPadding(
-                      bottomInset,
-                    ),
+                    padding: EdgeInsets.only(bottom: scrollEndClearance),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionLeaderboardContentGap,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         _TimeFilters(
                           active: _timeFilter,
@@ -132,11 +141,14 @@ class _PredictionsLeaderboardPageState
         borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) => Padding(
-        padding: AppSpacing.predictionLeaderboardSheetPadding,
+        padding: AppSpacing.cardPaddingCompact,
         child: Text(
           'P/L (Profit/Loss) shows how much a trader has gained or lost. '
           'A positive P/L means profit, negative means loss.',
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text2,
+            height: _boardLineTight,
+          ),
         ),
       ),
     );

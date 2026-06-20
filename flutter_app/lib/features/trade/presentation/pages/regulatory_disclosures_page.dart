@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -55,13 +56,11 @@ class _RegulatoryDisclosuresPageState
     _activeTabId ??= snapshot.defaultTabId;
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                AppSpacing.regulatoryDisclosuresBottomInsetVisualExtra
-            : DeviceMetrics.nativeBottomChrome +
-                AppSpacing.regulatoryDisclosuresBottomInsetNativeExtra) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -82,13 +81,16 @@ class _RegulatoryDisclosuresPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: RegulatoryDisclosuresPage.contentKey,
-                      padding: AppSpacing.regulatoryDisclosuresScrollPadding(
-                        bottomInset,
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        AppSpacing.tradeBotCardGap,
+                        AppSpacing.contentPad,
+                        scrollClearance,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: AppSpacing.regulatoryDisclosuresContentGap,
+                        density: VitDensity.compact,
                         children: [
                           _LegalHero(snapshot: snapshot),
                           _LegalTabs(
@@ -104,20 +106,19 @@ class _RegulatoryDisclosuresPageState
                                 setState(() => _notice = notice),
                           ),
                           const VitPageSection(
-                            customGap:
-                                AppSpacing.regulatoryDisclosuresReviewGap,
+                            density: VitDensity.compact,
                             children: [
                               VitCard(
                                 variant: VitCardVariant.inner,
-                                padding: AppSpacing.cardPaddingCompact,
+                                density: VitDensity.compact,
                                 child: VitPageContent(
                                   padding: VitContentPadding.none,
                                   fullBleed: true,
-                                  customGap: AppSpacing
-                                      .regulatoryDisclosuresReviewInnerGap,
+                                  density: VitDensity.compact,
                                   children: [
                                     VitHighRiskStatePanel(
                                       state: VitHighRiskUiState.riskReview,
+                                      density: VitDensity.compact,
                                       title: 'Disclosure review state',
                                       message:
                                           'Legal tabs, product disclosures, contact routes, notice result and investor next step are reviewed before regulated action.',

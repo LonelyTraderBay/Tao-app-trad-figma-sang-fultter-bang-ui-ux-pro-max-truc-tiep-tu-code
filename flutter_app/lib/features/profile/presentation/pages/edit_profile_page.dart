@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -64,12 +65,10 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(profileControllerProvider).getEditProfile();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.profileEditBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.profileEditBottomInsetNative) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -91,14 +90,19 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                 child: SingleChildScrollView(
                   key: EditProfilePage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.profileEditScrollPadding(bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    scrollClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.zero,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       VitCard(
-                        padding: AppSpacing.zeroInsets,
+                        density: VitDensity.compact,
                         child: _AvatarEditor(
                           initial: snapshot.user.fullName.substring(0, 1),
                           selected: _cameraSelected,
@@ -108,11 +112,8 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           },
                         ),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.profileEditAvatarFormGap,
-                      ),
                       VitCard(
-                        padding: AppSpacing.zeroInsets,
+                        density: VitDensity.compact,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -122,9 +123,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                               keyValue: EditProfilePage.fullNameFieldKey,
                               onChanged: (_) => setState(() {}),
                             ),
-                            const SizedBox(
-                              height: AppSpacing.profileEditFieldGap,
-                            ),
+                            const SizedBox(height: AppSpacing.x3),
                             _EditProfileField(
                               label: 'EMAIL',
                               controller: _emailController,
@@ -133,9 +132,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                                   'Email kh\u00F4ng th\u1EC3 thay \u0111\u1ED5i',
                               muted: true,
                             ),
-                            const SizedBox(
-                              height: AppSpacing.profileEditFieldGap,
-                            ),
+                            const SizedBox(height: AppSpacing.x3),
                             _EditProfileField(
                               label: 'S\u1ED0 \u0110I\u1EC6N THO\u1EA0I',
                               controller: _phoneController,
@@ -146,11 +143,11 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.profileEditFieldGap),
                       KeyedSubtree(
                         key: EditProfilePage.saveKey,
                         child: VitCtaButton(
                           variant: VitCtaButtonVariant.auth,
+                          density: VitDensity.compact,
                           loading: _saving,
                           onPressed: _canSave ? _save : null,
                           leading: const Icon(Icons.save_rounded),
@@ -161,15 +158,12 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.profileEditRiskGap),
-                      const VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Review profile changes',
-                          message:
-                              'Confirm name, phone number, avatar change, and account notification details before saving.',
-                        ),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review profile changes',
+                        message:
+                            'Confirm name, phone number, avatar change, and account notification details before saving.',
+                        density: VitDensity.compact,
                       ),
                     ],
                   ),
@@ -224,7 +218,7 @@ class _AvatarEditor extends StatelessWidget {
             VitAssetAvatar(
               label: initial,
               accentColor: _editPrimary,
-              size: AppSpacing.profileEditAvatarSize,
+              size: AppSpacing.x7 + AppSpacing.x5,
               radius: AppRadii.cardLargeRadius,
               border: true,
             ),
@@ -246,14 +240,11 @@ class _AvatarEditor extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.profileEditAvatarCaptionGap),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           'Nh\u1EA5n v\u00E0o bi\u1EC3u t\u01B0\u1EE3ng camera \u0111\u1EC3 thay \u0111\u1ED5i',
           textAlign: TextAlign.center,
-          style: AppTextStyles.micro.copyWith(
-            color: _editMuted,
-            height: AppSpacing.profileEditAvatarCaptionLineHeight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: _editMuted),
         ),
       ],
     );
@@ -291,10 +282,9 @@ class _EditProfileField extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.heavy,
-            height: AppSpacing.profileEditTightLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.profileEditFieldLabelGap),
+        const SizedBox(height: AppSpacing.x1),
         VitInput(
           fieldKey: keyValue,
           controller: controller,
@@ -304,14 +294,8 @@ class _EditProfileField extends StatelessWidget {
           onChanged: onChanged,
         ),
         if (note != null) ...[
-          const SizedBox(height: AppSpacing.profileEditFieldNoteGap),
-          Text(
-            note!,
-            style: AppTextStyles.micro.copyWith(
-              color: _editMuted,
-              height: AppSpacing.profileEditTightLineHeight,
-            ),
-          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(note!, style: AppTextStyles.micro.copyWith(color: _editMuted)),
         ],
       ],
     );

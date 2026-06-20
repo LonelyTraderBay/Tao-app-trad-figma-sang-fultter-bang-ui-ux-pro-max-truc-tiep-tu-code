@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,6 +22,15 @@ part '../widgets/advanced_trading_demo_page_common.dart';
 const _advancedGreen = AppColors.buy;
 const _advancedRed = AppColors.sell;
 const _advancedPrimary = AppColors.primary;
+const double _advancedVisualScrollClearance = 108;
+const double _advancedNativeScrollClearance = 72;
+const double _advancedSheetClearance = 72;
+const double _advancedSpace = AppSpacing.x2;
+const double _advancedTinySpace = AppSpacing.x1;
+const double _advancedModeControlExtent = 44;
+const double _advancedActionMinExtent = 44;
+const double _advancedSheetActionExtent = 44;
+const double _advancedLineBody = 1.24;
 
 class AdvancedTradingDemoPage extends ConsumerStatefulWidget {
   const AdvancedTradingDemoPage({super.key, this.shellRenderMode});
@@ -50,15 +59,11 @@ class _AdvancedTradingDemoPageState
         .watch(tradeReadModelControllerProvider)
         .getAdvancedTradingDemo();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.tradeToolBottomInsetRiskVisual
-            : AppSpacing.tradeToolBottomInsetRiskNative);
+            ? _advancedVisualScrollClearance
+            : _advancedNativeScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -80,10 +85,10 @@ class _AdvancedTradingDemoPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: AdvancedTradingDemoPage.contentKey,
-                      padding: AppSpacing.tradeToolScrollPadding(bottomInset),
+                      padding: EdgeInsets.only(bottom: scrollEndClearance),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
-                        customGap: AppSpacing.tradeToolPageTopGap,
+                        density: VitDensity.compact,
                         children: [
                           _PositionModeCard(
                             activeMode: _positionMode,
@@ -111,6 +116,7 @@ class _AdvancedTradingDemoPageState
                             message:
                                 'Advanced order controls are shown in demo mode. Live execution requires preview, margin, fee, and liquidation review.',
                             contractId: 'SC-088',
+                            density: VitDensity.compact,
                           ),
                         ],
                       ),

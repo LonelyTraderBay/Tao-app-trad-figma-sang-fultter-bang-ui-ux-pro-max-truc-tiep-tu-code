@@ -73,7 +73,7 @@ class _DetailTabButton extends StatelessWidget {
         onTap: () => onChanged(tab.$1),
         borderRadius: AppRadii.smRadius,
         child: SizedBox(
-          height: AppSpacing.predictionDetailTabHeight,
+          height: VitDensity.compact.controlHeight,
           child: Padding(
             padding: AppSpacing.predictionDetailTabPadding,
             child: Center(
@@ -103,7 +103,7 @@ class _TabCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionDetailTabCardPadding,
+      density: VitDensity.compact,
       child: switch (activeTab) {
         _DetailTab.rules => _RulesContent(snapshot: snapshot),
         _DetailTab.comments => const _CommentsContent(),
@@ -130,21 +130,21 @@ class _RulesContent extends StatelessWidget {
           text:
               'This market will resolve to "Yes" if bitcoin reaches \$150K before July 2026 before the end date. Otherwise, it resolves to "No".',
         ),
-        const SizedBox(height: AppSpacing.predictionDetailTabSectionGap),
+        const SizedBox(height: AppSpacing.x3),
         _InfoBox(
           icon: Icons.verified_user_outlined,
           title: 'Resolution Source',
           text: 'CoinGecko & CoinMarketCap (average)',
           color: _predictionPrimary,
         ),
-        const SizedBox(height: AppSpacing.predictionDetailTabInfoGap),
+        const SizedBox(height: AppSpacing.x2),
         _InfoBox(
           icon: Icons.calendar_month_outlined,
           title: 'End Date',
           text: '${_formatDate(snapshot.event.endDate)} at 23:59 UTC',
           color: AppColors.warn,
         ),
-        const SizedBox(height: AppSpacing.predictionDetailTabSectionGap),
+        const SizedBox(height: AppSpacing.x3),
         Text(
           'Market Rules',
           style: AppTextStyles.caption.copyWith(
@@ -152,11 +152,11 @@ class _RulesContent extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.predictionDetailTabTitleGap),
+        const SizedBox(height: AppSpacing.x2),
         for (var index = 0; index < snapshot.rules.length; index += 1) ...[
           _RuleRow(index: index, text: snapshot.rules[index]),
           if (index != snapshot.rules.length - 1)
-            const SizedBox(height: AppSpacing.predictionDetailRuleBottomGap),
+            const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -228,7 +228,7 @@ class _InfoBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.predictionDetailInfoIconGap),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           text,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -278,9 +278,7 @@ class _InfoBox extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: AppSpacing.predictionDetailInfoBoxTextGap,
-                  ),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     text,
                     style: AppTextStyles.caption.copyWith(color: color),

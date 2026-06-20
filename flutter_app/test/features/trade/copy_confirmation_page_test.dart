@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCopyConfirmation(
     WidgetTester tester, {
@@ -119,6 +121,18 @@ void main() {
       find.byKey(CopyConfirmationPage.submitKey),
     );
     expect(enabledSubmit.onPressed, isNotNull);
+  });
+
+  testWidgets('SC-073 first viewport reaches suitability review', (
+    tester,
+  ) async {
+    await pumpCopyConfirmation(tester, providerId: 'ct001');
+
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(CopyConfirmationPage.suitabilityKey),
+      targetLabel: 'the suitability review section',
+    );
   });
 
   testWidgets('SC-073 submit navigates to active copies', (tester) async {

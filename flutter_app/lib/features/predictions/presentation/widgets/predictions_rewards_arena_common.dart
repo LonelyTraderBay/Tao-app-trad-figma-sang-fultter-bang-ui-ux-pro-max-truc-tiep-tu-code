@@ -16,7 +16,7 @@ class _ArenaRooms extends StatelessWidget {
           key: PredictionsRewardsPage.arenaBridgeKey,
           onTap: () => context.go(AppRoutePaths.arena),
           borderColor: AppColors.warningBorder,
-          padding: AppSpacing.predictionRewardsArenaCardPadding,
+          density: VitDensity.compact,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -27,9 +27,7 @@ class _ArenaRooms extends StatelessWidget {
                     color: AppColors.warn,
                     size: AppSpacing.predictionRewardsArenaLabelIcon,
                   ),
-                  const SizedBox(
-                    width: AppSpacing.predictionRewardsArenaLabelGap,
-                  ),
+                  const SizedBox(width: AppSpacing.x1),
                   Text(
                     'ARENA POINTS ONLY',
                     style: AppTextStyles.micro.copyWith(
@@ -39,24 +37,23 @@ class _ArenaRooms extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(
-                padding: AppSpacing.predictionRewardsArenaContentGap,
-              ),
+              const SizedBox(height: AppSpacing.x2),
               Row(
                 children: [
                   Material(
                     color: AppColors.warn10,
                     borderRadius: AppRadii.mdRadius,
-                    child: const SizedBox.square(
-                      dimension: AppSpacing.predictionRewardsArenaIconBox,
-                      child: Icon(
+                    child: SizedBox.square(
+                      dimension:
+                          VitDensity.compact.controlHeight - AppSpacing.x2,
+                      child: const Icon(
                         Icons.sports_esports_rounded,
                         color: AppColors.warn,
                         size: AppSpacing.predictionRewardsArenaIcon,
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.predictionRewardsArenaGap),
+                  const SizedBox(width: AppSpacing.x2),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,9 +79,7 @@ class _ArenaRooms extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              width: AppSpacing.predictionRewardsArenaMetaGap,
-                            ),
+                            const SizedBox(width: AppSpacing.x2),
                             Text(
                               '${room.points} pts',
                               style: AppTextStyles.micro.copyWith(
@@ -92,9 +87,7 @@ class _ArenaRooms extends StatelessWidget {
                                 fontWeight: AppTextStyles.bold,
                               ),
                             ),
-                            const SizedBox(
-                              width: AppSpacing.predictionRewardsArenaMetaGap,
-                            ),
+                            const SizedBox(width: AppSpacing.x2),
                             _TinyBadge(
                               label: room.badge,
                               color: AppColors.warn,
@@ -148,7 +141,7 @@ class _TinyBadge extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: color,
-            height: AppSpacing.predictionRewardsTinyBadgeLineHeight,
+            height: 1.1,
             fontWeight: AppTextStyles.bold,
           ),
         ),

@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -27,6 +27,12 @@ const _scenarioPrimary = AppColors.primary;
 const _scenarioRed = AppColors.sell;
 const _scenarioAmber = AppColors.caution;
 const _scenarioGreen = AppColors.buy;
+const _scenarioSpace = AppSpacing.x2;
+const _scenarioTinySpace = AppSpacing.x1;
+const _scenarioVisualScrollClearance = 112.0;
+const _scenarioNativeScrollClearance = 72.0;
+const _scenarioIconTile = 34.0;
+const _scenarioLineTight = 1.2;
 
 class PerformanceScenariosPage extends ConsumerStatefulWidget {
   const PerformanceScenariosPage({super.key, this.shellRenderMode});
@@ -54,11 +60,11 @@ class _PerformanceScenariosPageState
         .getPerformanceScenarios();
     final selectedPeriod = _holdingPeriod ?? snapshot.defaultHoldingPeriod;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 70
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? _scenarioVisualScrollClearance
+            : _scenarioNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -78,19 +84,17 @@ class _PerformanceScenariosPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: PerformanceScenariosPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    customGap: 12,
-                    fullBleed: true,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Review performance scenario risk',
                         message:
                             'Confirm fees, loss limits, assumptions, and next steps before relying on modeled copy-trading outcomes.',
+                        density: VitDensity.compact,
                       ),
                       const _WarningNotice(),
                       _InvestmentCard(investment: snapshot.investment),
@@ -100,17 +104,19 @@ class _PerformanceScenariosPageState
                         onChanged: (value) =>
                             setState(() => _holdingPeriod = value),
                       ),
-                      const VitSectionHeader(
-                        title: 'Potential Outcomes',
-                        variant: VitSectionHeaderVariant.accentBar,
+                      VitPageSection(
+                        label: 'Potential Outcomes',
                         accentColor: _scenarioPrimary,
+                        density: VitDensity.compact,
+                        children: [
+                          for (final scenario in snapshot.scenarios)
+                            _ScenarioCard(
+                              scenario: scenario,
+                              investment: snapshot.investment,
+                              holdingPeriod: selectedPeriod,
+                            ),
+                        ],
                       ),
-                      for (final scenario in snapshot.scenarios)
-                        _ScenarioCard(
-                          scenario: scenario,
-                          investment: snapshot.investment,
-                          holdingPeriod: selectedPeriod,
-                        ),
                       const _InfoNote(),
                       const TradeBodyReviewSection(
                         title: 'Scenario body review',

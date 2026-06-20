@@ -7,7 +7,7 @@ class _HistorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadLimitOrdersPage.historyKey,
       child: VitPageSection(
         label: 'Lich su lenh',
@@ -15,7 +15,7 @@ class _HistorySection extends StatelessWidget {
         children: [
           for (final order in orders)
             VitCard(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.launchpadPaddingX4,
               child: Column(
                 children: [
                   Row(

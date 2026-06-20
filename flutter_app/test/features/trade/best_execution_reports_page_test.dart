@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBestExecution(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -72,6 +74,25 @@ void main() {
     expect(find.text('Total Orders'), findsOneWidget);
     expect(find.text('Top 5 Execution Venues (By Volume)'), findsOneWidget);
     expect(find.text('Binance'), findsOneWidget);
+  });
+
+  testWidgets('SC-096 first viewport reaches top venue', (tester) async {
+    await pumpBestExecution(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'BestExecutionReportsPage',
+      semanticLabel: 'SC-096 BestExecutionReportsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(BestExecutionReportsPage.venueKey(1)),
+      minVisibleHeight: 24,
+      targetLabel: 'top execution venue',
+      reason:
+          'Best execution reports must show the first venue above bottom '
+          'navigation after compliance notice, summary, and tabs.',
+    );
   });
 
   testWidgets('SC-096 switches archive tab and exposes report actions', (

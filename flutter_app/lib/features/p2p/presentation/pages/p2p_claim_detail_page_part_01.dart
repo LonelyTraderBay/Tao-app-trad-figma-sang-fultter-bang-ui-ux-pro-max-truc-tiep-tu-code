@@ -17,12 +17,11 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
     final snapshot = ref.watch(p2pClaimDetailProvider(widget.claimId));
     final claim = snapshot.claim;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.p2pClaimBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pClaimBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _p2pClaimVisualNavClearance
+        : _p2pClaimNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -62,15 +61,20 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.p2pClaimScrollPadding(bottomInset),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.p2pClaimContentGap,
+                      density: VitDensity.compact,
                       children: [
                         _ClaimHeroCard(claim: claim),
                         VitPageSection(
-                          customGap: 0,
+                          density: VitDensity.compact,
                           children: [_ClaimBenchmarksCard(snapshot: snapshot)],
                         ),
                         _DescriptionCard(description: claim.description),
@@ -119,6 +123,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                           VitCtaButton(
                             key: P2PClaimDetailPage.receiptKey,
                             variant: VitCtaButtonVariant.success,
+                            density: VitDensity.compact,
                             leading: const Icon(Icons.download_rounded),
                             onPressed: () {
                               HapticFeedback.selectionClick();
@@ -133,6 +138,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                           variant: VitCardVariant.inner,
                           padding: AppSpacing.p2pClaimCompactCardPadding,
                           child: VitHighRiskStatePanel(
+                            density: VitDensity.compact,
                             state: VitHighRiskUiState.riskReview,
                             title: 'Claim detail review',
                             message:
@@ -163,11 +169,11 @@ class _ClaimHeroCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.heroKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pClaimHeroPadding,
+      padding: AppSpacing.p2pClaimCompactCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.x4,
+        density: VitDensity.compact,
         children: [
           Row(
             children: [
@@ -177,7 +183,7 @@ class _ClaimHeroCard extends StatelessWidget {
                 icon: _statusIcon(claim.status),
                 size: VitStatusPillSize.lg,
               ),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.x2),
               VitStatusPill(
                 label: claim.claimCode,
                 status: VitStatusPillStatus.neutral,
@@ -188,7 +194,7 @@ class _ClaimHeroCard extends StatelessWidget {
           ),
           _ClaimProgress(status: claim.status),
           const Divider(
-            height: AppSpacing.dividerHairline,
+            height: _p2pClaimDividerExtent,
             color: AppColors.divider,
           ),
           _InfoRow(
@@ -208,7 +214,7 @@ class _ClaimHeroCard extends StatelessWidget {
             valueColor: AppModuleAccents.p2p,
           ),
           const Divider(
-            height: AppSpacing.dividerHairline,
+            height: _p2pClaimDividerExtent,
             color: AppColors.divider,
           ),
           if (claim.paidAmount != null)
@@ -249,7 +255,7 @@ class _ClaimProgress extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: AppRadii.xsRadius,
                   child: SizedBox(
-                    height: AppSpacing.p2pClaimProgressLineHeight,
+                    height: _p2pClaimProgressLineExtent,
                     child: ColoredBox(
                       color: i <= activeIndex
                           ? _stepColor(i)
@@ -353,7 +359,7 @@ class _ClaimBenchmarksCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.benchmarksKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pClaimHeroPadding,
+      padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -420,7 +426,7 @@ class _BenchmarkMetricCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pClaimCardPadding,
+      padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -482,7 +488,7 @@ class _ReasonDistribution extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pClaimCardPadding,
+      padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

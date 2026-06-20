@@ -87,7 +87,7 @@ class _VitAutoHideHeaderScaffoldState extends State<VitAutoHideHeaderScaffold> {
     final bottomInset = widget.bottomInset ?? 0;
     final body = bottomInset > 0
         ? Padding(
-            padding: EdgeInsets.only(bottom: bottomInset),
+            padding: EdgeInsetsDirectional.only(bottom: bottomInset),
             child: widget.child,
           )
         : widget.child;

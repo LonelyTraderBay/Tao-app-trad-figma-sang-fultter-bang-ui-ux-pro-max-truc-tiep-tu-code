@@ -29,7 +29,7 @@ class ArenaModeHero extends StatelessWidget {
     final templateColor = arenaTemplateColor(snapshot.template.kind);
     return VitModuleHeroCard(
       accentColor: templateColor,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.arenaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -164,7 +164,7 @@ class _CreatorRow extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          padding: AppSpacing.arenaVerticalPaddingX2,
           child: Row(
             children: [
               const ArenaModeActionIcon(
@@ -228,10 +228,7 @@ class _MiniStatCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.arenaModeMiniStatPadding,
       child: Column(
         children: [
           Icon(icon, color: AppColors.text3, size: AppSpacing.iconMd),

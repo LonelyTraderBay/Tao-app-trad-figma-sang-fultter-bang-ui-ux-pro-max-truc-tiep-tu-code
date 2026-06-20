@@ -11,16 +11,15 @@ class _RewardAnalyticsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      density: VitDensity.compact,
       children: [
         const VitModuleSectionHeader(
           title: 'Phân tích phần thưởng',
           accentColor: AppColors.warn,
         ),
-        const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          density: VitDensity.compact,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -37,7 +36,6 @@ class _RewardAnalyticsSection extends StatelessWidget {
                       'Phân tích phần thưởng',
                       style: AppTextStyles.body.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.myArenaTextLineHeight,
                       ),
                     ),
                   ),
@@ -152,7 +150,6 @@ class _RewardMetric extends StatelessWidget {
                 color: color,
                 fontWeight: AppTextStyles.heavy,
                 fontFeatures: AppTextStyles.tabularFigures,
-                height: AppSpacing.myArenaRewardMetricLineHeight,
               ),
             ),
             const SizedBox(height: AppSpacing.x2),
@@ -160,10 +157,7 @@ class _RewardMetric extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: AppSpacing.myArenaRewardMetricLineHeight,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ],
         ),
@@ -192,7 +186,6 @@ class _DistributionRow extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.myArenaRewardMetricLineHeight,
             ),
           ),
         ),
@@ -217,7 +210,6 @@ class _DistributionRow extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.myArenaRewardMetricLineHeight,
             ),
           ),
         ),
@@ -239,14 +231,13 @@ class _SafetySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      density: VitDensity.compact,
       children: [
         const VitModuleSectionHeader(
           title: 'An toàn & quản lý',
           accentColor: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x3),
         _SafetyActionCard(
           key: MyArenaPage.reportsKey,
           icon: Icons.outlined_flag_rounded,
@@ -255,7 +246,6 @@ class _SafetySection extends StatelessWidget {
           color: AppColors.sell,
           onTap: onReports,
         ),
-        const SizedBox(height: AppSpacing.x3),
         _SafetyActionCard(
           key: MyArenaPage.blockedKey,
           icon: Icons.block_rounded,
@@ -264,7 +254,6 @@ class _SafetySection extends StatelessWidget {
           color: AppColors.warn,
           onTap: onBlocked,
         ),
-        const SizedBox(height: AppSpacing.x3),
         _SafetyActionCard(
           key: MyArenaPage.safetyKey,
           icon: Icons.shield_outlined,
@@ -298,7 +287,7 @@ class _SafetyActionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Row(
         children: [
           _ActionIcon(icon: icon, color: color),
@@ -313,7 +302,6 @@ class _SafetyActionCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.myArenaTextLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -321,10 +309,7 @@ class _SafetyActionCard extends StatelessWidget {
                   subtitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.myArenaTextLineHeight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -379,7 +364,7 @@ class _ArenaFooter extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          density: VitDensity.compact,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -392,10 +377,7 @@ class _ArenaFooter extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính. Không thỏa thuận giao dịch ngoài nền tảng.',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.myArenaFooterLineHeight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
             ],
@@ -494,7 +476,6 @@ class _ArenaStatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.myArenaStatusPillLineHeight,
           ),
         ),
       ),

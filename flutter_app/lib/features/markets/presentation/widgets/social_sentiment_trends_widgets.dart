@@ -12,10 +12,10 @@ class _TopicCloud extends StatelessWidget {
       topics.addAll(token.topTopics);
     }
     return VitCard(
-      padding: AppSpacing.socialSentimentTopicCardPadding,
+      padding: _sentimentTopicCardPadding,
       child: Wrap(
-        spacing: AppSpacing.socialSentimentTopicGap,
-        runSpacing: AppSpacing.socialSentimentTopicGap,
+        spacing: _sentimentTopicGap,
+        runSpacing: _sentimentTopicGap,
         children: [
           for (final topic in topics)
             VitAccentPill(
@@ -39,10 +39,10 @@ class _SentimentHeatmap extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: AppSpacing.socialSentimentHeatmapCrossAxisCount,
-      crossAxisSpacing: AppSpacing.socialSentimentHeatmapGap,
-      mainAxisSpacing: AppSpacing.socialSentimentHeatmapGap,
-      childAspectRatio: AppSpacing.socialSentimentHeatmapAspectRatio,
+      crossAxisCount: _sentimentHeatmapCrossAxisCount,
+      crossAxisSpacing: _sentimentHeatmapGap,
+      mainAxisSpacing: _sentimentHeatmapGap,
+      childAspectRatio: _sentimentHeatmapAspectRatio,
       children: [
         for (final token in tokens)
           VitCard(
@@ -98,7 +98,7 @@ class _TrendLeaderboards extends StatelessWidget {
             positive: true,
           ),
         ),
-        const SizedBox(width: AppSpacing.socialSentimentLeaderboardGap),
+        const SizedBox(width: _sentimentLeaderboardGap),
         Expanded(
           child: _LeaderboardColumn(
             label: 'Tiêu cực nhất',
@@ -131,14 +131,14 @@ class _LeaderboardColumn extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _SectionHeader(label: label, accentColor: color),
-        const SizedBox(height: AppSpacing.socialSentimentLeaderboardGap),
+        const SizedBox(height: _sentimentLeaderboardGap),
         for (var index = 0; index < tokens.length; index += 1) ...[
           VitCard(
-            padding: AppSpacing.socialSentimentLeaderboardRowPadding,
+            padding: _sentimentLeaderboardRowPadding,
             child: Row(
               children: [
                 SizedBox(
-                  width: AppSpacing.socialSentimentLeaderboardRankWidth,
+                  width: _sentimentLeaderboardRankWidth,
                   child: Text(
                     '${index + 1}',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -164,7 +164,7 @@ class _LeaderboardColumn extends StatelessWidget {
             ),
           ),
           if (index != tokens.length - 1)
-            const SizedBox(height: AppSpacing.socialSentimentLeaderboardRowGap),
+            const SizedBox(height: _sentimentLeaderboardRowGap),
         ],
       ],
     );
@@ -188,11 +188,11 @@ class _MentionVelocity extends StatelessWidget {
       children: [
         for (final token in sorted.take(5)) ...[
           VitCard(
-            padding: AppSpacing.socialSentimentVelocityRowPadding,
+            padding: _sentimentVelocityRowPadding,
             child: Row(
               children: [
                 SizedBox(
-                  width: AppSpacing.socialSentimentVelocitySymbolWidth,
+                  width: _sentimentVelocitySymbolWidth,
                   child: Text(
                     token.symbol,
                     style: AppTextStyles.caption.copyWith(
@@ -205,7 +205,7 @@ class _MentionVelocity extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: AppRadii.xlRadius,
                     child: SizedBox(
-                      height: AppSpacing.socialSentimentVelocityBarHeight,
+                      height: _sentimentVelocityBarHeight,
                       child: Stack(
                         children: [
                           const ColoredBox(
@@ -229,9 +229,9 @@ class _MentionVelocity extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.socialSentimentVelocityGap),
+                const SizedBox(width: _sentimentVelocityGap),
                 SizedBox(
-                  width: AppSpacing.socialSentimentVelocityValueWidth,
+                  width: _sentimentVelocityValueWidth,
                   child: Text(
                     '${token.mentionsChange >= 0 ? '+' : ''}${token.mentionsChange.toStringAsFixed(1)}%',
                     textAlign: TextAlign.right,
@@ -247,7 +247,7 @@ class _MentionVelocity extends StatelessWidget {
             ),
           ),
           if (token != sorted.take(5).last)
-            const SizedBox(height: AppSpacing.socialSentimentListGap),
+            const SizedBox(height: _sentimentListGap),
         ],
       ],
     );

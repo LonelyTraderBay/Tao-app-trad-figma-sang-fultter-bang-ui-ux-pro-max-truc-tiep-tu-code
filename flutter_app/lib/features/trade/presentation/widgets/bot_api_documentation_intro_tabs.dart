@@ -7,7 +7,7 @@ class _IntroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
       borderColor: _apiPrimary.withValues(alpha: .25),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -15,9 +15,9 @@ class _IntroCard extends StatelessWidget {
           const Icon(
             Icons.code_rounded,
             color: _apiPrimary,
-            size: AppSpacing.tradeBotCheckbox,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,18 +27,14 @@ class _IntroCard extends StatelessWidget {
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightShort,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   'Programmatically create, manage, and monitor trading '
                   'bots using our REST API and WebSocket connections. '
                   'Available for Enterprise tier users.',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.tradeBotLineHeightRelaxed,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),

@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_ad_analytics_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PAdAnalytics(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -81,6 +83,24 @@ void main() {
     expect(find.text('Thanh toán phân bổ'), findsOneWidget);
     expect(find.text('So sánh đối thủ'), findsOneWidget);
     expect(find.text('Gợi ý tối ưu'), findsOneWidget);
+  });
+
+  testWidgets('SC-223 first viewport previews conversion funnel', (
+    tester,
+  ) async {
+    await pumpP2PAdAnalytics(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-223 P2PAdAnalyticsPage',
+      semanticLabel: 'SC-223 P2PAdAnalyticsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(P2PAdAnalyticsPage.funnelKey),
+      targetLabel: 'conversion funnel card',
+      minVisibleHeight: 18,
+    );
   });
 
   testWidgets('SC-223 content scroll keeps analytics sections reachable', (

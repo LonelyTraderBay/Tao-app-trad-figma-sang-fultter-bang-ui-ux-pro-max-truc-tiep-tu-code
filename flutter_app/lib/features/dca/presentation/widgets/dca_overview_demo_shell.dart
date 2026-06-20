@@ -14,16 +14,17 @@ class _DemoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      customGap: AppSpacing.x3,
       children: [
-        Text(title, style: AppTextStyles.sectionTitleXs),
-        const SizedBox(height: AppSpacing.x2),
+        VitModuleSectionHeader(
+          title: title,
+          accentColor: AppModuleAccents.trade,
+        ),
         Text(
           description,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x4),
         child,
       ],
     );
@@ -55,9 +56,9 @@ class _DcaOverviewCardPreviewState extends State<_DcaOverviewCardPreview> {
       key: DCAOverviewDemo.cardKey(widget.scenario.id),
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.all(
-        widget.compact ? AppSpacing.x4 : AppSpacing.contentPad,
-      ),
+      padding: widget.compact
+          ? AppSpacing.dcaPaddingX4
+          : AppSpacing.dcaContentPadding,
       child: widget.isLoading
           ? const _OverviewSkeleton()
           : Column(

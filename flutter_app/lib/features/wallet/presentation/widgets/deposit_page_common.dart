@@ -17,7 +17,7 @@ class _DepositInfoCard extends StatelessWidget {
     ];
 
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      padding: _depositCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -25,10 +25,10 @@ class _DepositInfoCard extends StatelessWidget {
             'Thông tin nạp tiền',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _depositGap),
           for (var i = 0; i < rows.length; i++) ...[
             _InfoRow(label: rows[i].$1, value: rows[i].$2),
-            if (i != rows.length - 1) const SizedBox(height: AppSpacing.x4),
+            if (i != rows.length - 1) const SizedBox(height: _depositGap),
           ],
         ],
       ),
@@ -54,7 +54,7 @@ class _InfoRow extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
-        const SizedBox(width: AppSpacing.x3),
+        const SizedBox(width: _depositInlineGap),
         Flexible(
           child: Text(
             value,
@@ -86,8 +86,8 @@ class _RefreshButton extends StatelessWidget {
       child: VitCard(
         variant: VitCardVariant.ghost,
         borderColor: _depositPrimary.withValues(alpha: .26),
-        padding: AppSpacing.cardPadding,
-        height: AppSpacing.inputHeight,
+        padding: _depositCompactPadding,
+        height: _depositRefreshHeight,
         alignment: Alignment.center,
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -97,7 +97,7 @@ class _RefreshButton extends StatelessWidget {
               color: AppColors.text2,
               size: AppSpacing.iconSm,
             ),
-            const SizedBox(width: AppSpacing.rowGap),
+            const SizedBox(width: _depositInlineGap),
             Text(
               'Làm mới địa chỉ nạp',
               style: AppTextStyles.caption.copyWith(
@@ -131,7 +131,7 @@ class _NetworkOption extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: VitCard(
         variant: VitCardVariant.inner,
-        padding: AppSpacing.cardPadding,
+        padding: _depositCompactPadding,
         borderColor: selected ? _depositPrimary : AppColors.border,
         child: Row(
           children: [
@@ -145,7 +145,7 @@ class _NetworkOption extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x1),
+                  const SizedBox(height: _depositTinyGap),
                   Text(
                     'Phí: ${network.fee} · ${network.arrivalTime} · ${network.confirmations} xác nhận',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -157,7 +157,7 @@ class _NetworkOption extends StatelessWidget {
               const Icon(
                 Icons.check_circle_rounded,
                 color: _depositPrimary,
-                size: AppSpacing.iconMd,
+                size: AppSpacing.iconSm,
               ),
           ],
         ),

@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBotStrategyCompare(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -65,6 +67,18 @@ void main() {
     expect(find.text('Best Risk-Adjusted Returns'), findsOneWidget);
     expect(find.text('Equity Curves Comparison'), findsOneWidget);
     expect(find.text('Performance Radar'), findsOneWidget);
+  });
+
+  testWidgets('SC-126 first viewport reaches best strategy card', (
+    tester,
+  ) async {
+    await pumpBotStrategyCompare(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.text('Best Risk-Adjusted Returns'),
+      targetLabel: 'the best strategy summary',
+    );
   });
 
   testWidgets('SC-126 lets users toggle strategy selection', (tester) async {

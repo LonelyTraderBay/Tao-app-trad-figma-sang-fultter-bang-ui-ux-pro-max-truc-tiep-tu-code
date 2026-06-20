@@ -20,17 +20,16 @@ class _QuestionView extends StatelessWidget {
     final progress = answers.length / totalQuestions;
     final selected = answers[question.id];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
       children: [
         _ProgressBar(
           currentQuestion: currentQuestion + 1,
           totalQuestions: totalQuestions,
           progress: progress,
         ),
-        const SizedBox(height: AppSpacing.tradeBotControlCompact),
         _QuestionHeader(question: question),
-        const SizedBox(height: AppSpacing.x7),
         for (final option in question.options) ...[
           _OptionCard(
             questionId: question.id,
@@ -39,9 +38,8 @@ class _QuestionView extends StatelessWidget {
             onTap: () => onAnswer(option.id),
           ),
           if (option != question.options.last)
-            const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+            const SizedBox(height: AppSpacing.x2),
         ],
-        const SizedBox(height: AppSpacing.tradeBotControlCompact),
         _InfoCard(snapshot: snapshot),
       ],
     );
@@ -68,10 +66,7 @@ class _ProgressBar extends StatelessWidget {
             Expanded(
               child: Text(
                 'Question $currentQuestion of $totalQuestions',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  height: AppSpacing.tradeBotLineHeightTight,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
             Text(
@@ -79,24 +74,18 @@ class _ProgressBar extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
+        const SizedBox(height: AppSpacing.x2),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
-          child: SizedBox(
-            height: AppSpacing.tradeBotProgressHeight,
-            child: LinearProgressIndicator(
-              value: progress,
-              minHeight: AppSpacing.tradeBotProgressHeight,
-              backgroundColor: _assessmentPanel2,
-              valueColor: const AlwaysStoppedAnimation<Color>(
-                _assessmentPrimary,
-              ),
-            ),
+          child: LinearProgressIndicator(
+            value: progress,
+            minHeight: AppSpacing.x1,
+            backgroundColor: _assessmentPanel2,
+            valueColor: const AlwaysStoppedAnimation<Color>(_assessmentPrimary),
           ),
         ),
       ],
@@ -115,35 +104,31 @@ class _QuestionHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         VitCard(
-          width: AppSpacing.tradeBotQuestionIconBox,
-          height: AppSpacing.tradeBotQuestionIconBox,
+          width: AppSpacing.buttonCompact,
+          height: AppSpacing.buttonCompact,
           alignment: Alignment.center,
           variant: VitCardVariant.inner,
           borderColor: _assessmentPrimary.withValues(alpha: .22),
           child: const Icon(
             Icons.assignment_turned_in_outlined,
             color: _assessmentPrimary,
-            size: AppSpacing.tradeBotQuestionIcon,
+            size: AppSpacing.inputPrefixIcon,
           ),
         ),
-        const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 question.category.name.toUpperCase(),
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.tradeBotLineHeightTight,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.tradeBotRowGap),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 question.question,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
-                  height: AppSpacing.tradeBotLineHeightLoose,
                 ),
               ),
             ],
@@ -171,10 +156,8 @@ class _OptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: BotSuitabilityAssessmentPage.optionKey(questionId, option.id),
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotOptionMinHeight,
-      ),
-      padding: AppSpacing.tradeBotOptionPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: selected ? _assessmentPrimary : _assessmentOptionBorder,
       onTap: onTap,
       child: Row(
@@ -185,7 +168,7 @@ class _OptionCard extends StatelessWidget {
                 ? Icons.radio_button_checked_rounded
                 : Icons.radio_button_unchecked_rounded,
             color: selected ? _assessmentPrimary : _assessmentOptionBorder,
-            size: AppSpacing.tradeBotQuestionIcon,
+            size: AppSpacing.inputPrefixIcon,
           ),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
@@ -194,7 +177,6 @@ class _OptionCard extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: selected ? _assessmentPrimary : AppColors.text1,
                 fontWeight: AppTextStyles.medium,
-                height: AppSpacing.tradeBotLineHeightLoose,
               ),
             ),
           ),
@@ -214,6 +196,7 @@ class _InfoCard extends StatelessWidget {
     return VitHighRiskStatePanel(
       key: BotSuitabilityAssessmentPage.infoKey,
       state: VitHighRiskUiState.riskReview,
+      density: VitDensity.compact,
       title: snapshot.infoTitle,
       message: snapshot.infoDescription,
     );

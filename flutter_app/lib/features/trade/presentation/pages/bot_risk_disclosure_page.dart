@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -25,6 +25,13 @@ const _botRiskAmber = AppColors.caution;
 const _botRiskPurple = AppColors.accent;
 const _botRiskPrimary = AppColors.primary;
 const _botRiskGreen = AppColors.buy;
+const _riskSpace = AppSpacing.x2;
+const _riskTinySpace = AppSpacing.x1;
+const _riskVisualScrollClearance = 112.0;
+const _riskNativeScrollClearance = 72.0;
+const _riskIconTile = 34.0;
+const _riskActionHeight = 44.0;
+const _riskLineTight = 1.2;
 
 class BotRiskDisclosurePage extends ConsumerStatefulWidget {
   const BotRiskDisclosurePage({super.key, this.shellRenderMode});
@@ -50,11 +57,11 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
         .watch(tradeReadModelControllerProvider)
         .getBotRiskDisclosure();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 112
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? _riskVisualScrollClearance
+            : _riskNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -74,19 +81,16 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
                 child: SingleChildScrollView(
                   key: BotRiskDisclosurePage.contentKey,
                   clipBehavior: Clip.none,
-                  padding: AppSpacing.tradeBotSecurityScrollPadding(
-                    bottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: 0,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _HighRiskBanner(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotCardPadding,
+                        density: VitDensity.compact,
+                        padding: AppSpacing.cardPaddingCompact,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -96,8 +100,9 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
                               message:
                                   'Past performance, category risks, regulatory notice, acknowledgment and next steps are reviewed before bot access.',
                               contractId: 'bot-risk-disclosure-review',
+                              density: VitDensity.compact,
                             ),
-                            SizedBox(height: AppSpacing.tradeBotRowGap),
+                            SizedBox(height: _riskSpace),
                             VitStatusPill(
                               label: 'Acknowledgment required',
                               status: VitStatusPillStatus.error,
@@ -106,45 +111,50 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x5),
+                      _PastPerformanceCard(snapshot: snapshot),
                       VitPageSection(
-                        customGap: 0,
-                        children: [_PastPerformanceCard(snapshot: snapshot)],
+                        label: snapshot.riskSectionLabel,
+                        accentColor: _botRiskPrimary,
+                        density: VitDensity.compact,
+                        children: [
+                          for (final category in snapshot.categories)
+                            _RiskCategoryCard(category: category),
+                        ],
                       ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _SectionLabel(snapshot.riskSectionLabel),
-                      const SizedBox(height: AppSpacing.x4),
-                      for (final category in snapshot.categories) ...[
-                        _RiskCategoryCard(category: category),
-                        if (category != snapshot.categories.last)
-                          const SizedBox(height: AppSpacing.x4),
-                      ],
-                      const SizedBox(height: AppSpacing.x5),
-                      _SectionLabel(snapshot.additionalWarningsLabel),
-                      const SizedBox(height: AppSpacing.x4),
-                      _AdditionalWarningsCard(
-                        warnings: snapshot.additionalWarnings,
+                      VitPageSection(
+                        label: snapshot.additionalWarningsLabel,
+                        accentColor: _botRiskPrimary,
+                        density: VitDensity.compact,
+                        children: [
+                          _AdditionalWarningsCard(
+                            warnings: snapshot.additionalWarnings,
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: AppSpacing.x5),
-                      _SectionLabel(snapshot.regulatoryNoticeLabel),
-                      const SizedBox(height: AppSpacing.x4),
-                      _RegulatoryNoticeCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x5),
-                      _SectionLabel(snapshot.acknowledgmentLabel),
-                      const SizedBox(height: AppSpacing.x4),
-                      _AcknowledgmentCard(
-                        snapshot: snapshot,
-                        acknowledged: _acknowledged,
-                        onTap: () =>
-                            setState(() => _acknowledged = !_acknowledged),
+                      VitPageSection(
+                        label: snapshot.regulatoryNoticeLabel,
+                        accentColor: _botRiskPrimary,
+                        density: VitDensity.compact,
+                        children: [_RegulatoryNoticeCard(snapshot: snapshot)],
                       ),
-                      const SizedBox(height: AppSpacing.x4),
-                      _RiskCta(
-                        snapshot: snapshot,
-                        acknowledged: _acknowledged,
-                        onPressed: () => context.go(snapshot.nextPath),
+                      VitPageSection(
+                        label: snapshot.acknowledgmentLabel,
+                        accentColor: _botRiskPrimary,
+                        density: VitDensity.compact,
+                        children: [
+                          _AcknowledgmentCard(
+                            snapshot: snapshot,
+                            acknowledged: _acknowledged,
+                            onTap: () =>
+                                setState(() => _acknowledged = !_acknowledged),
+                          ),
+                          _RiskCta(
+                            snapshot: snapshot,
+                            acknowledged: _acknowledged,
+                            onPressed: () => context.go(snapshot.nextPath),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: AppSpacing.x4),
                       _HelpCard(snapshot: snapshot),
                     ],
                   ),

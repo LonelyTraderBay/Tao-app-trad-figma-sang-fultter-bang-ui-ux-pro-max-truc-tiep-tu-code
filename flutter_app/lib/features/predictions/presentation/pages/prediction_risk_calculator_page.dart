@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -111,15 +112,13 @@ class _PredictionRiskCalculatorPageState
   Widget build(BuildContext context) {
     ref.watch(predictionsReadModelControllerProvider).getRiskCalculator();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndPadding =
+        navClearance +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionRiskBottomInsetVisual
-            : AppSpacing.predictionRiskBottomInsetNative);
+        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
     final inputs = _RiskInputs(
       shares: _parse(_sharesController.text),
       entryPrice: _parse(_entryPriceController.text),
@@ -154,11 +153,10 @@ class _PredictionRiskCalculatorPageState
                   child: SingleChildScrollView(
                     key: PredictionRiskCalculatorPage.contentKey,
                     padding: AppSpacing.predictionRiskScrollPadding(
-                      bottomInset,
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionRiskContentGap,
+                      density: VitDensity.compact,
                       children: [
                         ...(_activeTab == _RiskTab.calculator
                             ? [

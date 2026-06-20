@@ -7,7 +7,7 @@ class _EcosystemHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.primary,
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,7 +42,7 @@ class _EcosystemHero extends StatelessWidget {
                   'Consolidation 09A - 09D',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaEcosystemMetricLineHeight,
+                    height: _ecosystemMetricLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x3),
@@ -50,7 +50,7 @@ class _EcosystemHero extends StatelessWidget {
                   'Release-readiness handoff for Open Arena x Prediction Markets. The modules may share content/topic context while keeping financial surfaces fully separated.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.arenaEcosystemBodyLineHeight,
+                    height: _ecosystemBodyLineHeight,
                   ),
                 ),
               ],
@@ -104,52 +104,14 @@ class _TabPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: ConnectedEcosystemProductionPage.tabKey(config.id),
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.arenaEcosystemTabHeight,
-          child: Material(
-            color: active
-                ? AppColors.primary.withValues(alpha: .14)
-                : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.inputRadius,
-              side: BorderSide(
-                color: active
-                    ? AppColors.primary.withValues(alpha: .55)
-                    : AppColors.cardBorder,
-                width: active ? 1.5 : 1,
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.arenaHorizontalPaddingX4,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    config.icon,
-                    color: active ? AppColors.primary : AppColors.text2,
-                    size: AppSpacing.arenaEcosystemTabIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    config.label,
-                    style: AppTextStyles.micro.copyWith(
-                      color: active ? AppColors.primary : AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitStatusPill(
+      key: ConnectedEcosystemProductionPage.tabKey(config.id),
+      label: config.label,
+      icon: config.icon,
+      status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
+      size: VitStatusPillSize.md,
+      outline: !active,
+      onTap: onTap,
     );
   }
 }
@@ -207,30 +169,23 @@ class _CanonicalSection extends StatelessWidget {
         .expand((screen) => screen.bridgeComponents)
         .toSet()
         .length;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Canonical Connected Screens',
+      accentColor: AppColors.buy,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'Canonical Connected Screens',
-          accentColor: AppColors.buy,
-        ),
-        const SizedBox(height: AppSpacing.x2),
         Text(
           '9 màn hình vFinal chứa bridge integration từ 09A-09D. Mỗi màn đã chọn canonical version tốt nhất.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaEcosystemIntroLineHeight,
+            height: _ecosystemIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final screen in screens) ...[
+        for (final screen in screens)
           _CanonicalScreenCard(screen: screen, onRoute: onRoute),
-          if (screen != screens.last) const SizedBox(height: AppSpacing.x3),
-        ],
-        const SizedBox(height: AppSpacing.x4),
         VitCard(
           borderColor: AppColors.buy.withValues(alpha: .22),
-          padding: AppSpacing.arenaPaddingX4,
+          density: VitDensity.compact,
           child: Column(
             children: [
               Row(
@@ -252,7 +207,7 @@ class _CanonicalSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x2),
               Row(
                 children: [
                   _SummaryMetric(
@@ -289,10 +244,7 @@ class _CanonicalScreenCard extends StatelessWidget {
     return VitCard(
       key: ConnectedEcosystemProductionPage.screenKey(screen.name),
       onTap: screen.route == '/' ? null : () => onRoute(screen.route),
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.arenaEcosystemScreenMinHeight,
-      ),
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -306,7 +258,7 @@ class _CanonicalScreenCard extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaEcosystemTitleLineHeight,
+                    height: _ecosystemTitleLineHeight,
                   ),
                 ),
               ),
@@ -339,7 +291,7 @@ class _CanonicalScreenCard extends StatelessWidget {
             screen.notes,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.arenaEcosystemBodyLineHeight,
+              height: _ecosystemBodyLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -353,11 +305,25 @@ class _CanonicalScreenCard extends StatelessWidget {
           ),
           if (screen.route != '/') ...[
             const SizedBox(height: AppSpacing.x2),
-            _SmallTextAction(
-              label: 'Mở trang',
-              icon: Icons.open_in_new_rounded,
-              color: AppColors.primary,
-              onTap: () => onRoute(screen.route),
+            VitCtaButton(
+              fullWidth: false,
+              height: VitDensity.compact.controlHeight,
+              variant: VitCtaButtonVariant.ghost,
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x2,
+              ),
+              leading: const Icon(
+                Icons.open_in_new_rounded,
+                color: AppColors.primary,
+              ),
+              onPressed: () => onRoute(screen.route),
+              child: Text(
+                'Mở trang',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
             ),
           ],
         ],
@@ -373,26 +339,19 @@ class _StatesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Bridge State Matrix',
+      accentColor: AppColors.primary,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'Bridge State Matrix',
-          accentColor: AppColors.primary,
-        ),
-        const SizedBox(height: AppSpacing.x2),
         Text(
           '8 bridge-specific states. Mỗi state định nghĩa behavior, affected screens và fallback UI.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaEcosystemIntroLineHeight,
+            height: _ecosystemIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final state in states) ...[
-          _StateCard(state: state),
-          if (state != states.last) const SizedBox(height: AppSpacing.x3),
-        ],
+        for (final state in states) _StateCard(state: state),
       ],
     );
   }
@@ -407,7 +366,7 @@ class _StateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(state.tone);
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -438,7 +397,7 @@ class _StateCard extends StatelessWidget {
             state.description,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.arenaEcosystemBodyLineHeight,
+              height: _ecosystemBodyLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -466,26 +425,19 @@ class _FlowsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Connected E2E Flows',
+      accentColor: AppColors.primary,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'Connected E2E Flows',
-          accentColor: AppColors.primary,
-        ),
-        const SizedBox(height: AppSpacing.x2),
         Text(
           '4 end-to-end flows kết nối 2 module. Bridge steps được đánh dấu bằng link icon.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaEcosystemIntroLineHeight,
+            height: _ecosystemIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final flow in flows) ...[
-          _FlowCard(flow: flow, onRoute: onRoute),
-          if (flow != flows.last) const SizedBox(height: AppSpacing.x4),
-        ],
+        for (final flow in flows) _FlowCard(flow: flow, onRoute: onRoute),
       ],
     );
   }

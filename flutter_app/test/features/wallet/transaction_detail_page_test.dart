@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDetail(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -69,6 +71,22 @@ void main() {
     expect(find.text('Mã giao dịch (TxID)'), findsOneWidget);
     expect(find.text('TRC20'), findsOneWidget);
     expect(find.text('Xem trên Explorer'), findsOneWidget);
+  });
+
+  testWidgets('SC-141 first viewport reaches TxID copy action', (tester) async {
+    await pumpDetail(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'TransactionDetailPage',
+      semanticLabel: 'SC-141 TransactionDetailPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(TransactionDetailPage.copyTxIdKey),
+      routeName: 'TransactionDetailPage',
+      actionLabel: 'the transaction copy action',
+    );
   });
 
   testWidgets('SC-141 support action navigates to placeholder safely', (

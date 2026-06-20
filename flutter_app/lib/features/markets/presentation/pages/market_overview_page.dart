@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -56,7 +57,7 @@ class MarketOverviewPage extends ConsumerWidget {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 52 : 22);
+        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -81,17 +82,16 @@ class MarketOverviewPage extends ConsumerWidget {
                     key: contentKey,
                     padding: AppSpacing.marketScrollPadding(bottomInset),
                     child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      gap: VitContentGap.relaxed,
+                      density: VitDensity.compact,
                       children: [
                         _MarketCapHero(stats: snapshot.globalStats),
                         _StatsGrid(stats: snapshot.globalStats),
+                        const _QuickNavigation(),
+                        _MoversGrid(movers: snapshot.movers),
                         _SentimentGrid(
                           stats: snapshot.globalStats,
                           breadth: snapshot.marketBreadth,
                         ),
-                        const _QuickNavigation(),
-                        _MoversGrid(movers: snapshot.movers),
                         _SectorPerformance(sectors: snapshot.sectors),
                         _FearGreedHistory(points: snapshot.fearGreedHistory),
                         const _MarketTools(),

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -56,15 +57,13 @@ class _PredictionEventCalendarPageState
         .watch(predictionsReadModelControllerProvider)
         .getEventCalendar(category: _category);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndPadding =
+        navClearance +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionCalendarBottomInsetVisual
-            : AppSpacing.predictionCalendarBottomInsetNative);
+        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -100,11 +99,10 @@ class _PredictionEventCalendarPageState
                   child: SingleChildScrollView(
                     key: PredictionEventCalendarPage.contentKey,
                     padding: AppSpacing.predictionCalendarScrollPadding(
-                      bottomInset,
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionCalendarContentGap,
+                      density: VitDensity.compact,
                       children: [
                         if (_showFilter)
                           _CategoryFilters(

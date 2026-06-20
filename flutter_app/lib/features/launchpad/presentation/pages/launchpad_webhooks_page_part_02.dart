@@ -25,11 +25,11 @@ class _SubscriptionExpanded extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Divider(
-            height: AppSpacing.launchpadDividerHeight,
+            height: _launchpadWebhooksDividerHeight,
             color: AppColors.divider,
           ),
           Padding(
-            padding: AppSpacing.launchpadPaddingX3,
+            padding: _launchpadWebhooksCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -91,30 +91,37 @@ class _SubscriptionExpanded extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: _SmallActionButton(
+                      child: VitCtaButton(
                         key: LaunchpadWebhooksPage.toggleKey(subscription.id),
-                        label:
+                        onPressed: onToggle,
+                        variant:
                             subscription.status == LaunchpadWebhookStatus.active
-                            ? 'Pause'
-                            : 'Resume',
-                        icon:
-                            subscription.status == LaunchpadWebhookStatus.active
-                            ? Icons.pause_rounded
-                            : Icons.play_arrow_rounded,
-                        color:
-                            subscription.status == LaunchpadWebhookStatus.active
-                            ? AppColors.warn
-                            : AppColors.buy,
-                        onTap: onToggle,
+                            ? VitCtaButtonVariant.warning
+                            : VitCtaButtonVariant.success,
+                        height: _launchpadWebhooksActionButtonHeight,
+                        padding: AppSpacing.launchpadActionButtonPadding,
+                        leading: Icon(
+                          subscription.status == LaunchpadWebhookStatus.active
+                              ? Icons.pause_rounded
+                              : Icons.play_arrow_rounded,
+                        ),
+                        child: Text(
+                          subscription.status == LaunchpadWebhookStatus.active
+                              ? 'Pause'
+                              : 'Resume',
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x2),
-                    _SmallActionButton(
+                    VitCtaButton(
                       key: LaunchpadWebhooksPage.deleteKey(subscription.id),
-                      label: 'Xoa',
-                      icon: Icons.delete_outline_rounded,
-                      color: AppColors.sell,
-                      onTap: onDelete,
+                      onPressed: onDelete,
+                      variant: VitCtaButtonVariant.danger,
+                      fullWidth: false,
+                      height: _launchpadWebhooksActionButtonHeight,
+                      padding: AppSpacing.launchpadActionButtonPadding,
+                      leading: const Icon(Icons.delete_outline_rounded),
+                      child: const Text('Xoa'),
                     ),
                   ],
                 ),
@@ -194,7 +201,7 @@ class _MetadataRows extends StatelessWidget {
                 ),
               ),
               const Divider(
-                height: AppSpacing.launchpadDividerHeight,
+                height: _launchpadWebhooksDividerHeight,
                 color: AppColors.divider,
               ),
             ],
@@ -238,6 +245,7 @@ class _DeliveriesSection extends StatelessWidget {
       child: VitPageSection(
         label: 'Delivery History',
         accentColor: AppColors.primary,
+        density: VitDensity.compact,
         children: [
           for (final delivery in deliveries)
             _DeliveryCard(
@@ -268,17 +276,16 @@ class _DeliveryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final eventColor = _eventColor(delivery.eventType, eventTypes);
-    final deliveryColor = _deliveryStatusColor(delivery.status);
 
     return VitCard(
       key: LaunchpadWebhooksPage.deliveryKey(delivery.id),
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: _launchpadWebhooksCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.launchpadBox30,
-            height: AppSpacing.launchpadBox30,
+            width: _launchpadWebhooksDeliveryIconBox,
+            height: _launchpadWebhooksDeliveryIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: eventColor.withValues(alpha: .12),
@@ -289,7 +296,7 @@ class _DeliveryCard extends StatelessWidget {
               child: Icon(
                 Icons.bolt_rounded,
                 color: eventColor,
-                size: AppSpacing.launchpadIconLg,
+                size: _launchpadWebhooksIconLg,
               ),
             ),
           ),
@@ -310,9 +317,10 @@ class _DeliveryCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    _StatusPill(
+                    VitStatusPill(
                       label: _deliveryStatusLabel(delivery.status),
-                      color: deliveryColor,
+                      status: _deliveryStatusPillStatus(delivery.status),
+                      size: VitStatusPillSize.sm,
                     ),
                   ],
                 ),
@@ -362,7 +370,7 @@ class _DeliveryCard extends StatelessWidget {
                       _CopyButton(
                         key: LaunchpadWebhooksPage.deliveryCopyKey(delivery.id),
                         active: copiedField == delivery.id,
-                        size: AppSpacing.launchpadIcon2xl,
+                        size: _launchpadWebhooksIcon2xl,
                         onTap: () => onCopy(delivery.txHash!, delivery.id),
                       ),
                     ],

@@ -21,7 +21,7 @@ class StakingValidatorSelectionInfoBanner extends StatelessWidget {
       key: StakingValidatorSelectionKeys.info,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -77,7 +77,7 @@ class StakingValidatorSelectionStatsSummary extends StatelessWidget {
     return VitCard(
       key: StakingValidatorSelectionKeys.summary,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           Expanded(

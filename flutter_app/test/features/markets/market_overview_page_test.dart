@@ -13,6 +13,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpOverview(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,20 @@ void main() {
     expect(find.text('Biến động thị trường'), findsOneWidget);
     expect(find.text('Ngành'), findsOneWidget);
     expect(find.text('Heatmap'), findsOneWidget);
+  });
+
+  testWidgets('SC-009 first viewport reaches market navigation cards', (
+    tester,
+  ) async {
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
+    await pumpOverview(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(MarketOverviewPage.quickMoversKey),
+      targetLabel: 'the market movers shortcut',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-009 back button returns to SC-008 Markets', (tester) async {

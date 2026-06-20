@@ -17,10 +17,10 @@ class _QuickLinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotClientQuickLinkHeight,
-      padding: AppSpacing.tradeBotClientQuickLinkPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       borderColor: _clientBorder.withValues(alpha: .72),
+      constraints: BoxConstraints(minHeight: VitDensity.compact.controlHeight),
       onTap: onTap,
       child: Row(
         children: [
@@ -34,7 +34,6 @@ class _QuickLinkButton extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
           ),
@@ -58,20 +57,16 @@ class _MetricBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotClientMetricHeight,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotClientMetricPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             value,
             maxLines: 1,
@@ -79,7 +74,6 @@ class _MetricBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],

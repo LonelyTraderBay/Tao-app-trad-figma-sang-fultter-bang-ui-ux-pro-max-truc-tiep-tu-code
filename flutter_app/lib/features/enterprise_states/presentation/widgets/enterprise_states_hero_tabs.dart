@@ -1,14 +1,24 @@
 part of '../pages/enterprise_states_page.dart';
 
 class _PageHero extends StatelessWidget {
-  const _PageHero({required this.snapshot});
+  const _PageHero({required this.snapshot, required this.onBack});
 
   final EnterpriseStatesSnapshot snapshot;
+  final VoidCallback onBack;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        VitIconButton(
+          key: EnterpriseStatesPage.backKey,
+          icon: Icons.chevron_left_rounded,
+          tooltip: 'Back to Home',
+          onPressed: onBack,
+          variant: VitIconButtonVariant.transparent,
+          size: VitIconButtonSize.md,
+        ),
+        const SizedBox(width: AppSpacing.x2),
         SizedBox.square(
           dimension: AppSpacing.enterpriseStatesIconBox,
           child: DecoratedBox(
@@ -72,62 +82,18 @@ class _SectionTabs extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       padding: AppSpacing.enterpriseStatesTabShellPadding,
-      child: Row(
-        children: [
+      child: VitTabBar(
+        variant: VitTabBarVariant.segment,
+        activeKey: active.name,
+        tabs: [
           for (final tab in tabs)
-            Expanded(
-              child: _SectionTabButton(
-                tab: tab,
-                active: tab.section == active,
-                onTap: () => onChanged(tab.section),
-              ),
+            VitTabItem(
+              key: tab.section.name,
+              label: tab.label,
+              widgetKey: EnterpriseStatesPage.sectionKey(tab.section),
             ),
         ],
-      ),
-    );
-  }
-}
-
-class _SectionTabButton extends StatelessWidget {
-  const _SectionTabButton({
-    required this.tab,
-    required this.active,
-    required this.onTap,
-  });
-
-  final EnterpriseTabDraft tab;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        key: EnterpriseStatesPage.sectionKey(tab.section),
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: active ? AppColors.primary : AppColors.transparent,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-          ),
-          child: Padding(
-            padding: AppSpacing.enterpriseStatesTabButtonPadding,
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                tab.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? AppColors.text1 : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
+        onChanged: (key) => onChanged(_sectionFromKey(key)),
       ),
     );
   }

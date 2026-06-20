@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,6 +22,36 @@ part '../widgets/arena_flow_map_overview.dart';
 part '../widgets/arena_flow_map_nodes.dart';
 part '../widgets/arena_flow_map_qa.dart';
 
+const double _flowMapVisualScrollClearance = 108;
+const double _flowMapNativeScrollClearance = 72;
+const double _flowMapDividerHeight = AppSpacing.dividerHairline;
+const double _flowMapSmallIcon = AppSpacing.iconSm + AppSpacing.x1;
+const double _flowMapInlineIcon = AppSpacing.iconSm + AppSpacing.x2;
+const double _flowMapSectionIcon = AppSpacing.iconMd;
+const double _flowMapConnectionLineHeight = 1.25;
+const double _flowMapHeroLineHeight = 1.28;
+const double _flowMapBodyLineHeight = 1.25;
+const double _flowMapQaLineHeight = 1.25;
+const double _flowMapMarkerWidth = AppSpacing.pageSectionAccentWidth;
+const double _flowMapMarkerHeight = AppSpacing.rowPy + AppSpacing.x1;
+const EdgeInsets _flowMapCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _flowMapInnerPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _flowMapStatPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x3,
+);
+const EdgeInsets _flowMapSectionTogglePadding = EdgeInsets.symmetric(
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _flowMapRouteHeaderPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x4,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _flowMapRouteRowPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x4,
+  vertical: AppSpacing.x2,
+);
+
 class ArenaFlowMapPage extends ConsumerStatefulWidget {
   const ArenaFlowMapPage({super.key, this.shellRenderMode});
 
@@ -29,6 +59,7 @@ class ArenaFlowMapPage extends ConsumerStatefulWidget {
   static const checkAllKey = Key('sc197_check_all');
 
   static Key sectionKey(String id) => Key('sc197_section_$id');
+  static Key routeKey(String path) => Key('sc197_route_$path');
   static Key nodeKey(String label) => Key('sc197_node_$label');
   static Key qaKey(String id) => Key('sc197_qa_$id');
 
@@ -48,10 +79,10 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
         .watch(arenaReadModelControllerProvider)
         .getArenaFlowMap();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _flowMapVisualScrollClearance
+            : _flowMapNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -77,10 +108,12 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
                   child: SingleChildScrollView(
                     key: ArenaFlowMapPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(
+                      scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      density: VitDensity.compact,
                       children: [
                         _FlowHero(stats: snapshot.stats),
                         _CollapsibleSection(

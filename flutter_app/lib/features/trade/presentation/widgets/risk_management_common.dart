@@ -19,7 +19,7 @@ class _GradientButton extends StatelessWidget {
     return VitCtaButton(
       onPressed: onTap,
       variant: variant,
-      height: AppSpacing.tradeCtaHeight,
+      height: _riskControlExtent,
       leading: Icon(icon),
       child: Text(label),
     );
@@ -58,24 +58,24 @@ class _OcoSheet extends StatelessWidget {
     return VitSheetPanel(
       title: 'OCO Order Form',
       child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const _SheetRow(label: 'Cặp', value: 'BTC/USDT'),
-            const _SheetRow(label: 'Side', value: 'Buy'),
-            const _SheetRow(label: 'Limit', value: '\$69,000'),
-            const _SheetRow(label: 'Take Profit', value: '\$72,000'),
-            const _SheetRow(label: 'Stop Loss', value: '\$66,000'),
-            const SizedBox(height: AppSpacing.tradeToolBodyIcon),
-            _GradientButton(
-              key: RiskManagementDemoPage.ocoSubmitKey,
-              label: 'Đặt lệnh OCO',
-              icon: Icons.check_rounded,
-              variant: VitCtaButtonVariant.success,
-              onTap: () => Navigator.pop(context, true),
-            ),
-          ],
-        ),
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const _SheetRow(label: 'Cặp', value: 'BTC/USDT'),
+          const _SheetRow(label: 'Side', value: 'Buy'),
+          const _SheetRow(label: 'Limit', value: '\$69,000'),
+          const _SheetRow(label: 'Take Profit', value: '\$72,000'),
+          const _SheetRow(label: 'Stop Loss', value: '\$66,000'),
+          const SizedBox(height: _riskCardSpace),
+          _GradientButton(
+            key: RiskManagementDemoPage.ocoSubmitKey,
+            label: 'Đặt lệnh OCO',
+            icon: Icons.check_rounded,
+            variant: VitCtaButtonVariant.success,
+            onTap: () => Navigator.pop(context, true),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -90,35 +90,35 @@ class _CalculatorSheet extends StatelessWidget {
     return VitSheetPanel(
       title: 'Position Sizing Calculator',
       child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _SheetRow(
-              label: 'Risk amount',
-              value: '\$${_formatMoney(result.riskAmount)}',
-            ),
-            _SheetRow(
-              label: 'Per-unit risk',
-              value: '\$${_formatMoney(result.perUnitRisk)}',
-            ),
-            _SheetRow(
-              label: 'Suggested amount',
-              value: '${result.suggestedAmount.toStringAsFixed(6)} BTC',
-            ),
-            _SheetRow(
-              label: 'Notional',
-              value: '\$${_formatMoney(result.notional)}',
-            ),
-            const SizedBox(height: AppSpacing.tradeToolBodyIcon),
-            _GradientButton(
-              key: RiskManagementDemoPage.calculatorApplyKey,
-              label: 'Áp dụng khối lượng',
-              icon: Icons.check_rounded,
-              variant: VitCtaButtonVariant.auth,
-              onTap: () => Navigator.pop(context, true),
-            ),
-          ],
-        ),
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _SheetRow(
+            label: 'Risk amount',
+            value: '\$${_formatMoney(result.riskAmount)}',
+          ),
+          _SheetRow(
+            label: 'Per-unit risk',
+            value: '\$${_formatMoney(result.perUnitRisk)}',
+          ),
+          _SheetRow(
+            label: 'Suggested amount',
+            value: '${result.suggestedAmount.toStringAsFixed(6)} BTC',
+          ),
+          _SheetRow(
+            label: 'Notional',
+            value: '\$${_formatMoney(result.notional)}',
+          ),
+          const SizedBox(height: _riskCardSpace),
+          _GradientButton(
+            key: RiskManagementDemoPage.calculatorApplyKey,
+            label: 'Áp dụng khối lượng',
+            icon: Icons.check_rounded,
+            variant: VitCtaButtonVariant.auth,
+            onTap: () => Navigator.pop(context, true),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -174,7 +174,7 @@ class _SuccessToast extends StatelessWidget {
               color: AppColors.buy,
               size: AppSpacing.tradeToolBodyIcon,
             ),
-            const SizedBox(width: AppSpacing.tradeToolIconGap),
+            const SizedBox(width: _riskSpace),
             Expanded(
               child: Text(
                 message,

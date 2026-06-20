@@ -83,7 +83,7 @@ class _Disclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.earnPaddingX3,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -98,7 +98,7 @@ class _Disclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.savingsLadderDisclaimerLineHeight,
+                height: _disclaimerLineHeight,
               ),
             ),
           ),
@@ -119,17 +119,17 @@ class _EmptyTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX6,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Icon(icon, color: AppColors.text3, size: AppSpacing.iconLg),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             title,
             textAlign: TextAlign.center,
             style: _captionBold.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           VitCtaButton(fullWidth: false, onPressed: () {}, child: Text(cta)),
         ],
       ),

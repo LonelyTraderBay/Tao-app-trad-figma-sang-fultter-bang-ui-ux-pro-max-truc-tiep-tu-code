@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_gradients.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -16,6 +17,7 @@ class VitCard extends StatelessWidget {
     this.variant = VitCardVariant.standard,
     this.radius = VitCardRadius.md,
     this.padding,
+    this.density,
     this.margin,
     this.width,
     this.height,
@@ -31,6 +33,7 @@ class VitCard extends StatelessWidget {
   final VitCardVariant variant;
   final VitCardRadius radius;
   final EdgeInsetsGeometry? padding;
+  final VitDensity? density;
   final EdgeInsetsGeometry? margin;
   final double? width;
   final double? height;
@@ -52,17 +55,19 @@ class VitCard extends StatelessWidget {
     }
   }
 
-  BoxDecoration get _decoration {
+  ShapeDecoration get _decoration {
     final resolvedBorder = borderColor;
     switch (variant) {
       case VitCardVariant.hero:
-        return BoxDecoration(
+        return ShapeDecoration(
           gradient: AppGradients.portfolio,
-          border: Border.all(
-            color: resolvedBorder ?? AppColors.portfolioBorder,
+          shape: RoundedRectangleBorder(
+            borderRadius: _borderRadius,
+            side: BorderSide(
+              color: resolvedBorder ?? AppColors.portfolioBorder,
+            ),
           ),
-          borderRadius: _borderRadius,
-          boxShadow: const [
+          shadows: const [
             BoxShadow(
               color: AppColors.primary08,
               blurRadius: AppSpacing.ctaElevationBlur,
@@ -72,35 +77,43 @@ class VitCard extends StatelessWidget {
           ],
         );
       case VitCardVariant.inner:
-        return BoxDecoration(
+        return ShapeDecoration(
           color: AppColors.surface2,
-          border: resolvedBorder == null
-              ? null
-              : Border.all(color: resolvedBorder),
-          borderRadius: _borderRadius,
+          shape: RoundedRectangleBorder(
+            borderRadius: _borderRadius,
+            side: _borderSide(resolvedBorder),
+          ),
         );
       case VitCardVariant.ghost:
-        return BoxDecoration(
+        return ShapeDecoration(
           color: AppColors.transparent,
-          border: resolvedBorder == null
-              ? null
-              : Border.all(color: resolvedBorder),
-          borderRadius: _borderRadius,
+          shape: RoundedRectangleBorder(
+            borderRadius: _borderRadius,
+            side: _borderSide(resolvedBorder),
+          ),
         );
       case VitCardVariant.standard:
-        return BoxDecoration(
+        return ShapeDecoration(
           color: AppColors.cardBg,
-          border: Border.all(color: resolvedBorder ?? AppColors.cardBorder),
-          borderRadius: _borderRadius,
+          shape: RoundedRectangleBorder(
+            borderRadius: _borderRadius,
+            side: BorderSide(color: resolvedBorder ?? AppColors.cardBorder),
+          ),
         );
     }
+  }
+
+  BorderSide _borderSide(Color? resolvedBorder) {
+    if (resolvedBorder == null) return BorderSide.none;
+    return BorderSide(color: resolvedBorder);
   }
 
   @override
   Widget build(BuildContext context) {
     Widget content = child;
-    if (padding != null) {
-      content = Padding(padding: padding!, child: content);
+    final resolvedPadding = padding ?? density?.cardPadding;
+    if (resolvedPadding != null) {
+      content = Padding(padding: resolvedPadding, child: content);
     }
     if (background != null) {
       content = Stack(
@@ -112,14 +125,8 @@ class VitCard extends StatelessWidget {
       );
     }
 
-    final decorated = Container(
-      width: width,
-      height: height,
-      constraints: constraints,
-      alignment: alignment,
-      margin: margin,
+    Widget decorated = DecoratedBox(
       decoration: _decoration,
-      clipBehavior: clip ? Clip.antiAlias : Clip.none,
       child: Material(
         type: MaterialType.transparency,
         child: onTap == null
@@ -132,6 +139,26 @@ class VitCard extends StatelessWidget {
       ),
     );
 
+    if (clip) {
+      decorated = ClipRRect(
+        borderRadius: _borderRadius,
+        clipBehavior: Clip.antiAlias,
+        child: decorated,
+      );
+    }
+    if (alignment != null) {
+      decorated = Align(alignment: alignment!, child: decorated);
+    }
+    if (constraints != null) {
+      decorated = ConstrainedBox(constraints: constraints!, child: decorated);
+    }
+    if (width != null || height != null) {
+      decorated = SizedBox(width: width, height: height, child: decorated);
+    }
+    if (margin != null) {
+      decorated = Padding(padding: margin!, child: decorated);
+    }
+
     return decorated;
   }
 }
@@ -140,7 +167,7 @@ class VitCardStat extends StatelessWidget {
   const VitCardStat({
     super.key,
     required this.child,
-    this.padding = const EdgeInsets.all(AppSpacing.x3),
+    this.padding = const EdgeInsetsDirectional.all(AppSpacing.x3),
   });
 
   final Widget child;
@@ -149,9 +176,9 @@ class VitCardStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.portfolioBtnGhost,
-        borderRadius: AppRadii.smRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(padding: padding, child: child),
     );

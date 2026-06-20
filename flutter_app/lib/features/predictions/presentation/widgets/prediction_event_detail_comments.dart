@@ -36,9 +36,7 @@ class _CommentsContent extends StatelessWidget {
             ),
           ),
         ),
-        const Padding(
-          padding: AppSpacing.predictionDetailCommentAfterWarningGap,
-        ),
+        const SizedBox(height: AppSpacing.x2),
         _CommentRow(
           name: 'MacroAlpha',
           side: 'Yes',
@@ -51,9 +49,9 @@ class _CommentsContent extends StatelessWidget {
           text: 'Watch macro rates and exchange liquidity before sizing up.',
           likes: 9,
         ),
-        const Padding(padding: AppSpacing.predictionDetailCommentInputTopGap),
+        const SizedBox(height: AppSpacing.x2),
         SizedBox(
-          height: AppSpacing.predictionDetailCommentInputHeight,
+          height: VitDensity.compact.controlHeight,
           child: Material(
             color: AppColors.surface2,
             shape: RoundedRectangleBorder(
@@ -150,16 +148,12 @@ class _CommentRow extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: AppSpacing.predictionDetailCommentBodyGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   text,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
-                const Padding(
-                  padding: AppSpacing.predictionDetailCommentActionGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 Row(
                   children: [
                     const Icon(

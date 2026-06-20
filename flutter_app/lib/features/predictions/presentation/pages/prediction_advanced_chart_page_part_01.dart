@@ -42,15 +42,13 @@ class _PredictionAdvancedChartPageState
         .watch(predictionsReadModelControllerProvider)
         .getAdvancedChart(widget.eventId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final footerPadding =
+        footerChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionAdvancedBottomInsetVisual
-            : AppSpacing.predictionAdvancedBottomInsetNative);
+        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -78,11 +76,10 @@ class _PredictionAdvancedChartPageState
                   child: SingleChildScrollView(
                     key: PredictionAdvancedChartPage.contentKey,
                     padding: AppSpacing.predictionAdvancedScrollPadding(
-                      bottomInset,
+                      footerPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionAdvancedContentGap,
+                      density: VitDensity.compact,
                       children: [
                         ...switch (_activeTab) {
                           _ChartTab.chart => [
@@ -131,6 +128,7 @@ class _PredictionAdvancedChartPageState
                           message:
                               'Timeframe, probability movement, volume, indicators, support/resistance, order flow, pattern signals, and disclaimer states are reviewed before acting on chart analysis.',
                           contractId: 'SC-041',
+                          density: VitDensity.compact,
                         ),
                       ],
                     ),
@@ -177,7 +175,7 @@ class _AdvancedChartTabBar extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.predictionAdvancedTabsHeight,
+        height: VitDensity.compact.controlHeight,
         child: Stack(
           children: [
             Row(
@@ -285,7 +283,7 @@ class _TimeframeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.predictionAdvancedTimeframeHeight,
+      height: VitDensity.compact.controlHeight,
       child: Material(
         color: active ? _predictionPrimary : AppColors.bg,
         shape: RoundedRectangleBorder(
@@ -320,11 +318,11 @@ class _ProbabilitySummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionAdvancedCardPadding,
+      density: VitDensity.compact,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.predictionAdvancedSummaryGap,
+        gap: VitContentGap.tight,
         children: [
           Text(
             'Current Probability',
@@ -386,11 +384,11 @@ class _ProbabilityChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionAdvancedCardPadding,
+      density: VitDensity.compact,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.predictionAdvancedChartGap,
+        gap: VitContentGap.tight,
         children: [
           Text(
             'Probability Chart',
@@ -399,7 +397,7 @@ class _ProbabilityChartCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: AppSpacing.predictionAdvancedProbabilityChartHeight,
+            height: AppSpacing.x7 * 6,
             child: CustomPaint(
               painter: _ProbabilityPainter(
                 points: snapshot.priceHistory,
@@ -426,11 +424,11 @@ class _VolumeChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionAdvancedCardPadding,
+      density: VitDensity.compact,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.predictionAdvancedChartGap,
+        gap: VitContentGap.tight,
         children: [
           Text(
             'Trading Volume',
@@ -439,7 +437,7 @@ class _VolumeChartCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: AppSpacing.predictionAdvancedVolumeChartHeight,
+            height: AppSpacing.x7 * 3,
             child: CustomPaint(
               painter: _VolumePainter(points: snapshot.priceHistory),
               child: const SizedBox.expand(),
@@ -477,6 +475,7 @@ class _ChartLayerControls extends StatelessWidget {
     return VitPageSection(
       label: 'Lop hien thi',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         GridView.count(
           crossAxisCount: AppSpacing.predictionAdvancedLayerColumns,

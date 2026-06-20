@@ -8,14 +8,14 @@ class _CopyHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: AppSpacing.copyTradingHeroPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            padding: AppSpacing.copyTradingHeroAumPadding,
+            density: VitDensity.compact,
+            padding: AppSpacing.cardPaddingCompact,
             borderColor: AppColors.cardBorder,
             child: Column(
               children: [
@@ -26,18 +26,18 @@ class _CopyHeroCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.copyTradingHeroLabelGap),
+                const SizedBox(height: _copySpace),
                 Text(
                   _formatCompact(snapshot.totalAum, prefix: r'$'),
                   textAlign: TextAlign.center,
                   style: AppTextStyles.heroNumber,
                 ),
-                const SizedBox(height: AppSpacing.copyTradingHeroLabelGap),
+                const SizedBox(height: _copySpace),
                 _TrendPill(value: snapshot.aumTrendPct),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.copyTradingHeroGap),
+          const SizedBox(height: _copyCardSpace),
           Row(
             children: [
               Expanded(
@@ -48,7 +48,7 @@ class _CopyHeroCard extends StatelessWidget {
                   color: _copyPrimary,
                 ),
               ),
-              const SizedBox(width: AppSpacing.copyTradingHeroMetricGap),
+              const SizedBox(width: _copySpace),
               Expanded(
                 child: _HeroMetric(
                   icon: Icons.how_to_reg_rounded,
@@ -59,7 +59,7 @@ class _CopyHeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.copyTradingHeroGap),
+          const SizedBox(height: _copySpace),
           Text(
             'Updated ${snapshot.lastUpdatedLabel}',
             textAlign: TextAlign.center,
@@ -91,7 +91,8 @@ class _HeroMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.copyTradingHeroMetricPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +100,7 @@ class _HeroMetric extends StatelessWidget {
           Row(
             children: [
               Icon(icon, color: color, size: AppSpacing.copyTradingMetricIcon),
-              const SizedBox(width: AppSpacing.copyTradingMetricIconGap),
+              const SizedBox(width: _copySpace),
               Expanded(
                 child: Text(
                   label,
@@ -113,7 +114,7 @@ class _HeroMetric extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.copyTradingMetricIconGap),
+          const SizedBox(height: _copySpace),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -162,6 +163,7 @@ class _RiskWarningCard extends StatelessWidget {
       title: title,
       message: message,
       contractId: 'Copy trading provider risk disclosure',
+      density: VitDensity.compact,
     );
   }
 }

@@ -36,7 +36,7 @@ class _TrustButton extends StatelessWidget {
     return VitCtaButton(
       key: DeviceManagementPage.trustKey(device.id),
       onPressed: onTap,
-      height: AppSpacing.buttonCompact,
+      density: VitDensity.compact,
       variant: trusted
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.warning,
@@ -61,7 +61,7 @@ class _LogoutButton extends StatelessWidget {
     return VitCtaButton(
       key: DeviceManagementPage.logoutKey(deviceId),
       onPressed: onTap,
-      height: AppSpacing.buttonCompact,
+      density: VitDensity.compact,
       variant: VitCtaButtonVariant.danger,
       fullWidth: false,
       padding: AppSpacing.profileDevicesLogoutButtonPadding,

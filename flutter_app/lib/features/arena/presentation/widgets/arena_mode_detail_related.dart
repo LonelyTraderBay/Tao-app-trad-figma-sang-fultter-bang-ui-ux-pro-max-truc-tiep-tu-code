@@ -72,7 +72,7 @@ class _RoomRow extends StatelessWidget {
         key: rowKey,
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Row(
             children: [
               Expanded(
@@ -175,7 +175,7 @@ class _RelatedModeCard extends StatelessWidget {
     return VitCard(
       key: cardKey,
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaPaddingX4,
       constraints: const BoxConstraints(
         minHeight: AppSpacing.arenaModeRelatedCardMinHeight,
       ),

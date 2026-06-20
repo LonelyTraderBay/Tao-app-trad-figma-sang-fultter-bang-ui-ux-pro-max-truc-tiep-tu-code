@@ -74,9 +74,37 @@ Use Flutter primitives:
 - `VitInput`
 - `VitTabBar`
 - `VitEmptyState`, `VitErrorState`, `VitOfflineBanner`
+- `VitInfoRow` for repeated compact key-value, fee, limit, risk, and detail rows
 
 Do not build repeated local scaffolds, palettes, spacing systems, or bottom-nav
 variants when shared primitives already cover the behavior.
+
+## First-Viewport Density Gate
+
+UI completion includes first-viewport usefulness, not only shared-component
+adoption. A screen is not done if the phone viewport is mostly chrome, hero
+space, fixed-height cards, vertical gaps, or bottom-nav padding while the first
+useful repeated/actionable section sits below the fold.
+
+Use the maintained audit gate:
+
+```bash
+cd flutter_app
+dart run tool/visual_density_risk_audit.dart --check
+```
+
+Density fixes must preserve readable text, touch targets, semantics,
+financial-safety copy, and Prediction Markets/Open Arena boundaries. Fullscreen
+tool routes are separate QA exceptions; do not compact them with normal
+content-page rules without emulator evidence.
+
+Shared UI density tiers are:
+
+- `VitDensity.compact`: dense root/list/card sections and repeated actions.
+- `VitDensity.standard`: default behavior for existing screens.
+- `VitDensity.relaxed`: low-frequency informational or confirmation content.
+- `VitDensity.hero`: intentional first-screen emphasis, used sparingly.
+- `VitDensity.tool`: fullscreen tools that need chrome-efficient controls.
 
 ## Financial Safety
 
@@ -113,6 +141,7 @@ For UI changes run:
 ```bash
 cd flutter_app
 dart run tool/design_token_consistency_audit.dart --check
+dart run tool/visual_density_risk_audit.dart --check
 flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
 flutter analyze
 flutter test

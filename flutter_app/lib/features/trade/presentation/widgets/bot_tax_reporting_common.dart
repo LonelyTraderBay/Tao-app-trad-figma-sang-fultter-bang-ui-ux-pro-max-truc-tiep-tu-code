@@ -61,29 +61,13 @@ class _Pill extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
+  const _Card({required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(padding: padding, child: child);
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: _taxPrimary,
-    );
+    return VitCard(density: VitDensity.compact, child: child);
   }
 }
 

@@ -61,7 +61,7 @@ class VitTabBar extends StatelessWidget {
               active: tab.key == activeKey,
               onChanged: onChanged,
               fillParent: true,
-              padding: const EdgeInsets.symmetric(
+              padding: const EdgeInsetsDirectional.symmetric(
                 horizontal: AppSpacing.rowGapRegular,
                 vertical: AppSpacing.tabBarPillVertical,
               ),
@@ -80,7 +80,7 @@ class VitTabBar extends StatelessWidget {
             active: tab.key == activeKey,
             onChanged: onChanged,
             fillParent: false,
-            padding: const EdgeInsets.symmetric(
+            padding: const EdgeInsetsDirectional.symmetric(
               horizontal: AppSpacing.rowGapRegular,
               vertical: AppSpacing.tabBarPillVertical,
             ),
@@ -107,35 +107,38 @@ class _PillTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final content = AnimatedContainer(
-      duration: const Duration(milliseconds: 180),
-      padding: padding,
-      decoration: BoxDecoration(
+    final content = DecoratedBox(
+      decoration: ShapeDecoration(
         color: active ? AppColors.primary12 : AppColors.surface2,
-        border: Border.all(
-          color: active ? AppColors.primary20 : AppColors.cardBorder,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.smRadius,
+          side: BorderSide(
+            color: active ? AppColors.primary20 : AppColors.cardBorder,
+          ),
         ),
-        borderRadius: AppRadii.smRadius,
       ),
-      child: Row(
-        mainAxisSize: fillParent ? MainAxisSize.max : MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (tab.icon != null) ...[
-            Icon(
-              tab.icon,
-              color: active ? AppColors.primary : AppColors.text2,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x2),
+      child: Padding(
+        padding: padding,
+        child: Row(
+          mainAxisSize: fillParent ? MainAxisSize.max : MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (tab.icon != null) ...[
+              Icon(
+                tab.icon,
+                color: active ? AppColors.primary : AppColors.text2,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+            ],
+            if (fillParent)
+              Flexible(
+                child: _PillTabLabel(tab: tab, active: active),
+              )
+            else
+              _PillTabLabel(tab: tab, active: active),
           ],
-          if (fillParent)
-            Flexible(
-              child: _PillTabLabel(tab: tab, active: active),
-            )
-          else
-            _PillTabLabel(tab: tab, active: active),
-        ],
+        ),
       ),
     );
 
@@ -196,7 +199,9 @@ class _UnderlineTab extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+              padding: const EdgeInsetsDirectional.symmetric(
+                vertical: AppSpacing.x3,
+              ),
               child: Text(
                 tab.label,
                 style: AppTextStyles.control.copyWith(
@@ -207,14 +212,17 @@ class _UnderlineTab extends StatelessWidget {
                 ),
               ),
             ),
-            AnimatedContainer(
+            AnimatedSize(
               duration: const Duration(milliseconds: 180),
-              height: AppSpacing.tabBarUnderlineHeight,
-              width: active ? AppSpacing.tabBarUnderlineWidth : 0,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(
-                  AppSpacing.tabBarPillRadius,
+              alignment: Alignment.center,
+              child: SizedBox(
+                height: AppSpacing.tabBarUnderlineHeight,
+                width: active ? AppSpacing.tabBarUnderlineWidth : 0,
+                child: const DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.primary,
+                    shape: StadiumBorder(),
+                  ),
                 ),
               ),
             ),

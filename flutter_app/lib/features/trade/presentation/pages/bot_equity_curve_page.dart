@@ -6,10 +6,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -28,6 +28,16 @@ const _equityGreen = AppColors.buy;
 const _equityPrimary = AppColors.primary;
 const _equityRed = AppColors.sell;
 const _equityAxis = AppColors.chartAxisStrong;
+const double _equityFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _equityNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _equitySummaryMetricExtent =
+    AppSpacing.buttonCompact + AppSpacing.x4;
+const double _equityChartExtent = AppSpacing.buttonStandard * 3 + AppSpacing.x4;
+const double _equitySharpeExtent =
+    AppSpacing.buttonStandard * 2 + AppSpacing.x6;
+const double _equityProgressExtent = AppSpacing.x2 + AppSpacing.x1;
 
 class BotEquityCurvePage extends ConsumerStatefulWidget {
   const BotEquityCurvePage({super.key, this.shellRenderMode});
@@ -50,11 +60,10 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
         .watch(tradeReadModelControllerProvider)
         .getBotEquityCurve();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.tradeBotBottomInsetNative) +
+            ? _equityFramedScrollClearance
+            : _equityNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -68,81 +77,70 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.tradeBots),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: BotEquityCurvePage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: AppSpacing.tradeBotCardGap,
-                    children: [
-                      _SummaryRow(summary: snapshot.summary),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
-                        child: VitPageContent(
-                          padding: VitContentPadding.none,
-                          fullBleed: true,
-                          customGap: AppSpacing.tradeBotSmallGap,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Equity curve review',
-                              message:
-                                  'Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.',
-                              contractId: 'bot-equity-curve-review',
-                            ),
-                            VitStatusPill(
-                              label: 'Performance is not guaranteed',
-                              status: VitStatusPillStatus.warning,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
+          child: VitInsetScrollView(
+            key: BotEquityCurvePage.contentKey,
+            bottomInset: scrollEndClearance,
+            child: VitPageContent(
+              padding: VitContentPadding.compact,
+              density: VitDensity.compact,
+              children: [
+                _SummaryRow(summary: snapshot.summary),
+                VitCard(
+                  variant: VitCardVariant.inner,
+                  padding: AppSpacing.tradeBotCompactCardPadding,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Equity curve review',
+                        message:
+                            'Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.',
+                        contractId: 'bot-equity-curve-review',
                       ),
-                      _Tabs(
-                        active: _view,
-                        onChanged: (id) => setState(() => _view = id),
+                      SizedBox(height: AppSpacing.x2),
+                      VitStatusPill(
+                        label: 'Performance is not guaranteed',
+                        status: VitStatusPillStatus.warning,
+                        size: VitStatusPillSize.sm,
                       ),
-                      if (_view == 'equity')
-                        VitPageSection(
-                          label: 'Equity Curve vs Buy & Hold',
-                          children: [
-                            _EquityChartCard(points: snapshot.equityPoints),
-                          ],
-                        )
-                      else if (_view == 'sharpe')
-                        VitPageSection(
-                          label: 'Rolling 30-Day Sharpe Ratio',
-                          children: [
-                            _SharpeCard(points: snapshot.equityPoints),
-                          ],
-                        )
-                      else
-                        VitPageSection(
-                          label: 'Monthly Alpha (Bot vs Market)',
-                          children: [
-                            _MonthlyAlphaCard(months: snapshot.monthlyReturns),
-                          ],
-                        ),
-                      VitPageSection(
-                        label: 'Performance Statistics',
-                        children: [
-                          _PerformanceCard(stats: snapshot.performanceStats),
-                        ],
-                      ),
-                      _AnalysisCard(items: snapshot.analysisItems),
                     ],
                   ),
                 ),
-              ),
-            ],
+                _Tabs(
+                  active: _view,
+                  onChanged: (id) => setState(() => _view = id),
+                ),
+                if (_view == 'equity')
+                  VitPageSection(
+                    label: 'Equity Curve vs Buy & Hold',
+                    density: VitDensity.compact,
+                    children: [_EquityChartCard(points: snapshot.equityPoints)],
+                  )
+                else if (_view == 'sharpe')
+                  VitPageSection(
+                    label: 'Rolling 30-Day Sharpe Ratio',
+                    density: VitDensity.compact,
+                    children: [_SharpeCard(points: snapshot.equityPoints)],
+                  )
+                else
+                  VitPageSection(
+                    label: 'Monthly Alpha (Bot vs Market)',
+                    density: VitDensity.compact,
+                    children: [
+                      _MonthlyAlphaCard(months: snapshot.monthlyReturns),
+                    ],
+                  ),
+                VitPageSection(
+                  label: 'Performance Statistics',
+                  density: VitDensity.compact,
+                  children: [
+                    _PerformanceCard(stats: snapshot.performanceStats),
+                  ],
+                ),
+                _AnalysisCard(items: snapshot.analysisItems),
+              ],
+            ),
           ),
         ),
       ),

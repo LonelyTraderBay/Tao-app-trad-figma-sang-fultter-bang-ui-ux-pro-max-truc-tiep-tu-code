@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpKyc(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -79,6 +81,25 @@ void main() {
     expect(find.text('KYC Cấp 2'), findsWidgets);
     expect(find.text('Đã hoàn thành'), findsNWidgets(3));
     expect(find.text('Bảo mật thông tin cá nhân'), findsOneWidget);
+  });
+
+  testWidgets('SC-159 first viewport reaches first KYC level', (tester) async {
+    await pumpKyc(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'KYCPage',
+      semanticLabel: 'SC-159 KYCPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(KYCPage.levelKey(1)),
+      minVisibleHeight: 24,
+      targetLabel: 'first KYC level card',
+      reason:
+          'KYC must expose the actual verification level list above the bottom '
+          'navigation after the status and risk review.',
+    );
   });
 
   testWidgets('SC-159 expands KYC level details locally', (tester) async {

@@ -76,39 +76,43 @@ class VitMetricDeltaPill extends StatelessWidget {
 
     return Semantics(
       label: '${tone.name} delta $label',
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: metrics.paddingX,
-          vertical: metrics.paddingY,
-        ),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: palette.background,
-          border: Border.all(color: palette.border),
-          borderRadius: AppRadii.smRadius,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: palette.border),
+            borderRadius: AppRadii.smRadius,
+          ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (resolvedIcon != null) ...[
-              Icon(
-                resolvedIcon,
-                color: palette.foreground,
-                size: metrics.iconSize,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-            ],
-            Flexible(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: metrics.textStyle.copyWith(
+        child: Padding(
+          padding: EdgeInsetsDirectional.symmetric(
+            horizontal: metrics.paddingX,
+            vertical: metrics.paddingY,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (resolvedIcon != null) ...[
+                Icon(
+                  resolvedIcon,
                   color: palette.foreground,
-                  fontWeight: AppTextStyles.medium,
+                  size: metrics.iconSize,
+                ),
+                const SizedBox(width: AppSpacing.x1),
+              ],
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: metrics.textStyle.copyWith(
+                    color: palette.foreground,
+                    fontWeight: AppTextStyles.medium,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -21,17 +21,16 @@ class _BusinessInfoStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageSection(
       key: const ValueKey('sc227_step_business'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      density: VitDensity.compact,
       children: [
         const _StepIntro(
           title: 'Thông tin doanh nghiệp',
           subtitle: 'Cung cấp thông tin để xác minh tài khoản Merchant.',
         ),
-        const SizedBox(height: AppSpacing.x5),
         VitCard(
-          padding: AppSpacing.p2pMerchantApplyCardPadding,
+          padding: VitDensity.compact.cardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -93,15 +92,14 @@ class _DocumentsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageSection(
       key: const ValueKey('sc227_step_documents'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      density: VitDensity.compact,
       children: [
         const _StepIntro(
           title: 'Xác minh tài liệu',
           subtitle: 'Tải lên các tài liệu cần thiết để xác minh.',
         ),
-        const SizedBox(height: AppSpacing.x5),
         for (final document in documents) ...[
           _DocumentCard(
             document: document,
@@ -137,7 +135,7 @@ class _DocumentCard extends StatelessWidget {
       key: P2PMerchantApplyPage.documentKey(document.id),
       onTap: onTap,
       borderColor: uploaded ? AppColors.buy20 : null,
-      padding: AppSpacing.p2pMerchantApplyCardPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Row(
         children: [
           _IconBadge(
@@ -245,17 +243,16 @@ class _HistoryStep extends StatelessWidget {
       ),
     ];
 
-    return Column(
+    return VitPageSection(
       key: const ValueKey('sc227_step_history'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      density: VitDensity.compact,
       children: [
         const _StepIntro(
           title: 'Đánh giá lịch sử',
           subtitle: 'Hệ thống tự động kiểm tra lịch sử giao dịch.',
         ),
-        const SizedBox(height: AppSpacing.x5),
         VitCard(
-          padding: AppSpacing.p2pMerchantApplyCardPadding,
+          padding: VitDensity.compact.cardPadding,
           child: Column(
             children: [
               for (final row in rows) ...[
@@ -265,7 +262,6 @@ class _HistoryStep extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
         const _InfoBanner(
           icon: Icons.check_circle_rounded,
           text: 'Tất cả tiêu chí đánh giá đều đạt yêu cầu!',
@@ -312,17 +308,16 @@ class _FinalStep extends StatelessWidget {
       _SummaryData(label: 'Tài liệu', value: '$uploadedCount/3 đã tải'),
     ];
 
-    return Column(
+    return VitPageSection(
       key: const ValueKey('sc227_step_final'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      density: VitDensity.compact,
       children: [
         const _StepIntro(
           title: 'Xác nhận & Gửi đơn',
           subtitle: 'Kiểm tra lại thông tin trước khi nộp đơn đăng ký.',
         ),
-        const SizedBox(height: AppSpacing.x5),
         VitCard(
-          padding: AppSpacing.p2pMerchantApplyCardPadding,
+          padding: VitDensity.compact.cardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -338,9 +333,7 @@ class _FinalStep extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
         _AgreementCard(accepted: agreementAccepted, onTap: onToggleAgreement),
-        const SizedBox(height: AppSpacing.x4),
         _InfoBanner(
           icon: Icons.warning_amber_rounded,
           text: reviewNotice,
@@ -383,7 +376,7 @@ class _SuccessState extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x5),
         VitCard(
-          padding: AppSpacing.p2pMerchantApplyCardPadding,
+          padding: VitDensity.compact.cardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -427,10 +420,11 @@ class _SuccessState extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         VitCtaButton(
           key: P2PMerchantApplyPage.successCtaKey,
           onPressed: onBackToP2P,
+          density: VitDensity.compact,
           child: const Text('Quay về P2P'),
         ),
       ],
@@ -461,6 +455,7 @@ class _NavigationButtons extends StatelessWidget {
         ? VitCtaButton(
             key: P2PMerchantApplyPage.nextButtonKey,
             onPressed: canProceed ? onNext : null,
+            density: VitDensity.compact,
             trailing: const Icon(Icons.arrow_forward_rounded),
             child: const Text('Tiếp tục'),
           )
@@ -469,6 +464,7 @@ class _NavigationButtons extends StatelessWidget {
             onPressed: canProceed && !submitting ? onSubmit : null,
             loading: submitting,
             variant: VitCtaButtonVariant.success,
+            density: VitDensity.compact,
             child: Text(submitting ? 'Đang gửi...' : 'Gửi đơn đăng ký'),
           );
 
@@ -481,6 +477,7 @@ class _NavigationButtons extends StatelessWidget {
             key: P2PMerchantApplyPage.previousButtonKey,
             onPressed: onPrevious,
             variant: VitCtaButtonVariant.secondary,
+            density: VitDensity.compact,
             leading: const Icon(Icons.arrow_back_rounded),
             child: const Text('Quay lại'),
           ),

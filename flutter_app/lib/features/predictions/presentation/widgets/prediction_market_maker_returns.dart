@@ -10,7 +10,7 @@ class _EstimatedReturns extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.predictionMarketMakerEstimatePadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           Expanded(
@@ -43,7 +43,7 @@ class _AddLiquidityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.inputHeight,
+      height: VitDensity.compact.controlHeight,
       width: double.infinity,
       child: Material(
         color: _predictionPrimary.withValues(alpha: enabled ? 1 : .66),
@@ -60,7 +60,7 @@ class _AddLiquidityButton extends StatelessWidget {
                 color: AppColors.onAccent.withValues(alpha: enabled ? 1 : .5),
                 size: AppSpacing.predictionMarketMakerAddIcon,
               ),
-              const SizedBox(width: AppSpacing.predictionMarketMakerAddIconGap),
+              const SizedBox(width: AppSpacing.x2),
               Text(
                 'Them thanh khoan',
                 style: AppTextStyles.body.copyWith(
@@ -85,7 +85,7 @@ class _LiquidityWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.predictionMarketMakerWarningPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -94,7 +94,7 @@ class _LiquidityWarning extends StatelessWidget {
             color: AppColors.warn,
             size: AppSpacing.predictionMarketMakerWarningIcon,
           ),
-          const SizedBox(width: AppSpacing.predictionMarketMakerWarningGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               'Cung cap thanh khoan co rui ro impermanent loss. APR khong co dinh va phu thuoc vao volume giao dich. Khong dam bao loi nhuan.',

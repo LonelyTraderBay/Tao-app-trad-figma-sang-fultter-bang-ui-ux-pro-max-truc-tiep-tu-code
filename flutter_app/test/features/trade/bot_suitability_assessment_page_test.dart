@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSuitability(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -79,6 +81,19 @@ void main() {
       findsOneWidget,
     );
     expect(find.byKey(BotSuitabilityAssessmentPage.infoKey), findsOneWidget);
+  });
+
+  testWidgets('SC-119 first viewport reaches the first answer option', (
+    tester,
+  ) async {
+    await pumpSuitability(tester);
+
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(BotSuitabilityAssessmentPage.optionKey('q1', 'a')),
+      routeName: 'BotSuitabilityAssessmentPage',
+      actionLabel: 'first answer option',
+    );
   });
 
   testWidgets('SC-119 pass result continues to Trading Bots', (tester) async {

@@ -12,6 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpMarginHub(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -81,6 +83,24 @@ void main() {
     expect(find.text('27'), findsOneWidget);
     expect(find.text('Market Analytics'), findsOneWidget);
     expect(find.text('Regulatory & Safety'), findsOneWidget);
+  });
+
+  testWidgets('SC-090 first viewport reaches first margin action', (
+    tester,
+  ) async {
+    await pumpMarginHub(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-090 MarginTradingHubPage',
+      semanticLabel: 'SC-090 MarginTradingHubPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      MarginTradingHubPage.menuKey('margin').asFinder(),
+      targetLabel: 'the first margin hub action',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-090 menu edges use real routes and placeholders safely', (

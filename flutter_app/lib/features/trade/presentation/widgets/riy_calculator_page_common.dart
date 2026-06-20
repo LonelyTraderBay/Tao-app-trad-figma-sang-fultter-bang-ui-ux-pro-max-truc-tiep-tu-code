@@ -112,10 +112,7 @@ class _RiyChartPainter extends CustomPainter {
     final painter = TextPainter(
       text: TextSpan(
         text: text,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          height: AppSpacing.tradeBotLineHeightTight,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       ),
       textDirection: TextDirection.ltr,
     )..layout();

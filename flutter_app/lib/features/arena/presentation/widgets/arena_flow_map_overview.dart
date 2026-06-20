@@ -9,7 +9,7 @@ class _FlowHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.accent,
-      padding: AppSpacing.arenaFlowMapHeroPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -18,7 +18,7 @@ class _FlowHero extends StatelessWidget {
               const Icon(
                 Icons.map_outlined,
                 color: AppColors.accent,
-                size: AppSpacing.iconMd,
+                size: _flowMapSectionIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -32,15 +32,15 @@ class _FlowHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             'Flow map hoàn chỉnh cho toàn bộ module Open Arena — 10 pages, 10 routes, 4 shared component files, 12+ challenge states.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.arenaFlowMapHeroLineHeight,
+              height: _flowMapHeroLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               for (final stat in stats) ...[
@@ -66,7 +66,7 @@ class _StatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.arenaFlowMapStatPadding,
+      padding: _flowMapStatPadding,
       child: Column(
         children: [
           Text(
@@ -122,14 +122,10 @@ class _CollapsibleSection extends StatelessWidget {
             onTap: onTap,
             borderRadius: AppRadii.smRadius,
             child: Padding(
-              padding: AppSpacing.arenaFlowMapSectionTogglePadding,
+              padding: _flowMapSectionTogglePadding,
               child: Row(
                 children: [
-                  Icon(
-                    icon,
-                    color: color,
-                    size: AppSpacing.arenaFlowMapSectionIcon,
-                  ),
+                  Icon(icon, color: color, size: _flowMapSectionIcon),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
                     child: Text(
@@ -154,7 +150,7 @@ class _CollapsibleSection extends StatelessWidget {
                     child: const Icon(
                       Icons.chevron_right_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.arenaFlowMapInlineIcon,
+                      size: _flowMapInlineIcon,
                     ),
                   ),
                 ],
@@ -179,10 +175,10 @@ class _FlowMapBody extends StatelessWidget {
     return Column(
       children: [
         _RouteRegistry(routes: snapshot.routes),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         for (final group in snapshot.groups) ...[
           _FlowGroupCard(group: group, onRoute: onRoute),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
         ],
         _SharedComponents(components: snapshot.components),
       ],
@@ -209,7 +205,7 @@ class _RouteRegistry extends StatelessWidget {
               ColoredBox(
                 color: AppColors.surface2,
                 child: Padding(
-                  padding: AppSpacing.arenaFlowMapRouteHeaderPadding,
+                  padding: _flowMapRouteHeaderPadding,
                   child: Row(
                     children: [
                       Expanded(
@@ -233,10 +229,13 @@ class _RouteRegistry extends StatelessWidget {
                 ),
               ),
               for (final route in routes) ...[
-                _RouteRow(route: route),
+                _RouteRow(
+                  key: ArenaFlowMapPage.routeKey(route.path),
+                  route: route,
+                ),
                 if (route != routes.last)
                   const Divider(
-                    height: AppSpacing.arenaFlowMapDividerHeight,
+                    height: _flowMapDividerHeight,
                     color: AppColors.divider,
                   ),
               ],
@@ -249,7 +248,7 @@ class _RouteRegistry extends StatelessWidget {
 }
 
 class _RouteRow extends StatelessWidget {
-  const _RouteRow({required this.route});
+  const _RouteRow({super.key, required this.route});
 
   final ArenaFlowRouteDraft route;
 
@@ -257,7 +256,7 @@ class _RouteRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final live = route.status == 'Live';
     return Padding(
-      padding: AppSpacing.arenaFlowMapRouteRowPadding,
+      padding: _flowMapRouteRowPadding,
       child: Row(
         children: [
           Expanded(

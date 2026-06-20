@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +23,27 @@ part '../widgets/copy_trading_v2_common.dart';
 
 const _copyPrimary = AppColors.primary;
 const _copyPurple = AppColors.accent;
+const _copySpace = AppSpacing.x2;
+const _copyCardSpace = AppSpacing.x3;
+const _copyVisualScrollClearance = 112.0;
+const _copyNativeScrollClearance = 72.0;
+const _copyVariantMinHeight = 44.0;
+const _copyVariantButtonHeight = 40.0;
+const _copySortChipHeight = 40.0;
+const _copyAvatarStackWidth = 48.0;
+const _copyAvatarStackHeight = 46.0;
+const _copyAvatarSize = 44.0;
+const _copyTierBadgeSize = 22.0;
+const _copyTierBadgeIcon = 14.0;
+const _copyDetailsButtonHeight = 44.0;
+const _copyGlassHeroMinHeight = 188.0;
+const _copyBoldHeroMinHeight = 176.0;
+const _copyHeroIconBox = 40.0;
+const _copyHeroIconGlyph = 22.0;
+const _copyGlassStatHeight = 104.0;
+const _copyGlassStatIconBox = 30.0;
+const _copyGlassStatIconGlyph = 16.0;
+const _copyBoldStatHeight = 62.0;
 
 class CopyTradingV2Page extends ConsumerStatefulWidget {
   const CopyTradingV2Page({super.key, this.shellRenderMode});
@@ -48,13 +69,11 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
     final snapshot = ref.watch(tradeCopyTradingV2Provider);
     final copyTrading = snapshot.copyTrading;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 112 : 28);
+        (mode.usesVisualQaFrame
+            ? _copyVisualScrollClearance
+            : _copyNativeScrollClearance);
     final traders = _sortedTraders(copyTrading.traders).take(3).toList();
 
     return VitPageLayout(
@@ -75,16 +94,10 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyTradingV2Page.contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    left: AppSpacing.contentPad,
-                    top: AppSpacing.rowPy,
-                    right: AppSpacing.contentPad,
-                    bottom: bottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: AppSpacing.cardGap,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _VariantSwitcher(
                         variants: snapshot.heroVariants,
@@ -98,7 +111,7 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
                         message: copyTrading.riskWarningText,
                       ),
                       VitPageSection(
-                        customGap: AppSpacing.cardGap,
+                        density: VitDensity.compact,
                         children: [
                           _SortChips(
                             options: copyTrading.sortOptions,

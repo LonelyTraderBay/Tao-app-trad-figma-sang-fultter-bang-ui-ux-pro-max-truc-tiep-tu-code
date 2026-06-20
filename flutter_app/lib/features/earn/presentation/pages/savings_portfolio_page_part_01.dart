@@ -11,10 +11,10 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
         .watch(savingsPortfolioRepositoryProvider)
         .getPortfolio();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? _savingsPortfolioVisualNavClearance
+            : _savingsPortfolioNativeNavClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -53,10 +53,15 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    scrollEndPadding,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    density: VitDensity.compact,
                     children: [
                       if (_tab == _PortfolioTab.overview)
                         _OverviewTab(
@@ -108,7 +113,7 @@ class _OverviewTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: AppSpacing.x3,
+      density: VitDensity.compact,
       children: [
         _PortfolioHero(
           snapshot: snapshot,
@@ -161,7 +166,7 @@ class _PortfolioHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX5,
+      padding: _savingsPortfolioCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -226,7 +231,7 @@ class _PortfolioHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -247,7 +252,7 @@ class _PortfolioHero extends StatelessWidget {
               Expanded(child: _HeroPositionStat(snapshot: snapshot)),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -437,7 +442,7 @@ class _HeroAction extends StatelessWidget {
       variant: primary
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.secondary,
-      height: AppSpacing.savingsPortfolioActionHeight,
+      density: VitDensity.compact,
       padding: AppSpacing.earnHorizontalPaddingX2,
       onPressed: () {
         HapticFeedback.selectionClick();

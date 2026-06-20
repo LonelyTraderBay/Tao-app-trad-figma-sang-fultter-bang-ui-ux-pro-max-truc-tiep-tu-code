@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCopyPerformance(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -69,6 +71,33 @@ void main() {
     expect(find.text('+15.6%'), findsOneWidget);
     expect(find.text('Đường vốn so sánh (30 ngày)'), findsOneWidget);
     expect(find.text('Tại sao có chênh lệch?'), findsOneWidget);
+  });
+
+  testWidgets('SC-074 first viewport reaches performance tabs', (tester) async {
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.tradeCopyPerformance('copy001'),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-074 CopyPerformancePage',
+      semanticLabel: 'SC-074 CopyPerformancePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(CopyPerformancePage.tabKey('overview')),
+      targetLabel: 'the performance tabs',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-074 tabs switch to trades and costs', (tester) async {

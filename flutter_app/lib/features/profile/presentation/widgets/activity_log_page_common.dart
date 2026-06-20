@@ -32,7 +32,7 @@ class _DetailBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.profileActivityDetailValueGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           maxLines: 1,
@@ -67,8 +67,7 @@ class _ActivityFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.profileActivityFooterHeight,
-      padding: AppSpacing.profileActivityFooterPadding,
+      density: VitDensity.compact,
       borderColor: _activityDivider,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

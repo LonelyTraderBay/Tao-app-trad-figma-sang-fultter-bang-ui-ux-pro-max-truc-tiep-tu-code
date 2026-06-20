@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -47,10 +48,14 @@ class BotRiskDashboardPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getBotRiskDashboard();
     final mode = shellRenderMode ?? defaultShellRenderMode();
+    final chromeInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
     final bottomInset =
+        chromeInset +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 104
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? AppSpacing.x6 + AppSpacing.x4
+            : AppSpacing.x5 + AppSpacing.x2) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -78,51 +83,40 @@ class BotRiskDashboardPage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: BotRiskDashboardPage.contentKey,
                   clipBehavior: Clip.none,
-                  padding: AppSpacing.tradeBotSecurityScrollPadding(
-                    bottomInset,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.x2,
+                    right: AppSpacing.contentPad,
+                    bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
+                    density: VitDensity.compact,
                     fullBleed: true,
-                    customGap: 0,
                     children: [
                       _RiskScoreCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4),
                       const _SectionLabel('Critical Metrics'),
-                      const SizedBox(height: AppSpacing.x3),
                       VitPageSection(
-                        customGap: 0,
+                        density: VitDensity.compact,
                         children: [_CriticalMetricsGrid(snapshot: snapshot)],
                       ),
-                      const SizedBox(height: AppSpacing.x4),
                       const _SectionLabel('Drawdown Trend (24h)'),
-                      const SizedBox(height: AppSpacing.x4),
                       _DrawdownChartCard(points: snapshot.drawdownPoints),
-                      const SizedBox(height: AppSpacing.x5),
                       const _SectionLabel('Exposure by Asset'),
-                      const SizedBox(height: AppSpacing.x4),
                       _ExposureCard(exposures: snapshot.exposures),
-                      const SizedBox(height: AppSpacing.x5),
                       const _SectionLabel('VaR Trend (7 days)'),
-                      const SizedBox(height: AppSpacing.x4),
                       _VarChartCard(points: snapshot.varHistory),
-                      const SizedBox(height: AppSpacing.x5),
                       const _SectionLabel('Safety Controls'),
-                      const SizedBox(height: AppSpacing.x4),
                       _SafetyControlsCard(controls: snapshot.safetyControls),
-                      const SizedBox(height: AppSpacing.x5),
                       const _SectionLabel('Emergency Actions'),
-                      const SizedBox(height: AppSpacing.x4),
                       _EmergencyActionCard(
                         runningBots: snapshot.runningBots,
                         onTap: () => context.go(snapshot.emergencyPath),
                       ),
-                      const SizedBox(height: AppSpacing.x5),
                       const _RiskExplanationCard(),
-                      const SizedBox(height: AppSpacing.x4),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotCardPadding,
+                        density: VitDensity.compact,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -132,8 +126,9 @@ class BotRiskDashboardPage extends ConsumerWidget {
                               message:
                                   'Score, critical metrics, exposure, VaR trend, safety controls and emergency-stop next step are reviewed before bot risk action.',
                               contractId: 'bot-risk-dashboard-review',
+                              density: VitDensity.compact,
                             ),
-                            SizedBox(height: AppSpacing.tradeBotRowGap),
+                            SizedBox(height: AppSpacing.x2),
                             VitStatusPill(
                               label: 'Emergency route confirmed',
                               status: VitStatusPillStatus.warning,

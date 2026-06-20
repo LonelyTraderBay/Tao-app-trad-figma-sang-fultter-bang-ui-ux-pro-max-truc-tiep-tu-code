@@ -5,8 +5,9 @@ class _RightsNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.complaintsHandlingRightsPadding,
+    return VitCard(
+      density: VitDensity.compact,
+      borderColor: _complaintsPrimary.withValues(alpha: .28),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -15,7 +16,7 @@ class _RightsNotice extends StatelessWidget {
             color: AppColors.text1,
             size: AppSpacing.complaintCaseActionIcon,
           ),
-          const SizedBox(width: AppSpacing.complaintsHandlingRightsIconGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,10 +26,9 @@ class _RightsNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.complaintCaseLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'You have the right to complain. We will investigate fairly '
                   'and respond within 8 weeks. If dissatisfied, you can refer '
@@ -36,7 +36,6 @@ class _RightsNotice extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.complaintsHandlingRightsBodyLineHeight,
                   ),
                 ),
               ],
@@ -61,6 +60,7 @@ class _StatsRow extends StatelessWidget {
           child: VitMetricCard(
             label: 'Active',
             value: '${snapshot.activeCount}',
+            density: VitDensity.compact,
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
@@ -69,6 +69,7 @@ class _StatsRow extends StatelessWidget {
             label: 'Resolved',
             value: '${snapshot.resolvedCount}',
             accentColor: _complaintsGreen,
+            density: VitDensity.compact,
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
@@ -76,6 +77,7 @@ class _StatsRow extends StatelessWidget {
           child: VitMetricCard(
             label: 'Avg. Days',
             value: '${snapshot.averageResolutionDays}',
+            density: VitDensity.compact,
           ),
         ),
       ],
@@ -110,8 +112,8 @@ class _Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.x7 + AppSpacing.x2,
       variant: VitCardVariant.inner,
+      density: VitDensity.compact,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
         activeKey: active.name,

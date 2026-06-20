@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpLaunchpad(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -78,6 +80,24 @@ void main() {
     expect(find.byKey(LaunchpadPage.projectKey('proj1')), findsOneWidget);
     expect(find.text('NexaAI Protocol'), findsOneWidget);
     expect(find.text('MetaVerse Land'), findsOneWidget);
+  });
+
+  testWidgets('SC-295 first viewport reaches first launchpad project', (
+    tester,
+  ) async {
+    await pumpLaunchpad(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-295 LaunchpadPage',
+      semanticLabel: 'SC-295 LaunchpadPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadPage.projectKey('proj1')),
+      routeName: 'SC-295 LaunchpadPage',
+      actionLabel: 'the first launchpad project card',
+    );
   });
 
   testWidgets('SC-295 tab filter shows upcoming project', (tester) async {

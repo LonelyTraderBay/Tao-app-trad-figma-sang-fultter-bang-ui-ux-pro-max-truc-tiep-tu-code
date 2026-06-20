@@ -142,7 +142,7 @@ class _FuturesHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.buttonStandard,
+      height: AppSpacing.buttonStandard + AppSpacing.hairlineStroke,
       child: Row(
         children: [
           VitIconButton(
@@ -354,9 +354,20 @@ class _TradeTab extends ConsumerWidget {
           contractId: 'SC-057',
         ),
         const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
-        const _RiskWarning(),
+        const VitBanner(
+          variant: VitBannerVariant.warning,
+          icon: Icons.warning_amber_rounded,
+          message:
+              'Giao dịch hợp đồng tương lai có rủi ro cao. Bạn có thể mất toàn bộ ký quỹ. Chỉ giao dịch số tiền bạn có thể chấp nhận mất.',
+        ),
         const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
-        const _FuturesSafetyChecklist(),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Futures order review',
+          message:
+              'Leverage limit, margin, liquidation price, fee preview, TP/SL, and order side must be reviewed before confirmation.',
+          contractId: 'SC-057',
+        ),
       ],
     );
   }

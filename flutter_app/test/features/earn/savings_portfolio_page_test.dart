@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_histo
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_portfolio_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPortfolio(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -61,6 +63,22 @@ void main() {
     expect(find.text('Phân bổ tài sản'), findsOneWidget);
     expect(find.text('USDT'), findsOneWidget);
     expect(find.text('BTC'), findsAtLeastNWidgets(1));
+  });
+
+  testWidgets('SC-333 first viewport reaches history action', (tester) async {
+    await pumpPortfolio(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-333 SavingsPortfolioPage',
+      semanticLabel: 'SC-333 SavingsPortfolioPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(SavingsPortfolioPage.historyButtonKey),
+      routeName: 'SC-333 SavingsPortfolioPage',
+      actionLabel: 'the savings history action',
+    );
   });
 
   testWidgets('SC-333 switches to positions tab with local state', (

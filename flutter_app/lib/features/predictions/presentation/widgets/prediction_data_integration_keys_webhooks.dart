@@ -20,6 +20,7 @@ class _ApiKeysSection extends StatelessWidget {
     return VitPageSection(
       label: 'Your API Keys',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         for (final apiKey in apiKeys)
           _ApiKeyCard(
@@ -52,7 +53,7 @@ class _ApiKeyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionDataCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -80,9 +81,7 @@ class _ApiKeyCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: AppSpacing.predictionDataSmallTopGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       apiKey.createdAtLabel,
                       style: AppTextStyles.micro.copyWith(
@@ -99,7 +98,7 @@ class _ApiKeyCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionDataApiKeyBoxTopGap),
+          const SizedBox(height: AppSpacing.x2),
           ConstrainedBox(
             constraints: const BoxConstraints(
               minHeight: AppSpacing.predictionDataApiKeyBoxMinHeight,
@@ -151,12 +150,12 @@ class _ApiKeyCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.predictionDataPermissionsTopGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Permissions',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.predictionDataPermissionLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           Wrap(
             spacing: AppSpacing.predictionDataChipGap,
             runSpacing: AppSpacing.predictionDataChipGap,
@@ -166,7 +165,7 @@ class _ApiKeyCard extends StatelessWidget {
             ],
           ),
           if (apiKey.lastUsedLabel != null) ...[
-            const SizedBox(height: AppSpacing.predictionDataLastUsedGap),
+            const SizedBox(height: AppSpacing.x1),
             Row(
               children: [
                 const Icon(
@@ -198,6 +197,7 @@ class _WebhookSection extends StatelessWidget {
     return VitPageSection(
       label: 'Webhook Endpoints',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         for (final webhook in webhooks) _WebhookCard(webhook: webhook),
       ],
@@ -213,7 +213,7 @@ class _WebhookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionDataCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -239,14 +239,12 @@ class _WebhookCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: AppSpacing.predictionDataWebhookUrlGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       webhook.url,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text1,
-                        height: AppSpacing.predictionDataWebhookUrlLineHeight,
+                        height: 1.2,
                       ),
                     ),
                   ],
@@ -260,12 +258,12 @@ class _WebhookCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionDataWebhookSectionGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Events',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.predictionDataPermissionLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           Wrap(
             spacing: AppSpacing.predictionDataChipGap,
             runSpacing: AppSpacing.predictionDataChipGap,
@@ -273,7 +271,7 @@ class _WebhookCard extends StatelessWidget {
               for (final event in webhook.events) _NeutralChip(label: event),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionDataWebhookSectionGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(

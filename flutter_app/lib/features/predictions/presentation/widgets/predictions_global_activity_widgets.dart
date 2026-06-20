@@ -8,7 +8,7 @@ class _LiveStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionActivityLiveStatsPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         children: [
           Row(
@@ -19,22 +19,20 @@ class _LiveStats extends StatelessWidget {
                   const Icon(
                     Icons.settings_input_antenna_rounded,
                     color: AppColors.buy,
-                    size: AppSpacing.predictionActivityLiveIcon,
+                    size: AppSpacing.iconMd,
                   ),
                   Positioned(
-                    right: AppSpacing.predictionActivityLiveDotOffset,
-                    top: AppSpacing.predictionActivityLiveDotOffset,
+                    right: -AppSpacing.hairlineStroke,
+                    top: -AppSpacing.hairlineStroke,
                     child: const Material(
                       color: AppColors.buy,
                       shape: CircleBorder(),
-                      child: SizedBox.square(
-                        dimension: AppSpacing.predictionActivityLiveDotSize,
-                      ),
+                      child: SizedBox.square(dimension: AppSpacing.x1),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(width: AppSpacing.predictionActivityLiveGap),
+              const SizedBox(width: AppSpacing.x2),
               Text(
                 'Live Feed',
                 style: AppTextStyles.caption.copyWith(
@@ -42,7 +40,7 @@ class _LiveStats extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionActivityLiveGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   'Real-time market activity',
@@ -53,7 +51,7 @@ class _LiveStats extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: AppSpacing.predictionActivityStatsTopGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -62,7 +60,7 @@ class _LiveStats extends StatelessWidget {
                   value: _formatVolume(snapshot.totalVolume),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionActivityStatsGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _StatBox(
                   label: 'Buys',
@@ -70,7 +68,7 @@ class _LiveStats extends StatelessWidget {
                   valueColor: AppColors.buy,
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionActivityStatsGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _StatBox(
                   label: 'Sells',
@@ -102,16 +100,19 @@ class _StatBox extends StatelessWidget {
     return Material(
       color: AppColors.surface2,
       borderRadius: AppRadii.cardRadius,
-      child: SizedBox(
-        height: AppSpacing.predictionActivityStatHeight,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x1,
+          vertical: AppSpacing.x2,
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               label,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            const Padding(padding: AppSpacing.predictionActivityStatValueGap),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               value,
               style: AppTextStyles.caption.copyWith(
@@ -148,14 +149,14 @@ class _AmountFilters extends StatelessWidget {
         const Icon(
           Icons.filter_alt_outlined,
           color: AppColors.text3,
-          size: AppSpacing.predictionActivityFilterIcon,
+          size: AppSpacing.iconSm,
         ),
-        const SizedBox(width: AppSpacing.predictionActivityFilterGap),
+        const SizedBox(width: AppSpacing.x2),
         Text(
           'Min amount:',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(width: AppSpacing.predictionActivityFilterGap),
+        const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -168,9 +169,7 @@ class _AmountFilters extends StatelessWidget {
                     active: active == filter.value,
                     onTap: () => onSelected(filter.value),
                   ),
-                  const SizedBox(
-                    width: AppSpacing.predictionActivityAmountChipGap,
-                  ),
+                  const SizedBox(width: AppSpacing.x1),
                 ],
               ],
             ),
@@ -210,10 +209,15 @@ class _AmountChip extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
-        child: SizedBox(
-          height: AppSpacing.predictionActivityAmountChipHeight,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: VitDensity.compact.controlHeight - AppSpacing.x2,
+          ),
           child: Padding(
-            padding: AppSpacing.predictionActivityAmountChipPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x1,
+            ),
             child: Center(
               child: Text(
                 label,

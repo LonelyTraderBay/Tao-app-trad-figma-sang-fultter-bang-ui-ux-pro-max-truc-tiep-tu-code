@@ -10,8 +10,7 @@ class _MarketCapHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      height: AppSpacing.marketAnalyticsHeroHeight,
-      padding: AppSpacing.marketAnalyticsHeroPadding,
+      density: VitDensity.compact,
       borderColor: _marketPrimary.withValues(alpha: 0.24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -29,7 +28,7 @@ class _MarketCapHero extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
                   fontWeight: AppTextStyles.medium,
-                  height: AppSpacing.marketLineHeightShort,
+                  height: 1.15,
                 ),
               ),
             ],
@@ -43,16 +42,14 @@ class _MarketCapHero extends StatelessWidget {
                   _formatCompact(stats.totalMarketCap, prefix: r'$'),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.pageTitle.copyWith(
-                    height: AppSpacing.marketLineHeightTight,
-                  ),
+                  style: AppTextStyles.pageTitle.copyWith(height: 1),
                 ),
               ),
               const SizedBox(width: AppSpacing.marketAnalyticsGap),
               _ChangePill(value: stats.totalMarketCapChange24h),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -110,10 +107,10 @@ class _HeroMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.marketLineHeightShort,
+              height: 1.15,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsSmallGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -122,7 +119,7 @@ class _HeroMetric extends StatelessWidget {
               color: valueColor,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketLineHeightShort,
+              height: 1.15,
             ),
           ),
         ],
@@ -207,8 +204,7 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.marketAnalyticsStatCardHeight,
-      padding: AppSpacing.marketAnalyticsStatPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -234,7 +230,7 @@ class _StatCard extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             value,
             maxLines: 1,
@@ -242,11 +238,11 @@ class _StatCard extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketLineHeightShort,
+              height: 1.15,
             ),
           ),
           if (change != null) ...[
-            const SizedBox(height: AppSpacing.marketAnalyticsSmallGap),
+            const SizedBox(height: AppSpacing.x1),
             Row(
               children: [
                 Icon(
@@ -262,7 +258,7 @@ class _StatCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: change! >= 0 ? AppColors.buy : AppColors.sell,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.marketLineHeightTight,
+                    height: 1,
                   ),
                 ),
               ],
@@ -287,8 +283,8 @@ class _SentimentGrid extends StatelessWidget {
       children: [
         Expanded(
           child: VitCard(
-            height: AppSpacing.marketAnalyticsSentimentCardHeight,
-            padding: AppSpacing.marketAnalyticsHeroPadding,
+            density: VitDensity.compact,
+            height: AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -297,7 +293,7 @@ class _SentimentGrid extends StatelessWidget {
                   color: AppColors.primarySoft,
                   label: 'Fear & Greed',
                 ),
-                const SizedBox(height: AppSpacing.marketAnalyticsGap),
+                const SizedBox(height: AppSpacing.x2),
                 Expanded(
                   child: _FearGreedGauge(
                     value: stats.fearGreedIndex,
@@ -311,8 +307,8 @@ class _SentimentGrid extends StatelessWidget {
         const SizedBox(width: AppSpacing.marketAnalyticsGap),
         Expanded(
           child: VitCard(
-            height: AppSpacing.marketAnalyticsSentimentCardHeight,
-            padding: AppSpacing.marketAnalyticsHeroPadding,
+            density: VitDensity.compact,
+            height: AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x3,
             child: _MarketBreadthCard(breadth: breadth),
           ),
         ),
@@ -339,23 +335,23 @@ class _MarketBreadthCard extends StatelessWidget {
           color: _marketPrimary,
           label: 'Biến động thị trường',
         ),
-        const SizedBox(height: AppSpacing.marketAnalyticsLargeGap),
+        const SizedBox(height: AppSpacing.x2),
         _BreadthLine(
           label: 'Tăng',
           value: breadth.advancing,
           color: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.marketAnalyticsBreadthGap),
+        const SizedBox(height: AppSpacing.x1),
         _BreadthLine(
           label: 'Giảm',
           value: breadth.declining,
           color: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.marketAnalyticsFooterGap),
+        const SizedBox(height: AppSpacing.x2),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: SizedBox(
-            height: AppSpacing.marketAnalyticsBreadthTrackHeight,
+            height: AppSpacing.x2,
             child: Row(
               children: [
                 Expanded(
@@ -370,7 +366,7 @@ class _MarketBreadthCard extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.marketAnalyticsMediumGap),
+        const SizedBox(height: AppSpacing.x1),
         Row(
           children: [
             Expanded(
@@ -378,7 +374,7 @@ class _MarketBreadthCard extends StatelessWidget {
                 '${breadth.newATH} ATH mới',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.marketLineHeightTight,
+                  height: 1,
                 ),
               ),
             ),
@@ -386,7 +382,7 @@ class _MarketBreadthCard extends StatelessWidget {
               '${breadth.dropping10Pct} giảm >10%',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.sell,
-                height: AppSpacing.marketLineHeightTight,
+                height: 1,
               ),
             ),
           ],
@@ -421,7 +417,7 @@ class _BreadthLine extends StatelessWidget {
             label,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.marketLineHeightTight,
+              height: 1,
             ),
           ),
         ),
@@ -431,7 +427,7 @@ class _BreadthLine extends StatelessWidget {
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: AppSpacing.marketLineHeightTight,
+            height: 1,
           ),
         ),
       ],
@@ -452,24 +448,21 @@ class _FearGreedGauge extends StatelessWidget {
       children: [
         SizedBox(
           width: AppSpacing.marketAnalyticsGaugeWidth,
-          height: AppSpacing.marketAnalyticsGaugeHeight,
+          height: AppSpacing.x6,
           child: CustomPaint(painter: _FearGreedGaugePainter(value: value)),
         ),
-        const Spacer(),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           '$value',
-          style: AppTextStyles.amountMd.copyWith(
-            color: color,
-            height: AppSpacing.marketLineHeightTight,
-          ),
+          style: AppTextStyles.amountSm.copyWith(color: color, height: 1),
         ),
-        const SizedBox(height: AppSpacing.marketAnalyticsCompactGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
+          style: AppTextStyles.captionSm.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.marketLineHeightTight,
+            height: 1,
           ),
         ),
       ],

@@ -12,15 +12,14 @@ class _ProfitRow extends StatelessWidget {
     return Row(
       children: [
         DecoratedBox(
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: isProfit ? AppColors.buy20 : AppColors.sell20,
-            borderRadius: AppRadii.smRadius,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+            ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x1,
-            ),
+            padding: AppSpacing.devCompactChipPadding,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -135,24 +134,24 @@ class _MetricTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.portfolioBtnGhost,
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.devCompactPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 DecoratedBox(
-                  decoration: BoxDecoration(
+                  decoration: ShapeDecoration(
                     color: accentBg,
-                    shape: BoxShape.circle,
+                    shape: const CircleBorder(),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.x2),
+                    padding: AppSpacing.devTinyPadding,
                     child: Icon(
                       icon,
                       color: accent,
@@ -219,21 +218,21 @@ class _NextExecutionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasNext = data.nextRelativeTime != null && data.nextAmountVnd != null;
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.portfolioBtnGhost,
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.x3),
+        padding: AppSpacing.devCompactPadding,
         child: Row(
           children: [
             const DecoratedBox(
-              decoration: BoxDecoration(
+              decoration: ShapeDecoration(
                 color: AppColors.primary15,
-                shape: BoxShape.circle,
+                shape: CircleBorder(),
               ),
               child: Padding(
-                padding: EdgeInsets.all(AppSpacing.x3),
+                padding: AppSpacing.devCompactPadding,
                 child: Icon(
                   Icons.schedule_rounded,
                   color: AppColors.primary,
@@ -315,12 +314,12 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(color: bg, borderRadius: AppRadii.smRadius),
+      decoration: ShapeDecoration(
+        color: bg,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+      ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.devInlinePillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

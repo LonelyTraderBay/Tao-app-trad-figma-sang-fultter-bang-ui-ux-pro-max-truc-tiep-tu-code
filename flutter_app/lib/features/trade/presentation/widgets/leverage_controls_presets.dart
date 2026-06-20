@@ -16,11 +16,12 @@ class _LeverageSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.rowPy,
-        top: AppSpacing.rowPy,
-        right: AppSpacing.rowPy,
-        bottom: AppSpacing.walletAssetSectionGap,
+        left: _leverageCardSpace,
+        top: _leverageCardSpace,
+        right: _leverageCardSpace,
+        bottom: _leverageCardSpace,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,7 +32,7 @@ class _LeverageSlider extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _leverageSpace),
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
               trackHeight: AppSpacing.hairlineStroke * 2,
@@ -93,7 +94,7 @@ class _StopButton extends StatelessWidget {
     return VitCtaButton(
       key: LeveragePage.stopKey(leverage),
       onPressed: onTap,
-      height: AppSpacing.walletTransactionStepLineHeight,
+      height: _leverageControlHeight,
       variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
       padding: AppSpacing.zeroInsets,
       child: Text(
@@ -101,7 +102,7 @@ class _StopButton extends StatelessWidget {
         style: AppTextStyles.numericCode.copyWith(
           color: active ? AppColors.onAccent : AppColors.text2,
           fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-          height: AppSpacing.leverageControlButtonLineHeight,
+          height: _leverageControlLineHeight,
         ),
       ),
     );
@@ -122,11 +123,12 @@ class _PresetGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.rowPy,
-        top: AppSpacing.rowPy,
-        right: AppSpacing.rowPy,
-        bottom: AppSpacing.walletAssetSectionGap,
+        left: _leverageCardSpace,
+        top: _leverageCardSpace,
+        right: _leverageCardSpace,
+        bottom: _leverageCardSpace,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -137,7 +139,7 @@ class _PresetGrid extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletAssetChartBottomGap),
+          const SizedBox(height: _leverageSpace),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -146,7 +148,7 @@ class _PresetGrid extends StatelessWidget {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: AppSpacing.leveragePresetGridColumns,
               crossAxisSpacing: AppSpacing.transferCardGap,
-              mainAxisSpacing: AppSpacing.walletAssetChartBottomGap,
+              mainAxisSpacing: _leverageSpace,
               childAspectRatio: AppSpacing.leveragePresetGridAspectRatio,
             ),
             itemBuilder: (context, index) {
@@ -180,7 +182,7 @@ class _PresetButton extends StatelessWidget {
     return VitCtaButton(
       key: LeveragePage.presetKey(leverage),
       onPressed: onTap,
-      height: AppSpacing.walletTransactionStepLineHeight,
+      height: _leverageControlHeight,
       variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
       padding: AppSpacing.zeroInsets,
       child: Text(
@@ -188,7 +190,7 @@ class _PresetButton extends StatelessWidget {
         style: AppTextStyles.numericCode.copyWith(
           color: active ? AppColors.onAccent : AppColors.text2,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.leverageControlButtonLineHeight,
+          height: _leverageControlLineHeight,
         ),
       ),
     );

@@ -15,7 +15,7 @@ class _DexList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadSwapAggregatorPage.dexListKey,
       child: VitPageSection(
         label: 'DEX so sanh',
@@ -64,7 +64,7 @@ class _DexQuoteCard extends StatelessWidget {
         key: LaunchpadSwapAggregatorPage.dexToggleKey(quote.id),
         onTap: onToggle,
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.launchpadPaddingX4,
           child: Column(
             children: [
               Row(
@@ -169,19 +169,21 @@ class _DexLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.launchpadBox40,
-      height: AppSpacing.launchpadBox40,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: quote.accent.withValues(alpha: .14),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Text(
-        quote.symbol.substring(0, 2),
-        style: AppTextStyles.micro.copyWith(
-          color: quote.accent,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox40,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: quote.accent.withValues(alpha: .14),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(
+          child: Text(
+            quote.symbol.substring(0, 2),
+            style: AppTextStyles.micro.copyWith(
+              color: quote.accent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -194,12 +196,12 @@ class _BestPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.buy,
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+        padding: AppSpacing.launchpadBadgePadding,
         child: Text(
           'BEST',
           style: AppTextStyles.chartLabelTiny.copyWith(
@@ -262,54 +264,56 @@ class _RouteDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.bg,
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Route',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Wrap(
-            spacing: AppSpacing.x2,
-            runSpacing: AppSpacing.x2,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              for (var i = 0; i < quote.route.length; i++) ...[
-                _RouteToken(token: quote.route[i]),
-                if (i < quote.route.length - 1)
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.launchpadIconMd,
-                  ),
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX3,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Route',
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+            ),
+            const SizedBox(height: AppSpacing.x2),
+            Wrap(
+              spacing: AppSpacing.x2,
+              runSpacing: AppSpacing.x2,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                for (var i = 0; i < quote.route.length; i++) ...[
+                  _RouteToken(token: quote.route[i]),
+                  if (i < quote.route.length - 1)
+                    const Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.launchpadIconMd,
+                    ),
+                ],
               ],
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              Icon(
-                Icons.shield_outlined,
-                color: quote.security == LaunchpadSwapSecurity.high
-                    ? AppColors.buy
-                    : AppColors.primary,
-                size: AppSpacing.launchpadIconSm,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                'Security: ${quote.security == LaunchpadSwapSecurity.high ? 'High' : 'Medium'}',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(height: AppSpacing.x2),
+            Row(
+              children: [
+                Icon(
+                  Icons.shield_outlined,
+                  color: quote.security == LaunchpadSwapSecurity.high
+                      ? AppColors.buy
+                      : AppColors.primary,
+                  size: AppSpacing.launchpadIconSm,
+                ),
+                const SizedBox(width: AppSpacing.x1),
+                Text(
+                  'Security: ${quote.security == LaunchpadSwapSecurity.high ? 'High' : 'Medium'}',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -323,12 +327,12 @@ class _RouteToken extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface,
-        borderRadius: AppRadii.xsRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+        padding: AppSpacing.launchpadPillPadding,
         child: Text(
           token,
           style: AppTextStyles.micro.copyWith(
@@ -348,29 +352,14 @@ class _SwapWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadSwapAggregatorPage.warningKey,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppColors.warn08,
-        border: Border.all(color: AppColors.warn15),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.launchpadIconLg,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              'Gia chi mang tinh chat tham khao. Kiem tra lai truoc khi swap. Slippage: $slippage%',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-            ),
-          ),
-        ],
+      child: VitHighRiskStatePanel(
+        state: VitHighRiskUiState.riskReview,
+        title: 'Review route before swap',
+        message:
+            'Gia chi mang tinh chat tham khao. Kiem tra lai truoc khi swap. Slippage: $slippage%',
+        contractId: 'Launchpad swap route',
       ),
     );
   }
@@ -383,21 +372,11 @@ class _SwapPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      borderColor: AppColors.buy20,
-      child: Row(
-        children: [
-          const Icon(Icons.check_circle_outline_rounded, color: AppColors.buy),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              message,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-            ),
-          ),
-        ],
-      ),
+    return VitHighRiskStatePanel(
+      state: VitHighRiskUiState.success,
+      title: 'Swap preview ready',
+      message: message,
+      contractId: 'Best route preview',
     );
   }
 }

@@ -6,8 +6,8 @@ class _TaxNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
       variant: VitCardVariant.inner,
+      density: VitDensity.compact,
       borderColor: _taxAmber.withValues(alpha: .30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -15,9 +15,9 @@ class _TaxNotice extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: _taxAmber,
-            size: AppSpacing.iconMd,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          const SizedBox(width: AppSpacing.tradeBotNarrowIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,19 +27,15 @@ class _TaxNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: _taxAmber,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotRowGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Cryptocurrency trading is taxable in most countries. Bot '
                   'trades are treated as individual transactions. We provide '
                   'reports for convenience, but you should consult a tax '
                   'professional for accurate filing.',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.tradeBotLineHeightRelaxed,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ],
             ),
@@ -67,23 +63,18 @@ class _YearPicker extends StatelessWidget {
       children: [
         for (var i = 0; i < years.length; i++) ...[
           Expanded(
-            child: GestureDetector(
+            child: VitCtaButton(
               key: BotTaxReportingPage.yearKey(years[i]),
-              behavior: HitTestBehavior.opaque,
-              onTap: () => onChanged(years[i]),
-              child: VitCtaButton(
-                onPressed: () => onChanged(years[i]),
-                height: AppSpacing.tradeBotControlHeight,
-                variant: selectedYear == years[i]
-                    ? VitCtaButtonVariant.primary
-                    : VitCtaButtonVariant.ghost,
-                padding: AppSpacing.zeroInsets,
-                child: Text(
-                  years[i],
-                  style: AppTextStyles.caption.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+              onPressed: () => onChanged(years[i]),
+              density: VitDensity.compact,
+              variant: selectedYear == years[i]
+                  ? VitCtaButtonVariant.primary
+                  : VitCtaButtonVariant.ghost,
+              padding: AppSpacing.zeroInsets,
+              child: Text(
+                years[i],
+                style: AppTextStyles.caption.copyWith(
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),

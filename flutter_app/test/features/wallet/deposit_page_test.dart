@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDeposit(
     WidgetTester tester, {
@@ -78,6 +80,24 @@ void main() {
     expect(find.text('Sao chép địa chỉ'), findsOneWidget);
     expect(find.text('Thông tin nạp tiền'), findsOneWidget);
     expect(find.text('Làm mới địa chỉ nạp'), findsOneWidget);
+  });
+
+  testWidgets('SC-137 first viewport reaches copy address action', (
+    tester,
+  ) async {
+    await pumpDeposit(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'DepositPage',
+      semanticLabel: 'SC-137 DepositPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(DepositPage.copyAddressKey),
+      routeName: 'DepositPage',
+      actionLabel: 'the deposit copy address action',
+    );
   });
 
   testWidgets('SC-137 network picker switches selected deposit network', (

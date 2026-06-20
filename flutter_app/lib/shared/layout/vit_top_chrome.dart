@@ -99,7 +99,7 @@ class VitTopChrome extends StatelessWidget {
     return _TopChromeSurface(
       transparent: transparent,
       minHeight: rootMinHeight,
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppTopHeaderTokens.horizontalPadding,
         AppTopHeaderTokens.rootTopPadding,
         AppTopHeaderTokens.horizontalPadding,
@@ -134,7 +134,7 @@ class VitTopChrome extends StatelessWidget {
     return _TopChromeSurface(
       transparent: transparent,
       minHeight: instrumentMinHeight,
-      padding: const EdgeInsets.symmetric(
+      padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppTopHeaderTokens.horizontalPadding,
       ),
       child: Row(
@@ -174,18 +174,18 @@ class _TopChromeSurface extends StatelessWidget {
 
   final bool transparent;
   final double minHeight;
-  final EdgeInsets padding;
+  final EdgeInsetsGeometry padding;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: transparent
             ? AppTopHeaderTokens.transparentSurfaceColor
             : AppTopHeaderTokens.surfaceColor,
-        border: transparent
-            ? null
+        shape: transparent
+            ? const Border()
             : const Border(
                 bottom: BorderSide(color: AppTopHeaderTokens.dividerColor),
               ),

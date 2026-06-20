@@ -20,7 +20,7 @@ class _SummarySection extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: _auditSpace),
         Row(
           children: [
             Expanded(
@@ -40,7 +40,7 @@ class _SummarySection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.walletAssetPillGap),
+        const SizedBox(height: _auditSpace),
         Row(
           children: [
             Expanded(
@@ -88,7 +88,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: AppSpacing.copyAuditSummaryCardHeight,
+      height: _auditSummaryCardExtent,
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -100,7 +100,7 @@ class _SummaryCard extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletAssetPillGap),
+          const SizedBox(height: _auditTinySpace),
           Text(
             value,
             style: AppTextStyles.amountSm.copyWith(
@@ -142,15 +142,15 @@ class _ExportFormatButton extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.copyAuditExportLineHeight,
+                    height: _auditTitleLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: _auditTinySpace),
                 Text(
                   format.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.copyAuditExportLineHeight,
+                    height: _auditBodyLineHeight,
                   ),
                 ),
               ],

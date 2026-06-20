@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -85,11 +86,15 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
     final totalPnl = controller.totalPnlForMode(_mode);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final chromeInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollClearance =
+        chromeInset +
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? AppSpacing.x6 + AppSpacing.x6
+            : AppSpacing.x5 + AppSpacing.x5);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -121,12 +126,12 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                         left: AppSpacing.contentPad,
                         top: AppSpacing.rowPy,
                         right: AppSpacing.contentPad,
-                        bottom: bottomInset,
+                        bottom: scrollClearance,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: AppSpacing.x3,
+                        density: VitDensity.compact,
                         children: [
                           _ClientCategoryCard(
                             category: snapshot.clientCategory,
@@ -136,6 +141,7 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                             padding: AppSpacing.cardPaddingCompact,
                             child: VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
+                              density: VitDensity.compact,
                               title: 'Margin order review required',
                               message:
                                   'Leverage, liquidation risk, fee estimate, limit, preview and confirmation are reviewed before order submission.',
@@ -147,10 +153,6 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                             activeId: _mode,
                             onChanged: (id) => setState(() => _mode = id),
                             keyBuilder: MarginTradingPage.modeKey,
-                          ),
-                          _AccountHero(
-                            account: snapshot.account,
-                            totalPnl: totalPnl,
                           ),
                           _SegmentedTabs(
                             tabs: [
@@ -167,7 +169,7 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                             keyBuilder: MarginTradingPage.tabKey,
                           ),
                           VitPageSection(
-                            customGap: 0,
+                            density: VitDensity.compact,
                             children: [
                               if (_tab == 'trade')
                                 _TradeTab(
@@ -202,6 +204,10 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                               else
                                 const _OrdersTab(),
                             ],
+                          ),
+                          _AccountHero(
+                            account: snapshot.account,
+                            totalPnl: totalPnl,
                           ),
                         ],
                       ),

@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_portfolio_optimizer_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPortfolioOptimizer(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,6 +72,22 @@ void main() {
     expect(find.text('Efficient Frontier'), findsOneWidget);
     expect(find.text('Optimal (Max Sharpe)'), findsWidgets);
     expect(find.byKey(DCAPortfolioOptimizer.applyKey), findsOneWidget);
+  });
+
+  testWidgets('SC-174 first viewport reaches optimizer tabs', (tester) async {
+    await pumpPortfolioOptimizer(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-174 DCAPortfolioOptimizer',
+      semanticLabel: 'SC-174 DCAPortfolioOptimizer',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(DCAPortfolioOptimizer.tabKey('frontier')),
+      routeName: 'SC-174 DCAPortfolioOptimizer',
+      actionLabel: 'the optimizer tab strip',
+    );
   });
 
   testWidgets('SC-174 tabs and apply allocation route are wired', (

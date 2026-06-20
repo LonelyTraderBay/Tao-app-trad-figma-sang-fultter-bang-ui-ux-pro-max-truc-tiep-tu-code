@@ -11,11 +11,11 @@ class _ArenaPredictionBridgeFoundationPageState
         .watch(arenaReadModelControllerProvider)
         .getArenaPredictionBridge();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _bridgeVisualNavClearance
+        : _bridgeNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -40,10 +40,10 @@ class _ArenaPredictionBridgeFoundationPageState
                   child: SingleChildScrollView(
                     key: ArenaPredictionBridgeFoundationPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    padding: EdgeInsets.only(bottom: scrollEndPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      density: VitDensity.compact,
                       children: [
                         const _BridgeHero(),
                         _SectionTabs(
@@ -105,7 +105,7 @@ class _BridgeHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.primary,
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -124,7 +124,7 @@ class _BridgeHero extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.primary,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaBridgeHeroLineHeight,
+                    height: _bridgeHeroLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -132,7 +132,7 @@ class _BridgeHero extends StatelessWidget {
                   'Nền tảng kết nối an toàn giữa Open Arena và Prediction Markets. Khóa boundary trước khi nối flow.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaBridgeBodyLineHeight,
+                    height: _bridgeBodyLineHeight,
                   ),
                 ),
               ],
@@ -186,52 +186,14 @@ class _BridgeTabPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: ArenaPredictionBridgeFoundationPage.tabKey(config.id),
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.arenaBridgeTabHeight,
-          child: Material(
-            color: active
-                ? AppColors.primary.withValues(alpha: .14)
-                : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: active
-                    ? AppColors.primary.withValues(alpha: .55)
-                    : AppColors.cardBorder,
-                width: active ? 1.5 : 1,
-              ),
-              borderRadius: AppRadii.inputRadius,
-            ),
-            child: Padding(
-              padding: AppSpacing.arenaHorizontalPaddingX4,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    config.icon,
-                    color: active ? AppColors.primary : AppColors.text2,
-                    size: AppSpacing.arenaBridgeChipIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    config.label,
-                    style: AppTextStyles.micro.copyWith(
-                      color: active ? AppColors.primary : AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitStatusPill(
+      key: ArenaPredictionBridgeFoundationPage.tabKey(config.id),
+      label: config.label,
+      icon: config.icon,
+      status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
+      size: VitStatusPillSize.md,
+      outline: !active,
+      onTap: onTap,
     );
   }
 }
@@ -280,45 +242,38 @@ class _PrinciplesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: '1 - Cross-Module Principles',
+      accentColor: AppColors.primary,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: '1 - Cross-Module Principles',
-          accentColor: AppColors.primary,
-        ),
-        const SizedBox(height: AppSpacing.x4),
         Text(
           '6 nguyên tắc bắt buộc khi kết nối Arena - Prediction Markets. Vi phạm = reject trong code review.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaBridgeIntroLineHeight,
+            height: _bridgeIntroLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
-        for (final principle in snapshot.principles) ...[
+        for (final principle in snapshot.principles)
           _PrincipleCard(principle: principle),
-          if (principle != snapshot.principles.last)
-            const SizedBox(height: AppSpacing.x4),
-        ],
-        const SizedBox(height: AppSpacing.x5),
-        const VitModuleSectionHeader(
-          title: 'Allowed vs Not Allowed',
+        VitPageSection(
+          label: 'Allowed vs Not Allowed',
           accentColor: AppColors.buy,
-        ),
-        const SizedBox(height: AppSpacing.x4),
-        _RuleBoard(
-          title: 'Allowed',
-          icon: Icons.check_rounded,
-          color: AppColors.buy,
-          items: snapshot.allowedItems,
-        ),
-        const SizedBox(height: AppSpacing.x4),
-        _RuleBoard(
-          title: 'Not Allowed',
-          icon: Icons.close_rounded,
-          color: AppColors.sell,
-          items: snapshot.notAllowedItems,
+          density: VitDensity.compact,
+          children: [
+            _RuleBoard(
+              title: 'Allowed',
+              icon: Icons.check_rounded,
+              color: AppColors.buy,
+              items: snapshot.allowedItems,
+            ),
+            _RuleBoard(
+              title: 'Not Allowed',
+              icon: Icons.close_rounded,
+              color: AppColors.sell,
+              items: snapshot.notAllowedItems,
+            ),
+          ],
         ),
       ],
     );
@@ -334,10 +289,7 @@ class _PrincipleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final tone = _toneColor(principle.tone);
     return VitCard(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.arenaBridgePrincipleMinHeight,
-      ),
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -367,7 +319,7 @@ class _PrincipleCard extends StatelessWidget {
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.arenaBridgeTitleLineHeight,
+                          height: _bridgeTitleLineHeight,
                         ),
                       ),
                     ),
@@ -378,7 +330,7 @@ class _PrincipleCard extends StatelessWidget {
                   principle.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaBridgeBodyLineHeight,
+                    height: _bridgeBodyLineHeight,
                   ),
                 ),
               ],
@@ -407,7 +359,7 @@ class _RuleBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: color.withValues(alpha: .25),
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -424,10 +376,10 @@ class _RuleBoard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           for (final item in items) ...[
             _RuleRow(item: item, color: color),
-            if (item != items.last) const SizedBox(height: AppSpacing.x3),
+            if (item != items.last) const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -461,7 +413,7 @@ class _RuleRow extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.arenaBridgeMetricLineHeight,
+                  height: _bridgeMetricLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x1),
@@ -469,7 +421,7 @@ class _RuleRow extends StatelessWidget {
                 item.description,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.arenaBridgeBodyLineHeight,
+                  height: _bridgeBodyLineHeight,
                 ),
               ),
             ],

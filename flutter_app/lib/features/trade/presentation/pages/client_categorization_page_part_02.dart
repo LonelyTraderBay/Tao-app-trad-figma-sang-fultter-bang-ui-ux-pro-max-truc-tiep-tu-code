@@ -14,11 +14,11 @@ class _OverviewTab extends StatelessWidget {
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: AppSpacing.contentPad,
+      density: VitDensity.compact,
       children: [
         VitPageSection(
           label: 'Client Categories',
-          customGap: AppSpacing.tradeBotCardGap,
+          density: VitDensity.compact,
           children: [
             for (final category in categories)
               _CategoryCard(
@@ -29,7 +29,7 @@ class _OverviewTab extends StatelessWidget {
         ),
         const VitPageSection(
           label: 'Want Professional Status?',
-          customGap: AppSpacing.tradeBotCardGap,
+          density: VitDensity.compact,
           children: [_OptUpCard()],
         ),
       ],
@@ -48,11 +48,11 @@ class _CategoryCard extends StatelessWidget {
     final style = _categoryStyle(category.id);
     return VitCard(
       key: ClientCategorizationPage.categoryKey(category.id),
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.x4,
+        density: VitDensity.compact,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +62,7 @@ class _CategoryCard extends StatelessWidget {
                 size: AppSpacing.tradeBotClientCategoryIcon,
                 iconSize: AppSpacing.tradeBotClientCategoryIconGlyph,
               ),
-              const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,12 +77,11 @@ class _CategoryCard extends StatelessWidget {
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              height: AppSpacing.tradeBotLineHeightTight,
                             ),
                           ),
                         ),
                         if (isCurrent) ...[
-                          const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                          const SizedBox(width: AppSpacing.x2),
                           Icon(
                             Icons.check_circle_outline,
                             color: style.color,
@@ -97,7 +96,6 @@ class _CategoryCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.tradeBotLineHeightTight,
                       ),
                     ),
                   ],
@@ -113,7 +111,7 @@ class _CategoryCard extends StatelessWidget {
                   value: '${category.protections.length} active',
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotRowGap),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: _MetricBox(
                   label: 'Requirements',
@@ -134,11 +132,11 @@ class _OptUpCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.tradeBotStatusGap,
+        density: VitDensity.compact,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,26 +149,24 @@ class _OptUpCard extends StatelessWidget {
                 size: AppSpacing.tradeBotClientCategoryIcon,
                 iconSize: AppSpacing.tradeBotClientCategoryIconGlyph,
               ),
-              const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: VitPageContent(
                   padding: VitContentPadding.none,
                   fullBleed: true,
-                  customGap: AppSpacing.tradeBotSmallGap,
+                  density: VitDensity.compact,
                   children: [
                     Text(
                       'Request Professional Client Status',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.tradeBotLineHeightTight,
                       ),
                     ),
                     Text(
                       'If you meet the criteria, you can request to be treated as a professional client with reduced regulatory requirements.',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.tradeBotLineHeightBody,
                       ),
                     ),
                   ],
@@ -180,7 +176,7 @@ class _OptUpCard extends StatelessWidget {
           ),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.tradeBotCompactCardPadding,
+            density: VitDensity.compact,
             borderColor: _clientAmber.withValues(alpha: .24),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,14 +186,11 @@ class _OptUpCard extends StatelessWidget {
                   color: _clientAmber,
                   size: AppSpacing.tradeBotSectionMarkerHeight,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: RichText(
                     text: TextSpan(
-                      style: AppTextStyles.micro.copyWith(
-                        color: _clientAmber,
-                        height: AppSpacing.tradeBotLineHeightBody,
-                      ),
+                      style: AppTextStyles.micro.copyWith(color: _clientAmber),
                       children: [
                         TextSpan(
                           text: 'Warning: ',
@@ -219,7 +212,7 @@ class _OptUpCard extends StatelessWidget {
           ),
           VitCtaButton(
             key: ClientCategorizationPage.optUpKey,
-            height: AppSpacing.tradeBotSheetActionHeight,
+            density: VitDensity.compact,
             leading: const Icon(Icons.description_outlined),
             trailing: const Icon(Icons.chevron_right_rounded),
             onPressed: () =>
@@ -241,7 +234,7 @@ class _ProtectionsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Protection Comparison',
-      customGap: AppSpacing.tradeBotCardGap,
+      density: VitDensity.compact,
       children: [
         for (final category in categories)
           _ListCard(category: category, values: category.protections),
@@ -259,7 +252,7 @@ class _RequirementsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Qualification Requirements',
-      customGap: AppSpacing.tradeBotCardGap,
+      density: VitDensity.compact,
       children: [
         for (final category in categories)
           _ListCard(
@@ -287,11 +280,11 @@ class _ListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = _categoryStyle(category.id);
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
       child: VitPageContent(
         padding: VitContentPadding.none,
         fullBleed: true,
-        customGap: AppSpacing.x4,
+        density: VitDensity.compact,
         children: [
           Row(
             children: [
@@ -300,13 +293,12 @@ class _ListCard extends StatelessWidget {
                 color: style.color,
                 size: AppSpacing.tradeBotClientMarker,
               ),
-              const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+              const SizedBox(width: AppSpacing.x2),
               Text(
                 category.label,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
@@ -314,7 +306,7 @@ class _ListCard extends StatelessWidget {
           VitPageContent(
             padding: VitContentPadding.none,
             fullBleed: true,
-            customGap: AppSpacing.tradeBotSmallGap,
+            density: VitDensity.compact,
             children: [
               for (final value in values)
                 Row(
@@ -327,13 +319,12 @@ class _ListCard extends StatelessWidget {
                       color: requirementMode ? AppColors.text3 : style.color,
                       size: AppSpacing.x4,
                     ),
-                    const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                    const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: Text(
                         value,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
-                          height: AppSpacing.tradeBotLineHeightBody,
                         ),
                       ),
                     ),
@@ -359,11 +350,11 @@ class _HistoryTab extends StatelessWidget {
         categories.firstWhere((item) => item.id == id).label;
     return VitPageSection(
       label: 'Category History',
-      customGap: AppSpacing.tradeBotCardGap,
+      density: VitDensity.compact,
       children: [
         for (final entry in history)
           VitCard(
-            padding: AppSpacing.tradeBotStrategyCardPadding,
+            density: VitDensity.compact,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -375,19 +366,18 @@ class _HistoryTab extends StatelessWidget {
                   size: AppSpacing.tradeBotClientHistoryIcon,
                   iconSize: AppSpacing.tradeBotClientHistoryIconGlyph,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+                const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: AppSpacing.tradeBotLabelGap,
+                    density: VitDensity.compact,
                     children: [
                       Text(
                         _historyActionLabel(entry.action),
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
                       if (entry.fromCategoryId != null)
@@ -395,21 +385,18 @@ class _HistoryTab extends StatelessWidget {
                           '${labelFor(entry.fromCategoryId!)} -> ${labelFor(entry.toCategoryId)}',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            height: AppSpacing.tradeBotLineHeightTight,
                           ),
                         ),
                       Text(
                         entry.reason,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.tradeBotLineHeightCaption,
                         ),
                       ),
                       Text(
                         _formatHistoryDate(entry.date),
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
                     ],
@@ -440,7 +427,7 @@ class _QuickLinks extends StatelessWidget {
                 context.go(AppRoutePaths.tradeCopyRegulatoryDisclosures),
           ),
         ),
-        const SizedBox(width: AppSpacing.tradeBotCardGap),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: _QuickLinkButton(
             key: ClientCategorizationPage.settingsKey,

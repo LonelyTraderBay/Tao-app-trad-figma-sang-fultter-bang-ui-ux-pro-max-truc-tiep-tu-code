@@ -58,44 +58,42 @@ class _CategorySection extends StatelessWidget {
     final color = savingsNotificationCategoryColor(category);
     final enabled = alerts.where((item) => item.enabled).length;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                savingsNotificationCategoryIcon(category),
-                color: color,
-                size: AppSpacing.savingsNotificationInlineIcon,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                savingsNotificationCategoryLabel(category),
-                style: savingsNotificationCaptionMedium.copyWith(
-                  color: AppColors.text2,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                '($enabled/${alerts.length})',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          for (final alert in alerts) ...[
-            _AlertCard(
-              alert: alert,
-              enabled: masterEnabled && alert.enabled,
-              disabled: !masterEnabled,
-              onToggle: () => onToggle(alert.id),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              savingsNotificationCategoryIcon(category),
+              color: color,
+              size: AppSpacing.savingsNotificationInlineIcon,
             ),
-            if (alert != alerts.last) const SizedBox(height: AppSpacing.x2),
+            const SizedBox(width: AppSpacing.x2),
+            Text(
+              savingsNotificationCategoryLabel(category),
+              style: savingsNotificationCaptionMedium.copyWith(
+                color: AppColors.text2,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Text(
+              '($enabled/${alerts.length})',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            ),
           ],
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        for (final alert in alerts) ...[
+          _AlertCard(
+            alert: alert,
+            enabled: masterEnabled && alert.enabled,
+            disabled: !masterEnabled,
+            onToggle: () => onToggle(alert.id),
+          ),
+          if (alert != alerts.last) const SizedBox(height: AppSpacing.x2),
         ],
-      ),
+        const SizedBox(height: AppSpacing.x4),
+      ],
     );
   }
 }
@@ -120,20 +118,23 @@ class _AlertCard extends StatelessWidget {
     return VitCard(
       key: SavingsNotificationPreferencesKeys.alert(alert.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.savingsNotificationIconBox,
-            height: AppSpacing.savingsNotificationIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              savingsNotificationAlertIcon(alert.iconKey),
-              color: color,
-              size: AppSpacing.savingsNotificationAlertIcon,
+          SizedBox.square(
+            dimension: AppSpacing.savingsNotificationIconBox,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: .14),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Icon(
+                savingsNotificationAlertIcon(alert.iconKey),
+                color: color,
+                size: AppSpacing.savingsNotificationAlertIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),

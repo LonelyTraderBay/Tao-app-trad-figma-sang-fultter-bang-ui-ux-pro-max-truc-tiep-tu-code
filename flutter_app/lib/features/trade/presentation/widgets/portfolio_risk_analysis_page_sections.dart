@@ -18,7 +18,7 @@ class _RiskSummaryGrid extends StatelessWidget {
                 caption: 'Across ${snapshot.assetExposures.length} assets',
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeBotCardGap),
+            const SizedBox(width: _riskSectionSpace),
             Expanded(
               child: _RiskSummaryCard(
                 label: 'VaR (95%, 1-day)',
@@ -29,7 +29,7 @@ class _RiskSummaryGrid extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
+        const SizedBox(height: _riskSectionSpace),
         Row(
           children: [
             Expanded(
@@ -40,7 +40,7 @@ class _RiskSummaryGrid extends StatelessWidget {
                 caption: 'Good',
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeBotCardGap),
+            const SizedBox(width: _riskSectionSpace),
             Expanded(
               child: _RiskSummaryCard(
                 label: 'Risk Alerts',
@@ -72,7 +72,7 @@ class _RiskSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotCassSummaryHeight,
+      height: _riskSummaryExtent,
       padding: AppSpacing.tradeBotCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +81,7 @@ class _RiskSummaryCard extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Spacer(),
+          const SizedBox(height: _riskTinySpace),
           Text(
             value,
             style: AppTextStyles.amountSm.copyWith(
@@ -89,7 +89,7 @@ class _RiskSummaryCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          const SizedBox(height: _riskTinySpace),
           Text(
             caption,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -121,7 +121,7 @@ class _RiskWarningPanel extends StatelessWidget {
                 color: _riskWarningText,
                 size: AppSpacing.tradeBotSmallIcon,
               ),
-              const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+              const SizedBox(width: _riskSectionSpace),
               Text(
                 'Cảnh báo rủi ro',
                 style: AppTextStyles.baseMedium.copyWith(
@@ -130,7 +130,7 @@ class _RiskWarningPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: _riskSectionSpace),
           for (final alert in alerts) ...[
             Text(
               '• $alert',
@@ -141,8 +141,7 @@ class _RiskWarningPanel extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            if (alert != alerts.last)
-              const SizedBox(height: AppSpacing.tradeBotTinyGap),
+            if (alert != alerts.last) const SizedBox(height: _riskTinySpace),
           ],
         ],
       ),
@@ -193,26 +192,26 @@ class _ExposureTab extends StatelessWidget {
           title: 'Asset Allocation',
           variant: VitSectionHeaderVariant.accentBar,
         ),
-        const SizedBox(height: AppSpacing.tradeBotContentGap),
+        const SizedBox(height: _riskSectionSpace),
         SizedBox(
-          height: AppSpacing.tradeBotAnalyticsChartHeight,
+          height: _riskChartExtent,
           child: Center(
             child: CustomPaint(
-              size: const Size(
-                AppSpacing.tradeBotRiskRingSize,
-                AppSpacing.tradeBotRiskRingSize,
-              ),
+              size: const Size(_riskRingExtent, _riskRingExtent),
               painter: _ExposurePiePainter(snapshot.assetExposures),
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotPanelGap),
+        const SizedBox(height: _riskSectionSpace),
         for (final asset in snapshot.assetExposures) ...[
-          _AssetExposureRow(asset: asset),
+          _AssetExposureRow(
+            key: PortfolioRiskAnalysisPage.assetKey(asset.asset),
+            asset: asset,
+          ),
           if (asset != snapshot.assetExposures.last)
-            const SizedBox(height: AppSpacing.tradeBotSmallGap),
+            const SizedBox(height: _riskTinySpace),
         ],
-        const SizedBox(height: AppSpacing.tradeBotContentGap),
+        const SizedBox(height: _riskSectionSpace),
         _DiversificationNote(score: snapshot.diversificationScore),
       ],
     );
@@ -220,7 +219,7 @@ class _ExposureTab extends StatelessWidget {
 }
 
 class _AssetExposureRow extends StatelessWidget {
-  const _AssetExposureRow({required this.asset});
+  const _AssetExposureRow({super.key, required this.asset});
 
   final TradeAssetExposure asset;
 
@@ -229,19 +228,19 @@ class _AssetExposureRow extends StatelessWidget {
     final color = Color(asset.colorHex);
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.tradeBotCassTabsHeight,
+      height: _riskAssetRowExtent,
       padding: AppSpacing.tradeBotMetricBoxPadding,
       child: Row(
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            width: AppSpacing.tradeBotChartLegendSwatchHeight,
-            height: AppSpacing.tradeBotChartLegendSwatchHeight,
+            width: _riskSwatchExtent,
+            height: _riskSwatchExtent,
             clip: true,
             background: ColoredBox(color: color),
             child: const SizedBox.shrink(),
           ),
-          const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+          const SizedBox(width: _riskSectionSpace),
           Text(
             asset.asset,
             style: AppTextStyles.caption.copyWith(
@@ -251,7 +250,7 @@ class _AssetExposureRow extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          const Spacer(),
+          const Expanded(child: SizedBox.shrink()),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -262,12 +261,12 @@ class _AssetExposureRow extends StatelessWidget {
                   color: AppColors.text1,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeBotTinyGap),
+              const SizedBox(height: _riskTinySpace),
               Text(
                 '${_formatPercent(asset.percent)}%',
                 style: AppTextStyles.numericMicro.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.tradeBotLineHeightCaption,
+                  height: _riskCaptionLineHeight,
                 ),
               ),
             ],
@@ -297,7 +296,7 @@ class _DiversificationNote extends StatelessWidget {
             color: _riskPrimary,
             size: AppSpacing.tradeBotMediumIcon,
           ),
-          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          const SizedBox(width: _riskSectionSpace),
           Expanded(
             child: Text(
               'Diversification score $score/100. Khuyến nghị không để asset nào chiếm >30% portfolio.',

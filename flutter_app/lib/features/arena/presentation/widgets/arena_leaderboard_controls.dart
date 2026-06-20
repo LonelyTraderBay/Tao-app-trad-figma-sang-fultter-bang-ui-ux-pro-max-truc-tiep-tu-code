@@ -9,12 +9,12 @@ class _MyRankCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.accent,
-      padding: AppSpacing.arenaLeaderboardHeroPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.arenaLeaderboardMyRankIconBox,
-            height: AppSpacing.arenaLeaderboardMyRankIconBox,
+            width: _leaderboardMyRankIconBox,
+            height: _leaderboardMyRankIconBox,
             child: const DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.accent12,
@@ -24,7 +24,7 @@ class _MyRankCard extends StatelessWidget {
                 child: Icon(
                   Icons.emoji_events_outlined,
                   color: AppColors.accent,
-                  size: AppSpacing.arenaLeaderboardMyRankIcon,
+                  size: _leaderboardMyRankIcon,
                 ),
               ),
             ),
@@ -201,13 +201,13 @@ class _FilterChipButton extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: AppSpacing.arenaLeaderboardFilterPadding,
+            padding: _leaderboardFilterPadding,
             child: Row(
               children: [
                 Icon(
                   icon,
                   color: active ? accentColor : AppColors.text2,
-                  size: AppSpacing.arenaLeaderboardFilterIcon,
+                  size: _leaderboardFilterIcon,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Text(
@@ -215,7 +215,7 @@ class _FilterChipButton extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: active ? accentColor : AppColors.text2,
                     fontWeight: AppTextStyles.medium,
-                    height: AppSpacing.arenaLeaderboardLineHeight,
+                    height: _leaderboardLineHeight,
                   ),
                 ),
               ],
@@ -253,13 +253,13 @@ class _SeasonButton extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: AppSpacing.arenaLeaderboardFilterPadding,
+            padding: _leaderboardFilterPadding,
             child: Text(
               label,
               style: AppTextStyles.caption.copyWith(
                 color: active ? AppColors.primary : AppColors.text3,
                 fontWeight: AppTextStyles.medium,
-                height: AppSpacing.arenaLeaderboardLineHeight,
+                height: _leaderboardLineHeight,
               ),
             ),
           ),

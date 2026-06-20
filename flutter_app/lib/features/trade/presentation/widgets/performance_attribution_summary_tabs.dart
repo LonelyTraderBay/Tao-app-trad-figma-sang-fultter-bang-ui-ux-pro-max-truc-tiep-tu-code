@@ -8,12 +8,12 @@ class _SummaryGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: AppSpacing.tradeBotGridColumns,
+      crossAxisCount: 2,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: AppSpacing.tradeBotCardGap,
-      crossAxisSpacing: AppSpacing.tradeBotCardGap,
-      childAspectRatio: AppSpacing.tradeBotAttributionMetricAspectRatio,
+      mainAxisSpacing: AppSpacing.x3,
+      crossAxisSpacing: AppSpacing.x3,
+      childAspectRatio: 1.65,
       children: [
         _MetricTile(
           label: 'Total Return',
@@ -63,34 +63,28 @@ class _MetricTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotAttributionMetricPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightShort,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeBotLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             style: AppTextStyles.baseMedium.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.extraBold,
-              height: AppSpacing.tradeBotLineHeightShort,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
           Text(
             caption,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightShort,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -115,8 +109,8 @@ class _AttributionTabs extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.tradeBotAttributionTabHeight,
-      padding: AppSpacing.tradeSegmentedPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.zeroInsets,
       child: VitTabBar(
         tabs: [
           for (final tab in tabs)
@@ -141,35 +135,31 @@ class _AttributionTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
       children: [
         _SectionLabel(label: 'Returns Decomposition'),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         SizedBox(
-          height: AppSpacing.tradeBotAttributionReturnsChartHeight,
+          height: _attributionLargeChartHeight,
           child: CustomPaint(
             painter: _ReturnDecompositionPainter(snapshot.returns),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
         const _LegendRow(
           items: [
             _LegendItem('Market (Beta)', _attributionGray),
             _LegendItem('Alpha (Skill)', _attributionPurple),
           ],
         ),
-        const SizedBox(height: AppSpacing.tradeBotDisputeCasesTopGap),
         _InfoPanel(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.tradeBotRowGap),
         _ContributionBar(
           label: 'Market contribution (Beta)',
           value: snapshot.marketContributionPct,
           color: _attributionGray,
           ratio: .92,
         ),
-        const SizedBox(height: AppSpacing.tradeBotRowGap),
         _ContributionBar(
           label: 'Skill contribution (Alpha)',
           value: snapshot.skillContributionPct,

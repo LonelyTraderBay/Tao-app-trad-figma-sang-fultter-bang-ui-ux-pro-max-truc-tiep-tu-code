@@ -28,12 +28,12 @@ class StakingValidatorSelectionSearchAndFilter extends StatelessWidget {
       children: [
         Expanded(
           child: DecoratedBox(
-            decoration: BoxDecoration(
+            decoration: const ShapeDecoration(
               color: AppColors.surface3,
-              borderRadius: AppRadii.xlRadius,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              padding: AppSpacing.earnHorizontalPaddingX4,
               child: Row(
                 children: [
                   const Icon(
@@ -106,7 +106,7 @@ class StakingValidatorSelectionFilterPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -188,17 +188,16 @@ class _FilterChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: selected ? AppColors.primary30 : AppColors.cardBorder,
+              ),
+              borderRadius: AppRadii.smRadius,
             ),
-            borderRadius: AppRadii.smRadius,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
-            ),
+            padding: AppSpacing.earnWidePillPadding,
             child: Text(
               label,
               style: AppTextStyles.caption.copyWith(

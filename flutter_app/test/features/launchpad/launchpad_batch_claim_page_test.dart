@@ -94,6 +94,8 @@ void main() {
     await tester.tap(find.byKey(LaunchpadBatchClaimPage.ctaKey));
     await tester.pumpAndSettle();
     expect(find.byKey(LaunchpadBatchClaimPage.reviewKey), findsOneWidget);
+    expect(find.byKey(LaunchpadBatchClaimPage.reviewStateKey), findsOneWidget);
+    expect(find.text('Review truoc khi claim'), findsOneWidget);
     expect(find.text('Xác nhận Batch Claim'), findsOneWidget);
 
     await tester.tap(find.text('Nhận tất cả'));

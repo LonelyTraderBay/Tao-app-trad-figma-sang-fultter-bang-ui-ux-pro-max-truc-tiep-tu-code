@@ -25,7 +25,7 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -89,7 +89,7 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 children: [
                   for (final error in snapshot.errorCodes) ...[
@@ -117,7 +117,7 @@ class _RateLimitCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: tier.recommended ? AppColors.primary : null,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -148,7 +148,7 @@ class _RateLimitCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.earnCardPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -163,7 +163,7 @@ class _RateLimitCard extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: AppSpacing.x1),
+                      padding: AppSpacing.earnBottomPaddingX1,
                       child: Text(
                         'requests',
                         style: AppTextStyles.caption.copyWith(
@@ -206,7 +206,7 @@ class _ErrorCodeRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

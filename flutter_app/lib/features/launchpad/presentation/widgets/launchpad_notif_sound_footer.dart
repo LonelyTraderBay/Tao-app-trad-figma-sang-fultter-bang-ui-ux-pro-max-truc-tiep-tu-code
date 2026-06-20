@@ -5,33 +5,37 @@ class _InfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: LaunchpadNotifSoundPage.infoKey,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.primary08,
-        border: Border.all(color: AppColors.primary20),
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.lgRadius,
+          side: BorderSide(color: AppColors.primary20),
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppModuleAccents.launchpad,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              'Âm thanh chỉ phát khi ứng dụng đang hoạt động. Thông báo push ngoài app sử dụng cài đặt hệ thống thiết bị.',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.launchpadLineHeightReadable,
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX3,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.info_outline_rounded,
+              color: AppModuleAccents.launchpad,
+              size: AppSpacing.iconSm,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                'Âm thanh chỉ phát khi ứng dụng đang hoạt động. Thông báo push ngoài app sử dụng cài đặt hệ thống thiết bị.',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  height: AppSpacing.launchpadLineHeightReadable,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -53,7 +57,7 @@ class _InlineSaveActions extends StatelessWidget {
     return VitCard(
       key: LaunchpadNotifSoundPage.footerKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.contentPad),
+      padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -110,37 +114,49 @@ class _SoundSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = small ? 38.0 : 46.0;
-    final height = small ? 22.0 : 26.0;
-    final knob = small ? 18.0 : 22.0;
+    final width = small
+        ? AppSpacing.x6 + AppSpacing.launchpadGapXxs
+        : AppSpacing.launchpadBox44 + AppSpacing.hairlineStroke;
+    final height = small
+        ? AppSpacing.iconMd + AppSpacing.dividerHairline
+        : AppSpacing.iconMd + AppSpacing.x2;
+    final knob = small
+        ? AppSpacing.iconMd - AppSpacing.x1
+        : AppSpacing.iconMd + AppSpacing.dividerHairline;
+
     return Semantics(
       button: true,
       toggled: enabled,
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
+        child: SizedBox(
           width: width,
           height: height,
-          padding: const EdgeInsets.all(AppSpacing.launchpadGapXxs),
-          decoration: BoxDecoration(
-            color: enabled ? AppModuleAccents.launchpad : AppColors.surface3,
-            borderRadius: AppRadii.inputRadius,
-            border: Border.all(
-              color: enabled
-                  ? AppModuleAccents.launchpad
-                  : AppColors.borderSolid,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: enabled ? AppModuleAccents.launchpad : AppColors.surface3,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.inputRadius,
+                side: BorderSide(
+                  color: enabled
+                      ? AppModuleAccents.launchpad
+                      : AppColors.borderSolid,
+                ),
+              ),
             ),
-          ),
-          child: Align(
-            alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-            child: Container(
-              width: knob,
-              height: knob,
-              decoration: const BoxDecoration(
-                color: AppColors.onAccent,
-                shape: BoxShape.circle,
+            child: AnimatedAlign(
+              duration: const Duration(milliseconds: 180),
+              curve: Curves.easeOutCubic,
+              alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
+              child: SizedBox.square(
+                dimension: knob,
+                child: const DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.onAccent,
+                    shape: CircleBorder(),
+                  ),
+                ),
               ),
             ),
           ),
@@ -164,18 +180,22 @@ class _IconBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = small ? AppSpacing.x6 : AppSpacing.x7;
-    return Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: accent.withValues(alpha: .12),
-        borderRadius: small ? AppRadii.mdRadius : AppRadii.lgRadius,
-      ),
-      child: Icon(
-        icon,
-        color: accent,
-        size: small ? AppSpacing.iconSm : AppSpacing.iconMd,
+    return SizedBox.square(
+      dimension: size,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: accent.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            borderRadius: small ? AppRadii.mdRadius : AppRadii.lgRadius,
+          ),
+        ),
+        child: Center(
+          child: Icon(
+            icon,
+            color: accent,
+            size: small ? AppSpacing.iconSm : AppSpacing.iconMd,
+          ),
+        ),
       ),
     );
   }

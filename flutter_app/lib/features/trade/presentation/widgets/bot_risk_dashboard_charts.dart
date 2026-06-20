@@ -8,9 +8,9 @@ class _DrawdownChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingTall,
-      child: SizedBox(
-        height: AppSpacing.tradeBotDashboardChartHeight,
+      density: VitDensity.compact,
+      child: AspectRatio(
+        aspectRatio: 2.2,
         child: CustomPaint(
           painter: _DrawdownChartPainter(points),
           child: const SizedBox.expand(),
@@ -28,9 +28,9 @@ class _VarChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingTall,
-      child: SizedBox(
-        height: AppSpacing.tradeBotCompactChartHeight,
+      density: VitDensity.compact,
+      child: AspectRatio(
+        aspectRatio: 2.4,
         child: CustomPaint(
           painter: _VarChartPainter(points),
           child: const SizedBox.expand(),
@@ -164,10 +164,7 @@ void _drawSmallText(
   final painter = TextPainter(
     text: TextSpan(
       text: text,
-      style: AppTextStyles.micro.copyWith(
-        color: AppColors.text3,
-        height: AppSpacing.tradeBotLineHeightTight,
-      ),
+      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
     ),
     textDirection: TextDirection.ltr,
   )..layout();

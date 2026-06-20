@@ -27,7 +27,7 @@ class _FeaturedModesSection extends StatelessWidget {
           'Được cộng đồng yêu thích',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -59,10 +59,7 @@ class _ModeCard extends StatelessWidget {
     return VitCard(
       key: ArenaHomePage.modeKey(mode.id),
       onTap: onTap,
-      padding: AppSpacing.arenaPaddingX4,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.arenaHomeModeCardMinHeight,
-      ),
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -80,13 +77,13 @@ class _ModeCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaHomeModeTitleLineHeight,
+                    height: _arenaHomeModeTitleLineHeight,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             mode.creatorName,
             maxLines: 1,
@@ -96,7 +93,7 @@ class _ModeCard extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               _MetaText('${mode.cloneCount} clone'),
@@ -104,7 +101,7 @@ class _ModeCard extends StatelessWidget {
               _MetaText('${mode.completionRate}%'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -165,7 +162,7 @@ class _LiveRoomsSection extends StatelessWidget {
           'Tham gia ngay hoặc xem',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         VitCard(
           clip: true,
           padding: AppSpacing.zeroInsets,
@@ -175,7 +172,7 @@ class _LiveRoomsSection extends StatelessWidget {
                 _RoomRow(room: rooms[i], onTap: () => onRoom(rooms[i].id)),
                 if (i < rooms.length - 1)
                   const Divider(
-                    height: AppSpacing.arenaHomeDividerHeight,
+                    height: AppSpacing.x2,
                     color: AppColors.divider,
                   ),
               ],
@@ -204,7 +201,7 @@ class _RoomRow extends StatelessWidget {
       key: ArenaHomePage.roomKey(room.id),
       onTap: onTap,
       child: Padding(
-        padding: AppSpacing.arenaPaddingX4,
+        padding: VitDensity.compact.cardPadding,
         child: Column(
           children: [
             Row(
@@ -256,14 +253,14 @@ class _RoomRow extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
             Row(
               children: [
                 Expanded(
                   child: ClipRRect(
                     borderRadius: AppRadii.xsRadius,
                     child: LinearProgressIndicator(
-                      minHeight: AppSpacing.arenaHomeRoomProgressHeight,
+                      minHeight: _arenaHomeRoomProgressHeight,
                       value: progress,
                       backgroundColor: AppColors.surface3,
                       color: color,
@@ -305,7 +302,7 @@ class _CreatorSpotlightSection extends StatelessWidget {
           title: 'Creator nổi bật',
           accentColor: AppColors.buy,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -341,10 +338,7 @@ class _CreatorCard extends StatelessWidget {
     return VitCard(
       key: ArenaHomePage.creatorKey(creator.id),
       onTap: onTap,
-      padding: AppSpacing.arenaPaddingX4,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.arenaHomeCreatorCardMinHeight,
-      ),
+      density: VitDensity.compact,
       child: Column(
         children: [
           SizedBox(
@@ -365,7 +359,7 @@ class _CreatorCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             creator.name,
             maxLines: 1,
@@ -384,7 +378,7 @@ class _CreatorCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Wrap(
             alignment: WrapAlignment.center,
             spacing: AppSpacing.x1,
@@ -419,7 +413,7 @@ class _PredictionBridge extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       borderColor: AppColors.accent20,
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Row(
         children: [
           _ActionIcon(

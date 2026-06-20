@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpProviderLeaderboard(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,28 @@ void main() {
     expect(find.text('RiskMaster_88'), findsOneWidget);
     expect(find.text('+567.8%'), findsOneWidget);
     expect(find.text('WhaleWatcher'), findsOneWidget);
+  });
+
+  testWidgets('SC-079 first viewport reaches top provider card', (
+    tester,
+  ) async {
+    await pumpProviderLeaderboard(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ProviderLeaderboardPage',
+      semanticLabel: 'SC-079 ProviderLeaderboardPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ProviderLeaderboardPage.providerKey('ct003')),
+      minVisibleHeight: 24,
+      targetLabel: 'top provider card',
+      reason:
+          'Provider leaderboard must expose the first ranked provider above '
+          'bottom navigation after warning, review, sort, risk, and verified '
+          'filters.',
+    );
   });
 
   testWidgets('SC-079 filters low risk providers locally', (tester) async {

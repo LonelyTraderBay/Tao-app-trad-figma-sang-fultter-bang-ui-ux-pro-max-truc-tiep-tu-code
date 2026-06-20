@@ -11,7 +11,7 @@ class _HomeDiscoverySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const VitSectionHeader(title: 'Dự đoán & Thách đấu'),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         VitDiscoveryActionCard(
           title: 'Prediction Markets',
           badgeLabel: 'Prediction Market',
@@ -28,7 +28,7 @@ class _HomeDiscoverySection extends StatelessWidget {
           ),
           onTap: () => onNavigate('/markets/predictions'),
         ),
-        const SizedBox(height: AppSpacing.homeSectionCtaGap),
+        const SizedBox(height: AppSpacing.x2),
         VitDiscoveryActionCard(
           title: 'Open Arena',
           badgeLabel: 'Arena Points only',
@@ -80,7 +80,7 @@ class _MarketSection extends StatelessWidget {
           actionLabel: 'Xem tất cả',
           onAction: () => onNavigate('/markets'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         VitTabBar(
           activeKey: activeTab,
           onChanged: onTabChanged,
@@ -103,7 +103,7 @@ class _MarketSection extends StatelessWidget {
             VitTabItem(key: 'new', label: 'Mới', icon: Icons.fiber_new_rounded),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
           clip: true,
           child: Column(
@@ -116,8 +116,8 @@ class _MarketSection extends StatelessWidget {
                 ),
                 if (i < pairs.length - 1)
                   const Divider(
-                    height: AppSpacing.homeDividerHeight,
-                    thickness: AppSpacing.homeDividerHeight,
+                    height: AppSpacing.dividerHairline,
+                    thickness: AppSpacing.dividerHairline,
                     color: AppColors.divider,
                   ),
               ],
@@ -147,19 +147,18 @@ class _TrendingSection extends StatelessWidget {
           actionLabel: 'Xem tất cả',
           onAction: () => onNavigate('/markets'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         SizedBox(
-          height: AppSpacing.homeTrendingSectionHeight,
+          height: _trendCardExtent,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
             itemCount: pairs.length,
-            separatorBuilder: (_, _) =>
-                const SizedBox(width: AppSpacing.homeMarketIconGap),
+            separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.x3),
             itemBuilder: (context, index) {
               final pair = pairs[index];
               return SizedBox(
-                width: AppSpacing.homeTrendingItemWidth,
+                width: _trendCardWidth,
                 child: VitCard(
                   onTap: () => onNavigate('/pair/${pair.id}'),
                   padding: AppSpacing.cardPadding,
@@ -171,7 +170,7 @@ class _TrendingSection extends StatelessWidget {
                           VitAssetAvatar(
                             label: pair.baseAsset,
                             accentColor: pair.logoColor,
-                            size: AppSpacing.homeTrendingIconSize,
+                            size: _assetAvatarExtent,
                             radius: AppRadii.xsRadius,
                           ),
                           const SizedBox(width: AppSpacing.x3),
@@ -187,7 +186,7 @@ class _TrendingSection extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Spacer(),
+                      const SizedBox(height: AppSpacing.x3),
                       Text(
                         _formatUsd(pair.price),
                         style: AppTextStyles.base.copyWith(
@@ -246,7 +245,7 @@ class _RankedListSection extends StatelessWidget {
           actionLabel: 'Xem tất cả',
           onAction: () => onNavigate('/markets'),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
           clip: true,
           child: Column(
@@ -260,8 +259,8 @@ class _RankedListSection extends StatelessWidget {
                 ),
                 if (i < pairs.length - 1)
                   const Divider(
-                    height: AppSpacing.homeDividerHeight,
-                    thickness: AppSpacing.homeDividerHeight,
+                    height: AppSpacing.dividerHairline,
+                    thickness: AppSpacing.dividerHairline,
                     color: AppColors.divider,
                   ),
               ],

@@ -19,7 +19,7 @@ class _SortChips extends StatelessWidget {
             color: AppColors.sell,
             onTap: () => onSelected(CorrelationSortOrder.high),
           ),
-          const SizedBox(width: AppSpacing.marketCorrelationsChipGap),
+          const SizedBox(width: _corrChipGap),
           _SortChip(
             key: MarketCorrelationsPage.sortLowKey,
             label: 'Tương quan thấp',
@@ -56,7 +56,7 @@ class _SortChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: SizedBox(
-          height: AppSpacing.marketCorrelationsSortChipHeight,
+          height: _corrSortChipHeight,
           child: Padding(
             padding: AppSpacing.marketCorrelationsSortChipPadding,
             child: Center(

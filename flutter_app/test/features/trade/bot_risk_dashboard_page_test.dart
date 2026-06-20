@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskDashboard(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -69,6 +71,16 @@ void main() {
     expect(find.text('Medium Risk'), findsOneWidget);
     expect(find.text('Critical Metrics'), findsOneWidget);
     expect(find.text('Drawdown Trend (24h)'), findsOneWidget);
+  });
+
+  testWidgets('SC-120 first viewport reaches critical metrics', (tester) async {
+    await pumpRiskDashboard(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.text('Drawdown'),
+      targetLabel: 'the first critical risk metric',
+    );
   });
 
   testWidgets('SC-120 emergency actions navigate to SC-121 edge', (

@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBreaking(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -85,6 +87,22 @@ void main() {
     expect(find.text('Apple releases AR glasses in 2026?'), findsOneWidget);
     expect(find.text('Tesla stock above \$400 by mid-2026?'), findsOneWidget);
     expect(find.text('Get daily updates'), findsOneWidget);
+  });
+
+  testWidgets('SC-029 first viewport reaches first mover card', (tester) async {
+    await pumpBreaking(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-029 PredictionsBreakingPage',
+      semanticLabel: 'SC-029 PredictionsBreakingPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PredictionsBreakingPage.moverKey('pred-5')),
+      targetLabel: 'the first breaking mover card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-029 filters movers by category and subscribes locally', (

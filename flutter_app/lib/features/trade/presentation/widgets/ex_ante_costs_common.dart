@@ -1,20 +1,5 @@
 part of '../pages/ex_ante_costs_page.dart';
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: text,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: _costPrimary,
-    );
-  }
-}
-
 class _Card extends StatelessWidget {
   const _Card({required this.child, required this.padding});
 
@@ -24,6 +9,7 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       padding: padding,
       borderColor: _costBorder.withValues(alpha: .72),
       child: child,

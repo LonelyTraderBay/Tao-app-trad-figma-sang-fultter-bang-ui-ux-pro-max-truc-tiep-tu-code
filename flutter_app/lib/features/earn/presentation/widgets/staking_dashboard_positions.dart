@@ -48,7 +48,7 @@ class _PositionCard extends StatelessWidget {
     return VitCard(
       key: cardKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -154,10 +154,12 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        border: Border.all(color: color.withValues(alpha: 0.45)),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.xlRadius,
+          side: BorderSide(color: color.withValues(alpha: 0.45)),
+        ),
       ),
       child: SizedBox(
         width: AppSpacing.x7,
@@ -183,21 +185,20 @@ class _MaturityPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: const BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.warn10,
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
-      child: Text(
-        '$days ngày nữa',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.warn,
-          fontWeight: AppTextStyles.bold,
-          fontFeatures: AppTextStyles.tabularFigures,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          '$days ngày nữa',
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.warn,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
         ),
       ),
     );
@@ -221,7 +222,7 @@ class _PositionMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

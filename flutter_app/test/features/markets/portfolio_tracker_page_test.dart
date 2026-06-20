@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPortfolio(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -93,6 +95,24 @@ void main() {
     expect(find.text('Phân bổ tài sản'), findsOneWidget);
     expect(find.text('Tài sản chính'), findsOneWidget);
     expect(find.text('Đánh giá rủi ro'), findsOneWidget);
+  });
+
+  testWidgets('SC-021 first viewport reaches first holding row', (
+    tester,
+  ) async {
+    await pumpPortfolio(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'PortfolioTrackerPage',
+      semanticLabel: 'SC-021 PortfolioTrackerPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PortfolioTrackerPage.holdingKey('btc')),
+      targetLabel: 'first holding row',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-021 hide balance toggles masked values', (tester) async {

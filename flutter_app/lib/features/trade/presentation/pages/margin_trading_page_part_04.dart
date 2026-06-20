@@ -63,6 +63,7 @@ class _Panel extends StatelessWidget {
           ? null
           : BoxConstraints(minHeight: minHeight!),
       padding: padding,
+      density: padding == null ? VitDensity.compact : null,
       variant: usesCustomColor
           ? VitCardVariant.ghost
           : color == _marginPanel
@@ -206,7 +207,7 @@ class _NoticeSheet extends StatelessWidget {
             radius: VitCardRadius.lg,
             child: VitPageContent(
               padding: VitContentPadding.none,
-              customGap: AppSpacing.walletAssetHeroTopGap,
+              density: VitDensity.compact,
               children: [
                 Text('Margin trading', style: AppTextStyles.baseMedium),
                 Text(
@@ -214,7 +215,7 @@ class _NoticeSheet extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
                 VitCtaButton(
-                  height: AppSpacing.searchBarCompactHeight,
+                  density: VitDensity.compact,
                   onPressed: onClose,
                   child: const Text('Done'),
                 ),

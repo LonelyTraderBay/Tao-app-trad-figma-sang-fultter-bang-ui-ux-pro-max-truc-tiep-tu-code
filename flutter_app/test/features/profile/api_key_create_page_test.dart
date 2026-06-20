@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpApiCreate(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -90,6 +92,27 @@ void main() {
     expect(find.text('Kh\u00F4ng h\u1EBFt h\u1EA1n'), findsOneWidget);
     expect(find.text('M\u1EB9o b\u1EA3o m\u1EADt'), findsOneWidget);
     expect(find.text('Ti\u1EBFp t\u1EE5c'), findsOneWidget);
+  });
+
+  testWidgets('SC-162 first viewport keeps permission review visible', (
+    tester,
+  ) async {
+    await pumpApiCreate(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ApiKeyCreatePage',
+      semanticLabel: 'SC-162 ApiKeyCreatePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ApiKeyCreatePage.permissionKey('withdraw')),
+      minVisibleHeight: 24,
+      targetLabel: 'withdraw permission review',
+      reason:
+          'API key creation must show high-risk permission scope inside the '
+          'first viewport above the bottom navigation.',
+    );
   });
 
   testWidgets('SC-162 local create flow returns to API management', (

@@ -12,11 +12,13 @@ class VitErrorState extends StatelessWidget {
     this.title = 'Something went wrong',
     this.message = 'Please try again or check your connection.',
     this.icon = Icons.warning_amber_rounded,
-    this.iconContainerSize = 80,
-    this.iconSize = 36,
+    this.iconContainerSize =
+        AppSpacing.buttonStandard + AppSpacing.contentPad + AppSpacing.x2,
+    this.iconSize = AppSpacing.iconLg + AppSpacing.hairlineStroke,
     this.iconShape = BoxShape.rectangle,
     this.iconBorderRadius,
-    this.verticalPadding = 64,
+    this.verticalPadding =
+        AppSpacing.buttonStandard + AppSpacing.x3 + AppSpacing.dividerHairline,
     this.horizontalPadding = AppSpacing.x6,
     this.titleStyle,
     this.messageStyle,
@@ -44,26 +46,33 @@ class VitErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final iconShapeBorder = iconShape == BoxShape.circle
+        ? const CircleBorder(side: BorderSide(color: AppColors.sell20))
+        : RoundedRectangleBorder(
+            side: const BorderSide(color: AppColors.sell20),
+            borderRadius: iconBorderRadius ?? AppRadii.cardLargeRadius,
+          );
+
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: EdgeInsetsDirectional.symmetric(
         horizontal: horizontalPadding,
         vertical: verticalPadding,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
+          SizedBox(
             width: iconContainerSize,
             height: iconContainerSize,
-            decoration: BoxDecoration(
-              color: AppColors.sell10,
-              border: Border.all(color: AppColors.sell20),
-              shape: iconShape,
-              borderRadius: iconShape == BoxShape.circle
-                  ? null
-                  : iconBorderRadius ?? AppRadii.cardLargeRadius,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.sell10,
+                shape: iconShapeBorder,
+              ),
+              child: Center(
+                child: Icon(icon, color: AppColors.sell, size: iconSize),
+              ),
             ),
-            child: Icon(icon, color: AppColors.sell, size: iconSize),
           ),
           const SizedBox(height: AppSpacing.x4),
           Text(
@@ -83,7 +92,7 @@ class VitErrorState extends StatelessWidget {
               onPressed: onAction,
               variant: VitCtaButtonVariant.danger,
               fullWidth: false,
-              height: 44,
+              height: AppSpacing.inputHeight - AppSpacing.x3,
               leading: const Icon(Icons.refresh_rounded),
               child: Text(actionLabel),
             ),
@@ -94,7 +103,7 @@ class VitErrorState extends StatelessWidget {
               onPressed: onSecondary,
               variant: VitCtaButtonVariant.ghost,
               fullWidth: false,
-              height: 44,
+              height: AppSpacing.inputHeight - AppSpacing.x3,
               child: Text(secondaryLabel!),
             ),
           ],

@@ -32,28 +32,32 @@ class _HistoricalProjectCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadPerformancePage.projectKey(project.id),
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: _launchpadPerformanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.launchpadBox44,
-                height: AppSpacing.launchpadBox44,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: project.accent.withValues(alpha: .12),
-                  border: Border.all(
-                    color: project.accent.withValues(alpha: .30),
+              SizedBox.square(
+                dimension: _launchpadPerformanceProjectIconBox,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: project.accent.withValues(alpha: .12),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: project.accent.withValues(alpha: .30),
+                      ),
+                      borderRadius: AppRadii.lgRadius,
+                    ),
                   ),
-                  borderRadius: AppRadii.lgRadius,
-                ),
-                child: Text(
-                  project.symbol.substring(0, 2),
-                  style: AppTextStyles.caption.copyWith(
-                    color: project.accent,
-                    fontWeight: AppTextStyles.bold,
+                  child: Center(
+                    child: Text(
+                      project.symbol.substring(0, 2),
+                      style: AppTextStyles.caption.copyWith(
+                        color: project.accent,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -66,7 +70,7 @@ class _HistoricalProjectCard extends StatelessWidget {
                       project.name,
                       style: AppTextStyles.baseMedium.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.launchpadLineHeightLabel,
+                        height: _launchpadPerformanceLineHeightLabel,
                       ),
                     ),
                     Text(
@@ -150,7 +154,7 @@ class _PriceBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: _launchpadPerformanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -181,28 +185,32 @@ class _RoiBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = value >= 0 ? AppColors.buy : AppColors.sell;
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .08),
-        border: Border.all(color: color.withValues(alpha: .18)),
-        borderRadius: AppRadii.mdRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .18)),
+          borderRadius: AppRadii.mdRadius,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          Text(
-            '${value >= 0 ? '+' : ''}$value%',
-            style: AppTextStyles.baseMedium.copyWith(
-              color: color,
-              fontFeatures: AppTextStyles.tabularFigures,
+      child: Padding(
+        padding: _launchpadPerformanceCardPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-          ),
-        ],
+            Text(
+              '${value >= 0 ? '+' : ''}$value%',
+              style: AppTextStyles.baseMedium.copyWith(
+                color: color,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

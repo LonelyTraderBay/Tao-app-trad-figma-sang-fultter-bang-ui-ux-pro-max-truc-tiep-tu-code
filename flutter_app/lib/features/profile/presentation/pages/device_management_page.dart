@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -58,12 +59,13 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
     _initializeFrom(snapshot);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome +
-                  AppSpacing.profileDevicesBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.profileDevicesBottomInsetNative) +
+                  AppSpacing.x7 +
+                  AppSpacing.x6 +
+                  AppSpacing.x6
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
     final currentDevice = _currentDevice;
     final otherDevices = _otherDevices;
@@ -87,75 +89,50 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                 child: SingleChildScrollView(
                   key: DeviceManagementPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.profileDevicesScrollPadding(bottomInset),
+                  padding: AppSpacing.profileDevicesScrollPadding(
+                    scrollClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
-                      VitCard(
-                        padding: EdgeInsets.zero,
-                        child: _SecuritySummaryCard(
-                          totalDevices: _devices.length,
-                          trustedCount: _trustedCount,
-                          untrustedCount: _untrustedCount,
-                          activeCount: _activeCount,
+                      _SecuritySummaryCard(
+                        totalDevices: _devices.length,
+                        trustedCount: _trustedCount,
+                        untrustedCount: _untrustedCount,
+                        activeCount: _activeCount,
+                      ),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review device sessions',
+                        message:
+                            'Ch\u1EC9 tin c\u1EADy thi\u1EBFt b\u1ECB b\u1EA1n s\u1EDF h\u1EEFu; \u0111\u0103ng xu\u1EA5t c\u00E1c phi\u00EAn l\u1EA1 ho\u1EB7c kh\u00F4ng c\u00F2n s\u1EED d\u1EE5ng.',
+                        contractId:
+                            'Trusted devices: $_trustedCount/${_devices.length}',
+                        density: VitDensity.compact,
+                      ),
+                      if (currentDevice != null) ...[
+                        const _SectionHeader(
+                          label: 'THI\u1EBET B\u1ECA HI\u1EC6N T\u1EA0I',
                         ),
-                      ),
-                      const SizedBox(
-                        height: AppSpacing.profileDevicesSummaryGap,
-                      ),
-                      VitCard(
-                        padding: EdgeInsets.zero,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Review device sessions',
+                        _DeviceCard(
+                          device: currentDevice,
+                          showActions: false,
+                          onToggleTrust: () {},
+                          onLogout: () {},
+                        ),
+                      ] else
+                        const VitEmptyState(
+                          title:
+                              'Kh\u00F4ng c\u00F3 thi\u1EBFt b\u1ECB hi\u1EC7n t\u1EA1i',
                           message:
-                              'Ch\u1EC9 tin c\u1EADy thi\u1EBFt b\u1ECB b\u1EA1n s\u1EDF h\u1EEFu; \u0111\u0103ng xu\u1EA5t c\u00E1c phi\u00EAn l\u1EA1 ho\u1EB7c kh\u00F4ng c\u00F2n s\u1EED d\u1EE5ng.',
-                          contractId:
-                              'Trusted devices: $_trustedCount/${_devices.length}',
+                              'Phi\u00EAn \u0111\u0103ng nh\u1EADp s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
+                          icon: Icons.devices_other_outlined,
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.profileDevicesRiskGap),
-                      VitCard(
-                        padding: EdgeInsets.zero,
-                        child: currentDevice != null
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  const _SectionHeader(
-                                    label:
-                                        'THI\u1EBET B\u1ECA HI\u1EC6N T\u1EA0I',
-                                  ),
-                                  const SizedBox(
-                                    height: AppSpacing
-                                        .profileDevicesCurrentHeaderGap,
-                                  ),
-                                  _DeviceCard(
-                                    device: currentDevice,
-                                    showActions: false,
-                                    onToggleTrust: () {},
-                                    onLogout: () {},
-                                  ),
-                                ],
-                              )
-                            : const VitEmptyState(
-                                title:
-                                    'Kh\u00F4ng c\u00F3 thi\u1EBFt b\u1ECB hi\u1EC7n t\u1EA1i',
-                                message:
-                                    'Phi\u00EAn \u0111\u0103ng nh\u1EADp s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
-                                icon: Icons.devices_other_outlined,
-                              ),
-                      ),
-                      const SizedBox(
-                        height: AppSpacing.profileDevicesOtherHeaderGap,
-                      ),
                       _OtherDevicesHeader(
                         count: otherDevices.length,
                         onLogoutAll: otherDevices.isEmpty ? null : _logoutAll,
-                      ),
-                      const SizedBox(
-                        height: AppSpacing.profileDevicesOtherListGap,
                       ),
                       if (otherDevices.isEmpty)
                         const VitEmptyState(
@@ -165,22 +142,15 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                               'C\u00E1c phi\u00EAn \u0111\u0103ng nh\u1EADp ph\u1EE5 s\u1EBD xu\u1EA5t hi\u1EC7n t\u1EA1i \u0111\u00E2y.',
                           icon: Icons.phone_android_outlined,
                         )
-                      else
-                        for (final device in otherDevices) ...[
+                      else ...[
+                        for (final device in otherDevices)
                           _DeviceCard(
                             device: device,
                             showActions: true,
                             onToggleTrust: () => _toggleTrust(device.id),
                             onLogout: () => _logoutDevice(device.id),
                           ),
-                          if (device != otherDevices.last)
-                            const SizedBox(
-                              height: AppSpacing.profileDevicesCardGap,
-                            ),
-                        ],
-                      const SizedBox(
-                        height: AppSpacing.profileDevicesFooterSummaryGap,
-                      ),
+                      ],
                       _SecuritySummaryCard(
                         totalDevices: _devices.length,
                         trustedCount: _trustedCount,

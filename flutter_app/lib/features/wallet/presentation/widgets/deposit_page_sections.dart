@@ -20,13 +20,13 @@ class _NetworkSelector extends StatelessWidget {
           'Chọn mạng lưới',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.rowGap),
+        const SizedBox(height: _depositTinyGap),
         VitCard(
           key: DepositPage.networkSelectorKey,
           variant: VitCardVariant.inner,
           radius: VitCardRadius.sm,
-          height: AppSpacing.inputHeight,
-          padding: AppSpacing.walletDepositSelectorPadding,
+          height: _depositSelectorHeight,
+          padding: _depositCompactPadding,
           borderColor: _depositPrimary,
           onTap: onTap,
           child: Row(
@@ -43,7 +43,7 @@ class _NetworkSelector extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                    const SizedBox(height: _depositTinyGap),
                     Text(
                       'Phí: ${selected.fee} · Nạp tối thiểu: ${_formatDeposit(selected.minDeposit)} $asset',
                       maxLines: 1,
@@ -59,22 +59,20 @@ class _NetworkSelector extends StatelessWidget {
               const Icon(
                 Icons.keyboard_arrow_down_rounded,
                 color: AppColors.text2,
-                size: AppSpacing.iconMd + AppSpacing.x1,
+                size: AppSpacing.iconMd,
               ),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.rowGap),
+        const SizedBox(height: _depositTinyGap),
         Row(
           children: [
             const SizedBox(
-              width: AppSpacing.x1 + AppSpacing.x1,
-              height: AppSpacing.x1 + AppSpacing.x1,
-              child: ClipOval(
-                child: ColoredBox(color: _depositGreen),
-              ),
+              width: 6,
+              height: 6,
+              child: ClipOval(child: ColoredBox(color: _depositGreen)),
             ),
-            const SizedBox(width: AppSpacing.walletAssetSmallGap),
+            const SizedBox(width: _depositTinyGap),
             Expanded(
               child: Text(
                 'Mạng hoạt động tốt  ·  ${selected.arrivalTime}  ·  ${selected.confirmations} xác nhận',
@@ -116,12 +114,10 @@ class _WarningCard extends StatelessWidget {
           contractId:
               'Min ${_formatDeposit(network.minDeposit)} $asset / ${network.confirmations} confirmations',
         ),
-        const SizedBox(height: AppSpacing.rowGap),
+        const SizedBox(height: _depositGap),
         VitCard(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.walletDepositWarningCardMinHeight,
-          ),
-          padding: AppSpacing.walletDepositWarningPadding,
+          constraints: const BoxConstraints(minHeight: 0),
+          padding: _depositCompactPadding,
           borderColor: _depositRed.withValues(alpha: .38),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,9 +125,9 @@ class _WarningCard extends StatelessWidget {
               const Icon(
                 Icons.warning_amber_rounded,
                 color: _depositRed,
-                size: AppSpacing.iconSm + AppSpacing.x2,
+                size: AppSpacing.iconMd,
               ),
-              const SizedBox(width: AppSpacing.x2 + AppSpacing.x1),
+              const SizedBox(width: _depositInlineGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,7 +139,7 @@ class _WarningCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
+                    const SizedBox(height: _depositTinyGap),
                     for (final item in warningItems) ...[
                       Text(
                         '• $item',
@@ -152,7 +148,7 @@ class _WarningCard extends StatelessWidget {
                           fontWeight: AppTextStyles.medium,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
+                      const SizedBox(height: _depositTinyGap),
                     ],
                   ],
                 ),
@@ -181,16 +177,16 @@ class _QrAddressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      padding: _depositCardPadding,
       child: Column(
         children: [
           _QrCode(address: network.address),
-          const SizedBox(height: AppSpacing.rowPy + AppSpacing.x1),
+          const SizedBox(height: _depositGap),
           Text(
             'Địa chỉ $asset (${network.name.split(' ').first})',
             style: AppTextStyles.micro.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.rowPy - AppSpacing.x1),
+          const SizedBox(height: _depositTinyGap),
           Text(
             network.address,
             maxLines: 1,
@@ -201,18 +197,18 @@ class _QrAddressCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.rowPy + AppSpacing.x5),
+          const SizedBox(height: _depositGap),
           VitCtaButton(
             key: DepositPage.copyAddressKey,
             onPressed: onCopy,
-            height: AppSpacing.walletDepositCopyButtonHeight,
+            height: _depositCopyButtonHeight,
             variant: copied
                 ? VitCtaButtonVariant.success
                 : VitCtaButtonVariant.primary,
-            padding: AppSpacing.walletDepositCopyButtonPadding,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             leading: Icon(
               copied ? Icons.check_circle_outline : Icons.copy_rounded,
-              size: AppSpacing.walletDepositCopyIcon,
+              size: AppSpacing.iconSm,
             ),
             child: Text(copied ? 'Đã sao chép địa chỉ!' : 'Sao chép địa chỉ'),
           ),
@@ -230,16 +226,16 @@ class _QrCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.walletDepositQrCodeSize,
-      height: AppSpacing.walletDepositQrCodeSize,
+      width: _depositQrSize,
+      height: _depositQrSize,
       child: Material(
         color: AppColors.onAccent,
-        elevation: AppSpacing.walletDepositQrShadowOffsetY,
+        elevation: 2,
         shadowColor: AppColors.dynamicIslandBg.withValues(alpha: .32),
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
         clipBehavior: Clip.antiAlias,
         child: Padding(
-          padding: AppSpacing.cardPadding,
+          padding: const EdgeInsets.all(12),
           child: CustomPaint(painter: _QrPainter(address)),
         ),
       ),

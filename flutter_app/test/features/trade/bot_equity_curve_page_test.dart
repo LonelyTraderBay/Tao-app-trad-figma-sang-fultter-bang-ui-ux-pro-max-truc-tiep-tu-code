@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBotEquityCurve(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -69,6 +71,27 @@ void main() {
     expect(find.text('Equity Curve vs Buy & Hold'), findsOneWidget);
     expect(find.text('Performance Statistics'), findsOneWidget);
     expect(find.text('Strong Outperformance'), findsOneWidget);
+  });
+
+  testWidgets('SC-130 first viewport reaches equity summary metrics', (
+    tester,
+  ) async {
+    await pumpBotEquityCurve(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'BotEquityCurvePage',
+      semanticLabel: 'SC-130 BotEquityCurvePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Alpha'),
+      minVisibleHeight: 12,
+      targetLabel: 'equity alpha summary metric',
+      reason:
+          'Equity curve should expose the complete compact return summary '
+          'above bottom navigation.',
+    );
   });
 
   testWidgets('SC-130 tab controls switch to mock chart variants', (

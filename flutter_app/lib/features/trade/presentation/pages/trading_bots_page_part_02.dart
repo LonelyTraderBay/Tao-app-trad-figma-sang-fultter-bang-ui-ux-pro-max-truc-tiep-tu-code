@@ -109,33 +109,37 @@ class _BotCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _BotActionButton(
+                child: VitCtaButton(
                   key: TradingBotsPage.botToggleKey(bot.id),
-                  label: running ? 'Tạm dừng' : 'Tiếp tục',
-                  icon: running
-                      ? Icons.pause_rounded
-                      : Icons.play_arrow_rounded,
-                  color: running ? AppColors.warn : AppColors.buy,
-                  onTap: () => onToggle(bot.id),
+                  onPressed: () => onToggle(bot.id),
+                  height: AppSpacing.buttonCompact + AppSpacing.x3,
+                  variant: running
+                      ? VitCtaButtonVariant.warning
+                      : VitCtaButtonVariant.success,
+                  padding: AppSpacing.tradeBotActionButtonPadding(false),
+                  leading: Icon(
+                    running ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                  ),
+                  child: Text(running ? 'Tạm dừng' : 'Tiếp tục'),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
-              _BotActionButton(
+              VitIconButton(
                 key: TradingBotsPage.botSettingsKey(bot.id),
-                label: 'Cài đặt',
                 icon: Icons.settings_outlined,
-                color: _botPrimary,
-                compact: true,
-                onTap: () {},
+                tooltip: 'Mở cài đặt bot',
+                onPressed: () {},
+                variant: VitIconButtonVariant.primary,
+                size: VitIconButtonSize.lg,
               ),
               const SizedBox(width: AppSpacing.x3),
-              _BotActionButton(
+              VitIconButton(
                 key: TradingBotsPage.botDeleteKey(bot.id),
-                label: 'Xóa',
                 icon: Icons.delete_outline_rounded,
-                color: AppColors.sell,
-                compact: true,
-                onTap: () => onDelete(bot.id),
+                tooltip: 'Xóa bot',
+                onPressed: () => onDelete(bot.id),
+                variant: VitIconButtonVariant.danger,
+                size: VitIconButtonSize.lg,
               ),
             ],
           ),
@@ -223,46 +227,6 @@ class _BotMiniStat extends StatelessWidget {
       ),
     );
   }
-}
-
-class _BotActionButton extends StatelessWidget {
-  const _BotActionButton({
-    super.key,
-    required this.label,
-    required this.icon,
-    required this.color,
-    required this.onTap,
-    this.compact = false,
-  });
-
-  final String label;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-  final bool compact;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: compact ? AppSpacing.buttonHero : null,
-      child: VitCtaButton(
-        onPressed: onTap,
-        height: AppSpacing.buttonCompact + AppSpacing.x3,
-        variant: _botButtonVariant(color),
-        fullWidth: true,
-        padding: AppSpacing.tradeBotActionButtonPadding(compact),
-        leading: Icon(icon),
-        child: Text(label),
-      ),
-    );
-  }
-}
-
-VitCtaButtonVariant _botButtonVariant(Color color) {
-  if (color == AppColors.buy) return VitCtaButtonVariant.success;
-  if (color == AppColors.sell) return VitCtaButtonVariant.danger;
-  if (color == AppColors.warn) return VitCtaButtonVariant.warning;
-  return VitCtaButtonVariant.primary;
 }
 
 class _StrategiesTab extends StatelessWidget {

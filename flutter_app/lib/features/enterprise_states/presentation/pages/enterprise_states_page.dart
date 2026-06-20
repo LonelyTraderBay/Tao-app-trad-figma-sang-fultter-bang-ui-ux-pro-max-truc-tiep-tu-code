@@ -22,6 +22,7 @@ class EnterpriseStatesPage extends ConsumerStatefulWidget {
   const EnterpriseStatesPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc320_enterprise_states_content');
+  static const backKey = Key('sc320_back');
   static const marketCtaKey = Key('sc320_market_cta');
   static const kycCtaKey = Key('sc320_kyc_cta');
   static const loginCtaKey = Key('sc320_login_cta');
@@ -70,7 +71,10 @@ class _EnterpriseStatesPageState extends ConsumerState<EnterpriseStatesPage> {
               children: [
                 Padding(
                   padding: AppSpacing.enterpriseStatesHeroPadding,
-                  child: _PageHero(snapshot: snapshot),
+                  child: _PageHero(
+                    snapshot: snapshot,
+                    onBack: () => context.go(snapshot.backRoute),
+                  ),
                 ),
                 Padding(
                   padding: AppSpacing.enterpriseStatesContentPadding,

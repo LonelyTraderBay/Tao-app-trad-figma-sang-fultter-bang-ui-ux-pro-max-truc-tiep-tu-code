@@ -24,7 +24,7 @@ class _QaChecklist extends StatelessWidget {
     return Column(
       children: [
         VitCard(
-          padding: AppSpacing.arenaFlowMapCardPadding,
+          density: VitDensity.compact,
           borderColor: checkedIds.length == items.length
               ? AppColors.buy20
               : AppColors.cardBorder,
@@ -60,7 +60,7 @@ class _QaChecklist extends StatelessWidget {
                 variant: VitCardVariant.inner,
                 radius: VitCardRadius.sm,
                 onTap: onCheckAll,
-                padding: AppSpacing.arenaFlowMapInnerPadding,
+                padding: _flowMapInnerPadding,
                 child: Center(
                   child: Text(
                     'Check tất cả',
@@ -74,7 +74,7 @@ class _QaChecklist extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         for (final entry in grouped.entries) ...[
           _QaCategory(
             category: entry.key,
@@ -82,7 +82,7 @@ class _QaChecklist extends StatelessWidget {
             checkedIds: checkedIds,
             onToggle: onToggle,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -126,7 +126,7 @@ class _QaCategory extends StatelessWidget {
                 ),
                 if (item != items.last)
                   const Divider(
-                    height: AppSpacing.arenaFlowMapDividerHeight,
+                    height: _flowMapDividerHeight,
                     color: AppColors.divider,
                   ),
               ],
@@ -157,13 +157,13 @@ class _QaRow extends StatelessWidget {
         key: ArenaFlowMapPage.qaKey(item.id),
         onTap: onTap,
         child: Padding(
-          padding: AppSpacing.arenaFlowMapCardPadding,
+          padding: _flowMapCardPadding,
           child: Row(
             children: [
               Icon(
                 checked ? Icons.check_circle_rounded : Icons.circle_outlined,
                 color: checked ? AppColors.buy : AppColors.text3,
-                size: AppSpacing.arenaFlowMapInlineIcon,
+                size: _flowMapInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -171,7 +171,7 @@ class _QaRow extends StatelessWidget {
                   item.label,
                   style: AppTextStyles.caption.copyWith(
                     color: checked ? AppColors.text1 : AppColors.text2,
-                    height: AppSpacing.arenaFlowMapQaLineHeight,
+                    height: _flowMapQaLineHeight,
                   ),
                 ),
               ),
@@ -191,14 +191,14 @@ class _FlowDisclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaFlowMapCardPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.accent,
-            size: AppSpacing.arenaFlowMapSectionIcon,
+            size: _flowMapSectionIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -206,7 +206,7 @@ class _FlowDisclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaFlowMapQaLineHeight,
+                height: _flowMapQaLineHeight,
               ),
             ),
           ),
@@ -232,8 +232,8 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.arenaFlowMapMarkerWidth,
-          height: AppSpacing.arenaFlowMapMarkerHeight,
+          width: _flowMapMarkerWidth,
+          height: _flowMapMarkerHeight,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: color,

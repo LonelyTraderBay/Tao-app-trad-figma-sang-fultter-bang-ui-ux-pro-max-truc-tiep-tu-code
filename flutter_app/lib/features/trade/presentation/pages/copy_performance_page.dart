@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,6 +24,15 @@ const _performancePrimary = AppColors.primary;
 const _performancePurple = AppColors.accent;
 const _performanceGreen = AppColors.buy;
 const _performanceRed = AppColors.sell;
+const _performanceSpace = AppSpacing.x2;
+const _performanceCardSpace = AppSpacing.x3;
+const _performanceVisualScrollClearance = 108.0;
+const _performanceNativeScrollClearance = 72.0;
+const _performanceReturnCardHeight = 92.0;
+const _performanceTabsHeight = 48.0;
+const _performanceEquityChartHeight = 128.0;
+const _performanceSlippageChartHeight = 126.0;
+const _performanceInfoLineHeight = 1.18;
 
 class CopyPerformancePage extends ConsumerStatefulWidget {
   const CopyPerformancePage({
@@ -53,15 +62,11 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
         .watch(tradeReadModelControllerProvider)
         .getCopyPerformance(copyId: widget.copyId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.copyPerformanceBottomInsetVisualExtra
-            : AppSpacing.copyPerformanceBottomInsetNativeExtra);
+            ? _performanceVisualScrollClearance
+            : _performanceNativeScrollClearance);
 
     return VitPageLayout(
       semanticLabel: 'SC-074 CopyPerformancePage',
@@ -79,15 +84,15 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyPerformancePage.contentKey,
-                  padding: AppSpacing.copyPerformanceScrollPadding(bottomInset),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: AppSpacing.rowPy,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _PerformanceSummary(snapshot: snapshot),
                       VitCard(
                         variant: VitCardVariant.inner,
+                        density: VitDensity.compact,
                         padding: AppSpacing.cardPaddingCompact,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
@@ -95,6 +100,7 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
                           message:
                               'PnL, fees, drawdown, trade history, risk metrics and next steps are reviewed before copy allocation changes.',
                           contractId: 'copy-performance-${widget.copyId}',
+                          density: VitDensity.compact,
                         ),
                       ),
                       _PerformanceTabs(

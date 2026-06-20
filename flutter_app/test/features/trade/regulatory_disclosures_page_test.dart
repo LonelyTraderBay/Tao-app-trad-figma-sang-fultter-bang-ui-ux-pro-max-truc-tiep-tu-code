@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRegulatoryDisclosures(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,25 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Article 58: Record Keeping'), findsOneWidget);
+  });
+
+  testWidgets('SC-084 first viewport reaches MiFID article', (tester) async {
+    await pumpRegulatoryDisclosures(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'RegulatoryDisclosuresPage',
+      semanticLabel: 'SC-084 RegulatoryDisclosuresPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Article 24: Information to Clients'),
+      minVisibleHeight: 18,
+      targetLabel: 'first MiFID article',
+      reason:
+          'Regulatory disclosures must show the first MiFID article above '
+          'bottom navigation after the legal hero and disclosure tabs.',
+    );
   });
 
   testWidgets('SC-084 tabs expose protection, restrictions, and contact copy', (

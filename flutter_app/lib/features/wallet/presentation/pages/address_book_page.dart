@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -26,6 +26,29 @@ const _bookPrimary = AppColors.primary;
 const _bookGreen = AppColors.buy;
 const _bookAmber = AppColors.caution;
 const _bookRed = AppColors.sell;
+const _bookNativeBottomClearance = 88.0;
+const _bookVisualBottomClearance = 112.0;
+const _bookScrollTopPad = 0.0;
+const _bookGap = 8.0;
+const _bookTinyGap = 4.0;
+const _bookInlineGap = 8.0;
+const _bookFilterHeight = 34.0;
+const _bookStatsHeight = 52.0;
+const _bookCardMinHeight = 124.0;
+const _bookIconBox = 34.0;
+const _bookCopyHeight = 38.0;
+const _bookActionSize = 38.0;
+const _bookSecurityHeight = 62.0;
+const _bookCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 10);
+const _bookFilterPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 6);
+const _bookSecurityPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 10);
+
+double _bookScrollBottomInset(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? _bookVisualBottomClearance
+          : _bookNativeBottomClearance) +
+      MediaQuery.paddingOf(context).bottom;
+}
 
 class AddressBookPage extends ConsumerStatefulWidget {
   const AddressBookPage({super.key, this.shellRenderMode});
@@ -70,11 +93,7 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(walletAddressBookProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = _bookScrollBottomInset(context, mode);
     final filtered = _filteredAddresses();
     final favorites = filtered.where((address) => address.isFavorite).toList();
     final others = filtered.where((address) => !address.isFavorite).toList();
@@ -106,12 +125,12 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                 child: SingleChildScrollView(
                   key: AddressBookPage.contentKey,
                   padding: AppSpacing.contentInsets.copyWith(
-                    top: AppSpacing.x4,
+                    top: _bookScrollTopPad,
                     bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.x4,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       _SearchBox(

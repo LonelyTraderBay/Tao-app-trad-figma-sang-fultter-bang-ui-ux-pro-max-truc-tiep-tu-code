@@ -28,48 +28,55 @@ class _AdvancedHeader extends StatelessWidget {
                     size: VitIconButtonSize.md,
                   ),
                   const SizedBox(width: AppSpacing.tradeBotSmallGap),
-                  InkWell(
-                    key: AdvancedChartPage.pairSelectorKey,
-                    onTap: () => context.go(AppRoutePaths.markets),
-                    borderRadius: AppRadii.mdRadius,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        VitCard(
-                          width: AppSpacing.tradeBotClientMoneyBalanceGlyph,
-                          height: AppSpacing.tradeBotClientMoneyBalanceGlyph,
-                          padding: AppSpacing.zeroInsets,
-                          variant: VitCardVariant.ghost,
-                          clip: true,
-                          background: ColoredBox(
-                            color: logoColor.withValues(alpha: .18),
-                          ),
-                          child: Text(
-                            pair.baseAsset.substring(0, 3),
-                            style: AppTextStyles.micro.copyWith(
-                              color: logoColor,
-                              fontWeight: AppTextStyles.bold,
+                  Expanded(
+                    child: InkWell(
+                      key: AdvancedChartPage.pairSelectorKey,
+                      onTap: () => context.go(AppRoutePaths.markets),
+                      borderRadius: AppRadii.mdRadius,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          VitCard(
+                            width: AppSpacing.tradeBotClientMoneyBalanceGlyph,
+                            height: AppSpacing.tradeBotClientMoneyBalanceGlyph,
+                            padding: AppSpacing.zeroInsets,
+                            variant: VitCardVariant.ghost,
+                            clip: true,
+                            background: ColoredBox(
+                              color: logoColor.withValues(alpha: .18),
+                            ),
+                            child: Text(
+                              pair.baseAsset.substring(0, 3),
+                              style: AppTextStyles.micro.copyWith(
+                                color: logoColor,
+                                fontWeight: AppTextStyles.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
-                        Text(
-                          pair.symbol,
-                          style: AppTextStyles.baseMedium.copyWith(
-                            fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.tradeBotLineHeightTight,
+                          const SizedBox(
+                            width: AppSpacing.tradeBotInlineIconGap,
                           ),
-                        ),
-                        const SizedBox(width: AppSpacing.hairlineStroke * 2),
-                        const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          color: AppColors.text2,
-                          size: AppSpacing.tradeBotMediumIcon,
-                        ),
-                      ],
+                          Flexible(
+                            child: Text(
+                              pair.symbol,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.baseMedium.copyWith(
+                                fontWeight: AppTextStyles.bold,
+                                height: AppSpacing.tradeBotLineHeightTight,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.hairlineStroke * 2),
+                          const Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: AppColors.text2,
+                            size: AppSpacing.tradeBotMediumIcon,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  const Spacer(),
                   SizedBox(
                     width:
                         AppSpacing.tradeBotMetricTableColumnWidth +
@@ -258,13 +265,27 @@ class _ChartToolbar extends StatelessWidget {
               padding: AppSpacing.tradeReceiptSupportPadding,
               child: Row(
                 children: [
-                  for (final timeframe in timeframes)
-                    _TimeframeButton(
-                      key: AdvancedChartPage.timeframeKey(timeframe),
-                      label: timeframe,
-                      active: activeTimeframe == timeframe,
-                      onTap: () => onTimeframeChanged(timeframe),
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            for (final timeframe in timeframes)
+                              _TimeframeButton(
+                                key: AdvancedChartPage.timeframeKey(timeframe),
+                                label: timeframe,
+                                active: activeTimeframe == timeframe,
+                                onTap: () => onTimeframeChanged(timeframe),
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
+                  ),
                   const SizedBox(width: AppSpacing.tradeBotTinyGap),
                   const SizedBox(
                     width: AppSpacing.dividerHairline,
@@ -272,63 +293,52 @@ class _ChartToolbar extends StatelessWidget {
                     child: ColoredBox(color: AppColors.borderSolid),
                   ),
                   const SizedBox(width: AppSpacing.tradeBotTinyGap),
-                  _ChartTypeButton(
+                  VitIconButton(
                     key: AdvancedChartPage.chartTypeKey('candle'),
-                    id: 'candle',
                     icon: Icons.show_chart_rounded,
-                    active: activeChartType == 'candle',
-                    onTap: onChartTypeChanged,
+                    tooltip: 'Show candle chart',
+                    onPressed: () => onChartTypeChanged('candle'),
+                    variant: activeChartType == 'candle'
+                        ? VitIconButtonVariant.primary
+                        : VitIconButtonVariant.transparent,
+                    size: VitIconButtonSize.sm,
                   ),
-                  _ChartTypeButton(
+                  VitIconButton(
                     key: AdvancedChartPage.chartTypeKey('line'),
-                    id: 'line',
                     icon: Icons.stacked_line_chart_rounded,
-                    active: activeChartType == 'line',
-                    onTap: onChartTypeChanged,
+                    tooltip: 'Show line chart',
+                    onPressed: () => onChartTypeChanged('line'),
+                    variant: activeChartType == 'line'
+                        ? VitIconButtonVariant.primary
+                        : VitIconButtonVariant.transparent,
+                    size: VitIconButtonSize.sm,
                   ),
-                  _ChartTypeButton(
+                  VitIconButton(
                     key: AdvancedChartPage.chartTypeKey('area'),
-                    id: 'area',
                     icon: Icons.bar_chart_rounded,
-                    active: activeChartType == 'area',
-                    onTap: onChartTypeChanged,
+                    tooltip: 'Show area chart',
+                    onPressed: () => onChartTypeChanged('area'),
+                    variant: activeChartType == 'area'
+                        ? VitIconButtonVariant.primary
+                        : VitIconButtonVariant.transparent,
+                    size: VitIconButtonSize.sm,
                   ),
                   const SizedBox(width: AppSpacing.tradeBotTinyGap),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: VitCard(
+                  Tooltip(
+                    message: 'Open chart indicators',
+                    child: Semantics(
+                      button: true,
+                      label: 'Open chart indicators',
+                      child: GestureDetector(
                         key: AdvancedChartPage.indicatorButtonKey,
-                        height: AppSpacing.tradeBotQuestionIconBox,
-                        padding: AppSpacing.tradeBotCopyDemoInlinePadding,
-                        variant: VitCardVariant.ghost,
-                        borderColor: _tradePrimary.withValues(alpha: .45),
-                        clip: true,
+                        behavior: HitTestBehavior.opaque,
                         onTap: onIndicators,
-                        background: const ColoredBox(color: _toolbarBackground),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.layers_outlined,
-                              size: AppSpacing.iconSm,
-                              color: _tradePrimary,
-                            ),
-                            const SizedBox(
-                              width: AppSpacing.hairlineStroke * 2,
-                            ),
-                            Flexible(
-                              child: Text(
-                                '$activeIndicatorCount chỉ\nbáo',
-                                textAlign: TextAlign.center,
-                                style: AppTextStyles.micro.copyWith(
-                                  color: _tradePrimary,
-                                  fontWeight: AppTextStyles.medium,
-                                  fontFeatures: AppTextStyles.tabularFigures,
-                                ),
-                              ),
-                            ),
-                          ],
+                        child: VitStatusPill(
+                          label: 'Chỉ báo',
+                          icon: Icons.layers_outlined,
+                          count: activeIndicatorCount,
+                          status: VitStatusPillStatus.info,
+                          size: VitStatusPillSize.md,
                         ),
                       ),
                     ),
@@ -379,40 +389,6 @@ class _TimeframeButton extends StatelessWidget {
           fontWeight: AppTextStyles.bold,
           fontFeatures: AppTextStyles.tabularFigures,
         ),
-      ),
-    );
-  }
-}
-
-class _ChartTypeButton extends StatelessWidget {
-  const _ChartTypeButton({
-    super.key,
-    required this.id,
-    required this.icon,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String id;
-  final IconData icon;
-  final bool active;
-  final ValueChanged<String> onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      width: AppSpacing.tradeBotClientMoneyBalanceGlyph,
-      height: AppSpacing.buttonCompact - AppSpacing.hairlineStroke,
-      alignment: Alignment.center,
-      variant: VitCardVariant.ghost,
-      background: ColoredBox(
-        color: active ? AppColors.borderSolid : AppColors.transparent,
-      ),
-      onTap: () => onTap(id),
-      child: Icon(
-        icon,
-        size: AppSpacing.tradeBotCheckboxIcon,
-        color: active ? AppColors.primarySoft : AppColors.text2,
       ),
     );
   }

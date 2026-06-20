@@ -17,15 +17,15 @@ class _QuickAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.inputHeight,
-      padding: AppSpacing.tradeBotControlPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       borderColor: _dashBorder,
+      constraints: BoxConstraints(minHeight: VitDensity.compact.controlHeight),
       onTap: onTap,
       child: Row(
         children: [
           Icon(icon, color: color, size: AppSpacing.tradeBotMediumIcon),
-          const SizedBox(width: AppSpacing.tradeBotSmallGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               label,
@@ -66,12 +66,9 @@ class _SmallMetric extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           maxLines: 1,
@@ -79,7 +76,6 @@ class _SmallMetric extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ],

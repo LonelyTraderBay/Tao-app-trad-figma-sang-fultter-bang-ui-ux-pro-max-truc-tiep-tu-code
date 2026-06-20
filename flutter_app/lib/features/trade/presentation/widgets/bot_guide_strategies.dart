@@ -15,7 +15,7 @@ class _StrategiesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Bot Strategies Explained',
-      customGap: AppSpacing.tradeBotCardIconGap,
+      density: VitDensity.compact,
       children: [
         for (final strategy in strategies)
           _StrategyCard(
@@ -45,24 +45,25 @@ class _StrategyCard extends StatelessWidget {
     return VitCard(
       key: BotGuidePage.strategyKey(strategy.id),
       onTap: onTap,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.tradeBotCardPadding,
+            padding: AppSpacing.cardPaddingCompact,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 VitCard(
                   variant: VitCardVariant.inner,
-                  width: AppSpacing.inputHeight,
-                  height: AppSpacing.inputHeight,
+                  width: AppSpacing.buttonCompact,
+                  height: AppSpacing.buttonCompact,
                   alignment: Alignment.center,
                   borderColor: color.withValues(alpha: .30),
                   child: SizedBox(
                     child: Icon(_strategyIcon(strategy.iconKey), color: color),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+                const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,11 +82,11 @@ class _StrategyCard extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                          const SizedBox(width: AppSpacing.x2),
                           _DifficultyBadge(difficulty: strategy.difficulty),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                      const SizedBox(height: AppSpacing.x2),
                       Text(
                         strategy.description,
                         maxLines: 3,
@@ -98,7 +99,7 @@ class _StrategyCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotRowGap),
+                const SizedBox(width: AppSpacing.x2),
                 Icon(
                   expanded
                       ? Icons.keyboard_arrow_up_rounded
@@ -111,7 +112,7 @@ class _StrategyCard extends StatelessWidget {
           ),
           if (expanded)
             Padding(
-              padding: AppSpacing.tradeBotCardPadding,
+              padding: AppSpacing.cardPaddingCompact,
               child: _StrategyDetails(strategy: strategy),
             ),
         ],
@@ -151,7 +152,7 @@ class _StrategyDetails extends StatelessWidget {
     final color = Color(strategy.colorHex);
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: AppSpacing.tradeBotPageTopGap,
+      density: VitDensity.compact,
       children: [
         _StepsBlock(color: color, steps: strategy.howItWorks),
         Row(
@@ -164,7 +165,7 @@ class _StrategyDetails extends StatelessWidget {
                 items: strategy.pros,
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+            const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: _BulletsBlock(
                 title: 'Cons',

@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,6 +22,13 @@ part '../widgets/predictions_breaking_page_common.dart';
 
 const _predictionPrimary = AppColors.primary;
 const _emailPurple = AppColors.accent;
+const _breakingSpace = AppSpacing.x2;
+const _breakingTinySpace = AppSpacing.x1;
+const _breakingVisualScrollClearance = 112.0;
+const _breakingNativeScrollClearance = 72.0;
+const _breakingIconBox = 34.0;
+const _breakingRankBox = 28.0;
+const _breakingCtaHeight = 44.0;
 
 class PredictionsBreakingPage extends ConsumerStatefulWidget {
   const PredictionsBreakingPage({super.key, this.shellRenderMode});
@@ -60,15 +67,11 @@ class _PredictionsBreakingPageState
         .watch(predictionsReadModelControllerProvider)
         .getBreaking(category: _category);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.predictionBreakingBottomInsetVisual
-            : AppSpacing.predictionBreakingBottomInsetNative);
+            ? _breakingVisualScrollClearance
+            : _breakingNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -92,12 +95,10 @@ class _PredictionsBreakingPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsBreakingPage.contentKey,
-                    padding: AppSpacing.predictionBreakingScrollPadding(
-                      bottomInset,
-                    ),
+                    padding: EdgeInsets.only(bottom: scrollEndClearance),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionBreakingContentGap,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         _MovementSummary(snapshot: snapshot),
                         _CategoryTabs(

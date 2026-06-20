@@ -12,10 +12,10 @@ class _RegulatoryReportsDashboardPageState
         .watch(tradeReadModelControllerProvider)
         .getRegulatoryReportsDashboard();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -46,18 +46,18 @@ class _RegulatoryReportsDashboardPageState
                     child: SingleChildScrollView(
                       key: RegulatoryReportsDashboardPage.contentKey,
                       padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                        bottomInset,
+                        scrollClearance,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: AppSpacing.tradeBotContentGap,
+                        density: VitDensity.compact,
                         children: [
-                          _ComplianceAlert(totals: snapshot.totals),
                           VitPageSection(
-                            customGap: 0,
+                            density: VitDensity.compact,
                             children: [_KpiGrid(totals: snapshot.totals)],
                           ),
+                          _ComplianceAlert(totals: snapshot.totals),
                           _RangeSelector(
                             ranges: snapshot.timeRanges,
                             activeId: _range,
@@ -88,10 +88,10 @@ class _RegulatoryReportsDashboardPageState
                           ),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: AppSpacing.tradeBotInnerPanelPadding,
+                            density: VitDensity.compact,
                             child: VitPageContent(
                               padding: VitContentPadding.none,
-                              customGap: AppSpacing.tradeBotSmallGap,
+                              density: VitDensity.compact,
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
@@ -135,7 +135,7 @@ class _ComplianceAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotInnerPanelPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +145,7 @@ class _ComplianceAlert extends StatelessWidget {
             color: AppColors.text1,
             size: AppSpacing.tradeBotMediumIcon,
           ),
-          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,16 +155,12 @@ class _ComplianceAlert extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'All reports submitted within T+1. Zero regulatory breaches. Avg latency: ${totals.avgLatency.round()}s.',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.tradeBotLineHeightMedium,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ],
             ),
@@ -214,6 +210,7 @@ class _KpiGrid extends StatelessWidget {
     ];
 
     return Row(
+      key: RegulatoryReportsDashboardPage.kpiGridKey,
       children: [
         for (final item in items) ...[
           Expanded(child: _KpiCard(item: item)),
@@ -233,9 +230,11 @@ class _KpiCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotCassSummaryHeight,
-      padding: AppSpacing.tradeBotMetricBoxPadding,
+      density: VitDensity.compact,
       borderColor: _dashBorder.withValues(alpha: .68),
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.x7 + AppSpacing.x5,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -246,21 +245,18 @@ class _KpiCard extends StatelessWidget {
                 color: item.$4,
                 size: AppSpacing.tradeBotMediumIcon,
               ),
-              const SizedBox(width: AppSpacing.tradeBotTinyGap),
+              const SizedBox(width: AppSpacing.x1),
               Expanded(
                 child: Text(
                   item.$1,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             item.$2,
             maxLines: 1,
@@ -269,17 +265,15 @@ class _KpiCard extends StatelessWidget {
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             item.$3,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: item.$4 == _dashAmber ? _dashGreen : item.$4,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -361,16 +355,16 @@ class _OverviewTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: AppSpacing.tradeBotContentGap,
+      density: VitDensity.compact,
       children: [
         VitPageSection(
           label: 'Submission Trend (Last 7 Days)',
-          customGap: AppSpacing.tradeBotCardGap,
+          density: VitDensity.compact,
           children: [
             _Card(
               padding: AppSpacing.tradeBotInnerPanelPadding,
-              child: SizedBox(
-                height: AppSpacing.tradeBotDistributionChartHeight,
+              child: AspectRatio(
+                aspectRatio: 2.4,
                 child: CustomPaint(
                   painter: _TrendPainter(stats: snapshot.dailyStats),
                   child: const SizedBox.expand(),
@@ -381,7 +375,7 @@ class _OverviewTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'Report Distribution by Regulation',
-          customGap: AppSpacing.tradeBotCardGap,
+          density: VitDensity.compact,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -389,15 +383,15 @@ class _OverviewTab extends StatelessWidget {
                 Expanded(
                   child: _Card(
                     padding: AppSpacing.tradeBotInnerPanelPadding,
-                    child: SizedBox(
-                      height: AppSpacing.tradeBotDashboardChartHeight,
+                    child: AspectRatio(
+                      aspectRatio: 1.25,
                       child: CustomPaint(
                         painter: _DonutPainter(items: snapshot.distribution),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotCardGap),
+                const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: _DistributionLegend(
                     items: snapshot.distribution,
@@ -410,7 +404,7 @@ class _OverviewTab extends StatelessWidget {
         ),
         VitPageSection(
           label: 'ARM Provider Performance',
-          customGap: AppSpacing.tradeBotRowGap,
+          density: VitDensity.compact,
           children: [
             for (final provider in snapshot.providers)
               _ProviderCard(provider: provider),

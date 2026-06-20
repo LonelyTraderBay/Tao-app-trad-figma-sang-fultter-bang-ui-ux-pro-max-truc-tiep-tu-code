@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskDisclosure(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -72,6 +74,24 @@ void main() {
     expect(find.text('Staking Linh hoạt'), findsOneWidget);
     expect(find.text('Staking Cố định'), findsOneWidget);
     expect(find.text('DeFi Staking'), findsOneWidget);
+  });
+
+  testWidgets('SC-354 first viewport reaches first risk product', (
+    tester,
+  ) async {
+    await pumpRiskDisclosure(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-354 StakingRiskDisclosurePage',
+      semanticLabel: 'SC-354 StakingRiskDisclosurePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.text('Staking Linh hoạt'),
+      routeName: 'SC-354 StakingRiskDisclosurePage',
+      actionLabel: 'the first staking risk product',
+    );
   });
 
   testWidgets('SC-354 switches to category details state', (tester) async {

@@ -19,7 +19,7 @@ class StakingSlashingInsuranceBanner extends StatelessWidget {
       key: StakingSlashingHistoryKeys.info,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -61,7 +61,7 @@ class StakingSlashingSummaryStats extends StatelessWidget {
     return VitCard(
       key: StakingSlashingHistoryKeys.stats,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: GridView.count(
         crossAxisCount: AppSpacing.stakingSlashingStatsGridColumns,
         shrinkWrap: true,
@@ -121,7 +121,7 @@ class _StatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: borderColor,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -167,9 +167,9 @@ class StakingSlashingTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: StakingSlashingHistoryKeys.tabs,
-      decoration: const BoxDecoration(color: AppColors.surface),
+      color: AppColors.surface,
       child: Row(
         children: [
           for (final tab in StakingSlashingTab.values)
@@ -180,7 +180,7 @@ class StakingSlashingTabs extends StatelessWidget {
                   key: StakingSlashingHistoryKeys.tab(tab.name),
                   onTap: () => onChanged(tab),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.x4),
+                    padding: AppSpacing.earnTopPaddingX4,
                     child: Column(
                       children: [
                         Text(
@@ -195,16 +195,28 @@ class StakingSlashingTabs extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x4),
-                        AnimatedContainer(
+                        TweenAnimationBuilder<double>(
                           duration: const Duration(milliseconds: 160),
-                          width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: AppSpacing.stakingSlashingTabIndicatorHeight,
-                          decoration: BoxDecoration(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.transparent,
-                            borderRadius: AppRadii.xsRadius,
+                          tween: Tween<double>(
+                            end: active == tab ? AppSpacing.buttonHero : 0,
                           ),
+                          builder: (context, width, _) {
+                            return SizedBox(
+                              width: width,
+                              height:
+                                  AppSpacing.stakingSlashingTabIndicatorHeight,
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: active == tab
+                                      ? AppColors.primarySoft
+                                      : AppColors.transparent,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: AppRadii.xsRadius,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

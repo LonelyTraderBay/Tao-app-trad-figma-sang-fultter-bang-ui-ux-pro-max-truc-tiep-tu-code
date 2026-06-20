@@ -14,7 +14,7 @@ class RecentTransfersList extends StatelessWidget {
           'L\u1ecbch s\u1eed chuy\u1ec3n g\u1ea7n \u0111\u00e2y',
           style: AppTextStyles.baseMedium,
         ),
-        const SizedBox(height: AppSpacing.rowGap),
+        const SizedBox(height: _transferSectionGap),
         for (var i = 0; i < transfers.length; i++)
           _RecentTransferRow(
             transfer: transfers[i],
@@ -36,12 +36,12 @@ class _RecentTransferRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.walletTransferHistoryRowPadding,
+          padding: _transferHistoryRowPadding,
           child: Row(
             children: [
               VitCard(
-                width: AppSpacing.transferListIcon,
-                height: AppSpacing.transferListIcon,
+                width: _transferIconBox,
+                height: _transferIconBox,
                 variant: VitCardVariant.ghost,
                 background: ColoredBox(
                   color: _transferPrimary.withValues(alpha: .12),
@@ -51,12 +51,10 @@ class _RecentTransferRow extends StatelessWidget {
                 child: Icon(
                   Icons.swap_vert_rounded,
                   color: _transferPrimary,
-                  size: AppSpacing.transferBadgeIcon,
+                  size: _transferActionIcon,
                 ),
               ),
-              const SizedBox(
-                width: AppSpacing.searchBarHorizontalTrailingPadding,
-              ),
+              const SizedBox(width: _transferInlineGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +65,7 @@ class _RecentTransferRow extends StatelessWidget {
                         color: AppColors.text1,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: _transferTinyGap),
                     Text(
                       transfer.time,
                       style: AppTextStyles.micro.copyWith(
@@ -116,13 +114,11 @@ class TransferWalletPickerRow extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.walletTransferHistoryRowPadding,
+            padding: _transferHistoryRowPadding,
             child: Row(
               children: [
                 _WalletIcon(wallet: wallet, color: color),
-                const SizedBox(
-                  width: AppSpacing.searchBarHorizontalTrailingPadding,
-                ),
+                const SizedBox(width: _transferInlineGap),
                 Expanded(
                   child: Text(wallet.name, style: AppTextStyles.baseMedium),
                 ),
@@ -130,13 +126,12 @@ class TransferWalletPickerRow extends StatelessWidget {
                   formatTransferUsd(wallet.balanceUsd),
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(
-                  width: AppSpacing.searchBarHorizontalTrailingPadding,
-                ),
+                const SizedBox(width: _transferInlineGap),
                 if (selected)
                   const Icon(
                     Icons.check_circle_rounded,
                     color: _transferPrimary,
+                    size: _transferActionIcon,
                   ),
               ],
             ),
@@ -172,19 +167,17 @@ class TransferAssetPickerRow extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.walletTransferHistoryRowPadding,
+            padding: _transferHistoryRowPadding,
             child: Row(
               children: [
-                _AssetLogo(asset: asset, size: AppSpacing.transferListIcon),
-                const SizedBox(
-                  width: AppSpacing.searchBarHorizontalTrailingPadding,
-                ),
+                _AssetLogo(asset: asset, size: _transferIconBox),
+                const SizedBox(width: _transferInlineGap),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(asset.symbol, style: AppTextStyles.baseMedium),
-                      const SizedBox(height: AppSpacing.x1),
+                      const SizedBox(height: _transferTinyGap),
                       Text(
                         asset.name,
                         style: AppTextStyles.micro.copyWith(
@@ -200,11 +193,12 @@ class TransferAssetPickerRow extends StatelessWidget {
                     color: AppColors.text2,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.x2),
+                const SizedBox(width: _transferTinyGap),
                 if (selected)
                   const Icon(
                     Icons.check_circle_rounded,
                     color: _transferPrimary,
+                    size: _transferActionIcon,
                   ),
               ],
             ),
@@ -227,16 +221,16 @@ class TransferSuccessBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.transferSuccessPadding,
+      padding: _transferNoticePadding,
       borderColor: _transferGreen.withValues(alpha: .30),
       child: Row(
         children: [
           Icon(
             Icons.check_circle_outline_rounded,
             color: _transferGreen,
-            size: AppSpacing.transferActionIcon,
+            size: _transferActionIcon,
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: _transferInlineGap),
           Text(
             'Chuy\u1ec3n th\u00e0nh c\u00f4ng!',
             style: AppTextStyles.control.copyWith(color: _transferGreen),

@@ -8,49 +8,45 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeToolExportSummaryHeight,
-      padding: AppSpacing.tradeToolExportSummaryPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         children: [
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: _SummaryMetric(
-                    label: 'Tổng lệnh',
-                    value: _formatInteger(stats.totalTrades),
-                  ),
+          Row(
+            children: [
+              Expanded(
+                child: _SummaryMetric(
+                  label: 'Tổng lệnh',
+                  value: _formatInteger(stats.totalTrades),
                 ),
-                Expanded(
-                  child: _SummaryMetric(
-                    label: 'Tổng KL giao dịch',
-                    value: _formatCompact(stats.totalVolume),
-                  ),
+              ),
+              Expanded(
+                child: _SummaryMetric(
+                  label: 'Tổng KL giao dịch',
+                  value: _formatCompact(stats.totalVolume),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: _SummaryMetric(
-                    label: 'Tổng phí',
-                    value: _formatMoney(stats.totalFees),
-                    color: AppColors.primarySoft,
-                    small: true,
-                  ),
+          const SizedBox(height: AppSpacing.x2),
+          Row(
+            children: [
+              Expanded(
+                child: _SummaryMetric(
+                  label: 'Tổng phí',
+                  value: _formatMoney(stats.totalFees),
+                  color: AppColors.primarySoft,
+                  small: true,
                 ),
-                Expanded(
-                  child: _SummaryMetric(
-                    label: 'Lãi/Lỗ ròng',
-                    value: '+${_formatMoney(stats.netPnl)}',
-                    color: AppColors.buy,
-                    small: true,
-                  ),
+              ),
+              Expanded(
+                child: _SummaryMetric(
+                  label: 'Lãi/Lỗ ròng',
+                  value: '+${_formatMoney(stats.netPnl)}',
+                  color: AppColors.buy,
+                  small: true,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
@@ -81,11 +77,9 @@ class _SummaryMetric extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeToolInlineGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           maxLines: 1,
@@ -117,8 +111,9 @@ class _Section extends StatelessWidget {
           title: title,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _tradePrimary,
+          density: VitDensity.compact,
         ),
-        const SizedBox(height: AppSpacing.tradeToolSectionHeaderGap),
+        const SizedBox(height: AppSpacing.x2),
         child,
       ],
     );

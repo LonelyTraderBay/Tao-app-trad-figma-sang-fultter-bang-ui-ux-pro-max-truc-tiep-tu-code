@@ -55,26 +55,25 @@ class _RiskCategoryCard extends StatelessWidget {
             child: InkWell(
               onTap: onTap,
               child: Padding(
-                padding: AppSpacing.earnPaddingX4,
+                padding: _stakingRiskCardPadding,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox.square(
-                      dimension:
-                          AppSpacing.stakingRiskDisclosureCategoryIconBox,
+                      dimension: _stakingRiskCategoryIconBox,
                       child: Material(
                         color: _riskTint(category.level),
                         shape: RoundedRectangleBorder(
                           borderRadius: AppRadii.lgRadius,
                           side: BorderSide(
                             color: color.withValues(alpha: .28),
-                            width: AppSpacing.stakingRiskDisclosureBorderWidth,
+                            width: _stakingRiskBorderWidth,
                           ),
                         ),
                         child: Icon(
                           _categoryIcon(category.id),
                           color: color,
-                          size: AppSpacing.stakingRiskDisclosureCategoryIcon,
+                          size: _stakingRiskCategoryIcon,
                         ),
                       ),
                     ),
@@ -103,8 +102,7 @@ class _RiskCategoryCard extends StatelessWidget {
                             category.description,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text2,
-                              height: AppSpacing
-                                  .stakingRiskDisclosureBodyLineHeight,
+                              height: _stakingRiskBodyLineHeight,
                             ),
                           ),
                         ],
@@ -150,7 +148,7 @@ class _RiskCategoryDetails extends StatelessWidget {
       children: [
         const Divider(color: AppColors.divider, height: AppSpacing.x1),
         Padding(
-          padding: AppSpacing.earnDisclosureDetailsPadding,
+          padding: _stakingRiskDetailsPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -194,10 +192,10 @@ class _DetailGroup extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
-                padding: AppSpacing.stakingRiskDisclosureDetailBulletPadding,
+                padding: _stakingRiskDetailBulletPadding,
                 child: SizedBox(
-                  width: AppSpacing.stakingRiskDisclosureDetailBullet,
-                  height: AppSpacing.stakingRiskDisclosureDetailBullet,
+                  width: _stakingRiskDetailBullet,
+                  height: _stakingRiskDetailBullet,
                   child: Material(
                     color: AppColors.text3,
                     shape: CircleBorder(),
@@ -210,7 +208,7 @@ class _DetailGroup extends StatelessWidget {
                   item,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingRiskDisclosureBodyLineHeight,
+                    height: _stakingRiskBodyLineHeight,
                   ),
                 ),
               ),

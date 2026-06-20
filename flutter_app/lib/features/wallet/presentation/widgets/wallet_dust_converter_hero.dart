@@ -19,15 +19,15 @@ class _DustHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.walletDustHeroPadding,
+      padding: _dustHeroPadding,
       borderColor: _dustHeroBorder,
       child: Column(
         children: [
           Row(
             children: [
               VitCard(
-                width: AppSpacing.walletDustHeroIconBox,
-                height: AppSpacing.walletDustHeroIconBox,
+                width: _dustHeroIconBox,
+                height: _dustHeroIconBox,
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.md,
                 borderColor: _dustAmber.withValues(alpha: .5),
@@ -39,10 +39,10 @@ class _DustHero extends StatelessWidget {
                 child: const Icon(
                   Icons.auto_awesome_rounded,
                   color: _dustAmber,
-                  size: AppSpacing.walletDustHeroIconGlyph,
+                  size: AppSpacing.iconMd,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletDustHeroHeaderGap),
+              const SizedBox(width: _dustInlineGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +53,7 @@ class _DustHero extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.walletDustHeroTitleGap),
+                    const SizedBox(height: _dustTinyGap),
                     Text(
                       'Chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF (d\u01B0\u1EDBi ${_formatUsd(snapshot.dustThresholdUsd)}) sang $targetSymbol',
                       maxLines: 1,
@@ -65,7 +65,7 @@ class _DustHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletDustHeroStatsGap),
+          const SizedBox(height: _dustGap),
           Row(
             children: [
               _HeroStat(
@@ -73,13 +73,13 @@ class _DustHero extends StatelessWidget {
                 label: 'Dust t\u00ECm th\u1EA5y',
                 color: _dustAmber,
               ),
-              const SizedBox(width: AppSpacing.walletDustHeroStatGap),
+              const SizedBox(width: _dustTinyGap),
               _HeroStat(
                 value: selectedCount.toString(),
                 label: '\u0110\u00E3 ch\u1ECDn',
                 color: _dustPrimary,
               ),
-              const SizedBox(width: AppSpacing.walletDustHeroStatGap),
+              const SizedBox(width: _dustTinyGap),
               _HeroStat(
                 value: _formatUsd(selectedValue),
                 label: 'Gi\u00E1 tr\u1ECB',
@@ -108,8 +108,8 @@ class _HeroStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: VitCard(
-        height: AppSpacing.walletDustHeroStatHeight,
-        padding: AppSpacing.walletDustHeroStatPadding,
+        height: _dustHeroStatHeight,
+        padding: _dustHeroStatPadding,
         variant: VitCardVariant.inner,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -125,7 +125,7 @@ class _HeroStat extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.walletDustTextGap),
+            const SizedBox(height: _dustTinyGap),
             Text(
               label,
               maxLines: 1,

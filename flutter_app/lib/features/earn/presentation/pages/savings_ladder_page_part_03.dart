@@ -18,7 +18,7 @@ class _MetricGrid extends StatelessWidget {
         for (final metric in metrics)
           VitCard(
             radius: VitCardRadius.lg,
-            padding: AppSpacing.earnPaddingX3,
+            density: VitDensity.compact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -43,7 +43,7 @@ class _MetricGrid extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Spacer(),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   metric.value,
                   maxLines: 1,
@@ -77,7 +77,7 @@ class _AssetBreakdown extends StatelessWidget {
     }
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         children: [
           for (final entry in byAsset.entries) ...[
@@ -124,7 +124,7 @@ class _DurationBreakdown extends StatelessWidget {
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: AppSpacing.x3,
+      gap: VitContentGap.tight,
       children: [
         for (final days in [30, 60, 90]) ...[
           if (rungs.any((rung) => rung.lockDays == days))
@@ -163,7 +163,7 @@ class _DurationTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX3,
+      density: VitDensity.compact,
       child: Row(
         children: [
           _RoundIcon(icon: Icons.schedule_rounded, color: color),
@@ -222,7 +222,7 @@ class _BreakdownRow extends StatelessWidget {
             Text(label, style: _captionBold.copyWith(color: AppColors.text1)),
             const SizedBox(width: AppSpacing.x2),
             Text(caption, style: AppTextStyles.micro),
-            const Spacer(),
+            const Expanded(child: SizedBox.shrink()),
             Text(
               value,
               style: AppTextStyles.caption.copyWith(
@@ -241,7 +241,7 @@ class _BreakdownRow extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.pillRadius,
           child: LinearProgressIndicator(
-            minHeight: AppSpacing.savingsLadderProgressHeight,
+            minHeight: AppSpacing.x1,
             value: percent.clamp(0.0, 1.0),
             color: color,
             backgroundColor: AppColors.surface3,
@@ -269,14 +269,14 @@ class _LiquidityCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: color.withValues(alpha: .25),
-      padding: AppSpacing.earnPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.savingsLadderLiquidityRing,
-                height: AppSpacing.savingsLadderLiquidityRing,
+                width: _liquidityRingSize,
+                height: _liquidityRingSize,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -314,7 +314,7 @@ class _LiquidityCard extends StatelessWidget {
                           : 'Hầu hết vốn bị khóa dài hạn. Cân nhắc thêm bậc 30D.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.savingsLadderLiquidityLineHeight,
+                        height: _liquidityLineHeight,
                       ),
                     ),
                   ],
@@ -393,7 +393,7 @@ class _LiquidityMini extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: AppSpacing.earnPaddingX2,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -436,7 +436,7 @@ class _OptimizationTip extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: AppColors.accent20,
-      padding: AppSpacing.earnPaddingX3,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -456,7 +456,7 @@ class _OptimizationTip extends StatelessWidget {
                   text,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.savingsLadderDisclaimerLineHeight,
+                    height: _disclaimerLineHeight,
                   ),
                 ),
               ],
@@ -523,7 +523,7 @@ class _SectionTitle extends StatelessWidget {
       children: [
         const SizedBox(
           width: AppSpacing.savingsLadderSectionMarkerWidth,
-          height: AppSpacing.savingsLadderSectionMarkerHeight,
+          height: _sectionMarkerHeight,
           child: Material(
             color: AppColors.primary,
             borderRadius: AppRadii.xsRadius,

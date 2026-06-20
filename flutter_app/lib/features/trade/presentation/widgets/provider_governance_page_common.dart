@@ -14,18 +14,17 @@ class _MessagePanel extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           child: VitCard(
             radius: VitCardRadius.lg,
-            padding: AppSpacing.providerGovernanceMessagePanelPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            density: VitDensity.compact,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              density: VitDensity.compact,
+              fullBleed: true,
               children: [
                 Text('Broadcast Message', style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.rowGapRegular),
                 Text(
                   'Send announcement to all followers',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.ctaLoadingIcon),
                 _RequestButton(onPressed: onClose),
               ],
             ),

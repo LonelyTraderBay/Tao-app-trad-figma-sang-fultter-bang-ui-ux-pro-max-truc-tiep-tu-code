@@ -42,7 +42,7 @@ class _FieldSection extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        const SizedBox(height: AppSpacing.profileApiCreateFieldGap),
+        SizedBox(height: VitDensity.compact.verticalSpace),
         child,
       ],
     );
@@ -101,7 +101,7 @@ class _PrimaryCta extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       onPressed: enabled ? onTap : null,
-      height: AppSpacing.inputHeight,
+      density: VitDensity.compact,
       child: Text(label),
     );
   }
@@ -111,7 +111,7 @@ class _SimpleStepScaffold extends StatelessWidget {
   const _SimpleStepScaffold({
     required this.title,
     required this.subtitle,
-    required this.bottomInset,
+    required this.scrollClearance,
     required this.children,
     this.onBack,
     this.showBack = true,
@@ -119,7 +119,7 @@ class _SimpleStepScaffold extends StatelessWidget {
 
   final String title;
   final String subtitle;
-  final double bottomInset;
+  final double scrollClearance;
   final List<Widget> children;
   final VoidCallback? onBack;
   final bool showBack;
@@ -143,12 +143,12 @@ class _SimpleStepScaffold extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   padding: AppSpacing.profileApiCreateStepScrollPadding(
-                    bottomInset,
+                    scrollClearance,
                   ),
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.profileApiCreateStepGap,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: children,
                   ),
@@ -187,7 +187,7 @@ class _SuccessIcon extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.profileApiCreateSuccessTitleGap),
+        const SizedBox(height: AppSpacing.x3),
         Text(
           title,
           textAlign: TextAlign.center,
@@ -205,42 +205,14 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.profileApiCreateSummaryPadding,
-      borderColor: _apiBorder,
-      child: Column(
-        children: [
-          for (final row in rows) ...[
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    row.label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text2,
-                    ),
-                  ),
-                ),
-                Flexible(
-                  child: Text(
-                    row.value,
-                    textAlign: TextAlign.right,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            if (row != rows.last)
-              const Divider(
-                height: AppSpacing.profileApiCreateSummaryDivider,
-                color: AppColors.divider,
-              ),
-          ],
-        ],
-      ),
+    return VitFinancialSafetySummary(
+      title: 'API key safety review',
+      contractId: 'profile.api.create',
+      footer: 'Review permissions, IP whitelist, and expiry before creating.',
+      items: [
+        for (final row in rows)
+          VitFinancialSafetyItem(label: row.label, value: row.value),
+      ],
     );
   }
 }
@@ -255,7 +227,7 @@ class _WarningCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = amber ? _apiAmber : _apiRed;
     return VitCard(
-      padding: AppSpacing.profileApiCreateWarningPadding,
+      density: VitDensity.compact,
       borderColor: color.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +259,7 @@ class _KeyResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.profileApiCreateResultCardPadding,
+      density: VitDensity.compact,
       borderColor: _apiBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -299,7 +271,7 @@ class _KeyResultCard extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: AppSpacing.profileApiCreateResultValueGap),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(

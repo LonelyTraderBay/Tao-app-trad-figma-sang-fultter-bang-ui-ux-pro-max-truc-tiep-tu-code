@@ -79,7 +79,7 @@ class _SegmentButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: SizedBox(
-          height: AppSpacing.predictionDetailSegmentHeight,
+          height: VitDensity.compact.controlHeight,
           child: Center(
             child: Text(
               label,
@@ -165,7 +165,7 @@ class _AmountChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
         child: SizedBox(
-          height: AppSpacing.predictionDetailAmountChipHeight,
+          height: VitDensity.compact.controlHeight,
           child: Center(
             child: Text(
               '\$$amount',
@@ -193,7 +193,7 @@ class _RiskLink extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.mdRadius,
       child: SizedBox(
-        height: AppSpacing.predictionDetailRiskLinkHeight,
+        height: VitDensity.compact.controlHeight,
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

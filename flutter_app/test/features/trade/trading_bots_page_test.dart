@@ -14,9 +14,10 @@ void main() {
   Future<void> pumpTradingBots(
     WidgetTester tester, {
     String initialLocation = AppRoutePaths.tradeBots,
+    Size viewport = const Size(440, 956),
   }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -87,6 +88,33 @@ void main() {
     expect(find.text('DCA Bot'), findsOneWidget);
     expect(find.text('Grid Bot'), findsOneWidget);
     expect(find.text('Momentum Bot'), findsOneWidget);
+  });
+
+  testWidgets('SC-320 uses full-width bot workspace at 360x800', (
+    tester,
+  ) async {
+    await pumpTradingBots(tester, viewport: const Size(360, 800));
+
+    expect(find.byType(TradingBotsPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byKey(TradingBotsPage.contentKey), findsOneWidget);
+    expect(find.byKey(TradingBotsPage.backKey), findsOneWidget);
+    expect(find.byKey(TradingBotsPage.tabKey('mybots')), findsOneWidget);
+
+    final contentRect = tester.getRect(find.byKey(TradingBotsPage.contentKey));
+    final backRect = tester.getRect(find.byKey(TradingBotsPage.backKey));
+
+    expect(contentRect.left, closeTo(0, 0.5));
+    expect(contentRect.right, closeTo(360, 0.5));
+    expect(contentRect.height, greaterThan(560));
+    expect(backRect.left, greaterThanOrEqualTo(0));
+
+    await tester.ensureVisible(find.byKey(TradingBotsPage.addBotKey));
+    await tester.pumpAndSettle();
+
+    final addBotRect = tester.getRect(find.byKey(TradingBotsPage.addBotKey));
+    expect(addBotRect.bottom, lessThanOrEqualTo(800));
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('SC-059 bot actions stay local', (tester) async {

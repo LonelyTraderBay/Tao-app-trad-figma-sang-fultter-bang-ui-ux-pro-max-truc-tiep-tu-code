@@ -22,7 +22,7 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -77,7 +77,7 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warn15,
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.earnCardPaddingX3,
             child: Text(
               'Khi chọn validator riêng, bạn chịu rủi ro slashing nếu validator vi phạm. Ưu tiên validator Top Tier hoặc Recommended.',
               style: AppTextStyles.micro.copyWith(
@@ -105,7 +105,7 @@ class StakingValidatorSelectionFooterNote extends StatelessWidget {
     return VitCard(
       key: StakingValidatorSelectionKeys.footer,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         snapshot.footerNote,
         textAlign: TextAlign.center,

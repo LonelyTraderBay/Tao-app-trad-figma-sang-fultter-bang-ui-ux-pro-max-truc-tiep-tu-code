@@ -20,7 +20,7 @@ class _ReviewStep extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.launchpadPaddingX5,
           child: Column(
             children: [
               const Icon(
@@ -53,6 +53,16 @@ class _ReviewStep extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        VitHighRiskStatePanel(
+          key: LaunchpadBatchClaimPage.reviewStateKey,
+          state: VitHighRiskUiState.riskReview,
+          title: 'Review truoc khi claim',
+          message:
+              'Kiem tra token, chain, gas va tong gia tri truoc khi xac nhan batch claim.',
+          contractId:
+              'SC-304 / ${positions.length} positions / ${summary.chains.join(', ')}',
         ),
         const SizedBox(height: AppSpacing.x4),
         Row(
@@ -93,7 +103,7 @@ class _ReviewTotalRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.launchpadVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -134,7 +144,7 @@ class _SuccessStep extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x5),
+          padding: AppSpacing.launchpadPaddingX5,
           child: Column(
             children: [
               const Icon(

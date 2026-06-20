@@ -20,29 +20,28 @@ class _PnlBreakdown extends StatelessWidget {
             color: AppColors.surface,
             borderRadius: AppRadii.cardRadius,
             child: Padding(
-              padding: AppSpacing.portfolioTrackerPnlRowPadding,
+              padding: _portfolioPnlRowPadding,
               child: Row(
                 children: [
                   _TokenBadge(
                     holding: holding,
-                    size: AppSpacing.portfolioTrackerHoldingAvatarSm,
+                    size: _portfolioHoldingAvatarSm,
                   ),
-                  const SizedBox(
-                    width: AppSpacing.portfolioTrackerPnlAvatarGap,
-                  ),
+                  const SizedBox(width: _portfolioPnlAvatarGap),
                   Expanded(
                     child: Column(
                       children: [
                         Row(
                           children: [
-                            Text(
-                              holding.symbol,
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
+                            Expanded(
+                              child: Text(
+                                holding.symbol,
+                                style: AppTextStyles.caption.copyWith(
+                                  color: AppColors.text1,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
                               ),
                             ),
-                            const Spacer(),
                             Text(
                               _mask(
                                 '${holding.pnl >= 0 ? '+' : ''}${_formatUsd(holding.pnl)}',
@@ -57,14 +56,11 @@ class _PnlBreakdown extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: AppSpacing.portfolioTrackerPnlProgressGap,
-                        ),
+                        const SizedBox(height: _portfolioPnlProgressGap),
                         ClipRRect(
                           borderRadius: AppRadii.xlRadius,
                           child: LinearProgressIndicator(
-                            minHeight:
-                                AppSpacing.portfolioTrackerPnlProgressHeight,
+                            minHeight: _portfolioPnlProgressHeight,
                             value: maxPnl == 0 ? 0 : holding.pnl.abs() / maxPnl,
                             backgroundColor: AppColors.surface2,
                             valueColor: AlwaysStoppedAnimation(
@@ -80,7 +76,7 @@ class _PnlBreakdown extends StatelessWidget {
             ),
           ),
           if (holding != sorted.last)
-            const SizedBox(height: AppSpacing.portfolioTrackerPnlRowGap),
+            const SizedBox(height: _portfolioPnlRowGap),
         ],
       ],
     );
@@ -99,7 +95,7 @@ class _SummaryStats extends StatelessWidget {
       children: [
         Expanded(
           child: VitCard(
-            padding: AppSpacing.portfolioTrackerSummaryPadding,
+            padding: _portfolioSummaryPadding,
             child: _SummaryStat(
               label: 'Tổng lãi/lỗ',
               value: _mask(
@@ -110,10 +106,10 @@ class _SummaryStats extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.portfolioTrackerSummaryGap),
+        const SizedBox(width: _portfolioSummaryGap),
         Expanded(
           child: VitCard(
-            padding: AppSpacing.portfolioTrackerSummaryPadding,
+            padding: _portfolioSummaryPadding,
             child: _SummaryStat(
               label: 'ROI tổng',
               value: _formatSignedPercent(stats.totalPnlPct),
@@ -146,7 +142,7 @@ class _SummaryStat extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.portfolioTrackerSummaryValueGap),
+        const SizedBox(height: _portfolioSummaryValueGap),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
@@ -195,14 +191,12 @@ class _AllocationDonutPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final rect = Rect.fromCircle(
       center: center,
-      radius:
-          size.shortestSide / 2 -
-          AppSpacing.portfolioTrackerAllocationDonutInset,
+      radius: size.shortestSide / 2 - _portfolioAllocationDonutInset,
     );
     var start = -math.pi / 2;
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = AppSpacing.portfolioTrackerAllocationDonutStroke
+      ..strokeWidth = _portfolioAllocationDonutStroke
       ..strokeCap = StrokeCap.butt;
 
     for (final holding in holdings) {
@@ -231,8 +225,8 @@ class _PerformancePainter extends CustomPainter {
     final minValue = values.reduce(math.min) * .995;
     final maxValue = values.reduce(math.max) * 1.005;
     final range = maxValue - minValue;
-    const topPadding = AppSpacing.portfolioTrackerPerformanceTopPadding;
-    const bottomPadding = AppSpacing.portfolioTrackerPerformanceBottomPadding;
+    const topPadding = _portfolioPerformanceTopPadding;
+    const bottomPadding = _portfolioPerformanceBottomPadding;
     final chartHeight = size.height - topPadding - bottomPadding;
     final linePath = Path();
 
@@ -267,7 +261,7 @@ class _PerformancePainter extends CustomPainter {
     final linePaint = Paint()
       ..color = AppColors.buy
       ..style = PaintingStyle.stroke
-      ..strokeWidth = AppSpacing.portfolioTrackerPerformanceLineStroke
+      ..strokeWidth = _portfolioPerformanceLineStroke
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
     canvas.drawPath(linePath, linePaint);
@@ -276,12 +270,12 @@ class _PerformancePainter extends CustomPainter {
     canvas
       ..drawCircle(
         last,
-        AppSpacing.portfolioTrackerPerformanceLastPoint,
+        _portfolioPerformanceLastPoint,
         Paint()..color = AppColors.buy,
       )
       ..drawCircle(
         last,
-        AppSpacing.portfolioTrackerPerformanceInnerPoint,
+        _portfolioPerformanceInnerPoint,
         Paint()..color = AppColors.text1,
       );
 
@@ -303,7 +297,7 @@ class _PerformancePainter extends CustomPainter {
         canvas,
         Offset(
           x - textPainter.width / 2,
-          size.height - AppSpacing.portfolioTrackerPerformanceDateBottom,
+          size.height - _portfolioPerformanceDateBottom,
         ),
       );
     }

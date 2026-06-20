@@ -29,7 +29,7 @@ class _ClientCategoryCard extends StatelessWidget {
           Expanded(
             child: VitPageContent(
               padding: VitContentPadding.none,
-              customGap: AppSpacing.x3,
+              density: VitDensity.compact,
               children: [
                 Row(
                   children: [
@@ -55,7 +55,7 @@ class _ClientCategoryCard extends StatelessWidget {
                 ),
                 VitPageContent(
                   padding: VitContentPadding.none,
-                  customGap: AppSpacing.hairlineStroke * 2,
+                  density: VitDensity.compact,
                   children: [
                     for (final limit in category.limits)
                       _Bullet(text: limit, color: _marginAmber),
@@ -120,7 +120,7 @@ class _AccountHero extends StatelessWidget {
       ),
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.hairlineStroke * 2,
+        density: VitDensity.compact,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +183,8 @@ class _AccountHero extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.x2),
+              const Expanded(child: SizedBox.shrink()),
               Text(
                 '${account.marginLevel.toStringAsFixed(1)}%',
                 style: AppTextStyles.caption.copyWith(
@@ -224,13 +225,7 @@ class _HeroStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: VitCard(
-        height: AppSpacing.walletAssetStatHeight,
-        padding: AppSpacing.zeroInsets.copyWith(
-          left: AppSpacing.x3,
-          top: AppSpacing.formFieldLabelGap,
-          right: AppSpacing.x3,
-          bottom: AppSpacing.formFieldLabelGap,
-        ),
+        density: VitDensity.compact,
         variant: VitCardVariant.inner,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,7 +239,7 @@ class _HeroStat extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const Spacer(),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               value,
               maxLines: 1,
@@ -295,9 +290,8 @@ class _TradeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: AppSpacing.x4,
+      density: VitDensity.compact,
       children: [
-        _PriceComparison(prices: snapshot.referencePrices),
         _PairCard(snapshot: snapshot),
         _SideToggle(side: side, onChanged: onSideChanged),
         _LeverageSelector(
@@ -319,6 +313,7 @@ class _TradeTab extends StatelessWidget {
           available: snapshot.account.availableMargin,
           liquidationPrice: snapshot.orderDraft.liquidationPriceLabel,
         ),
+        _PriceComparison(prices: snapshot.referencePrices),
         _MarginOrderReviewCard(leverage: leverage),
         _SubmitButton(
           side: side,

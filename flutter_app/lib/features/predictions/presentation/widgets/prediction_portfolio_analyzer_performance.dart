@@ -8,7 +8,7 @@ class _PerformanceChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionAnalyzerCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -16,11 +16,9 @@ class _PerformanceChartCard extends StatelessWidget {
             'P/L Over Time',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(
-            height: AppSpacing.predictionAnalyzerPerformanceChartGap,
-          ),
+          const SizedBox(height: AppSpacing.x2),
           SizedBox(
-            height: AppSpacing.predictionAnalyzerPerformanceChartHeight,
+            height: AppSpacing.x7 * 5,
             child: CustomPaint(
               painter: _PnlLinePainter(points: snapshot.pnlHistory),
               child: const SizedBox.expand(),
@@ -42,9 +40,10 @@ class _TradeStatsSection extends StatelessWidget {
     return VitPageSection(
       label: 'Trade Statistics',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         VitCard(
-          padding: AppSpacing.predictionAnalyzerCardPadding,
+          density: VitDensity.compact,
           child: Column(
             children: [
               Row(
@@ -55,19 +54,20 @@ class _TradeStatsSection extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const Spacer(),
-                  Text(
-                    '${snapshot.winRate.toStringAsFixed(1)}%',
-                    style: AppTextStyles.baseMedium.copyWith(
-                      color: AppColors.buy,
-                      fontWeight: AppTextStyles.bold,
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: Text(
+                      '${snapshot.winRate.toStringAsFixed(1)}%',
+                      textAlign: TextAlign.end,
+                      style: AppTextStyles.baseMedium.copyWith(
+                        color: AppColors.buy,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: AppSpacing.predictionAnalyzerTradeStatsGap,
-              ),
+              const SizedBox(height: AppSpacing.x2),
               Row(
                 children: [
                   Expanded(
@@ -86,9 +86,7 @@ class _TradeStatsSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: AppSpacing.predictionAnalyzerTradeProgressGap,
-              ),
+              const SizedBox(height: AppSpacing.x2),
               ClipRRect(
                 borderRadius: AppRadii.pillRadius,
                 child: LinearProgressIndicator(
@@ -118,10 +116,11 @@ class _AttributionSection extends StatelessWidget {
     return VitPageSection(
       label: 'Performance Attribution',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         for (final position in closed)
           VitCard(
-            padding: AppSpacing.predictionAnalyzerAttributionPadding,
+            density: VitDensity.compact,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -135,10 +134,7 @@ class _AttributionSection extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(
-                        height:
-                            AppSpacing.predictionAnalyzerAttributionLabelGap,
-                      ),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         position.category,
                         style: AppTextStyles.micro.copyWith(

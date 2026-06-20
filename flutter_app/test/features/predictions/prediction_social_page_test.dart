@@ -10,12 +10,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSocial(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -85,6 +84,22 @@ void main() {
     expect(find.text('CryptoAnalyst'), findsOneWidget);
     expect(find.text('ChartMaster'), findsOneWidget);
     expect(find.text('BearMarketSurvivor'), findsOneWidget);
+  });
+
+  testWidgets('SC-040 first viewport reaches comment composer', (tester) async {
+    await pumpSocial(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-040 PredictionSocialPage',
+      semanticLabel: 'SC-040 PredictionSocialPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Them binh luan'),
+      targetLabel: 'the comment composer',
+      minVisibleHeight: 12,
+    );
   });
 
   testWidgets('SC-040 stance, comment input, tabs, and copy action are local', (

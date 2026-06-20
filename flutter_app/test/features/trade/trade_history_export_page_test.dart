@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTradeExport(
     WidgetTester tester, {
@@ -92,6 +94,27 @@ void main() {
     expect(find.text('Bao gồm dữ liệu'), findsOneWidget);
     expect(find.text('Spot Trading'), findsOneWidget);
     expect(find.text('Xuất CSV (30d)'), findsOneWidget);
+  });
+
+  testWidgets('SC-054 first viewport reaches export format selector', (
+    tester,
+  ) async {
+    await pumpTradeExport(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'TradeHistoryExportPage',
+      semanticLabel: 'SC-054 TradeHistoryExportPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(TradeHistoryExportPage.formatKey('csv')),
+      minVisibleHeight: 36,
+      targetLabel: 'CSV export format selector',
+      reason:
+          'Trade export should expose the primary format selector before '
+          'sticky export actions on the QA phone viewport.',
+    );
   });
 
   testWidgets('SC-054 format and period selections update the CTA', (

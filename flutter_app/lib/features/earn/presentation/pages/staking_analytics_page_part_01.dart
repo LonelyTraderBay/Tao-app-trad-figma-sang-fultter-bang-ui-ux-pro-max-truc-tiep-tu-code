@@ -12,10 +12,10 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
         .getAnalytics();
     final activeTab = _tab ?? snapshot.defaultTab;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? _stakingAnalyticsVisualNavClearance
+            : _stakingAnalyticsNativeNavClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -35,10 +35,15 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    scrollEndPadding,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    density: VitDensity.compact,
                     children: [
                       _SummaryCard(
                         snapshot: snapshot,
@@ -115,7 +120,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: StakingAnalyticsPage.summaryKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: _stakingAnalyticsCardPadding,
       child: Column(
         children: [
           Row(
@@ -148,13 +153,13 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
                 child: VitCtaButton(
                   key: StakingAnalyticsPage.calculateButtonKey,
-                  height: AppSpacing.earnAnalyticsActionHeight,
+                  density: VitDensity.compact,
                   onPressed: onCalculate,
                   leading: Icon(
                     showCalculator
@@ -168,7 +173,7 @@ class _SummaryCard extends StatelessWidget {
               Expanded(
                 child: VitCtaButton(
                   key: StakingAnalyticsPage.exportButtonKey,
-                  height: AppSpacing.earnAnalyticsActionHeight,
+                  density: VitDensity.compact,
                   variant: VitCtaButtonVariant.secondary,
                   onPressed: onExport,
                   leading: const Icon(Icons.file_download_outlined),
@@ -254,7 +259,7 @@ class _CalculatorCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: _stakingAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -310,7 +315,7 @@ class _CalculatorCard extends StatelessWidget {
             'Tổng nhận về ${_formatUsd(finalValue)} sau 90 ngày. Đây là mô phỏng để kiểm UI, không phải cam kết lợi nhuận.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.earnAnalyticsCaptionLineHeight,
+              height: _stakingAnalyticsCaptionLineHeight,
             ),
           ),
         ],
@@ -334,7 +339,7 @@ class _CalculatorMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.standard,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: _stakingAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -409,11 +414,13 @@ class _EarningsTab extends StatelessWidget {
         VitPageSection(
           label: 'Phân tích Thu nhập theo Tài sản',
           accentColor: AppColors.primary,
+          density: VitDensity.compact,
           children: [_EarningsChartCard(points: snapshot.earningsBreakdown)],
         ),
         VitPageSection(
           label: 'Thu nhập theo Tài sản',
           accentColor: AppColors.primary,
+          density: VitDensity.compact,
           children: [_AssetEarningsGrid(products: snapshot.productPerformance)],
         ),
       ],
@@ -430,11 +437,11 @@ class _EarningsChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingAnalyticsPage.earningsChartKey,
-      padding: AppSpacing.earnCardPaddingX4TopX5,
+      padding: _stakingAnalyticsCardPadding,
       child: Column(
         children: [
           SizedBox(
-            height: AppSpacing.earnAnalyticsEarningsChartHeight,
+            height: _stakingAnalyticsEarningsChartHeight,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

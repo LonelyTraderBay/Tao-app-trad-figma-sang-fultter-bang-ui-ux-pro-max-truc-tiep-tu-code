@@ -17,7 +17,7 @@ class _SubAccountSummaryCard extends StatelessWidget {
 
     return VitCard(
       key: SubAccountPage.summaryKey,
-      padding: AppSpacing.profileSubAccountSummaryPadding,
+      density: VitDensity.compact,
       radius: VitCardRadius.lg,
       variant: VitCardVariant.hero,
       borderColor: AppColors.primary20,
@@ -53,7 +53,7 @@ class _SubAccountSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.profileSubAccountSummaryBalanceGap),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             isBalanceHidden
                 ? '\u2022\u2022\u2022\u2022\u2022\u2022'
@@ -62,7 +62,7 @@ class _SubAccountSummaryCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.profileSubAccountSummaryPnlGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             isBalanceHidden
                 ? 'PnL 30d: \u2022\u2022\u2022\u2022'
@@ -72,9 +72,7 @@ class _SubAccountSummaryCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(
-            height: AppSpacing.profileSubAccountSummaryMetricTopGap,
-          ),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -125,35 +123,29 @@ class _SummaryMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.profileSubAccountSummaryMetricHeight,
-      child: Material(
-        color: AppColors.portfolioBtnGhost,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-        child: Padding(
-          padding: AppSpacing.profileSubAccountSummaryMetricPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.portfolioTextMuted,
-                ),
-              ),
-              const SizedBox(
-                height: AppSpacing.profileSubAccountSummaryMetricValueGap,
-              ),
-              Text(
-                value,
-                style: AppTextStyles.baseMedium.copyWith(color: valueColor),
-              ),
-            ],
+    return VitCardStat(
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.portfolioTextMuted,
+            ),
           ),
-        ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            value,
+            style: AppTextStyles.baseMedium.copyWith(color: valueColor),
+          ),
+        ],
       ),
     );
   }

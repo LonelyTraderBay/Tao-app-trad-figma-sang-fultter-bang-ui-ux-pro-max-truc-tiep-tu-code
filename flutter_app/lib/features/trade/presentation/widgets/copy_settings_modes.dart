@@ -16,7 +16,7 @@ class _SettingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.copySettingsSectionPadding,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -27,11 +27,10 @@ class _SettingsSection extends StatelessWidget {
                 : VitSectionHeaderVariant.plain,
             accentColor: accent,
           ),
-          const SizedBox(height: AppSpacing.rowGapRegular),
+          const SizedBox(height: AppSpacing.x2),
           for (final child in children) ...[
             child,
-            if (child != children.last)
-              const SizedBox(height: AppSpacing.cardGap),
+            if (child != children.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -48,12 +47,11 @@ class _ModeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SettingsCard(
-      height: AppSpacing.copySettingsModeCardHeight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Copy Mode mặc định', style: _cardTitleStyle()),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               for (final mode in TradeCopySettingsMode.values) ...[
@@ -92,14 +90,12 @@ class _ModeButton extends StatelessWidget {
       key: CopySettingsPage.modeKey(mode),
       onPressed: onTap,
       variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
-      height: AppSpacing.buttonCompact,
-      padding: AppSpacing.copySettingsModeButtonPadding,
+      density: VitDensity.compact,
       child: Text(
         _modeLabel(mode),
         style: AppTextStyles.caption.copyWith(
           color: active ? AppColors.onAccent : AppColors.text2,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.copySettingsLineHeightTight,
         ),
       ),
     );
@@ -133,12 +129,7 @@ class _SliderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasSubtext = subtitle != null || caption != null;
-
     return _SettingsCard(
-      height: hasSubtext
-          ? AppSpacing.copySettingsSliderCardWithSubtextHeight
-          : AppSpacing.copySettingsSliderCardHeight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -158,7 +149,6 @@ class _SliderCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.copySettingsLineHeightBody,
                         ),
                       ),
                     ],
@@ -171,13 +161,12 @@ class _SliderCard extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.copySettingsLineHeightTight,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           _CompactSlider(
             value: value,
             min: min,
@@ -187,15 +176,12 @@ class _SliderCard extends StatelessWidget {
             onChanged: onChanged,
           ),
           if (caption != null) ...[
-            const SizedBox(height: AppSpacing.formFieldLabelGap),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               caption!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: AppSpacing.copySettingsLineHeightBody,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ],
         ],

@@ -5,11 +5,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,6 +22,18 @@ part 'referral_home_page_part_01.dart';
 part 'referral_home_page_part_02.dart';
 part 'referral_home_page_part_03.dart';
 part 'referral_home_page_part_04.dart';
+
+const _refVisualScrollClearance = 112.0;
+const _refNativeScrollClearance = 72.0;
+const _heroBubble = 36.0;
+const _ctaExtent = 44.0;
+const _dividerExtent = 38.0;
+const _rankSlot = 28.0;
+const _stepBadgeExtent = 28.0;
+const _progressExtent = 5.0;
+const _avatarExtent = 34.0;
+const _milestoneCardWidth = 150.0;
+const _refLineTight = 1.2;
 
 class ReferralHomePage extends ConsumerStatefulWidget {
   const ReferralHomePage({super.key, this.shellRenderMode});
@@ -55,11 +67,11 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(referralControllerProvider).getHome();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+            ? _refVisualScrollClearance
+            : _refNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -84,11 +96,10 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
                   child: SingleChildScrollView(
                     key: ReferralHomePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.referralBottomScrollPadding(
-                      bottomInset,
-                    ),
+                    padding: EdgeInsets.only(bottom: scrollEndClearance),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         _CampaignBanner(campaign: snapshot.campaign),
                         const _SafetyNotice(),
@@ -182,7 +193,7 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: AppSpacing.referralSheetPadding,
+            padding: AppSpacing.cardPaddingCompact,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,

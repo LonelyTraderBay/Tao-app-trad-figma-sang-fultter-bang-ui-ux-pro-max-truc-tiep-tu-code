@@ -31,12 +31,13 @@ class _LeverageHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.leverageHeroHeight,
+      height: _leverageHeroHeight,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.x5,
-        top: AppSpacing.x5,
-        right: AppSpacing.x5,
-        bottom: AppSpacing.x5,
+        left: AppSpacing.x4,
+        top: AppSpacing.x4,
+        right: AppSpacing.x4,
+        bottom: AppSpacing.x4,
       ),
       radius: VitCardRadius.lg,
       borderColor: riskColor.withValues(alpha: .32),
@@ -55,17 +56,17 @@ class _LeverageHero extends StatelessWidget {
               Text('\u0110\u00F2n b\u1EA9y', style: AppTextStyles.captionSm),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _leverageSpace),
           Text(
             '${preview.leverage}x',
             style: AppTextStyles.jumbo.copyWith(
               color: riskColor,
-              height: AppSpacing.leverageHeroValueLineHeight,
+              height: _leverageHeroValueLineHeight,
               fontWeight: AppTextStyles.heavy,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.rowPy),
+          const SizedBox(height: _leverageSpace),
           VitAccentPill(
             label: 'R\u1EE7i ro: ${preview.riskLabel}',
             accentColor: riskColor,
@@ -86,11 +87,12 @@ class _RiskMeter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.rowPy,
-        top: AppSpacing.rowPy,
-        right: AppSpacing.rowPy,
-        bottom: AppSpacing.rowPy,
+        left: _leverageCardSpace,
+        top: _leverageCardSpace,
+        right: _leverageCardSpace,
+        bottom: _leverageCardSpace,
       ),
       borderColor: riskColor.withValues(alpha: .18),
       child: Column(
@@ -111,7 +113,7 @@ class _RiskMeter extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _leverageSpace),
           Row(
             children: [
               for (var level = 1; level <= 6; level++) ...[
@@ -119,7 +121,7 @@ class _RiskMeter extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: AppRadii.xsRadius,
                     child: SizedBox(
-                      height: AppSpacing.transferTileGap,
+                      height: _leverageMeterSegmentHeight,
                       child: ColoredBox(
                         color: level <= preview.riskLevel
                             ? _segmentColor(level)

@@ -11,7 +11,7 @@ class _CurrentTierCard extends StatelessWidget {
     final tierColor = Color(tier.colorHex);
 
     return VitCard(
-      padding: AppSpacing.walletNetworkSummaryPadding,
+      padding: _limitsCardPadding,
       radius: VitCardRadius.lg,
       borderColor: _limitsHeroBorder,
       child: Column(
@@ -19,8 +19,8 @@ class _CurrentTierCard extends StatelessWidget {
           Row(
             children: [
               VitCard(
-                width: AppSpacing.walletTokenHeroIcon,
-                height: AppSpacing.walletTokenHeroIcon,
+                width: _limitsIconBox,
+                height: _limitsIconBox,
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.md,
                 borderColor: tierColor.withValues(alpha: .5),
@@ -33,7 +33,7 @@ class _CurrentTierCard extends StatelessWidget {
                   size: AppSpacing.walletTokenHeroIconGlyph,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAddressPrimaryGap),
+              const SizedBox(width: _limitsInlineGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,7 @@ class _CurrentTierCard extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.walletAddressMetaGap),
+                        const SizedBox(width: _limitsInlineGap),
                         Flexible(
                           child: VitAccentPill(
                             label: tier.name,
@@ -55,7 +55,7 @@ class _CurrentTierCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.walletAddressStatsGap),
+                    const SizedBox(height: _limitsTinyGap),
                     Text(
                       '\u0110\u00E3 x\u00E1c minh',
                       style: AppTextStyles.micro.copyWith(color: _limitsMuted),
@@ -66,7 +66,7 @@ class _CurrentTierCard extends StatelessWidget {
               Icon(Icons.check_circle_outline, color: tierColor, size: 22),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAddressAddAgreementGap),
+          const SizedBox(height: _limitsGap),
           _LimitProgress(
             label: 'H\u1EA1n m\u1EE9c r\u00FAt/ng\u00E0y',
             used: snapshot.usedToday,
@@ -74,7 +74,7 @@ class _CurrentTierCard extends StatelessWidget {
             remaining: snapshot.dailyRemaining,
             percent: snapshot.dailyPercent,
           ),
-          const SizedBox(height: AppSpacing.transferSectionGap),
+          const SizedBox(height: _limitsGap),
           _LimitProgress(
             label: 'H\u1EA1n m\u1EE9c r\u00FAt/th\u00E1ng',
             used: snapshot.usedMonth,
@@ -125,17 +125,17 @@ class _LimitProgress extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.walletAddressActionGap),
+        const SizedBox(height: _limitsTinyGap),
         ClipRRect(
           borderRadius: AppRadii.pillRadius,
           child: LinearProgressIndicator(
-            minHeight: AppSpacing.walletAddressStatsGap,
+            minHeight: _limitsProgressHeight,
             value: (percent / 100).clamp(0, 1).toDouble(),
             color: _limitsGreen,
             backgroundColor: AppColors.surface3,
           ),
         ),
-        const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
+        const SizedBox(height: _limitsTinyGap),
         Row(
           children: [
             Expanded(
@@ -189,8 +189,8 @@ class _QuickStats extends StatelessWidget {
           Expanded(
             child: VitCard(
               variant: VitCardVariant.inner,
-              height: AppSpacing.walletNetworkSummaryStatHeight,
-              padding: AppSpacing.walletNetworkStatPadding,
+              height: _limitsStatHeight,
+              padding: _limitsCompactStatPadding,
               borderColor: _limitsBorder,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -206,7 +206,7 @@ class _QuickStats extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.walletNetworkStatTextGap),
+                  const SizedBox(height: _limitsTinyGap),
                   Text(
                     stat.label,
                     maxLines: 1,
@@ -218,8 +218,7 @@ class _QuickStats extends StatelessWidget {
               ),
             ),
           ),
-          if (stat != stats.last)
-            const SizedBox(width: AppSpacing.walletAddressStatsGap),
+          if (stat != stats.last) const SizedBox(width: _limitsTinyGap),
         ],
       ],
     );
@@ -232,7 +231,7 @@ class _LimitWarning extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletNetworkDisclaimerPadding,
+      padding: _limitsCardPadding,
       borderColor: _limitsAmber.withValues(alpha: .34),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,7 +241,7 @@ class _LimitWarning extends StatelessWidget {
             color: _limitsAmber,
             size: AppSpacing.walletAddressAddIcon,
           ),
-          const SizedBox(width: AppSpacing.walletAddressStatsValueGap),
+          const SizedBox(width: _limitsInlineGap),
           Expanded(
             child: Text.rich(
               TextSpan(
@@ -263,7 +262,7 @@ class _LimitWarning extends StatelessWidget {
               ),
               style: AppTextStyles.caption.copyWith(
                 color: _limitsAmber,
-                height: 1.45,
+                height: 1.35,
               ),
             ),
           ),

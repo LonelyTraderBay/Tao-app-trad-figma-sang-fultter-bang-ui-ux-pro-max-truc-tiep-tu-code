@@ -11,26 +11,28 @@ class _HeroCard extends StatelessWidget {
       key: LaunchpadPage.heroKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: VitDensity.compact.cardPadding,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.x7,
-                height: AppSpacing.x7,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.accent12,
-                  border: Border.all(color: AppColors.accent30),
-                  borderRadius: AppRadii.lgRadius,
-                ),
-                child: const Icon(
-                  Icons.rocket_launch_outlined,
-                  color: AppColors.accent,
-                  size: AppSpacing.iconLg,
+              SizedBox.square(
+                dimension: AppSpacing.x7,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.accent12,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.lgRadius,
+                      side: const BorderSide(color: AppColors.accent30),
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.rocket_launch_outlined,
+                    color: AppColors.accent,
+                    size: AppSpacing.iconLg,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -56,7 +58,7 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               const Expanded(
@@ -84,13 +86,13 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Nghiên cứu kỹ trước khi tham gia.',
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              height: AppSpacing.launchpadLineHeightDense,
+              height: _launchpadLineHeightDense,
             ),
           ),
         ],
@@ -113,10 +115,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.launchpadMetricCardPadding,
       child: Column(
         children: [
           Icon(icon, color: AppColors.accent, size: AppSpacing.iconSm),
@@ -136,7 +135,7 @@ class _HeroMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              height: AppSpacing.launchpadLineHeightBody,
+              height: _launchpadLineHeightBody,
             ),
           ),
         ],

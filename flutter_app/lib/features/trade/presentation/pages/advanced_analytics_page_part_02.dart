@@ -18,33 +18,23 @@ class _SignalCard extends StatelessWidget {
     final rrColor = signal.riskReward >= 3 ? _advancedGreen : _advancedPrimary;
 
     return VitCard(
-      constraints: const BoxConstraints(
-        minHeight:
-            AppSpacing.tradeBotAnalyticsChartHeight +
-            AppSpacing.tradeBotCardGap,
-      ),
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
       borderColor: tone.withValues(alpha: .28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              VitCard(
-                width: AppSpacing.tradeBotQuestionIconBox,
-                height: AppSpacing.tradeBotQuestionIconBox,
-                padding: AppSpacing.zeroInsets,
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
-                clip: true,
-                background: ColoredBox(color: tone.withValues(alpha: .12)),
+              CircleAvatar(
+                radius: AppSpacing.x4,
+                backgroundColor: tone.withValues(alpha: .12),
                 child: Icon(
                   icon,
                   color: tone,
                   size: AppSpacing.tradeBotDisputeDropdownIcon,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotRowGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,22 +44,20 @@ class _SignalCard extends StatelessWidget {
                       style: AppTextStyles.body.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.tradeBotLineHeightShort,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Row(
                       children: [
                         _SignalBadge(
                           label: signal.direction.toUpperCase(),
                           color: tone,
                         ),
-                        const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+                        const SizedBox(width: AppSpacing.x2),
                         Text(
                           signal.timeframe,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            height: AppSpacing.tradeBotLineHeightTight,
                           ),
                         ),
                       ],
@@ -84,7 +72,7 @@ class _SignalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotStatusGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -93,7 +81,7 @@ class _SignalCard extends StatelessWidget {
                   color: confidenceColor,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MetricBox(
                   label: 'Risk/Reward',
@@ -104,7 +92,7 @@ class _SignalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotStatusGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -130,7 +118,7 @@ class _SignalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotStatusGap),
+          const SizedBox(height: AppSpacing.x2),
           for (final reason in signal.reasoning.take(2)) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,27 +128,24 @@ class _SignalCard extends StatelessWidget {
                   color: tone,
                   size: AppSpacing.iconSm,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
                     reason,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      height: AppSpacing.tradeBotLineHeightReadable,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                   ),
                 ),
               ],
             ),
             if (reason != signal.reasoning.take(2).last)
-              const SizedBox(height: AppSpacing.tradeBotLabelGap),
+              const SizedBox(height: AppSpacing.x1),
           ],
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           SizedBox(
-            height: AppSpacing.tradeBotHairline,
+            height: 1,
             child: ColoredBox(color: _advancedBorder.withValues(alpha: .72)),
           ),
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               const Icon(
@@ -168,16 +153,13 @@ class _SignalCard extends StatelessWidget {
                 color: AppColors.text3,
                 size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: AppSpacing.tradeBotNarrowIconGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   'GPT-4 + TradingView v2.1',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
               Text(
@@ -187,7 +169,6 @@ class _SignalCard extends StatelessWidget {
                       ? _advancedGreen
                       : _advancedAmber,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
@@ -207,8 +188,7 @@ class _ConfidenceBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotDisputeComplaintHeight,
-      padding: AppSpacing.tradeBotMetricBoxPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,38 +196,28 @@ class _ConfidenceBox extends StatelessWidget {
         children: [
           Text(
             'Confidence',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          const SizedBox(height: AppSpacing.x1),
           Row(
             children: [
               Expanded(
                 child: ClipRRect(
                   borderRadius: AppRadii.pillRadius,
-                  child: SizedBox(
-                    height: AppSpacing.tradeBotCompactProgressHeight,
-                    child: Stack(
-                      children: [
-                        const ColoredBox(color: _advancedBorder),
-                        FractionallySizedBox(
-                          widthFactor: confidence / 100,
-                          child: ColoredBox(color: color),
-                        ),
-                      ],
-                    ),
+                  child: LinearProgressIndicator(
+                    minHeight: 3,
+                    value: confidence / 100,
+                    backgroundColor: _advancedBorder,
+                    color: color,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotLabelGap),
+              const SizedBox(width: AppSpacing.x2),
               Text(
                 '$confidence%',
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
@@ -274,10 +244,7 @@ class _MetricBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotOptionMinHeight,
-      ),
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -289,12 +256,9 @@ class _MetricBox extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -303,7 +267,6 @@ class _MetricBox extends StatelessWidget {
               color: valueColor,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -326,8 +289,7 @@ class _MiniStatBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.x7 + AppSpacing.rowGap + AppSpacing.hairlineStroke,
-      padding: AppSpacing.tradeBotMetricBoxPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -336,19 +298,15 @@ class _MiniStatBox extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             style: AppTextStyles.baseMedium.copyWith(
               color: valueColor,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -375,12 +333,9 @@ class _PriceTarget extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeBotNarrowIconGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           '\$${_formatPrice(value)}',
           maxLines: 1,
@@ -389,7 +344,6 @@ class _PriceTarget extends StatelessWidget {
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ],
@@ -422,6 +376,7 @@ class _DisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return const VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
+      density: VitDensity.compact,
       title: 'AI Prediction Disclaimer',
       message:
           'Signals are predictions, not guarantees. Always conduct your own research and risk management. Past accuracy does not guarantee future results.',

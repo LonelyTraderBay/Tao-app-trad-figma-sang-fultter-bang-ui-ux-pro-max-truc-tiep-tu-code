@@ -24,7 +24,7 @@ class _InputCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         children: [
           _NumberField(
@@ -36,7 +36,7 @@ class _InputCard extends StatelessWidget {
               if (parsed != null && parsed >= 0) onInvestmentChanged(parsed);
             },
           ),
-          const SizedBox(height: AppSpacing.tradeBotPanelGap),
+          const SizedBox(height: AppSpacing.x3),
           _NumberField(
             key: RIYCalculatorPage.expectedReturnKey,
             label: 'Expected Annual Return (%)',
@@ -46,7 +46,7 @@ class _InputCard extends StatelessWidget {
               if (parsed != null) onExpectedReturnChanged(parsed);
             },
           ),
-          const SizedBox(height: AppSpacing.tradeBotPanelGap),
+          const SizedBox(height: AppSpacing.x3),
           _NumberField(
             key: RIYCalculatorPage.totalCostsKey,
             label: 'Total Annual Costs (%)',
@@ -56,7 +56,7 @@ class _InputCard extends StatelessWidget {
               if (parsed != null && parsed >= 0) onTotalCostsChanged(parsed);
             },
           ),
-          const SizedBox(height: AppSpacing.tradeBotPanelGap),
+          const SizedBox(height: AppSpacing.x3),
           _NumberField(
             key: RIYCalculatorPage.yearsKey,
             label: 'Holding Period (Years)',
@@ -96,14 +96,11 @@ class _NumberField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: AppColors.text2,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
+          style: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.tradeBotSmallGap),
+        const SizedBox(height: AppSpacing.x1),
         SizedBox(
-          height: AppSpacing.inputHeight,
+          height: VitDensity.compact.controlHeight,
           child: TextFormField(
             initialValue: initialValue,
             keyboardType: TextInputType.numberWithOptions(decimal: decimals),
@@ -118,7 +115,10 @@ class _NumberField extends StatelessWidget {
             decoration: InputDecoration(
               filled: true,
               fillColor: _riyPanel2,
-              contentPadding: AppSpacing.tradeBotControlPadding,
+              contentPadding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x3,
+                vertical: AppSpacing.x2,
+              ),
               border: _fieldBorder(_riyBorder),
               enabledBorder: _fieldBorder(_riyBorder),
               focusedBorder: _fieldBorder(_riyPrimary),
@@ -144,20 +144,17 @@ class _ResultMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: VitDensity.compact.cardPadding,
       child: SizedBox(
-        height: AppSpacing.tradeBotControlCompact,
+        height: _riyMetricExtent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: AppSpacing.tradeBotLineHeightTight,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            const Spacer(),
+            const SizedBox(height: AppSpacing.x1),
             Text(value, style: AppTextStyles.amountSm.copyWith(color: color)),
           ],
         ),
@@ -180,9 +177,9 @@ class _CostImpactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: VitDensity.compact.cardPadding,
       child: SizedBox(
-        height: AppSpacing.tradeBotControlTall,
+        height: _riyCostImpactExtent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -203,10 +200,13 @@ class _CostImpactCard extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
+            const SizedBox(height: AppSpacing.x2),
             VitCard(
               variant: VitCardVariant.ghost,
-              padding: AppSpacing.tradeBotClientMoneyMetricPadding,
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x3,
+                vertical: AppSpacing.x2,
+              ),
               borderColor: _riyPrimary.withValues(alpha: .12),
               child: Text(
                 'Over $years years, costs reduce your investment by '
@@ -215,7 +215,6 @@ class _CostImpactCard extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightCompact,
                 ),
               ),
             ),
@@ -234,9 +233,9 @@ class _ChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: VitDensity.compact.cardPadding,
       child: SizedBox(
-        height: AppSpacing.tradeBotDistributionChartHeight,
+        height: _riyChartExtent,
         child: CustomPaint(painter: _RiyChartPainter(projections)),
       ),
     );

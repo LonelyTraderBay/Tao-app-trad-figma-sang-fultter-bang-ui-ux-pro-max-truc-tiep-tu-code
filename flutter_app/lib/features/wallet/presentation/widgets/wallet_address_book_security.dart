@@ -13,14 +13,14 @@ class _WhitelistModeCard extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: VitCard(
-        height: AppSpacing.walletAddressSecurityCardHeight,
-        padding: AppSpacing.walletAddressSecurityPadding,
+        height: _bookSecurityHeight,
+        padding: _bookSecurityPadding,
         borderColor: AppColors.overlayStroke,
         child: Row(
           children: [
             VitCard(
-              width: AppSpacing.walletAddressIconSize,
-              height: AppSpacing.walletAddressIconSize,
+              width: _bookIconBox,
+              height: _bookIconBox,
               variant: VitCardVariant.inner,
               radius: VitCardRadius.lg,
               borderColor: enabled ? AppColors.buy20 : AppColors.borderSolid,
@@ -28,10 +28,10 @@ class _WhitelistModeCard extends StatelessWidget {
               child: Icon(
                 Icons.lock_outline_rounded,
                 color: enabled ? _bookGreen : AppColors.text3,
-                size: AppSpacing.walletAddressShieldIcon,
+                size: AppSpacing.iconSm,
               ),
             ),
-            const SizedBox(width: AppSpacing.walletAddressPrimaryGap),
+            const SizedBox(width: _bookInlineGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +45,7 @@ class _WhitelistModeCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.walletAddressSectionGap),
+                  const SizedBox(height: _bookTinyGap),
                   Text(
                     enabled
                         ? 'Chỉ rút tới địa chỉ whitelist'
@@ -82,7 +82,7 @@ class _SecurityTip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletAddressSecurityPadding,
+      padding: _bookSecurityPadding,
       borderColor: AppColors.primary15,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +92,7 @@ class _SecurityTip extends StatelessWidget {
             color: _bookPrimary,
             size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.rowGap),
+          const SizedBox(width: _bookInlineGap),
           Expanded(
             child: Text.rich(
               TextSpan(

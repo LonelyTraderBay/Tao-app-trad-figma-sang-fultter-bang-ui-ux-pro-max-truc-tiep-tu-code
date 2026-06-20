@@ -21,7 +21,7 @@ class _DiversificationHero extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketCorrelationsHeroLabelGap),
+          const SizedBox(height: _corrHeroLabelGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -46,11 +46,11 @@ class _DiversificationHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketCorrelationsHeroProgressGap),
+          const SizedBox(height: _corrHeroProgressGap),
           ClipRRect(
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
-              height: AppSpacing.marketCorrelationsHeroProgressHeight,
+              height: _corrHeroProgressHeight,
               child: LinearProgressIndicator(
                 value: score.score / 100,
                 backgroundColor: AppColors.surface2,
@@ -58,7 +58,7 @@ class _DiversificationHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.marketCorrelationsHeroScaleGap),
+          const SizedBox(height: _corrHeroScaleGap),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -117,9 +117,7 @@ class _DiversificationMetrics extends StatelessWidget {
                   'Tương quan TB',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(
-                  height: AppSpacing.marketCorrelationsMetricValueGap,
-                ),
+                const SizedBox(height: _corrMetricValueGap),
                 Text(
                   score.avgCorrelation.toStringAsFixed(2),
                   style: AppTextStyles.base.copyWith(
@@ -144,9 +142,7 @@ class _DiversificationMetrics extends StatelessWidget {
                   'Cặp ít tương quan nhất',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(
-                  height: AppSpacing.marketCorrelationsMetricValueGap,
-                ),
+                const SizedBox(height: _corrMetricValueGap),
                 Text(
                   score.lowestCorr.pair,
                   style: AppTextStyles.caption.copyWith(
@@ -221,7 +217,7 @@ class _TimeframeScoreRow extends StatelessWidget {
           child: ClipRRect(
             borderRadius: AppRadii.smRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.marketCorrelationsScoreBarHeight,
+              minHeight: _corrScoreBarHeight,
               value: score.score / 100,
               backgroundColor: AppColors.surface2,
               valueColor: AlwaysStoppedAnimation<Color>(color),

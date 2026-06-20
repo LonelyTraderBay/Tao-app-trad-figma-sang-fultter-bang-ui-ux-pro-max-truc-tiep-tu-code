@@ -5,8 +5,9 @@ class _ProtectionNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.tradeBotClientMoneyNoticePadding,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,17 +26,15 @@ class _ProtectionNotice extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'All client money is held in segregated bank accounts and '
                   'reconciled daily per FCA CASS 7 rules.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightBody,
                   ),
                 ),
               ],
@@ -55,7 +54,6 @@ class _BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotClientMoneyBalancePadding,
       child: Column(
         children: [
           Row(
@@ -82,31 +80,27 @@ class _BalanceCard extends StatelessWidget {
                       'Your Segregated Balance',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.tradeBotLineHeightTight,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.tradeBotStatusGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       _formatUsd(snapshot.balance),
-                      style: AppTextStyles.heroNumber.copyWith(
+                      style: AppTextStyles.sectionTitleSm.copyWith(
                         color: AppColors.text1,
-                        height: AppSpacing.tradeBotLineHeightTight,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.tradeBotDisclosureGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Fully segregated and protected',
-                      style: AppTextStyles.micro.copyWith(
-                        color: _moneyGreen,
-                        height: AppSpacing.tradeBotLineHeightTight,
-                      ),
+                      style: AppTextStyles.micro.copyWith(color: _moneyGreen),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotActionIcon),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -144,7 +138,6 @@ class _Tabs extends StatelessWidget {
       ('documents', 'Documents'),
     ];
     return VitCard(
-      height: AppSpacing.tradeBotCassTabsHeight,
       variant: VitCardVariant.inner,
       padding: AppSpacing.tradeSegmentedPadding,
       child: VitTabBar(
@@ -174,17 +167,18 @@ class _Overview extends StatelessWidget {
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: AppSpacing.tradeBotCardGap,
+      density: VitDensity.compact,
       children: [
         VitPageSection(
+          key: ClientMoneyProtectionPage.overviewSectionKey,
           label: 'How Your Money Is Protected',
+          density: VitDensity.compact,
           children: [
             _Card(
-              padding: AppSpacing.tradeBotClientMoneyOverviewPadding,
               child: VitPageContent(
                 padding: VitContentPadding.none,
                 fullBleed: true,
-                customGap: AppSpacing.tradeBotClientMoneyProtectionGap,
+                density: VitDensity.compact,
                 children: [
                   for (final item in snapshot.protections)
                     _ProtectionItem(item: item),
@@ -195,9 +189,9 @@ class _Overview extends StatelessWidget {
         ),
         VitPageSection(
           label: 'In Case of Insolvency',
+          density: VitDensity.compact,
           children: [
             _Card(
-              padding: AppSpacing.tradeBotClientMoneyInsolvencyPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -216,7 +210,6 @@ class _Overview extends StatelessWidget {
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              height: AppSpacing.tradeBotLineHeightBody,
                             ),
                             children: [
                               TextSpan(
@@ -233,12 +226,11 @@ class _Overview extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.tradeToolSectionGap),
+                  const SizedBox(height: AppSpacing.x3),
                   Text(
                     snapshot.insolvencyDetail,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.tradeBotLineHeightMedium,
                     ),
                   ),
                 ],
@@ -276,16 +268,12 @@ class _ProtectionItem extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeBotSmallGap),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 item.description,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.tradeBotLineHeightBody,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),

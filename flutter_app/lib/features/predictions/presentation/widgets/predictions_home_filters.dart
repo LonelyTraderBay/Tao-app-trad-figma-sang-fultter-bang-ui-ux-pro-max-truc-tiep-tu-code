@@ -75,8 +75,7 @@ class _FilterTabs extends StatelessWidget {
               active: active == tabs[index].filter,
               onTap: () => onSelected(tabs[index].filter),
             ),
-            if (index != tabs.length - 1)
-              const SizedBox(width: AppSpacing.predictionHomeFilterGap),
+            if (index != tabs.length - 1) const SizedBox(width: AppSpacing.x2),
           ],
         ],
       ),
@@ -123,7 +122,7 @@ class _FilterTabButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: SizedBox(
-          height: AppSpacing.predictionHomeFilterHeight,
+          height: VitDensity.compact.controlHeight - AppSpacing.x2,
           child: Padding(
             padding: AppSpacing.predictionHomeFilterPadding,
             child: Row(
@@ -133,7 +132,7 @@ class _FilterTabButton extends StatelessWidget {
                   size: AppSpacing.predictionHomeFilterIcon,
                   color: active ? _marketPrimary : AppColors.text3,
                 ),
-                const SizedBox(width: AppSpacing.predictionHomeFilterIconGap),
+                const SizedBox(width: AppSpacing.x1),
                 Text(
                   meta.label,
                   style: AppTextStyles.badge.copyWith(
@@ -175,7 +174,7 @@ class _CategoryChips extends StatelessWidget {
             active: activeCategory == null,
             onTap: () => onSelected(null),
           ),
-          const SizedBox(width: AppSpacing.predictionHomeFilterGap),
+          const SizedBox(width: AppSpacing.x2),
           for (var index = 0; index < categories.length; index += 1) ...[
             _CategoryChip(
               key: categories[index] == 'Live Crypto'
@@ -188,7 +187,7 @@ class _CategoryChips extends StatelessWidget {
               ),
             ),
             if (index != categories.length - 1)
-              const SizedBox(width: AppSpacing.predictionHomeFilterGap),
+              const SizedBox(width: AppSpacing.x2),
           ],
         ],
       ),
@@ -226,7 +225,7 @@ class _CategoryChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
         child: SizedBox(
-          height: AppSpacing.predictionHomeCategoryHeight,
+          height: VitDensity.compact.controlHeight - AppSpacing.x3,
           child: Padding(
             padding: AppSpacing.predictionHomeCategoryPadding,
             child: Center(

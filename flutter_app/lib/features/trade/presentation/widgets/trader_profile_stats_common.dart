@@ -36,10 +36,12 @@ class _StatsTab extends StatelessWidget {
       ),
     ];
 
-    return Column(
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _Panel(
-          padding: AppSpacing.traderProfilePanelPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -48,35 +50,24 @@ class _StatsTab extends StatelessWidget {
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.traderProfileSectionGap),
+              const SizedBox(height: AppSpacing.x2),
               Row(
                 children: [
                   Expanded(
                     child: ClipRRect(
                       borderRadius: AppRadii.pillRadius,
-                      child: SizedBox(
-                        height: AppSpacing.traderProfileWinLossBarHeight,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: trader.winRate.round(),
-                              child: const ColoredBox(color: _profileGreen),
-                            ),
-                            Expanded(
-                              flex: 100 - trader.winRate.round(),
-                              child: const ColoredBox(color: _profileRed),
-                            ),
-                          ],
-                        ),
+                      child: LinearProgressIndicator(
+                        minHeight: AppSpacing.x3,
+                        value: trader.winRate / 100,
+                        backgroundColor: _profileRed,
+                        color: _profileGreen,
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.traderProfilePanelInnerGap),
-                  SizedBox(
-                    width: AppSpacing.traderProfileStatsValueWidth,
+                  const SizedBox(width: AppSpacing.x2),
+                  Flexible(
                     child: Text(
                       '${trader.winRate.toStringAsFixed(1)}%',
                       textAlign: TextAlign.right,
@@ -88,20 +79,18 @@ class _StatsTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4 - AppSpacing.x2),
+              const SizedBox(height: AppSpacing.x2),
               Row(
                 children: [
                   _LegendDot(color: _profileGreen, label: 'Thắng: $wins'),
-                  const Spacer(),
+                  const SizedBox(width: AppSpacing.x2),
                   _LegendDot(color: _profileRed, label: 'Thua: $losses'),
                 ],
               ),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.traderProfilePanelInnerGap),
         _Panel(
-          padding: AppSpacing.traderProfilePanelPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -110,10 +99,9 @@ class _StatsTab extends StatelessWidget {
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
+              const SizedBox(height: AppSpacing.x2),
               for (final row in rows) _StatsLine(row: row),
             ],
           ),
@@ -141,16 +129,13 @@ class _StatsLine extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.traderProfileStatsLinePadding,
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
           child: Row(
             children: [
               Expanded(
                 child: Text(
                   row.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ),
               Text(
@@ -159,14 +144,13 @@ class _StatsLine extends StatelessWidget {
                   color: row.color,
                   fontWeight: AppTextStyles.medium,
                   fontFeatures: AppTextStyles.tabularFigures,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
           ),
         ),
         const Divider(
-          height: AppSpacing.hairlineStroke,
+          height: 1,
           thickness: AppSpacing.hairlineStroke,
           color: AppColors.divider,
         ),
@@ -189,10 +173,7 @@ class _LegendDot extends StatelessWidget {
         const SizedBox(width: AppSpacing.x2),
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -212,14 +193,13 @@ class _MiniBadge extends StatelessWidget {
 }
 
 class _Panel extends StatelessWidget {
-  const _Panel({required this.child, required this.padding});
+  const _Panel({required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(padding: padding, child: child);
+    return VitCard(density: VitDensity.compact, child: child);
   }
 }
 

@@ -39,20 +39,19 @@ class StakingApiDocumentationMethodBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = method == 'POST' ? AppColors.buy : AppColors.primarySoft;
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        method,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          method,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -71,20 +70,19 @@ class StakingApiDocumentationStatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -112,10 +110,7 @@ class StakingApiDocumentationCopyButton extends StatelessWidget {
         borderRadius: AppRadii.smRadius,
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x1,
-          ),
+          padding: AppSpacing.earnSmallPillPadding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -154,20 +149,24 @@ class StakingApiDocumentationCodeBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppColors.surface3,
-        borderRadius: AppRadii.inputRadius,
-      ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Text(
-          text,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            height: tall ? 1.65 : 1.5,
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.surface3,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
+        ),
+        child: Padding(
+          padding: AppSpacing.earnCardPaddingX3,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text2,
+                height: tall ? 1.65 : 1.5,
+              ),
+            ),
           ),
         ),
       ),
@@ -185,7 +184,7 @@ class StakingApiDocumentationFooterNote extends StatelessWidget {
     return VitCard(
       key: StakingApiDocumentationKeys.footer,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,

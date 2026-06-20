@@ -9,12 +9,15 @@ class _SuccessHero extends StatelessWidget {
   Widget build(BuildContext context) {
     final sideLabel = receipt.side == TradeOrderSide.buy ? 'Mua' : 'Bán';
     return Padding(
-      padding: AppSpacing.tradeReceiptHeroPadding,
+      padding: const EdgeInsetsDirectional.only(
+        top: AppSpacing.x2,
+        bottom: AppSpacing.x1,
+      ),
       child: Column(
         children: [
           VitCard(
-            width: AppSpacing.tradeReceiptHeroIconBox,
-            height: AppSpacing.tradeReceiptHeroIconBox,
+            width: _receiptHeroExtent,
+            height: _receiptHeroExtent,
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.lg,
             alignment: Alignment.center,
@@ -22,10 +25,10 @@ class _SuccessHero extends StatelessWidget {
             child: const Icon(
               Icons.check_circle_outline_rounded,
               color: AppColors.buy,
-              size: AppSpacing.tradeReceiptHeroIcon,
+              size: AppSpacing.iconLg,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeReceiptHeroTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Đặt lệnh thành công!',
             textAlign: TextAlign.center,
@@ -33,7 +36,7 @@ class _SuccessHero extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeReceiptHeroSubtitleGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             'Lệnh $sideLabel ${receipt.symbol} đang được xử lý',
             textAlign: TextAlign.center,
@@ -59,8 +62,7 @@ class _ReceiptCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      margin: AppSpacing.tradeReceiptHorizontalMargin,
-      padding: AppSpacing.tradeReceiptCardPadding,
+      padding: VitDensity.compact.cardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,7 +70,7 @@ class _ReceiptCard extends StatelessWidget {
           Row(
             children: [
               _SideBadge(label: isBuy ? 'MUA' : 'BÁN', color: sideColor),
-              const SizedBox(width: AppSpacing.tradeReceiptHeaderGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   receipt.symbol,
@@ -84,12 +86,12 @@ class _ReceiptCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeReceiptDividerGap),
+          const SizedBox(height: AppSpacing.x2),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.tradeReceiptSectionGap),
+          const SizedBox(height: AppSpacing.x2),
           _DetailRow(
             label: 'Order ID',
             value: receipt.orderId,
@@ -101,12 +103,12 @@ class _ReceiptCard extends StatelessWidget {
             label: 'Khối lượng',
             value: '${_formatAmount(receipt.amount)} ${receipt.baseAsset}',
           ),
-          const SizedBox(height: AppSpacing.tradeReceiptSmallDividerGap),
+          const SizedBox(height: AppSpacing.x1),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.tradeReceiptTotalGap),
+          const SizedBox(height: AppSpacing.x2),
           _DetailRow(
             label: 'Thành tiền',
             value: '\$${_formatMoney(receipt.total)}',
@@ -122,12 +124,12 @@ class _ReceiptCard extends StatelessWidget {
               value: receipt.estimatedFill!,
             ),
           _DetailRow(label: 'Thời gian đặt', value: receipt.timestamp),
-          const SizedBox(height: AppSpacing.tradeReceiptSmallDividerGap),
+          const SizedBox(height: AppSpacing.x1),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.tradeReceiptSectionGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Quản lý rủi ro',
             style: AppTextStyles.caption.copyWith(
@@ -135,7 +137,7 @@ class _ReceiptCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeReceiptRiskTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               if (receipt.tpPrice != null)
@@ -147,7 +149,7 @@ class _ReceiptCard extends StatelessWidget {
                   ),
                 ),
               if (receipt.tpPrice != null && receipt.slPrice != null)
-                const SizedBox(width: AppSpacing.tradeReceiptRiskColumnGap),
+                const SizedBox(width: AppSpacing.x2),
               if (receipt.slPrice != null)
                 Expanded(
                   child: _RiskBox(
@@ -194,7 +196,10 @@ class _StatusBadge extends StatelessWidget {
       onTap: onTap,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.tradeReceiptStatusBadgePadding,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x2,
+        vertical: AppSpacing.x1,
+      ),
       borderColor: _tradePrimary.withValues(alpha: .18),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -202,9 +207,9 @@ class _StatusBadge extends StatelessWidget {
           const Icon(
             Icons.schedule_rounded,
             color: _tradePrimary,
-            size: AppSpacing.tradeReceiptStatusIcon,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.tradeReceiptStatusGap),
+          const SizedBox(width: AppSpacing.x1),
           Text(
             label,
             style: AppTextStyles.micro.copyWith(
@@ -234,11 +239,11 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.tradeReceiptDetailPadding,
+      padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x1),
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.tradeReceiptDetailLabelWidth,
+            width: _receiptDetailLabelExtent,
             child: Text(
               label,
               maxLines: 1,
@@ -246,7 +251,7 @@ class _DetailRow extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeReceiptDetailGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -269,9 +274,7 @@ class _DetailRow extends StatelessWidget {
                   ),
                 ),
                 if (trailing != null) ...[
-                  const SizedBox(
-                    width: AppSpacing.tradeReceiptDetailTrailingGap,
-                  ),
+                  const SizedBox(width: AppSpacing.x1),
                   trailing!,
                 ],
               ],
@@ -291,14 +294,14 @@ class _CopyOrderIdButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.tradeReceiptCopyButton,
-      height: AppSpacing.tradeReceiptCopyButton,
+      width: _receiptCopyActionExtent,
+      height: _receiptCopyActionExtent,
       child: VitInlineIconAction(
         key: OrderReceiptPage.copyOrderIdKey,
         icon: Icons.copy_rounded,
         tooltip: 'Copy order id',
         color: AppColors.text3,
-        size: AppSpacing.tradeReceiptCopyIcon,
+        size: AppSpacing.iconSm,
         padding: 0,
         onPressed: () => Clipboard.setData(ClipboardData(text: orderId)),
       ),

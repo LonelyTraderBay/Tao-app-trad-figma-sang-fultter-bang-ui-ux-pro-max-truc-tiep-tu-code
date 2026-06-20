@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/profile/presentation/pages/vip_page.d
 import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRoute(WidgetTester tester, String route) async {
     tester.view.devicePixelRatio = 1;
@@ -69,6 +71,27 @@ void main() {
     );
     expect(find.text('So s\u00E1nh c\u00E1c c\u1EA5p VIP'), findsOneWidget);
     expect(find.byKey(VIPPage.tierRowKey(1)), findsOneWidget);
+  });
+
+  testWidgets('SC-164 first viewport keeps upgrade progress visible', (
+    tester,
+  ) async {
+    await pumpRoute(tester, AppRoutePaths.profileVip);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'VIPPage',
+      semanticLabel: 'SC-164 VIPPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Ti\u1EBFn \u0111\u1ED9 l\u00EAn h\u1EA1ng').hitTestable(),
+      minVisibleHeight: 12,
+      targetLabel: 'VIP upgrade progress',
+      reason:
+          'VIPPage should show the upgrade progress section in the first '
+          'viewport above the bottom navigation.',
+    );
   });
 
   testWidgets('SC-164 supports tab state changes', (tester) async {

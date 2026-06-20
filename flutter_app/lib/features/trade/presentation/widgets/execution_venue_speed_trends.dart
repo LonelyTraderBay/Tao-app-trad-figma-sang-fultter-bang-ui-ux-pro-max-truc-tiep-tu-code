@@ -7,14 +7,12 @@ class _SpeedTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Speed Metrics',
+      density: VitDensity.compact,
       children: [
-        const _SectionLabel('Speed Metrics'),
-        const SizedBox(height: AppSpacing.executionVenueSummaryGap),
-        for (final venue in venues) ...[
+        for (final venue in venues)
           _Card(
-            padding: AppSpacing.executionVenueCardPadding,
             child: Column(
               children: [
                 Row(
@@ -33,7 +31,9 @@ class _SpeedTab extends StatelessWidget {
                       color: venue.avgFillTime < .4 ? _venueGreen : _venueAmber,
                       size: AppSpacing.executionVenueBodyIcon,
                     ),
-                    const SizedBox(width: AppSpacing.executionVenueSortLabelGap),
+                    const SizedBox(
+                      width: AppSpacing.executionVenueSortLabelGap,
+                    ),
                     Text(
                       '${_formatSpeed(venue.avgFillTime)}s',
                       style: AppTextStyles.caption.copyWith(
@@ -45,7 +45,7 @@ class _SpeedTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.executionVenueCardPaddingValue),
+                const SizedBox(height: AppSpacing.x2),
                 Row(
                   children: [
                     Expanded(
@@ -66,9 +66,6 @@ class _SpeedTab extends StatelessWidget {
               ],
             ),
           ),
-          if (venue != venues.last)
-            const SizedBox(height: AppSpacing.executionVenueSummaryGap),
-        ],
       ],
     );
   }
@@ -81,13 +78,11 @@ class _TrendsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Cost Trends (Last 3 Months)',
+      density: VitDensity.compact,
       children: [
-        const _SectionLabel('Cost Trends (Last 3 Months)'),
-        const SizedBox(height: AppSpacing.executionVenueSummaryGap),
         _Card(
-          padding: AppSpacing.executionVenuePanelPadding,
           child: Column(
             children: [
               for (final trend in trends) ...[
@@ -118,13 +113,12 @@ class _TrendsTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (trend != trends.last)
-                  const SizedBox(height: AppSpacing.executionVenueSummaryGap),
+                if (trend != trends.last) const SizedBox(height: AppSpacing.x2),
               ],
-              const SizedBox(height: AppSpacing.executionVenuePanelPaddingValue),
+              const SizedBox(height: AppSpacing.x2),
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: AppSpacing.executionVenueCompactPanelPadding,
+                density: VitDensity.compact,
                 borderColor: _venueGreen.withValues(alpha: .28),
                 child: Text(
                   'Overall costs trending down 5% over last 3 months',
@@ -153,7 +147,7 @@ class _TrendBar extends StatelessWidget {
     return ClipRRect(
       borderRadius: AppRadii.pillRadius,
       child: SizedBox(
-        height: AppSpacing.executionVenueTrendBarHeight,
+        height: AppSpacing.x2,
         child: Stack(
           children: [
             const ColoredBox(color: _venuePanel2),
@@ -202,11 +196,11 @@ class _ProgressMetric extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.executionVenueMetricGap),
+        const SizedBox(height: AppSpacing.x1),
         ClipRRect(
           borderRadius: AppRadii.pillRadius,
           child: SizedBox(
-            height: AppSpacing.executionVenueProgressHeight,
+            height: AppSpacing.x2,
             child: Stack(
               children: [
                 const ColoredBox(color: _venuePanel2),

@@ -81,17 +81,13 @@ class _OrderBookSection extends StatelessWidget {
           ),
         ),
         if (expanded) ...[
-          const SizedBox(
-            height: AppSpacing.predictionDetailOrderBookExpandedGap,
-          ),
+          const SizedBox(height: AppSpacing.x2),
           VitCard(
-            padding: AppSpacing.predictionDetailOrderBookCardPadding,
+            density: VitDensity.compact,
             child: Column(
               children: [
                 _OrderBookHeader(),
-                const SizedBox(
-                  height: AppSpacing.predictionDetailOrderBookHeaderGap,
-                ),
+                const SizedBox(height: AppSpacing.x2),
                 for (final ask in snapshot.orderBook.asks.reversed)
                   _OrderBookRow(entry: ask, isBid: false),
                 Padding(

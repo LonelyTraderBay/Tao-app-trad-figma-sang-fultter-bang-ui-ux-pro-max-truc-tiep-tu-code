@@ -12,8 +12,9 @@ class _SwapButton extends StatelessWidget {
       onTap: onTap,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      width: AppSpacing.buttonStandard - AppSpacing.rowGapRegular,
-      height: AppSpacing.buttonStandard - AppSpacing.rowGapRegular,
+      width: _convertSwapSize,
+      height: _convertSwapSize,
+      density: VitDensity.compact,
       alignment: Alignment.center,
       borderColor: _tradePrimary.withValues(alpha: .45),
       child: const Icon(
@@ -31,7 +32,7 @@ class _ToolRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.inputHeight - AppSpacing.rowPy,
+      height: _convertControlHeight,
       child: Row(
         children: const [
           Expanded(
@@ -41,7 +42,7 @@ class _ToolRow extends StatelessWidget {
               icon: Icons.bar_chart_rounded,
             ),
           ),
-          SizedBox(width: AppSpacing.rowGap),
+          SizedBox(width: _convertSpace),
           Expanded(
             child: _ToolChip(
               id: 'depth',
@@ -49,7 +50,7 @@ class _ToolRow extends StatelessWidget {
               icon: Icons.layers_outlined,
             ),
           ),
-          SizedBox(width: AppSpacing.rowGap),
+          SizedBox(width: _convertSpace),
           Expanded(
             child: _ToolChip(
               id: 'info',
@@ -57,7 +58,7 @@ class _ToolRow extends StatelessWidget {
               icon: Icons.info_outline_rounded,
             ),
           ),
-          SizedBox(width: AppSpacing.rowGap),
+          SizedBox(width: _convertSpace),
           Expanded(
             child: _ToolChip(
               id: 'alert',
@@ -66,7 +67,7 @@ class _ToolRow extends StatelessWidget {
               badge: true,
             ),
           ),
-          SizedBox(width: AppSpacing.rowGap),
+          SizedBox(width: _convertSpace),
           _SettingsChip(),
         ],
       ),
@@ -94,7 +95,8 @@ class _ToolChip extends StatelessWidget {
       onTap: () {},
       radius: VitCardRadius.lg,
       variant: VitCardVariant.inner,
-      height: AppSpacing.inputHeight - AppSpacing.rowPy,
+      height: _convertControlHeight,
+      density: VitDensity.compact,
       alignment: Alignment.center,
       borderColor: _tradePrimary.withValues(alpha: .14),
       child: Stack(
@@ -156,8 +158,9 @@ class _SettingsChip extends StatelessWidget {
       onTap: () {},
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      width: AppSpacing.inputHeight - AppSpacing.rowPy,
-      height: AppSpacing.inputHeight - AppSpacing.rowPy,
+      width: _convertControlHeight,
+      height: _convertControlHeight,
+      density: VitDensity.compact,
       alignment: Alignment.center,
       borderColor: _tradePrimary.withValues(alpha: .14),
       child: const Icon(
@@ -178,7 +181,8 @@ class _PairMiniCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.buttonStandard,
+      height: _convertPairHeight,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.x4,
         right: AppSpacing.x4,
@@ -198,10 +202,10 @@ class _PairMiniCard extends StatelessWidget {
             color: AppColors.buy,
             size: AppSpacing.iconSm,
           ),
-          const Spacer(),
+          const SizedBox(width: _convertSpace),
           SizedBox(
             width: AppSpacing.convertPairSparklineWidth,
-            height: AppSpacing.convertPairSparklineHeight,
+            height: _convertSparklineHeight,
             child: const VitSparkline(
               values: [3.2, 3.8, 3.5, 4.4, 4.0, 4.8, 4.6, 5.2],
               color: AppColors.buy,
@@ -209,7 +213,7 @@ class _PairMiniCard extends StatelessWidget {
               strokeWidth: 1.7,
             ),
           ),
-          const SizedBox(width: AppSpacing.rowGap),
+          const SizedBox(width: _convertSpace),
           Text(
             '+0.62%',
             style: AppTextStyles.micro.copyWith(
@@ -237,7 +241,8 @@ class _SlippageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.convertSlippageCardHeight,
+      height: _convertSlippageHeight,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.x4,
         top: AppSpacing.x4,
@@ -262,7 +267,7 @@ class _SlippageCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
-              const SizedBox(width: AppSpacing.rowGap),
+              const SizedBox(width: _convertSpace),
               Text(
                 'Tùy chỉnh',
                 style: AppTextStyles.micro.copyWith(
@@ -272,7 +277,7 @@ class _SlippageCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _convertSpace),
           Row(
             children: [
               for (final option in options) ...[
@@ -282,7 +287,7 @@ class _SlippageCard extends StatelessWidget {
                   active: option == active,
                   onTap: () => onChanged(option),
                 ),
-                const SizedBox(width: AppSpacing.rowGap),
+                const SizedBox(width: _convertSpace),
               ],
             ],
           ),
@@ -309,7 +314,7 @@ class _SlippageChip extends StatelessWidget {
     return VitCtaButton(
       onPressed: onTap,
       fullWidth: false,
-      height: AppSpacing.buttonCompact,
+      height: _convertChipHeight,
       variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.rowPy,
@@ -351,6 +356,7 @@ class _ConvertRiskReviewPanel extends StatelessWidget {
       message:
           'Confirm $fromSymbol/$toSymbol rate, fee, ${slippage.toStringAsFixed(1)}% slippage limit, network risk, and next-step receipt before submitting.',
       contractId: 'SC-056 Convert preview',
+      density: VitDensity.compact,
     );
   }
 }
@@ -377,7 +383,7 @@ class _SubmitButton extends StatelessWidget {
       variant: receipt == null
           ? VitCtaButtonVariant.primary
           : VitCtaButtonVariant.success,
-      height: AppSpacing.inputHeight,
+      height: _convertButtonHeight,
       leading: Icon(
         receipt == null
             ? Icons.swap_vert_rounded
@@ -405,7 +411,7 @@ class _HistoryHeader extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.rowGapRegular),
+        const SizedBox(width: _convertSpace),
         const Icon(
           Icons.download_rounded,
           color: AppColors.text3,
@@ -416,7 +422,7 @@ class _HistoryHeader extends StatelessWidget {
           'Xuất',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(width: AppSpacing.rowGapRegular),
+        const SizedBox(width: _convertSpace),
         Text(
           'Xem tất cả',
           style: AppTextStyles.micro.copyWith(

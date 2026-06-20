@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -71,11 +72,15 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
     final repository = ref.watch(tradeReadModelControllerProvider);
     final snapshot = repository.getBotTaxReporting();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final chromeInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollClearance =
+        MediaQuery.paddingOf(context).bottom +
+        chromeInset +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotFooterBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.tradeBotFooterBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+            ? AppSpacing.x6 + AppSpacing.x6
+            : AppSpacing.x5 + AppSpacing.x5);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -96,20 +101,21 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: BotTaxReportingPage.contentKey,
-                      padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                        bottomInset,
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        AppSpacing.tradeBotCardGap,
+                        AppSpacing.contentPad,
+                        scrollClearance,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: 0,
+                        density: VitDensity.compact,
                         children: [
                           const _TaxNotice(),
-                          const SizedBox(height: AppSpacing.tradeBotContentGap),
-                          const _SectionLabel('Select Tax Year'),
-                          const SizedBox(height: AppSpacing.tradeBotRowGap),
                           VitPageSection(
-                            customGap: 0,
+                            label: 'Select Tax Year',
+                            density: VitDensity.compact,
                             children: [
                               _YearPicker(
                                 years: snapshot.taxYears,
@@ -120,55 +126,71 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: AppSpacing.tradeBotContentGap),
-                          _SectionLabel('Summary for $_selectedYear'),
-                          const SizedBox(height: AppSpacing.tradeBotRowGap),
-                          _SummaryCard(summary: snapshot.summary),
-                          const SizedBox(height: AppSpacing.tradeBotContentGap),
-                          const _SectionLabel('Cost Basis Method'),
-                          const SizedBox(height: AppSpacing.tradeBotRowGap),
-                          _CostBasisPicker(
-                            selectedMethod: _costBasisMethod,
-                            onChanged: (method) {
-                              setState(() => _costBasisMethod = method);
-                            },
+                          VitPageSection(
+                            label: 'Summary for $_selectedYear',
+                            density: VitDensity.compact,
+                            children: [_SummaryCard(summary: snapshot.summary)],
                           ),
-                          const SizedBox(height: AppSpacing.tradeBotContentGap),
-                          const _SectionLabel('Select Report Types'),
-                          const SizedBox(height: AppSpacing.tradeBotRowGap),
-                          for (final report in snapshot.reportTypes) ...[
-                            _ReportTypeCard(
-                              report: report,
-                              selected: _selectedReportIds.contains(report.id),
-                              onTap: () => _toggleReport(report.id),
-                            ),
-                            if (report != snapshot.reportTypes.last)
-                              const SizedBox(height: AppSpacing.tradeBotRowGap),
-                          ],
-                          const SizedBox(height: AppSpacing.tradeBotContentGap),
-                          const _SectionLabel('Capital Gains Breakdown'),
-                          const SizedBox(height: AppSpacing.tradeBotRowGap),
-                          _BreakdownCard(
-                            summary: snapshot.summary,
-                            breakdown: snapshot.breakdown,
+                          VitPageSection(
+                            label: 'Cost Basis Method',
+                            density: VitDensity.compact,
+                            children: [
+                              _CostBasisPicker(
+                                selectedMethod: _costBasisMethod,
+                                onChanged: (method) {
+                                  setState(() => _costBasisMethod = method);
+                                },
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: AppSpacing.tradeBotContentGap),
+                          VitPageSection(
+                            label: 'Select Report Types',
+                            density: VitDensity.compact,
+                            children: [
+                              VitPageContent(
+                                padding: VitContentPadding.none,
+                                fullBleed: true,
+                                density: VitDensity.compact,
+                                children: [
+                                  for (final report in snapshot.reportTypes)
+                                    _ReportTypeCard(
+                                      report: report,
+                                      selected: _selectedReportIds.contains(
+                                        report.id,
+                                      ),
+                                      onTap: () => _toggleReport(report.id),
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          VitPageSection(
+                            label: 'Capital Gains Breakdown',
+                            density: VitDensity.compact,
+                            children: [
+                              _BreakdownCard(
+                                summary: snapshot.summary,
+                                breakdown: snapshot.breakdown,
+                              ),
+                            ],
+                          ),
                           _TaxNotesCard(notes: snapshot.taxNotes),
-                          const SizedBox(height: AppSpacing.tradeBotCardGap),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: AppSpacing.tradeBotInnerPanelPadding,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            density: VitDensity.compact,
+                            child: VitPageContent(
+                              padding: VitContentPadding.none,
+                              fullBleed: true,
+                              density: VitDensity.compact,
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
+                                  density: VitDensity.compact,
                                   title: 'Tax export review required',
                                   message:
                                       'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
                                   contractId: 'bot-tax-reporting-review',
                                 ),
-                                SizedBox(height: AppSpacing.tradeBotSmallGap),
                                 VitStatusPill(
                                   label: 'Report preview before export',
                                   status: VitStatusPillStatus.info,
@@ -185,7 +207,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
               ),
             ),
             _GenerateFooter(
-              visualMode: mode.usesVisualQaFrame,
+              chromeInset: chromeInset,
               disabled: _selectedReportIds.isEmpty || _generating,
               generating: _generating,
               selectedCount: _selectedReportIds.length,

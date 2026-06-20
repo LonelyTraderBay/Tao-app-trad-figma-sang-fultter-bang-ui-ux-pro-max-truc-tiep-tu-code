@@ -9,12 +9,8 @@ class _HeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.x5 + AppSpacing.hairlineStroke * 2,
-        top: AppSpacing.x6 - AppSpacing.x2,
-        right: AppSpacing.x5 + AppSpacing.hairlineStroke * 2,
-        bottom: AppSpacing.x5 + AppSpacing.hairlineStroke * 2,
-      ),
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _hubHeroBorder,
       child: Column(
         children: [
@@ -22,15 +18,17 @@ class _HeroCard extends StatelessWidget {
             children: [
               const VitCard(
                 variant: VitCardVariant.inner,
-                width: AppSpacing.launchpadBox64,
-                height: AppSpacing.launchpadBox64,
+                width: _hubHeroIconTile,
+                height: _hubHeroIconTile,
+                density: VitDensity.compact,
+                padding: EdgeInsets.zero,
                 child: Icon(
                   Icons.trending_up_rounded,
                   color: AppColors.onAccent,
-                  size: AppSpacing.walletAddressActionSize,
+                  size: AppSpacing.x5,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: _hubSpace),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +40,7 @@ class _HeroCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.transferTileGap),
+                    const SizedBox(height: _hubTinySpace),
                     Text(
                       'Margin tools with leverage limits and compliance checks',
                       style: AppTextStyles.body.copyWith(
@@ -55,13 +53,12 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletTransactionStepSpacing),
+          const SizedBox(height: _hubSpace),
           Row(
             children: [
               for (final stat in stats) ...[
                 Expanded(child: _HeroStat(stat: stat)),
-                if (stat != stats.last)
-                  const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
+                if (stat != stats.last) const SizedBox(width: _hubTinySpace),
               ],
             ],
           ),
@@ -81,12 +78,10 @@ class _HeroStat extends StatelessWidget {
     final color = Color(stat.colorHex);
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.marginTradingHubHeroStatHeight,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.transferTileGap,
-        top: AppSpacing.rowPy,
-        right: AppSpacing.transferTileGap,
-        bottom: AppSpacing.rowPy,
+      density: VitDensity.compact,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.x2,
+        vertical: AppSpacing.x1,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -100,7 +95,7 @@ class _HeroStat extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletAssetChartBottomGap),
+          const SizedBox(height: _hubTinySpace),
           Text(
             stat.label,
             maxLines: 2,
@@ -109,7 +104,7 @@ class _HeroStat extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.onAccent.withValues(alpha: .62),
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.marginTradingHubLineHeightCaption,
+              height: _hubLineTight,
             ),
           ),
         ],
@@ -126,12 +121,6 @@ class _NavigationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _HubCard(
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.contentPad,
-        top: AppSpacing.contentPad,
-        right: AppSpacing.contentPad,
-        bottom: AppSpacing.contentPad,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -140,9 +129,9 @@ class _NavigationCard extends StatelessWidget {
               const Icon(
                 Icons.bar_chart_rounded,
                 color: _hubPrimary,
-                size: AppSpacing.marginTradingHubNavIconSize,
+                size: AppSpacing.x4,
               ),
-              const SizedBox(width: AppSpacing.transferCardGap),
+              const SizedBox(width: _hubSpace),
               Expanded(
                 child: Text(
                   'Margin Trading Suite',
@@ -156,18 +145,17 @@ class _NavigationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.contentPad),
+          const SizedBox(height: _hubSpace),
           Text(
             'Margin trading controls with risk limits, liquidation context, fee disclosure, and market intelligence.',
             style: AppTextStyles.body.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.walletTransactionProgressBottomGap),
+          const SizedBox(height: _hubSpace),
           for (final item in items) ...[
             _MenuItem(item: item),
-            if (item != items.last)
-              const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+            if (item != items.last) const SizedBox(height: _hubSpace),
           ],
-          const SizedBox(height: AppSpacing.walletAssetSectionGap),
+          const SizedBox(height: _hubSpace),
           const MarginHubComplianceInfoBanner(),
         ],
       ),
@@ -188,22 +176,17 @@ class _MenuItem extends StatelessWidget {
       borderRadius: AppRadii.cardRadius,
       onTap: () => context.go(item.targetPath),
       child: VitCard(
-        constraints: const BoxConstraints(
-          minHeight: AppSpacing.marginTradingHubMenuItemMinHeight,
-        ),
-        padding: AppSpacing.zeroInsets.copyWith(
-          left: AppSpacing.walletAssetSectionGap,
-          top: AppSpacing.rowPy,
-          right: AppSpacing.walletAssetSectionGap,
-          bottom: AppSpacing.rowPy,
-        ),
+        density: VitDensity.compact,
+        padding: AppSpacing.cardPaddingCompact,
         borderColor: color.withValues(alpha: .28),
         child: Row(
           children: [
             VitCard(
               variant: VitCardVariant.inner,
-              width: AppSpacing.dcaSmartStatsIconBox,
-              height: AppSpacing.dcaSmartStatsIconBox,
+              width: _hubIconTile,
+              height: _hubIconTile,
+              density: VitDensity.compact,
+              padding: EdgeInsets.zero,
               borderColor: color.withValues(alpha: .18),
               child: Icon(
                 _menuIcon(item.id),
@@ -211,7 +194,7 @@ class _MenuItem extends StatelessWidget {
                 size: AppSpacing.x5,
               ),
             ),
-            const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
+            const SizedBox(width: _hubSpace),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,11 +213,11 @@ class _MenuItem extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.transferTileGap),
+                      const SizedBox(width: _hubTinySpace),
                       MarginHubPhaseBadge(label: item.badge, color: color),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.transferTileGap),
+                  const SizedBox(height: _hubTinySpace),
                   Text(
                     item.subtitle,
                     maxLines: 2,
@@ -246,11 +229,11 @@ class _MenuItem extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
+            const SizedBox(width: _hubTinySpace),
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: AppSpacing.marginTradingHubChevronIcon,
+              size: AppSpacing.x4,
             ),
           ],
         ),

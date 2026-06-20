@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -24,7 +25,7 @@ class PredictionSocialShareButton extends StatelessWidget {
       color: color,
       borderRadius: AppRadii.cardRadius,
       child: SizedBox(
-        height: AppSpacing.predictionSocialShareButtonHeight,
+        height: VitDensity.compact.controlHeight,
         child: Padding(
           padding: AppSpacing.predictionSocialShareButtonPadding,
           child: Row(
@@ -71,7 +72,7 @@ class PredictionSocialMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.predictionSocialMetricGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
@@ -110,7 +111,7 @@ class PredictionSocialSentimentLegend extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.predictionSocialLegendValueGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           '${item.value}%',
           style: AppTextStyles.baseMedium.copyWith(

@@ -19,7 +19,7 @@ class VitHeroGlow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         gradient: RadialGradient(
           center: center,
           radius: radius,
@@ -32,6 +32,7 @@ class VitHeroGlow extends StatelessWidget {
               ],
           stops: stops,
         ),
+        shape: const RoundedRectangleBorder(),
       ),
     );
   }

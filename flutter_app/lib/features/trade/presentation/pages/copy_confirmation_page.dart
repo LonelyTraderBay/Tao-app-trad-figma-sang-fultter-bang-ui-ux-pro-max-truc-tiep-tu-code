@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -76,8 +77,8 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.copyConfirmationBottomInsetVisual
-            : AppSpacing.copyConfirmationBottomInsetNative);
+            ? AppSpacing.x6 + AppSpacing.x4
+            : AppSpacing.x5 + AppSpacing.x2);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -98,62 +99,38 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyConfirmationPage.contentKey,
-                  padding: AppSpacing.copyConfirmationScrollPadding(
-                    bottomInset,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.x2,
+                    right: AppSpacing.contentPad,
+                    bottom: bottomInset,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    density: VitDensity.compact,
+                    fullBleed: true,
                     children: [
                       _CriticalWarning(snapshot: snapshot),
-                      const SizedBox(
-                        height: AppSpacing.copyConfirmationSectionGap,
-                      ),
                       _ProviderSummary(provider: snapshot.provider!),
-                      const SizedBox(
-                        height: AppSpacing.copyConfirmationSectionGap,
-                      ),
                       _SuitabilityReviewCard(snapshot: snapshot),
-                      const SizedBox(
-                        height: AppSpacing.copyConfirmationSectionGap,
-                      ),
                       _ConfigurationSummary(snapshot: snapshot),
-                      const SizedBox(
-                        height: AppSpacing.copyConfirmationSectionGap,
-                      ),
                       _FeeBreakdown(snapshot: snapshot),
-                      const SizedBox(
-                        height: AppSpacing.copyConfirmationSectionGap,
-                      ),
                       _ScenarioSection(scenarios: snapshot.scenarios),
-                      const SizedBox(
-                        height: AppSpacing.copyConfirmationSectionGap,
-                      ),
                       _MaxLossCard(snapshot: snapshot),
-                      const SizedBox(
-                        height: AppSpacing.copyConfirmationSectionGap,
-                      ),
                       _ConsentSection(
                         items: snapshot.consentItems,
                         acceptedIds: _acceptedConsentIds,
                         onToggle: _toggleConsent,
                       ),
-                      const SizedBox(
-                        height: AppSpacing.copyConfirmationSectionGap,
-                      ),
                       _CoolingOffCard(hours: snapshot.coolingOffHours),
-                      const SizedBox(
-                        height: AppSpacing.copyConfirmationSectionGap,
-                      ),
                       _NextStepsCard(snapshot: snapshot),
-                      const SizedBox(
-                        height: AppSpacing.copyConfirmationSectionGap,
-                      ),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Copy confirmation state review',
                         message:
                             'Critical warning, suitability review, fees, scenarios, max loss, required consents, cooling-off period, next steps, and submitting state remain visible before starting copy trading.',
                         contractId: 'SC-073',
+                        density: VitDensity.compact,
                       ),
                     ],
                   ),
@@ -173,6 +150,7 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                             : null,
                         loading: _submitting,
                         variant: VitCtaButtonVariant.danger,
+                        density: VitDensity.compact,
                         leading: const Icon(Icons.shield_outlined),
                         child: const Text('Xác nhận & Bắt đầu Copy'),
                       ),

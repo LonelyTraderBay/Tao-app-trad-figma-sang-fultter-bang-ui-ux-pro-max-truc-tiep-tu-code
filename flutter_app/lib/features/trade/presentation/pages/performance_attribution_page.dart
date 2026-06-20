@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -29,6 +30,8 @@ const _attributionPurple = AppColors.accent;
 const _attributionGreen = AppColors.buy;
 const _attributionRed = AppColors.sell;
 const _attributionGray = AppColors.text3;
+const _attributionChartHeight = 132.0;
+const _attributionLargeChartHeight = 148.0;
 
 class PerformanceAttributionPage extends ConsumerStatefulWidget {
   const PerformanceAttributionPage({
@@ -59,13 +62,15 @@ class _PerformanceAttributionPageState
         .watch(tradeReadModelControllerProvider)
         .getPerformanceAttribution(copyId: widget.copyId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final chromeInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollClearance =
+        chromeInset +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 26 : 14);
+        (mode.usesVisualQaFrame
+            ? AppSpacing.x6 + AppSpacing.x6
+            : AppSpacing.x5 + AppSpacing.x5);
 
     return VitPageLayout(
       semanticLabel: 'SC-075 PerformanceAttributionPage',
@@ -84,16 +89,20 @@ class _PerformanceAttributionPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: PerformanceAttributionPage.contentKey,
-                  padding: AppSpacing.tradeBotAttributionScrollPadding(
-                    bottomInset,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.rowPy,
+                    right: AppSpacing.contentPad,
+                    bottom: scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.tradeBotDisputeCasesTopGap,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
+                        density: VitDensity.compact,
                         title: 'Review performance attribution risk',
                         message:
                             'Confirm drawdown, exposure, limits, and next steps before adjusting copy-trading allocation.',

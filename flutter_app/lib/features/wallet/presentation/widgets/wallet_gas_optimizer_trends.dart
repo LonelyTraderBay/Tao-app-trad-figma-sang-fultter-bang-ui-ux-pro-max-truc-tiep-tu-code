@@ -8,20 +8,18 @@ class _TrendsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-      padding: VitContentPadding.none,
-      fullBleed: true,
-      customGap: AppSpacing.walletGasSecondaryContentGap,
+      density: VitDensity.compact,
       children: [
         _ChartCard(
           title: '24h Gas Price Trends',
-          height: AppSpacing.walletGasChartLargeHeight,
+          height: VitDensity.compact.controlHeight * 3.2,
           child: CustomPaint(
             painter: _GasLineChartPainter(points: snapshot.history),
           ),
         ),
         _ChartCard(
           title: 'Network Activity',
-          height: AppSpacing.walletGasChartSmallHeight,
+          height: VitDensity.compact.controlHeight * 2.5,
           child: CustomPaint(
             painter: _NetworkBarChartPainter(points: snapshot.networkActivity),
           ),
@@ -47,12 +45,10 @@ class _ChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       height: height,
-      padding: AppSpacing.walletGasChartPadding,
+      density: VitDensity.compact,
       borderColor: _gasBorder,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        fullBleed: true,
-        customGap: AppSpacing.walletGasChartGap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             title,
@@ -60,6 +56,7 @@ class _ChartCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
+          const SizedBox(height: AppSpacing.x2),
           Expanded(child: child),
         ],
       ),
@@ -73,7 +70,7 @@ class _BestTimeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletGasBestTimePadding,
+      density: VitDensity.compact,
       borderColor: _gasGreen.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -86,7 +83,7 @@ class _BestTimeCard extends StatelessWidget {
                 color: _gasGreen,
                 size: AppSpacing.walletGasIcon,
               ),
-              const SizedBox(width: AppSpacing.walletGasQuickActionIconGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,12 +95,12 @@ class _BestTimeCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.walletGasBestTimeTextGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Gas fees are typically lowest between 2 AM - 6 AM UTC.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
+                        height: 1.28,
                       ),
                     ),
                   ],
@@ -111,7 +108,7 @@ class _BestTimeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletGasBestTimeMetricGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: const [
               Expanded(
@@ -120,7 +117,7 @@ class _BestTimeCard extends StatelessWidget {
                   value: '12 Gwei',
                 ),
               ),
-              SizedBox(width: AppSpacing.walletGasBestTimeColumnGap),
+              SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _BestTimeMetric(
                   label: 'Potential Saving',
@@ -150,7 +147,7 @@ class _BestTimeMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.walletGasBestTimeValueGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: AppTextStyles.sectionTitle.copyWith(

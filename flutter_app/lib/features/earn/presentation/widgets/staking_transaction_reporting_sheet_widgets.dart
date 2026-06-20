@@ -33,7 +33,7 @@ class _MethodSheet extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
-            padding: AppSpacing.cardPaddingCompact,
+            padding: _transactionReportingCardPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -48,8 +48,7 @@ class _MethodSheet extends StatelessWidget {
                     'Once you choose a method for a tax year, use it consistently. Consult a tax professional for guidance.',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing
-                          .stakingTransactionReportingNoticeLineHeight,
+                      height: _transactionReportingNoticeLineHeight,
                     ),
                   ),
                 ),
@@ -79,7 +78,7 @@ class _MethodOption extends StatelessWidget {
       key: StakingTransactionReportingPage.methodKey(method.value),
       onTap: onTap,
       borderColor: selected ? AppColors.primary : null,
-      padding: AppSpacing.cardPadding,
+      padding: _transactionReportingCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -101,8 +100,7 @@ class _MethodOption extends StatelessWidget {
                   method.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height:
-                        AppSpacing.stakingTransactionReportingMethodLineHeight,
+                    height: _transactionReportingMethodLineHeight,
                   ),
                 ),
               ],
@@ -154,12 +152,13 @@ class _ExportGroup extends StatelessWidget {
     return VitPageSection(
       label: title,
       accentColor: AppColors.primarySoft,
+      density: VitDensity.compact,
       children: [
         for (final option in options)
           VitCard(
             key: StakingTransactionReportingPage.exportOptionKey(option.name),
             onTap: () => Navigator.of(context).pop(),
-            padding: AppSpacing.cardPaddingCompact,
+            padding: _transactionReportingCardPadding,
             child: Row(
               children: [
                 Expanded(
@@ -213,7 +212,7 @@ class _SheetFrame extends StatelessWidget {
           child: VitSheetSurface(
             color: AppColors.surface,
             borderRadius: AppRadii.cardLargeRadius,
-            padding: AppSpacing.cardPaddingHero,
+            padding: _transactionReportingCardPadding,
             child: child,
           ),
         ),
@@ -263,13 +262,13 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingTransactionReportingPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.cardPadding,
+      padding: _transactionReportingCardPadding,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingTransactionReportingBodyLineHeight,
+          height: _transactionReportingBodyLineHeight,
         ),
       ),
     );

@@ -19,7 +19,7 @@ class StakingCustodyHeroCard extends StatelessWidget {
       key: StakingCustodyKeys.hero,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -62,7 +62,7 @@ class StakingCustodyFeedbackNote extends StatelessWidget {
       key: StakingCustodyKeys.feedback,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           const Icon(
@@ -100,7 +100,7 @@ class StakingCustodyCustodianSection extends StatelessWidget {
         VitCard(
           key: StakingCustodyKeys.custodian,
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -175,7 +175,7 @@ class StakingCustodyCustodianSection extends StatelessWidget {
               VitCard(
                 variant: VitCardVariant.inner,
                 borderColor: AppColors.buy20,
-                padding: const EdgeInsets.all(AppSpacing.x3),
+                padding: AppSpacing.earnCardPaddingX3,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

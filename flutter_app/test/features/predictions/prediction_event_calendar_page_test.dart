@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCalendar(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -81,6 +83,24 @@ void main() {
     expect(find.text('December 2026'), findsOneWidget);
     expect(find.text('BTC > \$100K by Dec 2026?'), findsOneWidget);
     expect(find.text('SpaceX Mars landing in 2026?'), findsOneWidget);
+  });
+
+  testWidgets('SC-039 first viewport reaches first calendar event', (
+    tester,
+  ) async {
+    await pumpCalendar(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-039 PredictionEventCalendarPage',
+      semanticLabel: 'SC-039 PredictionEventCalendarPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PredictionEventCalendarPage.eventKey('pred-1')),
+      targetLabel: 'the first calendar event card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-039 filter and tabs update locally', (tester) async {

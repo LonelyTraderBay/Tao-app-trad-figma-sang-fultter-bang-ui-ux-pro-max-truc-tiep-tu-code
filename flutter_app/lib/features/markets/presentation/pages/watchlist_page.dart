@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,6 +22,12 @@ part '../widgets/watchlist_cards.dart';
 part '../widgets/watchlist_common_painter.dart';
 
 const _marketPrimary = AppColors.primary;
+const double _watchlistFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _watchlistNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _watchlistSparklineExtent =
+    AppSpacing.buttonStandard + AppSpacing.x4;
 
 class WatchlistPage extends ConsumerStatefulWidget {
   const WatchlistPage({super.key, this.shellRenderMode});
@@ -139,13 +145,11 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(marketControllerProvider).getMarketWatchlist();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 42 : 18);
+    final scrollEndClearance =
+        (mode.usesVisualQaFrame
+            ? _watchlistFramedScrollClearance
+            : _watchlistNativeScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
     final items = _filteredItems(snapshot);
 
     return VitPageLayout(
@@ -175,12 +179,12 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                   behavior: ScrollConfiguration.of(
                     context,
                   ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
+                  child: VitInsetScrollView(
                     key: WatchlistPage.contentKey,
-                    padding: AppSpacing.marketScrollPadding(bottomInset),
+                    bottomInset: scrollEndClearance,
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.watchlistSectionGap,
+                      density: VitDensity.compact,
                       children: [
                         items.isEmpty
                             ? _EmptyWatchlist(
@@ -211,9 +215,7 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
                                           _removeEntry(items[i].entry.id),
                                     ),
                                     if (i != items.length - 1)
-                                      const SizedBox(
-                                        height: AppSpacing.watchlistSectionGap,
-                                      ),
+                                      const SizedBox(height: AppSpacing.x3),
                                   ],
                                 ],
                               ),

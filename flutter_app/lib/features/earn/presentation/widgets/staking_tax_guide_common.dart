@@ -26,32 +26,36 @@ class StakingTaxWarningNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.warningBg,
-        border: Border.all(color: AppColors.warningBorder),
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.warningBorder),
+          borderRadius: AppRadii.lgRadius,
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.stakingTaxWarningIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.stakingTaxWarningLineHeight,
+      child: Padding(
+        padding: AppSpacing.earnCardPaddingX3,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.stakingTaxWarningIcon,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                text,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text2,
+                  height: AppSpacing.stakingTaxWarningLineHeight,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -67,7 +71,7 @@ class StakingTaxFooterCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -102,19 +106,23 @@ class StakingTaxCodeBadge extends StatelessWidget {
     final style = small
         ? AppTextStyles.numericMicro
         : (large ? AppTextStyles.baseMedium : AppTextStyles.body);
-    return Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.surface3,
-        borderRadius: large ? AppRadii.cardRadius : AppRadii.mdRadius,
-      ),
-      child: Text(
-        code,
-        style: style.copyWith(
-          color: AppColors.text1,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox.square(
+      dimension: size,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: AppColors.surface3,
+          shape: RoundedRectangleBorder(
+            borderRadius: large ? AppRadii.cardRadius : AppRadii.mdRadius,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            code,
+            style: style.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );

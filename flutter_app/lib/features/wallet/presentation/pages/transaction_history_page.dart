@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,6 +22,26 @@ const _historyBackground = AppColors.bg;
 const _historyPrimary = AppColors.primary;
 const _historyGreen = AppColors.buy;
 const _historyRed = AppColors.sell;
+const _historyNativeBottomClearance = 88.0;
+const _historyVisualBottomClearance = 112.0;
+const _historyScrollTopPad = 0.0;
+const _historyGap = 8.0;
+const _historyTinyGap = 4.0;
+const _historyInlineGap = 8.0;
+const _historyIconBox = 36.0;
+const _historyAmountColumnWidth = 108.0;
+const _historyRowMinHeight = 66.0;
+const _historySectionHeaderHeight = 28.0;
+const _historyExportPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
+const _historyRowPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
+const _historyEndPadding = EdgeInsets.only(top: 10, bottom: 14);
+
+double _historyScrollBottomInset(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? _historyVisualBottomClearance
+          : _historyNativeBottomClearance) +
+      MediaQuery.paddingOf(context).bottom;
+}
 
 class TransactionHistoryPage extends ConsumerStatefulWidget {
   const TransactionHistoryPage({super.key, this.shellRenderMode});
@@ -48,13 +68,7 @@ class _TransactionHistoryPageState
     final transactions = _filteredTransactions(snapshot.transactions);
     final grouped = _groupByDate(transactions);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletBottomInsetVisualChrome
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletBottomInsetNativeChrome) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = _historyScrollBottomInset(context, mode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -82,29 +96,25 @@ class _TransactionHistoryPageState
                 child: SingleChildScrollView(
                   key: TransactionHistoryPage.contentKey,
                   padding: AppSpacing.contentInsets.copyWith(
-                    top: AppSpacing.rowPy,
+                    top: _historyScrollTopPad,
                     bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       _ExportBar(
                         count: transactions.length,
                         onExport: () => _showExportNotice(transactions.length),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.walletHistoryFilterTopPad,
-                      ),
+                      const SizedBox(height: _historyGap),
                       _FilterTabs(
                         filters: snapshot.filters,
                         active: _filter,
                         onChanged: (id) => setState(() => _filter = id),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.walletHistoryGroupTopPad,
-                      ),
+                      const SizedBox(height: _historyGap),
                       for (final group in grouped)
                         _TransactionGroup(
                           group: group,

@@ -85,38 +85,12 @@ class _InfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitBanner(
       key: StakingProofOfReservesPage.infoKey,
-      variant: VitCardVariant.inner,
-      borderColor: AppColors.buy20,
-      padding: AppSpacing.earnPaddingX4,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.shield_outlined,
-            color: AppColors.buy,
-            size: AppSpacing.iconMd,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  snapshot.infoBody,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.stakingProofInfoLineHeight,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      variant: VitBannerVariant.info,
+      icon: Icons.shield_outlined,
+      message: snapshot.infoTitle,
+      detail: snapshot.infoBody,
     );
   }
 }
@@ -129,52 +103,22 @@ class _ReserveTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitCard(
       key: StakingProofOfReservesPage.tabsKey,
-      color: AppColors.surface,
-      child: Row(
-        children: [
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.earnPaddingX2,
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: active.name,
+        tabs: [
           for (final tab in _ReserveTab.values)
-            Expanded(
-              child: Material(
-                color: AppColors.transparent,
-                child: InkWell(
-                  key: StakingProofOfReservesPage.tabKey(tab.name),
-                  onTap: () => onChanged(tab),
-                  child: Padding(
-                    padding: AppSpacing.earnTopPaddingX4,
-                    child: Column(
-                      children: [
-                        Text(
-                          _tabLabel(tab),
-                          style: AppTextStyles.caption.copyWith(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        AnimatedSize(
-                          duration: const Duration(milliseconds: 160),
-                          child: SizedBox(
-                            width: active == tab ? AppSpacing.buttonHero : 0,
-                            height: AppSpacing.stakingProofTabIndicatorHeight,
-                            child: Material(
-                              color: active == tab
-                                  ? AppColors.primarySoft
-                                  : AppColors.transparent,
-                              borderRadius: AppRadii.xsRadius,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+            VitTabItem(
+              key: tab.name,
+              label: _tabLabel(tab),
+              widgetKey: StakingProofOfReservesPage.tabKey(tab.name),
             ),
         ],
+        onChanged: (key) => onChanged(_reserveTabFromKey(key)),
       ),
     );
   }
@@ -407,12 +351,10 @@ class _VerifyTab extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: AppSpacing.x4),
-                  SizedBox(
-                    height: AppSpacing.ctaHeight,
-                    child: FilledButton(
-                      onPressed: onVerify,
-                      child: const Text('Verify My Balance'),
-                    ),
+                  VitCtaButton(
+                    onPressed: onVerify,
+                    leading: const Icon(Icons.verified_user_outlined),
+                    child: const Text('Verify My Balance'),
                   ),
                 ],
               ),

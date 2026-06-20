@@ -19,7 +19,7 @@ class StakingApiDocumentationInfoBanner extends StatelessWidget {
       key: StakingApiDocumentationKeys.info,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -79,7 +79,7 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(stat.tone);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: SizedBox(
         height: AppSpacing.stakingApiStatTileHeight,
         child: Column(
@@ -121,9 +121,9 @@ class StakingApiDocumentationTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: StakingApiDocumentationKeys.tabs,
-      decoration: const BoxDecoration(color: AppColors.surface),
+      color: AppColors.surface,
       child: Row(
         children: [
           for (final tab in StakingApiDocumentationTab.values)
@@ -134,7 +134,7 @@ class StakingApiDocumentationTabs extends StatelessWidget {
                   key: StakingApiDocumentationKeys.tab(tab.name),
                   onTap: () => onChanged(tab),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.x4),
+                    padding: AppSpacing.earnTopPaddingX4,
                     child: Column(
                       children: [
                         Text(
@@ -149,16 +149,27 @@ class StakingApiDocumentationTabs extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x4),
-                        AnimatedContainer(
+                        TweenAnimationBuilder<double>(
                           duration: const Duration(milliseconds: 160),
-                          width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: AppSpacing.stakingApiTabIndicatorHeight,
-                          decoration: BoxDecoration(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.transparent,
-                            borderRadius: AppRadii.xsRadius,
+                          tween: Tween<double>(
+                            end: active == tab ? AppSpacing.buttonHero : 0,
                           ),
+                          builder: (context, width, _) {
+                            return SizedBox(
+                              width: width,
+                              height: AppSpacing.stakingApiTabIndicatorHeight,
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: active == tab
+                                      ? AppColors.primarySoft
+                                      : AppColors.transparent,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: AppRadii.xsRadius,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

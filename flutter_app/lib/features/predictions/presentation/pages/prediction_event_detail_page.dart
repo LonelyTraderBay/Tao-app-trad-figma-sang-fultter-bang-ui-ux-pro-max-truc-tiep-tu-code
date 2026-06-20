@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -100,15 +101,13 @@ class _PredictionEventDetailPageState
     final snapshot = controller.state.snapshot;
     final event = snapshot.event;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final footerPadding =
+        footerChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionDetailBottomInsetVisual
-            : AppSpacing.predictionDetailBottomInsetNative);
+        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
 
     if (!event.outcomes.any((outcome) => outcome.label == _selectedOutcome)) {
       _selectedOutcome = event.outcomes.first.label;
@@ -159,11 +158,10 @@ class _PredictionEventDetailPageState
                   child: SingleChildScrollView(
                     key: PredictionEventDetailPage.contentKey,
                     padding: AppSpacing.predictionDetailScrollPadding(
-                      bottomInset,
+                      footerPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionDetailContentGap,
+                      density: VitDensity.compact,
                       children: [
                         _EventHeader(
                           event: event,
@@ -172,6 +170,7 @@ class _PredictionEventDetailPageState
                             _selectedOutcome = value;
                           }),
                         ),
+                        _StatsGrid(event: event),
                         if (snapshot.highRiskContractId != null)
                           VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
@@ -179,8 +178,8 @@ class _PredictionEventDetailPageState
                             message:
                                 'Rules, amount setup, probability preview, confirmation, submitted receipt and recovery are tracked in one prediction contract.',
                             contractId: snapshot.highRiskContractId,
+                            density: VitDensity.compact,
                           ),
-                        _StatsGrid(event: event),
                         if (snapshot.position != null)
                           _PositionBanner(position: snapshot.position!),
                         _ChartSection(snapshot: snapshot),

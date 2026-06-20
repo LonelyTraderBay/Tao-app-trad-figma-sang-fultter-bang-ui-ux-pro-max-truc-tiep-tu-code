@@ -9,14 +9,12 @@ class _RiskWarningCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotSecurityCardMinHeight,
-      ),
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletAssetHeroTopGap,
-        top: AppSpacing.walletAssetHeroTopGap,
-        right: AppSpacing.rowPy,
-        bottom: AppSpacing.walletAssetHeroTopGap,
+        left: _copyCardSpace,
+        top: _copySpace,
+        right: _copyCardSpace,
+        bottom: _copySpace,
       ),
       variant: VitCardVariant.inner,
       borderColor: AppColors.warningBorder,
@@ -26,6 +24,7 @@ class _RiskWarningCard extends StatelessWidget {
         message:
             '$message Preview, fees, allocation limit and confirmation are reviewed before copying.',
         contractId: 'copy-trading-v2-review',
+        density: VitDensity.compact,
       ),
     );
   }
@@ -82,7 +81,7 @@ class _SortChip extends StatelessWidget {
       borderRadius: AppRadii.xlRadius,
       child: VitCard(
         width: _sortChipWidth(label),
-        height: AppSpacing.copyTradingV2SortChipHeight,
+        height: _copySortChipHeight,
         alignment: Alignment.center,
         padding: AppSpacing.zeroInsets.copyWith(
           left: AppSpacing.walletAssetChartBottomGap,
@@ -116,21 +115,22 @@ class _TraderCard extends StatelessWidget {
     final tier = _tierFor(trader.copiers);
     return VitCard(
       key: CopyTradingV2Page.traderKey(trader.id),
-      height: AppSpacing.copyTradingV2TraderCardHeight,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletAssetSectionGap,
-        top: AppSpacing.rowPy,
-        right: AppSpacing.walletAssetSectionGap,
-        bottom: AppSpacing.rowPy,
+        left: _copyCardSpace,
+        top: _copyCardSpace,
+        right: _copyCardSpace,
+        bottom: _copyCardSpace,
       ),
       borderColor: AppColors.cardBorder,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _AvatarBadge(trader: trader, tier: tier),
-              const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
+              const SizedBox(width: _copyCardSpace),
               Expanded(
                 child: Padding(
                   padding: AppSpacing.zeroInsets.copyWith(
@@ -153,7 +153,7 @@ class _TraderCard extends StatelessWidget {
                             ),
                           ),
                           if (trader.isFollowing) ...[
-                            const SizedBox(width: AppSpacing.formFieldLabelGap),
+                            const SizedBox(width: _copySpace),
                             const Icon(
                               Icons.star_rounded,
                               color: AppColors.warn,
@@ -162,10 +162,10 @@ class _TraderCard extends StatelessWidget {
                           ],
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: _copySpace),
                       Wrap(
-                        spacing: AppSpacing.formFieldLabelGap,
-                        runSpacing: AppSpacing.formFieldLabelGap,
+                        spacing: _copySpace,
+                        runSpacing: _copySpace,
                         children: [
                           _MiniBadge(label: tier.label, color: tier.color),
                           for (final tag in trader.tags.take(2))
@@ -176,11 +176,11 @@ class _TraderCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
+              const SizedBox(width: _copySpace),
               _RoiBlock(trader: trader),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: _copyCardSpace),
           _DetailsButton(traderId: trader.id, onOpen: onOpen),
         ],
       ),
@@ -197,14 +197,14 @@ class _AvatarBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.copyTradingV2TraderAvatarStackWidth,
-      height: AppSpacing.copyTradingV2TraderAvatarStackHeight,
+      width: _copyAvatarStackWidth,
+      height: _copyAvatarStackHeight,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           VitCard(
-            width: AppSpacing.copyTradingV2TraderAvatarSize,
-            height: AppSpacing.copyTradingV2TraderAvatarSize,
+            width: _copyAvatarSize,
+            height: _copyAvatarSize,
             alignment: Alignment.center,
             radius: VitCardRadius.lg,
             variant: VitCardVariant.ghost,
@@ -223,15 +223,15 @@ class _AvatarBadge extends StatelessWidget {
             right: -AppSpacing.dividerHairline,
             bottom: AppSpacing.hairlineStroke,
             child: VitCard(
-              width: AppSpacing.copyTradingV2TraderTierBadgeSize,
-              height: AppSpacing.copyTradingV2TraderTierBadgeSize,
+              width: _copyTierBadgeSize,
+              height: _copyTierBadgeSize,
               alignment: Alignment.center,
               radius: VitCardRadius.lg,
               borderColor: tier.color,
               child: Icon(
                 tier.icon,
                 color: tier.color,
-                size: AppSpacing.copyTradingV2TraderTierBadgeIcon,
+                size: _copyTierBadgeIcon,
               ),
             ),
           ),
@@ -292,7 +292,7 @@ class _DetailsButton extends StatelessWidget {
       onTap: onOpen,
       borderRadius: AppRadii.inputRadius,
       child: VitCard(
-        height: AppSpacing.copyTradingV2DetailsButtonHeight,
+        height: _copyDetailsButtonHeight,
         alignment: Alignment.center,
         variant: VitCardVariant.inner,
         child: Row(

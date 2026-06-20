@@ -22,7 +22,7 @@ class _PositionsTab extends StatelessWidget {
               color: AppColors.text3,
               size: AppSpacing.iconLg,
             ),
-            const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+            const SizedBox(height: AppSpacing.x3),
             Text(
               'Chưa có vị thế',
               style: AppTextStyles.caption.copyWith(
@@ -37,8 +37,7 @@ class _PositionsTab extends StatelessWidget {
       children: [
         for (final position in positions) ...[
           _PositionCard(position: position),
-          if (position != positions.last)
-            const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+          if (position != positions.last) const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -68,7 +67,7 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -108,7 +107,7 @@ class _OrdersTab extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             'Không có lệnh chờ',
             style: AppTextStyles.caption.copyWith(

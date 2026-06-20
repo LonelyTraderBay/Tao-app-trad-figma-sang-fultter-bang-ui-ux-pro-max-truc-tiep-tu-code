@@ -21,7 +21,7 @@ class _BenefitsTab extends StatelessWidget {
             tier: tier,
             unlocked: snapshot.currentLevel >= tier.level,
           ),
-          const SizedBox(height: AppSpacing.profileVipBenefitCardGap),
+          SizedBox(height: VitDensity.compact.pageContentGap),
         ],
         if (nextTier != null) _UpgradeCta(nextTier: nextTier, onTrade: onTrade),
       ],
@@ -64,9 +64,7 @@ class _BenefitTierCard extends StatelessWidget {
                               fontWeight: AppTextStyles.heavy,
                             ),
                           ),
-                          const SizedBox(
-                            height: AppSpacing.profileVipBenefitTitleGap,
-                          ),
+                          const SizedBox(height: AppSpacing.x2),
                           Text(
                             'Volume >= ${_formatUsd(tier.monthlyVolume)}/th\u00E1ng ho\u1EB7c T\u00E0i s\u1EA3n >= ${_formatUsd(tier.assetHold)}',
                             maxLines: 2,
@@ -91,7 +89,7 @@ class _BenefitTierCard extends StatelessWidget {
               ),
             ),
             const Divider(
-              height: AppSpacing.profileVipTableDividerHeight,
+              height: AppSpacing.dividerHairline,
               color: AppColors.divider,
             ),
             Padding(
@@ -105,20 +103,14 @@ class _BenefitTierCard extends StatelessWidget {
                       unlocked: unlocked,
                     ),
                     if (feature != tier.features.last)
-                      const SizedBox(
-                        height: AppSpacing.profileVipBenefitFeatureGap,
-                      ),
+                      const SizedBox(height: AppSpacing.x2),
                   ],
-                  const SizedBox(
-                    height: AppSpacing.profileVipBenefitMetricsGap,
-                  ),
+                  const SizedBox(height: AppSpacing.x3),
                   const Divider(
-                    height: AppSpacing.profileVipTableDividerHeight,
+                    height: AppSpacing.dividerHairline,
                     color: AppColors.divider,
                   ),
-                  const SizedBox(
-                    height: AppSpacing.profileVipBenefitMetricsGap,
-                  ),
+                  const SizedBox(height: AppSpacing.x3),
                   Row(
                     children: [
                       _BenefitMetric(
@@ -217,7 +209,7 @@ class _BenefitMetric extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: AppTextStyles.micro.copyWith(color: _vipMuted)),
-        const SizedBox(height: AppSpacing.profileVipBenefitMetricValueGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           maxLines: 1,
@@ -273,7 +265,7 @@ class _UpgradeCta extends StatelessWidget {
                     fontWeight: AppTextStyles.heavy,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.profileVipUpgradeTextGap),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   'T\u0103ng kh\u1ED1i l\u01B0\u1EE3ng giao d\u1ECBch \u0111\u1EC3 ti\u1EBFt ki\u1EC7m th\u00EAm',
                   maxLines: 2,
@@ -288,7 +280,7 @@ class _UpgradeCta extends StatelessWidget {
             key: VIPPage.tradeCtaKey,
             onPressed: onTrade,
             fullWidth: false,
-            height: AppSpacing.buttonCompact,
+            density: VitDensity.compact,
             padding: AppSpacing.profileVipUpgradeCtaPadding,
             child: Text(
               'Giao d\u1ECBch',

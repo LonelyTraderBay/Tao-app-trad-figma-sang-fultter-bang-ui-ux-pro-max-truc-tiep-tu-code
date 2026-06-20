@@ -25,86 +25,86 @@ class _WalletHero extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
-        padding: AppSpacing.p2pWalletHeroPadding,
+        padding: _p2pWalletHeroPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Tổng tài sản P2P',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.onAccent.withValues(alpha: .82),
-                        fontWeight: AppTextStyles.medium,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tổng tài sản P2P',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.onAccent.withValues(alpha: .82),
+                          fontWeight: AppTextStyles.medium,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      balanceVisible
-                          ? '\$${_formatComma(snapshot.totalUsdValue, 2)}'
-                          : snapshot.privacyMask,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.heroNumber.copyWith(
-                        color: AppColors.onAccent,
-                        fontFeatures: AppTextStyles.tabularFigures,
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        balanceVisible
+                            ? '\$${_formatComma(snapshot.totalUsdValue, 2)}'
+                            : snapshot.privacyMask,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.heroNumber.copyWith(
+                          color: AppColors.onAccent,
+                          fontFeatures: AppTextStyles.tabularFigures,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Material(
-                key: P2PWalletPage.privacyKey,
-                color: AppColors.onAccent.withValues(alpha: .18),
-                shape: const CircleBorder(),
-                child: InkWell(
-                  onTap: onPrivacyToggle,
-                  customBorder: const CircleBorder(),
-                  child: SizedBox(
-                    width: AppSpacing.inputHeight,
-                    height: AppSpacing.inputHeight,
-                    child: Icon(
-                      balanceVisible
-                          ? Icons.visibility_rounded
-                          : Icons.visibility_off_rounded,
-                      color: AppColors.onAccent,
-                      size: AppSpacing.iconSm,
+                const SizedBox(width: AppSpacing.x3),
+                Material(
+                  key: P2PWalletPage.privacyKey,
+                  color: AppColors.onAccent.withValues(alpha: .18),
+                  shape: const CircleBorder(),
+                  child: InkWell(
+                    onTap: onPrivacyToggle,
+                    customBorder: const CircleBorder(),
+                    child: SizedBox(
+                      width: _p2pWalletIconBoxExtent,
+                      height: _p2pWalletIconBoxExtent,
+                      child: Icon(
+                        balanceVisible
+                            ? Icons.visibility_rounded
+                            : Icons.visibility_off_rounded,
+                        color: AppColors.onAccent,
+                        size: AppSpacing.iconSm,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x5),
-          Row(
-            children: [
-              Expanded(
-                child: _HeroActionButton(
-                  key: P2PWalletPage.transferFromMainKey,
-                  label: 'Chuyển từ Main',
-                  icon: Icons.south_west_rounded,
-                  onTap: onTransferFromMain,
-                  filled: false,
+              ],
+            ),
+            const SizedBox(height: AppSpacing.x3),
+            Row(
+              children: [
+                Expanded(
+                  child: _HeroActionButton(
+                    key: P2PWalletPage.transferFromMainKey,
+                    label: 'Chuyển từ Main',
+                    icon: Icons.south_west_rounded,
+                    onTap: onTransferFromMain,
+                    filled: false,
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: _HeroActionButton(
-                  key: P2PWalletPage.transferToMainKey,
-                  label: 'Chuyển về Main',
-                  icon: Icons.north_east_rounded,
-                  onTap: onTransferToMain,
-                  filled: true,
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: _HeroActionButton(
+                    key: P2PWalletPage.transferToMainKey,
+                    label: 'Chuyển về Main',
+                    icon: Icons.north_east_rounded,
+                    onTap: onTransferToMain,
+                    filled: true,
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
           ],
         ),
       ),
@@ -137,7 +137,9 @@ class _HeroActionButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: AppSpacing.inputHeight),
+          constraints: const BoxConstraints(
+            minHeight: _p2pWalletActionMinHeight,
+          ),
           child: Padding(
             padding: AppSpacing.p2pWalletHeroActionPadding,
             child: Center(
@@ -148,9 +150,7 @@ class _HeroActionButton extends StatelessWidget {
                   children: [
                     Icon(
                       icon,
-                      color: filled
-                          ? AppModuleAccents.p2p
-                          : AppColors.onAccent,
+                      color: filled ? AppModuleAccents.p2p : AppColors.onAccent,
                       size: AppSpacing.iconSm,
                     ),
                     const SizedBox(width: AppSpacing.x2),

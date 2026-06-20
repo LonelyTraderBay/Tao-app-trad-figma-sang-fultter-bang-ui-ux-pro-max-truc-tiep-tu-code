@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,6 +22,11 @@ const _targetBackground = AppColors.bg;
 const _targetPrimary = AppColors.primary;
 const _targetGreen = AppColors.buy;
 const _targetRed = AppColors.sell;
+const double _targetFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _targetNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _targetSummaryIconExtent = AppSpacing.buttonCompact;
 
 class TargetMarketDefinitionPage extends ConsumerWidget {
   const TargetMarketDefinitionPage({
@@ -42,10 +47,10 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getTargetMarketDefinition(productId: productId ?? 'prod-1');
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? _targetFramedScrollClearance
+            : _targetNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -64,35 +69,30 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
+                  bottomInset: scrollEndClearance,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: AppSpacing.tradeBotCardGap,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _SummaryCard(snapshot: snapshot),
                       const VitSectionHeader(
                         title: 'Target Market Criteria',
                         variant: VitSectionHeaderVariant.accentBar,
                       ),
-                      for (final dimension in snapshot.dimensions) ...[
+                      for (final dimension in snapshot.dimensions)
                         _DimensionCard(dimension: dimension),
-                        if (dimension != snapshot.dimensions.last)
-                          const SizedBox(height: AppSpacing.tradeBotCardGap),
-                      ],
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
+                        density: VitDensity.compact,
                         child: VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Target market review',
                           message:
                               'Suitable audience, exclusions, knowledge level, capital capacity and distribution limits are reviewed before product action.',
                           contractId: 'target-market-review',
+                          density: VitDensity.compact,
                         ),
                       ),
                       const TradeBodyReviewSection(
@@ -127,23 +127,23 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: VitDensity.compact.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            width: 48,
-            height: 48,
+            width: _targetSummaryIconExtent,
+            height: _targetSummaryIconExtent,
             alignment: Alignment.center,
             borderColor: _targetPrimary.withValues(alpha: .18),
             child: Icon(
               Icons.gps_fixed_rounded,
               color: _targetPrimary,
-              size: AppSpacing.tradeBotCardIcon,
+              size: AppSpacing.iconMd,
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,10 +156,9 @@ class _SummaryCard extends StatelessWidget {
                   style: AppTextStyles.base.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'High-risk product requiring advanced knowledge and '
                   'significant capital.',
@@ -168,7 +167,6 @@ class _SummaryCard extends StatelessWidget {
                   style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text3,
                     fontWeight: AppTextStyles.normal,
-                    height: AppSpacing.tradeBotLineHeightBody,
                   ),
                 ),
               ],
@@ -189,7 +187,7 @@ class _DimensionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: TargetMarketDefinitionPage.dimensionKey(dimension.id),
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -198,17 +196,16 @@ class _DimensionCard extends StatelessWidget {
             style: AppTextStyles.control.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          const SizedBox(height: AppSpacing.x2),
           _CriteriaGroup(
             label: 'Suitable for:',
             color: _targetGreen,
             icon: Icons.check_circle_outline,
             values: dimension.suitableFor,
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: AppSpacing.x2),
           _CriteriaGroup(
             label: 'Not suitable for:',
             color: _targetRed,
@@ -239,34 +236,26 @@ class _CriteriaGroup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.tradeBotLabelGap),
+        Text(label, style: AppTextStyles.micro.copyWith(color: color)),
+        const SizedBox(height: AppSpacing.x1),
         for (final value in values) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: color, size: AppSpacing.tradeBotSmallIcon),
-              const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+              Icon(icon, color: color, size: AppSpacing.iconSm),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   value,
                   style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.normal,
-                    height: AppSpacing.tradeBotLineHeightCompact,
                   ),
                 ),
               ),
             ],
           ),
-          if (value != values.last)
-            const SizedBox(height: AppSpacing.tradeBotTinyGap),
+          if (value != values.last) const SizedBox(height: AppSpacing.x1),
         ],
       ],
     );

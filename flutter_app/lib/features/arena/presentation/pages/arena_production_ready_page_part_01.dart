@@ -10,11 +10,13 @@ class _ArenaProductionReadyPageState
         .watch(arenaReadModelControllerProvider)
         .getArenaProductionReady();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollEndPadding =
+        navClearance +
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -39,10 +41,11 @@ class _ArenaProductionReadyPageState
                   child: SingleChildScrollView(
                     key: ArenaProductionReadyPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
-                      padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      density: VitDensity.compact,
                       children: [
                         _ProductionHero(),
                         _SectionTabs(
@@ -90,7 +93,7 @@ class _ProductionHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.primary,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: VitDensity.compact.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -109,15 +112,15 @@ class _ProductionHero extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.primary,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaProductionHeroLineHeight,
+                    height: 1.18,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'QA/Dev handoff dashboard. Internal-only release checks, not an end-user production claim.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaProductionBodyLineHeight,
+                    height: 1.28,
                   ),
                 ),
               ],
@@ -171,52 +174,14 @@ class _SectionTabPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: ArenaProductionReadyPage.tabKey(config.id),
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.arenaProductionTabHeight,
-          child: Material(
-            color: active
-                ? AppColors.primary.withValues(alpha: .14)
-                : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: active
-                    ? AppColors.primary.withValues(alpha: .55)
-                    : AppColors.cardBorder,
-                width: active ? 1.5 : 1,
-              ),
-              borderRadius: AppRadii.inputRadius,
-            ),
-            child: Padding(
-              padding: AppSpacing.arenaHorizontalPaddingX4,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    config.icon,
-                    color: active ? AppColors.primary : AppColors.text2,
-                    size: AppSpacing.arenaProductionTabIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    config.label,
-                    style: AppTextStyles.micro.copyWith(
-                      color: active ? AppColors.primary : AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitStatusPill(
+      key: ArenaProductionReadyPage.tabKey(config.id),
+      label: config.label,
+      icon: config.icon,
+      status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
+      size: VitStatusPillSize.sm,
+      outline: !active,
+      onTap: onTap,
     );
   }
 }
@@ -309,26 +274,22 @@ class _ScreensSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      density: VitDensity.compact,
       children: [
         const VitModuleSectionHeader(
           title: 'A - Canonical Screens (vFinal)',
           accentColor: AppColors.accent,
         ),
-        const SizedBox(height: AppSpacing.x4),
         Text(
           '7 core screens đã được consolidate thành bản vFinal. Mỗi screen đã audit: trust-first, accessibility, states đầy đủ.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaProductionBodyLineHeight,
+            height: 1.28,
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
-        for (final screen in screens) ...[
+        for (final screen in screens)
           _ProductionScreenCard(screen: screen, onRoute: onRoute),
-          if (screen != screens.last) const SizedBox(height: AppSpacing.x4),
-        ],
       ],
     );
   }
@@ -345,10 +306,7 @@ class _ProductionScreenCard extends StatelessWidget {
     return VitCard(
       key: ArenaProductionReadyPage.screenKey(screen.name),
       onTap: () => onRoute(screen.route),
-      padding: AppSpacing.arenaPaddingX4,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.arenaProductionScreenMinHeight,
-      ),
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -364,7 +322,7 @@ class _ProductionScreenCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.body.copyWith(
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.arenaProductionTitleLineHeight,
+                          height: 1.14,
                         ),
                       ),
                     ),
@@ -382,7 +340,7 @@ class _ProductionScreenCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             screen.route,
             style: AppTextStyles.micro.copyWith(
@@ -391,15 +349,15 @@ class _ProductionScreenCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             screen.notes,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.arenaProductionBodyLineHeight,
+              height: 1.28,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -423,24 +381,22 @@ class _StatesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final states = ArenaProductionScreenState.values;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      density: VitDensity.compact,
       children: [
         const VitModuleSectionHeader(
           title: 'B - State Matrix',
           accentColor: AppColors.warn,
         ),
-        const SizedBox(height: AppSpacing.x4),
         Text(
           'Lưới states cho từng core screen. Chỉ hiển thị states thực sự áp dụng.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaProductionBodyLineHeight,
+            height: 1.28,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: AppSpacing.arenaPaddingX3,
+          density: VitDensity.compact,
           child: Wrap(
             spacing: AppSpacing.x3,
             runSpacing: AppSpacing.x2,
@@ -450,10 +406,9 @@ class _StatesSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final screen in screens) ...[
+        for (final screen in screens)
           VitCard(
-            padding: AppSpacing.arenaPaddingX3,
+            density: VitDensity.compact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -463,7 +418,7 @@ class _StatesSection extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x2),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x2,
@@ -478,8 +433,6 @@ class _StatesSection extends StatelessWidget {
               ],
             ),
           ),
-          if (screen != screens.last) const SizedBox(height: AppSpacing.x3),
-        ],
       ],
     );
   }
@@ -493,26 +446,21 @@ class _FlowsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      density: VitDensity.compact,
       children: [
         const VitModuleSectionHeader(
           title: 'C - End-to-End Flows',
           accentColor: AppColors.primary,
         ),
-        const SizedBox(height: AppSpacing.x4),
         Text(
           'Các flow chính có prototype link thật. Tap step để navigate bằng route canonical.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaProductionBodyLineHeight,
+            height: 1.28,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final flow in flows) ...[
-          _FlowCard(flow: flow, onRoute: onRoute),
-          if (flow != flows.last) const SizedBox(height: AppSpacing.x4),
-        ],
+        for (final flow in flows) _FlowCard(flow: flow, onRoute: onRoute),
       ],
     );
   }

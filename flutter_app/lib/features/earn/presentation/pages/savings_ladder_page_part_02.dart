@@ -20,7 +20,7 @@ class _RungTile extends StatelessWidget {
       key: SavingsLadderPage.rungKey(rung.id),
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX3,
+      density: VitDensity.compact,
       child: Row(
         children: [
           SizedBox.square(
@@ -123,7 +123,7 @@ class _AddRungButton extends StatelessWidget {
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary30,
-      padding: AppSpacing.earnVerticalPaddingX4,
+      density: VitDensity.compact,
       onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -165,7 +165,7 @@ class _AllocationStatus extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: color.withValues(alpha: .18),
-      padding: AppSpacing.earnPaddingX3,
+      density: VitDensity.compact,
       child: Row(
         children: [
           Expanded(
@@ -182,7 +182,7 @@ class _AllocationStatus extends StatelessWidget {
             child: ClipRRect(
               borderRadius: AppRadii.pillRadius,
               child: LinearProgressIndicator(
-                minHeight: AppSpacing.savingsLadderProgressHeight,
+                minHeight: AppSpacing.x1,
                 value: progress,
                 color: color,
                 backgroundColor: AppColors.surface3,
@@ -216,7 +216,7 @@ class _TimelineTab extends StatelessWidget {
       key: SavingsLadderPage.timelineKey,
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: AppSpacing.x5,
+      gap: VitContentGap.tight,
       children: [
         const _SectionTitle(label: 'Lịch đáo hạn'),
         _TimelineChart(rungs: sorted),
@@ -224,7 +224,7 @@ class _TimelineTab extends StatelessWidget {
         VitPageContent(
           padding: VitContentPadding.none,
           fullBleed: true,
-          customGap: AppSpacing.x3,
+          gap: VitContentGap.tight,
           children: [for (final rung in sorted) _MaturityTile(rung: rung)],
         ),
         const _SectionTitle(label: 'Dự kiến dòng tiền'),
@@ -245,7 +245,7 @@ class _TimelineChart extends StatelessWidget {
     final maxDays = rungs.map((rung) => rung.lockDays).reduce(math.max);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -255,7 +255,7 @@ class _TimelineChart extends StatelessWidget {
                 'Hôm nay',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const Spacer(),
+              const Expanded(child: SizedBox.shrink()),
               Text(
                 '${maxDays}D',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -310,7 +310,7 @@ class _TimelineBar extends StatelessWidget {
           child: Stack(
             children: [
               SizedBox(
-                height: AppSpacing.savingsLadderTimelineBarHeight,
+                height: _timelineBarHeight,
                 child: Material(
                   color: AppColors.surface3,
                   borderRadius: AppRadii.smRadius,
@@ -319,7 +319,7 @@ class _TimelineBar extends StatelessWidget {
               FractionallySizedBox(
                 widthFactor: widthFactor,
                 child: SizedBox(
-                  height: AppSpacing.savingsLadderTimelineBarHeight,
+                  height: _timelineBarHeight,
                   child: Material(
                     color: color.withValues(alpha: .18),
                     shape: RoundedRectangleBorder(
@@ -365,12 +365,12 @@ class _MaturityTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX3,
+      density: VitDensity.compact,
       child: Row(
         children: [
           SizedBox(
             width: AppSpacing.savingsLadderMaturityBadgeWidth,
-            height: AppSpacing.savingsLadderMaturityBadgeHeight,
+            height: _maturityBadgeHeight,
             child: Material(
               color: color.withValues(alpha: .12),
               shape: RoundedRectangleBorder(
@@ -444,7 +444,7 @@ class _CashFlowCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.earnPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         children: [
           for (final rung in rungs) ...[
@@ -503,7 +503,7 @@ class _AnalysisTab extends StatelessWidget {
       key: SavingsLadderPage.analysisKey,
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: AppSpacing.x5,
+      gap: VitContentGap.tight,
       children: [
         _MetricGrid(
           metrics: [

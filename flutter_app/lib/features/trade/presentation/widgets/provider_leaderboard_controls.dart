@@ -10,6 +10,7 @@ class _SurvivorshipWarning extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       padding: AppSpacing.providerLeaderboardWarningPadding,
+      density: VitDensity.compact,
       borderColor: _leaderWarningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,7 +20,7 @@ class _SurvivorshipWarning extends StatelessWidget {
             color: _leaderWarningText,
             size: AppSpacing.providerLeaderboardWarningIcon,
           ),
-          const SizedBox(width: AppSpacing.providerLeaderboardWarningGap),
+          const SizedBox(width: _leaderSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,18 +30,16 @@ class _SurvivorshipWarning extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: _leaderWarningText,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.providerLeaderboardLineHeightFlat,
+                    height: _leaderLineFlat,
                   ),
                 ),
-                const SizedBox(
-                  height: AppSpacing.providerLeaderboardWarningTitleGap,
-                ),
+                const SizedBox(height: _leaderTinySpace),
                 Text(
                   snapshot.warningText,
                   style: AppTextStyles.micro.copyWith(
                     color: _leaderWarningText,
                     fontWeight: AppTextStyles.medium,
-                    height: AppSpacing.providerLeaderboardLineHeightReadable,
+                    height: _leaderLineReadable,
                   ),
                 ),
               ],
@@ -67,8 +66,9 @@ class _SortTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.inputHeight,
+      height: _leaderControlExtent,
       padding: AppSpacing.zeroInsets,
+      density: VitDensity.compact,
       child: VitTabBar(
         activeKey: activeId,
         onChanged: onChanged,
@@ -106,12 +106,10 @@ class _RiskFilters extends StatelessWidget {
           'Risk Level',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.providerLeaderboardLineHeightFlat,
+            height: _leaderLineFlat,
           ),
         ),
-        const SizedBox(
-          height: AppSpacing.providerLeaderboardFiltersLabelGap,
-        ),
+        const SizedBox(height: _leaderTinySpace),
         Row(
           children: [
             for (final filter in filters) ...[
@@ -167,8 +165,9 @@ class _VerifiedToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: ProviderLeaderboardPage.verifiedToggleKey,
-      height: AppSpacing.inputHeight - AppSpacing.x1,
+      height: _leaderControlExtent,
       padding: AppSpacing.providerLeaderboardVerifiedPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       borderColor: AppColors.cardBorder,
       onTap: () => onChanged(!checked),
@@ -186,7 +185,7 @@ class _VerifiedToggle extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.providerLeaderboardLineHeightFlat,
+                height: _leaderLineFlat,
               ),
             ),
           ),

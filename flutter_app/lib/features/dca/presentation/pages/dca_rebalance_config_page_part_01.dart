@@ -8,7 +8,7 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.dcaContentPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -17,7 +17,7 @@ class _InfoBanner extends StatelessWidget {
           Expanded(
             child: VitPageContent(
               padding: VitContentPadding.none,
-              customGap: AppSpacing.x2,
+              gap: VitContentGap.tight,
               fullBleed: true,
               children: [
                 Text(
@@ -31,7 +31,7 @@ class _InfoBanner extends StatelessWidget {
                   'Duy trì tỷ lệ phân bổ tài sản theo mục tiêu. Hệ thống tự động mua/bán khi danh mục lệch khỏi ngưỡng.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.dcaRebalanceBodyLineHeight,
+                    height: _dcaRebalanceBodyLineHeight,
                   ),
                 ),
               ],
@@ -60,7 +60,7 @@ class _AllocationSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.dcaContentPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -75,7 +75,7 @@ class _AllocationSummary extends StatelessWidget {
               enabled: targets.length < 4,
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               SizedBox(
@@ -91,7 +91,7 @@ class _AllocationSummary extends StatelessWidget {
                           '${totalPercent.toStringAsFixed(0)}%',
                           style: AppTextStyles.sectionTitle.copyWith(
                             color: AppColors.text1,
-                            height: AppSpacing.dcaRebalanceTightLineHeight,
+                            height: _dcaRebalanceTightLineHeight,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x1),
@@ -106,7 +106,7 @@ class _AllocationSummary extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x5),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
                   children: targets
@@ -121,7 +121,7 @@ class _AllocationSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           DecoratedBox(
             decoration: ShapeDecoration(
               color: _valid ? AppColors.buy10 : AppColors.sell10,
@@ -197,7 +197,7 @@ class _TargetList extends StatelessWidget {
       children: targets
           .map(
             (target) => Padding(
-              padding: AppSpacing.dcaBottomPaddingX4,
+              padding: AppSpacing.dcaBottomPaddingX3,
               child: _TargetCard(
                 target: target,
                 canRemove: targets.length > 2,
@@ -241,7 +241,7 @@ class _TargetCard extends StatelessWidget {
             child: ColoredBox(color: accent),
           ),
           Padding(
-            padding: AppSpacing.dcaContentPadding,
+            padding: VitDensity.compact.cardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -299,7 +299,7 @@ class _TargetCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x5),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   'Tỷ lệ mục tiêu',
                   style: AppTextStyles.caption.copyWith(
@@ -316,7 +316,7 @@ class _TargetCard extends StatelessWidget {
                   accent: accent,
                   onChanged: onPercentChanged,
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x2),
                 DecoratedBox(
                   decoration: ShapeDecoration(
                     color: AppColors.surface2,
@@ -328,19 +328,24 @@ class _TargetCard extends StatelessWidget {
                     padding: AppSpacing.dcaPrimaryChipPadding,
                     child: Row(
                       children: [
-                        Text(
-                          'Dung sai',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text3,
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Text(
+                                'Dung sai',
+                                style: AppTextStyles.caption.copyWith(
+                                  color: AppColors.text3,
+                                ),
+                              ),
+                              const SizedBox(width: AppSpacing.x2),
+                              const Icon(
+                                Icons.help_outline_rounded,
+                                size: AppSpacing.dcaRebalanceIconXs,
+                                color: AppColors.text3,
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.x2),
-                        const Icon(
-                          Icons.help_outline_rounded,
-                          size: AppSpacing.dcaRebalanceIconXs,
-                          color: AppColors.text3,
-                        ),
-                        const Spacer(),
                         _IconBadgeButton(
                           icon: Icons.remove_rounded,
                           onTap: () => onToleranceChanged(target.tolerance - 1),
@@ -394,7 +399,7 @@ class _StrategySection extends StatelessWidget {
           icon: Icons.track_changes_rounded,
           title: 'Chiến lược',
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         ...options.map(
           (option) => Padding(
             padding: AppSpacing.dcaBottomPaddingX3,
@@ -451,7 +456,7 @@ class _StrategyOptionTile extends StatelessWidget {
                 : null,
           ),
           child: Padding(
-            padding: AppSpacing.dcaContentPadding,
+            padding: VitDensity.compact.cardPadding,
             child: Row(
               children: [
                 _AccentIcon(

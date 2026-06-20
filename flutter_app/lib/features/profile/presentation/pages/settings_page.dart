@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -57,11 +58,13 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     _initializeFrom(snapshot);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.settingsBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.settingsBottomInsetNative) +
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.x7 +
+                  AppSpacing.x6 +
+                  AppSpacing.x6
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -83,38 +86,25 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 child: SingleChildScrollView(
                   key: SettingsPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.settingsScrollPadding(bottomInset),
+                  padding: AppSpacing.settingsScrollPadding(scrollClearance),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       _SectionTitle(label: 'GIAO DI\u1EC6N'),
-                      const SizedBox(
-                        height: AppSpacing.settingsSectionTitleGap,
-                      ),
                       _CurrencyCard(
                         currencies: snapshot.currencyOptions,
                         selectedCurrency: _selectedCurrency,
                         onChanged: _setCurrency,
                       ),
-                      const SizedBox(
-                        height: AppSpacing.settingsCurrencyToLanguageGap,
-                      ),
                       _SectionTitle(label: 'NG\u00D4N NG\u1EEE'),
-                      const SizedBox(
-                        height: AppSpacing.settingsSectionTitleGap,
-                      ),
                       _LanguageCard(
                         languages: snapshot.languages,
                         selectedId: _selectedLanguageId,
                         onChanged: _setLanguage,
                       ),
-                      const SizedBox(height: AppSpacing.settingsSectionGap),
                       _SectionTitle(label: 'B\u1EA2O M\u1EACT GIAO D\u1ECACH'),
-                      const SizedBox(
-                        height: AppSpacing.settingsSectionTitleGap,
-                      ),
                       if (snapshot.tradeSecurity.isEmpty)
                         const VitEmptyState(
                           title:
@@ -128,13 +118,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           rows: snapshot.tradeSecurity,
                           toggles: _toggles,
                           onToggle: _setToggle,
-                          rowHeight: AppSpacing.settingsTradeSecurityRowHeight,
                         ),
-                      const SizedBox(height: AppSpacing.settingsSectionGap),
                       _SectionTitle(label: 'TH\u00D4NG B\u00C1O'),
-                      const SizedBox(
-                        height: AppSpacing.settingsSectionTitleGap,
-                      ),
                       if (snapshot.notifications.isEmpty)
                         const VitEmptyState(
                           title: 'Ch\u01B0a c\u00F3 th\u00F4ng b\u00E1o',
@@ -147,11 +132,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           rows: snapshot.notifications,
                           toggles: _toggles,
                           onToggle: _setToggle,
-                          rowHeight: AppSpacing.settingsNotificationRowHeight,
                         ),
-                      const SizedBox(
-                        height: AppSpacing.settingsNotificationsToInfoGap,
-                      ),
                       _AppInfoCard(rows: snapshot.appInfo),
                     ],
                   ),

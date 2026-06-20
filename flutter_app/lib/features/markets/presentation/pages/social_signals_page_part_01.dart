@@ -21,7 +21,7 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : 20);
+        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -50,8 +50,7 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                     key: SocialSignalsPage.contentKey,
                     padding: AppSpacing.marketScrollPadding(bottomInset),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.marketSocialSectionGap,
+                      density: VitDensity.compact,
                       children: [
                         const _RiskDisclaimerCard(),
                         if (_tab == 'signals') ...[
@@ -161,7 +160,7 @@ class _SocialSignalsTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketSocialTabsHeight,
+        height: VitDensity.compact.controlHeight,
         child: Column(
           children: [
             Expanded(
@@ -232,13 +231,13 @@ class _UnderlinedTab extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.medium,
-                    height: AppSpacing.marketLineHeightTight,
+                    height: 1,
                   ),
                 ),
               ),
             ),
             SizedBox(
-              height: AppSpacing.marketSocialTabIndicatorHeight,
+              height: AppSpacing.dividerHairline,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 child: const ColoredBox(color: _marketPrimary),
@@ -258,7 +257,7 @@ class _RiskDisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.marketSocialDisclaimerPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -267,7 +266,7 @@ class _RiskDisclaimerCard extends StatelessWidget {
             child: Icon(
               Icons.shield_outlined,
               color: AppColors.warn,
-              size: AppSpacing.marketOverviewMoverHeaderIcon,
+              size: AppSpacing.x4,
             ),
           ),
           const SizedBox(width: AppSpacing.marketSocialGap),
@@ -276,7 +275,7 @@ class _RiskDisclaimerCard extends StatelessWidget {
               'Tín hiệu từ cộng đồng chỉ mang tính tham khảo. Không phải khuyến nghị đầu tư. Luôn tự nghiên cứu và quản lý rủi ro.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.marketLineHeightReadable,
+                height: 1.35,
               ),
             ),
           ),
@@ -414,18 +413,17 @@ class _FilterChipButton extends StatelessWidget {
                 : AppColors.transparent,
           ),
         ),
-        child: SizedBox(
-          height: AppSpacing.marketSocialFilterHeight,
-          child: Padding(
-            padding: AppSpacing.marketSocialFilterPadding,
-            child: Center(
-              child: Text(
-                label,
-                style: AppTextStyles.captionSm.copyWith(
-                  color: active ? color : AppColors.text3,
-                  fontWeight: AppTextStyles.medium,
-                  height: AppSpacing.marketLineHeightTight,
-                ),
+        child: Padding(
+          padding: AppSpacing.marketSocialFilterPadding.add(
+            const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: AppTextStyles.captionSm.copyWith(
+                color: active ? color : AppColors.text3,
+                fontWeight: AppTextStyles.medium,
+                height: 1,
               ),
             ),
           ),
@@ -457,18 +455,17 @@ class _CategoryChip extends StatelessWidget {
             ? _marketPrimary.withValues(alpha: .12)
             : AppColors.transparent,
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-        child: SizedBox(
-          height: AppSpacing.marketSocialCategoryHeight,
-          child: Padding(
-            padding: AppSpacing.marketSocialFilterPadding,
-            child: Center(
-              child: Text(
-                label,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? _marketPrimary : AppColors.text3,
-                  fontWeight: AppTextStyles.medium,
-                  height: AppSpacing.marketLineHeightTight,
-                ),
+        child: Padding(
+          padding: AppSpacing.marketSocialFilterPadding.add(
+            const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: active ? _marketPrimary : AppColors.text3,
+                fontWeight: AppTextStyles.medium,
+                height: 1,
               ),
             ),
           ),

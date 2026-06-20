@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -55,13 +56,11 @@ class _ComplaintsHandlingPageState
         .watch(tradeReadModelControllerProvider)
         .getComplaintsHandling();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.complaintsHandlingBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.complaintsHandlingBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -81,34 +80,33 @@ class _ComplaintsHandlingPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ComplaintsHandlingPage.contentKey,
-                  padding: AppSpacing.complaintsHandlingScrollPadding(
-                    bottomInset,
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.tradeBotCardGap,
+                    AppSpacing.contentPad,
+                    scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     children: [
                       const _RightsNotice(),
-                      const SizedBox(
-                        height: AppSpacing.complaintsHandlingReviewGap,
-                      ),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.cardPaddingCompact,
+                        density: VitDensity.compact,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
+                              density: VitDensity.compact,
                               title: 'Complaint process review',
                               message:
                                   'Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.',
                               contractId: 'complaints-handling-review',
                             ),
-                            SizedBox(
-                              height: AppSpacing.complaintsHandlingGridGap,
-                            ),
+                            SizedBox(height: AppSpacing.x2),
                             VitStatusPill(
                               label: 'Regulated process',
                               status: VitStatusPillStatus.warning,
@@ -117,26 +115,14 @@ class _ComplaintsHandlingPageState
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.complaintsHandlingStatsGap,
-                      ),
                       _StatsRow(snapshot: snapshot),
-                      const SizedBox(
-                        height: AppSpacing.complaintsHandlingPrimaryGap,
-                      ),
                       const _SubmitComplaintButton(),
-                      const SizedBox(
-                        height: AppSpacing.complaintsHandlingTabGap,
-                      ),
                       _Tabs(
                         active: _tab,
                         onChanged: (tab) => setState(() => _tab = tab),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.complaintsHandlingTabGap,
-                      ),
                       VitPageSection(
-                        customGap: 0,
+                        density: VitDensity.compact,
                         children: [
                           if (_tab == _ComplaintsTab.overview)
                             _OverviewContent(snapshot: snapshot),

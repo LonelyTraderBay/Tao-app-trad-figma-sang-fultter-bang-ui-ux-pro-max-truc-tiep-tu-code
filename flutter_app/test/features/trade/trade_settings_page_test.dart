@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTradeSettings(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -74,6 +76,24 @@ void main() {
     expect(find.text('Xác nhận lệnh'), findsOneWidget);
     expect(find.text('Phản hồi'), findsOneWidget);
     expect(find.text('Hiển thị'), findsOneWidget);
+  });
+
+  testWidgets('SC-052 first viewport reaches order defaults controls', (
+    tester,
+  ) async {
+    await pumpTradeSettings(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-052 TradeSettingsPage',
+      semanticLabel: 'SC-052 TradeSettingsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(TradeSettingsPage.orderTypeKey('market')),
+      targetLabel: 'the first trade settings order type control',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-052 order defaults and display chips update locally', (

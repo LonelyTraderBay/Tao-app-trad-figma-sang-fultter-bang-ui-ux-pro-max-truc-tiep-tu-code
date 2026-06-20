@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpMarketAnalytics(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -68,6 +70,25 @@ void main() {
     expect(find.text('Long/Short Ratio'), findsWidgets);
     expect(find.text('Top Traders'), findsOneWidget);
     expect(find.text('Funding Rate'), findsOneWidget);
+  });
+
+  testWidgets('SC-089 first viewport reaches market data card', (tester) async {
+    await pumpMarketAnalytics(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'MarketDataAnalyticsPage',
+      semanticLabel: 'SC-089 MarketDataAnalyticsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Open Interest'),
+      minVisibleHeight: 18,
+      targetLabel: 'first market data card',
+      reason:
+          'Market analytics must show the first data card above bottom '
+          'navigation after the pair selector, risk review, and tabs.',
+    );
   });
 
   testWidgets('SC-089 local tabs switch to liquidations and sentiment', (

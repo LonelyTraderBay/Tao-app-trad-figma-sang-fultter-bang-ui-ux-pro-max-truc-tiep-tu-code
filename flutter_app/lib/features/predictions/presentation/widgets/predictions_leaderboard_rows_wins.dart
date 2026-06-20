@@ -15,24 +15,22 @@ class _RankingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.predictionLeaderboardRankingRowHeight,
+      height: _boardRankRowExtent,
       child: Stack(
         children: [
           Padding(
-            padding: AppSpacing.predictionLeaderboardRankingPadding,
+            padding: const EdgeInsets.symmetric(horizontal: _boardSpace),
             child: Row(
               children: [
                 SizedBox(
-                  width: AppSpacing.predictionLeaderboardRankWidth,
+                  width: _boardRankSlot,
                   child: _RankBadge(rank: trader.rank),
                 ),
                 Expanded(
                   child: Row(
                     children: [
                       Text(trader.avatar, style: AppTextStyles.avatarMd),
-                      const SizedBox(
-                        width: AppSpacing.predictionLeaderboardTraderGap,
-                      ),
+                      const SizedBox(width: _boardSpace),
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +58,7 @@ class _RankingRow extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: AppSpacing.predictionLeaderboardMetricWidth,
+                  width: _boardMetricSlot,
                   child: Text(
                     metric == PredictionLeaderboardMetric.pnl
                         ? _formatSignedCompact(trader.pnl)
@@ -76,7 +74,7 @@ class _RankingRow extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: AppSpacing.predictionLeaderboardWinRateWidth,
+                  width: _boardWinRateSlot,
                   child: Text(
                     '${trader.winRate}%',
                     textAlign: TextAlign.right,
@@ -122,7 +120,7 @@ class _RankBadge extends StatelessWidget {
       color: color.withValues(alpha: .15),
       shape: const CircleBorder(),
       child: SizedBox.square(
-        dimension: AppSpacing.predictionLeaderboardRankBadge,
+        dimension: _boardBadgeExtent,
         child: Center(
           child: Text(
             '$rank',
@@ -163,10 +161,14 @@ class _BiggestWins extends StatelessWidget {
     return VitPageSection(
       label: 'Biggest Wins',
       accentColor: AppColors.buy,
+      density: VitDensity.compact,
       children: [
         Text(
           'Top single-trade profits this period',
-          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text3,
+            height: _boardLineTight,
+          ),
         ),
         for (final trader in snapshot.biggestWins)
           _BiggestWinCard(snapshot: snapshot, trader: trader),
@@ -191,22 +193,23 @@ class _BiggestWinCard extends StatelessWidget {
           ? null
           : () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
       borderColor: AppColors.transparent,
-      padding: AppSpacing.predictionLeaderboardWinCardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
           Material(
             color: AppColors.buy10,
             borderRadius: AppRadii.cardRadius,
             child: const SizedBox.square(
-              dimension: AppSpacing.predictionLeaderboardWinIconBox,
+              dimension: _boardWinTile,
               child: Icon(
                 Icons.emoji_events_outlined,
                 color: AppColors.buy,
-                size: AppSpacing.predictionLeaderboardWinIcon,
+                size: AppSpacing.x4,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.predictionLeaderboardWinGap),
+          const SizedBox(width: _boardSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,9 +217,7 @@ class _BiggestWinCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(trader.avatar, style: AppTextStyles.avatarSm),
-                    const SizedBox(
-                      width: AppSpacing.predictionLeaderboardWinAvatarGap,
-                    ),
+                    const SizedBox(width: _boardTinySpace),
                     Flexible(
                       child: Text(
                         trader.user,
@@ -230,9 +231,7 @@ class _BiggestWinCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionLeaderboardWinMarketGap,
-                ),
+                const SizedBox(height: _boardTinySpace),
                 Row(
                   children: [
                     Flexible(
@@ -248,13 +247,11 @@ class _BiggestWinCard extends StatelessWidget {
                       ),
                     ),
                     if (event != null) ...[
-                      const SizedBox(
-                        width: AppSpacing.predictionLeaderboardWinMarketGap,
-                      ),
+                      const SizedBox(width: _boardTinySpace),
                       const Icon(
                         Icons.arrow_outward_rounded,
                         color: _predictionPrimary,
-                        size: AppSpacing.predictionLeaderboardWinMarketArrow,
+                        size: AppSpacing.x3,
                       ),
                     ],
                   ],

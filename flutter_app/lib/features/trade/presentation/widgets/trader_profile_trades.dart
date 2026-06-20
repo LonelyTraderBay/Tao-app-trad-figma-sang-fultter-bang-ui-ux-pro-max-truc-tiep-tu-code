@@ -7,13 +7,11 @@ class _TradesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        for (final trade in trades) ...[
-          _TradeCard(trade: trade),
-          if (trade != trades.last) const SizedBox(height: AppSpacing.x3),
-        ],
-      ],
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
+      children: [for (final trade in trades) _TradeCard(trade: trade)],
     );
   }
 }
@@ -28,7 +26,6 @@ class _TradeCard extends StatelessWidget {
     final isProfit = trade.pnl >= 0;
     final sideColor = trade.side == 'long' ? _profileGreen : _profileRed;
     return _Panel(
-      padding: AppSpacing.traderProfileTradeCardPadding,
       child: Column(
         children: [
           Row(
@@ -38,41 +35,43 @@ class _TradeCard extends StatelessWidget {
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               _MiniBadge(label: trade.side.toUpperCase(), color: sideColor),
               if (trade.status == 'open') ...[
-                const SizedBox(width: AppSpacing.x2 + AppSpacing.x1),
+                const SizedBox(width: AppSpacing.x2),
                 const _MiniBadge(label: 'OPEN', color: _profilePrimary),
               ],
-              const Spacer(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    _signedUsd(trade.pnl),
-                    style: AppTextStyles.caption.copyWith(
-                      color: isProfit ? _profileGreen : _profileRed,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                      height: AppSpacing.tradeBotLineHeightTight,
-                    ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        _signedUsd(trade.pnl),
+                        style: AppTextStyles.caption.copyWith(
+                          color: isProfit ? _profileGreen : _profileRed,
+                          fontWeight: AppTextStyles.bold,
+                          fontFeatures: AppTextStyles.tabularFigures,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        '${trade.pnlPct >= 0 ? '+' : ''}${trade.pnlPct.toStringAsFixed(2)}%',
+                        style: AppTextStyles.micro.copyWith(
+                          color: isProfit ? _profileGreen : _profileRed,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: AppSpacing.traderProfileTinyGap),
-                  Text(
-                    '${trade.pnlPct >= 0 ? '+' : ''}${trade.pnlPct.toStringAsFixed(2)}%',
-                    style: AppTextStyles.micro.copyWith(
-                      color: isProfit ? _profileGreen : _profileRed,
-                      height: AppSpacing.tradeBotLineHeightTight,
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -92,15 +91,12 @@ class _TradeCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Text(
                 trade.time,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.tradeBotLineHeightTight,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -120,10 +116,7 @@ class _TradePrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          height: AppSpacing.tradeBotLineHeightTight,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         children: [
           TextSpan(text: '$label '),
           TextSpan(
@@ -131,7 +124,6 @@ class _TradePrice extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],

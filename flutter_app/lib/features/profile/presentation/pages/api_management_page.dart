@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -60,12 +61,13 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
     _initializeFrom(snapshot);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome +
-                  AppSpacing.profileApiBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.profileApiBottomInsetNative) +
+                  AppSpacing.x7 +
+                  AppSpacing.x6 +
+                  AppSpacing.x6
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -95,57 +97,40 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
                 child: SingleChildScrollView(
                   key: ApiManagementPage.contentKey,
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.profileApiScrollPadding(bottomInset),
+                  padding: AppSpacing.profileApiScrollPadding(scrollClearance),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.profileApiContentGap,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
-                      VitCard(
-                        padding: EdgeInsets.zero,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Review API access',
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review API access',
+                        message:
+                            'Ki\u1EC3m tra quy\u1EC1n giao d\u1ECBch, IP whitelist, secret v\u00E0 key \u0111ang b\u1EADt tr\u01B0\u1EDBc khi ti\u1EBFp t\u1EE5c.',
+                        contractId:
+                            'Active keys: ${_keys.where((key) => key.isActive).length}/${_keys.length}',
+                        density: VitDensity.compact,
+                      ),
+                      if (_keys.isEmpty)
+                        const VitEmptyState(
+                          title: 'Ch\u01B0a c\u00F3 API key',
                           message:
-                              'Ki\u1EC3m tra quy\u1EC1n giao d\u1ECBch, IP whitelist, secret v\u00E0 key \u0111ang b\u1EADt tr\u01B0\u1EDBc khi ti\u1EBFp t\u1EE5c.',
-                          contractId:
-                              'Active keys: ${_keys.where((key) => key.isActive).length}/${_keys.length}',
-                        ),
-                      ),
-                      VitCard(
-                        padding: EdgeInsets.zero,
-                        child: _keys.isEmpty
-                            ? const VitEmptyState(
-                                title: 'Ch\u01B0a c\u00F3 API key',
-                                message:
-                                    'T\u1EA1o key m\u1EDBi v\u00E0 ch\u1EC9 c\u1EA5p quy\u1EC1n th\u1EADt s\u1EF1 c\u1EA7n.',
-                                icon: Icons.key_off_outlined,
-                              )
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  for (final apiKey in _keys) ...[
-                                    _ApiKeyCard(
-                                      apiKey: apiKey,
-                                      showSecret: _showSecretId == apiKey.id,
-                                      copiedId: _copiedId,
-                                      onToggle: () => _toggleKey(apiKey.id),
-                                      onReveal: () => _toggleSecret(apiKey.id),
-                                      onCopy: _copyText,
-                                      onDelete: () => _confirmDelete(apiKey),
-                                    ),
-                                    if (apiKey != _keys.last)
-                                      const SizedBox(
-                                        height: AppSpacing.profileApiCardGap,
-                                      ),
-                                  ],
-                                ],
-                              ),
-                      ),
-                      const VitCard(
-                        padding: EdgeInsets.zero,
-                        child: _ApiDocsCard(),
-                      ),
+                              'T\u1EA1o key m\u1EDBi v\u00E0 ch\u1EC9 c\u1EA5p quy\u1EC1n th\u1EADt s\u1EF1 c\u1EA7n.',
+                          icon: Icons.key_off_outlined,
+                        )
+                      else
+                        for (final apiKey in _keys)
+                          _ApiKeyCard(
+                            apiKey: apiKey,
+                            showSecret: _showSecretId == apiKey.id,
+                            copiedId: _copiedId,
+                            onToggle: () => _toggleKey(apiKey.id),
+                            onReveal: () => _toggleSecret(apiKey.id),
+                            onCopy: _copyText,
+                            onDelete: () => _confirmDelete(apiKey),
+                          ),
+                      const _ApiDocsCard(),
                     ],
                   ),
                 ),

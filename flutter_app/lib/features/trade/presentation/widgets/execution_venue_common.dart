@@ -1,30 +1,14 @@
 part of '../pages/execution_venue_analysis_page.dart';
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: text,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: _venuePrimary,
-    );
-  }
-}
-
 class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
+  const _Card({required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: padding,
+      density: VitDensity.compact,
       borderColor: _venueBorder.withValues(alpha: .72),
       child: child,
     );

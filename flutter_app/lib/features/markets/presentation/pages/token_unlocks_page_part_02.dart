@@ -64,7 +64,7 @@ class _UnlockCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.tokenUnlocksDateGap),
+                        const SizedBox(height: _unlockDateGap),
                         Row(
                           children: [
                             const Icon(
@@ -72,9 +72,7 @@ class _UnlockCard extends StatelessWidget {
                               size: AppSpacing.tokenUnlocksDateIcon,
                               color: AppColors.text3,
                             ),
-                            const SizedBox(
-                              width: AppSpacing.tokenUnlocksDateGap,
-                            ),
+                            const SizedBox(width: _unlockDateGap),
                             Flexible(
                               child: Text(
                                 unlock.unlockDateLabel,
@@ -85,9 +83,7 @@ class _UnlockCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              width: AppSpacing.tokenUnlocksDateGap,
-                            ),
+                            const SizedBox(width: _unlockDateGap),
                             Text(
                               _countdownLabel(unlock),
                               style: AppTextStyles.micro.copyWith(
@@ -111,7 +107,7 @@ class _UnlockCard extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tokenUnlocksValueGap),
+                      const SizedBox(height: _unlockValueGap),
                       Text(
                         '${unlock.unlockPctCirculating.toStringAsFixed(1)}% supply',
                         style: AppTextStyles.micro.copyWith(
@@ -167,9 +163,7 @@ class _UnlockExpandedDetails extends StatelessWidget {
                           '${unlock.symbol}',
                     ),
                   ),
-                  const SizedBox(
-                    width: AppSpacing.tokenUnlocksExpandedMetricGap,
-                  ),
+                  const SizedBox(width: _unlockExpandedMetricGap),
                   Expanded(
                     child: _DetailMetric(
                       label: 'Giá hiện tại',
@@ -178,7 +172,7 @@ class _UnlockExpandedDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.tokenUnlocksExpandedMetricGap),
+              const SizedBox(height: _unlockExpandedMetricGap),
               Row(
                 children: [
                   Expanded(
@@ -187,9 +181,7 @@ class _UnlockExpandedDetails extends StatelessWidget {
                       value: _formatCompactUsd(unlock.totalLockedValueUsd),
                     ),
                   ),
-                  const SizedBox(
-                    width: AppSpacing.tokenUnlocksExpandedMetricGap,
-                  ),
+                  const SizedBox(width: _unlockExpandedMetricGap),
                   Expanded(
                     child: _DetailMetric(
                       label: 'Loại vesting',
@@ -199,7 +191,7 @@ class _UnlockExpandedDetails extends StatelessWidget {
                 ],
               ),
               if (unlock.priceChange7d < -3) ...[
-                const SizedBox(height: AppSpacing.tokenUnlocksPriceWarningGap),
+                const SizedBox(height: _unlockPriceWarningGap),
                 VitCard(
                   variant: VitCardVariant.ghost,
                   borderColor: AppColors.sell.withValues(alpha: .12),
@@ -250,7 +242,7 @@ class _DetailMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tokenUnlocksDetailMetricGap),
+        const SizedBox(height: _unlockDetailMetricGap),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
@@ -282,7 +274,7 @@ class _ImpactOverview extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tokenUnlocksImpactTitleGap),
+          const SizedBox(height: _unlockImpactTitleGap),
           Row(
             children: [
               for (final entry in snapshot.impactConfigs.entries) ...[
@@ -341,7 +333,7 @@ class _ImpactStat extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tokenUnlocksImpactStatValueGap),
+          const SizedBox(height: _unlockImpactStatValueGap),
           Text(
             _formatCompactUsd(value),
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -382,7 +374,7 @@ class _CategoryBreakdown extends StatelessWidget {
               maxValue: maxTotal,
             ),
             if (entry.key != snapshot.categoryConfigs.keys.last)
-              const SizedBox(height: AppSpacing.tokenUnlocksCategoryGap),
+              const SizedBox(height: _unlockCategoryGap),
           ],
         ],
       ),
@@ -430,14 +422,14 @@ class _CategoryBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.tokenUnlocksCategoryProgressGap),
+        const SizedBox(height: _unlockCategoryProgressGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: SizedBox(
-            height: AppSpacing.tokenUnlocksCategoryProgressHeight,
+            height: _unlockCategoryProgressHeight,
             child: LinearProgressIndicator(
               value: maxValue == 0 ? 0 : value / maxValue,
-              minHeight: AppSpacing.tokenUnlocksCategoryProgressHeight,
+              minHeight: _unlockCategoryProgressHeight,
               backgroundColor: AppColors.surface2,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
@@ -463,7 +455,7 @@ class _DilutionRanking extends StatelessWidget {
         for (var index = 0; index < unlocks.length; index += 1) ...[
           _DilutionRow(index: index, unlock: unlocks[index]),
           if (index != unlocks.length - 1)
-            const SizedBox(height: AppSpacing.tokenUnlocksDilutionRowGap),
+            const SizedBox(height: _unlockDilutionRowGap),
         ],
       ],
     );

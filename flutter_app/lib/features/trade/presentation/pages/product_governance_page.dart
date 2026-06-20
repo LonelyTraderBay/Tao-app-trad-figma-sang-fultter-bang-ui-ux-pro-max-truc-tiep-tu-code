@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -52,13 +53,15 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
         .getProductGovernance();
     _tab ??= snapshot.defaultTab;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final chromeInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollClearance =
+        chromeInset +
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.productGovernanceBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.productGovernanceBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+            ? AppSpacing.x6 + AppSpacing.x6
+            : AppSpacing.x5 + AppSpacing.x5);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -78,17 +81,21 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: ProductGovernancePage.contentKey,
-                  padding: AppSpacing.productGovernanceScrollPadding(
-                    bottomInset,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.rowPy,
+                    right: AppSpacing.contentPad,
+                    bottom: scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: AppSpacing.productGovernanceContentGap,
+                    density: VitDensity.compact,
                     children: [
                       _ComplianceNotice(snapshot: snapshot),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
+                        density: VitDensity.compact,
                         title: 'Product governance review',
                         message:
                             'Review target market, negative market, risk level, distribution channel, fee disclosure, and next review deadline before approving copy products.',

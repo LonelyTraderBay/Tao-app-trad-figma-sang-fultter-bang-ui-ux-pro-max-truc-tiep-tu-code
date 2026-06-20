@@ -7,7 +7,7 @@ class _ReportTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadRiskAnalyticsPage.reportKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,32 +32,36 @@ class _ReportTab extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.x3),
-            decoration: BoxDecoration(
+          DecoratedBox(
+            decoration: const ShapeDecoration(
               color: AppColors.primary08,
-              border: Border.all(color: AppColors.primary20),
-              borderRadius: AppRadii.cardRadius,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: AppColors.primary20),
+                borderRadius: AppRadii.cardRadius,
+              ),
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Icon(
-                  Icons.info_outline_rounded,
-                  color: AppColors.primary,
-                  size: AppSpacing.launchpadIconXl,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Text(
-                    'Risk analysis is for reference only. Always do your own research before investing. Past performance does not guarantee future results.',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      height: AppSpacing.launchpadLineHeightLoose,
+            child: Padding(
+              padding: AppSpacing.launchpadPaddingX3,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.info_outline_rounded,
+                    color: AppColors.primary,
+                    size: AppSpacing.launchpadIconXl,
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: Text(
+                      'Risk analysis is for reference only. Always do your own research before investing. Past performance does not guarantee future results.',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        height: AppSpacing.launchpadLineHeightLoose,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -76,7 +80,7 @@ class _ComparisonProjectCard extends StatelessWidget {
     final color = _riskColor(project.level);
     return VitCard(
       key: LaunchpadRiskAnalyticsPage.projectKey(project.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         children: [
           Row(
@@ -134,7 +138,7 @@ class _RiskDistributionCard extends StatelessWidget {
     final levels = LaunchpadRiskLevel.values;
     return VitCard(
       key: LaunchpadRiskAnalyticsPage.distributionKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -170,17 +174,20 @@ class _RiskDistributionCard extends StatelessWidget {
             childAspectRatio: AppSpacing.launchpadGridAspectReport,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
+            padding: AppSpacing.zeroInsets,
             children: [
               for (final level in levels)
                 Row(
                   children: [
-                    Container(
-                      width: AppSpacing.launchpadBox12,
-                      height: AppSpacing.launchpadBox12,
-                      decoration: BoxDecoration(
-                        color: _riskColor(level),
-                        borderRadius: AppRadii.xsRadius,
+                    SizedBox.square(
+                      dimension: AppSpacing.launchpadBox12,
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: _riskColor(level),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: AppRadii.xsRadius,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x2),
@@ -207,30 +214,34 @@ class _ResourceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.bg,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.cardBorder),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              resource.label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.medium,
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX3,
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                resource.label,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.medium,
+                ),
               ),
             ),
-          ),
-          const Icon(
-            Icons.open_in_new_rounded,
-            color: AppColors.text3,
-            size: AppSpacing.launchpadIconXl,
-          ),
-        ],
+            const Icon(
+              Icons.open_in_new_rounded,
+              color: AppColors.text3,
+              size: AppSpacing.launchpadIconXl,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -250,18 +261,27 @@ class _ScoreProgress extends StatelessWidget {
             ? constraints.maxWidth
             : 1.0;
         final fillWidth = width * value.clamp(0, 100) / 100;
-        return Container(
+        return SizedBox(
           height: AppSpacing.launchpadDotMd,
-          decoration: BoxDecoration(
-            color: AppColors.bg,
-            borderRadius: AppRadii.inputRadius,
-          ),
-          alignment: Alignment.centerLeft,
-          child: Container(
-            width: fillWidth,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: AppRadii.inputRadius,
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
+              color: AppColors.bg,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
+            ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: SizedBox(
+                width: fillWidth,
+                height: AppSpacing.launchpadDotMd,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: color,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.inputRadius,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         );
@@ -283,15 +303,14 @@ class _RiskPill extends StatelessWidget {
         ? AppTextStyles.chartLabelXs
         : AppTextStyles.badge;
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.inputRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: compact ? AppSpacing.x2 : AppSpacing.x3,
-          vertical: compact ? 2 : AppSpacing.x1,
-        ),
+        padding: compact
+            ? AppSpacing.launchpadLiveBadgePadding
+            : AppSpacing.launchpadTimelineMarkerPadding,
         child: Text(
           compact
               ? _riskLabel(level).toUpperCase()

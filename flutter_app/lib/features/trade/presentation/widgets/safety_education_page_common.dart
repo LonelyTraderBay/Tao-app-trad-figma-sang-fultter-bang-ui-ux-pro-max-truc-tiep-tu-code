@@ -13,21 +13,22 @@ class _SeveritySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         Text(
           title,
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotDisclosureGap),
+        const SizedBox(height: AppSpacing.x1),
         for (final flag in flags) ...[
           VitCard(
-            padding: AppSpacing.tradeBotInnerPanelPadding,
+            density: VitDensity.compact,
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.sm,
             borderColor: color.withValues(alpha: .65),
@@ -39,16 +40,12 @@ class _SeveritySection extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightBody,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotLabelGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   flag.explanation,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    height: AppSpacing.tradeBotLineHeightBody,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: color),
                 ),
               ],
             ),
@@ -67,15 +64,16 @@ class _VerificationTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _InfoPanel(
           text:
               'Verification là cơ chế bảo vệ user. Provider verified đã qua kiểm tra KYC và performance audit.',
           color: _safetyPrimary,
         ),
-        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         Text(
           'Verification Tiers',
           style: AppTextStyles.caption.copyWith(
@@ -83,12 +81,7 @@ class _VerificationTab extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
-        for (final tier in tiers) ...[
-          _TierCard(tier: tier),
-          if (tier != tiers.last)
-            const SizedBox(height: AppSpacing.tradeBotCardGap),
-        ],
+        for (final tier in tiers) _TierCard(tier: tier),
       ],
     );
   }
@@ -103,7 +96,7 @@ class _TierCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(tier.colorHex);
     return VitCard(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      density: VitDensity.compact,
       borderColor: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,19 +114,15 @@ class _TierCard extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          const SizedBox(height: AppSpacing.x2),
           for (final req in tier.requirements) ...[
             Text(
               '• $req',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.tradeBotLineHeightMedium,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
             if (req != tier.requirements.last)
               const SizedBox(height: AppSpacing.x1),
@@ -151,17 +140,18 @@ class _ReportTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _InfoPanel(
           text:
               'Khi nào nên report?\n${reasons.map((item) => '• $item').join('\n')}',
           color: AppColors.sell,
         ),
-        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         VitCard(
-          padding: AppSpacing.tradeBotCardPadding,
+          density: VitDensity.compact,
           borderColor: AppColors.cardBorder,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -173,20 +163,16 @@ class _ReportTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeBotStatusGap),
               const _ReportField(label: 'Provider ID hoặc tên'),
-              const SizedBox(height: AppSpacing.tradeBotCardGap),
               const _ReportField(label: 'Lý do report'),
-              const SizedBox(height: AppSpacing.tradeBotCardGap),
               const _ReportField(
                 label: 'Mô tả chi tiết',
                 height: AppSpacing.tradeBotControlTall,
               ),
-              const SizedBox(height: AppSpacing.tradeBotStatusGap),
               VitCtaButton(
                 onPressed: () {},
                 variant: VitCtaButtonVariant.danger,
-                height: AppSpacing.tradeBotControlHeight,
+                density: VitDensity.compact,
                 child: Text(
                   'Submit Report',
                   style: AppTextStyles.body.copyWith(
@@ -219,12 +205,9 @@ class _ReportField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.tradeBotLabelGap),
+        const SizedBox(height: AppSpacing.x1),
         SizedBox(
           height: height,
           child: const VitCardStat(
@@ -247,6 +230,7 @@ class _InfoPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
+      density: VitDensity.compact,
       title: 'Review safety guidance',
       message: text,
     );

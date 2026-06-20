@@ -30,7 +30,10 @@ class _CategoryChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
         child: Padding(
-          padding: AppSpacing.predictionSearchCategoryChipPadding,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x2,
+            vertical: AppSpacing.x1,
+          ),
           child: Text(
             label,
             style: AppTextStyles.micro.copyWith(
@@ -67,7 +70,7 @@ class _SearchResultCard extends StatelessWidget {
 
     return VitCard(
       onTap: onTap,
-      padding: AppSpacing.predictionSearchResultPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -75,7 +78,7 @@ class _SearchResultCard extends StatelessWidget {
             color: chanceColor.withValues(alpha: .14),
             borderRadius: AppRadii.mdRadius,
             child: SizedBox.square(
-              dimension: AppSpacing.predictionSearchChanceBox,
+              dimension: _searchChanceExtent,
               child: Center(
                 child: Text(
                   '${topOutcome.chance}%',
@@ -87,7 +90,7 @@ class _SearchResultCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.predictionSearchResultGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,11 +99,10 @@ class _SearchResultCard extends StatelessWidget {
                   event.title,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
-                    height: AppSpacing.predictionSearchTitleLineHeight,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: AppSpacing.predictionSearchMetaTopGap),
+                const SizedBox(height: AppSpacing.x1),
                 Wrap(
                   spacing: AppSpacing.predictionSearchMetaSpacing,
                   runSpacing: AppSpacing.predictionSearchMetaRunSpacing,
@@ -143,7 +145,10 @@ class _TinyBadge extends StatelessWidget {
           : _predictionPrimary.withValues(alpha: .14),
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.predictionSearchTinyBadgePadding,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x1,
+          vertical: AppSpacing.x1,
+        ),
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -175,33 +180,30 @@ class _SearchEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.predictionSearchEmptyHeight,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.search_rounded,
-              color: AppColors.text3.withValues(alpha: .42),
-              size: AppSpacing.predictionSearchEmptyIcon,
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.search_rounded,
+            color: AppColors.text3.withValues(alpha: .42),
+            size: AppSpacing.iconLg,
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            'No events match filters',
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
             ),
-            const Padding(padding: AppSpacing.predictionSearchEmptyTitleGap),
-            Text(
-              'No events match filters',
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-            const Padding(padding: AppSpacing.predictionSearchEmptyMessageGap),
-            Text(
-              'Try adjusting your search or filter criteria',
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            'Try adjusting your search or filter criteria',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
+        ],
       ),
     );
   }

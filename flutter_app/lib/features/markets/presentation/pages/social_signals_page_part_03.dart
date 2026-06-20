@@ -20,7 +20,7 @@ class _ProviderMetric extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.marketLineHeightTight,
+            height: 1,
           ),
         ),
         Text(
@@ -30,7 +30,7 @@ class _ProviderMetric extends StatelessWidget {
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: AppSpacing.marketLineHeightTight,
+            height: 1,
           ),
         ),
       ],
@@ -47,7 +47,7 @@ class _PerformanceSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      padding: AppSpacing.marketSocialCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -56,10 +56,10 @@ class _PerformanceSummary extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.portfolioTextMuted,
               fontWeight: AppTextStyles.medium,
-              height: AppSpacing.marketLineHeightTight,
+              height: 1,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketSocialSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -110,14 +110,14 @@ class _HeroMetric extends StatelessWidget {
           style: AppTextStyles.sectionTitleSm.copyWith(
             color: color,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: AppSpacing.marketLineHeightCaption,
+            height: 1.15,
           ),
         ),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.portfolioTextMuted,
-            height: AppSpacing.marketLineHeightTight,
+            height: 1,
           ),
         ),
       ],
@@ -140,7 +140,7 @@ class _StatusBreakdown extends StatelessWidget {
     };
 
     return VitCard(
-      padding: AppSpacing.marketSocialCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -149,14 +149,14 @@ class _StatusBreakdown extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.marketLineHeightTight,
+              height: 1,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketSocialSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           ClipRRect(
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
-              height: AppSpacing.marketSocialStatusBarHeight,
+              height: AppSpacing.x3,
               child: Row(
                 children: [
                   for (final entry in counts.entries)
@@ -171,7 +171,7 @@ class _StatusBreakdown extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.marketSocialMediumGap),
+          const SizedBox(height: AppSpacing.x2),
           Wrap(
             spacing: AppSpacing.marketSocialSectionGap,
             runSpacing: AppSpacing.marketSocialCompactGap,
@@ -214,7 +214,7 @@ class _LegendItem extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.marketLineHeightTight,
+            height: 1,
           ),
         ),
       ],
@@ -255,7 +255,7 @@ class _SignalResultRow extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.marketLineHeightTight,
+                          height: 1,
                         ),
                       ),
                       const SizedBox(width: AppSpacing.marketSocialGap),
@@ -270,7 +270,6 @@ class _SignalResultRow extends StatelessWidget {
                             signal.direction == TradingSignalDirection.long
                             ? AppColors.buy10
                             : AppColors.sell10,
-                        height: AppSpacing.marketSocialTinyBadgeHeightMd,
                       ),
                     ],
                   ),
@@ -278,7 +277,7 @@ class _SignalResultRow extends StatelessWidget {
                     '${signal.providerName} · ${signal.timeAgo}',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.marketLineHeightTight,
+                      height: 1,
                     ),
                   ),
                 ],
@@ -290,7 +289,7 @@ class _SignalResultRow extends StatelessWidget {
                 color: positive ? AppColors.buy : AppColors.sell,
                 fontWeight: AppTextStyles.bold,
                 fontFeatures: AppTextStyles.tabularFigures,
-                height: AppSpacing.marketLineHeightTight,
+                height: 1,
               ),
             ),
           ],
@@ -321,26 +320,29 @@ class _SignalsEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.marketSocialEmptyHeight,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.track_changes_rounded,
-              size: AppSpacing.marketSocialEmptyIcon,
-              color: AppColors.text3.withValues(alpha: .35),
-            ),
-            const SizedBox(height: AppSpacing.marketSocialSectionGap),
-            Text(
-              'Không có tín hiệu phù hợp',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                height: AppSpacing.marketLineHeightTight,
+    return VitCard(
+      density: VitDensity.compact,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x5),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.track_changes_rounded,
+                size: AppSpacing.x6,
+                color: AppColors.text3.withValues(alpha: .35),
               ),
-            ),
-          ],
+              const SizedBox(height: AppSpacing.x3),
+              Text(
+                'Không có tín hiệu phù hợp',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text3,
+                  height: 1,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

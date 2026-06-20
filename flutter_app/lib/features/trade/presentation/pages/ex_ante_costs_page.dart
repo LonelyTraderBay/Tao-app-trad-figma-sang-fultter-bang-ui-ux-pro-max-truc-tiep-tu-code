@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -28,6 +28,15 @@ const _costPrimary = AppColors.primary;
 const _costGreen = AppColors.buy;
 const _costAmber = AppColors.caution;
 const _costRed = AppColors.sell;
+const _costSpace = AppSpacing.x2;
+const _costTinySpace = AppSpacing.x1;
+const _costVisualScrollClearance = 112.0;
+const _costNativeScrollClearance = 72.0;
+const _costIconTile = 34.0;
+const _costButtonExtent = 44.0;
+const _costTabExtent = 44.0;
+const _costSwatchExtent = 14.0;
+const _costLineTight = 1.2;
 
 class ExAnteCostsPage extends ConsumerStatefulWidget {
   const ExAnteCostsPage({super.key, this.shellRenderMode});
@@ -54,11 +63,11 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
         .watch(tradeReadModelControllerProvider)
         .getExAnteCosts();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 70
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? _costVisualScrollClearance
+            : _costNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -84,44 +93,14 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: ExAnteCostsPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top:
-                        AppSpacing.x6 -
-                        AppSpacing.x3 +
-                        AppSpacing.x1 -
-                        AppSpacing.hairlineStroke,
-                    bottom: bottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: 0,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       const _RegulatoryNotice(),
-                      const SizedBox(
-                        height:
-                            AppSpacing.x6 +
-                            AppSpacing.x1 -
-                            AppSpacing.hairlineStroke,
-                      ),
                       _InvestmentCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Ex-ante cost preview',
-                        message:
-                            'Review one-off, recurring, incidental fees, RIY impact, limits, and next-step documents before investing.',
-                        contractId: 'SC-105 ex-ante costs review',
-                      ),
-                      const SizedBox(height: AppSpacing.x5 + AppSpacing.x1),
                       _Tabs(activeId: _tab, onChanged: _setTab),
-                      const SizedBox(
-                        height:
-                            AppSpacing.x6 -
-                            AppSpacing.x3 +
-                            AppSpacing.x1 -
-                            AppSpacing.hairlineStroke,
-                      ),
                       if (_tab == 'summary')
                         _Summary(snapshot: snapshot)
                       else if (_tab == 'breakdown')
@@ -133,7 +112,14 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
                           onChanged: (period) =>
                               setState(() => _holdingPeriod = period),
                         ),
-                      const SizedBox(height: AppSpacing.x5 + AppSpacing.x1),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Ex-ante cost preview',
+                        message:
+                            'Review fees, RIY impact, limits, and next-step documents before investing.',
+                        contractId: 'SC-105 ex-ante costs review',
+                        density: VitDensity.compact,
+                      ),
                       const _QuickLinks(),
                     ],
                   ),

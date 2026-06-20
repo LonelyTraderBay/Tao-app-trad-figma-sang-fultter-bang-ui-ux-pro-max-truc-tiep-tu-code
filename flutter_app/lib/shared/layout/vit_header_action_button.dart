@@ -122,12 +122,14 @@ class VitHeaderActionButton extends StatelessWidget {
             color: AppColors.transparent,
             borderRadius: AppRadii.headerActionRadius,
             child: Ink(
-              decoration: BoxDecoration(
+              decoration: ShapeDecoration(
                 color: style.background,
-                borderRadius: AppRadii.headerActionRadius,
-                border: style.border == null
-                    ? null
-                    : Border.all(color: style.border!),
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.headerActionRadius,
+                  side: style.border == null
+                      ? BorderSide.none
+                      : BorderSide(color: style.border!),
+                ),
               ),
               child: InkWell(
                 onTap: _enabled ? onPressed : null,
@@ -307,16 +309,18 @@ class _HeaderActionBadge extends StatelessWidget {
         minHeight: AppTopHeaderTokens.badgeMinSize,
       ),
       child: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: ShapeDecoration(
           color: AppColors.sell,
-          border: Border.all(
-            color: AppColors.bg,
-            width: AppTopHeaderTokens.badgeBorderWidth,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.pillRadius,
+            side: const BorderSide(
+              color: AppColors.bg,
+              width: AppTopHeaderTokens.badgeBorderWidth,
+            ),
           ),
-          borderRadius: BorderRadius.circular(AppTopHeaderTokens.badgeRadius),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
+          padding: const EdgeInsetsDirectional.symmetric(
             horizontal: AppTopHeaderTokens.badgeHorizontalPadding,
           ),
           child: Center(
@@ -326,7 +330,6 @@ class _HeaderActionBadge extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1,
               ),
             ),
           ),

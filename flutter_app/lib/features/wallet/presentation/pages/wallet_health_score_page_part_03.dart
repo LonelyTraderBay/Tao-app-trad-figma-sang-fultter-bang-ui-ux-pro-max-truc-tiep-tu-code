@@ -42,7 +42,7 @@ class _TipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: AppSpacing.walletHealthCompactCardPadding,
+      density: VitDensity.compact,
       borderColor: _healthBorder,
       child: Row(
         children: [
@@ -51,13 +51,13 @@ class _TipCard extends StatelessWidget {
             color: _healthAmber,
             size: AppSpacing.walletHealthActionIcon,
           ),
-          const SizedBox(width: AppSpacing.walletHealthNoticeGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               tip,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.35,
+                height: 1.24,
               ),
             ),
           ),
@@ -76,7 +76,7 @@ class _InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: AppSpacing.walletHealthCompactCardPadding,
+      density: VitDensity.compact,
       borderColor: _healthPrimary.withValues(alpha: .15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,13 +86,13 @@ class _InfoCard extends StatelessWidget {
             color: _healthPrimary,
             size: AppSpacing.walletHealthActionIcon,
           ),
-          const SizedBox(width: AppSpacing.walletHealthNoticeGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.45,
+                height: 1.28,
               ),
             ),
           ),

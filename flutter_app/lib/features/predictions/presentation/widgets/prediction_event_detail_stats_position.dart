@@ -45,7 +45,7 @@ class _StatsGrid extends StatelessWidget {
         for (final stat in stats)
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.predictionDetailStatPadding,
+            density: VitDensity.compact,
             child: Row(
               children: [
                 SizedBox(
@@ -120,7 +120,7 @@ class _PositionBanner extends StatelessWidget {
     final color = position.pnl >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
       borderColor: color.withValues(alpha: .22),
-      padding: AppSpacing.predictionDetailPositionPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -141,7 +141,7 @@ class _PositionBanner extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionDetailPositionTopGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               _TinyBadge(

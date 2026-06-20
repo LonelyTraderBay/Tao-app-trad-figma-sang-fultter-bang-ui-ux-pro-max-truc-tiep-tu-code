@@ -25,6 +25,7 @@ class _NewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       borderColor: news.isBreaking
           ? AppColors.sell.withValues(alpha: .18)
           : null,
@@ -34,12 +35,12 @@ class _NewsCard extends StatelessWidget {
           InkWell(
             onTap: onToggleExpanded,
             child: Padding(
-              padding: AppSpacing.marketNewsCardPadding,
+              padding: AppSpacing.cardPaddingCompact,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _NewsIcon(item: news, category: category),
-                  const SizedBox(width: AppSpacing.marketNewsCardIconGap),
+                  const SizedBox(width: _marketSpace),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +50,7 @@ class _NewsCard extends StatelessWidget {
                           category: category,
                           sentimentBadge: sentimentBadge,
                         ),
-                        const SizedBox(height: AppSpacing.marketNewsCardTagGap),
+                        const SizedBox(height: _marketTinySpace),
                         Text(
                           news.title,
                           maxLines: expanded ? 4 : 2,
@@ -57,28 +58,26 @@ class _NewsCard extends StatelessWidget {
                           style: AppTextStyles.body.copyWith(
                             color: AppColors.text1,
                             fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.marketNewsCardTitleLineHeight,
+                            height: _marketTitleLineHeight,
                           ),
                         ),
-                        const SizedBox(
-                          height: AppSpacing.marketNewsCardTitleGap,
-                        ),
+                        const SizedBox(height: _marketTinySpace),
                         _NewsMeta(news: news),
                       ],
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.marketNewsSaveGap),
+                  const SizedBox(width: _marketTinySpace),
                   InkWell(
                     key: MarketNewsPage.saveKey(news.id),
                     onTap: onToggleSaved,
                     borderRadius: AppRadii.cardRadius,
                     child: Padding(
-                      padding: AppSpacing.marketNewsSavePaddingInsets,
+                      padding: const EdgeInsets.all(AppSpacing.x1),
                       child: Icon(
                         saved
                             ? Icons.bookmark_rounded
                             : Icons.bookmark_border_rounded,
-                        size: AppSpacing.marketNewsSaveIcon,
+                        size: _marketSaveIconSize,
                         color: saved ? _marketPrimary : AppColors.text3,
                       ),
                     ),
@@ -107,13 +106,9 @@ class _NewsIcon extends StatelessWidget {
       color: category.color.withValues(alpha: .08),
       borderRadius: AppRadii.mdRadius,
       child: SizedBox(
-        width: AppSpacing.marketNewsCardIcon,
-        height: AppSpacing.marketNewsCardIcon,
-        child: Icon(
-          item.icon,
-          size: AppSpacing.marketNewsCardIconGlyph,
-          color: item.iconColor,
-        ),
+        width: _newsIconSize,
+        height: _newsIconSize,
+        child: Icon(item.icon, size: _newsIconGlyph, color: item.iconColor),
       ),
     );
   }
@@ -133,8 +128,8 @@ class _NewsTags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.marketNewsTagSpacing,
-      runSpacing: AppSpacing.marketNewsTagRunSpacing,
+      spacing: _marketTinySpace,
+      runSpacing: _marketTinySpace,
       children: [
         if (news.isBreaking)
           _TagPill(label: 'NÓNG', color: AppColors.sell, strong: true),
@@ -168,13 +163,16 @@ class _TagPill extends StatelessWidget {
       color: color.withValues(alpha: strong ? .16 : .08),
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.marketNewsTagPadding,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.x2,
+          vertical: AppSpacing.x1,
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null) ...[
-              Icon(icon, size: AppSpacing.marketNewsTagIcon, color: color),
-              const SizedBox(width: AppSpacing.marketNewsTagIconGap),
+              Icon(icon, size: AppSpacing.x3, color: color),
+              const SizedBox(width: _marketTinySpace),
             ],
             Text(
               label,
@@ -211,10 +209,10 @@ class _NewsMeta extends StatelessWidget {
         _MetaSeparator(style: style),
         const Icon(
           Icons.schedule_rounded,
-          size: AppSpacing.marketNewsMetaIcon,
+          size: AppSpacing.x3,
           color: AppColors.text3,
         ),
-        const SizedBox(width: AppSpacing.marketNewsMetaIconGap),
+        const SizedBox(width: _marketTinySpace),
         Flexible(
           child: Text(
             news.timeAgo,
@@ -245,7 +243,7 @@ class _MetaSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.marketNewsMetaSeparatorPadding,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x1),
       child: Text('•', style: style),
     );
   }
@@ -264,7 +262,7 @@ class _ExpandedNewsDetails extends StatelessWidget {
       children: [
         const Divider(height: AppSpacing.homeDividerHeight),
         Padding(
-          padding: AppSpacing.marketNewsExpandedPadding,
+          padding: AppSpacing.cardPaddingCompact,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -272,13 +270,13 @@ class _ExpandedNewsDetails extends StatelessWidget {
                 news.summary,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.marketNewsExpandedSummaryLineHeight,
+                  height: _marketSummaryLineHeight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.marketNewsExpandedGap),
+              const SizedBox(height: _marketSpace),
               Wrap(
-                spacing: AppSpacing.marketNewsExpandedTokenGap,
-                runSpacing: AppSpacing.marketNewsExpandedTokenGap,
+                spacing: _marketTinySpace,
+                runSpacing: _marketTinySpace,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
@@ -297,7 +295,10 @@ class _ExpandedNewsDetails extends StatelessWidget {
                         onTap: () => onTokenTap(token),
                         borderRadius: AppRadii.mdRadius,
                         child: Padding(
-                          padding: AppSpacing.marketNewsExpandedTokenPadding,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.x2,
+                            vertical: AppSpacing.x1,
+                          ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -308,13 +309,10 @@ class _ExpandedNewsDetails extends StatelessWidget {
                                   fontWeight: AppTextStyles.bold,
                                 ),
                               ),
-                              const SizedBox(
-                                width:
-                                    AppSpacing.marketNewsExpandedTokenIconGap,
-                              ),
+                              const SizedBox(width: _marketTinySpace),
                               const Icon(
                                 Icons.chevron_right_rounded,
-                                size: AppSpacing.marketNewsExpandedTokenIcon,
+                                size: AppSpacing.x3,
                                 color: AppColors.text3,
                               ),
                             ],
@@ -340,20 +338,20 @@ class _NewsEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.marketNewsEmptyPadding,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           const Icon(
             Icons.article_outlined,
-            size: AppSpacing.marketNewsEmptyIcon,
+            size: _newsIconSize,
             color: AppColors.text3,
           ),
-          const SizedBox(height: AppSpacing.marketNewsEmptyGap),
+          const SizedBox(height: _marketSpace),
           Text(
             'Không có tin tức phù hợp',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.marketNewsEmptyGap),
+          const SizedBox(height: _marketSpace),
           Material(
             color: _marketPrimary.withValues(alpha: .12),
             borderRadius: AppRadii.cardRadius,
@@ -361,7 +359,10 @@ class _NewsEmptyState extends StatelessWidget {
               onTap: onReset,
               borderRadius: AppRadii.cardRadius,
               child: Padding(
-                padding: AppSpacing.marketNewsEmptyCtaPadding,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.x3,
+                  vertical: AppSpacing.x2,
+                ),
                 child: Text(
                   'Xem tất cả',
                   style: AppTextStyles.caption.copyWith(

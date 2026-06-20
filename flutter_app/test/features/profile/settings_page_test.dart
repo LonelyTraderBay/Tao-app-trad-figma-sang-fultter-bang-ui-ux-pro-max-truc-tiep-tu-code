@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSettings(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -96,6 +98,27 @@ void main() {
     expect(find.text('Tin t\u1EE9c & Khuy\u1EBFn m\u1EA1i'), findsOneWidget);
     expect(find.text('TH\u00D4NG TIN \u1EE8NG D\u1EE4NG'), findsOneWidget);
     expect(find.text('2.4.1 (Build 241)'), findsOneWidget);
+  });
+
+  testWidgets('SC-160 first viewport reaches trade security toggle', (
+    tester,
+  ) async {
+    await pumpSettings(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SettingsPage',
+      semanticLabel: 'SC-160 SettingsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(SettingsPage.toggleKey('biometric')),
+      minVisibleHeight: 20,
+      targetLabel: 'biometric trade security toggle',
+      reason:
+          'Settings must preview actionable security preferences above the '
+          'bottom navigation, not only localization controls.',
+    );
   });
 
   testWidgets('SC-160 settings interactions stay local', (tester) async {

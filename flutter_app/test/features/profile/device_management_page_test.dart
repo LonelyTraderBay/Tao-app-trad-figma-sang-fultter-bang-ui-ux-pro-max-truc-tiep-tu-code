@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/profile/presentation/pages/device_man
 import 'package:vit_trade_flutter/features/profile/presentation/pages/profile_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRoute(WidgetTester tester, String route) async {
     tester.view.devicePixelRatio = 1;
@@ -70,6 +72,27 @@ void main() {
     );
     expect(find.text('Unknown Device'), findsOneWidget);
     expect(find.text('\u0110\u00E1nh d\u1EA5u tin c\u1EADy'), findsOneWidget);
+  });
+
+  testWidgets('SC-165 first viewport reaches current device card', (
+    tester,
+  ) async {
+    await pumpRoute(tester, AppRoutePaths.profileDevices);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'DeviceManagementPage',
+      semanticLabel: 'SC-165 DeviceManagementPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(DeviceManagementPage.deviceCardKey('dev001')),
+      minVisibleHeight: 24,
+      targetLabel: 'current device card',
+      reason:
+          'Device management must preview the active session above the bottom '
+          'navigation after summary and session-risk review.',
+    );
   });
 
   testWidgets('SC-165 supports trust and logout state changes', (tester) async {

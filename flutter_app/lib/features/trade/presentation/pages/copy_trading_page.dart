@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -23,6 +23,14 @@ part '../widgets/copy_trading_list.dart';
 part '../widgets/copy_trading_metrics_common.dart';
 
 const _copyPrimary = AppColors.primary;
+const _copySpace = AppSpacing.x2;
+const _copyCardSpace = AppSpacing.x3;
+const _copyVisualScrollClearance = 112.0;
+const _copyNativeScrollClearance = 72.0;
+const _copyWeeklyChartHeight = 36.0;
+const _copyBadgeSize = 18.0;
+const _copyButtonHeight = 44.0;
+const _copyTextLineHeight = 1.24;
 
 class CopyTradingPage extends ConsumerStatefulWidget {
   const CopyTradingPage({super.key, this.shellRenderMode});
@@ -45,15 +53,11 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeCopyTradingProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.copyTradingBottomInsetVisual
-            : AppSpacing.copyTradingBottomInsetNative);
+            ? _copyVisualScrollClearance
+            : _copyNativeScrollClearance);
     final traders = _sortedTraders(snapshot.traders);
 
     return VitPageLayout(
@@ -78,11 +82,10 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyTradingPage.contentKey,
-                  padding: AppSpacing.copyTradingScrollPadding(bottomInset),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    customGap: AppSpacing.sectionGap,
-                    fullBleed: true,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _CopyHeroCard(snapshot: snapshot),
                       _RiskWarningCard(
@@ -95,6 +98,7 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
                         message:
                             'Compare provider drawdown, copier concentration, fees, and stop rules before copying any strategy.',
                         contractId: 'Providers available: ${traders.length}',
+                        density: VitDensity.compact,
                       ),
                       _SortChips(
                         options: snapshot.sortOptions,
@@ -116,8 +120,6 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
                               AppRoutePaths.tradeCopyProvider(trader.id),
                             ),
                           ),
-                          if (trader != traders.last)
-                            const SizedBox(height: AppSpacing.sectionGap),
                         ],
                       _Disclaimer(text: snapshot.disclaimer),
                     ],

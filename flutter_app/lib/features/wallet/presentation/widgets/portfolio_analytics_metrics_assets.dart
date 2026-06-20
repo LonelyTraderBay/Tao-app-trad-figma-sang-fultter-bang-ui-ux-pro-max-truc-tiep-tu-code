@@ -16,7 +16,7 @@ class _MetricsCard extends StatelessWidget {
             'Ch\u1EC9 s\u1ED1 hi\u1EC7u su\u1EA5t',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.walletAnalyticsMetricsTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           for (final metric in metrics)
             _MetricRow(metric: metric, isLast: metric == metrics.last),
         ],
@@ -35,8 +35,10 @@ class _MetricRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: AppSpacing.walletAnalyticsMetricRowHeight,
+        Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            vertical: AppSpacing.x2,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -124,87 +126,75 @@ class _AssetRow extends StatelessWidget {
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.walletAnalyticsAssetRowMinHeight,
-          ),
-          child: Padding(
-            padding: AppSpacing.walletAnalyticsAssetRowPadding,
-            child: Row(
-              children: [
-                _AssetAvatar(asset: asset, color: color),
-                const SizedBox(width: AppSpacing.walletAnalyticsAssetGap),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              asset.symbol,
-                              style: AppTextStyles.body.copyWith(
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            _formatUsd(asset.usdValue),
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text1,
-                              fontWeight: AppTextStyles.bold,
-                              fontFeatures: AppTextStyles.tabularFigures,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: AppSpacing.walletAnalyticsAssetTopGap,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: ClipRRect(
-                              borderRadius: AppRadii.xsRadius,
-                              child: LinearProgressIndicator(
-                                value: math.min(1, pct / 100),
-                                minHeight: AppSpacing
-                                    .walletAnalyticsAssetProgressHeight,
-                                backgroundColor: AppColors.surface3,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  color,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: AppSpacing.walletAnalyticsAssetValueGap,
-                          ),
-                          Text(
-                            '${asset.change24h >= 0 ? '+' : ''}${asset.change24h.toStringAsFixed(2)}%',
-                            style: AppTextStyles.micro.copyWith(
-                              color: trendColor,
+        Padding(
+          padding: AppSpacing.walletAnalyticsAssetRowPadding,
+          child: Row(
+            children: [
+              _AssetAvatar(asset: asset, color: color),
+              const SizedBox(width: AppSpacing.walletAnalyticsAssetGap),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            asset.symbol,
+                            style: AppTextStyles.body.copyWith(
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: AppSpacing.walletAnalyticsAssetBottomGap,
-                      ),
-                      Text(
-                        '${pct.toStringAsFixed(1)}% danh m\u1EE5c',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
                         ),
+                        Text(
+                          _formatUsd(asset.usdValue),
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                            fontFeatures: AppTextStyles.tabularFigures,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: AppRadii.xsRadius,
+                            child: LinearProgressIndicator(
+                              value: math.min(1, pct / 100),
+                              minHeight: _walletAnalyticsAssetProgressHeight,
+                              backgroundColor: AppColors.surface3,
+                              valueColor: AlwaysStoppedAnimation<Color>(color),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: AppSpacing.walletAnalyticsAssetValueGap,
+                        ),
+                        Text(
+                          '${asset.change24h >= 0 ? '+' : ''}${asset.change24h.toStringAsFixed(2)}%',
+                          style: AppTextStyles.micro.copyWith(
+                            color: trendColor,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      '${pct.toStringAsFixed(1)}% danh m\u1EE5c',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],

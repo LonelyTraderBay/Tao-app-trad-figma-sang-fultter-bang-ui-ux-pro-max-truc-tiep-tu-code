@@ -9,7 +9,7 @@ class _ComparisonHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      padding: AppSpacing.dcaPaddingX5,
+      padding: _dcaPortfolioHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,9 +41,9 @@ class _ComparisonHero extends StatelessWidget {
               _ScoreBadge(score: snapshot.score),
             ],
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX5),
+          const Padding(padding: AppSpacing.dcaTopPaddingX4),
           _MetricStrip(snapshot: snapshot),
-          const Padding(padding: AppSpacing.dcaTopPaddingX5),
+          const Padding(padding: AppSpacing.dcaTopPaddingX4),
           for (final allocation in snapshot.currentAllocations) ...[
             _AllocationRow(allocation: allocation),
             if (allocation != snapshot.currentAllocations.last)
@@ -156,7 +156,7 @@ class _MetricStrip extends StatelessWidget {
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: metric.color,
                         fontWeight: AppTextStyles.heavy,
-                        height: AppSpacing.dcaPortfolioOptimizerTightLineHeight,
+                        height: _dcaPortfolioTightLineHeight,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
@@ -166,7 +166,7 @@ class _MetricStrip extends StatelessWidget {
             ),
             if (metric != metrics.last)
               const SizedBox(
-                width: AppSpacing.dcaPortfolioOptimizerDividerWidth,
+                width: _dcaPortfolioDividerWidth,
                 height: AppSpacing.x7,
                 child: ColoredBox(color: AppColors.border),
               ),

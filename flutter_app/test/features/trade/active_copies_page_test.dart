@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpActiveCopies(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -105,6 +107,19 @@ void main() {
     expect(find.text('AlphaHunter_VN'), findsOneWidget);
     expect(find.text('SteadyGains_Pro'), findsOneWidget);
     expect(find.text('RiskMaster_88'), findsOneWidget);
+  });
+
+  testWidgets('SC-066 first viewport reaches first active copy card', (
+    tester,
+  ) async {
+    await pumpActiveCopies(tester);
+
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ActiveCopiesPage.copyKey('copy-1')),
+      routeName: 'ActiveCopiesPage',
+      actionLabel: 'first active copy card',
+    );
   });
 
   testWidgets('SC-066 provider detail uses the SC-070 route edge', (

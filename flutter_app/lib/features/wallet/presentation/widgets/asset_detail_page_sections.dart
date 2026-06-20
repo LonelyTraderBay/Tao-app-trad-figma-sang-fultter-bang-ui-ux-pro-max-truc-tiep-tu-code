@@ -12,7 +12,7 @@ class _AssetHero extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.hero,
-      height: AppSpacing.walletAssetHeroHeight,
+      height: _assetHeroHeight,
       padding: AppSpacing.walletAssetHeroPadding,
       borderColor: color.withValues(alpha: .25),
       child: Column(
@@ -20,46 +20,51 @@ class _AssetHero extends StatelessWidget {
         children: [
           Row(
             children: [
-              _AssetLogo(
-                snapshot: snapshot,
-                size: AppSpacing.walletAssetLogoSize,
-              ),
-              const SizedBox(width: AppSpacing.sectionGapCompact),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    snapshot.name,
-                    style: AppTextStyles.baseMedium.copyWith(
-                      fontWeight: AppTextStyles.bold,
+              _AssetLogo(snapshot: snapshot, size: _assetLogoSize),
+              const SizedBox(width: _assetInlineGap),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      snapshot.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.baseMedium.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.walletAssetSmallGap),
-                  Text(
-                    snapshot.symbol,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text2,
+                    const SizedBox(height: _assetSmallGap),
+                    Text(
+                      snapshot.symbol,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+          const SizedBox(height: _assetHeroStatsGap),
           Text(
             _formatUsd(snapshot.usdValue),
             style: AppTextStyles.amountMd.copyWith(
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletAssetHeroValueGap),
+          const SizedBox(height: _assetSmallGap),
           Row(
             children: [
-              Text(
-                '${_formatFixed(snapshot.balance, 6)} ${snapshot.symbol}',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              Flexible(
+                child: Text(
+                  '${_formatFixed(snapshot.balance, 6)} ${snapshot.symbol}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                ),
               ),
-              const SizedBox(width: AppSpacing.walletAssetPillGap),
+              const SizedBox(width: _assetInlineGap),
               Text(
                 _formatPct(snapshot.change24h),
                 style: AppTextStyles.caption.copyWith(
@@ -69,7 +74,7 @@ class _AssetHero extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: _assetHeroStatsGap),
           Row(
             children: [
               Expanded(
@@ -79,7 +84,7 @@ class _AssetHero extends StatelessWidget {
                   valueColor: AppColors.text1,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: _assetSmallGap),
               Expanded(
                 child: _StatPill(
                   label: 'Trong lệnh',
@@ -87,7 +92,7 @@ class _AssetHero extends StatelessWidget {
                   valueColor: _assetPrimary,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: _assetSmallGap),
               Expanded(
                 child: _StatPill(
                   label: 'Đóng băng',
@@ -95,7 +100,7 @@ class _AssetHero extends StatelessWidget {
                   valueColor: AppColors.caution,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: _assetSmallGap),
               Expanded(
                 child: _StatPill(
                   label: 'Giá hiện tại',
@@ -146,8 +151,8 @@ class _StatPill extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: AppSpacing.walletAssetStatHeight,
-      padding: AppSpacing.walletAssetStatPillPadding,
+      height: _assetStatHeight,
+      padding: _assetStatPillPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -158,7 +163,7 @@ class _StatPill extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _assetSmallGap),
           FittedBox(
             alignment: Alignment.centerLeft,
             fit: BoxFit.scaleDown,
@@ -193,8 +198,7 @@ class _AssetActionGrid extends StatelessWidget {
               onTap: () => onNavigate(actions[i].route),
             ),
           ),
-          if (i != actions.length - 1)
-            const SizedBox(width: AppSpacing.walletAssetActionGap),
+          if (i != actions.length - 1) const SizedBox(width: _assetSmallGap),
         ],
       ],
     );
@@ -218,8 +222,8 @@ class _ActionTile extends StatelessWidget {
     };
     return VitCard(
       key: AssetDetailPage.actionKey(action.id),
-      height: AppSpacing.walletAssetActionHeight,
-      padding: AppSpacing.walletAssetActionTilePadding,
+      height: _assetActionHeight,
+      padding: _assetActionTilePadding,
       borderColor: AppColors.overlayStroke,
       onTap: onTap,
       child: Column(
@@ -227,8 +231,8 @@ class _ActionTile extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            width: AppSpacing.walletAssetActionIcon,
-            height: AppSpacing.walletAssetActionIcon,
+            width: _assetActionIconSize,
+            height: _assetActionIconSize,
             alignment: Alignment.center,
             borderColor: color.withValues(alpha: .22),
             child: Icon(
@@ -237,7 +241,7 @@ class _ActionTile extends StatelessWidget {
               size: AppSpacing.walletAssetActionIconInner,
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: _assetActionLabelGap),
           Text(
             action.label,
             maxLines: 1,
@@ -267,7 +271,7 @@ class _PriceChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(snapshot.colorHex);
     return VitCard(
-      height: AppSpacing.walletAssetChartHeight,
+      height: _assetChartHeight,
       padding: AppSpacing.cardPadding.copyWith(
         bottom: AppSpacing.walletAssetChartBottomPad,
       ),
@@ -291,13 +295,13 @@ class _PriceChartCard extends StatelessWidget {
                   status: activePeriod == period
                       ? VitStatusPillStatus.info
                       : VitStatusPillStatus.neutral,
-                  size: VitStatusPillSize.md,
+                  size: VitStatusPillSize.sm,
                   outline: activePeriod != period,
                   onTap: () => onPeriod(period),
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAssetChartBottomGap),
+          const SizedBox(height: _assetChartGap),
           Expanded(
             child: VitSparkline(
               values: [for (final point in snapshot.chart) point.price],

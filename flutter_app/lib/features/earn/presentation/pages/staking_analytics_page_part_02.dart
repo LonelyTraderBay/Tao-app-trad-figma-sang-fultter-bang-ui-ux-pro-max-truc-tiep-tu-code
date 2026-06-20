@@ -24,7 +24,7 @@ class _AssetEarningsGrid extends StatelessWidget {
           final color = _assetColor(product.colorIndex);
           return VitCard(
             key: StakingAnalyticsPage.assetKey(product.asset),
-            padding: AppSpacing.earnCardPaddingX4,
+            padding: _stakingAnalyticsCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -55,7 +55,7 @@ class _AssetEarningsGrid extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Spacer(),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   '+${_formatUsd(product.earnedUsd)}',
                   style: AppTextStyles.baseMedium.copyWith(
@@ -82,15 +82,16 @@ class _ApyTab extends StatelessWidget {
     return VitPageSection(
       label: 'Xu hướng APY (6 tháng)',
       accentColor: AppColors.primary,
+      density: VitDensity.compact,
       children: [
         VitCard(
           key: StakingAnalyticsPage.apyChartKey,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: _stakingAnalyticsCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: AppSpacing.earnAnalyticsChartHeight,
+                height: _stakingAnalyticsChartHeight,
                 child: Row(
                   children: [
                     const _YAxisLabels(
@@ -151,14 +152,15 @@ class _RoiTab extends StatelessWidget {
     return VitPageSection(
       label: 'ROI: Staking vs Holding',
       accentColor: AppColors.primary,
+      density: VitDensity.compact,
       children: [
         VitCard(
           key: StakingAnalyticsPage.roiChartKey,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: _stakingAnalyticsCardPadding,
           child: Column(
             children: [
               SizedBox(
-                height: AppSpacing.earnAnalyticsChartHeight,
+                height: _stakingAnalyticsChartHeight,
                 child: CustomPaint(
                   painter: _RoiBarPainter(points: snapshot.roiComparison),
                   size: Size.infinite,
@@ -198,6 +200,7 @@ class _ProductsTab extends StatelessWidget {
     return VitPageSection(
       label: 'Hiệu suất theo Sản phẩm',
       accentColor: AppColors.primary,
+      density: VitDensity.compact,
       children: [
         KeyedSubtree(
           key: StakingAnalyticsPage.productListKey,
@@ -229,7 +232,7 @@ class _ProductPerformanceCard extends StatelessWidget {
 
     return VitCard(
       key: StakingAnalyticsPage.productKey(product.asset),
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: _stakingAnalyticsCardPadding,
       child: Column(
         children: [
           Row(
@@ -326,7 +329,7 @@ class _SmallStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: _stakingAnalyticsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -396,7 +399,7 @@ class _InsightBox extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3,
+        padding: _stakingAnalyticsCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -411,7 +414,7 @@ class _InsightBox extends StatelessWidget {
                 text,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.earnAnalyticsInsightLineHeight,
+                  height: _stakingAnalyticsInsightLineHeight,
                 ),
               ),
             ),
@@ -431,13 +434,13 @@ class _FooterNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: _stakingAnalyticsCardPadding,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.earnAnalyticsFooterLineHeight,
+          height: _stakingAnalyticsFooterLineHeight,
         ),
       ),
     );

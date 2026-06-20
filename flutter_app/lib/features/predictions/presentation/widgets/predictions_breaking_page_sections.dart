@@ -8,29 +8,33 @@ class _MovementSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionBreakingMovementPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
           const Icon(
             Icons.bolt_rounded,
             color: AppColors.warn,
-            size: AppSpacing.predictionBreakingMovementIcon,
+            size: AppSpacing.x4,
           ),
-          const SizedBox(width: AppSpacing.predictionBreakingMovementGap),
-          Text(
-            '24h Movement',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+          const SizedBox(width: _breakingSpace),
+          Expanded(
+            child: Text(
+              '24h Movement',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
           ),
-          const Spacer(),
           _MovementCount(
             icon: Icons.trending_up_rounded,
             label: '${snapshot.upCount} up',
             color: AppColors.buy,
           ),
-          const SizedBox(width: AppSpacing.predictionBreakingMovementCountGap),
+          const SizedBox(width: _breakingSpace),
           _MovementCount(
             icon: Icons.trending_down_rounded,
             label: '${snapshot.downCount} down',
@@ -58,8 +62,8 @@ class _MovementCount extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: color, size: AppSpacing.predictionBreakingCountIcon),
-        const SizedBox(width: AppSpacing.predictionBreakingCountIconGap),
+        Icon(icon, color: color, size: AppSpacing.x3),
+        const SizedBox(width: _breakingTinySpace),
         Text(
           label,
           style: AppTextStyles.badge.copyWith(
@@ -109,7 +113,7 @@ class _CategoryTabs extends StatelessWidget {
               onTap: () => onSelected(tabs[index].id),
             ),
             if (index != tabs.length - 1)
-              const SizedBox(width: AppSpacing.predictionBreakingTabGap),
+              const SizedBox(width: _breakingTinySpace),
           ],
         ],
       ),
@@ -146,19 +150,17 @@ class _CategoryTabButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
-        child: SizedBox(
-          height: AppSpacing.predictionBreakingTabHeight,
-          child: Padding(
-            padding: AppSpacing.predictionBreakingTabPadding,
-            child: Center(
-              child: Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? _predictionPrimary : AppColors.text3,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.normal,
-                ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x2,
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
+                color: active ? _predictionPrimary : AppColors.text3,
+                fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
               ),
             ),
           ),
@@ -194,7 +196,8 @@ class _MoverCard extends StatelessWidget {
 
     return VitCard(
       onTap: onTap,
-      padding: AppSpacing.predictionBreakingMoverPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -204,7 +207,7 @@ class _MoverCard extends StatelessWidget {
                 : AppColors.surface2,
             borderRadius: AppRadii.smRadius,
             child: SizedBox.square(
-              dimension: AppSpacing.predictionBreakingRankBox,
+              dimension: _breakingRankBox,
               child: Center(
                 child: Text(
                   '$rank',
@@ -216,7 +219,7 @@ class _MoverCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.predictionBreakingMoverGap),
+          const SizedBox(width: _breakingSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,10 +231,10 @@ class _MoverCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.predictionBreakingTitleGap),
+                const SizedBox(height: _breakingTinySpace),
                 Wrap(
-                  spacing: AppSpacing.predictionBreakingOutcomeGap,
-                  runSpacing: AppSpacing.predictionBreakingOutcomeRunGap,
+                  spacing: _breakingTinySpace,
+                  runSpacing: _breakingTinySpace,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     RichText(
@@ -257,10 +260,10 @@ class _MoverCard extends StatelessWidget {
                     _ChangeBadge(value: event.change24h, color: changeColor),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.predictionBreakingMetaGap),
+                const SizedBox(height: _breakingTinySpace),
                 Wrap(
-                  spacing: AppSpacing.predictionBreakingMetaGap,
-                  runSpacing: AppSpacing.predictionBreakingMetaRunGap,
+                  spacing: _breakingTinySpace,
+                  runSpacing: _breakingTinySpace,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     _TinyBadge(event.category),
@@ -296,16 +299,19 @@ class _ChangeBadge extends StatelessWidget {
       color: color.withValues(alpha: .14),
       borderRadius: AppRadii.badgeRadius,
       child: Padding(
-        padding: AppSpacing.predictionBreakingChangePadding,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.x2,
+          vertical: AppSpacing.x1,
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               isUp ? Icons.arrow_outward_rounded : Icons.south_east_rounded,
-              size: AppSpacing.predictionBreakingChangeIcon,
+              size: AppSpacing.x3,
               color: color,
             ),
-            const SizedBox(width: AppSpacing.predictionBreakingChangeIconGap),
+            const SizedBox(width: _breakingTinySpace),
             Text(
               _formatPercent(value),
               style: AppTextStyles.badge.copyWith(
@@ -331,7 +337,10 @@ class _TinyBadge extends StatelessWidget {
       color: _predictionPrimary.withValues(alpha: .14),
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.predictionBreakingTinyBadgePadding,
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.x2,
+          vertical: AppSpacing.x1,
+        ),
         child: Text(
           label,
           style: AppTextStyles.numericMicro.copyWith(
@@ -355,12 +364,8 @@ class _MetaIcon extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          icon,
-          color: AppColors.text3,
-          size: AppSpacing.predictionBreakingMetaIcon,
-        ),
-        const SizedBox(width: AppSpacing.predictionBreakingMetaIconGap),
+        Icon(icon, color: AppColors.text3, size: AppSpacing.x3),
+        const SizedBox(width: _breakingTinySpace),
         Text(
           label,
           style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),

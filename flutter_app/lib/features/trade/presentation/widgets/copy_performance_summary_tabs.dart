@@ -8,7 +8,8 @@ class _PerformanceSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -18,7 +19,7 @@ class _PerformanceSummary extends StatelessWidget {
               fontWeight: AppTextStyles.extraBold,
             ),
           ),
-          const SizedBox(height: AppSpacing.rowPy),
+          const SizedBox(height: _performanceSpace),
           Row(
             children: [
               Expanded(
@@ -32,7 +33,7 @@ class _PerformanceSummary extends StatelessWidget {
                   textColor: AppColors.infoTextStrong,
                 ),
               ),
-              const SizedBox(width: AppSpacing.cardGap),
+              const SizedBox(width: _performanceSpace),
               Expanded(
                 child: _ReturnCard(
                   title: 'Provider lý thuyết',
@@ -46,9 +47,10 @@ class _PerformanceSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.cardGap),
+          const SizedBox(height: _performanceSpace),
           VitCard(
             variant: VitCardVariant.ghost,
+            density: VitDensity.compact,
             padding: AppSpacing.cardPaddingCompact,
             borderColor: _performanceGreen,
             child: Column(
@@ -79,7 +81,7 @@ class _PerformanceSummary extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.formFieldLabelGap),
+                const SizedBox(height: _performanceSpace),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -117,7 +119,7 @@ class _ReturnCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      height: AppSpacing.copyPerformanceReturnCardHeight,
+      height: _performanceReturnCardHeight,
       padding: AppSpacing.copyPerformanceReturnCardPadding,
       borderColor: border,
       child: Column(
@@ -130,7 +132,7 @@ class _ReturnCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: textColor),
           ),
-          const SizedBox(height: AppSpacing.formFieldLabelGap),
+          const SizedBox(height: _performanceSpace),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -163,7 +165,7 @@ class _PerformanceTabs extends StatelessWidget {
     ];
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.copyPerformanceTabsHeight,
+      height: _performanceTabsHeight,
       padding: AppSpacing.zeroInsets,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
@@ -199,15 +201,15 @@ class _OverviewTab extends StatelessWidget {
             fontWeight: AppTextStyles.extraBold,
           ),
         ),
-        const SizedBox(height: AppSpacing.walletAssetPillGap),
+        const SizedBox(height: _performanceSpace),
         SizedBox(
-          height: AppSpacing.copyPerformanceEquityChartHeight,
+          height: _performanceEquityChartHeight,
           child: CustomPaint(
             painter: _LineChartPainter(points: snapshot.equityCurve),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: AppSpacing.rowPy),
+        const SizedBox(height: _performanceSpace),
         _InfoBox(
           title: 'Tại sao có chênh lệch?',
           lines: const [
@@ -216,7 +218,7 @@ class _OverviewTab extends StatelessWidget {
             'Position sizing: Fixed mode sử dụng 50% capital',
           ],
         ),
-        const SizedBox(height: AppSpacing.transferSectionGap),
+        const SizedBox(height: _performanceCardSpace),
         Text(
           'Phân bổ Slippage',
           style: AppTextStyles.caption.copyWith(
@@ -224,15 +226,15 @@ class _OverviewTab extends StatelessWidget {
             fontWeight: AppTextStyles.extraBold,
           ),
         ),
-        const SizedBox(height: AppSpacing.walletAssetPillGap),
+        const SizedBox(height: _performanceSpace),
         SizedBox(
-          height: AppSpacing.dcaPortfolioOptimizerFrontierChartHeight,
+          height: _performanceSlippageChartHeight,
           child: CustomPaint(
             painter: _BarChartPainter(buckets: snapshot.slippageBuckets),
             child: const SizedBox.expand(),
           ),
         ),
-        const SizedBox(height: AppSpacing.cardGap),
+        const SizedBox(height: _performanceSpace),
         Row(
           children: [
             Expanded(
@@ -241,7 +243,7 @@ class _OverviewTab extends StatelessWidget {
                 value: '${snapshot.avgSlippagePct.toStringAsFixed(2)}%',
               ),
             ),
-            const SizedBox(width: AppSpacing.walletAssetPillGap),
+            const SizedBox(width: _performanceSpace),
             Expanded(
               child: _SmallMetricCard(
                 label: 'Provider TB',

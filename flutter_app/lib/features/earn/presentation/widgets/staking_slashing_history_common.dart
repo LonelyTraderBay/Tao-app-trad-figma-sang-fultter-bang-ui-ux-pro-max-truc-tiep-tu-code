@@ -35,10 +35,7 @@ class StakingSlashingExportButton extends StatelessWidget {
     return VitCard(
       key: StakingSlashingHistoryKeys.export,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -74,7 +71,7 @@ class StakingSlashingFooterNote extends StatelessWidget {
     return VitCard(
       key: StakingSlashingHistoryKeys.footer,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,
@@ -99,20 +96,19 @@ class StakingSlashingStatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: AppRadii.pillRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.pillRadius),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );

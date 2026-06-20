@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -69,22 +70,27 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(profileControllerProvider).getApiKeyCreate();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome +
-                  AppSpacing.profileApiCreateBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.profileApiCreateBottomInsetNative) +
+                  AppSpacing.x7 +
+                  AppSpacing.x6 +
+                  AppSpacing.x5 +
+                  AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
     return switch (_step) {
-      _ApiCreateStep.confirm => _buildConfirm(snapshot, bottomInset),
-      _ApiCreateStep.result => _buildResult(snapshot, bottomInset),
-      _ => _buildForm(snapshot, bottomInset),
+      _ApiCreateStep.confirm => _buildConfirm(snapshot, scrollClearance),
+      _ApiCreateStep.result => _buildResult(snapshot, scrollClearance),
+      _ => _buildForm(snapshot, scrollClearance),
     };
   }
 
-  Widget _buildForm(ProfileApiKeyCreateSnapshot snapshot, double bottomInset) {
+  Widget _buildForm(
+    ProfileApiKeyCreateSnapshot snapshot,
+    double scrollClearance,
+  ) {
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-162 ApiKeyCreatePage',
@@ -104,11 +110,11 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   padding: AppSpacing.profileApiCreateScrollPadding(
-                    bottomInset,
+                    scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.profileApiCreateContentGap,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(
@@ -116,6 +122,7 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
                         title: 'Review API key scope',
                         message:
                             'Use the least permissions, set IP whitelist, choose expiry, and confirm secret handling before creation.',
+                        density: VitDensity.compact,
                       ),
                       _NameSection(
                         controller: _nameController,
@@ -161,7 +168,7 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
 
   Widget _buildConfirm(
     ProfileApiKeyCreateSnapshot snapshot,
-    double bottomInset,
+    double scrollClearance,
   ) {
     final permissionLabels = snapshot.permissions
         .where((permission) => _permissions.contains(permission.id))
@@ -175,7 +182,7 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
     return _SimpleStepScaffold(
       title: 'X\u00E1c nh\u1EADn t\u1EA1o API Key',
       subtitle: 'API \u00B7 Profile',
-      bottomInset: bottomInset,
+      scrollClearance: scrollClearance,
       onBack: () => setState(() => _step = _ApiCreateStep.form),
       children: [
         const _SuccessIcon(title: 'X\u00E1c nh\u1EADn t\u1EA1o API Key'),
@@ -215,12 +222,12 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
 
   Widget _buildResult(
     ProfileApiKeyCreateSnapshot snapshot,
-    double bottomInset,
+    double scrollClearance,
   ) {
     return _SimpleStepScaffold(
       title: 'API Key \u0111\u00E3 t\u1EA1o',
       subtitle: 'API \u00B7 Profile',
-      bottomInset: bottomInset,
+      scrollClearance: scrollClearance,
       showBack: false,
       children: [
         const _SuccessIcon(title: 'T\u1EA1o th\u00E0nh c\u00F4ng!'),

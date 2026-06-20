@@ -16,13 +16,13 @@ class _PredictionEventCard extends StatelessWidget {
     final isMulti = event.outcomes.length > 2;
     return VitCard(
       onTap: onTap,
-      padding: AppSpacing.predictionHomeEventPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Wrap(
-            spacing: AppSpacing.predictionHomeBadgeGap,
-            runSpacing: AppSpacing.predictionHomeBadgeRunGap,
+            spacing: AppSpacing.x1,
+            runSpacing: AppSpacing.x1,
             children: [
               _SmallBadge(
                 label: event.category,
@@ -49,7 +49,7 @@ class _PredictionEventCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionHomeEventTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             event.title,
             style: AppTextStyles.body.copyWith(
@@ -57,18 +57,18 @@ class _PredictionEventCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.predictionHomeEventTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           if (isMulti)
             _MultiOutcomeRow(event: event)
           else
             _BinaryOutcomeBar(outcomes: outcomes),
-          const SizedBox(height: AppSpacing.predictionHomeSectionGap),
+          const SizedBox(height: AppSpacing.x2),
           _EventStatsRow(event: event),
-          const SizedBox(height: AppSpacing.predictionHomeSectionGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(child: _OutcomeActionButton(outcome: outcomes.first)),
-              const SizedBox(width: AppSpacing.predictionHomeActionGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(child: _OutcomeActionButton(outcome: outcomes.last)),
             ],
           ),
@@ -102,11 +102,11 @@ class _BinaryOutcomeBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.predictionHomeChanceLabelGap),
+        const SizedBox(height: AppSpacing.x1),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: SizedBox(
-            height: AppSpacing.predictionHomeChanceBarHeight,
+            height: AppSpacing.x2,
             child: Row(
               children: [
                 Expanded(
@@ -134,8 +134,8 @@ class _MultiOutcomeRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.predictionHomeOutcomeGap,
-      runSpacing: AppSpacing.predictionHomeOutcomeGap,
+      spacing: AppSpacing.x2,
+      runSpacing: AppSpacing.x2,
       children: [
         for (final outcome in event.outcomes.take(3))
           Material(
@@ -156,12 +156,12 @@ class _MultiOutcomeRow extends StatelessWidget {
                       shape: const CircleBorder(),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.predictionHomeOutcomeGap),
+                  const SizedBox(width: AppSpacing.x2),
                   Text(
                     outcome.label,
                     style: AppTextStyles.badge.copyWith(color: AppColors.text1),
                   ),
-                  const SizedBox(width: AppSpacing.predictionHomeOutcomeGap),
+                  const SizedBox(width: AppSpacing.x2),
                   Text(
                     '${outcome.chance}%',
                     style: AppTextStyles.badge.copyWith(color: outcome.color),
@@ -194,17 +194,17 @@ class _EventStatsRow extends StatelessWidget {
           icon: Icons.bar_chart_rounded,
           label: 'Vol: ${_formatVolume(event.volume24h)}',
         ),
-        const SizedBox(width: AppSpacing.predictionHomeStatGap),
+        const SizedBox(width: AppSpacing.x2),
         _StatText(
           icon: Icons.group_outlined,
           label: _formatInt(event.participants),
         ),
-        const SizedBox(width: AppSpacing.predictionHomeStatGap),
+        const SizedBox(width: AppSpacing.x2),
         _StatText(
           icon: Icons.schedule_rounded,
           label: _timeRemaining(event.endDate),
         ),
-        const Spacer(),
+        const Expanded(child: SizedBox.shrink()),
         Icon(
           event.change24h >= 0
               ? Icons.trending_up_rounded
@@ -242,7 +242,7 @@ class _StatText extends StatelessWidget {
             size: AppSpacing.predictionHomeStatIcon,
             color: AppColors.text3,
           ),
-          const SizedBox(width: AppSpacing.predictionHomeStatIconGap),
+          const SizedBox(width: AppSpacing.x1),
           Flexible(
             child: Text(
               label,
@@ -265,7 +265,7 @@ class _OutcomeActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.predictionHomeActionHeight,
+      height: VitDensity.compact.controlHeight - AppSpacing.x2,
       child: Material(
         color: outcome.color.withValues(alpha: .12),
         shape: RoundedRectangleBorder(
@@ -322,7 +322,7 @@ class _PredictionsEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.predictionHomeEmptyHeight,
+      height: VitDensity.compact.controlHeight * 4,
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -332,7 +332,7 @@ class _PredictionsEmptyState extends StatelessWidget {
               color: AppColors.text3.withValues(alpha: .40),
               size: AppSpacing.predictionHomeEmptyIcon,
             ),
-            const SizedBox(height: AppSpacing.predictionHomeEmptyTitleGap),
+            const SizedBox(height: AppSpacing.x2),
             Text(
               'No events found',
               style: AppTextStyles.body.copyWith(
@@ -340,7 +340,7 @@ class _PredictionsEmptyState extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.predictionHomeEmptySubtitleGap),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               'Try adjusting your filters or search terms',
               textAlign: TextAlign.center,

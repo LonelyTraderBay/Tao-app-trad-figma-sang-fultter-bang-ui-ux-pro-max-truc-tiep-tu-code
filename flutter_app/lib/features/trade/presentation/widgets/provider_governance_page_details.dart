@@ -9,8 +9,7 @@ class _ModificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final typeColor = _modificationColor(modification.type);
     return VitCard(
-      height: AppSpacing.providerGovernanceModificationHeight,
-      padding: AppSpacing.providerGovernanceModificationPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -28,23 +27,17 @@ class _ModificationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Change:',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.providerGovernanceLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Row(
             children: [
               Text(
                 modification.oldValue,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  height: AppSpacing.providerGovernanceLineHeightTight,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
               ),
               const SizedBox(width: AppSpacing.x3),
               const Icon(
@@ -61,13 +54,12 @@ class _ModificationCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.providerGovernanceLineHeightTight,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               const Icon(
@@ -78,10 +70,7 @@ class _ModificationCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x1),
               Text(
                 modification.date,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.providerGovernanceLineHeightTight,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               const SizedBox(width: AppSpacing.providerGovernanceMetaGap),
               const Icon(
@@ -93,15 +82,12 @@ class _ModificationCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   '${modification.followerImpact} followers impacted',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.providerGovernanceLineHeightTight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           const VitAccentPill(
             label: 'Notification sent 24h before implementation',
             accentColor: AppColors.buy,
@@ -123,7 +109,7 @@ class _RequestButton extends StatelessWidget {
     return VitCtaButton(
       key: ProviderGovernancePage.requestActionKey,
       onPressed: onPressed,
-      height: AppSpacing.providerGovernanceRequestHeight,
+      density: VitDensity.compact,
       leading: const Icon(Icons.edit_outlined),
       child: const Text('Request Strategy Modification'),
     );
@@ -138,20 +124,18 @@ class _CommunicationTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
+      fullBleed: true,
       children: [
         _RequestButton(onPressed: onBroadcast),
-        const SizedBox(height: AppSpacing.rowPy),
-        for (final message in snapshot.messages) ...[
+        for (final message in snapshot.messages)
           _SimplePanel(
             title: message.subject,
             body:
                 '${message.recipients} recipients · ${message.openRate}% open rate · ${message.date}',
           ),
-          if (message != snapshot.messages.last)
-            const SizedBox(height: AppSpacing.rowGapRegular),
-        ],
       ],
     );
   }
@@ -164,24 +148,22 @@ class _FeesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
+      fullBleed: true,
       children: [
         _SimplePanel(
           title: 'Performance Fee Waterfall',
           body:
               'This Month \$${snapshot.stats.monthlyFeesEarned.toStringAsFixed(0)} · All-Time \$${snapshot.stats.allTimeFeesEarned.toStringAsFixed(0)}',
         ),
-        const SizedBox(height: AppSpacing.x4),
-        for (final contributor in snapshot.feeContributors) ...[
+        for (final contributor in snapshot.feeContributors)
           _SimplePanel(
             title: contributor.name,
             body:
                 'Profit \$${contributor.profit.toStringAsFixed(0)} · Fee \$${contributor.fee.toStringAsFixed(0)}',
           ),
-          if (contributor != snapshot.feeContributors.last)
-            const SizedBox(height: AppSpacing.x3),
-        ],
       ],
     );
   }
@@ -194,19 +176,17 @@ class _ComplianceTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
+      fullBleed: true,
       children: [
-        for (final item in snapshot.complianceItems) ...[
+        for (final item in snapshot.complianceItems)
           _SimplePanel(
             title: item.item,
             body: 'Last check: ${item.lastCheck}',
             leading: Icons.check_circle_outline_rounded,
           ),
-          if (item != snapshot.complianceItems.last)
-            const SizedBox(height: AppSpacing.x3),
-        ],
-        const SizedBox(height: AppSpacing.x4),
         _SimplePanel(
           title: 'Compliance Score: ${snapshot.stats.complianceScore}/100',
           body: 'Excellent standing — All requirements met',
@@ -226,16 +206,12 @@ class _SimplePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.providerGovernancePanelPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           if (leading != null) ...[
-            Icon(
-              leading,
-              color: AppColors.buy,
-              size: AppSpacing.providerGovernancePanelIcon,
-            ),
-            const SizedBox(width: AppSpacing.rowGapRegular),
+            Icon(leading, color: AppColors.buy, size: AppSpacing.iconSm),
+            const SizedBox(width: AppSpacing.x2),
           ],
           Expanded(
             child: Column(

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -53,15 +54,13 @@ class _PredictionPortfolioAnalyzerPageState
         .watch(predictionsReadModelControllerProvider)
         .getPortfolioAnalyzer();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final footerPadding =
+        footerChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionAnalyzerBottomInsetVisual
-            : AppSpacing.predictionAnalyzerBottomInsetNative);
+        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,11 +88,10 @@ class _PredictionPortfolioAnalyzerPageState
                   child: SingleChildScrollView(
                     key: PredictionPortfolioAnalyzerPage.contentKey,
                     padding: AppSpacing.predictionAnalyzerScrollPadding(
-                      bottomInset,
+                      footerPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionAnalyzerContentGap,
+                      density: VitDensity.compact,
                       children: [
                         ...switch (_activeTab) {
                           _AnalyzerTab.overview => [
@@ -119,6 +117,7 @@ class _PredictionPortfolioAnalyzerPageState
                           message:
                               'Portfolio value, category exposure, P/L attribution, probability drift, risk concentration, diversification, and warning states are reviewed before portfolio decisions.',
                           contractId: 'SC-038',
+                          density: VitDensity.compact,
                         ),
                       ],
                     ),

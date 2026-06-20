@@ -10,12 +10,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAdvancedChart(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -86,6 +85,24 @@ void main() {
     expect(find.text('+18.97%'), findsOneWidget);
     expect(find.text('Probability Chart'), findsOneWidget);
     expect(find.text('Trading Volume'), findsOneWidget);
+  });
+
+  testWidgets('SC-041 first viewport reaches the chart work area', (
+    tester,
+  ) async {
+    await pumpAdvancedChart(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-041 PredictionAdvancedChartPage',
+      semanticLabel: 'SC-041 PredictionAdvancedChartPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Probability Chart'),
+      targetLabel: 'the primary probability chart title',
+      minVisibleHeight: 12,
+    );
   });
 
   testWidgets('SC-041 timeframe and layer controls update locally', (

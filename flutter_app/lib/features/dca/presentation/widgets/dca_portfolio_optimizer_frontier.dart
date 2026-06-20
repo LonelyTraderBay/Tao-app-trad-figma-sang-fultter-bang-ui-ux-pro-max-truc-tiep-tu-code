@@ -26,9 +26,9 @@ class _FrontierContent extends StatelessWidget {
             onTap: () {},
           ),
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX4),
+        const Padding(padding: AppSpacing.dcaTopPaddingX3),
         VitCard(
-          padding: AppSpacing.dcaPaddingX4,
+          padding: _dcaPortfolioCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -38,9 +38,9 @@ class _FrontierContent extends StatelessWidget {
                 subtitle:
                     'Mỗi điểm đại diện một phân bổ tối ưu. Điểm càng cao = lợi nhuận lớn hơn.',
               ),
-              const Padding(padding: AppSpacing.dcaTopPaddingX4),
+              const Padding(padding: AppSpacing.dcaTopPaddingX3),
               SizedBox(
-                height: AppSpacing.dcaPortfolioOptimizerFrontierChartHeight,
+                height: _dcaPortfolioFrontierChartHeight,
                 width: double.infinity,
                 child: CustomPaint(
                   painter: _FrontierChartPainter(snapshot.frontier),
@@ -49,9 +49,9 @@ class _FrontierContent extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX4),
+        const Padding(padding: AppSpacing.dcaTopPaddingX3),
         SizedBox(
-          height: AppSpacing.dcaPortfolioOptimizerFrontierChipListHeight,
+          height: _dcaPortfolioFrontierChipListHeight,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
@@ -64,9 +64,9 @@ class _FrontierContent extends StatelessWidget {
             },
           ),
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX4),
+        const Padding(padding: AppSpacing.dcaTopPaddingX3),
         _SelectedPortfolioCard(snapshot: snapshot),
-        const Padding(padding: AppSpacing.dcaTopPaddingX4),
+        const Padding(padding: AppSpacing.dcaTopPaddingX3),
         _SuggestionsCard(
           suggestions: snapshot.suggestions,
           expanded: showSuggestions,
@@ -89,15 +89,15 @@ class _SelectedPortfolioCard extends StatelessWidget {
         .toList(growable: false);
 
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: _dcaPortfolioHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.x7,
-                height: AppSpacing.x7,
+                width: _dcaPortfolioHeroIconExtent,
+                height: _dcaPortfolioHeroIconExtent,
                 child: DecoratedBox(
                   decoration: const ShapeDecoration(
                     color: AppColors.accent10,
@@ -140,10 +140,10 @@ class _SelectedPortfolioCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX4),
+          const Padding(padding: AppSpacing.dcaTopPaddingX3),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.dcaPaddingX4,
+            padding: _dcaPortfolioCardPadding,
             child: Row(
               children: [
                 Expanded(
@@ -155,7 +155,7 @@ class _SelectedPortfolioCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  width: AppSpacing.dcaPortfolioOptimizerDividerWidth,
+                  width: _dcaPortfolioDividerWidth,
                   height: AppSpacing.x7,
                   child: ColoredBox(color: AppColors.border),
                 ),
@@ -169,7 +169,7 @@ class _SelectedPortfolioCard extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX4),
+          const Padding(padding: AppSpacing.dcaTopPaddingX3),
           for (final allocation in optimalAllocations) ...[
             _SimpleAllocationBar(allocation: allocation),
             if (allocation != optimalAllocations.last)
@@ -195,7 +195,7 @@ class _SuggestionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: _dcaPortfolioHeroPadding,
       child: Column(
         children: [
           InkWell(
@@ -228,7 +228,7 @@ class _SuggestionsCard extends StatelessWidget {
             ),
           ),
           if (expanded) ...[
-            const Padding(padding: AppSpacing.dcaTopPaddingX4),
+            const Padding(padding: AppSpacing.dcaTopPaddingX3),
             for (final suggestion in suggestions) ...[
               _SuggestionRow(suggestion: suggestion),
               if (suggestion != suggestions.last)

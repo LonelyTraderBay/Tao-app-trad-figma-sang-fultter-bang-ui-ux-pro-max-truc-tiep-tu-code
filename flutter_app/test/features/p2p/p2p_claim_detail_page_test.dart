@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_insurance_
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PClaimDetail(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -97,6 +99,22 @@ void main() {
     expect(find.byKey(P2PClaimDetailPage.notificationsKey), findsOneWidget);
     expect(find.byKey(P2PClaimDetailPage.orderLinkKey), findsOneWidget);
     expect(find.byKey(P2PClaimDetailPage.receiptKey), findsOneWidget);
+  });
+
+  testWidgets('SC-243 first viewport reaches claim benchmarks', (tester) async {
+    await pumpP2PClaimDetail(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-243 P2PClaimDetailPage',
+      semanticLabel: 'SC-243 P2PClaimDetailPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(P2PClaimDetailPage.benchmarksKey),
+      targetLabel: 'claim benchmark comparison',
+      minVisibleHeight: 18,
+    );
   });
 
   testWidgets(

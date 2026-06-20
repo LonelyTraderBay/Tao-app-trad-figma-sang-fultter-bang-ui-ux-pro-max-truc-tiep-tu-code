@@ -88,22 +88,25 @@ class _ActionBar extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: _TradeActionButton(
+                    child: VitCtaButton(
                       key: AdvancedChartPage.buyKey,
-                      label: 'MUA',
-                      color: AppColors.buy,
-                      onTap: () => context.go(AppRoutePaths.tradePair(pairId)),
+                      height: AppSpacing.tradeBotControlCompact,
+                      variant: VitCtaButtonVariant.success,
+                      onPressed: () =>
+                          context.go(AppRoutePaths.tradePair(pairId)),
+                      child: const Text('MUA'),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.tradeBotSmallGap),
                   Expanded(
-                    child: _TradeActionButton(
+                    child: VitCtaButton(
                       key: AdvancedChartPage.sellKey,
-                      label: 'BÁN',
-                      color: AppColors.sell,
-                      onTap: () => context.go(
+                      height: AppSpacing.tradeBotControlCompact,
+                      variant: VitCtaButtonVariant.danger,
+                      onPressed: () => context.go(
                         '${AppRoutePaths.tradePair(pairId)}?side=sell',
                       ),
+                      child: const Text('BÁN'),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.tradeBotSmallGap),
@@ -120,40 +123,6 @@ class _ActionBar extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _TradeActionButton extends StatelessWidget {
-  const _TradeActionButton({
-    super.key,
-    required this.label,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      height: AppSpacing.tradeBotControlCompact,
-      alignment: Alignment.center,
-      variant: VitCardVariant.ghost,
-      borderColor: color.withValues(alpha: .34),
-      clip: true,
-      background: ColoredBox(color: color.withValues(alpha: .15)),
-      onTap: onTap,
-      child: Text(
-        label,
-        style: AppTextStyles.body.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.tradeBotLineHeightTight,
-        ),
       ),
     );
   }
@@ -181,48 +150,57 @@ class _IndicatorSheet extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: GestureDetector(
               onTap: () {},
-              child: VitCard(
+              child: ConstrainedBox(
                 constraints: const BoxConstraints(
                   maxWidth: AppSpacing.launchpadSheetMaxWidth,
                 ),
-                padding: AppSpacing.homeMoreProductsSheetPadding,
-                variant: VitCardVariant.standard,
-                radius: VitCardRadius.lg,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const VitSheetHandle(),
-                    const SizedBox(height: AppSpacing.tradeBotPanelGap),
-                    Row(
+                child: VitSheetSurface(
+                  color: AppColors.surface,
+                  child: SafeArea(
+                    top: false,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Expanded(
-                          child: Text(
-                            'Chỉ báo kỹ thuật',
-                            style: AppTextStyles.baseMedium.copyWith(
-                              fontWeight: AppTextStyles.bold,
+                        const VitSheetHandle(),
+                        const SizedBox(height: AppSpacing.tradeBotPanelGap),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Chỉ báo kỹ thuật',
+                                style: AppTextStyles.baseMedium.copyWith(
+                                  fontWeight: AppTextStyles.bold,
+                                ),
+                              ),
                             ),
-                          ),
+                            VitIconButton(
+                              key: AdvancedChartPage.closeIndicatorsKey,
+                              icon: Icons.close_rounded,
+                              tooltip: 'Close indicators',
+                              onPressed: onClose,
+                              variant: VitIconButtonVariant.transparent,
+                              size: VitIconButtonSize.md,
+                            ),
+                          ],
                         ),
-                        VitIconButton(
-                          key: AdvancedChartPage.closeIndicatorsKey,
-                          icon: Icons.close_rounded,
-                          tooltip: 'Close indicators',
-                          onPressed: onClose,
-                          variant: VitIconButtonVariant.transparent,
-                          size: VitIconButtonSize.md,
+                        const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                        for (final indicator in indicators) ...[
+                          _IndicatorOption(
+                            key: AdvancedChartPage.indicatorKey(indicator.id),
+                            indicator: indicator,
+                            onTap: () => onToggle(indicator.id),
+                          ),
+                          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                        ],
+                        const SizedBox(
+                          height:
+                              AppSpacing.bottomNavCapsuleHeightVisual +
+                              AppSpacing.bottomNavBottomGapVisual +
+                              AppSpacing.x3,
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.tradeBotSmallGap),
-                    for (final indicator in indicators) ...[
-                      _IndicatorOption(
-                        key: AdvancedChartPage.indicatorKey(indicator.id),
-                        indicator: indicator,
-                        onTap: () => onToggle(indicator.id),
-                      ),
-                      const SizedBox(height: AppSpacing.tradeBotSmallGap),
-                    ],
-                  ],
+                  ),
                 ),
               ),
             ),

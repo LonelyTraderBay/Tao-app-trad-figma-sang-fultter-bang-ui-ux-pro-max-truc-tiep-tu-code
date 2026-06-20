@@ -51,12 +51,16 @@ class _VitSkeletonState extends State<VitSkeleton>
       child: AnimatedBuilder(
         animation: _color,
         builder: (context, child) {
-          return Container(
+          return SizedBox(
             width: widget.width,
             height: widget.height,
-            decoration: BoxDecoration(
-              color: _color.value,
-              borderRadius: widget.borderRadius,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: _color.value,
+                shape: RoundedRectangleBorder(
+                  borderRadius: widget.borderRadius,
+                ),
+              ),
             ),
           );
         },
@@ -73,7 +77,7 @@ class VitSkeletonRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
+      padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x4,
         vertical: AppSpacing.rowPy,
       ),
@@ -126,7 +130,11 @@ class VitSkeletonList extends StatelessWidget {
           for (var i = 0; i < rows; i++) ...[
             const VitSkeletonRow(),
             if (i < rows - 1)
-              const Divider(height: 1, thickness: 1, color: AppColors.divider),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
           ],
         ],
       ),

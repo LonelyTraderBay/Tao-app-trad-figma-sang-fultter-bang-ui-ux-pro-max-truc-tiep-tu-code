@@ -90,12 +90,12 @@ class _UnlockWarningCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tokenUnlocksWarningTitleGap),
+                const SizedBox(height: _unlockWarningTitleGap),
                 Text(
                   'Token unlock không đồng nghĩa token sẽ bị bán. Tuy nhiên, unlock lớn thường tạo áp lực bán tiềm ẩn. Dữ liệu chỉ mang tính tham khảo.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.tokenUnlocksWarningLineHeight,
+                    height: _unlockWarningLineHeight,
                   ),
                 ),
               ],
@@ -125,7 +125,7 @@ class _ScheduleList extends StatelessWidget {
             categoryConfig: snapshot.categoryConfigs[unlock.category]!,
           ),
           if (unlock != unlocks.last)
-            const SizedBox(height: AppSpacing.tokenUnlocksScheduleGap),
+            const SizedBox(height: _unlockScheduleGap),
         ],
       ],
     );
@@ -167,9 +167,7 @@ class _ScheduleCard extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(
-                          width: AppSpacing.tokenUnlocksScheduleGap,
-                        ),
+                        const SizedBox(width: _unlockScheduleGap),
                         _TinyBadge(
                           label: _shortVestingTypeLabel(unlock.vestingType),
                           color: categoryConfig.color,
@@ -207,7 +205,7 @@ class _ScheduleCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tokenUnlocksScheduleSupplyGap),
+          const SizedBox(height: _unlockScheduleSupplyGap),
           Row(
             children: [
               Expanded(
@@ -225,17 +223,17 @@ class _ScheduleCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tokenUnlocksScheduleProgressGap),
+          const SizedBox(height: _unlockScheduleProgressGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
               value: supplyPct,
-              minHeight: AppSpacing.tokenUnlocksCategoryProgressHeight,
+              minHeight: _unlockCategoryProgressHeight,
               backgroundColor: AppColors.surface2,
               valueColor: AlwaysStoppedAnimation<Color>(unlock.color),
             ),
           ),
-          const SizedBox(height: AppSpacing.tokenUnlocksScheduleTitleGap),
+          const SizedBox(height: _unlockScheduleTitleGap),
           Text(
             'Lịch mở khóa',
             style: AppTextStyles.micro.copyWith(
@@ -243,7 +241,7 @@ class _ScheduleCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tokenUnlocksScheduleGap),
+          const SizedBox(height: _unlockScheduleGap),
           for (var index = 0; index < unlock.vestingSchedule.length; index += 1)
             _VestingEventRow(
               event: unlock.vestingSchedule[index],

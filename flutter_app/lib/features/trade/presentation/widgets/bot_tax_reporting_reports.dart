@@ -18,7 +18,7 @@ class _ReportTypeCard extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: VitCard(
-        padding: AppSpacing.tradeBotCardPadding,
+        density: VitDensity.compact,
         borderColor: selected ? _taxPrimary : _taxOptionBorder,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +39,6 @@ class _ReportTypeCard extends StatelessWidget {
                           style: AppTextStyles.caption.copyWith(
                             color: selected ? _taxPrimary : AppColors.text1,
                             fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.tradeBotLineHeightTight,
                           ),
                         ),
                       ),
@@ -59,13 +58,10 @@ class _ReportTypeCard extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.tradeBotRowGap),
+                  const SizedBox(height: AppSpacing.x2),
                   Text(
                     report.description,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: AppSpacing.tradeBotLineHeightTight,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -86,7 +82,6 @@ class _BreakdownCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         children: [
           _BreakdownRow(
@@ -94,7 +89,7 @@ class _BreakdownCard extends StatelessWidget {
             description: breakdown.shortTermDescription,
             value: '+${_formatUsd(summary.shortTermGains)}',
           ),
-          const SizedBox(height: AppSpacing.tradeBotContentGap),
+          const SizedBox(height: AppSpacing.x3),
           _BreakdownRow(
             title: breakdown.longTermLabel,
             description: breakdown.longTermDescription,
@@ -127,18 +122,12 @@ class _BreakdownRow extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  height: AppSpacing.tradeBotLineHeightTight,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.tradeBotTinyGap),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 description,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.tradeBotLineHeightTight,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -148,7 +137,6 @@ class _BreakdownRow extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: _taxGreen,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ],
@@ -165,7 +153,7 @@ class _TaxNotesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -174,10 +162,9 @@ class _TaxNotesCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSectionMarkerHeight),
+          const SizedBox(height: AppSpacing.x2),
           for (final note in notes) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,15 +178,12 @@ class _TaxNotesCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     note,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: AppSpacing.tradeBotLineHeightReadable,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ),
               ],
             ),
-            if (note != notes.last) const SizedBox(height: AppSpacing.x4),
+            if (note != notes.last) const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -209,7 +193,7 @@ class _TaxNotesCard extends StatelessWidget {
 
 class _GenerateFooter extends StatelessWidget {
   const _GenerateFooter({
-    required this.visualMode,
+    required this.chromeInset,
     required this.disabled,
     required this.generating,
     required this.selectedCount,
@@ -217,7 +201,7 @@ class _GenerateFooter extends StatelessWidget {
     required this.onPressed,
   });
 
-  final bool visualMode;
+  final double chromeInset;
   final bool disabled;
   final bool generating;
   final int selectedCount;
@@ -226,76 +210,36 @@ class _GenerateFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaHeight = MediaQuery.sizeOf(context).height;
-    final topOffset = mediaHeight <= DeviceMetrics.height + 1
-        ? DeviceMetrics.safeTop + AppSpacing.tradeBotFooterTopOffset
-        : 0.0;
-    final top =
-        DeviceMetrics.height -
-        DeviceMetrics.bottomChrome -
-        AppSpacing.tradeBotControlHeight -
-        topOffset;
     final child = VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotFooterPadding,
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.contentPad,
+        AppSpacing.x2,
+        AppSpacing.contentPad,
+        AppSpacing.x2,
+      ),
       borderColor: AppColors.borderSolid,
-      child: GestureDetector(
+      child: VitCtaButton(
         key: BotTaxReportingPage.generateKey,
-        behavior: HitTestBehavior.opaque,
-        onTap: disabled ? null : onPressed,
-        child: VitCard(
-          variant: disabled ? VitCardVariant.inner : VitCardVariant.hero,
-          height: AppSpacing.tradeBotFooterButtonHeight,
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (generating)
-                const SizedBox(
-                  width: AppSpacing.tradeBotSelectionDot,
-                  height: AppSpacing.tradeBotSelectionDot,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: AppColors.onAccent,
-                  ),
-                )
-              else
-                Icon(
-                  Icons.download_rounded,
-                  color: disabled ? AppColors.text3 : AppColors.onAccent,
-                  size: AppSpacing.iconSm,
-                ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
-              Flexible(
-                child: Text(
-                  generating
-                      ? 'Generating Reports...'
-                      : 'Generate $selectedCount Report${selectedCount > 1 ? 's' : ''} for $selectedYear',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: disabled ? AppColors.text3 : AppColors.onAccent,
-                    fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
-                ),
-              ),
-            ],
-          ),
+        onPressed: disabled ? null : onPressed,
+        loading: generating,
+        density: VitDensity.compact,
+        leading: generating ? null : const Icon(Icons.download_rounded),
+        child: Text(
+          generating
+              ? 'Generating Reports...'
+              : 'Generate $selectedCount Report${selectedCount > 1 ? 's' : ''} for $selectedYear',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
         ),
       ),
     );
 
-    if (visualMode) {
-      return Positioned(left: 0, right: 0, top: top, child: child);
-    }
     return Positioned(
       left: 0,
       right: 0,
-      bottom:
-          DeviceMetrics.nativeBottomChrome +
-          MediaQuery.paddingOf(context).bottom,
+      bottom: chromeInset + MediaQuery.paddingOf(context).bottom,
       child: child,
     );
   }

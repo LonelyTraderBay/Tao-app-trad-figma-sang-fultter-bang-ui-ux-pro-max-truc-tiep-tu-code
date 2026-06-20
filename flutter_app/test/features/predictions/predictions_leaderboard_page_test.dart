@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpLeaderboard(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -84,6 +86,24 @@ void main() {
     expect(
       find.byKey(PredictionsLeaderboardPage.traderKey('WhaleAlpha')),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-033 first viewport reaches the top ranking row', (
+    tester,
+  ) async {
+    await pumpLeaderboard(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-033 PredictionsLeaderboardPage',
+      semanticLabel: 'SC-033 PredictionsLeaderboardPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PredictionsLeaderboardPage.traderKey('WhaleAlpha')),
+      targetLabel: 'the top prediction leaderboard row',
+      minVisibleHeight: 24,
     );
   });
 

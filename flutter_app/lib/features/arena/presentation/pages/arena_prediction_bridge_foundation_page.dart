@@ -5,11 +5,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,6 +24,14 @@ part 'arena_prediction_bridge_foundation_page_part_02.dart';
 part 'arena_prediction_bridge_foundation_page_part_03.dart';
 
 enum _BridgeSection { principles, topics, boundary, bridge, examples }
+
+const _bridgeVisualNavClearance = 114.0;
+const _bridgeNativeNavClearance = 88.0;
+const _bridgeHeroLineHeight = 1.08;
+const _bridgeIntroLineHeight = 1.16;
+const _bridgeTitleLineHeight = 1.12;
+const _bridgeBodyLineHeight = 1.22;
+const _bridgeMetricLineHeight = 1.12;
 
 class ArenaPredictionBridgeFoundationPage extends ConsumerStatefulWidget {
   const ArenaPredictionBridgeFoundationPage({super.key, this.shellRenderMode});

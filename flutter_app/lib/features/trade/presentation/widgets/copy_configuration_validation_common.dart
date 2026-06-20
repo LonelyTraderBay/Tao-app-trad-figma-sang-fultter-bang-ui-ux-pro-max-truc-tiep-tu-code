@@ -15,7 +15,8 @@ class _RiskToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.copyConfigurationRiskTogglePadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
           const Icon(
@@ -23,7 +24,7 @@ class _RiskToggle extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.copyConfigurationRiskIcon,
           ),
-          const SizedBox(width: AppSpacing.copyConfigurationMediumGap),
+          const SizedBox(width: _configurationCardSpace),
           Expanded(
             child: Text(
               title,
@@ -60,7 +61,8 @@ class _ValidationCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: color.withValues(alpha: .55),
-      padding: AppSpacing.copyConfigurationValidationPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -69,13 +71,13 @@ class _ValidationCard extends StatelessWidget {
             color: color,
             size: AppSpacing.copyConfigurationValidationIcon,
           ),
-          const SizedBox(width: AppSpacing.copyConfigurationSmallGap),
+          const SizedBox(width: _configurationSpace),
           Expanded(
             child: Text(
               item.message,
               style: AppTextStyles.captionSm.copyWith(
                 color: color,
-                height: AppSpacing.copyConfigurationDescriptionLineHeight,
+                height: _configurationDescriptionLineHeight,
               ),
             ),
           ),
@@ -99,7 +101,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.copyConfigurationSummaryRowPadding,
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
       child: Row(
         children: [
           Expanded(
@@ -108,7 +110,7 @@ class _SummaryRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
-          const SizedBox(width: AppSpacing.copyConfigurationInlineGap),
+          const SizedBox(width: _configurationSpace),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(
@@ -131,7 +133,7 @@ class _PresetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.copyConfigurationPresetHeight,
+      height: _configurationPresetHeight,
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(

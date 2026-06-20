@@ -8,19 +8,21 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: LaunchpadRiskAnalyticsPage.tabsKey,
       color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
-      child: VitTabBar(
-        tabs: const [
-          VitTabItem(key: 'overview', label: 'Tong quan'),
-          VitTabItem(key: 'dueDiligence', label: 'Due Diligence'),
-          VitTabItem(key: 'report', label: 'Bao cao'),
-        ],
-        activeKey: activeTab.name,
-        onChanged: (key) => onChanged(_RiskAnalyticsTab.values.byName(key)),
-        variant: VitTabBarVariant.underline,
+      child: Padding(
+        padding: AppSpacing.launchpadHorizontalContentPadding,
+        child: VitTabBar(
+          tabs: const [
+            VitTabItem(key: 'overview', label: 'Tong quan'),
+            VitTabItem(key: 'dueDiligence', label: 'Due Diligence'),
+            VitTabItem(key: 'report', label: 'Bao cao'),
+          ],
+          activeKey: activeTab.name,
+          onChanged: (key) => onChanged(_RiskAnalyticsTab.values.byName(key)),
+          variant: VitTabBarVariant.underline,
+        ),
       ),
     );
   }
@@ -36,7 +38,7 @@ class _OverallRiskCard extends StatelessWidget {
     final color = _riskColor(project.level);
     return VitCard(
       key: LaunchpadRiskAnalyticsPage.scoreKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -63,18 +65,22 @@ class _OverallRiskCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                width: AppSpacing.launchpadBox60,
-                height: AppSpacing.launchpadBox60,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: .12),
-                  borderRadius: AppRadii.cardRadius,
-                ),
-                child: Icon(
-                  Icons.shield_outlined,
-                  color: color,
-                  size: AppSpacing.launchpadIconHuge,
+              SizedBox.square(
+                dimension: AppSpacing.launchpadBox60,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: color.withValues(alpha: .12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.cardRadius,
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.shield_outlined,
+                      color: color,
+                      size: AppSpacing.launchpadIconHuge,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -101,7 +107,7 @@ class _RiskBreakdownCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadRiskAnalyticsPage.breakdownKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -165,7 +171,7 @@ class _QuickChecksSection extends StatelessWidget {
       ),
     ];
 
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadRiskAnalyticsPage.quickChecksKey,
       child: VitPageSection(
         label: 'Kiem tra nhanh',
@@ -178,7 +184,7 @@ class _QuickChecksSection extends StatelessWidget {
             childAspectRatio: AppSpacing.launchpadGridAspectWide,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
+            padding: AppSpacing.zeroInsets,
             children: [
               for (final check in checks) _QuickCheckCard(check: check),
             ],
@@ -209,38 +215,46 @@ class _QuickCheckCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = check.status ? AppColors.buy : AppColors.sell;
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .08),
-        border: Border.all(color: color.withValues(alpha: .20)),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: color.withValues(alpha: .20)),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(check.icon, color: color, size: AppSpacing.launchpadIconXl),
-              const SizedBox(width: AppSpacing.x2),
-              Icon(
-                check.status
-                    ? Icons.check_circle_outline_rounded
-                    : Icons.cancel_outlined,
-                color: color,
-                size: AppSpacing.launchpadIconLg,
-              ),
-            ],
-          ),
-          const Spacer(),
-          Text(
-            check.label,
-            style: AppTextStyles.captionSm.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX3,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  check.icon,
+                  color: color,
+                  size: AppSpacing.launchpadIconXl,
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Icon(
+                  check.status
+                      ? Icons.check_circle_outline_rounded
+                      : Icons.cancel_outlined,
+                  color: color,
+                  size: AppSpacing.launchpadIconLg,
+                ),
+              ],
             ),
-          ),
-        ],
+            const Spacer(),
+            Text(
+              check.label,
+              style: AppTextStyles.captionSm.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -263,35 +277,39 @@ class _SignalSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: sectionKey,
       child: VitPageSection(
         label: label,
         accentColor: accent,
         children: [
           for (final message in messages)
-            Container(
-              padding: const EdgeInsets.all(AppSpacing.x3),
-              decoration: BoxDecoration(
+            DecoratedBox(
+              decoration: ShapeDecoration(
                 color: accent.withValues(alpha: .08),
-                border: Border.all(color: accent.withValues(alpha: .20)),
-                borderRadius: AppRadii.cardRadius,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: accent.withValues(alpha: .20)),
+                  borderRadius: AppRadii.cardRadius,
+                ),
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(icon, color: accent, size: AppSpacing.launchpadIconXl),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.medium,
+              child: Padding(
+                padding: AppSpacing.launchpadPaddingX3,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(icon, color: accent, size: AppSpacing.launchpadIconXl),
+                    const SizedBox(width: AppSpacing.x2),
+                    Expanded(
+                      child: Text(
+                        message,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.medium,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
         ],

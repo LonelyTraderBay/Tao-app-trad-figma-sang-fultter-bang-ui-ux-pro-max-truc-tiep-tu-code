@@ -14,13 +14,12 @@ class _EnforcementTab extends StatelessWidget {
           'Recent enforcement actions taken to protect users:',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.rowPy),
+        const SizedBox(height: _safetySpace),
         for (final action in actions) ...[
           _EnforcementCard(action: action),
-          if (action != actions.last)
-            const SizedBox(height: AppSpacing.walletAssetPillGap),
+          if (action != actions.last) const SizedBox(height: _safetySpace),
         ],
-        const SizedBox(height: AppSpacing.rowPy),
+        const SizedBox(height: _safetySpace),
         _SimpleCard(
           title: 'Transparent enforcement',
           body:
@@ -45,6 +44,7 @@ class _EnforcementCard extends StatelessWidget {
       _ => AppColors.buy,
     };
     return VitCard(
+      density: VitDensity.compact,
       padding: AppSpacing.copySafetyActionCardPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
@@ -53,7 +53,7 @@ class _EnforcementCard extends StatelessWidget {
           Icon(
             Icons.shield_outlined,
             color: color,
-            size: AppSpacing.sectionGapRegular,
+            size: _safetyActionIconSize,
           ),
           const SizedBox(width: AppSpacing.cardGap),
           Expanded(
@@ -67,7 +67,7 @@ class _EnforcementCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                const SizedBox(height: _safetySpace),
                 Text(
                   action.providerName,
                   style: AppTextStyles.caption.copyWith(
@@ -112,7 +112,7 @@ class _SectionPanel extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.walletAssetPillGap),
+        const SizedBox(height: _safetySpace),
         child,
       ],
     );
@@ -135,11 +135,12 @@ class _IconTextRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
+      density: VitDensity.compact,
       padding: AppSpacing.copySafetyIconTextPadding,
       child: Row(
         children: [
           Icon(icon, color: color, size: AppSpacing.copySafetyIconTextIcon),
-          const SizedBox(width: AppSpacing.copySafetyIconTextGap),
+          const SizedBox(width: _safetySpace),
           Expanded(
             child: Text(
               text,
@@ -165,6 +166,7 @@ class _SimpleCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
+      density: VitDensity.compact,
       width: double.infinity,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: color,
@@ -219,7 +221,7 @@ class _EmergencyPanel extends StatelessWidget {
                       'Emergency stop activated',
                       style: AppTextStyles.baseMedium,
                     ),
-                    const SizedBox(height: AppSpacing.walletAssetPillGap),
+                    const SizedBox(height: _safetySpace),
                     Text(
                       'All copies would be stopped and positions queued for close in the backend flow.',
                       style: AppTextStyles.caption.copyWith(
@@ -229,7 +231,7 @@ class _EmergencyPanel extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
                     VitCtaButton(
                       onPressed: onClose,
-                      height: AppSpacing.searchBarCompactHeight,
+                      height: _safetySheetButtonHeight,
                       child: const Text('Done'),
                     ),
                   ],

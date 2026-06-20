@@ -21,6 +21,7 @@ class _ProviderRankCard extends StatelessWidget {
           ? AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x4
           : AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x6,
       padding: AppSpacing.providerLeaderboardCardPadding,
+      density: VitDensity.compact,
       borderColor: AppColors.cardBorder,
       onTap: onOpen,
       child: Row(
@@ -33,13 +34,9 @@ class _ProviderRankCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _ProviderTitle(provider: provider),
-                const SizedBox(
-                  height: AppSpacing.providerLeaderboardCardTitleGap,
-                ),
+                const SizedBox(height: _leaderTinySpace),
                 _MetricsRow(provider: provider),
-                const SizedBox(
-                  height: AppSpacing.providerLeaderboardCardMetricsGap,
-                ),
+                const SizedBox(height: _leaderTinySpace),
                 _FollowersLabel(count: provider.copiers),
                 if (redFlags.isNotEmpty) ...[
                   const SizedBox(height: AppSpacing.x3),
@@ -87,7 +84,7 @@ class _RankBadge extends StatelessWidget {
         style: AppTextStyles.caption.copyWith(
           color: podium ? _leaderWarningText : AppColors.text2,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.providerLeaderboardLineHeightFlat,
+          height: _leaderLineFlat,
           fontFeatures: AppTextStyles.tabularFigures,
         ),
       ),
@@ -112,14 +109,12 @@ class _ProviderTitle extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.providerLeaderboardLineHeightFlat,
+              height: _leaderLineFlat,
             ),
           ),
         ),
         if (_isProviderVerified(provider)) ...[
-          const SizedBox(
-            width: AppSpacing.providerLeaderboardVerifiedIconGap,
-          ),
+          const SizedBox(width: AppSpacing.providerLeaderboardVerifiedIconGap),
           const Icon(
             Icons.check_circle_outline_rounded,
             color: _leaderPrimary,
@@ -199,16 +194,16 @@ class _MetricValue extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.providerLeaderboardLineHeightFlat,
+            height: _leaderLineFlat,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
+        const SizedBox(height: _leaderTinySpace),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.providerLeaderboardLineHeightFlat,
+            height: _leaderLineFlat,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),
@@ -236,7 +231,7 @@ class _FollowersLabel extends StatelessWidget {
           '${_formatInteger(count)} followers',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.providerLeaderboardLineHeightFlat,
+            height: _leaderLineFlat,
             fontFeatures: AppTextStyles.tabularFigures,
           ),
         ),

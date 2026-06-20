@@ -28,7 +28,8 @@ class _NoticePanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotInnerPanelPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: color.withValues(alpha: .55),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,16 +37,13 @@ class _NoticePanel extends StatelessWidget {
           Icon(
             Icons.warning_amber_rounded,
             color: color,
-            size: AppSpacing.tradeBotSmallIcon + AppSpacing.hairlineStroke,
+            size: AppSpacing.inputPrefixIcon,
           ),
-          const SizedBox(width: AppSpacing.tradeBotSmallGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                height: AppSpacing.tradeBotLineHeightReadable,
-              ),
+              style: AppTextStyles.micro.copyWith(color: color),
             ),
           ),
         ],

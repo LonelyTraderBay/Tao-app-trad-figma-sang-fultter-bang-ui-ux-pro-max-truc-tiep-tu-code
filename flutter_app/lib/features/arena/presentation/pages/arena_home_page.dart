@@ -5,11 +5,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
@@ -24,6 +24,17 @@ part 'arena_home_page_part_02.dart';
 part 'arena_home_page_part_03.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
+const _arenaHomeVisualNavClearance = 114.0;
+const _arenaHomeNativeNavClearance = 88.0;
+const _arenaHomeIntroLineHeight = 1.16;
+const _arenaHomeHeroTitleLineHeight = 1.06;
+const _arenaHomeTemplateTitleLineHeight = 1.12;
+const _arenaHomeTemplateDescriptionLineHeight = 1.18;
+const _arenaHomeModeTitleLineHeight = 1.12;
+const _arenaHomeVerifiedLineHeight = 1.2;
+const _arenaHomeFooterLineHeight = 1.22;
+const _arenaHomeCountBadgeLineHeight = 1.0;
+const _arenaHomeRoomProgressHeight = 4.0;
 
 class ArenaHomePage extends ConsumerStatefulWidget {
   const ArenaHomePage({super.key, this.shellRenderMode});

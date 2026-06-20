@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_home_p
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_safety_center_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSafetyCenter(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -76,6 +78,24 @@ void main() {
     expect(find.text('Tôn trọng kết quả'), findsOneWidget);
     expect(find.text('Nội dung bị cấm'), findsOneWidget);
     expect(find.text('Spam, quảng cáo, link lạ'), findsOneWidget);
+  });
+
+  testWidgets('SC-198 first viewport reaches first community rule', (
+    tester,
+  ) async {
+    await pumpSafetyCenter(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ArenaSafetyCenterPage',
+      semanticLabel: 'SC-198 ArenaSafetyCenterPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ArenaSafetyCenterPage.firstCommunityRuleKey),
+      targetLabel: 'first community rule',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-198 quick links use safe Arena routes', (tester) async {

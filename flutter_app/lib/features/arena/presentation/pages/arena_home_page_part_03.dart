@@ -12,7 +12,7 @@ class _VerifiedTeaser extends StatelessWidget {
       child: VitCard(
         key: ArenaHomePage.verifiedTeaserKey,
         onTap: onTap,
-        padding: AppSpacing.arenaPaddingX4,
+        density: VitDensity.compact,
         child: Row(
           children: [
             _ActionIcon(
@@ -50,7 +50,7 @@ class _VerifiedTeaser extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.arenaHomeVerifiedLineHeight,
+                      height: _arenaHomeVerifiedLineHeight,
                     ),
                   ),
                 ],
@@ -86,9 +86,9 @@ class _ArenaFooter extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          density: VitDensity.compact,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -103,7 +103,7 @@ class _ArenaFooter extends StatelessWidget {
                   'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính. Không thỏa thuận giao dịch ngoài nền tảng.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaHomeFooterLineHeight,
+                    height: _arenaHomeFooterLineHeight,
                   ),
                 ),
               ),
@@ -162,13 +162,13 @@ class _SearchResults extends StatelessWidget {
               : '$total kết quả cho "$query"',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         if (modes.isNotEmpty) ...[
           VitModuleSectionHeader(
             title: 'Modes (${modes.length})',
             accentColor: AppColors.primary,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           for (final mode in modes) ...[
             _SearchRow(
               icon: _templateIcon(_kindForMode(mode.templateId)),
@@ -177,7 +177,7 @@ class _SearchResults extends StatelessWidget {
               color: AppColors.primary,
               onTap: () => onMode(mode.id),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
           ],
         ],
         if (rooms.isNotEmpty) ...[
@@ -185,7 +185,7 @@ class _SearchResults extends StatelessWidget {
             title: 'Phòng (${rooms.length})',
             accentColor: AppColors.warn,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           for (final room in rooms) ...[
             _SearchRow(
               icon: Icons.groups_2_outlined,
@@ -195,7 +195,7 @@ class _SearchResults extends StatelessWidget {
               color: _challengeStateColor(room.state),
               onTap: () => onRoom(room.id),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
           ],
         ],
         if (creators.isNotEmpty) ...[
@@ -203,7 +203,7 @@ class _SearchResults extends StatelessWidget {
             title: 'Creators (${creators.length})',
             accentColor: AppColors.buy,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           for (final creator in creators) ...[
             _SearchRow(
               icon: Icons.person_rounded,
@@ -213,7 +213,7 @@ class _SearchResults extends StatelessWidget {
               color: AppColors.buy,
               onTap: () => onCreator(creator.id),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
           ],
         ],
         if (total == 0)
@@ -246,7 +246,7 @@ class _SearchRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Row(
         children: [
           _ActionIcon(icon: icon, color: color),
@@ -320,23 +320,20 @@ class _MiniCountBadge extends StatelessWidget {
       constraints: const BoxConstraints(
         minWidth: AppSpacing.arenaHomeCountBadgeMinWidth,
       ),
-      child: SizedBox(
-        height: AppSpacing.arenaHomeCountBadgeHeight,
-        child: DecoratedBox(
-          decoration: const ShapeDecoration(
-            color: AppColors.sell,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-          ),
-          child: Padding(
-            padding: AppSpacing.arenaHomeCountBadgePadding,
-            child: Center(
-              child: Text(
-                count > 99 ? '99+' : '$count',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.onAccent,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.arenaHomeCountBadgeLineHeight,
-                ),
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.sell,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+        ),
+        child: Padding(
+          padding: AppSpacing.arenaHomeCountBadgePadding,
+          child: Center(
+            child: Text(
+              count > 99 ? '99+' : '$count',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.onAccent,
+                fontWeight: AppTextStyles.bold,
+                height: _arenaHomeCountBadgeLineHeight,
               ),
             ),
           ),

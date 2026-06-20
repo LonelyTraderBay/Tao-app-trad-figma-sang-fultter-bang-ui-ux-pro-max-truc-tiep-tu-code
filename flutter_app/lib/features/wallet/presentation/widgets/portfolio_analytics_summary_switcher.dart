@@ -8,8 +8,7 @@ class _ValueSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.walletAnalyticsSummaryHeight,
-      padding: AppSpacing.walletAnalyticsSummaryPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
       borderColor: _analyticsPrimary.withValues(alpha: .32),
@@ -20,7 +19,7 @@ class _ValueSummary extends StatelessWidget {
             'T\u1ED5ng gi\u00E1 tr\u1ECB danh m\u1EE5c',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.walletAnalyticsSummaryGap),
+          const SizedBox(height: AppSpacing.x2),
           SizedBox(
             width: double.infinity,
             child: FittedBox(
@@ -37,7 +36,7 @@ class _ValueSummary extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.walletAnalyticsSummaryGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               SizedBox(
@@ -60,7 +59,7 @@ class _ValueSummary extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -114,8 +113,7 @@ class _QuickStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.walletAnalyticsQuickStatHeight,
-      padding: AppSpacing.walletAnalyticsQuickStatPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
       background: ColoredBox(color: AppColors.onAccent.withValues(alpha: .055)),
@@ -129,7 +127,7 @@ class _QuickStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.walletAnalyticsQuickStatTextGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -139,7 +137,7 @@ class _QuickStat extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletAnalyticsQuickStatTextGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             sub,
             maxLines: 1,
@@ -171,8 +169,7 @@ class _ViewSwitcher extends StatelessWidget {
     ];
 
     return VitCard(
-      height: AppSpacing.walletAnalyticsSwitcherHeight,
-      padding: AppSpacing.walletAnalyticsSwitcherPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       child: Row(
@@ -187,6 +184,10 @@ class _ViewSwitcher extends StatelessWidget {
                   alignment: Alignment.center,
                   variant: VitCardVariant.ghost,
                   radius: VitCardRadius.md,
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.x2,
+                    vertical: AppSpacing.x2,
+                  ),
                   background: ColoredBox(
                     color: active == item.id
                         ? _analyticsPrimary.withValues(alpha: .18)

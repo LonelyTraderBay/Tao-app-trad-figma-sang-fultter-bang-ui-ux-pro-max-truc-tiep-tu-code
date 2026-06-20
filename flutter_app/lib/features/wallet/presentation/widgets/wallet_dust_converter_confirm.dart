@@ -7,7 +7,7 @@ class _ConvertFooter extends StatelessWidget {
     required this.targetSymbol,
     required this.enabled,
     required this.onTap,
-    this.horizontalPadding = AppSpacing.walletDustFooterHorizontalPadding,
+    this.horizontalPadding = 16,
   });
 
   final double bottomSpace;
@@ -22,11 +22,10 @@ class _ConvertFooter extends StatelessWidget {
     return ColoredBox(
       color: AppColors.modalScrimStrong,
       child: Padding(
-        padding: AppSpacing.walletDustSheetPadding.copyWith(
+        padding: _dustFooterPadding.copyWith(
           left: horizontalPadding,
-          top: AppSpacing.walletDustFooterTopPadding,
           right: horizontalPadding,
-          bottom: bottomSpace + AppSpacing.walletDustFooterBottomPadding,
+          bottom: bottomSpace + _dustGap,
         ),
         child: _PrimaryButton(
           key: DustConverterPage.ctaKey,
@@ -57,7 +56,7 @@ class _PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       onPressed: enabled ? onTap : null,
-      height: AppSpacing.walletDustButtonHeight,
+      height: _dustButtonHeight,
       child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
@@ -79,9 +78,7 @@ class _PreviewRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.zeroInsets.copyWith(
-        bottom: last ? 0 : AppSpacing.walletDustPreviewRowGap,
-      ),
+      padding: AppSpacing.zeroInsets.copyWith(bottom: last ? 0 : _dustGap),
       child: Row(
         children: [
           Expanded(
@@ -112,16 +109,16 @@ class _ConvertedBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletDustConvertedPadding,
+      padding: _dustConvertedPadding,
       borderColor: _dustGreen.withValues(alpha: .28),
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline,
             color: _dustGreen,
-            size: AppSpacing.walletDustConvertedIcon,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.walletDustConvertedGap),
+          const SizedBox(width: _dustInlineGap),
           Expanded(
             child: Text(
               '\u0110\u00E3 chuy\u1EC3n \u0111\u1ED5i sang $targetSymbol',

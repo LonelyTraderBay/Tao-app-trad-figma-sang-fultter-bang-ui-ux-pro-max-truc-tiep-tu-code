@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpScreener(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -98,6 +100,24 @@ void main() {
     expect(find.text('10 kết quả'), findsOneWidget);
     expect(find.byKey(MarketScreenerPage.rowKey('btcusdt')), findsOneWidget);
     expect(find.byKey(MarketScreenerPage.rowKey('ethusdt')), findsOneWidget);
+  });
+
+  testWidgets('SC-015 first viewport reaches first screener result row', (
+    tester,
+  ) async {
+    await pumpScreener(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-015 MarketScreenerPage',
+      semanticLabel: 'SC-015 MarketScreenerPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(MarketScreenerPage.rowKey('btcusdt')),
+      targetLabel: 'the first screener result row',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-015 filters by search and presets', (tester) async {

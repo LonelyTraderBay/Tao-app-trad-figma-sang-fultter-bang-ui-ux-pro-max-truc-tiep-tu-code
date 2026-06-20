@@ -15,7 +15,7 @@ class _DashedActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotControlHeight,
+      density: VitDensity.compact,
       alignment: Alignment.center,
       borderColor: _securityPrimary.withValues(alpha: .72),
       onTap: onTap,
@@ -23,13 +23,12 @@ class _DashedActionButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: _securityPrimary, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: AppSpacing.x2),
           Text(
             label,
             style: AppTextStyles.caption.copyWith(
               color: _securityPrimary,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -59,14 +58,12 @@ class _Switch extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding, this.constraints});
+  const _Card({required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
-  final BoxConstraints? constraints;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(constraints: constraints, padding: padding, child: child);
+    return VitCard(density: VitDensity.compact, child: child);
   }
 }

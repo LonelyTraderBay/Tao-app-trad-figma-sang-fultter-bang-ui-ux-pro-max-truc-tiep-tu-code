@@ -26,7 +26,10 @@ class VitPhoneFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(gradient: AppGradients.frameOuter),
+      decoration: const ShapeDecoration(
+        gradient: AppGradients.frameOuter,
+        shape: RoundedRectangleBorder(),
+      ),
       child: LayoutBuilder(
         builder: (context, constraints) {
           final frameHeight = constraints.hasBoundedHeight
@@ -66,52 +69,67 @@ class _DynamicIsland extends StatelessWidget {
       key: VitPhoneFrame.dynamicIslandKey,
       top: DeviceMetrics.dynamicIslandTop,
       left: (DeviceMetrics.width - DeviceMetrics.dynamicIslandWidth) / 2,
-      child: Container(
+      child: SizedBox(
         width: DeviceMetrics.dynamicIslandWidth,
         height: DeviceMetrics.dynamicIslandHeight,
-        decoration: BoxDecoration(
-          color: AppColors.dynamicIslandBg,
-          borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: AppColors.divider),
-          boxShadow: const [
-            BoxShadow(color: AppColors.phoneChromeShadow, blurRadius: 2),
-          ],
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              left: 22,
-              top: (DeviceMetrics.dynamicIslandHeight - 5) / 2,
-              child: Container(
-                width: 5,
-                height: 5,
-                decoration: const BoxDecoration(
-                  color: AppColors.phoneSensor,
-                  shape: BoxShape.circle,
-                ),
-              ),
+        child: DecoratedBox(
+          decoration: const ShapeDecoration(
+            color: AppColors.dynamicIslandBg,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: AppColors.divider),
+              borderRadius: AppRadii.dynamicIslandRadius,
             ),
-            Positioned(
-              right: 18,
-              top: (DeviceMetrics.dynamicIslandHeight - 12) / 2,
-              child: Container(
-                width: 12,
-                height: 12,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    center: Alignment(-0.3, -0.3),
-                    colors: [
-                      AppColors.phoneLensStart,
-                      AppColors.phoneLensMid,
-                      AppColors.phoneLensEnd,
-                    ],
-                    stops: [0, 0.6, 1],
+            shadows: [
+              BoxShadow(
+                color: AppColors.phoneChromeShadow,
+                blurRadius: DeviceMetrics.phoneChromeShadowBlur,
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                left: DeviceMetrics.dynamicIslandSensorLeft,
+                top:
+                    (DeviceMetrics.dynamicIslandHeight -
+                        DeviceMetrics.dynamicIslandSensorSize) /
+                    2,
+                child: SizedBox.square(
+                  dimension: DeviceMetrics.dynamicIslandSensorSize,
+                  child: DecoratedBox(
+                    decoration: const ShapeDecoration(
+                      color: AppColors.phoneSensor,
+                      shape: CircleBorder(),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                right: DeviceMetrics.dynamicIslandLensRight,
+                top:
+                    (DeviceMetrics.dynamicIslandHeight -
+                        DeviceMetrics.dynamicIslandLensSize) /
+                    2,
+                child: SizedBox.square(
+                  dimension: DeviceMetrics.dynamicIslandLensSize,
+                  child: DecoratedBox(
+                    decoration: const ShapeDecoration(
+                      gradient: RadialGradient(
+                        center: Alignment(-0.3, -0.3),
+                        colors: [
+                          AppColors.phoneLensStart,
+                          AppColors.phoneLensMid,
+                          AppColors.phoneLensEnd,
+                        ],
+                        stops: [0, 0.6, 1],
+                      ),
+                      shape: CircleBorder(),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -126,13 +144,15 @@ class _HomeIndicator extends StatelessWidget {
     return Positioned(
       key: VitPhoneFrame.homeIndicatorKey,
       left: (DeviceMetrics.width - DeviceMetrics.homeBarWidth) / 2,
-      bottom: 8,
-      child: Container(
+      bottom: DeviceMetrics.homeBarBottomInset,
+      child: SizedBox(
         width: DeviceMetrics.homeBarWidth,
         height: DeviceMetrics.homeBarHeight,
-        decoration: BoxDecoration(
-          color: AppColors.homeBar,
-          borderRadius: AppRadii.xsRadius,
+        child: DecoratedBox(
+          decoration: const ShapeDecoration(
+            color: AppColors.homeBar,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+          ),
         ),
       ),
     );

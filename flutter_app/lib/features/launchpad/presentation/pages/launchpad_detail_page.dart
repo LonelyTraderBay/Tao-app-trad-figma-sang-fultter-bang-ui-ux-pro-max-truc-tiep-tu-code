@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -13,7 +14,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 class LaunchpadDetailPage extends ConsumerWidget {
   const LaunchpadDetailPage({
@@ -108,44 +108,42 @@ class _LaunchpadDetailSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final project = snapshot.project!;
-    return VitCard(
+    final typeLabel = _typeLabel(project.type);
+    final status = _statusPill(project.status);
+
+    return Column(
       key: LaunchpadDetailPage.summaryKey,
-      radius: VitCardRadius.lg,
-      padding: AppSpacing.launchpadPaddingX5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitCard(
+          radius: VitCardRadius.lg,
+          padding: AppSpacing.launchpadPaddingX5,
+          borderColor: project.accent.withValues(alpha: .24),
+          child: Row(
             children: [
-              SizedBox(
-                width: AppSpacing.x7,
-                height: AppSpacing.x7,
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: project.accent.withValues(alpha: .12),
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: project.accent.withValues(alpha: .24),
-                      ),
-                      borderRadius: AppRadii.cardRadius,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      project.logo,
-                      style: AppTextStyles.base.copyWith(
-                        color: project.accent,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              _LaunchpadLogoMark(project: project),
               const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Wrap(
+                      spacing: AppSpacing.x2,
+                      runSpacing: AppSpacing.x2,
+                      children: [
+                        VitStatusPill(
+                          label: typeLabel,
+                          status: VitStatusPillStatus.purple,
+                          size: VitStatusPillSize.sm,
+                        ),
+                        VitStatusPill(
+                          label: status.label,
+                          status: status.status,
+                          size: VitStatusPillSize.sm,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.x3),
                     Text(
                       project.name,
                       style: AppTextStyles.baseMedium.copyWith(
@@ -153,8 +151,9 @@ class _LaunchpadDetailSummary extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
-                      '${project.symbol} · ${project.chain}',
+                      '${project.symbol} - ${project.chain}',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
                       ),
@@ -164,27 +163,239 @@ class _LaunchpadDetailSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
-          Text(
-            project.description,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        Row(
+          children: [
+            Expanded(
+              child: VitCardStat(
+                child: _LaunchpadDetailStat(
+                  label: 'Token price',
+                  value: '\$${_formatPrice(project.price)}',
+                  meta: project.priceUnit,
+                ),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: VitCardStat(
+                child: _LaunchpadDetailStat(
+                  label: 'Raised',
+                  value: project.totalRaise,
+                  meta: 'of ${project.hardCap}',
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        VitCard(
+          variant: VitCardVariant.inner,
+          radius: VitCardRadius.lg,
+          padding: AppSpacing.launchpadPaddingX5,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                project.description,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  height: AppSpacing.launchpadLineHeightLong,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              Wrap(
+                spacing: AppSpacing.x2,
+                runSpacing: AppSpacing.x2,
+                children: [
+                  for (final tag in project.tags)
+                    VitStatusPill(
+                      label: tag,
+                      status: VitStatusPillStatus.neutral,
+                      size: VitStatusPillSize.sm,
+                      outline: true,
+                    ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              Row(
+                children: [
+                  Expanded(
+                    child: _LaunchpadDetailFact(
+                      label: 'KYC',
+                      value: project.kyc ? 'Level ${project.kycLevel}' : 'No',
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: _LaunchpadDetailFact(
+                      label: 'Audit',
+                      value: project.audit,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-          const SizedBox(height: AppSpacing.x4),
-          VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Launchpad staking review required',
-            message:
-                'Review allocation, eligibility, lockup terms, fees and project risk before opening the staking flow.',
-            contractId: project.id,
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Launchpad staking review required',
+          message:
+              'Review allocation, eligibility, lockup terms, fees and project risk before opening the staking flow.',
+          contractId: project.id,
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        VitCard(
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.lg,
+          padding: AppSpacing.launchpadPaddingX5,
+          borderColor: project.accent.withValues(alpha: .24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Next step',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                'Open staking only after reviewing eligibility and lockup terms.',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  height: AppSpacing.launchpadLineHeightLong,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              VitCtaButton(
+                onPressed: () => context.go(snapshot.stakingRoute),
+                leading: const Icon(Icons.rocket_launch_outlined),
+                child: const Text('Mở Launchpad staking'),
+              ),
+            ],
           ),
-          const SizedBox(height: AppSpacing.x4),
-          VitCtaButton(
-            onPressed: () => context.go(snapshot.stakingRoute),
-            leading: const Icon(Icons.rocket_launch_outlined),
-            child: const Text('Mở Launchpad staking'),
+        ),
+      ],
+    );
+  }
+}
+
+class _LaunchpadLogoMark extends StatelessWidget {
+  const _LaunchpadLogoMark({required this.project});
+
+  final LaunchpadProjectDraft project;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: AppSpacing.x7,
+      height: AppSpacing.x7,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: project.accent.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: project.accent.withValues(alpha: .24)),
+            borderRadius: AppRadii.cardRadius,
           ),
-        ],
+        ),
+        child: Center(
+          child: Text(
+            project.logo,
+            style: AppTextStyles.base.copyWith(
+              color: project.accent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ),
       ),
     );
   }
+}
+
+class _LaunchpadDetailStat extends StatelessWidget {
+  const _LaunchpadDetailStat({
+    required this.label,
+    required this.value,
+    required this.meta,
+  });
+
+  final String label;
+  final String value;
+  final String meta;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          style: AppTextStyles.baseMedium.copyWith(
+            color: AppColors.text1,
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(meta, style: AppTextStyles.micro.copyWith(color: AppColors.text3)),
+      ],
+    );
+  }
+}
+
+class _LaunchpadDetailFact extends StatelessWidget {
+  const _LaunchpadDetailFact({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCardStat(
+      child: _LaunchpadDetailStat(label: label, value: value, meta: 'Required'),
+    );
+  }
+}
+
+final class _LaunchpadStatusLabel {
+  const _LaunchpadStatusLabel({required this.label, required this.status});
+
+  final String label;
+  final VitStatusPillStatus status;
+}
+
+_LaunchpadStatusLabel _statusPill(LaunchpadProjectStatus status) {
+  return switch (status) {
+    LaunchpadProjectStatus.active => const _LaunchpadStatusLabel(
+      label: 'Active',
+      status: VitStatusPillStatus.success,
+    ),
+    LaunchpadProjectStatus.upcoming => const _LaunchpadStatusLabel(
+      label: 'Upcoming',
+      status: VitStatusPillStatus.info,
+    ),
+    LaunchpadProjectStatus.ended => const _LaunchpadStatusLabel(
+      label: 'Ended',
+      status: VitStatusPillStatus.neutral,
+    ),
+  };
+}
+
+String _typeLabel(LaunchpadProjectType type) {
+  return switch (type) {
+    LaunchpadProjectType.ido => 'IDO',
+    LaunchpadProjectType.ieo => 'IEO',
+    LaunchpadProjectType.launchpool => 'Launchpool',
+  };
+}
+
+String _formatPrice(double value) {
+  final decimals = value < 0.01 ? 3 : 2;
+  final fixed = value.toStringAsFixed(decimals);
+  return fixed.replaceFirst(RegExp(r'\.?0+$'), '');
 }

@@ -15,14 +15,14 @@ class _InfoBanner extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX3,
+        padding: _launchpadWebhooksCompactCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.info_outline_rounded,
               color: AppColors.accent,
-              size: AppSpacing.launchpadIconLg,
+              size: _launchpadWebhooksIconLg,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -56,6 +56,15 @@ Color _statusColor(LaunchpadWebhookStatus status) {
   };
 }
 
+VitStatusPillStatus _statusPillStatus(LaunchpadWebhookStatus status) {
+  return switch (status) {
+    LaunchpadWebhookStatus.active => VitStatusPillStatus.success,
+    LaunchpadWebhookStatus.paused => VitStatusPillStatus.warning,
+    LaunchpadWebhookStatus.error => VitStatusPillStatus.error,
+    LaunchpadWebhookStatus.pending => VitStatusPillStatus.neutral,
+  };
+}
+
 IconData _statusIcon(LaunchpadWebhookStatus status) {
   return switch (status) {
     LaunchpadWebhookStatus.active => Icons.check_circle_outline_rounded,
@@ -74,12 +83,14 @@ String _deliveryStatusLabel(LaunchpadWebhookDeliveryStatus status) {
   };
 }
 
-Color _deliveryStatusColor(LaunchpadWebhookDeliveryStatus status) {
+VitStatusPillStatus _deliveryStatusPillStatus(
+  LaunchpadWebhookDeliveryStatus status,
+) {
   return switch (status) {
-    LaunchpadWebhookDeliveryStatus.delivered => AppColors.buy,
-    LaunchpadWebhookDeliveryStatus.failed => AppColors.sell,
-    LaunchpadWebhookDeliveryStatus.retrying => AppColors.warn,
-    LaunchpadWebhookDeliveryStatus.pending => AppColors.text3,
+    LaunchpadWebhookDeliveryStatus.delivered => VitStatusPillStatus.success,
+    LaunchpadWebhookDeliveryStatus.failed => VitStatusPillStatus.error,
+    LaunchpadWebhookDeliveryStatus.retrying => VitStatusPillStatus.warning,
+    LaunchpadWebhookDeliveryStatus.pending => VitStatusPillStatus.neutral,
   };
 }
 

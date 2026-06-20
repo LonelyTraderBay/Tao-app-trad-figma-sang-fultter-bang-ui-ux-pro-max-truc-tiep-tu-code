@@ -10,12 +10,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDetail(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -100,6 +99,24 @@ void main() {
     expect(find.text('Open Arena trên cùng chủ đề'), findsOneWidget);
     expect(find.text('Daily Rewards'), findsOneWidget);
     expect(find.text('Global Activity'), findsOneWidget);
+  });
+
+  testWidgets('SC-030 first viewport reaches compact market metrics', (
+    tester,
+  ) async {
+    await pumpDetail(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-030 PredictionEventDetailPage',
+      semanticLabel: 'SC-030 PredictionEventDetailPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Volume 24h').first,
+      targetLabel: 'the first compact market metric',
+      minVisibleHeight: 12,
+    );
   });
 
   testWidgets('SC-030 order book and tabs switch locally', (tester) async {

@@ -8,7 +8,7 @@ class _SentimentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionSocialCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -16,15 +16,15 @@ class _SentimentCard extends StatelessWidget {
             'Community Sentiment',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: AppSpacing.predictionSocialSentimentTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           SizedBox(
-            height: AppSpacing.predictionSocialSentimentChartHeight,
+            height: AppSpacing.x7 * 4,
             child: CustomPaint(
               painter: PredictionSocialSentimentPiePainter(snapshot.sentiment),
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.predictionSocialSentimentLegendGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               for (final item in snapshot.sentiment)
@@ -47,6 +47,7 @@ class _ContributorsSection extends StatelessWidget {
     return VitPageSection(
       label: 'Nguoi dong gop hang dau',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         for (var i = 0; i < snapshot.contributors.length; i += 1)
           _ContributorCard(rank: i, contributor: snapshot.contributors[i]),
@@ -65,6 +66,7 @@ class _SocialShareButtons extends StatelessWidget {
     return VitPageSection(
       label: 'Chia se qua mang xa hoi',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         Row(
           children: const [
@@ -102,7 +104,7 @@ class _CopyLinkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionSocialCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -112,12 +114,12 @@ class _CopyLinkCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.predictionSocialCopyTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
                 child: SizedBox(
-                  height: AppSpacing.predictionSocialCopyBoxHeight,
+                  height: VitDensity.compact.controlHeight,
                   child: Material(
                     color: AppColors.bg,
                     shape: RoundedRectangleBorder(
@@ -143,7 +145,7 @@ class _CopyLinkCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.predictionSocialCopyButtonGap),
               SizedBox(
                 key: PredictionSocialPage.copyLinkKey,
-                height: AppSpacing.predictionSocialCopyBoxHeight,
+                height: VitDensity.compact.controlHeight,
                 child: ElevatedButton.icon(
                   onPressed: onCopy,
                   icon: Icon(
@@ -179,7 +181,7 @@ class _ShareStatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionSocialCardPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           Expanded(
@@ -211,9 +213,10 @@ class _SharePreviewCard extends StatelessWidget {
     return VitPageSection(
       label: 'Preview',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         VitCard(
-          padding: AppSpacing.predictionSocialCardPadding,
+          density: VitDensity.compact,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -240,18 +243,14 @@ class _SharePreviewCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: AppSpacing.predictionSocialPreviewTitleGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Join the prediction market and share your insights with the community.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
                       ),
                     ),
-                    const SizedBox(
-                      height: AppSpacing.predictionSocialPreviewBodyGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'app.example.com',
                       style: AppTextStyles.micro.copyWith(
@@ -278,7 +277,7 @@ class _ContributorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionSocialCardPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           Icon(
@@ -308,9 +307,7 @@ class _ContributorCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionSocialContributorMetaGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${contributor.comments} comments - ${contributor.upvotes} upvotes',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -332,7 +329,7 @@ class _SentimentTrendCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.predictionSocialCompactPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -342,7 +339,7 @@ class _SentimentTrendCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.predictionSocialTrendGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Bullish sentiment tang 12% trong 24h qua. Cho thay su lac quan tang len.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),

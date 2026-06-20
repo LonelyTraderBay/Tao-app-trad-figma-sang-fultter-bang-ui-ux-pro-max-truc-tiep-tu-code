@@ -10,10 +10,10 @@ class _ThresholdCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.dcaContentPadding,
+      padding: VitDensity.compact.cardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.x4,
+        gap: VitContentGap.tight,
         fullBleed: true,
         children: [
           const _SectionHeader(icon: Icons.tune_rounded, title: 'Ngưỡng drift'),
@@ -81,7 +81,7 @@ class _FrequencyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.dcaContentPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -89,7 +89,7 @@ class _FrequencyCard extends StatelessWidget {
             icon: Icons.calendar_month_rounded,
             title: 'Tần suất',
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: options
                 .map(
@@ -242,7 +242,7 @@ class _AdvancedSettings extends StatelessWidget {
             children: [
               VitCard(
                 radius: VitCardRadius.lg,
-                padding: AppSpacing.dcaContentPadding,
+                padding: VitDensity.compact.cardPadding,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -291,10 +291,10 @@ class _AdvancedSettings extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x3),
               VitCard(
                 radius: VitCardRadius.lg,
-                padding: AppSpacing.dcaContentPadding,
+                padding: VitDensity.compact.cardPadding,
                 child: Column(
                   children: [
                     Row(
@@ -333,7 +333,7 @@ class _AdvancedSettings extends StatelessWidget {
                       ],
                     ),
                     if (autoExecute) ...[
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.x3),
                       DecoratedBox(
                         decoration: ShapeDecoration(
                           color: AppColors.warningBg,
@@ -360,8 +360,7 @@ class _AdvancedSettings extends StatelessWidget {
                                   'Hệ thống sẽ tự động thực hiện giao dịch khi danh mục lệch. Bạn có thể tắt bất kỳ lúc nào.',
                                   style: AppTextStyles.micro.copyWith(
                                     color: AppColors.warningText,
-                                    height:
-                                        AppSpacing.dcaRebalanceBodyLineHeight,
+                                    height: _dcaRebalanceBodyLineHeight,
                                   ),
                                 ),
                               ),
@@ -396,7 +395,7 @@ class _InlineRebalanceActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.dcaContentPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -417,13 +416,13 @@ class _InlineRebalanceActions extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: valid ? AppColors.buy : AppColors.text3,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.dcaRebalanceCompactLineHeight,
+                    height: _dcaRebalanceCompactLineHeight,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -431,6 +430,7 @@ class _InlineRebalanceActions extends StatelessWidget {
                   key: DCARebalanceConfig.previewKey,
                   onPressed: valid ? onPreview : null,
                   fullWidth: true,
+                  density: VitDensity.compact,
                   leading: const Icon(Icons.visibility_outlined),
                   child: const Text('Xem trước'),
                 ),
@@ -442,6 +442,7 @@ class _InlineRebalanceActions extends StatelessWidget {
                   onPressed: valid ? onSave : null,
                   fullWidth: true,
                   variant: VitCtaButtonVariant.secondary,
+                  density: VitDensity.compact,
                   leading: const Icon(Icons.save_outlined),
                   child: const Text('Lưu cấu hình'),
                 ),
@@ -475,13 +476,17 @@ class _PreviewSheet extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: AppSpacing.dcaBottomSheetPadding(
-              DeviceMetrics.nativeBottomChrome + AppSpacing.x5,
+            padding: EdgeInsets.fromLTRB(
+              AppSpacing.contentPad,
+              AppSpacing.zero,
+              AppSpacing.contentPad,
+              _dcaRebalancePreviewNavClearance +
+                  MediaQuery.paddingOf(context).bottom,
             ),
             child: VitCard(
               key: DCARebalanceConfig.previewSheetKey,
               radius: VitCardRadius.lg,
-              padding: AppSpacing.dcaContentPadding,
+              padding: VitDensity.compact.cardPadding,
               child: SafeArea(
                 top: false,
                 child: Column(
@@ -508,7 +513,7 @@ class _PreviewSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x5),
+                    const SizedBox(height: AppSpacing.x3),
                     ...previews.map(
                       (preview) => Padding(
                         padding: AppSpacing.dcaBottomPaddingX3,
@@ -524,19 +529,24 @@ class _PreviewSheet extends StatelessWidget {
                             color: AppColors.text2,
                           ),
                         ),
-                        const Spacer(),
-                        Text(
-                          '\$${totalFeesUsd.toStringAsFixed(2)}',
-                          style: AppTextStyles.baseMedium.copyWith(
-                            color: AppColors.text1,
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '\$${totalFeesUsd.toStringAsFixed(2)}',
+                              style: AppTextStyles.baseMedium.copyWith(
+                                color: AppColors.text1,
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x5),
+                    const SizedBox(height: AppSpacing.x3),
                     VitCtaButton(
                       key: DCARebalanceConfig.confirmSaveKey,
                       onPressed: onConfirm,
+                      density: VitDensity.compact,
                       leading: const Icon(Icons.check_rounded),
                       child: const Text('Xác nhận lưu'),
                     ),

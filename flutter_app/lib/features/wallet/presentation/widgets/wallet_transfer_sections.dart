@@ -5,7 +5,6 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_asset_avatar.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
@@ -18,6 +17,29 @@ part 'wallet_transfer_history_picker.dart';
 
 const _transferPrimary = AppColors.primary;
 const _transferGreen = AppColors.buy;
+const _transferSectionGap = 8.0;
+const _transferTinyGap = 4.0;
+const _transferInlineGap = 8.0;
+const _transferIconBox = 34.0;
+const _transferSwapButtonSize = 32.0;
+const _transferActionIcon = 18.0;
+const _transferWalletCardHeight = 70.0;
+const _transferButtonHeight = 46.0;
+const _transferSheetBottomClearance = 88.0;
+const _transferCardInnerPadding = EdgeInsets.symmetric(
+  horizontal: 12,
+  vertical: 10,
+);
+const _transferTilePadding = EdgeInsets.symmetric(horizontal: 12, vertical: 6);
+const _transferNoticePadding = EdgeInsets.symmetric(
+  horizontal: 12,
+  vertical: 10,
+);
+const _transferSheetPadding = EdgeInsets.fromLTRB(16, 14, 16, 16);
+const _transferHistoryRowPadding = EdgeInsets.symmetric(
+  horizontal: 12,
+  vertical: 8,
+);
 
 String formatTransferUsd(double value) {
   return '\$${_withCommas(value.toStringAsFixed(2))}';

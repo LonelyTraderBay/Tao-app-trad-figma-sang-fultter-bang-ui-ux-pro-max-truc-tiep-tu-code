@@ -6,11 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -27,6 +27,29 @@ const _depositPanel = AppColors.surface;
 const _depositPrimary = AppColors.primary;
 const _depositGreen = AppColors.buy;
 const _depositRed = AppColors.sell;
+const _depositNativeBottomClearance = 88.0;
+const _depositVisualBottomClearance = 112.0;
+const _depositScrollTopPad = 0.0;
+const _depositGap = 8.0;
+const _depositTinyGap = 4.0;
+const _depositInlineGap = 8.0;
+const _depositSelectorHeight = 60.0;
+const _depositQrSize = 132.0;
+const _depositCopyButtonHeight = 44.0;
+const _depositRefreshHeight = 44.0;
+const _depositCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 12);
+const _depositCompactPadding = EdgeInsets.symmetric(
+  horizontal: 12,
+  vertical: 8,
+);
+const _depositSheetPadding = EdgeInsets.fromLTRB(16, 14, 16, 16);
+
+double _depositScrollBottomInset(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? _depositVisualBottomClearance
+          : _depositNativeBottomClearance) +
+      MediaQuery.paddingOf(context).bottom;
+}
 
 class DepositPage extends ConsumerStatefulWidget {
   const DepositPage({
@@ -64,13 +87,7 @@ class _DepositPageState extends ConsumerState<DepositPage> {
     );
     final selected = _selectedNetwork(snapshot.networks);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletBottomInsetVisualChrome
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletBottomInsetNativeChrome) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = _depositScrollBottomInset(context, mode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -93,12 +110,12 @@ class _DepositPageState extends ConsumerState<DepositPage> {
                 child: SingleChildScrollView(
                   key: DepositPage.contentKey,
                   padding: AppSpacing.contentInsets.copyWith(
-                    top: AppSpacing.x4,
+                    top: _depositScrollTopPad,
                     bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       _NetworkSelector(
@@ -106,27 +123,21 @@ class _DepositPageState extends ConsumerState<DepositPage> {
                         selected: selected,
                         onTap: () => _openNetworkPicker(snapshot.networks),
                       ),
-                      const SizedBox(height: AppSpacing.walletDepositTopGap),
+                      const SizedBox(height: _depositGap),
                       _WarningCard(asset: snapshot.asset, network: selected),
-                      const SizedBox(
-                        height: AppSpacing.walletDepositSectionGap,
-                      ),
+                      const SizedBox(height: _depositGap),
                       _QrAddressCard(
                         asset: snapshot.asset,
                         network: selected,
                         copied: _copied,
                         onCopy: () => _copyAddress(selected.address),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.walletDepositSectionGap,
-                      ),
+                      const SizedBox(height: _depositGap),
                       _DepositInfoCard(
                         asset: snapshot.asset,
                         network: selected,
                       ),
-                      const SizedBox(
-                        height: AppSpacing.walletDepositSectionGap,
-                      ),
+                      const SizedBox(height: _depositGap),
                       _RefreshButton(onTap: () {}),
                     ],
                   ),
@@ -166,13 +177,13 @@ class _DepositPageState extends ConsumerState<DepositPage> {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: AppSpacing.transferSheetPadding,
+            padding: _depositSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text('Chọn mạng lưới', style: AppTextStyles.sectionTitle),
-                const SizedBox(height: AppSpacing.walletDepositTitleGap),
+                const SizedBox(height: _depositGap),
                 for (final network in networks) ...[
                   _NetworkOption(
                     network: network,
@@ -185,7 +196,7 @@ class _DepositPageState extends ConsumerState<DepositPage> {
                       Navigator.of(context).pop();
                     },
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: _depositTinyGap),
                 ],
               ],
             ),

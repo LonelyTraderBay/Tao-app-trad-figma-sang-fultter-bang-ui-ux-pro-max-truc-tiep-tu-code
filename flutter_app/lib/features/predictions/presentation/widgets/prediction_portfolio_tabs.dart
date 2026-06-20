@@ -34,33 +34,37 @@ class PredictionPortfolioTabs extends StatelessWidget {
       ),
     ];
 
-    return Container(
+    return SizedBox(
       height: AppSpacing.predictionPortfolioTabsHeight,
-      padding: AppSpacing.predictionPortfolioTabsPadding,
-      decoration: BoxDecoration(
-        color: AppColors.surface3,
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Row(
-        children: [
-          for (final item in tabs)
-            Expanded(
-              child: PredictionPortfolioTabButton(
-                key: switch (item.tab) {
-                  PredictionPortfolioTab.active =>
-                    predictionPortfolioActiveTabKey,
-                  PredictionPortfolioTab.closed =>
-                    predictionPortfolioClosedTabKey,
-                  PredictionPortfolioTab.history =>
-                    predictionPortfolioHistoryTabKey,
-                },
-                label: item.label,
-                count: item.count,
-                active: activeTab == item.tab,
-                onTap: () => onChanged(item.tab),
-              ),
-            ),
-        ],
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.surface3,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+        ),
+        child: Padding(
+          padding: AppSpacing.predictionPortfolioTabsPadding,
+          child: Row(
+            children: [
+              for (final item in tabs)
+                Expanded(
+                  child: PredictionPortfolioTabButton(
+                    key: switch (item.tab) {
+                      PredictionPortfolioTab.active =>
+                        predictionPortfolioActiveTabKey,
+                      PredictionPortfolioTab.closed =>
+                        predictionPortfolioClosedTabKey,
+                      PredictionPortfolioTab.history =>
+                        predictionPortfolioHistoryTabKey,
+                    },
+                    label: item.label,
+                    count: item.count,
+                    active: activeTab == item.tab,
+                    onTap: () => onChanged(item.tab),
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -85,32 +89,44 @@ class PredictionPortfolioTabButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
-      child: AnimatedContainer(
+      child: TweenAnimationBuilder<Color?>(
         duration: const Duration(milliseconds: 160),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? AppColors.surface : AppColors.transparent,
-          borderRadius: AppRadii.cardRadius,
+        tween: ColorTween(
+          end: active ? AppColors.surface : AppColors.transparent,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.badge.copyWith(
-                  color: active ? AppColors.text1 : AppColors.text3,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.normal,
-                ),
+        builder: (context, color, child) {
+          return DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color ?? AppColors.transparent,
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.cardRadius,
               ),
             ),
-            const SizedBox(width: AppSpacing.predictionPortfolioTabLabelGap),
-            PredictionPortfolioCountBadge(count: count, active: active),
-          ],
+            child: child,
+          );
+        },
+        child: Align(
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.badge.copyWith(
+                    color: active ? AppColors.text1 : AppColors.text3,
+                    fontWeight: active
+                        ? AppTextStyles.bold
+                        : AppTextStyles.normal,
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.predictionPortfolioTabLabelGap),
+              PredictionPortfolioCountBadge(count: count, active: active),
+            ],
+          ),
         ),
       ),
     );
@@ -129,19 +145,21 @@ class PredictionPortfolioCountBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionPortfolioCountBadgePadding,
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: active
             ? predictionPortfolioPrimary.withValues(alpha: .18)
             : AppColors.surface2,
-        borderRadius: AppRadii.badgeRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.badgeRadius),
       ),
-      child: Text(
-        '$count',
-        style: AppTextStyles.numericMicro.copyWith(
-          color: active ? predictionPortfolioPrimary : AppColors.text3,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.predictionPortfolioCountBadgePadding,
+        child: Text(
+          '$count',
+          style: AppTextStyles.numericMicro.copyWith(
+            color: active ? predictionPortfolioPrimary : AppColors.text3,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );

@@ -59,7 +59,7 @@ class _ValidatorCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -159,12 +159,12 @@ class _ValidatorCard extends StatelessWidget {
           if (validator.slashingHistory > 0) ...[
             const SizedBox(height: AppSpacing.x3),
             DecoratedBox(
-              decoration: const BoxDecoration(
+              decoration: const ShapeDecoration(
                 color: AppColors.sell10,
-                borderRadius: AppRadii.mdRadius,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.x2),
+                padding: AppSpacing.earnPaddingX2,
                 child: Row(
                   children: [
                     const Icon(
@@ -202,9 +202,9 @@ class _ValidatorAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: accent.withValues(alpha: 0.14),
-        borderRadius: AppRadii.xlRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: SizedBox(
         width: AppSpacing.buttonStandard,
@@ -238,10 +238,7 @@ class _ValidatorMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -287,15 +284,12 @@ class _StatusPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.14),
-        borderRadius: AppRadii.smRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: 3,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

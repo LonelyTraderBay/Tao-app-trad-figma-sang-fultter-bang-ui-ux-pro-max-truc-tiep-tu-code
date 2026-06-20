@@ -23,8 +23,7 @@ class _MetricsGrid extends StatelessWidget {
               color: metrics[i].$3,
             ),
           ),
-          if (i < metrics.length - 1)
-            const SizedBox(width: AppSpacing.copyTradingHeroMetricGap),
+          if (i < metrics.length - 1) const SizedBox(width: _copySpace),
         ],
       ],
     );
@@ -53,7 +52,7 @@ class _MetricCell extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.copyTradingMetricCellGap),
+        const SizedBox(height: AppSpacing.x1),
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
@@ -85,9 +84,9 @@ class _WeeklyChart extends StatelessWidget {
           'P/L 7 ngày gần nhất',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.copyTradingWeeklyTitleGap),
+        const SizedBox(height: AppSpacing.x1),
         SizedBox(
-          height: AppSpacing.copyTradingWeeklyChartHeight,
+          height: _copyWeeklyChartHeight,
           child: VitSparkline(
             values: values,
             color: values.isNotEmpty && values.last < values.first
@@ -121,13 +120,13 @@ class _Disclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.copyTradingDisclaimerPadding,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.copyTradingDisclaimerLineHeight,
+          height: _copyTextLineHeight,
         ),
       ),
     );
@@ -135,15 +134,15 @@ class _Disclaimer extends StatelessWidget {
 }
 
 class _Panel extends StatelessWidget {
-  const _Panel({super.key, required this.child, required this.padding});
+  const _Panel({super.key, required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: padding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: AppColors.cardBorder,
       child: child,
     );

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_transaction_reporting_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpReporting(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -89,6 +91,24 @@ void main() {
     expect(find.text('Staking Rewards by Asset'), findsOneWidget);
     expect(find.text('ETH'), findsOneWidget);
     expect(find.text('\$7,000.00'), findsOneWidget);
+  });
+
+  testWidgets('SC-378 first viewport reaches reporting selectors', (
+    tester,
+  ) async {
+    await pumpReporting(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-378 StakingTransactionReportingPage',
+      semanticLabel: 'SC-378 StakingTransactionReportingPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingTransactionReportingPage.selectorsKey),
+      routeName: 'SC-378 StakingTransactionReportingPage',
+      actionLabel: 'the tax year and cost basis selectors',
+    );
   });
 
   testWidgets('SC-378 cost basis sheet updates method state', (tester) async {

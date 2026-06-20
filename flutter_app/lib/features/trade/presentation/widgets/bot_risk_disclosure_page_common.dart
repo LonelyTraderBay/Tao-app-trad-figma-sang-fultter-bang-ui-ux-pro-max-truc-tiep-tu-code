@@ -17,10 +17,8 @@ class _AcknowledgmentCard extends StatelessWidget {
       key: BotRiskDisclosurePage.acknowledgmentKey,
       onTap: onTap,
       variant: VitCardVariant.inner,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotApiKeyCardMinHeight,
-      ),
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: acknowledged ? _botRiskRed : AppColors.borderSolid,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,9 +28,9 @@ class _AcknowledgmentCard extends StatelessWidget {
                 ? Icons.check_box_rounded
                 : Icons.check_box_outline_blank_rounded,
             color: acknowledged ? _botRiskRed : AppColors.text3,
-            size: AppSpacing.tradeBotCheckbox,
+            size: AppSpacing.x4,
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardGap),
+          const SizedBox(width: _riskSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,10 +42,13 @@ class _AcknowledgmentCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: _riskTinySpace),
                 Text(
                   snapshot.acknowledgmentDescription,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    height: _riskLineTight,
+                  ),
                 ),
               ],
             ),
@@ -73,7 +74,7 @@ class _RiskCta extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: BotRiskDisclosurePage.ctaKey,
-      height: AppSpacing.tradeBotSheetActionHeight,
+      height: _riskActionHeight,
       variant: VitCtaButtonVariant.danger,
       onPressed: acknowledged ? onPressed : null,
       child: Text(acknowledged ? snapshot.enabledCta : snapshot.disabledCta),
@@ -90,7 +91,8 @@ class _HelpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -101,12 +103,15 @@ class _HelpCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          const SizedBox(height: _riskTinySpace),
           Text(
             snapshot.helpDescription,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text3,
+              height: _riskLineTight,
+            ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: _riskSpace),
           Text(
             snapshot.helpCta,
             style: AppTextStyles.caption.copyWith(
@@ -116,21 +121,6 @@ class _HelpCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: _botRiskPrimary,
     );
   }
 }
@@ -147,11 +137,14 @@ class _BulletText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('â€¢', style: AppTextStyles.caption.copyWith(color: color)),
-        const SizedBox(width: AppSpacing.tradeBotRowGap),
+        const SizedBox(width: _riskTinySpace),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(color: color),
+            style: AppTextStyles.caption.copyWith(
+              color: color,
+              height: _riskLineTight,
+            ),
           ),
         ),
       ],

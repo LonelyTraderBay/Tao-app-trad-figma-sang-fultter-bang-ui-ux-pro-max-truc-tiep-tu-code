@@ -8,17 +8,13 @@ class _SafetyControlsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Row(
             children: [
-              const Icon(
-                Icons.circle,
-                color: _riskGreen,
-                size: AppSpacing.tradeBotCardGap,
-              ),
-              const SizedBox(width: AppSpacing.tradeBotCardGap),
+              const Icon(Icons.circle, color: _riskGreen, size: AppSpacing.x2),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +26,7 @@ class _SafetyControlsCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.tradeBotTinyGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Auto-stop at limit breach',
                       style: AppTextStyles.caption.copyWith(
@@ -49,11 +45,11 @@ class _SafetyControlsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotContentGap),
+          const SizedBox(height: AppSpacing.x3),
           for (final control in controls) ...[
             VitCard(
               variant: VitCardVariant.inner,
-              padding: AppSpacing.tradeBotControlPadding,
+              density: VitDensity.compact,
               child: Row(
                 children: [
                   Expanded(
@@ -71,17 +67,16 @@ class _SafetyControlsCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.tradeBotRowGap),
+                  const SizedBox(width: AppSpacing.x2),
                   const Icon(
                     Icons.circle,
                     color: _riskGreen,
-                    size: AppSpacing.tradeBotSmallGap,
+                    size: AppSpacing.x2,
                   ),
                 ],
               ),
             ),
-            if (control != controls.last)
-              const SizedBox(height: AppSpacing.tradeBotSmallGap),
+            if (control != controls.last) const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -103,15 +98,16 @@ class _EmergencyActionCard extends StatelessWidget {
       borderRadius: AppRadii.cardRadius,
       child: VitCard(
         variant: VitCardVariant.ghost,
-        constraints: const BoxConstraints(
-          minHeight: AppSpacing.tradeBotSecurityCardMinHeight,
-        ),
-        padding: AppSpacing.tradeBotCardPadding,
+        density: VitDensity.compact,
         borderColor: _riskRed.withValues(alpha: .48),
         child: Row(
           children: [
-            const Icon(Icons.error_outline_rounded, color: _riskRed, size: 24),
-            const SizedBox(width: AppSpacing.x4),
+            const Icon(
+              Icons.error_outline_rounded,
+              color: _riskRed,
+              size: AppSpacing.iconSm,
+            ),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +120,7 @@ class _EmergencyActionCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     'Stop all $runningBots running bots immediately',
                     style: AppTextStyles.caption.copyWith(
@@ -160,7 +156,7 @@ class _RiskExplanationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -171,7 +167,7 @@ class _RiskExplanationCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+          const SizedBox(height: AppSpacing.x2),
           for (final item in _items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +176,7 @@ class _RiskExplanationCard extends StatelessWidget {
                   '-',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotRowGap),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
                     item,
@@ -191,8 +187,7 @@ class _RiskExplanationCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != _items.last)
-              const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+            if (item != _items.last) const SizedBox(height: AppSpacing.x1),
           ],
         ],
       ),
@@ -211,6 +206,7 @@ class _SectionLabel extends StatelessWidget {
       title: label,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: _riskPrimary,
+      density: VitDensity.compact,
     );
   }
 }

@@ -18,8 +18,8 @@ class _EventHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Wrap(
-          spacing: AppSpacing.predictionDetailBadgeGap,
-          runSpacing: AppSpacing.predictionDetailBadgeRunGap,
+          spacing: AppSpacing.x2,
+          runSpacing: AppSpacing.x1,
           children: [
             _TinyBadge(
               label: event.category,
@@ -40,17 +40,17 @@ class _EventHeader extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.predictionDetailTitleTopGap),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           event.title,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.sectionTitle,
         ),
-        const SizedBox(height: AppSpacing.predictionDetailMetaTopGap),
+        const SizedBox(height: AppSpacing.x2),
         Wrap(
-          spacing: AppSpacing.predictionDetailMetaGap,
-          runSpacing: AppSpacing.predictionDetailBadgeRunGap,
+          spacing: AppSpacing.x3,
+          runSpacing: AppSpacing.x1,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             _MetaItem(
@@ -68,7 +68,7 @@ class _EventHeader extends StatelessWidget {
             _ChangeLabel(value: event.change24h),
           ],
         ),
-        const SizedBox(height: AppSpacing.predictionDetailOutcomeTopGap),
+        const SizedBox(height: AppSpacing.x3),
         if (event.outcomes.length == 2)
           Row(
             children: [
@@ -92,7 +92,7 @@ class _EventHeader extends StatelessWidget {
             onOutcomeSelected: onOutcomeSelected,
           ),
         if (event.outcomes.length == 2) ...[
-          const SizedBox(height: AppSpacing.predictionDetailProbabilityTopGap),
+          const SizedBox(height: AppSpacing.x2),
           _ProbabilityBar(outcomes: outcomes),
         ],
       ],
@@ -127,7 +127,10 @@ class _OutcomeCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: Padding(
-          padding: AppSpacing.predictionDetailOutcomePadding,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x2,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -152,14 +155,15 @@ class _OutcomeCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: AppSpacing.predictionDetailOutcomeChanceGap,
-              ),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 '${outcome.chance}%',
-                style: AppTextStyles.heroNumber.copyWith(color: outcome.color),
+                style: AppTextStyles.sectionTitle.copyWith(
+                  color: outcome.color,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
               ),
-              const SizedBox(height: AppSpacing.predictionDetailOutcomeMetaGap),
+              const SizedBox(height: AppSpacing.x1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -221,9 +225,7 @@ class _MultiOutcomeList extends StatelessWidget {
             onTap: () => onOutcomeSelected(event.outcomes[index].label),
           ),
           if (index != event.outcomes.length - 1)
-            const SizedBox(
-              height: AppSpacing.predictionDetailMultiOutcomeBottomGap,
-            ),
+            const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -260,7 +262,10 @@ class _MultiOutcomeRow extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: AppSpacing.predictionDetailMultiOutcomePadding,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x2,
+          ),
           child: Row(
             children: [
               SizedBox.square(
@@ -307,7 +312,7 @@ class _ProbabilityBar extends StatelessWidget {
     return ClipRRect(
       borderRadius: AppRadii.pillRadius,
       child: SizedBox(
-        height: AppSpacing.predictionDetailProbabilityHeight,
+        height: AppSpacing.x2,
         child: Row(
           children: [
             Expanded(

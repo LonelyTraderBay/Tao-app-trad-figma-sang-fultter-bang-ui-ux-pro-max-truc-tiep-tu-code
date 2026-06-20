@@ -26,7 +26,6 @@ class _WarningBox extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: _compAmber,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.tradeBotLineHeightBody,
               ),
             ),
           ),
@@ -43,32 +42,31 @@ class _Eligibility extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
-        const _SectionLabel('Who Is Eligible?'),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
-        _Card(
-          padding: AppSpacing.cardPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const _EligibilityHeading('Eligible Customers:'),
-              const SizedBox(height: AppSpacing.tradeBotRowGap),
-              for (final item in snapshot.eligibleCustomers) ...[
-                _Bullet(text: item, color: _compGreen),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
-              ],
-              const SizedBox(height: AppSpacing.formFieldLabelGap),
-              const _EligibilityHeading('Not Eligible:'),
-              const SizedBox(height: AppSpacing.tradeBotRowGap),
-              for (final item in snapshot.ineligibleCustomers) ...[
-                _Bullet(text: item, color: _compRed),
-                if (item != snapshot.ineligibleCustomers.last)
-                  const SizedBox(height: AppSpacing.tradeBotSmallGap),
-              ],
-            ],
-          ),
+        VitPageSection(
+          label: 'Who Is Eligible?',
+          density: VitDensity.compact,
+          children: [
+            _Card(
+              child: VitPageContent(
+                padding: VitContentPadding.none,
+                fullBleed: true,
+                density: VitDensity.compact,
+                children: [
+                  const _EligibilityHeading('Eligible Customers:'),
+                  for (final item in snapshot.eligibleCustomers)
+                    _Bullet(text: item, color: _compGreen),
+                  const _EligibilityHeading('Not Eligible:'),
+                  for (final item in snapshot.ineligibleCustomers)
+                    _Bullet(text: item, color: _compRed),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -82,19 +80,20 @@ class _ClaimGuide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
-        const _SectionLabel('How to Make a Claim'),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
-        for (final step in snapshot.claimSteps) ...[
-          _ClaimStep(step: step),
-          if (step != snapshot.claimSteps.last)
-            const SizedBox(height: AppSpacing.tradeBotCardGap),
-        ],
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
+        VitPageSection(
+          label: 'How to Make a Claim',
+          density: VitDensity.compact,
+          children: [
+            for (final step in snapshot.claimSteps) _ClaimStep(step: step),
+          ],
+        ),
         VitCtaButton(
-          height: AppSpacing.searchBarCompactHeight,
+          density: VitDensity.compact,
           onPressed: () {},
           leading: const Icon(Icons.open_in_new_rounded),
           child: const Text('Visit FSCS Website'),
@@ -112,23 +111,19 @@ class _ClaimStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotAttributionPanelPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VitCard(
-            width: AppSpacing.statusPillHeightLg,
-            height: AppSpacing.statusPillHeightLg,
+            width: AppSpacing.x6,
+            height: AppSpacing.x6,
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.sm,
             borderColor: _compPrimary.withValues(alpha: .24),
             alignment: Alignment.center,
             child: Text(
               '${step.step}',
-              style: AppTextStyles.baseMedium.copyWith(
-                color: _compPrimary,
-                height: AppSpacing.tradeBotLineHeightTight,
-              ),
+              style: AppTextStyles.baseMedium.copyWith(color: _compPrimary),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -141,16 +136,12 @@ class _ClaimStep extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.formFieldLabelGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   step.description,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightBody,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -173,7 +164,6 @@ class _EligibilityHeading extends StatelessWidget {
       style: AppTextStyles.caption.copyWith(
         color: AppColors.text1,
         fontWeight: AppTextStyles.bold,
-        height: AppSpacing.tradeBotLineHeightTight,
       ),
     );
   }
@@ -201,10 +191,7 @@ class _Bullet extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: AppSpacing.tradeBotLineHeightBody,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
       ],
@@ -219,7 +206,7 @@ class _FaqButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: InvestorCompensationPage.faqKey,
-      height: AppSpacing.searchBarCompactHeight,
+      density: VitDensity.compact,
       variant: VitCtaButtonVariant.secondary,
       onPressed: () {},
       leading: const Icon(Icons.help_outline_rounded),
@@ -229,31 +216,15 @@ class _FaqButton extends StatelessWidget {
   }
 }
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: text,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: _compPrimary,
-    );
-  }
-}
-
 class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
+  const _Card({required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: padding,
+      density: VitDensity.compact,
       borderColor: _compBorder.withValues(alpha: .72),
       child: child,
     );

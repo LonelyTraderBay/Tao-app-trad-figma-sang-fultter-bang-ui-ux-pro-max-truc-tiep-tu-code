@@ -153,7 +153,7 @@ class _SourceFilterCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadEventLogPage.sourcesKey,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

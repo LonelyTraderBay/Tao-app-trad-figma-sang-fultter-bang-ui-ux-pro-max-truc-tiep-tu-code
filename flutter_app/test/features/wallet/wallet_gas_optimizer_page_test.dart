@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpGasOptimizer(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -87,6 +89,24 @@ void main() {
     expect(find.text('Simple Transfer'), findsOneWidget);
     expect(find.text('~\$3.50'), findsWidgets);
     expect(find.text('Refresh Prices'), findsOneWidget);
+  });
+
+  testWidgets('SC-149 first viewport reaches gas comparison fee row', (
+    tester,
+  ) async {
+    await pumpGasOptimizer(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-149 WalletGasOptimizerPage',
+      semanticLabel: 'SC-149 WalletGasOptimizerPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(WalletGasOptimizerPage.comparisonKey('Simple Transfer')),
+      targetLabel: 'the first gas comparison fee row',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-149 speed selection and secondary tabs are local', (

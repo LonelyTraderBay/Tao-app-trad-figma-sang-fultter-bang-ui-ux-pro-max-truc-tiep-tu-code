@@ -81,60 +81,68 @@ class VitInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final input = Container(
+    final input = SizedBox(
       height: AppSpacing.inputHeight,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
-        border: Border.all(
-          color: _hasError ? AppColors.sell : AppColors.borderSolid,
-          width: AppSpacing.borderWidth,
-        ),
-      ),
-      child: Row(
-        children: [
-          if (prefix != null) ...[
-            IconTheme(
-              data: const IconThemeData(
-                color: AppColors.text3,
-                size: AppSpacing.inputPrefixIcon,
-              ),
-              child: prefix!,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: AppColors.surface2,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: _hasError ? AppColors.sell : AppColors.borderSolid,
+              width: AppSpacing.borderWidth,
             ),
-            const SizedBox(width: AppSpacing.x3),
-          ],
-          Expanded(
-            child: TextField(
-              key: fieldKey,
-              controller: controller,
-              focusNode: focusNode,
-              enabled: enabled,
-              autofocus: autofocus,
-              obscureText: obscureText,
-              keyboardType: keyboardType,
-              textInputAction: textInputAction,
-              textCapitalization: textCapitalization,
-              inputFormatters: inputFormatters,
-              autofillHints: autofillHints,
-              textAlign: textAlign,
-              cursorColor: AppColors.primary,
-              style: textStyle ?? AppTextStyles.control,
-              onChanged: onChanged,
-              onSubmitted: onSubmitted,
-              decoration: InputDecoration.collapsed(
-                hintText: hintText,
-                hintStyle: AppTextStyles.control.copyWith(
-                  color: AppColors.text3,
+            borderRadius: AppRadii.inputRadius,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x4,
+          ),
+          child: Row(
+            children: [
+              if (prefix != null) ...[
+                IconTheme(
+                  data: const IconThemeData(
+                    color: AppColors.text3,
+                    size: AppSpacing.inputPrefixIcon,
+                  ),
+                  child: prefix!,
+                ),
+                const SizedBox(width: AppSpacing.x3),
+              ],
+              Expanded(
+                child: TextField(
+                  key: fieldKey,
+                  controller: controller,
+                  focusNode: focusNode,
+                  enabled: enabled,
+                  autofocus: autofocus,
+                  obscureText: obscureText,
+                  keyboardType: keyboardType,
+                  textInputAction: textInputAction,
+                  textCapitalization: textCapitalization,
+                  inputFormatters: inputFormatters,
+                  autofillHints: autofillHints,
+                  textAlign: textAlign,
+                  cursorColor: AppColors.primary,
+                  style: textStyle ?? AppTextStyles.control,
+                  onChanged: onChanged,
+                  onSubmitted: onSubmitted,
+                  decoration: InputDecoration.collapsed(
+                    hintText: hintText,
+                    hintStyle: AppTextStyles.control.copyWith(
+                      color: AppColors.text3,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              if (suffix != null) ...[
+                const SizedBox(width: AppSpacing.x3),
+                suffix!,
+              ],
+            ],
           ),
-          if (suffix != null) ...[
-            const SizedBox(width: AppSpacing.x3),
-            suffix!,
-          ],
-        ],
+        ),
       ),
     );
 

@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTerms(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -68,6 +70,26 @@ void main() {
     expect(find.text('2. No Profit Guarantee'), findsOneWidget);
     expect(find.text('Accept Terms'), findsOneWidget);
     expect(find.text('Read Terms to Continue'), findsOneWidget);
+  });
+
+  testWidgets('SC-117 first viewport previews agreement card', (tester) async {
+    await pumpTerms(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'BotTermsOfServicePage',
+      semanticLabel: 'SC-117 BotTermsOfServicePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(BotTermsOfServicePage.agreementKey),
+      minVisibleHeight: 24,
+      targetLabel: 'terms agreement card',
+      reason:
+          'Bot terms must preview the agreement step above bottom navigation '
+          'while still requiring the inner terms scroll to be read before '
+          'enabling the CTA.',
+    );
   });
 
   testWidgets('SC-117 agreement stays disabled until terms are read', (

@@ -7,13 +7,13 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(walletHealthScoreProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletHealthBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletHealthBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollEndPadding =
+        navClearance +
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -36,14 +36,11 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: WalletHealthScorePage.contentKey,
-                  padding: AppSpacing.walletHealthScrollPadding(bottomInset),
-                  physics: const BouncingScrollPhysics(),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    customGap: 0,
-                    fullBleed: true,
-                    children: [_buildTab(snapshot)],
+                  padding: AppSpacing.walletHealthScrollPadding(
+                    scrollEndPadding,
                   ),
+                  physics: const BouncingScrollPhysics(),
+                  child: _buildTab(snapshot),
                 ),
               ),
             ],
@@ -77,9 +74,7 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
           child: Padding(
             padding: AppSpacing.walletHealthSheetPadding,
             child: VitPageContent(
-              padding: VitContentPadding.none,
-              fullBleed: true,
-              customGap: AppSpacing.walletHealthSheetGap,
+              density: VitDensity.compact,
               children: [
                 Text(
                   recommendation.actionLabel,
@@ -131,7 +126,7 @@ class _HealthTabs extends StatelessWidget {
     return Material(
       color: _healthPanel,
       child: SizedBox(
-        height: AppSpacing.walletHealthTabsHeight,
+        height: 48,
         child: Column(
           children: [
             Expanded(
@@ -167,9 +162,7 @@ class _OverviewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-      padding: VitContentPadding.none,
-      fullBleed: true,
-      customGap: AppSpacing.walletHealthContentGap,
+      density: VitDensity.compact,
       children: [
         _OverallScoreCard(snapshot: snapshot),
         _RadarCard(metrics: snapshot.metrics),
@@ -203,28 +196,19 @@ class _OverallScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scoreColor = _scoreColor(snapshot.overallScore);
     return VitCard(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.walletHealthOverallHeight,
-      ),
-      padding: AppSpacing.walletHealthOverallPadding,
+      density: VitDensity.compact,
       borderColor: _healthBorder,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        fullBleed: true,
-        customGap: AppSpacing.walletHealthCardGap,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'Overall Health Score',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
           SizedBox(
-            width: AppSpacing.walletHealthGaugeSize,
-            height: AppSpacing.walletHealthGaugeSize,
+            width: 88,
+            height: 88,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 CustomPaint(
-                  size: const Size.square(AppSpacing.walletHealthGaugeSize),
+                  size: const Size.square(88),
                   painter: _GaugePainter(
                     score: snapshot.overallScore,
                     color: scoreColor,
@@ -240,7 +224,7 @@ class _OverallScoreCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.walletHealthScoreGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       '/ 100',
                       style: AppTextStyles.micro.copyWith(
@@ -252,17 +236,33 @@ class _OverallScoreCard extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            snapshot.overallStatus,
-            style: AppTextStyles.caption.copyWith(
-              color: scoreColor,
-              fontWeight: AppTextStyles.bold,
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Overall Health Score',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  snapshot.overallStatus,
+                  style: AppTextStyles.caption.copyWith(
+                    color: scoreColor,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  'Your wallet is ${snapshot.overallMessage}',
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    height: 1.28,
+                  ),
+                ),
+              ],
             ),
-          ),
-          Text(
-            'Your wallet is ${snapshot.overallMessage}',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -278,13 +278,11 @@ class _RadarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.walletHealthRadarHeight,
-      padding: AppSpacing.walletHealthRadarPadding,
+      height: VitDensity.compact.controlHeight * 3.2,
+      density: VitDensity.compact,
       borderColor: _healthBorder,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        fullBleed: true,
-        customGap: AppSpacing.walletHealthCardGap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Health Breakdown',
@@ -293,6 +291,7 @@ class _RadarCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
+          const SizedBox(height: AppSpacing.x2),
           Expanded(
             child: CustomPaint(
               painter: _RadarPainter(metrics),
@@ -314,11 +313,9 @@ class _MetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _statusColor(metric.status);
     return VitCard(
+      key: WalletHealthScorePage.metricKey(metric.category),
       radius: VitCardRadius.sm,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.walletHealthMetricHeight,
-      ),
-      padding: AppSpacing.walletHealthMetricPadding,
+      density: VitDensity.compact,
       borderColor: _healthBorder,
       child: Column(
         children: [
@@ -340,15 +337,15 @@ class _MetricCard extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletHealthMetricValueGap),
+              const SizedBox(width: AppSpacing.x1),
               _StatusBadge(label: metric.status, color: color),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletHealthInlineGap),
+          const SizedBox(height: AppSpacing.x2),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: SizedBox(
-              height: AppSpacing.walletHealthProgressHeight,
+              height: 5,
               child: LinearProgressIndicator(
                 value: metric.score / metric.maxScore,
                 backgroundColor: _healthBackground,
@@ -370,13 +367,11 @@ class _TrendCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.walletHealthTrendHeight,
-      padding: AppSpacing.walletHealthTrendPadding,
+      height: VitDensity.compact.controlHeight * 3,
+      density: VitDensity.compact,
       borderColor: _healthBorder,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        fullBleed: true,
-        customGap: AppSpacing.walletHealthTrendGap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Health Trend (6 months)',
@@ -385,6 +380,7 @@ class _TrendCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
+          const SizedBox(height: AppSpacing.x2),
           Expanded(
             child: CustomPaint(
               painter: _TrendPainter(history),

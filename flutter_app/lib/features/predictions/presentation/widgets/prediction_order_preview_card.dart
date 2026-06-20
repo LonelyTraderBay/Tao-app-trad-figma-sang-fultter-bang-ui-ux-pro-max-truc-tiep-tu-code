@@ -20,72 +20,78 @@ class PredictionOrderPreviewCard extends StatelessWidget {
       ('Fee preview', _formatMoney(preview.fee)),
       ('Max loss', _formatMoney(preview.maxLoss)),
     ];
-    return Container(
-      padding: AppSpacing.predictionOrderPreviewPadding,
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: AppColors.surface2,
-        border: Border.all(color: AppColors.primary.withValues(alpha: .22)),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.primary.withValues(alpha: .22)),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.receipt_long_outlined,
-                color: AppColors.primary,
-                size: AppSpacing.predictionOrderPreviewIcon,
-              ),
-              const SizedBox(width: AppSpacing.predictionOrderPreviewIconGap),
-              Expanded(
-                child: Text(
-                  'Order Preview',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.predictionOrderPreviewIconGap),
-              _PreviewBadge(label: preview.orderTypeLabel),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.predictionOrderPreviewHeaderGap),
-          for (final row in rows) ...[
+      child: Padding(
+        padding: AppSpacing.predictionOrderPreviewPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
             Row(
               children: [
+                const Icon(
+                  Icons.receipt_long_outlined,
+                  color: AppColors.primary,
+                  size: AppSpacing.predictionOrderPreviewIcon,
+                ),
+                const SizedBox(width: AppSpacing.predictionOrderPreviewIconGap),
                 Expanded(
                   child: Text(
-                    row.$1,
-                    style: AppTextStyles.numericMicro.copyWith(
-                      color: AppColors.text3,
+                    'Order Preview',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
                 ),
-                Text(
-                  preview.canSubmit || row.$1 == 'Outcome'
-                      ? row.$2
-                      : 'Enter amount',
-                  style: AppTextStyles.numericMicro.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                ),
+                const SizedBox(width: AppSpacing.predictionOrderPreviewIconGap),
+                _PreviewBadge(label: preview.orderTypeLabel),
               ],
             ),
-            if (row != rows.last)
-              const SizedBox(height: AppSpacing.predictionOrderPreviewRowGap),
+            const SizedBox(height: AppSpacing.predictionOrderPreviewHeaderGap),
+            for (final row in rows) ...[
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      row.$1,
+                      style: AppTextStyles.numericMicro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    preview.canSubmit || row.$1 == 'Outcome'
+                        ? row.$2
+                        : 'Enter amount',
+                    style: AppTextStyles.numericMicro.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ],
+              ),
+              if (row != rows.last)
+                const SizedBox(height: AppSpacing.predictionOrderPreviewRowGap),
+            ],
+            const SizedBox(height: AppSpacing.predictionOrderPreviewFooterGap),
+            Text(
+              'Prediction positions, probability, receipt, rewards, and P/L stay separate from Arena Points.',
+              style: AppTextStyles.numericMicro.copyWith(
+                color: AppColors.text3,
+              ),
+            ),
           ],
-          const SizedBox(height: AppSpacing.predictionOrderPreviewFooterGap),
-          Text(
-            'Prediction positions, probability, receipt, rewards, and P/L stay separate from Arena Points.',
-            style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -99,9 +105,9 @@ class _PreviewBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.primary.withValues(alpha: .12),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
         padding: AppSpacing.predictionOrderPreviewBadgePadding,

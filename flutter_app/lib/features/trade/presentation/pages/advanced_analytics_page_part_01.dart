@@ -10,11 +10,11 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
         .watch(tradeReadModelControllerProvider)
         .getAdvancedAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -34,10 +34,16 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: AdvancedAnalyticsPage.contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.tradeBotCardGap,
+                    AppSpacing.contentPad,
+                    scrollClearance,
+                  ),
                   child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x4 + AppSpacing.x1,
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    density: VitDensity.compact,
                     children: [
                       _HeroCard(stats: snapshot.stats),
                       _UnderlineTabs(
@@ -58,6 +64,7 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
                         _PositionSizingTab(snapshot: snapshot),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
+                        density: VitDensity.compact,
                         title: 'Analytics risk review',
                         message:
                             'AI signals, sizing, and journal metrics are decision-support tools. Confirm risk limits before using them for live orders.',
@@ -87,27 +94,21 @@ class _HeroCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       borderColor: AppColors.onAccent.withValues(alpha: .10),
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Row(
             children: [
-              VitCard(
-                width: AppSpacing.x7 + AppSpacing.tradeBotDisputeDropdownIcon,
-                height: AppSpacing.x7 + AppSpacing.tradeBotDisputeDropdownIcon,
-                padding: AppSpacing.zeroInsets,
-                variant: VitCardVariant.ghost,
-                clip: true,
-                background: ColoredBox(
-                  color: AppColors.onAccent.withValues(alpha: .10),
-                ),
+              CircleAvatar(
+                radius: AppSpacing.x4,
+                backgroundColor: AppColors.onAccent.withValues(alpha: .10),
                 child: const Icon(
                   Icons.auto_awesome_rounded,
                   color: AppColors.onAccent,
                   size: AppSpacing.iconLg,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,20 +118,13 @@ class _HeroCard extends StatelessWidget {
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.tradeBotLineHeightShort,
                       ),
                     ),
-                    const SizedBox(
-                      height:
-                          AppSpacing.x3 -
-                          AppSpacing.hairlineStroke +
-                          AppSpacing.x1,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'AI-powered insights va professional trading tools',
                       style: AppTextStyles.body.copyWith(
                         color: AppColors.onAccent.withValues(alpha: .72),
-                        height: AppSpacing.tradeBotLineHeightBody,
                       ),
                     ),
                   ],
@@ -138,7 +132,7 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5 + AppSpacing.hairlineStroke),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               for (final stat in stats) ...[
@@ -162,8 +156,7 @@ class _HeroStat extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(stat.colorHex);
     return VitCard(
-      height: AppSpacing.x7 + AppSpacing.x5 + AppSpacing.hairlineStroke,
-      padding: AppSpacing.tradeBotMetricBoxPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -176,10 +169,9 @@ class _HeroStat extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             stat.label,
             maxLines: 2,
@@ -187,7 +179,6 @@ class _HeroStat extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.onAccent.withValues(alpha: .62),
-              height: AppSpacing.tradeBotLineHeightCaption,
             ),
           ),
         ],
@@ -212,8 +203,7 @@ class _UnderlineTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.x7,
-      padding: AppSpacing.zeroInsets,
+      density: VitDensity.compact,
       child: VitTabBar(
         activeKey: activeId,
         onChanged: onChanged,
@@ -261,10 +251,10 @@ class _AiSignalsTab extends StatelessWidget {
         .length;
 
     return _Card(
-      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 16,
+        fullBleed: true,
+        density: VitDensity.compact,
         children: [
           const _SectionHeader(
             icon: Icons.psychology_rounded,
@@ -314,7 +304,8 @@ class _AiSignalsTab extends StatelessWidget {
           ),
           VitPageContent(
             padding: VitContentPadding.none,
-            customGap: 12,
+            fullBleed: true,
+            density: VitDensity.compact,
             children: [
               for (final signal in visibleSignals) _SignalCard(signal: signal),
             ],
@@ -344,7 +335,7 @@ class _FilterChip extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: VitCard(
-        height: AppSpacing.tradeHistoryCancelHeight,
+        density: VitDensity.compact,
         alignment: Alignment.center,
         variant: VitCardVariant.inner,
         borderColor: selected ? _advancedPurple : _advancedBorder,
@@ -353,7 +344,6 @@ class _FilterChip extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: selected ? _advancedPurple : AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ),

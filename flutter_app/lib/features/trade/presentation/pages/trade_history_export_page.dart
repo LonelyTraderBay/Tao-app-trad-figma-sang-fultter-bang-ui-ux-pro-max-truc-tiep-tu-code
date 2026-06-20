@@ -4,12 +4,13 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -22,10 +23,20 @@ part '../widgets/trade_history_export_selectors_includes.dart';
 part '../widgets/trade_history_export_footer.dart';
 
 const _tradePrimary = AppColors.primary;
+const double _exportFramedFooterClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _exportNativeFooterClearance =
+    AppSpacing.buttonStandard + AppSpacing.x3;
+const double _exportFramedScrollClearance =
+    AppSpacing.buttonStandard * 2 + AppSpacing.x7;
+const double _exportNativeScrollClearance =
+    AppSpacing.buttonStandard * 2 + AppSpacing.x5;
+const double _exportFormatExtent = AppSpacing.buttonStandard + AppSpacing.x7;
 
 class TradeHistoryExportPage extends ConsumerStatefulWidget {
   const TradeHistoryExportPage({super.key, this.shellRenderMode});
 
+  static const contentKey = Key('sc054_export_content');
   static const exportKey = Key('sc054_export');
   static const newExportKey = Key('sc054_new_export');
   static const downloadKey = Key('sc054_download');
@@ -66,9 +77,16 @@ class _TradeHistoryExportPageState
         .watch(tradeReadModelControllerProvider)
         .getTradeExport();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
+    final footerClearance =
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame
+            ? _exportFramedFooterClearance
+            : _exportNativeFooterClearance);
+    final scrollEndClearance =
+        (mode.usesVisualQaFrame
+            ? _exportFramedScrollClearance
+            : _exportNativeScrollClearance) +
+        footerClearance;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -88,17 +106,14 @@ class _TradeHistoryExportPageState
                 child: Stack(
                   children: [
                     Positioned.fill(
-                      child: SingleChildScrollView(
-                        padding: AppSpacing.tradeToolExportScrollPadding(
-                          bottomChrome,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: VitInsetScrollView(
+                        key: TradeHistoryExportPage.contentKey,
+                        bottomInset: scrollEndClearance,
+                        child: VitPageContent(
+                          padding: VitContentPadding.compact,
+                          density: VitDensity.compact,
                           children: [
                             _SummaryCard(stats: snapshot.stats),
-                            const SizedBox(
-                              height: AppSpacing.tradeToolContentGap,
-                            ),
                             _Section(
                               title: 'Định dạng file',
                               child: _FormatSelector(
@@ -111,9 +126,6 @@ class _TradeHistoryExportPageState
                                   });
                                 },
                               ),
-                            ),
-                            const SizedBox(
-                              height: AppSpacing.tradeToolSectionGap,
                             ),
                             _Section(
                               title: 'Khoảng thời gian',
@@ -128,9 +140,6 @@ class _TradeHistoryExportPageState
                                 },
                               ),
                             ),
-                            const SizedBox(
-                              height: AppSpacing.tradeToolSectionGap,
-                            ),
                             _Section(
                               title: 'Bao gồm dữ liệu',
                               child: _IncludeList(
@@ -138,23 +147,22 @@ class _TradeHistoryExportPageState
                                 onToggle: _toggleInclude,
                               ),
                             ),
-                            const SizedBox(
-                              height: AppSpacing.tradeToolBodyIcon,
-                            ),
                             const _TaxNote(),
-                            const SizedBox(height: AppSpacing.tradeToolCardGap),
                             const VitCard(
                               variant: VitCardVariant.inner,
-                              padding: AppSpacing.tradeToolRiskReviewPadding,
+                              padding: EdgeInsetsDirectional.symmetric(
+                                horizontal: AppSpacing.x3,
+                                vertical: AppSpacing.x2,
+                              ),
                               child: VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'Export review state',
                                 message:
                                     'Format, period, included records, tax note, generated result and download next step are reviewed before export.',
                                 contractId: 'trade-history-export-review',
+                                density: VitDensity.compact,
                               ),
                             ),
-                            const SizedBox(height: AppSpacing.tradeToolCardGap),
                             const TradeBodyReviewSection(
                               title: 'Export body review',
                               message: 'Trade export body reviewed',
@@ -174,7 +182,7 @@ class _TradeHistoryExportPageState
                     Positioned(
                       left: 0,
                       right: 0,
-                      bottom: bottomChrome,
+                      bottom: footerClearance,
                       child: _ExportFooter(
                         format: _format,
                         period: _period,

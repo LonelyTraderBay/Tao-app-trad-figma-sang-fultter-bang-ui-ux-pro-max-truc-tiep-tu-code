@@ -71,8 +71,8 @@ class _IconBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.x6,
-      height: AppSpacing.x6,
+      width: _dcaPortfolioIconBubbleExtent,
+      height: _dcaPortfolioIconBubbleExtent,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .10),
@@ -129,7 +129,7 @@ class _CardLabel extends StatelessWidget {
           subtitle,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
+            height: _dcaPortfolioBodyLineHeight,
           ),
         ),
       ],

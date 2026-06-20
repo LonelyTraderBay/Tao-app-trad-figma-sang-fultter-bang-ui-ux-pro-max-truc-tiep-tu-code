@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSlippageMonitoring(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -84,6 +86,18 @@ void main() {
     );
     expect(find.text('BTC/USDT'), findsWidgets);
     expect(find.text('ETH/USDT'), findsOneWidget);
+  });
+
+  testWidgets('SC-098 first viewport reaches first slippage event', (
+    tester,
+  ) async {
+    await pumpSlippageMonitoring(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(SlippageMonitoringPage.eventKey('slip-1')),
+      targetLabel: 'first slippage event',
+    );
   });
 
   testWidgets('SC-098 switches provider, history, and alert tabs', (

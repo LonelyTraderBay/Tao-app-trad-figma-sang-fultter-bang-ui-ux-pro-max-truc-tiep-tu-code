@@ -13,9 +13,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
 void main() {
-  Future<void> pumpAdvancedChart(WidgetTester tester) async {
+  Future<void> pumpAdvancedChart(
+    WidgetTester tester, {
+    Size viewport = const Size(440, 956),
+  }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -82,6 +85,38 @@ void main() {
     expect(find.text('MA(25)'), findsOneWidget);
     expect(find.text('MUA'), findsOneWidget);
     expect(find.text('BÁN'), findsOneWidget);
+  });
+
+  testWidgets('SC-320 uses full-width chart workspace at 360x800', (
+    tester,
+  ) async {
+    await pumpAdvancedChart(tester, viewport: const Size(360, 800));
+
+    expect(find.byType(AdvancedChartPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byKey(AdvancedChartPage.buyKey), findsOneWidget);
+    expect(find.byKey(AdvancedChartPage.sellKey), findsOneWidget);
+    expect(find.byKey(AdvancedChartPage.alertKey), findsOneWidget);
+
+    final chartFinder = find.byWidgetPredicate(
+      (widget) =>
+          widget is CustomPaint &&
+          widget.painter.runtimeType.toString() == '_AdvancedTradeChartPainter',
+    );
+    expect(chartFinder, findsOneWidget);
+
+    final chartRect = tester.getRect(chartFinder);
+    final buyRect = tester.getRect(find.byKey(AdvancedChartPage.buyKey));
+    final sellRect = tester.getRect(find.byKey(AdvancedChartPage.sellKey));
+    final alertRect = tester.getRect(find.byKey(AdvancedChartPage.alertKey));
+
+    expect(chartRect.left, closeTo(0, 0.5));
+    expect(chartRect.right, closeTo(360, 0.5));
+    expect(chartRect.height, greaterThan(140));
+    expect(buyRect.bottom, lessThanOrEqualTo(800));
+    expect(sellRect.bottom, lessThanOrEqualTo(800));
+    expect(alertRect.bottom, lessThanOrEqualTo(800));
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('SC-055 timeframe, chart type, and indicator sheet are local', (

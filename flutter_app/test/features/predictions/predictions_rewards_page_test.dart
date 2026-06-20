@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRewards(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -94,6 +96,22 @@ void main() {
     expect(find.text('Room Arena cùng chủ đề'), findsOneWidget);
     expect(find.text('ARENA POINTS ONLY'), findsOneWidget);
     expect(find.text('BTC \$70K? — Tuần 9'), findsOneWidget);
+  });
+
+  testWidgets('SC-032 first viewport reaches reward table row', (tester) async {
+    await pumpRewards(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-032 PredictionsRewardsPage',
+      semanticLabel: 'SC-032 PredictionsRewardsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PredictionsRewardsPage.rewardKey('rw-1')),
+      targetLabel: 'the first daily reward row',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-032 filters by category and favorites locally', (

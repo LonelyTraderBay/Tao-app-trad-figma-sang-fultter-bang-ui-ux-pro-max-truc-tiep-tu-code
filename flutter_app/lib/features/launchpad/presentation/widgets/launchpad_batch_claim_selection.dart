@@ -27,10 +27,10 @@ class _SelectionHeader extends StatelessWidget {
           ),
         ),
         TextButton(onPressed: onSelectAll, child: const Text('Chọn tất cả')),
-        Container(
+        const SizedBox(
           width: AppSpacing.launchpadDividerWidth,
           height: AppSpacing.launchpadBox18,
-          color: AppColors.divider,
+          child: ColoredBox(color: AppColors.divider),
         ),
         TextButton(onPressed: onClear, child: const Text('Bỏ chọn')),
       ],
@@ -59,7 +59,7 @@ class _BatchPositionCard extends StatelessWidget {
       borderColor: selected
           ? position.accent.withValues(alpha: .42)
           : AppColors.cardBorder,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       onTap: onToggle,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,78 +108,77 @@ class _BatchPositionCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.x2),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x3,
-                    vertical: AppSpacing.x2,
-                  ),
-                  decoration: BoxDecoration(
+                DecoratedBox(
+                  decoration: const ShapeDecoration(
                     color: AppColors.surface2,
-                    borderRadius: AppRadii.lgRadius,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.lgRadius,
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Padding(
+                    padding: AppSpacing.launchpadPillPadding,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Có thể nhận',
+                                style: AppTextStyles.micro.copyWith(
+                                  color: AppColors.text3,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    _formatNumber(position.claimableAmount),
+                                    style: AppTextStyles.baseMedium.copyWith(
+                                      color: AppColors.buy,
+                                      fontWeight: AppTextStyles.bold,
+                                      fontFeatures:
+                                          AppTextStyles.tabularFigures,
+                                    ),
+                                  ),
+                                  const SizedBox(width: AppSpacing.x2),
+                                  Text(
+                                    position.rewardToken,
+                                    style: AppTextStyles.micro.copyWith(
+                                      color: AppColors.buy,
+                                      fontWeight: AppTextStyles.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                '~${_formatUsd(position.claimableUsd)} USD',
+                                style: AppTextStyles.micro.copyWith(
+                                  color: AppColors.text3,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              'Có thể nhận',
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.text3,
+                            _CountBadge(count: position.vestingEntries.length),
+                            TextButton(
+                              key: LaunchpadBatchClaimPage.detailKey(
+                                position.positionId,
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  _formatNumber(position.claimableAmount),
-                                  style: AppTextStyles.baseMedium.copyWith(
-                                    color: AppColors.buy,
-                                    fontWeight: AppTextStyles.bold,
-                                    fontFeatures: AppTextStyles.tabularFigures,
-                                  ),
-                                ),
-                                const SizedBox(width: AppSpacing.x2),
-                                Text(
-                                  position.rewardToken,
-                                  style: AppTextStyles.micro.copyWith(
-                                    color: AppColors.buy,
-                                    fontWeight: AppTextStyles.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              '~${_formatUsd(position.claimableUsd)} USD',
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.text3,
+                              style: TextButton.styleFrom(
+                                minimumSize: const Size(0, 30),
+                                padding: AppSpacing.launchpadInlinePillPadding,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
+                              onPressed: onDetail,
+                              child: const Text('Chi tiết'),
                             ),
                           ],
                         ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          _CountBadge(count: position.vestingEntries.length),
-                          TextButton(
-                            key: LaunchpadBatchClaimPage.detailKey(
-                              position.positionId,
-                            ),
-                            style: TextButton.styleFrom(
-                              minimumSize: const Size(0, 30),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.x2,
-                                vertical: AppSpacing.x1,
-                              ),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            onPressed: onDetail,
-                            child: const Text('Chi tiết'),
-                          ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -211,19 +210,21 @@ class _TokenAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.launchpadBox36,
-      height: AppSpacing.launchpadBox36,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .18),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox36,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .18),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -237,20 +238,19 @@ class _CountBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.buy15,
-        borderRadius: AppRadii.inputRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
-      child: Text(
-        '$count đợt',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.buy,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadTimelineMarkerPadding,
+        child: Text(
+          '$count đợt',
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.buy,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -264,21 +264,22 @@ class _VestingPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: AppColors.warn.withValues(alpha: .10),
-        border: Border.all(color: AppColors.warn.withValues(alpha: .20)),
-        borderRadius: AppRadii.inputRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(color: AppColors.warn.withValues(alpha: .20)),
+        ),
       ),
-      child: Text(
-        '${entry.label}: ${_formatNumber(entry.amount)} ${entry.token}',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.warn,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadPillPadding,
+        child: Text(
+          '${entry.label}: ${_formatNumber(entry.amount)} ${entry.token}',
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.warn,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -292,30 +293,34 @@ class _ChainWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: LaunchpadBatchClaimPage.warningKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.warn.withValues(alpha: .08),
-        border: Border.all(color: AppColors.warn.withValues(alpha: .18)),
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.lgRadius,
+          side: BorderSide(color: AppColors.warn.withValues(alpha: .18)),
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              'Các vị trí trên nhiều chain (${summary.chains.join(', ')}). Batch claim sẽ gửi giao dịch riêng cho mỗi chain.',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX4,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warn,
+              size: AppSpacing.iconSm,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Text(
+                'Các vị trí trên nhiều chain (${summary.chains.join(', ')}). Batch claim sẽ gửi giao dịch riêng cho mỗi chain.',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

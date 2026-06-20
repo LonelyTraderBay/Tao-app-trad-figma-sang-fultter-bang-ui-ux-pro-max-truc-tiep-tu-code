@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpLeverage(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -87,6 +89,33 @@ void main() {
     expect(find.text('Chọn nhanh'), findsOneWidget);
     expect(find.text('Ước tính tác động'), findsOneWidget);
     expect(find.text('Xác nhận đòn bẩy 10x'), findsOneWidget);
+  });
+
+  testWidgets('SC-058 first viewport reaches leverage slider', (tester) async {
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.tradeFuturesLeverage('btcusdt'),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-058 LeveragePage',
+      semanticLabel: 'SC-058 LeveragePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(LeveragePage.sliderKey),
+      targetLabel: 'the leverage slider',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-058 preset updates risk and impact preview', (tester) async {

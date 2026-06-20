@@ -11,6 +11,7 @@ class _RiskSection extends StatelessWidget {
     return VitPageSection(
       label: 'Giới hạn rủi ro',
       accentColor: _configurationRed,
+      density: VitDensity.compact,
       children: [
         _RiskToggle(
           title: 'Stop-Loss riêng',
@@ -45,9 +46,11 @@ class _FeeSection extends StatelessWidget {
     return VitPageSection(
       label: 'Dự kiến chi phí',
       accentColor: AppColors.warn,
+      density: VitDensity.compact,
       children: [
         VitCard(
-          padding: AppSpacing.copyConfigurationCardPadding,
+          density: VitDensity.compact,
+          padding: AppSpacing.cardPaddingCompact,
           child: Column(
             children: [
               _SummaryRow(
@@ -65,7 +68,7 @@ class _FeeSection extends StatelessWidget {
               ),
               const Divider(
                 color: AppColors.divider,
-                height: AppSpacing.copyConfigurationDividerHeight,
+                height: _configurationDividerHeight,
               ),
               _SummaryRow(
                 label: 'Tổng phí cố định',
@@ -92,8 +95,7 @@ class _ValidationList extends StatelessWidget {
       children: [
         for (final item in items) ...[
           _ValidationCard(item: item),
-          if (item != items.last)
-            const SizedBox(height: AppSpacing.copyConfigurationSmallGap),
+          if (item != items.last) const SizedBox(height: _configurationSpace),
         ],
       ],
     );
@@ -108,7 +110,8 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.copyConfigurationCardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -118,7 +121,7 @@ class _SummaryCard extends StatelessWidget {
               fontWeight: AppTextStyles.extraBold,
             ),
           ),
-          const SizedBox(height: AppSpacing.copyConfigurationInlineGap),
+          const SizedBox(height: _configurationSpace),
           _SummaryRow(
             label: 'Số vốn copy',
             value: '\$${draft.copyCapital.toStringAsFixed(0)}',
@@ -165,7 +168,8 @@ class _ModeTile extends StatelessWidget {
       key: CopyConfigurationPage.modeKey(mode),
       variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
       borderColor: selected ? _configurationPrimary : null,
-      padding: AppSpacing.copyConfigurationInnerPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +181,7 @@ class _ModeTile extends StatelessWidget {
             color: selected ? _configurationPrimary : AppColors.text3,
             size: AppSpacing.copyConfigurationModeIcon,
           ),
-          const SizedBox(width: AppSpacing.copyConfigurationMediumGap),
+          const SizedBox(width: _configurationCardSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,12 +193,12 @@ class _ModeTile extends StatelessWidget {
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.copyConfigurationTinyGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   _modeDescription(mode),
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.copyConfigurationDescriptionLineHeight,
+                    height: _configurationDescriptionLineHeight,
                   ),
                 ),
               ],

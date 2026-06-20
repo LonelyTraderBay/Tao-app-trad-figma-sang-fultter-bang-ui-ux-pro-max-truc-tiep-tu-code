@@ -10,7 +10,7 @@ class _AnalysisCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: _equityGreen.withValues(alpha: .30),
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: AppSpacing.tradeBotCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,7 +21,7 @@ class _AnalysisCard extends StatelessWidget {
                 size: AppSpacing.iconSm,
                 color: AppColors.successAccentSoft,
               ),
-              const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+              const SizedBox(width: AppSpacing.x3),
               Text(
                 'Strong Outperformance',
                 style: AppTextStyles.caption.copyWith(
@@ -31,7 +31,7 @@ class _AnalysisCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotContentGap),
+          const SizedBox(height: AppSpacing.x3),
           for (final item in items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +41,7 @@ class _AnalysisCard extends StatelessWidget {
                   size: AppSpacing.x1,
                   color: AppColors.text3,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotRowGap),
+                const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Text(
                     item,
@@ -53,8 +53,7 @@ class _AnalysisCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last)
-              const SizedBox(height: AppSpacing.tradeBotContentGap),
+            if (item != items.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),

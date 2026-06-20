@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpNews(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -101,6 +103,22 @@ void main() {
     expect(find.text('Tích cực'), findsWidgets);
     expect(find.text('Trung lập'), findsWidgets);
     expect(find.text('Tiêu cực'), findsWidgets);
+  });
+
+  testWidgets('SC-022 first viewport reaches first news card', (tester) async {
+    await pumpNews(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-022 MarketNewsPage',
+      semanticLabel: 'SC-022 MarketNewsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(MarketNewsPage.newsCardKey('n1')),
+      targetLabel: 'the first market news card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-022 filters by breaking and bearish sentiment', (

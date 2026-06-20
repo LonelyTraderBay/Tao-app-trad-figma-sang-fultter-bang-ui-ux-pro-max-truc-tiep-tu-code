@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAdvancedCharts(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -112,6 +114,24 @@ void main() {
     expect(find.text('RSI'), findsWidgets);
     expect(find.text('OBV'), findsWidgets);
     expect(find.text('ICHI'), findsWidgets);
+  });
+
+  testWidgets('SC-023 first viewport reaches first indicator card', (
+    tester,
+  ) async {
+    await pumpAdvancedCharts(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'AdvancedChartsPage',
+      semanticLabel: 'SC-023 AdvancedChartsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(AdvancedChartsPage.indicatorKey('sma')),
+      targetLabel: 'first indicator card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-023 toggles indicators and clears active chips', (

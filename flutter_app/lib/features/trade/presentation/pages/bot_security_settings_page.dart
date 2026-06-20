@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -67,11 +68,11 @@ class _BotSecuritySettingsPageState
         .state
         .snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetNative
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.contentPad) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -90,17 +91,20 @@ class _BotSecuritySettingsPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: BotSecuritySettingsPage.contentKey,
-                  padding: AppSpacing.tradeBotSecurityScrollPadding(
-                    bottomInset,
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.tradeBotCardGap,
+                    AppSpacing.contentPad,
+                    scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: AppSpacing.tradeBotContentGap,
+                    density: VitDensity.compact,
                     children: [
                       VitPageSection(
                         label: 'Two-Factor Authentication',
-                        customGap: AppSpacing.tradeBotCardGap,
+                        density: VitDensity.compact,
                         children: [
                           _TwoFaCard(
                             enabled: _twoFaEnabled,
@@ -108,13 +112,15 @@ class _BotSecuritySettingsPageState
                           ),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: AppSpacing.tradeBotInnerPanelPadding,
+                            density: VitDensity.compact,
                             child: VitPageContent(
                               padding: VitContentPadding.none,
-                              customGap: AppSpacing.tradeBotSmallGap,
+                              fullBleed: true,
+                              density: VitDensity.compact,
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
+                                  density: VitDensity.compact,
                                   title: 'Bot security review required',
                                   message:
                                       '2FA, API key creation, IP whitelist, recent activity and destructive key changes require explicit review.',
@@ -132,11 +138,12 @@ class _BotSecuritySettingsPageState
                       ),
                       VitPageSection(
                         label: 'API Keys',
-                        customGap: AppSpacing.tradeBotRowGap,
+                        density: VitDensity.compact,
                         children: [
                           VitPageContent(
                             padding: VitContentPadding.none,
-                            customGap: AppSpacing.tradeBotRowGap,
+                            fullBleed: true,
+                            density: VitDensity.compact,
                             children: [
                               for (final key in snapshot.apiKeys)
                                 _ApiKeyCard(apiKey: key),
@@ -152,11 +159,12 @@ class _BotSecuritySettingsPageState
                       ),
                       VitPageSection(
                         label: 'IP Whitelist',
-                        customGap: AppSpacing.tradeBotRowGap,
+                        density: VitDensity.compact,
                         children: [
                           VitPageContent(
                             padding: VitContentPadding.none,
-                            customGap: AppSpacing.tradeBotRowGap,
+                            fullBleed: true,
+                            density: VitDensity.compact,
                             children: [
                               for (final entry in snapshot.ipWhitelist)
                                 _IpCard(entry: entry),
@@ -172,14 +180,14 @@ class _BotSecuritySettingsPageState
                       ),
                       VitPageSection(
                         label: 'Recent Activity',
-                        customGap: AppSpacing.tradeBotRowGap,
+                        density: VitDensity.compact,
                         children: [
                           _ActivityCard(activities: snapshot.recentActivity),
                         ],
                       ),
                       VitPageSection(
                         label: 'Security Tips',
-                        customGap: AppSpacing.tradeBotRowGap,
+                        density: VitDensity.compact,
                         children: [
                           _SecurityTipsCard(tips: snapshot.securityTips),
                         ],

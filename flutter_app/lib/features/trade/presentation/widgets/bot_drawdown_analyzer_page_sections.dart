@@ -20,7 +20,7 @@ class _MetricGrid extends StatelessWidget {
                 valueColor: _drawdownRed,
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeBotCardGap),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: _MetricCard(
                 icon: Icons.bar_chart_rounded,
@@ -32,7 +32,7 @@ class _MetricGrid extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
+        const SizedBox(height: AppSpacing.x2),
         Row(
           children: [
             Expanded(
@@ -44,7 +44,7 @@ class _MetricGrid extends StatelessWidget {
                 caption: 'of ${summary.totalDays} days',
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeBotCardGap),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: _MetricCard(
                 icon: Icons.report_problem_outlined,
@@ -81,13 +81,13 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: AppSpacing.tradeBotCompactPanelPadding,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: iconColor, size: AppSpacing.iconMd),
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -102,7 +102,7 @@ class _MetricCard extends StatelessWidget {
             ),
           ),
           if (caption != null) ...[
-            const SizedBox(height: AppSpacing.tradeBotTinyGap),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               caption!,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -122,17 +122,17 @@ class _UnderwaterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: AppSpacing.tradeBotCompactCardPadding,
       child: Column(
         children: [
           SizedBox(
-            height: AppSpacing.botDrawdownUnderwaterChartHeight,
+            height: _drawdownUnderwaterExtent,
             child: CustomPaint(
               painter: _UnderwaterPainter(points),
               size: Size.infinite,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Below zero = in drawdown (underwater)',
             textAlign: TextAlign.center,
@@ -152,9 +152,9 @@ class _DurationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: AppSpacing.tradeBotCompactCardPadding,
       child: SizedBox(
-        height: AppSpacing.botDrawdownDurationChartHeight,
+        height: _drawdownDurationExtent,
         child: CustomPaint(
           painter: _DurationPainter(buckets),
           size: Size.infinite,
@@ -175,8 +175,7 @@ class _EventsList extends StatelessWidget {
       children: [
         for (final event in events) ...[
           _EventCard(event: event),
-          if (event != events.last)
-            const SizedBox(height: AppSpacing.tradeBotRowGap),
+          if (event != events.last) const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -191,25 +190,34 @@ class _EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: AppSpacing.tradeBotCompactCardPadding,
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Event #${event.id}',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-              ),
-              if (event.severe) ...[
-                const SizedBox(width: AppSpacing.tradeBotSmallGap),
-                VitAccentPill(
-                  label: 'Severe',
-                  accentColor: _drawdownRed,
-                  size: VitStatusPillSize.sm,
+              Expanded(
+                child: Wrap(
+                  spacing: AppSpacing.x2,
+                  runSpacing: AppSpacing.x1,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      'Event #${event.id}',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                    if (event.severe)
+                      VitAccentPill(
+                        label: 'Severe',
+                        accentColor: _drawdownRed,
+                        size: VitStatusPillSize.sm,
+                      ),
+                  ],
                 ),
-              ],
-              const Spacer(),
+              ),
+              const SizedBox(width: AppSpacing.x2),
               Text(
                 '${event.depthPct.toStringAsFixed(1)}%',
                 style: AppTextStyles.baseMedium.copyWith(
@@ -219,17 +227,17 @@ class _EventCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotContentGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
                 child: _EventStat(label: 'Start', value: event.startLabel),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _EventStat(label: 'Duration', value: event.duration),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _EventStat(
                   label: 'Recovery',
@@ -262,7 +270,7 @@ class _EventStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotControlPadding,
+      padding: AppSpacing.tradeBotCompactPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

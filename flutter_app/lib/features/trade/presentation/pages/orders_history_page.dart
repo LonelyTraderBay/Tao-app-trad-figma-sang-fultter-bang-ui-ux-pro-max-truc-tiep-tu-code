@@ -4,13 +4,14 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -22,6 +23,11 @@ part '../widgets/orders_history_page_sections.dart';
 part '../widgets/orders_history_page_common.dart';
 
 const _tradePrimary = AppColors.primary;
+const double _ordersFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _ordersNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _ordersStatusExtent = AppSpacing.buttonStandard + AppSpacing.x5;
 
 class OrdersHistoryPage extends ConsumerStatefulWidget {
   const OrdersHistoryPage({super.key, this.shellRenderMode});
@@ -30,6 +36,7 @@ class OrdersHistoryPage extends ConsumerStatefulWidget {
   static const historyTabKey = Key('sc050_history_tab');
   static const cancelFirstOrderKey = Key('sc050_cancel_first_order');
   static Key filterKey(String id) => Key('sc050_filter_$id');
+  static Key orderKey(String id) => Key('sc050_order_$id');
 
   final ShellRenderMode? shellRenderMode;
 
@@ -49,15 +56,11 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
         .snapshot;
     final orders = _visibleOrders(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.tradeHistoryBottomInsetVisual
-            : AppSpacing.tradeHistoryBottomInsetNative);
+            ? _ordersFramedScrollClearance
+            : _ordersNativeScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -75,10 +78,11 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                child: VitInsetScrollView(
+                  bottomInset: scrollEndClearance,
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _OrderTopTabs(
                         active: _activeTab,
@@ -95,6 +99,7 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
                       else
                         for (var i = 0; i < orders.length; i++)
                           _OrderHistoryTile(
+                            key: OrdersHistoryPage.orderKey(orders[i].id),
                             order: orders[i],
                             actionKey: i == 0
                                 ? OrdersHistoryPage.cancelFirstOrderKey

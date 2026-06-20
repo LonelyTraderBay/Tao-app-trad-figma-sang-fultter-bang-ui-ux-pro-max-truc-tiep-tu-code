@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPortfolioRisk(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,6 +72,28 @@ void main() {
     expect(find.text('Cảnh báo rủi ro'), findsOneWidget);
     expect(find.text('Asset Allocation'), findsOneWidget);
     expect(find.text('BTC'), findsOneWidget);
+  });
+
+  testWidgets('SC-078 first viewport reaches asset allocation data', (
+    tester,
+  ) async {
+    await pumpPortfolioRisk(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'PortfolioRiskAnalysisPage',
+      semanticLabel: 'SC-078 PortfolioRiskAnalysisPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PortfolioRiskAnalysisPage.assetKey('BTC')),
+      minVisibleHeight: 24,
+      targetLabel: 'first asset exposure row',
+      reason:
+          'Portfolio risk analysis must expose allocation data above the '
+          'bottom navigation after the summary, risk preview, alerts, and '
+          'tabs.',
+    );
   });
 
   testWidgets('SC-078 tabs switch to stress scenarios locally', (tester) async {

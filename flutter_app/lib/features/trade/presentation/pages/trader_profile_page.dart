@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -57,13 +58,11 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
         .getTraderProfile(traderId: widget.traderId);
     final trader = snapshot.trader;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollClearance =
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 104 : 28);
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,11 +82,16 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: TraderProfilePage.contentKey,
-                  padding: AppSpacing.traderProfileScrollPadding(bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.tradeBotCardGap,
+                    AppSpacing.contentPad,
+                    scrollClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     children: [
                       _ProfileHero(
                         trader: trader,
@@ -95,21 +99,21 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
                         onToggleFollow: () =>
                             setState(() => _isFollowing = !_isFollowing),
                       ),
-                      const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
                       VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.traderProfileRiskPanelPadding,
+                        density: VitDensity.compact,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
+                              density: VitDensity.compact,
                               title: 'Trader profile review',
                               message:
                                   'Performance, recent trades, statistics, risk history and copy action suitability are reviewed before following.',
                               contractId: 'trader-profile-${widget.traderId}',
                             ),
-                            const SizedBox(height: AppSpacing.x3),
+                            const SizedBox(height: AppSpacing.x2),
                             const VitStatusPill(
                               label: 'Past performance varies',
                               status: VitStatusPillStatus.warning,
@@ -117,9 +121,6 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
                             ),
                           ],
                         ),
-                      ),
-                      const SizedBox(
-                        height: AppSpacing.traderProfileSectionGap,
                       ),
                       _SegmentTabs(
                         activeId: _tab,
@@ -130,11 +131,8 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
                         ],
                         onChanged: (id) => setState(() => _tab = id),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.traderProfileSectionGap,
-                      ),
                       VitPageSection(
-                        customGap: 0,
+                        density: VitDensity.compact,
                         children: [
                           if (_tab == 'overview')
                             _OverviewTab(snapshot: snapshot)

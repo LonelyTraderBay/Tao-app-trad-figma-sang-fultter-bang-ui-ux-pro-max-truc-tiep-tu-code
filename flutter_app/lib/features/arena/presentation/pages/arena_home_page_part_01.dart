@@ -15,13 +15,11 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(arenaReadModelControllerProvider).getArenaHome();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.arenaHomeBottomInsetVisualExtra
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.arenaHomeBottomInsetNativeExtra) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _arenaHomeVisualNavClearance
+        : _arenaHomeNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     final hasSearch = _query.trim().length >= 2;
 
@@ -49,10 +47,10 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                   child: SingleChildScrollView(
                     key: ArenaHomePage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaHomeScrollPadding(bottomInset),
+                    padding: EdgeInsets.only(bottom: scrollEndPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      density: VitDensity.compact,
                       children: [
                         _IntroBlock(
                           controller: _searchController,
@@ -184,7 +182,7 @@ class _IntroBlock extends StatelessWidget {
                 'Tạo mode chơi, mở phòng và thách đấu bằng Arena Points',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.arenaHomeIntroLineHeight,
+                  height: _arenaHomeIntroLineHeight,
                 ),
               ),
             ),
@@ -196,7 +194,7 @@ class _IntroBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         VitSearchBar(
           key: ArenaHomePage.searchKey,
           controller: controller,
@@ -205,7 +203,7 @@ class _IntroBlock extends StatelessWidget {
           onChanged: onChanged,
           onClear: onClear,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -269,7 +267,7 @@ class _QuickChip extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.inputRadius,
           child: SizedBox(
-            height: AppSpacing.arenaHomeQuickChipHeight,
+            height: VitDensity.compact.controlHeight,
             child: Material(
               color: AppColors.surface2,
               shape: RoundedRectangleBorder(
@@ -292,7 +290,7 @@ class _QuickChip extends StatelessWidget {
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.arenaHomeQuickChipLineHeight,
+                        height: _arenaHomeCountBadgeLineHeight,
                       ),
                     ),
                     if (count > 0) ...[
@@ -320,7 +318,7 @@ class _HeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: _arenaAccent,
-      padding: AppSpacing.arenaPaddingX5,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -331,15 +329,15 @@ class _HeroCard extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Tạo sân chơi',
-            style: AppTextStyles.heroNumber.copyWith(
+            style: AppTextStyles.sectionTitle.copyWith(
               fontWeight: AppTextStyles.heavy,
-              height: AppSpacing.arenaHomeHeroTitleLineHeight,
+              height: _arenaHomeHeroTitleLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               const VitStatusPill(
@@ -362,7 +360,7 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -404,20 +402,16 @@ class _TemplateSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageSection(
       key: anchorKey,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      label: 'Templates',
+      accentColor: AppColors.accent,
+      density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'Templates',
-          accentColor: AppColors.accent,
-        ),
-        const SizedBox(height: AppSpacing.x1),
         Text(
           'Chọn template để bắt đầu tạo challenge',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -434,7 +428,7 @@ class _TemplateSection extends StatelessWidget {
             return VitCard(
               key: ArenaHomePage.templateKey(template.id),
               onTap: () => onTap(template.id),
-              padding: AppSpacing.arenaPaddingX4,
+              density: VitDensity.compact,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -452,23 +446,23 @@ class _TemplateSection extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.body.copyWith(
                             fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.arenaHomeTemplateTitleLineHeight,
+                            height: _arenaHomeTemplateTitleLineHeight,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.x2),
                   Text(
                     template.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.arenaHomeTemplateDescriptionLineHeight,
+                      height: _arenaHomeTemplateDescriptionLineHeight,
                     ),
                   ),
-                  const Spacer(),
+                  const SizedBox(height: AppSpacing.x2),
                   Wrap(
                     spacing: AppSpacing.x3,
                     runSpacing: AppSpacing.x1,

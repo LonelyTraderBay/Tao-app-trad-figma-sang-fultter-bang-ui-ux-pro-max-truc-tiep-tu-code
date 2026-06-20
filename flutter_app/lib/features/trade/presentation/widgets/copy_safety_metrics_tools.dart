@@ -8,6 +8,7 @@ class _WarningCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       padding: AppSpacing.cardPaddingCompact,
       borderColor: _safetyWarningBorder,
       child: Row(
@@ -18,14 +19,14 @@ class _WarningCard extends StatelessWidget {
             color: AppColors.warn,
             size: AppSpacing.rowPy,
           ),
-          const SizedBox(width: AppSpacing.walletAssetPillGap),
+          const SizedBox(width: _safetySpace),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.copySafetyBodyLineHeight,
+                height: _safetyBodyLineHeight,
               ),
             ),
           ),
@@ -55,15 +56,14 @@ class _MetricsTab extends StatelessWidget {
           'Understanding trust metrics:',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: _safetySpace),
         for (final metric in metrics) ...[
           _MetricCard(
             metric: metric,
             expanded: expandedMetric == metric.name,
             onTap: () => onMetricToggle(metric.name),
           ),
-          if (metric != metrics.last)
-            const SizedBox(height: AppSpacing.walletAssetPillGap),
+          if (metric != metrics.last) const SizedBox(height: _safetySpace),
         ],
       ],
     );
@@ -84,6 +84,7 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -172,6 +173,7 @@ class _MetricInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      density: VitDensity.compact,
       radius: VitCardRadius.sm,
       width: double.infinity,
       padding: AppSpacing.copySafetyMetricInfoPadding,
@@ -181,7 +183,7 @@ class _MetricInfo extends StatelessWidget {
         style: AppTextStyles.micro.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.copySafetyBodyLineHeight,
+          height: _safetyBodyLineHeight,
         ),
       ),
     );
@@ -203,14 +205,14 @@ class _GuidelinesTab extends StatelessWidget {
           items: snapshot.prohibitedBehaviors,
           icon: Icons.cancel_outlined,
         ),
-        const SizedBox(height: AppSpacing.transferSectionGap),
+        const SizedBox(height: _safetyCardSpace),
         _GuidelineList(
           title: 'Follower Responsibilities',
           color: _safetyPrimary,
           items: snapshot.followerResponsibilities,
           icon: Icons.check_circle_outline_rounded,
         ),
-        const SizedBox(height: AppSpacing.transferSectionGap),
+        const SizedBox(height: _safetyCardSpace),
         _ReportingSteps(steps: snapshot.reportingSteps),
       ],
     );
@@ -239,7 +241,7 @@ class _GuidelineList extends StatelessWidget {
         children: [
           for (final item in items) ...[
             _IconTextRow(icon: icon, color: color, text: item),
-            if (item != items.last) const SizedBox(height: AppSpacing.x3),
+            if (item != items.last) const SizedBox(height: _safetySpace),
           ],
         ],
       ),
@@ -261,7 +263,7 @@ class _ReportingSteps extends StatelessWidget {
         children: [
           for (final step in steps) ...[
             _SimpleCard(title: step.title, body: step.description),
-            if (step != steps.last) const SizedBox(height: AppSpacing.x3),
+            if (step != steps.last) const SizedBox(height: _safetySpace),
           ],
         ],
       ),
@@ -284,8 +286,7 @@ class _ToolsTab extends StatelessWidget {
         children: [
           for (final tool in tools) ...[
             _ToolButton(tool: tool, onEmergency: onEmergency),
-            if (tool != tools.last)
-              const SizedBox(height: AppSpacing.walletAssetPillGap),
+            if (tool != tools.last) const SizedBox(height: _safetySpace),
           ],
         ],
       ),
@@ -305,6 +306,7 @@ class _ToolButton extends StatelessWidget {
     return VitCard(
       key: CopySafetyCenterPage.toolKey(tool.id),
       variant: VitCardVariant.inner,
+      density: VitDensity.compact,
       padding: AppSpacing.copySafetyActionCardPadding,
       borderColor: AppColors.cardBorder,
       onTap: () {

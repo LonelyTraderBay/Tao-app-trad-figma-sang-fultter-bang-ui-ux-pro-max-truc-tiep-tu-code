@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -24,6 +25,9 @@ part 'trade_page_part_02.dart';
 part 'trade_page_part_03.dart';
 
 const _tradePrimary = AppColors.primary;
+const _tradeCompactChartHeight = AppSpacing.x7 + AppSpacing.x6 + AppSpacing.x4;
+const _tradeCompactQuickNavHeight = AppSpacing.x6 + AppSpacing.x5;
+const _tradeCompactQuickChipWidth = AppSpacing.x7 + AppSpacing.x6;
 
 enum TradeChartVariant { defaultRoute, pairRoute }
 

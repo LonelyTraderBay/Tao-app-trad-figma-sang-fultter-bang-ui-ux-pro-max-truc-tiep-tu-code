@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCopyAuditLog(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -86,6 +88,27 @@ void main() {
     expect(find.text('Trade Executed'), findsOneWidget);
     expect(find.text('Risk Alert Triggered'), findsOneWidget);
     expect(find.text('Thống kê tổng quan'), findsOneWidget);
+  });
+
+  testWidgets('SC-077 first viewport reaches first audit event', (
+    tester,
+  ) async {
+    await pumpCopyAuditLog(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'CopyAuditLogPage',
+      semanticLabel: 'SC-077 CopyAuditLogPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(CopyAuditLogPage.eventKey('evt-1')),
+      minVisibleHeight: 24,
+      targetLabel: 'first audit event',
+      reason:
+          'Copy audit log must show the first timeline event above bottom '
+          'navigation after compliance notice, review, search, and tabs.',
+    );
   });
 
   testWidgets('SC-077 search and filter tabs narrow the audit list', (

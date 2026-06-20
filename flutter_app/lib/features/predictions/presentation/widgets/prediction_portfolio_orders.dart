@@ -97,17 +97,20 @@ class PredictionPortfolioOpenOrderCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: AppSpacing.predictionPortfolioOrderIconBox,
-              height: AppSpacing.predictionPortfolioOrderIconBox,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: .12),
-                borderRadius: AppRadii.mdRadius,
-              ),
-              child: Icon(
-                Icons.attach_money_rounded,
-                color: color,
-                size: AppSpacing.predictionPortfolioOrderIcon,
+            SizedBox.square(
+              dimension: AppSpacing.predictionPortfolioOrderIconBox,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color.withValues(alpha: .12),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.mdRadius,
+                  ),
+                ),
+                child: Icon(
+                  Icons.attach_money_rounded,
+                  color: color,
+                  size: AppSpacing.predictionPortfolioOrderIcon,
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.predictionPortfolioOrderGap),
@@ -188,34 +191,42 @@ class PredictionPortfolioOpenOrderCard extends StatelessWidget {
                   key: predictionPortfolioCancelOrderKey(order.id),
                   onTap: onCancel,
                   borderRadius: AppRadii.mdRadius,
-                  child: Container(
+                  child: SizedBox(
                     height: AppSpacing.predictionPortfolioOrderCancelHeight,
-                    padding: AppSpacing.predictionPortfolioOrderCancelPadding,
-                    decoration: BoxDecoration(
-                      color: AppColors.sell10,
-                      border: Border.all(color: AppColors.sell20),
-                      borderRadius: AppRadii.mdRadius,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.close_rounded,
-                          color: AppColors.sell,
-                          size: AppSpacing.predictionPortfolioOrderCancelIcon,
+                    child: DecoratedBox(
+                      decoration: const ShapeDecoration(
+                        color: AppColors.sell10,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(color: AppColors.sell20),
+                          borderRadius: AppRadii.mdRadius,
                         ),
-                        const SizedBox(
-                          width:
-                              AppSpacing.predictionPortfolioOrderCancelIconGap,
+                      ),
+                      child: Padding(
+                        padding:
+                            AppSpacing.predictionPortfolioOrderCancelPadding,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.close_rounded,
+                              color: AppColors.sell,
+                              size:
+                                  AppSpacing.predictionPortfolioOrderCancelIcon,
+                            ),
+                            const SizedBox(
+                              width: AppSpacing
+                                  .predictionPortfolioOrderCancelIconGap,
+                            ),
+                            Text(
+                              'Cancel',
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.sell,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          'Cancel',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.sell,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),

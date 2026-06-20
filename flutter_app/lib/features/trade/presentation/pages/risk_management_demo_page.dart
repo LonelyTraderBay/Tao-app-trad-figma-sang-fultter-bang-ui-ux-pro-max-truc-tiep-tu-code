@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -21,6 +21,13 @@ part '../widgets/risk_management_tabs.dart';
 part '../widgets/risk_management_common.dart';
 
 const _riskPrimary = AppColors.primary;
+const _riskSpace = AppSpacing.x2;
+const _riskTinySpace = AppSpacing.x1;
+const _riskCardSpace = AppSpacing.x3;
+const _riskControlExtent = 44.0;
+const _riskTabExtent = 44.0;
+const _riskVisualScrollClearance = 108.0;
+const _riskNativeScrollClearance = 72.0;
 
 enum _RiskTab { oco, positions, calculator }
 
@@ -56,15 +63,11 @@ class _RiskManagementDemoPageState
         .state
         .snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.tradeToolBottomInsetRiskVisual
-            : AppSpacing.tradeToolBottomInsetRiskNative);
+            ? _riskVisualScrollClearance
+            : _riskNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -85,14 +88,13 @@ class _RiskManagementDemoPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: RiskManagementDemoPage.contentKey,
-                      padding: AppSpacing.tradeToolScrollPadding(bottomInset),
+                      padding: EdgeInsets.only(bottom: scrollEndClearance),
                       child: VitPageContent(
-                        padding: VitContentPadding.none,
+                        padding: VitContentPadding.compact,
+                        density: VitDensity.compact,
                         fullBleed: true,
-                        customGap: 0,
                         children: [
                           const _IntroCard(),
-                          const SizedBox(height: AppSpacing.tradeToolCardGap),
                           const VitCard(
                             variant: VitCardVariant.inner,
                             padding: AppSpacing.tradeToolRiskReviewPadding,
@@ -105,10 +107,9 @@ class _RiskManagementDemoPageState
                                   message:
                                       'OCO order, protected positions, calculator result, fee impact and confirmation are reviewed before applying risk actions.',
                                   contractId: 'risk-management-demo-review',
+                                  density: VitDensity.compact,
                                 ),
-                                SizedBox(
-                                  height: AppSpacing.tradeToolInlineGap,
-                                ),
+                                SizedBox(height: _riskSpace),
                                 VitStatusPill(
                                   label: 'Preview before action',
                                   status: VitStatusPillStatus.warning,
@@ -117,27 +118,20 @@ class _RiskManagementDemoPageState
                               ],
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.tradeToolCardGap),
                           for (final feature in snapshot.features) ...[
                             _FeatureCard(
                               feature: feature,
                               onTap: () => _onFeatureTap(feature),
                             ),
-                            const SizedBox(height: AppSpacing.tradeToolCardGap),
                           ],
                           const _BenefitsCard(),
-                          const SizedBox(height: AppSpacing.tradeToolCardGap),
                           _StatusCard(items: snapshot.statusItems),
-                          const SizedBox(height: AppSpacing.tradeToolBodyIcon),
                           _RiskTabs(
                             active: _tab,
                             onChanged: (tab) => setState(() => _tab = tab),
                           ),
-                          const SizedBox(
-                            height: AppSpacing.tradeToolPageTopGap,
-                          ),
                           VitPageSection(
-                            customGap: 0,
+                            density: VitDensity.compact,
                             children: [
                               if (_tab == _RiskTab.oco)
                                 _OcoTab(onOpen: _openOcoSheet)
@@ -161,7 +155,7 @@ class _RiskManagementDemoPageState
               right: AppSpacing.contentPad,
               top: mode.usesVisualQaFrame
                   ? AppSpacing.buttonHero
-                  : AppSpacing.tradeToolContentGap,
+                  : AppSpacing.x5,
               child: _SuccessToast(
                 message: _successMessage!,
                 onClose: () => setState(() => _successMessage = null),

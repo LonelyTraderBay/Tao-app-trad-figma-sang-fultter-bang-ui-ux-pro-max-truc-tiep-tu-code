@@ -7,10 +7,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,6 +24,21 @@ part 'p2p_insurance_fund_page_part_02.dart';
 part 'p2p_insurance_fund_page_part_03.dart';
 
 enum _InsuranceTab { overview, claims }
+
+const double _p2pInsuranceVisualNavClearance = 112;
+const double _p2pInsuranceNativeNavClearance = 88;
+const double _p2pInsuranceIconBox = AppSpacing.buttonCompact;
+const double _p2pInsuranceChartHeight = AppSpacing.p2pTrustProgressChartHeight;
+const double _p2pInsuranceInputHeight = AppSpacing.p2pTrustProgressInputHeight;
+const double _p2pInsuranceTourMaxHeight =
+    AppSpacing.p2pTrustProgressTourMaxHeight;
+const double _p2pInsuranceTourStepHeight =
+    AppSpacing.p2pTrustProgressTourStepHeight;
+const double _p2pInsuranceTourIconBox = AppSpacing.x7;
+const double _p2pInsuranceBodyLineHeight =
+    AppSpacing.p2pTrustProgressBodyLineHeight;
+const double _p2pInsuranceCaptionLineHeight =
+    AppSpacing.p2pTrustProgressCaptionLineHeight;
 
 class P2PInsuranceFundPage extends ConsumerStatefulWidget {
   const P2PInsuranceFundPage({super.key, this.shellRenderMode});
@@ -51,11 +66,11 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pInsuranceFundProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _p2pInsuranceVisualNavClearance
+        : _p2pInsuranceNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return Stack(
       children: [
@@ -120,16 +135,19 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                       child: SingleChildScrollView(
                         key: P2PInsuranceFundPage.contentKey,
                         physics: const BouncingScrollPhysics(),
-                        padding: AppSpacing.p2pTrustProgressScrollPadding(
-                          bottomInset,
+                        padding: EdgeInsets.fromLTRB(
+                          AppSpacing.contentPad,
+                          AppSpacing.x3,
+                          AppSpacing.contentPad,
+                          scrollEndPadding,
                         ),
                         child: VitPageContent(
                           padding: VitContentPadding.none,
                           fullBleed: true,
-                          customGap: AppSpacing.x3,
+                          density: VitDensity.compact,
                           children: [
                             VitPageSection(
-                              customGap: 0,
+                              density: VitDensity.compact,
                               children: [
                                 _tab == _InsuranceTab.overview
                                     ? _OverviewContent(snapshot: snapshot)
@@ -138,8 +156,10 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                             ),
                             const VitCard(
                               variant: VitCardVariant.inner,
-                              padding: AppSpacing.p2pTrustProgressCompactPadding,
+                              padding:
+                                  AppSpacing.p2pTrustProgressCompactPadding,
                               child: VitHighRiskStatePanel(
+                                density: VitDensity.compact,
                                 state: VitHighRiskUiState.riskReview,
                                 title: 'Insurance fund review',
                                 message:

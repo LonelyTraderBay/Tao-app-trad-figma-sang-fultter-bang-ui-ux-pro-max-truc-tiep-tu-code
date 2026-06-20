@@ -19,33 +19,40 @@ class DcaBacktesterTopTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
-      child: Row(
+    return ColoredBox(
+      color: AppColors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          _TopTab(
-            label: 'Cài đặt',
-            tab: DcaBacktesterTab.setup,
-            active: activeTab == DcaBacktesterTab.setup,
-            tabKey: tabKey,
-            onChanged: onChanged,
+          Row(
+            children: [
+              _TopTab(
+                label: 'Cài đặt',
+                tab: DcaBacktesterTab.setup,
+                active: activeTab == DcaBacktesterTab.setup,
+                tabKey: tabKey,
+                onChanged: onChanged,
+              ),
+              _TopTab(
+                label: 'Kết quả',
+                tab: DcaBacktesterTab.results,
+                active: activeTab == DcaBacktesterTab.results,
+                tabKey: tabKey,
+                onChanged: onChanged,
+              ),
+              _TopTab(
+                label: 'Phân tích',
+                tab: DcaBacktesterTab.analysis,
+                active: activeTab == DcaBacktesterTab.analysis,
+                tabKey: tabKey,
+                onChanged: onChanged,
+              ),
+            ],
           ),
-          _TopTab(
-            label: 'Kết quả',
-            tab: DcaBacktesterTab.results,
-            active: activeTab == DcaBacktesterTab.results,
-            tabKey: tabKey,
-            onChanged: onChanged,
-          ),
-          _TopTab(
-            label: 'Phân tích',
-            tab: DcaBacktesterTab.analysis,
-            active: activeTab == DcaBacktesterTab.analysis,
-            tabKey: tabKey,
-            onChanged: onChanged,
+          const SizedBox(
+            width: double.infinity,
+            height: AppSpacing.dividerHairline,
+            child: ColoredBox(color: AppColors.border),
           ),
         ],
       ),
@@ -78,7 +85,7 @@ class _TopTab extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+              padding: AppSpacing.dcaVerticalPaddingX4,
               child: Text(
                 label,
                 style: AppTextStyles.caption.copyWith(
@@ -89,11 +96,14 @@ class _TopTab extends StatelessWidget {
                 ),
               ),
             ),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
+            SizedBox(
               height: AppSpacing.x1,
               width: double.infinity,
-              color: active ? AppColors.primary : AppColors.transparent,
+              child: AnimatedOpacity(
+                opacity: active ? 1 : 0,
+                duration: const Duration(milliseconds: 180),
+                child: const ColoredBox(color: AppColors.primary),
+              ),
             ),
           ],
         ),

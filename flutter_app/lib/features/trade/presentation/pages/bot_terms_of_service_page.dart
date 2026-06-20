@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,6 +24,21 @@ const _termsBackground = AppColors.bg;
 const _termsPrimary = AppColors.primary;
 const _termsAmber = AppColors.caution;
 const _termsRed = AppColors.sell;
+const double _termsVisualScrollClearance = 108;
+const double _termsNativeScrollClearance = 72;
+const double _termsSpace = AppSpacing.x2;
+const double _termsTinySpace = AppSpacing.x1;
+const double _termsInfoMinExtent = 82;
+const double _termsCardExtent = 360;
+const double _termsWarningMinExtent = 40;
+const double _termsAgreementMinExtent = 96;
+const double _termsComplianceMinExtent = 88;
+const double _termsLineTight = 1.05;
+const double _termsLineShort = 1.15;
+const double _termsLineCaption = 1.2;
+const double _termsLineBody = 1.26;
+const double _termsLineReadable = 1.34;
+const double _termsLineLegal = 1.42;
 
 class BotTermsOfServicePage extends ConsumerStatefulWidget {
   const BotTermsOfServicePage({super.key, this.shellRenderMode});
@@ -65,10 +80,10 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
         .watch(tradeReadModelControllerProvider)
         .getBotTermsOfService();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 58
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? _termsVisualScrollClearance
+            : _termsNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -88,13 +103,11 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: BotTermsOfServicePage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     fullBleed: true,
-                    customGap: AppSpacing.tradeBotPageTopGap,
                     children: [
                       _InfoBanner(snapshot: snapshot),
                       _TermsCard(
@@ -124,6 +137,7 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
                           message:
                               'Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.',
                           contractId: 'bot-terms-acceptance-review',
+                          density: VitDensity.compact,
                         ),
                       ),
                     ],

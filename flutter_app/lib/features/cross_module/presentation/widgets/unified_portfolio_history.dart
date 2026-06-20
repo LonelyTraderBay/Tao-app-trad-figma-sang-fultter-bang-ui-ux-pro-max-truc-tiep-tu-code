@@ -22,7 +22,7 @@ class UnifiedPortfolioHistory extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.crossModuleCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -70,7 +70,7 @@ class _GrowthRow extends StatelessWidget {
         ? 0.0
         : (module.value - oldValue) / oldValue * 100;
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Row(
         children: [
           Expanded(

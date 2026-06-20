@@ -26,7 +26,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
             VitCard(
               key: StakingTaxGuideKeys.overview,
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -55,7 +55,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
             VitCard(
               key: StakingTaxGuideKeys.summary,
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 children: [
                   for (final summary in snapshot.countrySummaries) ...[
@@ -74,7 +74,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 children: [
                   _ToolRow(
@@ -111,40 +111,42 @@ class _IncomeEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface3,
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            event.title,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnCardPaddingX3,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              event.title,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            event.description,
-            style: AppTextStyles.captionSm.copyWith(
-              color: AppColors.text2,
-              height: AppSpacing.stakingTaxEventLineHeight,
+            const SizedBox(height: AppSpacing.x2),
+            Text(
+              event.description,
+              style: AppTextStyles.captionSm.copyWith(
+                color: AppColors.text2,
+                height: AppSpacing.stakingTaxEventLineHeight,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            event.example,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontStyle: FontStyle.italic,
-              height: AppSpacing.stakingTaxExampleLineHeight,
+            const SizedBox(height: AppSpacing.x2),
+            Text(
+              event.example,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                fontStyle: FontStyle.italic,
+                height: AppSpacing.stakingTaxExampleLineHeight,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -210,7 +212,7 @@ class _ToolRow extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.lgRadius,
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.x3),
+          padding: AppSpacing.earnCardPaddingX3,
           child: Row(
             children: [
               Icon(

@@ -54,7 +54,7 @@ class _RelatedMarketCard extends StatelessWidget {
       width: AppSpacing.predictionDetailRelatedCardWidth,
       child: VitCard(
         onTap: onTap,
-        padding: AppSpacing.predictionDetailRelatedCardPadding,
+        density: VitDensity.compact,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -63,7 +63,7 @@ class _RelatedMarketCard extends StatelessWidget {
               color: _predictionPrimary,
               background: _predictionPrimary.withValues(alpha: .13),
             ),
-            const SizedBox(height: AppSpacing.predictionDetailRelatedBadgeGap),
+            const SizedBox(height: AppSpacing.x2),
             Text(
               event.title,
               maxLines: 2,
@@ -73,7 +73,7 @@ class _RelatedMarketCard extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(height: AppSpacing.predictionDetailRelatedMetaGap),
+            const SizedBox(height: AppSpacing.x2),
             Row(
               children: [
                 SizedBox.square(
@@ -99,10 +99,13 @@ class _RelatedMarketCard extends StatelessWidget {
                   top.label,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const Spacer(),
-                Text(
-                  _formatVolume(event.volume24h),
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    _formatVolume(event.volume24h),
+                    textAlign: TextAlign.end,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
                 ),
               ],
             ),
@@ -123,7 +126,7 @@ class _ArenaBridgeSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.predictionDetailArenaPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -166,7 +169,7 @@ class _ArenaBridgeSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionDetailArenaRoomsGap),
+          const SizedBox(height: AppSpacing.x3),
           for (
             var index = 0;
             index < snapshot.arenaRooms.length;
@@ -174,9 +177,7 @@ class _ArenaBridgeSection extends StatelessWidget {
           ) ...[
             _ArenaRoomRow(room: snapshot.arenaRooms[index]),
             if (index != snapshot.arenaRooms.length - 1)
-              const SizedBox(
-                height: AppSpacing.predictionDetailArenaRoomBottomGap,
-              ),
+              const SizedBox(height: AppSpacing.x2),
           ],
           Material(
             color: AppColors.warn08,

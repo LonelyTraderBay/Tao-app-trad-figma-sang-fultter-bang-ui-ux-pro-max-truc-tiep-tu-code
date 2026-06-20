@@ -7,14 +7,14 @@ class _ProvidersTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
       children: [
         const _SectionLabel('Provider Performance'),
-        const SizedBox(height: AppSpacing.tradeToolSectionHeaderGap),
-        for (final provider in providers) ...[
+        for (final provider in providers)
           _Card(
-            padding: AppSpacing.tradeToolCardPadding,
+            padding: AppSpacing.cardPaddingCompact,
             child: Column(
               children: [
                 Row(
@@ -39,7 +39,7 @@ class _ProvidersTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.tradeToolCardGap),
+                const SizedBox(height: AppSpacing.x3),
                 Row(
                   children: [
                     Expanded(
@@ -48,14 +48,14 @@ class _ProvidersTab extends StatelessWidget {
                         value: provider.eventCount.toString(),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.tradeToolInlineGap),
+                    const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: _EventMetric(
                         label: 'Max Slippage',
                         value: '${provider.maxSlippage.toStringAsFixed(1)} bps',
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.tradeToolInlineGap),
+                    const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: _EventMetric(
                         label: 'Cost Impact',
@@ -67,9 +67,6 @@ class _ProvidersTab extends StatelessWidget {
               ],
             ),
           ),
-          if (provider != providers.last)
-            const SizedBox(height: AppSpacing.tradeToolCardGap),
-        ],
       ],
     );
   }
@@ -82,13 +79,13 @@ class _HistoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
       children: [
         const _SectionLabel('Slippage Trends (Last 7 Days)'),
-        const SizedBox(height: AppSpacing.tradeToolSectionHeaderGap),
         _Card(
-          padding: AppSpacing.tradeToolCardPadding,
+          padding: AppSpacing.cardPaddingCompact,
           child: Column(
             children: [
               for (final point in history) ...[
@@ -112,7 +109,7 @@ class _HistoryTab extends StatelessWidget {
                         borderRadius: AppRadii.pillRadius,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.tradeToolInlineGap),
+                    const SizedBox(width: AppSpacing.x2),
                     Text(
                       '${point.max.toStringAsFixed(1)} bps',
                       style: AppTextStyles.micro.copyWith(
@@ -122,7 +119,7 @@ class _HistoryTab extends StatelessWidget {
                   ],
                 ),
                 if (point != history.last)
-                  const SizedBox(height: AppSpacing.tradeToolIconGap),
+                  const SizedBox(height: AppSpacing.x2),
               ],
             ],
           ),
@@ -137,25 +134,23 @@ class _AlertsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return const VitPageContent(
+      padding: VitContentPadding.none,
+      density: VitDensity.compact,
       children: [
         _SectionLabel('Alert Configuration'),
-        SizedBox(height: AppSpacing.tradeToolSectionHeaderGap),
         _AlertSetting(
           title: 'Critical Slippage Alert',
           subtitle: 'Notify when slippage exceeds 1%',
           value: 'Current Threshold: 100 bps (1.0%)',
           enabled: true,
         ),
-        SizedBox(height: AppSpacing.tradeToolCardGap),
         _AlertSetting(
           title: 'Warning Slippage Alert',
           subtitle: 'Notify when slippage exceeds 0.5%',
           value: 'Current Threshold: 50 bps (0.5%)',
           enabled: true,
         ),
-        SizedBox(height: AppSpacing.tradeToolCardGap),
         _AlertSetting(
           title: 'Daily Summary Email',
           subtitle: 'Receive daily slippage report at 9:00 AM',
@@ -183,7 +178,7 @@ class _AlertSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeToolCardPadding,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Row(
@@ -199,7 +194,7 @@ class _AlertSetting extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.tradeToolTinyGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       subtitle,
                       style: AppTextStyles.micro.copyWith(
@@ -212,11 +207,15 @@ class _AlertSetting extends StatelessWidget {
               _SwitchVisual(enabled: enabled),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: AppSpacing.x3),
           VitCard(
             variant: VitCardVariant.inner,
             width: double.infinity,
-            padding: AppSpacing.tradeToolMetricRowPadding,
+            density: VitDensity.compact,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x2,
+            ),
             child: Text(
               value,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),

@@ -8,19 +8,21 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: LaunchpadSwapAggregatorPage.tabsKey,
       color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
-      child: VitTabBar(
-        tabs: const [
-          VitTabItem(key: 'compare', label: 'So sanh'),
-          VitTabItem(key: 'history', label: 'Lich su'),
-          VitTabItem(key: 'settings', label: 'Cai dat'),
-        ],
-        activeKey: activeTab.name,
-        onChanged: (key) => onChanged(_SwapTab.values.byName(key)),
-        variant: VitTabBarVariant.underline,
+      child: Padding(
+        padding: AppSpacing.launchpadHorizontalContentPadding,
+        child: VitTabBar(
+          tabs: const [
+            VitTabItem(key: 'compare', label: 'So sanh'),
+            VitTabItem(key: 'history', label: 'Lich su'),
+            VitTabItem(key: 'settings', label: 'Cai dat'),
+          ],
+          activeKey: activeTab.name,
+          onChanged: (key) => onChanged(_SwapTab.values.byName(key)),
+          variant: VitTabBarVariant.underline,
+        ),
       ),
     );
   }
@@ -49,7 +51,7 @@ class _SwapInputCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadSwapAggregatorPage.inputKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -139,45 +141,53 @@ class _TokenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: AppColors.bg,
-        border: Border.all(color: AppColors.cardBorder),
-        borderRadius: AppRadii.inputRadius,
+        shape: const RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.cardBorder),
+          borderRadius: AppRadii.inputRadius,
+        ),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: AppSpacing.launchpadBox24,
-            height: AppSpacing.launchpadBox24,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .16),
-              borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: AppSpacing.launchpadPillPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox.square(
+              dimension: AppSpacing.launchpadBox24,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color.withValues(alpha: .16),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.xsRadius,
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    token.substring(0, 2),
+                    style: AppTextStyles.badge.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ),
+              ),
             ),
-            child: Text(
-              token.substring(0, 2),
-              style: AppTextStyles.badge.copyWith(
-                color: color,
+            const SizedBox(width: AppSpacing.x2),
+            Text(
+              token,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Text(
-            token,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+            const Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color: AppColors.text3,
             ),
-          ),
-          const Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.text3),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -191,41 +201,45 @@ class _BestRouteAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: LaunchpadSwapAggregatorPage.bestRouteKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.buy10,
-        border: Border.all(color: AppColors.buy20),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.buy20),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.bolt_rounded,
-            color: AppColors.buy,
-            size: AppSpacing.launchpadIcon2xl + AppSpacing.hairlineStroke,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Best rate: ${bestDex.name}',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                Text(
-                  'Saving ${savings.toStringAsFixed(2)}% vs worst route - Gas: \$${bestDex.gas.toStringAsFixed(0)}',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-                ),
-              ],
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX4,
+        child: Row(
+          children: [
+            const Icon(
+              Icons.bolt_rounded,
+              color: AppColors.buy,
+              size: AppSpacing.launchpadIcon2xl + AppSpacing.hairlineStroke,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Best rate: ${bestDex.name}',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  Text(
+                    'Saving ${savings.toStringAsFixed(2)}% vs worst route - Gas: \$${bestDex.gas.toStringAsFixed(0)}',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

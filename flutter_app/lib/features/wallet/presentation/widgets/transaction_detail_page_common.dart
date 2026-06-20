@@ -11,7 +11,7 @@ class _SupportButton extends StatelessWidget {
       key: TransactionDetailPage.supportKey,
       onPressed: onTap,
       variant: VitCtaButtonVariant.warning,
-      height: AppSpacing.inputHeight,
+      height: _detailActionHeight,
       leading: const Icon(Icons.chat_bubble_outline_rounded),
       child: const Text('Liên hệ hỗ trợ'),
     );
@@ -27,16 +27,16 @@ class _MissingTransaction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: AppSpacing.walletTransactionMissingTopPad),
+        const SizedBox(height: _detailGap),
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.sm,
-          width: AppSpacing.walletTransactionMissingIcon,
-          height: AppSpacing.walletTransactionMissingIcon,
+          width: _detailMissingIconBox,
+          height: _detailMissingIconBox,
           alignment: Alignment.center,
           child: const Icon(Icons.error_outline_rounded, color: _detailRed),
         ),
-        const SizedBox(height: AppSpacing.walletTransactionSummaryTopGap),
+        const SizedBox(height: _detailGap),
         Text(
           'Không tìm thấy giao dịch',
           style: AppTextStyles.body.copyWith(
@@ -44,12 +44,12 @@ class _MissingTransaction extends StatelessWidget {
             fontWeight: AppTextStyles.medium,
           ),
         ),
-        const SizedBox(height: AppSpacing.walletTransactionAfterHashGap),
+        const SizedBox(height: _detailGap),
         VitCtaButton(
           onPressed: onBack,
           variant: VitCtaButtonVariant.primary,
           fullWidth: false,
-          height: AppSpacing.walletTransactionMissingActionHeight,
+          height: _detailActionHeight,
           child: const Text('Quay lại lịch sử'),
         ),
       ],

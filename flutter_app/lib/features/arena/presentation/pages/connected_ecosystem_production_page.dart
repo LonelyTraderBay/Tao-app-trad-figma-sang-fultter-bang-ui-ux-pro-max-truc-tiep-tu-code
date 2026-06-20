@@ -5,11 +5,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,6 +24,15 @@ part 'connected_ecosystem_production_page_part_02.dart';
 part 'connected_ecosystem_production_page_part_03.dart';
 
 enum _EcosystemSection { canonical, states, flows, registry, handoff }
+
+const _ecosystemVisualNavClearance = 114.0;
+const _ecosystemNativeNavClearance = 88.0;
+const _ecosystemIntroLineHeight = 1.16;
+const _ecosystemTitleLineHeight = 1.12;
+const _ecosystemBodyLineHeight = 1.22;
+const _ecosystemMetricLineHeight = 1.12;
+const _ecosystemCheckLineHeight = 1.18;
+const _ecosystemFlowConnectorHeight = 36.0;
 
 class ConnectedEcosystemProductionPage extends ConsumerStatefulWidget {
   const ConnectedEcosystemProductionPage({super.key, this.shellRenderMode});
@@ -55,11 +64,11 @@ class _ConnectedEcosystemProductionPageState
         .watch(arenaReadModelControllerProvider)
         .getConnectedEcosystemProduction();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _ecosystemVisualNavClearance
+        : _ecosystemNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -84,10 +93,10 @@ class _ConnectedEcosystemProductionPageState
                   child: SingleChildScrollView(
                     key: ConnectedEcosystemProductionPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    padding: EdgeInsets.only(bottom: scrollEndPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      density: VitDensity.compact,
                       children: [
                         const _EcosystemHero(),
                         _SectionTabs(

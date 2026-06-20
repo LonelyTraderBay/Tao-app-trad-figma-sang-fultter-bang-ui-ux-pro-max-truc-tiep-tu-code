@@ -1,15 +1,14 @@
 part of 'advanced_analytics_page.dart';
 
 class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
+  const _Card({required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: padding,
+      density: VitDensity.compact,
       borderColor: _advancedBorder.withValues(alpha: .7),
       child: child,
     );

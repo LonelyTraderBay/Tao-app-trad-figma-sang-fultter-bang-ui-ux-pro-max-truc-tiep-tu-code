@@ -19,7 +19,7 @@ class SavingsSmartSummary extends StatelessWidget {
       key: SavingsSmartSuggestionsKeys.summary,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -132,7 +132,7 @@ class SavingsSmartSummaryMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -248,24 +248,25 @@ class SavingsSmartFilterChip extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.xlRadius,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: active
-                  ? tone.withValues(alpha: .45)
-                  : AppColors.cardBorder,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: active
+                    ? tone.withValues(alpha: .45)
+                    : AppColors.cardBorder,
+              ),
+              borderRadius: AppRadii.xlRadius,
             ),
-            borderRadius: AppRadii.xlRadius,
           ),
-          child: Text(
-            label,
-            style: savingsSmartCaptionBold.copyWith(
-              color: active ? tone : AppColors.text2,
-              height: AppSpacing.savingsConsumerPillLineHeight,
+          child: Padding(
+            padding: AppSpacing.earnWidePillPadding,
+            child: Text(
+              label,
+              style: savingsSmartCaptionBold.copyWith(
+                color: active ? tone : AppColors.text2,
+                height: AppSpacing.savingsConsumerPillLineHeight,
+              ),
             ),
           ),
         ),

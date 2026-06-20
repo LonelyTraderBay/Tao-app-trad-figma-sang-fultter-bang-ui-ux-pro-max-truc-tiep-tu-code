@@ -75,6 +75,7 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       padding: padding,
       borderColor: _slipBorder.withValues(alpha: .72),
       child: child,
@@ -98,14 +99,15 @@ class _NoticePanel extends StatelessWidget {
         color: AppColors.transparent,
         child: VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.tradeToolNoticePadding,
+          density: VitDensity.compact,
+          padding: AppSpacing.cardPaddingCompact,
           borderColor: _slipBorder,
           child: Row(
             children: [
               const Icon(
                 Icons.check_circle_outline,
                 color: _slipGreen,
-                size: AppSpacing.tradeToolBodyIcon,
+                size: AppSpacing.iconSm,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(

@@ -37,13 +37,12 @@ class _EmergencyContactCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.warn,
                     fontWeight: AppTextStyles.medium,
-                    height: AppSpacing.copySettingsLineHeightReadable,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           _SettingsTextField(
             label: 'Email',
             initialValue: email,
@@ -51,7 +50,7 @@ class _EmergencyContactCard extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             onChanged: onEmailChanged,
           ),
-          const SizedBox(height: AppSpacing.walletAssetPillGap),
+          const SizedBox(height: AppSpacing.x3),
           _SettingsTextField(
             label: 'Số điện thoại',
             initialValue: phone,
@@ -129,7 +128,6 @@ class _PrivacyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SettingsCard(
-      height: AppSpacing.copySettingsPrivacyCardHeight,
       child: Row(
         children: [
           Icon(
@@ -149,10 +147,7 @@ class _PrivacyCard extends StatelessWidget {
                   'Cho phép người khác xem portfolio copy của bạn (không hiện số tiền cụ thể)',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.copySettingsLineHeightCompact,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -179,7 +174,7 @@ class _SaveButton extends StatelessWidget {
       variant: saved
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.primary,
-      height: AppSpacing.inputHeight,
+      density: VitDensity.compact,
       leading: Icon(saved ? Icons.shield_rounded : Icons.settings_rounded),
       child: Text(saved ? 'Đã lưu!' : 'Lưu cài đặt'),
     );
@@ -187,22 +182,16 @@ class _SaveButton extends StatelessWidget {
 }
 
 class _SettingsCard extends StatelessWidget {
-  const _SettingsCard({
-    required this.child,
-    required this.height,
-    this.padding = AppSpacing.cardPaddingCompact,
-  });
+  const _SettingsCard({required this.child});
 
   final Widget child;
-  final double height;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: height,
-      padding: padding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: child,
     );
   }
@@ -212,7 +201,6 @@ TextStyle _cardTitleStyle() {
   return AppTextStyles.captionSm.copyWith(
     color: AppColors.text1,
     fontWeight: AppTextStyles.bold,
-    height: AppSpacing.copySettingsLineHeightDense,
   );
 }
 

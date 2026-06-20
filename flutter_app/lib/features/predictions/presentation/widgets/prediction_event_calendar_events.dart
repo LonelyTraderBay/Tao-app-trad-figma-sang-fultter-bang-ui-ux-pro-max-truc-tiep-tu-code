@@ -8,7 +8,7 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionCalendarStatsPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           Expanded(
@@ -72,7 +72,7 @@ class _CalendarEventCard extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
         child: VitCard(
           borderColor: urgent ? AppColors.warningBorder : AppColors.border,
-          padding: AppSpacing.predictionCalendarEventPadding,
+          density: VitDensity.compact,
           child: Column(
             children: [
               Row(
@@ -84,18 +84,14 @@ class _CalendarEventCard extends StatelessWidget {
                       color: AppColors.warn,
                       size: AppSpacing.predictionCalendarWatchIcon,
                     ),
-                    const SizedBox(
-                      width: AppSpacing.predictionCalendarLeadingGap,
-                    ),
+                    const SizedBox(width: AppSpacing.x1),
                   ] else if (urgent) ...[
                     const Icon(
                       Icons.warning_amber_rounded,
                       color: AppColors.warn,
                       size: AppSpacing.predictionCalendarUrgentIcon,
                     ),
-                    const SizedBox(
-                      width: AppSpacing.predictionCalendarLeadingGap,
-                    ),
+                    const SizedBox(width: AppSpacing.x1),
                   ],
                   Expanded(
                     child: Text(
@@ -107,14 +103,15 @@ class _CalendarEventCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: AppSpacing.predictionCalendarTitleTrailingGap,
-                  ),
+                  const SizedBox(width: AppSpacing.x2),
                   Material(
                     color: statusBg,
                     borderRadius: AppRadii.smRadius,
                     child: Padding(
-                      padding: AppSpacing.predictionCalendarStatusPadding,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.x2,
+                        vertical: AppSpacing.x1,
+                      ),
                       child: Text(
                         _statusLabel(event.status),
                         style: AppTextStyles.numericMicro.copyWith(
@@ -126,9 +123,7 @@ class _CalendarEventCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: AppSpacing.predictionCalendarEventMetricGap,
-              ),
+              const SizedBox(height: AppSpacing.x2),
               Row(
                 children: [
                   Expanded(
@@ -152,9 +147,7 @@ class _CalendarEventCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: AppSpacing.predictionCalendarEventMetricGap,
-              ),
+              const SizedBox(height: AppSpacing.x2),
               Row(
                 children: [
                   const Icon(
@@ -162,22 +155,22 @@ class _CalendarEventCard extends StatelessWidget {
                     color: AppColors.text3,
                     size: AppSpacing.predictionCalendarTimeIcon,
                   ),
-                  const SizedBox(
-                    width: AppSpacing.predictionCalendarTimeIconGap,
-                  ),
+                  const SizedBox(width: AppSpacing.x1),
                   Text(
                     _daysUntil(event.resolutionDate),
                     style: AppTextStyles.numericMicro.copyWith(
                       color: urgent ? AppColors.warn : AppColors.text3,
                     ),
                   ),
-                  const Spacer(),
+                  const SizedBox(width: AppSpacing.x2),
                   Material(
                     color: AppColors.searchBg,
                     borderRadius: AppRadii.smRadius,
                     child: Padding(
-                      padding:
-                          AppSpacing.predictionCalendarCategoryBadgePadding,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.x2,
+                        vertical: AppSpacing.x1,
+                      ),
                       child: Text(
                         event.category,
                         style: AppTextStyles.numericMicro.copyWith(
@@ -186,9 +179,7 @@ class _CalendarEventCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: AppSpacing.predictionCalendarCategoryGap,
-                  ),
+                  const SizedBox(width: AppSpacing.x1),
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.text3,

@@ -11,9 +11,10 @@ void main() {
   Future<void> pumpP2PWalletTransfer(
     WidgetTester tester, {
     String initialLocation = AppRoutePaths.p2pWalletTransfer,
+    Size viewport = const Size(440, 956),
   }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -79,6 +80,55 @@ void main() {
     expect(find.text('25%'), findsOneWidget);
     expect(find.text('Miễn phí & Tức thì'), findsOneWidget);
     expect(find.byKey(P2PWalletTransferPage.escrowNoteKey), findsOneWidget);
+  });
+
+  testWidgets('SC-320 uses full-width transfer flow at 360x800', (
+    tester,
+  ) async {
+    await pumpP2PWalletTransfer(tester, viewport: const Size(360, 800));
+
+    expect(find.byType(P2PWalletTransferPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byKey(P2PWalletTransferPage.directionKey), findsOneWidget);
+    expect(find.byKey(P2PWalletTransferPage.assetSelectorKey), findsOneWidget);
+    expect(find.byKey(P2PWalletTransferPage.amountFieldKey), findsOneWidget);
+
+    final scrollFinder = find.descendant(
+      of: find.byType(P2PWalletTransferPage),
+      matching: find.byType(SingleChildScrollView),
+    );
+    expect(scrollFinder, findsOneWidget);
+
+    final scrollRect = tester.getRect(scrollFinder);
+    expect(scrollRect.left, closeTo(0, 0.5));
+    expect(scrollRect.right, closeTo(360, 0.5));
+    expect(scrollRect.height, greaterThan(560));
+
+    await tester.ensureVisible(find.byKey(P2PWalletTransferPage.maxKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(P2PWalletTransferPage.maxKey));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.byKey(P2PWalletTransferPage.submitKey));
+    await tester.pumpAndSettle();
+
+    final submitRect = tester.getRect(
+      find.byKey(P2PWalletTransferPage.submitKey),
+    );
+    expect(submitRect.bottom, lessThanOrEqualTo(800));
+
+    await tester.tap(find.byKey(P2PWalletTransferPage.submitKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(P2PWalletTransferPage.confirmPanelKey), findsOneWidget);
+    await tester.ensureVisible(find.byKey(P2PWalletTransferPage.confirmKey));
+    await tester.pumpAndSettle();
+
+    final confirmRect = tester.getRect(
+      find.byKey(P2PWalletTransferPage.confirmKey),
+    );
+    expect(confirmRect.bottom, lessThanOrEqualTo(800));
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('SC-261 supports max amount and confirm navigation', (

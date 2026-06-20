@@ -13,32 +13,28 @@ class _ReturnBar extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: AppSpacing.activeCopiesReturnHeight,
-      padding: AppSpacing.activeCopiesReturnPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Row(
             children: [
               Text(
                 'Return',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.activeCopiesLineHeightTight,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.x2),
+              const Expanded(child: SizedBox.shrink()),
               Text(
                 _formatPercent(value),
                 style: AppTextStyles.micro.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.activeCopiesLineHeightTight,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
@@ -90,7 +86,7 @@ class _ExpandedCopyDetails extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.x3),
               _MiniPerformanceStrip(points: copy.performanceHistory),
-              const SizedBox(height: AppSpacing.cardGap),
+              const SizedBox(height: AppSpacing.x3),
               Row(
                 children: [
                   Expanded(
@@ -129,7 +125,7 @@ class _ExpandedCopyDetails extends StatelessWidget {
                 ],
               ),
               if (copy.recentTrades.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.rowPy),
+                const SizedBox(height: AppSpacing.x4),
                 Row(
                   children: [
                     Expanded(
@@ -158,10 +154,10 @@ class _ExpandedCopyDetails extends StatelessWidget {
                 for (final trade in copy.recentTrades.take(3)) ...[
                   _RecentTradeRow(trade: trade),
                   if (trade != copy.recentTrades.take(3).last)
-                    const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                    const SizedBox(height: AppSpacing.x2),
                 ],
               ],
-              const SizedBox(height: AppSpacing.rowPy),
+              const SizedBox(height: AppSpacing.x4),
               Row(
                 children: [
                   Expanded(
@@ -210,13 +206,15 @@ class _MiniPerformanceStrip extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: AppSpacing.activeCopiesPerformanceHeight,
-      padding: AppSpacing.activeCopiesReturnPadding,
-      child: VitSparkline(
-        values: values,
-        color: color,
-        showFill: false,
-        strokeWidth: AppSpacing.dividerHairline,
+      density: VitDensity.compact,
+      child: SizedBox(
+        height: AppSpacing.x6,
+        child: VitSparkline(
+          values: values,
+          color: color,
+          showFill: false,
+          strokeWidth: AppSpacing.dividerHairline,
+        ),
       ),
     );
   }
@@ -241,12 +239,9 @@ class _DetailStat extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.activeCopiesLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.formFieldLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -254,7 +249,6 @@ class _DetailStat extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.activeCopiesLineHeightTight,
             ),
           ),
         ],
@@ -291,7 +285,6 @@ class _RecentTradeRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.activeCopiesLineHeightTight,
               ),
             ),
           ),
@@ -300,7 +293,6 @@ class _RecentTradeRow extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: trade.pnl >= 0 ? AppColors.buy : AppColors.sell,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.activeCopiesLineHeightTight,
             ),
           ),
         ],
@@ -327,10 +319,10 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       onPressed: onTap,
+      density: VitDensity.compact,
       variant: danger
           ? VitCtaButtonVariant.danger
           : VitCtaButtonVariant.secondary,
-      height: AppSpacing.activeCopiesActionHeight,
       leading: Icon(icon),
       padding: AppSpacing.activeCopiesActionPadding,
       child: Text(label),

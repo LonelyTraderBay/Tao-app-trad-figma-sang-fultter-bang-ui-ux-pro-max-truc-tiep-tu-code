@@ -12,7 +12,7 @@ class _LegendCard extends StatelessWidget {
       ('down', 'B\u1EA3o tr\u00EC'),
     ];
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      padding: VitDensity.compact.cardPadding,
       borderColor: _networkBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +24,7 @@ class _LegendCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.rowGapRegular),
+          const SizedBox(height: _networkCardGap),
           Row(
             children: [
               for (var col = 0; col < 2; col++) ...[
@@ -36,8 +36,7 @@ class _LegendCard extends StatelessWidget {
                           health: rows[col + row * 2].$1,
                           label: rows[col + row * 2].$2,
                         ),
-                        if (row == 0)
-                          const SizedBox(height: AppSpacing.rowGapRegular),
+                        if (row == 0) const SizedBox(height: _networkCardGap),
                       ],
                     ],
                   ),
@@ -63,8 +62,8 @@ class _LegendItem extends StatelessWidget {
     return Row(
       children: [
         VitCard(
-          width: AppSpacing.walletNetworkLegendIcon,
-          height: AppSpacing.walletNetworkLegendIcon,
+          width: _networkLegendIconSize,
+          height: _networkLegendIconSize,
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.sm,
           background: ColoredBox(color: color.withValues(alpha: .08)),
@@ -76,7 +75,7 @@ class _LegendItem extends StatelessWidget {
             size: AppSpacing.walletNetworkLegendIconGlyph,
           ),
         ),
-        const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
+        const SizedBox(width: _networkInlineGap),
         Expanded(
           child: Text(
             label,
@@ -94,7 +93,7 @@ class _DisclaimerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletNetworkDisclaimerPadding,
+      padding: VitDensity.compact.cardPadding,
       borderColor: _networkPrimary.withValues(alpha: .25),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,13 +103,13 @@ class _DisclaimerCard extends StatelessWidget {
             color: _networkPrimary,
             size: AppSpacing.walletTokenNoticeIcon,
           ),
-          const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
+          const SizedBox(width: _networkInlineGap),
           Expanded(
             child: Text(
               'D\u1EEF li\u1EC7u tr\u1EA1ng th\u00E1i m\u1EA1ng \u0111\u01B0\u1EE3c c\u1EADp nh\u1EADt t\u1EF1 \u0111\u1ED9ng. Th\u1EDDi gian x\u00E1c nh\u1EADn th\u1EF1c t\u1EBF c\u00F3 th\u1EC3 kh\u00E1c t\u00F9y thu\u1ED9c v\u00E0o ph\u00ED gas v\u00E0 m\u1EE9c t\u1EA3i m\u1EA1ng t\u1EA1i th\u1EDDi \u0111i\u1EC3m giao d\u1ECBch.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: 1.5,
+                height: 1.35,
               ),
             ),
           ),
@@ -129,8 +128,8 @@ class _TokenLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      width: AppSpacing.walletAddressIconSize,
-      height: AppSpacing.walletAddressIconSize,
+      height: _networkLogoSize,
+      width: _networkLogoSize,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.md,
       background: ColoredBox(color: color.withValues(alpha: .1)),

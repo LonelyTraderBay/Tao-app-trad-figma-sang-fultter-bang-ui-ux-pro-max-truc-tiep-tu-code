@@ -13,10 +13,10 @@ class _CategoryBreakdown extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: AppSpacing.tradeBotGridColumns,
-      crossAxisSpacing: AppSpacing.tradeBotCardGap,
-      mainAxisSpacing: AppSpacing.tradeBotCardGap,
-      childAspectRatio: AppSpacing.tradeBotGridAspectRatio,
+      crossAxisCount: 2,
+      crossAxisSpacing: AppSpacing.x3,
+      mainAxisSpacing: AppSpacing.x3,
+      childAspectRatio: 1.45,
       children: [
         for (final category in categories)
           _CategoryScoreCard(
@@ -66,16 +66,13 @@ class _CategoryScoreCard extends StatelessWidget {
         : _assessmentRed;
 
     return _ResultCard(
-      padding: AppSpacing.tradeBotInnerPanelPadding,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x3),
           Text(
@@ -83,15 +80,14 @@ class _CategoryScoreCard extends StatelessWidget {
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: AppSpacing.x2),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
               value: percent,
-              minHeight: AppSpacing.tradeBotCompactProgressHeight,
+              minHeight: AppSpacing.x1,
               backgroundColor: _assessmentPanel2,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
@@ -120,7 +116,7 @@ class _RecommendationsCard extends StatelessWidget {
               icon: _iconForResult(result.outcome),
             ),
             if (recommendation != result.recommendations.last)
-              const SizedBox(height: AppSpacing.tradeBotCardGap),
+              const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -144,19 +140,12 @@ class _RecommendationRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          icon,
-          color: color,
-          size: AppSpacing.tradeBotSelectionDot,
-        ),
-        const SizedBox(width: AppSpacing.tradeBotSmallGap),
+        Icon(icon, color: color, size: AppSpacing.x3),
+        const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: AppSpacing.tradeBotLineHeightRelaxed,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
       ],
@@ -172,26 +161,23 @@ class _RegulatoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        density: VitDensity.compact,
         children: [
           Text(
             snapshot.regulatoryTitle,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightShort,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
           Text(
             snapshot.regulatoryDescription,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightRelaxed,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -216,7 +202,7 @@ class _SectionLabel extends StatelessWidget {
 class _ResultCard extends StatelessWidget {
   const _ResultCard({
     required this.child,
-    this.padding = AppSpacing.tradeBotCardPadding,
+    this.padding = AppSpacing.cardPaddingCompact,
   });
 
   final Widget child;
@@ -225,6 +211,7 @@ class _ResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       padding: padding,
       borderColor: AppColors.cardBorder,
       child: child,

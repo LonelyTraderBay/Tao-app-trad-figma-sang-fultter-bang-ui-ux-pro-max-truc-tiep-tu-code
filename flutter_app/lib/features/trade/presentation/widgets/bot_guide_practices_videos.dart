@@ -9,7 +9,7 @@ class _BestPracticesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Best Practices',
-      customGap: AppSpacing.tradeBotCardGap,
+      density: VitDensity.compact,
       children: [
         for (final item in items)
           _InfoCard(
@@ -32,7 +32,7 @@ class _MistakesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Common Mistakes to Avoid',
-      customGap: AppSpacing.tradeBotCardGap,
+      density: VitDensity.compact,
       children: [for (final item in items) _MistakeCard(item: item)],
     );
   }
@@ -54,12 +54,13 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: iconColor, size: AppSpacing.tradeBotCardGap * 2),
-          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          Icon(icon, color: iconColor, size: AppSpacing.inputPrefixIcon),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,12 +72,10 @@ class _InfoCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotTinyGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),
@@ -95,10 +94,11 @@ class _MistakeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotCardGap,
+        density: VitDensity.compact,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +108,7 @@ class _MistakeCard extends StatelessWidget {
                 color: _guideRed,
                 size: AppSpacing.iconMd,
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   item.mistake,
@@ -123,11 +123,11 @@ class _MistakeCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(width: AppSpacing.tradeBotMethodTextIndent),
+              const SizedBox(width: AppSpacing.x6),
               Expanded(
                 child: VitPageContent(
                   padding: VitContentPadding.none,
-                  customGap: AppSpacing.tradeBotRowGap,
+                  density: VitDensity.compact,
                   children: [
                     Text(
                       "WHY IT'S BAD:",
@@ -142,12 +142,12 @@ class _MistakeCard extends StatelessWidget {
                       ),
                     ),
                     VitCard(
-                      padding: AppSpacing.tradeBotCodeBlockCompactPadding,
+                      padding: AppSpacing.cardPaddingCompact,
                       variant: VitCardVariant.inner,
                       borderColor: _guideGreen.withValues(alpha: .24),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
-                        customGap: AppSpacing.hairlineStroke * 2,
+                        density: VitDensity.compact,
                         children: [
                           Text(
                             'HOW TO FIX:',
@@ -182,11 +182,12 @@ class _VideoTutorialsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotRowGap,
+        density: VitDensity.compact,
         children: [
           Row(
             children: [
@@ -195,7 +196,7 @@ class _VideoTutorialsCard extends StatelessWidget {
                 color: _guidePrimary,
                 size: 22,
               ),
-              const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+              const SizedBox(width: AppSpacing.x3),
               Text(
                 'Video Tutorials',
                 style: AppTextStyles.caption.copyWith(
@@ -210,7 +211,7 @@ class _VideoTutorialsCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           VitCtaButton(
-            height: AppSpacing.buttonCompact,
+            density: VitDensity.compact,
             onPressed: () {},
             child: const Text('View All Tutorials'),
           ),

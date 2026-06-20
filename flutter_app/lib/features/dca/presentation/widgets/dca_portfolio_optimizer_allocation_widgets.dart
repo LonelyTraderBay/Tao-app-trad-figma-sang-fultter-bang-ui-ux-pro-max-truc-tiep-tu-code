@@ -9,7 +9,7 @@ class _FrontierChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.dcaPortfolioOptimizerFrontierChipWidth,
+      width: _dcaPortfolioFrontierChipWidth,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: active ? AppColors.accent10 : AppColors.surface,
@@ -83,8 +83,8 @@ class _SimpleAllocationBar extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.x7,
-          height: AppSpacing.x7,
+          width: _dcaPortfolioHeroIconExtent,
+          height: _dcaPortfolioHeroIconExtent,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: accent.withValues(alpha: .10),
@@ -186,7 +186,7 @@ class _SuggestionRow extends StatelessWidget {
                   suggestion.reason,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
+                    height: _dcaPortfolioBodyLineHeight,
                   ),
                 ),
               ],

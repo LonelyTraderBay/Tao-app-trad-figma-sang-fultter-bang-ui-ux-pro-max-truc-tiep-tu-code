@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/referral/data/referral_repository.dar
 import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpHome(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,22 @@ void main() {
     expect(find.text('VITTA-A2B3C'), findsOneWidget);
     expect(find.text('Sao chép link'), findsOneWidget);
     expect(find.byKey(ReferralHomePage.milestoneKey('ms-10')), findsOneWidget);
+  });
+
+  testWidgets('SC-290 first viewport reaches referral hero', (tester) async {
+    await pumpHome(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-290 ReferralHomePage',
+      semanticLabel: 'SC-290 ReferralHomePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ReferralHomePage.heroKey),
+      targetLabel: 'the referral code and sharing hero',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-290 copy and share states are local actions', (tester) async {

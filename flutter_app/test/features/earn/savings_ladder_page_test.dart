@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_ladde
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpLadder(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -65,6 +67,24 @@ void main() {
     );
     expect(find.byKey(SavingsLadderPage.rungsKey), findsOneWidget);
     expect(find.text('Các bậc ladder (3)'), findsOneWidget);
+  });
+
+  testWidgets('SC-351 first viewport reaches amount action chips', (
+    tester,
+  ) async {
+    await pumpLadder(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-351 SavingsLadderPage',
+      semanticLabel: 'SC-351 SavingsLadderPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(SavingsLadderPage.amountChipKey(25000)),
+      targetLabel: 'the ladder amount action chips',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-351 changes amount, preset, and confirm count', (

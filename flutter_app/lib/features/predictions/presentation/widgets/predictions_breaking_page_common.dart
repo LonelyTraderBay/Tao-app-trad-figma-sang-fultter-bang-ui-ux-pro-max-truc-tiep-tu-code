@@ -16,22 +16,23 @@ class _EmailCta extends StatelessWidget {
     if (subscribed) {
       return VitCard(
         borderColor: AppColors.buy.withValues(alpha: .24),
-        padding: AppSpacing.predictionBreakingEmailPadding,
+        density: VitDensity.compact,
+        padding: AppSpacing.cardPaddingCompact,
         child: Row(
           children: [
             Material(
               color: AppColors.buy.withValues(alpha: .12),
               borderRadius: AppRadii.mdRadius,
               child: const SizedBox.square(
-                dimension: AppSpacing.predictionBreakingEmailIconBox,
+                dimension: _breakingIconBox,
                 child: Icon(
                   Icons.mail_outline_rounded,
                   color: AppColors.buy,
-                  size: AppSpacing.predictionBreakingEmailIcon,
+                  size: AppSpacing.x4,
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.predictionBreakingEmailGap),
+            const SizedBox(width: _breakingSpace),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +58,8 @@ class _EmailCta extends StatelessWidget {
 
     return VitCard(
       borderColor: _emailPurple.withValues(alpha: .24),
-      padding: AppSpacing.predictionBreakingEmailPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Row(
@@ -66,15 +68,15 @@ class _EmailCta extends StatelessWidget {
                 color: _emailPurple.withValues(alpha: .13),
                 borderRadius: AppRadii.mdRadius,
                 child: const SizedBox.square(
-                  dimension: AppSpacing.predictionBreakingEmailIconBox,
+                  dimension: _breakingIconBox,
                   child: Icon(
                     Icons.mail_outline_rounded,
                     color: _emailPurple,
-                    size: AppSpacing.predictionBreakingEmailIcon,
+                    size: AppSpacing.x4,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionBreakingEmailGap),
+              const SizedBox(width: _breakingSpace),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +99,7 @@ class _EmailCta extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionBreakingEmailFormGap),
+          const SizedBox(height: _breakingSpace),
           Row(
             children: [
               Expanded(
@@ -112,9 +114,7 @@ class _EmailCta extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: AppSpacing.predictionBreakingEmailButtonGap,
-              ),
+              const SizedBox(width: _breakingSpace),
               Material(
                 color: _emailPurple,
                 borderRadius: AppRadii.mdRadius,
@@ -123,9 +123,11 @@ class _EmailCta extends StatelessWidget {
                   onTap: onSubscribe,
                   borderRadius: AppRadii.mdRadius,
                   child: SizedBox(
-                    height: AppSpacing.predictionBreakingSubscribeHeight,
+                    height: _breakingCtaHeight,
                     child: Padding(
-                      padding: AppSpacing.predictionBreakingSubscribePadding,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.x3,
+                      ),
                       child: Center(
                         child: Text(
                           'Subscribe',
@@ -152,34 +154,31 @@ class _BreakingEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.predictionBreakingEmptyHeight,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.bolt_rounded,
-              color: AppColors.text3.withValues(alpha: .42),
-              size: AppSpacing.predictionBreakingEmptyIcon,
+    return VitCard(
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.bolt_rounded,
+            color: AppColors.text3.withValues(alpha: .42),
+            size: _breakingIconBox,
+          ),
+          const SizedBox(height: _breakingSpace),
+          Text(
+            'No movers in this category',
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
             ),
-            const SizedBox(height: AppSpacing.predictionBreakingEmptyTitleGap),
-            Text(
-              'No movers in this category',
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-            const SizedBox(
-              height: AppSpacing.predictionBreakingEmptySubtitleGap,
-            ),
-            Text(
-              'Try selecting a different category',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: _breakingTinySpace),
+          Text(
+            'Try selecting a different category',
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
+        ],
       ),
     );
   }

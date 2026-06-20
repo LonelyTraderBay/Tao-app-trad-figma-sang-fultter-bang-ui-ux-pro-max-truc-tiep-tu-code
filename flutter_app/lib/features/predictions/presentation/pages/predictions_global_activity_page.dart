@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -21,6 +21,12 @@ part '../widgets/predictions_global_activity_widgets.dart';
 part '../widgets/predictions_global_activity_feed_widgets.dart';
 
 const _predictionPrimary = AppColors.primary;
+const double _activityFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _activityNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _activityAvatarExtent = AppSpacing.buttonCompact;
+const double _activityAmountExtent = AppSpacing.buttonStandard + AppSpacing.x2;
 
 class PredictionsGlobalActivityPage extends ConsumerStatefulWidget {
   const PredictionsGlobalActivityPage({super.key, this.shellRenderMode});
@@ -49,15 +55,11 @@ class _PredictionsGlobalActivityPageState
         .watch(predictionsReadModelControllerProvider)
         .getGlobalActivity(minAmount: _minAmount);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.predictionActivityBottomInsetVisual
-            : AppSpacing.predictionActivityBottomInsetNative);
+            ? _activityFramedScrollClearance
+            : _activityNativeScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -80,21 +82,16 @@ class _PredictionsGlobalActivityPageState
                   behavior: ScrollConfiguration.of(
                     context,
                   ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
+                  child: VitInsetScrollView(
                     key: PredictionsGlobalActivityPage.contentKey,
-                    padding: AppSpacing.predictionActivityScrollPadding(
-                      bottomInset,
-                    ),
+                    bottomInset: scrollEndClearance,
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionActivityContentGap,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
+                        _LiveStats(snapshot: snapshot),
                         VitCard(
-                          padding: AppSpacing.zeroInsets,
-                          child: _LiveStats(snapshot: snapshot),
-                        ),
-                        VitCard(
-                          padding: AppSpacing.zeroInsets,
+                          density: VitDensity.compact,
                           child: _AmountFilters(
                             active: _minAmount,
                             onSelected: (value) => setState(() {
@@ -104,7 +101,7 @@ class _PredictionsGlobalActivityPageState
                         ),
                         if (snapshot.activities.isEmpty)
                           const VitCard(
-                            padding: AppSpacing.zeroInsets,
+                            density: VitDensity.compact,
                             child: VitEmptyState(
                               title: 'No activity found',
                               message: 'Lower the minimum amount filter',
@@ -113,7 +110,7 @@ class _PredictionsGlobalActivityPageState
                           )
                         else
                           VitCard(
-                            padding: AppSpacing.zeroInsets,
+                            density: VitDensity.compact,
                             child: _ActivityList(snapshot: snapshot),
                           ),
                       ],

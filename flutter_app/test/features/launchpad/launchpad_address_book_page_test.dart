@@ -96,6 +96,27 @@ void main() {
     expect(find.text('Vi BSC'), findsNothing);
   });
 
+  testWidgets('SC-309 shows empty state for unmatched address search', (
+    tester,
+  ) async {
+    await pumpAddressBook(tester);
+
+    await tester.enterText(
+      find.descendant(
+        of: find.byKey(LaunchpadAddressBookPage.searchKey),
+        matching: find.byType(TextField),
+      ),
+      'khong-co-dia-chi',
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(LaunchpadAddressBookPage.emptyKey), findsOneWidget);
+    expect(find.text('Khong tim thay dia chi'), findsOneWidget);
+    expect(find.byKey(LaunchpadAddressBookPage.favoritesKey), findsNothing);
+    expect(find.byKey(LaunchpadAddressBookPage.allKey), findsNothing);
+    expect(find.byKey(LaunchpadAddressBookPage.infoKey), findsOneWidget);
+  });
+
   testWidgets('SC-309 copy favorite expand and default states work', (
     tester,
   ) async {

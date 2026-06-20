@@ -16,8 +16,7 @@ class _MetricBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(minHeight: 57),
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -27,10 +26,7 @@ class _MetricBubble extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightShort,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           Text(
             value,
@@ -41,7 +37,6 @@ class _MetricBubble extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -87,20 +82,17 @@ class _InfoStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeReceiptNoticePadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(Icons.info_outline_rounded, color: iconColor, size: 14),
-          const SizedBox(width: AppSpacing.tradeReceiptTotalGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: AppSpacing.tradeBotLineHeightMedium,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
         ],
@@ -118,8 +110,7 @@ class _ToggleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotControlCompact - AppSpacing.hairlineStroke,
-      padding: AppSpacing.tradeBotCompactPanelPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Row(
         children: [
@@ -137,7 +128,6 @@ class _ToggleBar extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
                   fontWeight: AppTextStyles.medium,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ),
@@ -165,13 +155,12 @@ class _PctLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     final children = [
       Icon(icon, color: color, size: 15),
-      const SizedBox(width: AppSpacing.hairlineStroke * 2),
+      const SizedBox(width: AppSpacing.x1),
       Text(
         label,
         style: AppTextStyles.caption.copyWith(
           color: color,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.tradeBotLineHeightTight,
         ),
       ),
     ];
@@ -191,20 +180,11 @@ class _RatioBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.pillRadius,
-      child: SizedBox(
-        height: AppSpacing.x4 - AppSpacing.x1,
-        child: Row(
-          children: [
-            Expanded(
-              flex: (longPct * 10).round(),
-              child: const ColoredBox(color: _analyticsGreen),
-            ),
-            Expanded(
-              flex: ((100 - longPct) * 10).round(),
-              child: const ColoredBox(color: _analyticsRed),
-            ),
-          ],
-        ),
+      child: LinearProgressIndicator(
+        minHeight: AppSpacing.x3,
+        value: longPct / 100,
+        backgroundColor: _analyticsRed,
+        color: _analyticsGreen,
       ),
     );
   }
@@ -249,10 +229,8 @@ class _HeatmapRow extends StatelessWidget {
     final isCurrent = cluster.intensity == 0;
     return Row(
       children: [
-        SizedBox(
-          width:
-              AppSpacing.tradeBotRiskRingInnerSize -
-              AppSpacing.tradeBotCheckboxIcon,
+        Flexible(
+          flex: 3,
           child: Text(
             '\$${cluster.price.toStringAsFixed(0)}',
             style: AppTextStyles.caption.copyWith(
@@ -263,31 +241,23 @@ class _HeatmapRow extends StatelessWidget {
           ),
         ),
         Expanded(
+          flex: 7,
           child: ClipRRect(
             borderRadius: AppRadii.pillRadius,
-            child: SizedBox(
-              height: AppSpacing.ctaLoadingIcon,
-              child: ColoredBox(
-                color: _analyticsPanel2,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: FractionallySizedBox(
-                    widthFactor: math.max(cluster.intensity / 100, .02),
-                    child: ColoredBox(
-                      color:
-                          (cluster.shortLiquidations >= cluster.longLiquidations
-                                  ? _analyticsRed
-                                  : _analyticsGreen)
-                              .withValues(alpha: isCurrent ? .18 : .78),
-                    ),
-                  ),
-                ),
-              ),
+            child: LinearProgressIndicator(
+              minHeight: AppSpacing.x3,
+              value: math.max(cluster.intensity / 100, .02),
+              backgroundColor: _analyticsPanel2,
+              color:
+                  (cluster.shortLiquidations >= cluster.longLiquidations
+                          ? _analyticsRed
+                          : _analyticsGreen)
+                      .withValues(alpha: isCurrent ? .18 : .78),
             ),
           ),
         ),
-        SizedBox(
-          width: AppSpacing.x7 + AppSpacing.x2 - AppSpacing.hairlineStroke,
+        Flexible(
+          flex: 3,
           child: Text(
             isCurrent ? 'Mark' : _formatCompactUsd(cluster.total),
             textAlign: TextAlign.right,
@@ -312,12 +282,12 @@ class _LiquidationRow extends StatelessWidget {
     final isLong = liquidation.side == 'long';
     final color = isLong ? _analyticsGreen : _analyticsRed;
     return VitCard(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Row(
         children: [
           _SmallBadge(label: liquidation.side.toUpperCase(), color: color),
-          const SizedBox(width: AppSpacing.x3 + AppSpacing.hairlineStroke),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               '${liquidation.pair} @ \$${_formatMoney(liquidation.price)}',
@@ -349,11 +319,12 @@ class _SentimentComponentRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotAttributionPanelPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotNarrowIconGap,
+        fullBleed: true,
+        density: VitDensity.compact,
         children: [
           Row(
             children: [
@@ -388,17 +359,19 @@ class _ImplicationRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(implication.colorHex);
     return VitCard(
-      padding: AppSpacing.tradeBotAttributionPanelPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: AppSpacing.x1 + AppSpacing.hairlineStroke,
-            height: AppSpacing.buttonCompact + AppSpacing.x3 - AppSpacing.x1,
-            child: ColoredBox(color: color),
+          Container(
+            width: AppSpacing.x1,
+            constraints: const BoxConstraints(
+              minHeight: AppSpacing.buttonCompact,
+            ),
+            color: color,
           ),
-          const SizedBox(width: AppSpacing.x3 + AppSpacing.hairlineStroke),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -408,15 +381,11 @@ class _ImplicationRow extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightCaption,
                   ),
                 ),
                 Text(
                   implication.action,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightMedium,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),

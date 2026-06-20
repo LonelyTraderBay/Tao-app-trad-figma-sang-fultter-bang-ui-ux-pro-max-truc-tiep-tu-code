@@ -26,22 +26,27 @@ class VitAssetAvatar extends StatelessWidget {
     final initial = normalizedLabel.isEmpty
         ? ''
         : normalizedLabel.characters.first;
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: accentColor.withValues(alpha: 0.16),
-        borderRadius: radius,
-        border: border
-            ? Border.all(color: accentColor.withValues(alpha: 0.30))
-            : null,
-      ),
-      child: Text(
-        initial,
-        style: AppTextStyles.caption.copyWith(
-          color: accentColor,
-          fontWeight: AppTextStyles.bold,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: accentColor.withValues(alpha: 0.16),
+          shape: RoundedRectangleBorder(
+            side: border
+                ? BorderSide(color: accentColor.withValues(alpha: 0.30))
+                : BorderSide.none,
+            borderRadius: radius,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            initial,
+            style: AppTextStyles.caption.copyWith(
+              color: accentColor,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );

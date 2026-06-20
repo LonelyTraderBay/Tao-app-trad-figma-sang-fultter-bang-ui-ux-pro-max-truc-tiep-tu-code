@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDca(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -67,6 +69,22 @@ void main() {
     expect(find.text('BTC'), findsWidgets);
   });
 
+  testWidgets('SC-169 first viewport reaches first DCA plan', (tester) async {
+    await pumpDca(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-169 DCAPage',
+      semanticLabel: 'SC-169 DCAPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(DCAPage.planKey('plan-1')),
+      targetLabel: 'the first DCA plan card',
+      minVisibleHeight: 24,
+    );
+  });
+
   testWidgets('SC-169 switches history tab and opens create plan sheet', (
     tester,
   ) async {
@@ -87,15 +105,25 @@ void main() {
   ) async {
     await pumpDca(tester);
 
+    await tester.ensureVisible(
+      find.byKey(DCAPage.toolKey(AppRoutePaths.dcaPortfolioOptimizer)),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(
       find.byKey(DCAPage.toolKey(AppRoutePaths.dcaPortfolioOptimizer)),
+      warnIfMissed: false,
     );
     await tester.pumpAndSettle();
     expect(find.text('Portfolio Optimizer'), findsOneWidget);
 
     await pumpDca(tester);
+    await tester.ensureVisible(
+      find.byKey(DCAPage.toolKey(AppRoutePaths.dcaDynamicAmount)),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(
       find.byKey(DCAPage.toolKey(AppRoutePaths.dcaDynamicAmount)),
+      warnIfMissed: false,
     );
     await tester.pumpAndSettle();
     expect(find.text('Dynamic Amount'), findsOneWidget);

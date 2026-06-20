@@ -25,9 +25,7 @@ class _TypeBadge extends StatelessWidget {
       TradeOrderType.stop => 'Stop',
     };
     return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minWidth: AppSpacing.tradeHistoryTypeBadgeMinWidth,
-      ),
+      constraints: const BoxConstraints(minWidth: AppSpacing.buttonCompact),
       child: VitAccentPill(label: label, accentColor: AppColors.text2),
     );
   }
@@ -53,7 +51,7 @@ class _InfoColumn extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeHistoryInfoGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
@@ -74,15 +72,15 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.tradeHistoryEmptyPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         children: [
           const Icon(
             Icons.access_time_rounded,
             color: AppColors.borderSolid,
-            size: AppSpacing.tradeHistoryEmptyIcon,
+            size: AppSpacing.iconMd,
           ),
-          const SizedBox(height: AppSpacing.tradeHistoryEmptyGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             activeTab == 'open'
                 ? 'Không có lệnh đang mở'

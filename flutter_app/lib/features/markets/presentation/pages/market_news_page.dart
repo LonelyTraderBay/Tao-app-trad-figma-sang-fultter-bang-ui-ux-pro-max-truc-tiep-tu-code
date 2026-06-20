@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -21,6 +21,15 @@ part '../widgets/market_news_page_sections.dart';
 part '../widgets/market_news_page_common.dart';
 
 const _marketPrimary = AppColors.primary;
+const _marketSpace = AppSpacing.x2;
+const _marketTinySpace = AppSpacing.x1;
+const _marketVisualScrollClearance = 112.0;
+const _marketNativeScrollClearance = 72.0;
+const _newsIconSize = 34.0;
+const _newsIconGlyph = 18.0;
+const _marketSaveIconSize = 20.0;
+const _marketTitleLineHeight = 1.2;
+const _marketSummaryLineHeight = 1.22;
 
 class MarketNewsPage extends ConsumerStatefulWidget {
   const MarketNewsPage({super.key, this.shellRenderMode});
@@ -53,15 +62,11 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
         .watch(marketControllerProvider)
         .getMarketNews(category: _category, sentiment: _sentimentFilter);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.marketNewsVisualBottomExtra
-            : AppSpacing.marketNewsNativeBottomExtra);
+            ? _marketVisualScrollClearance
+            : _marketNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -84,10 +89,10 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketNewsPage.contentKey,
-                    padding: AppSpacing.marketNewsScrollPadding(bottomInset),
+                    padding: EdgeInsets.only(bottom: scrollEndClearance),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.marketNewsPageGap,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         if (snapshot.breakingNews.isNotEmpty &&
                             _category == 'all')

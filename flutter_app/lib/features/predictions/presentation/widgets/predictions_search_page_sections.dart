@@ -58,15 +58,15 @@ class _FilterPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionSearchFilterPanelPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _FilterLabel('Sort by'),
-          const Padding(padding: AppSpacing.predictionSearchFilterLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           Wrap(
-            spacing: AppSpacing.predictionSearchChipGap,
-            runSpacing: AppSpacing.predictionSearchChipGap,
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x2,
             children: [
               _SortChip(
                 key: PredictionsSearchPage.sortTrendingKey,
@@ -108,9 +108,9 @@ class _FilterPanel extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: AppSpacing.predictionSearchFilterSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           _FilterLabel('Event Status'),
-          const Padding(padding: AppSpacing.predictionSearchFilterLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           Row(
             children: [
               Expanded(
@@ -121,7 +121,7 @@ class _FilterPanel extends StatelessWidget {
                   onTap: () => onStatusSelected(PredictionStatusFilter.active),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionSearchChipGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _StatusChip(
                   key: PredictionsSearchPage.statusResolvedKey,
@@ -131,7 +131,7 @@ class _FilterPanel extends StatelessWidget {
                       onStatusSelected(PredictionStatusFilter.resolved),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionSearchChipGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _StatusChip(
                   key: PredictionsSearchPage.statusAllKey,
@@ -142,12 +142,12 @@ class _FilterPanel extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: AppSpacing.predictionSearchFilterSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           _FilterLabel('Category'),
-          const Padding(padding: AppSpacing.predictionSearchFilterLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           Wrap(
-            spacing: AppSpacing.predictionSearchChipGap,
-            runSpacing: AppSpacing.predictionSearchChipGap,
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x2,
             children: [
               for (final category in categories)
                 _CategoryChip(
@@ -163,7 +163,7 @@ class _FilterPanel extends StatelessWidget {
             ],
           ),
           if (hasActiveFilters) ...[
-            const Padding(padding: AppSpacing.predictionSearchClearGap),
+            const SizedBox(height: AppSpacing.x3),
             Material(
               key: PredictionsSearchPage.clearFiltersKey,
               color: AppColors.sell.withValues(alpha: .10),
@@ -175,18 +175,16 @@ class _FilterPanel extends StatelessWidget {
                 onTap: onClear,
                 borderRadius: AppRadii.mdRadius,
                 child: SizedBox(
-                  height: AppSpacing.predictionSearchClearHeight,
+                  height: VitDensity.compact.controlHeight,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(
                         Icons.close_rounded,
                         color: AppColors.sell,
-                        size: AppSpacing.predictionSearchClearIcon,
+                        size: AppSpacing.iconSm,
                       ),
-                      const SizedBox(
-                        width: AppSpacing.predictionSearchClearIconGap,
-                      ),
+                      const SizedBox(width: AppSpacing.x1),
                       Text(
                         'Clear all filters',
                         style: AppTextStyles.caption.copyWith(
@@ -255,18 +253,20 @@ class _SortChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: SizedBox(
-          height: AppSpacing.predictionSearchSortChipHeight,
+          height: VitDensity.compact.controlHeight,
           child: Padding(
-            padding: AppSpacing.predictionSearchSortChipPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x2,
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   icon,
-                  size: AppSpacing.predictionSearchSortIcon,
+                  size: AppSpacing.iconSm,
                   color: active ? _predictionPrimary : AppColors.text3,
                 ),
-                const SizedBox(width: AppSpacing.predictionSearchSortIconGap),
+                const SizedBox(width: AppSpacing.x1),
                 Text(
                   label,
                   style: AppTextStyles.micro.copyWith(
@@ -315,7 +315,7 @@ class _StatusChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: SizedBox(
-          height: AppSpacing.predictionSearchStatusChipHeight,
+          height: VitDensity.compact.controlHeight,
           child: Center(
             child: Text(
               label,

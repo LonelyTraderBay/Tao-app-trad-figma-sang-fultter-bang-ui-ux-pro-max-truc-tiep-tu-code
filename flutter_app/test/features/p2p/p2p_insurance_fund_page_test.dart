@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_insurance_fund_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PInsuranceFund(
     WidgetTester tester, {
@@ -76,6 +78,24 @@ void main() {
     expect(find.text('Sức khỏe quỹ'), findsOneWidget);
     expect(find.text('Biến động quỹ'), findsOneWidget);
     expect(find.text('Mức bảo hiểm của bạn'), findsOneWidget);
+  });
+
+  testWidgets('SC-238 first viewport reaches eligibility card', (tester) async {
+    await pumpP2PInsuranceFund(tester);
+    await tester.tap(find.byKey(P2PInsuranceFundPage.tourContinueKey));
+    await tester.pumpAndSettle();
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-238 P2PInsuranceFundPage',
+      semanticLabel: 'SC-238 P2PInsuranceFundPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Điều kiện bồi thường'),
+      targetLabel: 'insurance eligibility card',
+      minVisibleHeight: 18,
+    );
   });
 
   testWidgets('SC-238 switches claims tab and opens certificate route', (

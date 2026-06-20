@@ -23,7 +23,7 @@ class _LadderHero extends StatelessWidget {
       key: SavingsLadderPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX5,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -241,15 +241,15 @@ class _AmountSelector extends StatelessWidget {
       key: SavingsLadderPage.amountKey,
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: AppSpacing.x3,
+      gap: VitContentGap.tight,
       children: [
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.md,
           borderColor: AppColors.primary30,
-          padding: AppSpacing.earnHorizontalPaddingX4,
+          density: VitDensity.compact,
           child: SizedBox(
-            height: AppSpacing.inputHeight,
+            height: VitDensity.compact.controlHeight,
             child: Row(
               children: [
                 const Icon(
@@ -318,7 +318,7 @@ class _TemplateList extends StatelessWidget {
       key: SavingsLadderPage.templatesKey,
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: AppSpacing.x3,
+      gap: VitContentGap.tight,
       children: [
         for (final template in templates) ...[
           _TemplateCard(
@@ -356,7 +356,7 @@ class _TemplateCard extends StatelessWidget {
       variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: selected ? color.withValues(alpha: .45) : null,
-      padding: AppSpacing.earnPaddingX4,
+      density: VitDensity.compact,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -367,7 +367,7 @@ class _TemplateCard extends StatelessWidget {
             child: VitPageContent(
               padding: VitContentPadding.none,
               fullBleed: true,
-              customGap: AppSpacing.x2,
+              gap: VitContentGap.tight,
               children: [
                 Text(
                   template.label,
@@ -381,7 +381,7 @@ class _TemplateCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.savingsLadderTemplateLineHeight,
+                    height: _templateLineHeight,
                   ),
                 ),
                 Text(
@@ -422,7 +422,7 @@ class _RungList extends StatelessWidget {
       return VitCard(
         key: SavingsLadderPage.rungsKey,
         radius: VitCardRadius.lg,
-        padding: AppSpacing.earnPaddingX5,
+        density: VitDensity.compact,
         child: Column(
           children: [
             const Icon(
@@ -444,7 +444,7 @@ class _RungList extends StatelessWidget {
       key: SavingsLadderPage.rungsKey,
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: AppSpacing.x3,
+      gap: VitContentGap.tight,
       children: [
         for (var i = 0; i < rungs.length; i++) ...[
           _RungTile(

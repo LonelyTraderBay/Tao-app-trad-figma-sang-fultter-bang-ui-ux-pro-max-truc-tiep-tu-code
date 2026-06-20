@@ -8,7 +8,6 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPaddingTall,
       child: Column(
         children: [
           Row(
@@ -29,7 +28,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotContentGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -48,13 +47,13 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotContentGap),
+          const SizedBox(height: AppSpacing.x3),
           const Divider(
             height: AppSpacing.dividerHairline,
             thickness: AppSpacing.dividerHairline,
             color: _taxOptionBorder,
           ),
-          const SizedBox(height: AppSpacing.tradeBotContentGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -63,7 +62,6 @@ class _SummaryCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                     fontWeight: FontWeight.w600,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
@@ -72,7 +70,6 @@ class _SummaryCard extends StatelessWidget {
                 style: AppTextStyles.baseMedium.copyWith(
                   color: _taxGreen,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
@@ -101,18 +98,14 @@ class _SummaryStat extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeBotSmallGap),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           value,
           style: AppTextStyles.baseMedium.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ],
@@ -144,8 +137,7 @@ class _CostBasisPicker extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onTap: () => onChanged(methods[i].$1),
               child: VitCard(
-                height: AppSpacing.tradeBotControlTall,
-                padding: AppSpacing.tradeBotControlPadding,
+                density: VitDensity.compact,
                 borderColor: selectedMethod == methods[i].$1
                     ? _taxPrimary
                     : _taxOptionBorder,
@@ -163,12 +155,11 @@ class _CostBasisPicker extends StatelessWidget {
                                 ? _taxPrimary
                                 : AppColors.text1,
                             fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.tradeBotLineHeightTight,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.tradeBotRowGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Row(
                       children: [
                         const SizedBox(
@@ -181,7 +172,6 @@ class _CostBasisPicker extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              height: AppSpacing.tradeBotLineHeightBody,
                             ),
                           ),
                         ),

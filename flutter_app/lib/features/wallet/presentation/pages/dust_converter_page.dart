@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -30,6 +30,38 @@ const _dustPrimary = AppColors.primary;
 const _dustGreen = AppColors.buy;
 const _dustAmber = AppColors.caution;
 const _dustMuted = AppColors.text3;
+const _dustNativeBottomClearance = 88.0;
+const _dustVisualBottomClearance = 112.0;
+const _dustScrollTopPad = 0.0;
+const _dustGap = 8.0;
+const _dustTinyGap = 4.0;
+const _dustInlineGap = 8.0;
+const _dustHeroIconBox = 40.0;
+const _dustHeroStatHeight = 48.0;
+const _dustTargetHeight = 54.0;
+const _dustSelectAllHeight = 40.0;
+const _dustAssetRowHeight = 58.0;
+const _dustTokenLogo = 34.0;
+const _dustButtonHeight = 46.0;
+const _dustHeroPadding = EdgeInsets.all(12);
+const _dustHeroStatPadding = EdgeInsets.symmetric(horizontal: 8, vertical: 4);
+const _dustTargetPadding = EdgeInsets.symmetric(horizontal: 10, vertical: 6);
+const _dustSelectAllPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
+const _dustAssetRowPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
+const _dustFooterPadding = EdgeInsets.fromLTRB(16, 8, 16, 8);
+const _dustSheetPadding = EdgeInsets.fromLTRB(16, 14, 16, 16);
+const _dustPreviewPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 12);
+const _dustConvertedPadding = EdgeInsets.symmetric(
+  horizontal: 12,
+  vertical: 10,
+);
+
+double _dustBottomSpace(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? _dustVisualBottomClearance
+          : _dustNativeBottomClearance) +
+      MediaQuery.paddingOf(context).bottom;
+}
 
 class DustConverterPage extends ConsumerStatefulWidget {
   const DustConverterPage({super.key, this.shellRenderMode});
@@ -63,11 +95,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
         .toList(growable: false);
     final selectedTotal = _sumUsd(selectedAssets);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomSpace =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomSpace = _dustBottomSpace(context, mode);
     final inlineFooter =
         mode.usesVisualQaFrame &&
         MediaQuery.sizeOf(context).height >
@@ -90,11 +118,14 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: DustConverterPage.contentKey,
-                  padding: AppSpacing.walletDustScrollPadding,
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: _dustScrollTopPad,
+                    bottom: _dustGap,
+                  ),
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.walletDustContentGap,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       if (_converted)
@@ -144,9 +175,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                           }
                         }),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.walletDustAssetListTopGap,
-                      ),
+                      const SizedBox(height: _dustGap),
                       for (final asset in assets) ...[
                         _DustAssetRow(
                           asset: asset,
@@ -154,9 +183,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                           onTap: () => _toggleAsset(asset.id),
                         ),
                         if (asset != assets.last)
-                          const SizedBox(
-                            height: AppSpacing.walletDustAssetRowGap,
-                          ),
+                          const SizedBox(height: _dustTinyGap),
                       ],
                       if (inlineFooter) ...[
                         _ConvertFooter(
@@ -172,11 +199,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                             selectedTotal,
                           ),
                         ),
-                        const SizedBox(
-                          height:
-                              DeviceMetrics.bottomChrome +
-                              AppSpacing.walletDustInlineFooterBottomGap,
-                        ),
+                        const SizedBox(height: _dustVisualBottomClearance),
                       ],
                     ],
                   ),
@@ -234,7 +257,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
           top: false,
           child: Padding(
             key: DustConverterPage.confirmSheetKey,
-            padding: AppSpacing.walletDustSheetPadding,
+            padding: _dustSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -246,11 +269,11 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletDustSheetGap),
+                const SizedBox(height: _dustGap),
                 VitCard(
                   variant: VitCardVariant.inner,
                   radius: VitCardRadius.sm,
-                  padding: AppSpacing.walletDustPreviewPadding,
+                  padding: _dustPreviewPadding,
                   borderColor: _dustBorder,
                   child: Column(
                     children: [
@@ -276,7 +299,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletDustPreviewGap),
+                const SizedBox(height: _dustGap),
                 _PrimaryButton(
                   key: DustConverterPage.confirmButtonKey,
                   label: 'Chuy\u1EC3n \u0111\u1ED5i sang $_targetSymbol',

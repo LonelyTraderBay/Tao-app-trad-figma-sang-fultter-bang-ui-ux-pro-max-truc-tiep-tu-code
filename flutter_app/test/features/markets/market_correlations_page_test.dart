@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCorrelations(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -108,6 +110,24 @@ void main() {
     expect(find.text('Khuyến nghị'), findsOneWidget);
     expect(find.text('BTC/ETH'), findsOneWidget);
     expect(find.text('XRP/LINK'), findsOneWidget);
+  });
+
+  testWidgets('SC-026 first viewport reaches correlation matrix card', (
+    tester,
+  ) async {
+    await pumpCorrelations(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'MarketCorrelationsPage',
+      semanticLabel: 'SC-026 MarketCorrelationsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(MarketCorrelationsPage.matrixCardKey),
+      targetLabel: 'correlation matrix card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-026 timeframe selector updates matrix labels', (

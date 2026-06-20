@@ -30,7 +30,7 @@ class _AnalyzerTabBar extends StatelessWidget {
       color: AppColors.surface,
       shape: const Border(bottom: BorderSide(color: AppColors.border)),
       child: SizedBox(
-        height: AppSpacing.predictionAnalyzerTabsHeight,
+        height: VitDensity.compact.controlHeight,
         child: Row(
           children: [
             for (final item in tabs)
@@ -59,8 +59,7 @@ class _AnalyzerTabBar extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: AppRadii.hairlineRadius,
                           child: SizedBox(
-                            height:
-                                AppSpacing.predictionAnalyzerTabIndicatorHeight,
+                            height: AppSpacing.dividerHairline,
                             width: activeTab == item.tab
                                 ? AppSpacing.predictionAnalyzerTabIndicatorWidth
                                 : 0,
@@ -88,7 +87,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final pnlColor = snapshot.totalPnl >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
-      padding: AppSpacing.predictionAnalyzerSummaryPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -96,7 +95,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
             'Total Portfolio Value',
             style: AppTextStyles.badge.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.predictionAnalyzerValueGap),
+          const SizedBox(height: AppSpacing.x1),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -132,9 +131,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: AppSpacing.predictionAnalyzerSummaryPrimaryGap,
-          ),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -153,9 +150,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: AppSpacing.predictionAnalyzerSummarySecondaryGap,
-          ),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -228,14 +223,14 @@ class _StatsGrid extends StatelessWidget {
       itemCount: stats.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: AppSpacing.predictionAnalyzerGridColumns,
-        mainAxisExtent: AppSpacing.predictionAnalyzerGridExtent,
+        mainAxisExtent: AppSpacing.x7 * 3,
         crossAxisSpacing: AppSpacing.predictionAnalyzerGridGap,
         mainAxisSpacing: AppSpacing.predictionAnalyzerGridGap,
       ),
       itemBuilder: (context, index) {
         final stat = stats[index];
         return VitCard(
-          padding: AppSpacing.predictionAnalyzerCardPadding,
+          density: VitDensity.compact,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -261,7 +256,7 @@ class _StatsGrid extends StatelessWidget {
                   ),
                 ],
               ),
-              const Spacer(),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 stat.value,
                 style: AppTextStyles.amountSm.copyWith(
@@ -286,7 +281,7 @@ class _CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final categories = snapshot.categories;
     return VitCard(
-      padding: AppSpacing.predictionAnalyzerCategoryPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -294,24 +289,24 @@ class _CategoryCard extends StatelessWidget {
             'Portfolio by Category',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: AppSpacing.predictionAnalyzerCategoryTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           Center(
             child: SizedBox(
-              height: AppSpacing.predictionAnalyzerDonutHeight,
-              width: AppSpacing.predictionAnalyzerDonutWidth,
+              height: AppSpacing.x7 * 4,
+              width: AppSpacing.x7 * 4,
               child: CustomPaint(
                 painter: _DonutChartPainter(categories: categories),
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.predictionAnalyzerLegendGap),
+          const SizedBox(height: AppSpacing.x2),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: categories.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: AppSpacing.predictionAnalyzerLegendColumns,
-              mainAxisExtent: AppSpacing.predictionAnalyzerLegendExtent,
+              mainAxisExtent: AppSpacing.x7,
               crossAxisSpacing: AppSpacing.predictionAnalyzerLegendCrossGap,
               mainAxisSpacing: AppSpacing.predictionAnalyzerLegendMainGap,
             ),

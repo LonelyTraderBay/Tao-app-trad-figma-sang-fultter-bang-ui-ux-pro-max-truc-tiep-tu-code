@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -18,6 +18,21 @@ import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
 part '../widgets/staking_suitability_assessment_page_sections.dart';
 part '../widgets/staking_suitability_assessment_page_common.dart';
+
+const double _stakingSuitabilityVisualNavClearance = 112;
+const double _stakingSuitabilityNativeNavClearance = 88;
+const double _stakingSuitabilityFooterVisualClearance = 72;
+const double _stakingSuitabilityFooterNativeClearance = 56;
+const double _stakingSuitabilityScoreRing = 104;
+const double _stakingSuitabilityBodyLineHeight = 1.24;
+const double _stakingSuitabilityFooterLineHeight = 1.2;
+const double _stakingSuitabilityQuestionLineHeight = 1.16;
+const double _stakingSuitabilityOptionLineHeight = 1.18;
+const EdgeInsets _stakingSuitabilityCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _stakingSuitabilityOptionPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x3,
+);
 
 class StakingSuitabilityAssessmentPage extends ConsumerStatefulWidget {
   const StakingSuitabilityAssessmentPage({super.key, this.shellRenderMode});
@@ -58,16 +73,17 @@ class _StakingSuitabilityAssessmentPageState
     final controller = ref.watch(stakingSuitabilityControllerProvider);
     final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final safeAreaEnd = MediaQuery.paddingOf(context).bottom;
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
-    final footerBottomInset =
+            ? _stakingSuitabilityVisualNavClearance
+            : _stakingSuitabilityNativeNavClearance) +
+        safeAreaEnd;
+    final footerEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
-        MediaQuery.paddingOf(context).bottom;
+            ? _stakingSuitabilityFooterVisualClearance
+            : _stakingSuitabilityFooterNativeClearance) +
+        safeAreaEnd;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -86,10 +102,15 @@ class _StakingSuitabilityAssessmentPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    scrollEndPadding,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    density: VitDensity.compact,
                     children: _showResult
                         ? [
                             _ResultView(
@@ -105,6 +126,7 @@ class _StakingSuitabilityAssessmentPageState
                               total: snapshot.questions.length,
                             ),
                             VitHighRiskStatePanel(
+                              density: VitDensity.compact,
                               state: VitHighRiskUiState.riskReview,
                               title: 'Suitability review active',
                               message:
@@ -129,7 +151,7 @@ class _StakingSuitabilityAssessmentPageState
               ),
               if (!_showResult)
                 Padding(
-                  padding: AppSpacing.earnBottomInsetPadding(footerBottomInset),
+                  padding: EdgeInsets.only(bottom: footerEndPadding),
                   child: VitStickyFooter(
                     child: Row(
                       children: [
@@ -139,7 +161,7 @@ class _StakingSuitabilityAssessmentPageState
                               key: StakingSuitabilityAssessmentPage
                                   .previousButtonKey,
                               variant: VitCtaButtonVariant.secondary,
-                              height: AppSpacing.ctaHeight,
+                              density: VitDensity.compact,
                               onPressed: _previous,
                               child: const Text('Previous'),
                             ),
@@ -149,7 +171,7 @@ class _StakingSuitabilityAssessmentPageState
                         Expanded(
                           child: VitCtaButton(
                             key: StakingSuitabilityAssessmentPage.nextButtonKey,
-                            height: AppSpacing.ctaHeight,
+                            density: VitDensity.compact,
                             onPressed:
                                 _isAnswered(
                                   controller,

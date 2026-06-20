@@ -17,7 +17,7 @@ class _OrderTopTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: AppSpacing.tradeHistoryTopTabsPadding,
+      padding: VitDensity.compact.cardPadding,
       borderColor: AppColors.border,
       child: Row(
         children: [
@@ -30,7 +30,7 @@ class _OrderTopTabs extends StatelessWidget {
               onTap: () => onChanged('open'),
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeHistoryTabGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: _TopTabButton(
               key: OrdersHistoryPage.historyTabKey,
@@ -65,7 +65,7 @@ class _TopTabButton extends StatelessWidget {
     return VitCtaButton(
       onPressed: onTap,
       variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
-      height: AppSpacing.tradeHistoryTopTabHeight,
+      height: VitDensity.compact.controlHeight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -76,7 +76,7 @@ class _TopTabButton extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeHistoryTabGap),
+          const SizedBox(width: AppSpacing.x2),
           VitAccentPill(
             label: '$count',
             accentColor: active ? AppColors.onAccent : AppColors.text2,
@@ -101,19 +101,19 @@ class _FilterRow extends StatelessWidget {
       ('sell', 'Bán', AppColors.sell),
     ];
     return Padding(
-      padding: AppSpacing.tradeHistoryFilterPadding,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x1),
       child: Row(
         children: [
-          for (final filter in filters) ...[
+          for (var index = 0; index < filters.length; index += 1) ...[
+            if (index > 0) const SizedBox(width: AppSpacing.x2),
             _FilterChip(
-              key: OrdersHistoryPage.filterKey(filter.$1),
-              id: filter.$1,
-              label: filter.$2,
-              color: filter.$3,
-              active: active == filter.$1,
-              onTap: () => onChanged(filter.$1),
+              key: OrdersHistoryPage.filterKey(filters[index].$1),
+              id: filters[index].$1,
+              label: filters[index].$2,
+              color: filters[index].$3,
+              active: active == filters[index].$1,
+              onTap: () => onChanged(filters[index].$1),
             ),
-            const SizedBox(width: AppSpacing.tradeHistoryFilterGap),
           ],
         ],
       ),
@@ -139,20 +139,22 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compactAll = id == 'all' && active;
     return VitCard(
-      width: compactAll
-          ? AppSpacing.tradeHistoryFilterCompactWidth
-          : AppSpacing.tradeHistoryFilterWidth,
-      height: AppSpacing.tradeHistoryFilterHeight,
-      padding: compactAll
-          ? AppSpacing.zeroInsets
-          : AppSpacing.tradeHistoryFilterPaddingCompact,
+      constraints: BoxConstraints(
+        minWidth: id == 'all'
+            ? AppSpacing.buttonCompact
+            : AppSpacing.buttonStandard,
+        minHeight: VitDensity.compact.controlHeight - AppSpacing.x2,
+      ),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x1,
+      ),
       alignment: Alignment.center,
       borderColor: active ? color : AppColors.border,
       onTap: onTap,
       child: Text(
-        compactAll ? '' : label,
+        label,
         style: AppTextStyles.caption.copyWith(
           color: active ? color : AppColors.text2,
           fontWeight: AppTextStyles.bold,
@@ -164,6 +166,7 @@ class _FilterChip extends StatelessWidget {
 
 class _OrderHistoryTile extends StatelessWidget {
   const _OrderHistoryTile({
+    super.key,
     required this.order,
     required this.onCancel,
     this.actionKey,
@@ -184,7 +187,7 @@ class _OrderHistoryTile extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: AppSpacing.tradeHistoryTilePadding,
+      padding: VitDensity.compact.cardPadding,
       borderColor: AppColors.divider,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -202,27 +205,27 @@ class _OrderHistoryTile extends StatelessWidget {
                         style: AppTextStyles.baseMedium,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.tradeHistorySymbolGap),
+                    const SizedBox(width: AppSpacing.x2),
                     _SmallBadge(
                       label: isBuy ? 'MUA' : 'BÁN',
                       color: isBuy ? AppColors.buy : AppColors.sell,
                     ),
-                    const SizedBox(width: AppSpacing.tradeHistoryTypeGap),
+                    const SizedBox(width: AppSpacing.x1),
                     _TypeBadge(type: order.type),
                   ],
                 ),
               ),
               SizedBox(
-                width: AppSpacing.tradeHistoryStatusWidth,
+                width: _ordersStatusExtent,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Icon(
                       status.icon,
                       color: status.color,
-                      size: AppSpacing.tradeHistoryStatusIcon,
+                      size: AppSpacing.iconSm,
                     ),
-                    const SizedBox(width: AppSpacing.tradeHistoryStatusGap),
+                    const SizedBox(width: AppSpacing.x1),
                     Flexible(
                       child: Text(
                         status.label,
@@ -239,7 +242,7 @@ class _OrderHistoryTile extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeHistoryTileGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -258,7 +261,7 @@ class _OrderHistoryTile extends StatelessWidget {
             ],
           ),
           if (order.status == TradeOrderStatus.partial || order.fee > 0) ...[
-            const SizedBox(height: AppSpacing.tradeHistoryTileSmallGap),
+            const SizedBox(height: AppSpacing.x1),
             Row(
               children: [
                 Expanded(
@@ -282,24 +285,24 @@ class _OrderHistoryTile extends StatelessWidget {
               ],
             ),
           ],
-          const SizedBox(height: AppSpacing.tradeHistoryTileSmallGap),
+          const SizedBox(height: AppSpacing.x1),
           _InfoColumn(label: 'Thời gian', value: order.createdAt),
           if (order.status == TradeOrderStatus.partial) ...[
-            const SizedBox(height: AppSpacing.tradeHistoryTileGap),
+            const SizedBox(height: AppSpacing.x2),
             ClipRRect(
               borderRadius: AppRadii.xsRadius,
               child: LinearProgressIndicator(
                 value: fillPercent,
-                minHeight: AppSpacing.tradeHistoryProgressHeight,
+                minHeight: AppSpacing.x1,
                 color: AppColors.buy,
                 backgroundColor: AppColors.surface3,
               ),
             ),
           ],
           if (actionable) ...[
-            const SizedBox(height: AppSpacing.tradeHistoryTileGap),
+            const SizedBox(height: AppSpacing.x2),
             SizedBox(
-              height: AppSpacing.tradeHistoryCancelHeight,
+              height: VitDensity.compact.controlHeight,
               child: OutlinedButton(
                 key: actionKey,
                 onPressed: onCancel,

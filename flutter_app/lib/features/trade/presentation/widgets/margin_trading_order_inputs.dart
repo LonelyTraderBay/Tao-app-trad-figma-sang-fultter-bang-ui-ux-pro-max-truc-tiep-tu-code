@@ -18,7 +18,7 @@ class _InputCard extends StatelessWidget {
       padding: AppSpacing.cardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.transferSectionGap,
+        density: VitDensity.compact,
         children: [
           Row(
             children: [
@@ -76,7 +76,7 @@ class _AmountInput extends StatelessWidget {
       ),
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.transferSectionGap,
+        density: VitDensity.compact,
         children: [
           Row(
             children: [

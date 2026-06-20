@@ -35,7 +35,7 @@ class VitInlineIconAction extends StatelessWidget {
           onTap: onPressed,
           borderRadius: borderRadius,
           child: Padding(
-            padding: EdgeInsets.all(padding),
+            padding: EdgeInsetsDirectional.all(padding),
             child: Icon(icon, color: color, size: size),
           ),
         ),

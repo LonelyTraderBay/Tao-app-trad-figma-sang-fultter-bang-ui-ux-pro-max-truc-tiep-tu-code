@@ -9,7 +9,7 @@ class _AnalysisCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: AppSpacing.tradeBotCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -20,13 +20,13 @@ class _AnalysisCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotContentGap),
+          const SizedBox(height: AppSpacing.x3),
           for (final insight in insights) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: AppSpacing.tradeBotCardIconGap,
+                  width: AppSpacing.x5,
                   child: insight.symbol == 'alert'
                       ? Text(
                           '!',
@@ -41,7 +41,7 @@ class _AnalysisCard extends StatelessWidget {
                           size: AppSpacing.iconSm,
                         ),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+                const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Text(
                     insight.text,
@@ -53,8 +53,7 @@ class _AnalysisCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (insight != insights.last)
-              const SizedBox(height: AppSpacing.tradeBotContentGap),
+            if (insight != insights.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),

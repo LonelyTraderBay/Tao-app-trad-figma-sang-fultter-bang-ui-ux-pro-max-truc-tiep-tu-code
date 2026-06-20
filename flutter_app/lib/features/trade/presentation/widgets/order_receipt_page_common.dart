@@ -14,8 +14,10 @@ class _RiskBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeReceiptRiskBoxHeight,
-      padding: AppSpacing.tradeReceiptRiskBoxPadding,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
       borderColor: color.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +29,7 @@ class _RiskBox extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeReceiptRiskValueGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -48,23 +50,20 @@ class _WarningNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      margin: AppSpacing.tradeReceiptHorizontalMargin,
-      padding: AppSpacing.tradeReceiptNoticePadding,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
       borderColor: AppColors.warn.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: AppSpacing.zeroInsets.copyWith(
-              top: AppSpacing.tradeReceiptNoticeIconTop,
-            ),
-            child: const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.tradeReceiptNoticeIcon,
-            ),
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: AppColors.warn,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.tradeReceiptNoticeGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               'Lệnh có thể bị khớp 1 phần hoặc hủy nếu giá thay đổi nhanh. '
@@ -91,18 +90,19 @@ class _OrderSupportLink extends StatelessWidget {
     return VitCard(
       key: OrderReceiptPage.supportKey,
       onTap: () => context.go(supportRoute),
-      height: AppSpacing.tradeReceiptSupportHeight,
-      margin: AppSpacing.tradeReceiptHorizontalMargin,
-      padding: AppSpacing.tradeReceiptSupportPadding,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
       borderColor: AppColors.primary.withValues(alpha: .18),
       child: Row(
         children: [
           const Icon(
             Icons.support_agent_rounded,
             color: AppColors.primary,
-            size: AppSpacing.tradeReceiptSupportIcon,
+            size: AppSpacing.iconMd,
           ),
-          const SizedBox(width: AppSpacing.tradeReceiptSupportGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               'Cần hỗ trợ lệnh này?',
@@ -121,11 +121,11 @@ class _OrderSupportLink extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeReceiptSupportChevronGap),
+          const SizedBox(width: AppSpacing.x1),
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.primary,
-            size: AppSpacing.tradeReceiptSupportIcon,
+            size: AppSpacing.iconMd,
           ),
         ],
       ),
@@ -138,11 +138,13 @@ class _ReceiptFooter extends StatelessWidget {
     required this.sharePressed,
     required this.onShare,
     required this.onContinue,
+    required this.bottomPadding,
   });
 
   final bool sharePressed;
   final VoidCallback onShare;
   final VoidCallback onContinue;
+  final double bottomPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -156,13 +158,18 @@ class _ReceiptFooter extends StatelessWidget {
             color: AppColors.divider,
           ),
           Padding(
-            padding: AppSpacing.tradeReceiptFooterPadding,
+            padding: EdgeInsetsDirectional.fromSTEB(
+              AppSpacing.x4,
+              AppSpacing.x2,
+              AppSpacing.x4,
+              AppSpacing.x2 + bottomPadding,
+            ),
             child: Row(
               children: [
                 Expanded(
                   child: VitCtaButton(
                     variant: VitCtaButtonVariant.ghost,
-                    height: AppSpacing.tradeReceiptFooterButtonHeight,
+                    height: VitDensity.compact.controlHeight,
                     key: OrderReceiptPage.shareKey,
                     onPressed: onShare,
                     leading: Icon(
@@ -170,7 +177,7 @@ class _ReceiptFooter extends StatelessWidget {
                       color: sharePressed
                           ? AppColors.receiptTextActive
                           : AppColors.textMutedLight,
-                      size: AppSpacing.tradeReceiptFooterIcon,
+                      size: AppSpacing.iconSm,
                     ),
                     child: Text(
                       sharePressed ? 'Đã chia sẻ' : 'Chia sẻ',
@@ -183,12 +190,12 @@ class _ReceiptFooter extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.tradeReceiptFooterGap),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   flex: 2,
                   child: VitCtaButton(
                     variant: VitCtaButtonVariant.success,
-                    height: AppSpacing.inputHeight,
+                    height: VitDensity.compact.controlHeight,
                     key: OrderReceiptPage.continueTradingKey,
                     onPressed: onContinue,
                     child: Text(

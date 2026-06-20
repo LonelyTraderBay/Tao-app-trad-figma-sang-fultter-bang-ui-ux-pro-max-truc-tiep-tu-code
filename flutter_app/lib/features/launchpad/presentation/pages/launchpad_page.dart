@@ -6,11 +6,11 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
@@ -24,6 +24,17 @@ part '../widgets/launchpad_home_helpers.dart';
 part '../widgets/launchpad_home_shared_widgets.dart';
 part '../widgets/launchpad_home_project_widgets.dart';
 part '../widgets/launchpad_home_tool_widgets.dart';
+
+const _launchpadVisualNavClearance = 112.0;
+const _launchpadNativeNavClearance = 88.0;
+const _launchpadActionHeight = AppSpacing.searchBarCompactHeight;
+const _launchpadLineHeightDense = AppSpacing.launchpadLineHeightDense;
+const _launchpadLineHeightBody = AppSpacing.launchpadLineHeightBody;
+const _launchpadLineHeightCompact = AppSpacing.launchpadLineHeightCompact;
+const _launchpadLineHeightTight = AppSpacing.launchpadLineHeightTight;
+const _launchpadLineHeightLabel = AppSpacing.launchpadLineHeightLabel;
+const _launchpadLineHeightReadable = AppSpacing.launchpadLineHeightReadable;
+const _launchpadLineHeightShort = AppSpacing.launchpadLineHeightShort;
 
 class LaunchpadPage extends ConsumerStatefulWidget {
   const LaunchpadPage({super.key, this.shellRenderMode});
@@ -61,11 +72,11 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
         .where((project) => project.status == LaunchpadProjectStatus.active)
         .length;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _launchpadVisualNavClearance
+        : _launchpadNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -73,7 +84,6 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
           semanticLabel: 'SC-295 LaunchpadPage scroll surface',
           header: VitTopChrome(
             type: VitTopChromeType.rootModule,
@@ -112,9 +122,10 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
             child: SingleChildScrollView(
               key: LaunchpadPage.contentKey,
               physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.only(bottom: scrollEndPadding),
               child: VitPageContent(
-                padding: VitContentPadding.defaultPadding,
-                customGap: AppSpacing.x4,
+                padding: VitContentPadding.compact,
+                density: VitDensity.compact,
                 children: [
                   _HeroCard(activeCount: activeCount),
                   _LaunchpadTabs(

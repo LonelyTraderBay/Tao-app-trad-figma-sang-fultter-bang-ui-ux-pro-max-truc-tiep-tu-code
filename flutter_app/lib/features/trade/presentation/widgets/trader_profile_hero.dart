@@ -18,7 +18,7 @@ class _ProfileHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
       borderColor: _profilePrimary.withValues(alpha: .25),
-      padding: AppSpacing.traderProfileHeroPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -32,7 +32,7 @@ class _ProfileHero extends StatelessWidget {
                 radius: AppRadii.cardRadius,
                 border: true,
               ),
-              const SizedBox(width: AppSpacing.traderProfileHeaderGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +47,6 @@ class _ProfileHero extends StatelessWidget {
                             style: AppTextStyles.baseMedium.copyWith(
                               color: AppColors.onAccent,
                               fontWeight: AppTextStyles.bold,
-                              height: AppSpacing.tradeBotLineHeightCaption,
                             ),
                           ),
                         ),
@@ -59,10 +58,10 @@ class _ProfileHero extends StatelessWidget {
                           ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.x1),
                     Wrap(
-                      spacing: AppSpacing.traderProfileWrapGap,
-                      runSpacing: AppSpacing.traderProfileWrapGap,
+                      spacing: AppSpacing.x1,
+                      runSpacing: AppSpacing.x1,
                       children: [
                         for (final tag in trader.tags) _TagChip(label: tag),
                         _TagChip(
@@ -76,7 +75,7 @@ class _ProfileHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.ctaLoadingIcon),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               _HeroMetric(
@@ -84,19 +83,19 @@ class _ProfileHero extends StatelessWidget {
                 value: '+${trader.totalPnlPct.toStringAsFixed(1)}%',
                 color: _profileGreen,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               _HeroMetric(
                 label: 'Win Rate',
                 value: '${trader.winRate.toStringAsFixed(1)}%',
                 color: _profileGreen,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               _HeroMetric(
                 label: 'Sharpe',
                 value: trader.sharpeRatio.toStringAsFixed(2),
                 color: _profileAmber,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               _HeroMetric(
                 label: 'MDD',
                 value: '${trader.maxDrawdown.toStringAsFixed(1)}%',
@@ -104,27 +103,21 @@ class _ProfileHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.ctaLoadingIcon),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Text(
                 'Copiers: ${trader.copiers} / ${trader.maxCopiers}',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.tradeBotLineHeightTight,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.x2),
               Text(
                 '${trader.maxCopiers - trader.copiers} slots trống',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  height: AppSpacing.tradeBotLineHeightTight,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3 - AppSpacing.hairlineStroke),
+          const SizedBox(height: AppSpacing.x1),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
@@ -134,14 +127,13 @@ class _ProfileHero extends StatelessWidget {
               valueColor: const AlwaysStoppedAnimation(_profilePrimary),
             ),
           ),
-          const SizedBox(height: AppSpacing.traderProfileSectionGap),
+          const SizedBox(height: AppSpacing.x2),
           VitCtaButton(
             key: TraderProfilePage.copyButtonKey,
             onPressed: onToggleFollow,
             variant: isFollowing
                 ? VitCtaButtonVariant.destructive
                 : VitCtaButtonVariant.primary,
-            height: AppSpacing.inputHeight,
             leading: Icon(
               isFollowing
                   ? Icons.warning_amber_rounded
@@ -184,8 +176,7 @@ class _HeroMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: VitCard(
-        height: AppSpacing.traderProfileMetricHeight,
-        padding: AppSpacing.traderProfileMetricPadding,
+        density: VitDensity.compact,
         variant: VitCardVariant.inner,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,12 +185,9 @@ class _HeroMetric extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: AppSpacing.tradeBotLineHeightTight,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            const Spacer(),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               value,
               maxLines: 1,
@@ -207,7 +195,6 @@ class _HeroMetric extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.tradeBotLineHeightTight,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),

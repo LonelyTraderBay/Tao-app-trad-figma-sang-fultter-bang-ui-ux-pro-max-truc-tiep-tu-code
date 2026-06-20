@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -34,6 +35,7 @@ class PredictionOrderReceiptPage extends ConsumerWidget {
   static const shareKey = Key('sc035_share_receipt');
   static const viewEventKey = Key('sc035_view_event');
   static const viewPortfolioKey = Key('sc035_view_portfolio');
+  static const feeSummaryKey = Key('sc035_fee_summary');
 
   final String receiptId;
   final ShellRenderMode? shellRenderMode;
@@ -44,15 +46,13 @@ class PredictionOrderReceiptPage extends ConsumerWidget {
         .watch(predictionsReadModelControllerProvider)
         .getOrderReceipt(receiptId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndPadding =
+        navClearance +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionReceiptBottomInsetVisual
-            : AppSpacing.predictionReceiptBottomInsetNative);
+        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -73,9 +73,9 @@ class PredictionOrderReceiptPage extends ConsumerWidget {
                 child: snapshot.found
                     ? _ReceiptContent(
                         snapshot: snapshot,
-                        bottomInset: bottomInset,
+                        scrollEndPadding: scrollEndPadding,
                       )
-                    : _MissingReceipt(bottomInset: bottomInset),
+                    : _MissingReceipt(scrollEndPadding: scrollEndPadding),
               ),
             ],
           ),

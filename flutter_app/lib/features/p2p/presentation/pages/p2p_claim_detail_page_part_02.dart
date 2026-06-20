@@ -58,13 +58,13 @@ class _ProgressLine extends StatelessWidget {
             ClipRRect(
               borderRadius: AppRadii.xsRadius,
               child: const SizedBox(
-                height: AppSpacing.p2pClaimProgressLineHeight,
+                height: _p2pClaimProgressLineExtent,
                 child: ColoredBox(color: AppColors.surface3),
               ),
             ),
             SizedBox(
               width: constraints.maxWidth * fill,
-              height: AppSpacing.p2pClaimProgressLineHeight,
+              height: _p2pClaimProgressLineExtent,
               child: ClipRRect(
                 borderRadius: AppRadii.xsRadius,
                 child: ColoredBox(color: color),
@@ -88,7 +88,7 @@ class _MiniStatCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pClaimCardPadding,
+      padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -121,7 +121,7 @@ class _DescriptionCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.descriptionKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pClaimCardPadding,
+      padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -137,7 +137,7 @@ class _DescriptionCard extends StatelessWidget {
             description,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              height: AppSpacing.p2pClaimDescriptionLineHeight,
+              height: _p2pClaimDescriptionLine,
               fontWeight: AppTextStyles.medium,
             ),
           ),
@@ -235,7 +235,7 @@ class _TimelineEventRow extends StatelessWidget {
             children: [
               SizedBox(
                 width: AppSpacing.p2pClaimTimelineNodeSize,
-                height: AppSpacing.p2pClaimTimelineNodeSize,
+                height: _p2pClaimTimelineNodeExtent,
                 child: Material(
                   color: _statusBackground(color),
                   shape: CircleBorder(side: BorderSide(color: color)),
@@ -249,7 +249,7 @@ class _TimelineEventRow extends StatelessWidget {
               if (!isLast)
                 const SizedBox(
                   width: AppSpacing.p2pClaimTimelineConnectorWidth,
-                  height: AppSpacing.p2pClaimTimelineConnectorHeight,
+                  height: _p2pClaimTimelineConnectorExtent,
                   child: ColoredBox(color: AppColors.divider),
                 ),
             ],
@@ -273,7 +273,7 @@ class _TimelineEventRow extends StatelessWidget {
                   event.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pClaimBodyLineHeight,
+                    height: _p2pClaimBodyLine,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -325,12 +325,12 @@ class _UploadEvidenceCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.borderSolid,
-      padding: AppSpacing.p2pClaimCardPadding,
+      padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         children: [
           SizedBox(
-            width: AppSpacing.x7,
-            height: AppSpacing.x7,
+            width: _p2pClaimIconBoxExtent,
+            height: _p2pClaimIconBoxExtent,
             child: Material(
               color: AppColors.primary12,
               borderRadius: AppRadii.lgRadius,
@@ -374,8 +374,8 @@ class _EvidenceFileCard extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.x7,
-            height: AppSpacing.x7,
+            width: _p2pClaimIconBoxExtent,
+            height: _p2pClaimIconBoxExtent,
             child: Material(
               color: isImage ? AppColors.accent12 : AppColors.primary12,
               borderRadius: AppRadii.mdRadius,
@@ -439,7 +439,7 @@ class _NotesSection extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.lg,
-          padding: AppSpacing.p2pClaimCardPadding,
+          padding: AppSpacing.p2pClaimCompactCardPadding,
           child: Row(
             children: [
               const Icon(

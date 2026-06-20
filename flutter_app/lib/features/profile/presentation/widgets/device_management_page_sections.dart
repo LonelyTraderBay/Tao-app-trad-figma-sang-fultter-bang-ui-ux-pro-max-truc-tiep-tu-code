@@ -19,7 +19,7 @@ class _SecuritySummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: compactBorder ? null : DeviceManagementPage.summaryKey,
-      padding: AppSpacing.profileDevicesSummaryPadding,
+      density: VitDensity.compact,
       borderColor: compactBorder ? _devicesBorder : AppColors.primary20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,9 +54,7 @@ class _SecuritySummaryCard extends StatelessWidget {
                         fontWeight: AppTextStyles.heavy,
                       ),
                     ),
-                    const SizedBox(
-                      height: AppSpacing.profileDevicesSummaryTitleGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       '$totalDevices thi\u1EBFt b\u1ECB \u0111\u00E3 \u0111\u0103ng nh\u1EADp',
                       style: AppTextStyles.micro.copyWith(
@@ -68,7 +66,7 @@ class _SecuritySummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.profileDevicesSummaryStatsGapTop),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -115,32 +113,29 @@ class _SummaryStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.profileDevicesSummaryStatHeight,
-      child: Material(
-        color: _devicesPanel3.withValues(alpha: .82),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-        child: Padding(
-          padding: AppSpacing.profileDevicesSummaryStatPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(color: _devicesMuted),
+    return Material(
+      color: _devicesPanel3.withValues(alpha: .82),
+      shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(color: _devicesMuted),
+            ),
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              value,
+              style: AppTextStyles.caption.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.heavy,
               ),
-              const Spacer(),
-              Text(
-                value,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.heavy,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -158,6 +153,7 @@ class _SectionHeader extends StatelessWidget {
       title: label,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: _devicesPrimary,
+      density: VitDensity.compact,
     );
   }
 }
@@ -217,7 +213,7 @@ class _DeviceCard extends StatelessWidget {
 
     return VitCard(
       key: DeviceManagementPage.deviceCardKey(device.id),
-      padding: AppSpacing.profileDevicesCardPadding,
+      density: VitDensity.compact,
       borderColor: suspicious
           ? _devicesAmber.withValues(alpha: .42)
           : _devicesBorder,
@@ -249,12 +245,12 @@ class _DeviceCard extends StatelessWidget {
             ],
           ),
           if (showActions) ...[
-            const SizedBox(height: AppSpacing.profileDevicesActionTopGap),
+            const SizedBox(height: AppSpacing.x3),
             const Divider(
               height: AppSpacing.dividerHairline,
               color: _devicesDivider,
             ),
-            const SizedBox(height: AppSpacing.profileDevicesActionDividerGap),
+            const SizedBox(height: AppSpacing.x2),
             Row(
               children: [
                 Expanded(
@@ -312,7 +308,7 @@ class _DeviceDetails extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: AppSpacing.profileDevicesBrowserGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           '${device.browser} \u2022 ${device.os}',
           maxLines: 1,
@@ -322,7 +318,7 @@ class _DeviceDetails extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        const SizedBox(height: AppSpacing.profileDevicesMetaGap),
+        const SizedBox(height: AppSpacing.x2),
         Wrap(
           spacing: AppSpacing.profileDevicesMetaSpacing,
           runSpacing: AppSpacing.profileDevicesMetaRunSpacing,
@@ -337,7 +333,7 @@ class _DeviceDetails extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.profileDevicesIpGap),
+        const SizedBox(height: AppSpacing.x2),
         Text(
           'IP: ${device.ip}',
           style: AppTextStyles.micro.copyWith(color: _devicesMuted),

@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +23,17 @@ part '../widgets/leverage_impact_confirm.dart';
 
 const _tradePrimary = AppColors.primary;
 const _chipBackground = AppColors.surface2;
+const _leverageSpace = AppSpacing.x2;
+const _leverageCardSpace = AppSpacing.x3;
+const _leverageVisualScrollClearance = 108.0;
+const _leverageNativeScrollClearance = 72.0;
+const _leverageHeroHeight = 138.0;
+const _leverageHeroValueLineHeight = .95;
+const _leverageMeterSegmentHeight = 8.0;
+const _leverageControlHeight = 40.0;
+const _leverageControlLineHeight = 1.0;
+const _leverageImpactRowLineHeight = 1.12;
+const _leverageConfirmHeight = 44.0;
 
 class LeveragePage extends ConsumerStatefulWidget {
   const LeveragePage({super.key, required this.pairId, this.shellRenderMode});
@@ -69,13 +80,11 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
     final preview = controller.state.preview;
     final riskColor = Color(preview.riskColorHex);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.contentPad);
+        (mode.usesVisualQaFrame
+            ? _leverageVisualScrollClearance
+            : _leverageNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,10 +98,10 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
           ),
           child: SingleChildScrollView(
             key: LeveragePage.contentKey,
-            padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
+            padding: EdgeInsets.only(bottom: scrollEndClearance),
             child: VitPageContent(
-              padding: VitContentPadding.relaxed,
-              customGap: AppSpacing.transferSectionGap,
+              padding: VitContentPadding.compact,
+              density: VitDensity.compact,
               children: [
                 _LeverageHero(preview: preview, riskColor: riskColor),
                 _RiskMeter(preview: preview, riskColor: riskColor),

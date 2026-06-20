@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -21,6 +21,64 @@ part '../widgets/price_alerts_page_details.dart';
 part '../widgets/price_alerts_page_common.dart';
 
 const _marketPrimary = AppColors.primary;
+const double _alertsVisualScrollClearance = 108;
+const double _alertsNativeScrollClearance = 72;
+const double _alertsSectionGap = AppSpacing.x3;
+const double _alertsCardGap = AppSpacing.x3;
+const double _alertsAddNoticeGap = AppSpacing.x2;
+const double _alertsBottomReviewGap = AppSpacing.x3;
+const double _alertsFilterGap = AppSpacing.x3;
+const double _alertsFilterHeight = AppSpacing.buttonCompact;
+const double _alertsStatGap = AppSpacing.x3;
+const double _alertsStatHeight = AppSpacing.ctaHeight;
+const double _alertsStatLabelGap = AppSpacing.x1;
+const double _alertsAvatar = AppSpacing.buttonCompact;
+const double _alertsHeaderGap = AppSpacing.x3;
+const double _alertsTrendIcon = AppSpacing.iconSm + AppSpacing.x1;
+const double _alertsTrendGap = AppSpacing.x2;
+const double _alertsToggleIcon = AppSpacing.buttonCompact;
+const double _alertsActionGap = AppSpacing.x2;
+const double _alertsProgressGap = AppSpacing.x2;
+const double _alertsProgressHeight = AppSpacing.x2;
+const double _alertsTargetGap = AppSpacing.x4;
+const double _alertsTargetWidth = 58;
+const double _alertsTriggeredGap = AppSpacing.x3;
+const double _alertsTriggeredDividerGap = AppSpacing.x2;
+const double _alertsTriggeredIcon = AppSpacing.iconSm + AppSpacing.x1;
+const double _alertsTriggeredIconGap = AppSpacing.x2;
+const double _alertsEmptyIcon = AppSpacing.iconLg;
+const double _alertsEmptyGap = AppSpacing.x3;
+const double _alertsAddIcon = AppSpacing.iconSm + AppSpacing.x2;
+const double _alertsAddGap = AppSpacing.x3;
+const double _alertsLineHeightTight = 1.0;
+const double _alertsLineHeightShort = 1.1;
+const double _alertsLineHeightCaption = 1.2;
+const EdgeInsets _alertsScrollPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.contentPad,
+);
+const EdgeInsets _alertsNoticePadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x4,
+  vertical: AppSpacing.x3,
+);
+const EdgeInsets _alertsFilterHeaderPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+);
+const EdgeInsets _alertsFilterTabPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+);
+const EdgeInsets _alertsCardPadding = EdgeInsets.fromLTRB(
+  AppSpacing.x4,
+  AppSpacing.x3,
+  AppSpacing.x4,
+  AppSpacing.x3,
+);
+const EdgeInsets _alertsEmptyPadding = EdgeInsets.symmetric(
+  vertical: AppSpacing.x6,
+  horizontal: AppSpacing.x4,
+);
 
 enum _AlertFilter { all, active, triggered }
 
@@ -111,15 +169,11 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(marketControllerProvider).getPriceAlerts();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.priceAlertsVisualBottomExtra
-            : AppSpacing.priceAlertsNativeBottomExtra);
+            ? _alertsVisualScrollClearance
+            : _alertsNativeScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
     final activeCount = _alerts.where((alert) => alert.isActive).length;
     final triggeredCount = _alerts
         .where((alert) => !alert.isActive && alert.triggeredAt != null)
@@ -151,7 +205,10 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PriceAlertsPage.contentKey,
-                    padding: AppSpacing.priceAlertsScrollPadding(bottomInset),
+                    padding: _alertsScrollPadding.copyWith(
+                      top: AppSpacing.x3,
+                      bottom: scrollEndClearance,
+                    ),
                     child: Column(
                       children: [
                         _StatsSummary(
@@ -159,9 +216,7 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                           active: activeCount,
                           triggered: triggeredCount,
                         ),
-                        const SizedBox(
-                          height: AppSpacing.priceAlertsSectionGap,
-                        ),
+                        const SizedBox(height: _alertsSectionGap),
                         if (_filteredAlerts.isEmpty)
                           const _EmptyAlertsCard()
                         else
@@ -176,21 +231,15 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                               onDelete: () => _deleteAlert(alert.id),
                             ),
                             if (alert != _filteredAlerts.last)
-                              const SizedBox(
-                                height: AppSpacing.priceAlertsCardGap,
-                              ),
+                              const SizedBox(height: _alertsCardGap),
                           ],
-                        const SizedBox(height: AppSpacing.sectionGap),
+                        const SizedBox(height: _alertsSectionGap),
                         _AddAlertButton(onTap: _showAddPlaceholder),
                         if (_showAddNotice) ...[
-                          const SizedBox(
-                            height: AppSpacing.priceAlertsAddNoticeGap,
-                          ),
+                          const SizedBox(height: _alertsAddNoticeGap),
                           const _AddAlertNotice(),
                         ],
-                        const SizedBox(
-                          height: AppSpacing.priceAlertsBottomReviewGap,
-                        ),
+                        const SizedBox(height: _alertsBottomReviewGap),
                         const MarketBodyReviewSection(
                           title: 'Price alert state review',
                           message: 'Price alert data reviewed',

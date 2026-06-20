@@ -19,9 +19,9 @@ class _TimeFilters extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.lgRadius,
       child: SizedBox(
-        height: AppSpacing.predictionLeaderboardTimeFilterHeight,
+        height: _boardControlExtent,
         child: Padding(
-          padding: AppSpacing.predictionLeaderboardTimeFilterPadding,
+          padding: const EdgeInsets.all(_boardTinySpace),
           child: Row(
             children: [
               for (final item in filters)
@@ -103,16 +103,16 @@ class _MetricTabs extends StatelessWidget {
             onTap: onInfoTap,
             borderRadius: AppRadii.smRadius,
             child: const Padding(
-              padding: AppSpacing.predictionLeaderboardInfoPadding,
+              padding: EdgeInsets.only(left: _boardTinySpace),
               child: Icon(
                 Icons.help_outline_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.predictionLeaderboardInfoIcon,
+                size: AppSpacing.x3,
               ),
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.predictionLeaderboardMetricGap),
+        const SizedBox(width: _boardSpace),
         _MetricTab(
           key: PredictionsLeaderboardPage.volumeMetricKey,
           label: 'Volume',
@@ -159,20 +159,18 @@ class _MetricTab extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: SizedBox(
-          height: AppSpacing.predictionLeaderboardMetricHeight,
+          height: _boardControlExtent,
           child: Padding(
-            padding: AppSpacing.predictionLeaderboardMetricPadding,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   icon,
                   color: active ? _predictionPrimary : AppColors.text3,
-                  size: AppSpacing.predictionLeaderboardMetricIcon,
+                  size: AppSpacing.x3,
                 ),
-                const SizedBox(
-                  width: AppSpacing.predictionLeaderboardMetricIconGap,
-                ),
+                const SizedBox(width: _boardTinySpace),
                 Text(
                   label,
                   style: AppTextStyles.caption.copyWith(

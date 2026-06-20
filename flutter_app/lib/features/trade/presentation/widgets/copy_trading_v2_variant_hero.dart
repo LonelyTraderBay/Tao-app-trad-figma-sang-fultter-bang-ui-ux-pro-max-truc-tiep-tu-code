@@ -15,10 +15,9 @@ class _VariantSwitcher extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
+      density: VitDensity.compact,
       borderColor: AppColors.cardBorder,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.copyTradingV2VariantMinHeight,
-      ),
+      constraints: const BoxConstraints(minHeight: _copyVariantMinHeight),
       padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
@@ -27,7 +26,7 @@ class _VariantSwitcher extends StatelessWidget {
             color: _copyPrimary,
             size: AppSpacing.inputPrefixIcon,
           ),
-          const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
+          const SizedBox(width: _copyCardSpace),
           Expanded(
             child: Text(
               'Card Style:',
@@ -44,7 +43,7 @@ class _VariantSwitcher extends StatelessWidget {
               active: selected == variant,
               onTap: () => onChanged(variant),
             ),
-            if (variant != variants.last) const SizedBox(width: AppSpacing.x3),
+            if (variant != variants.last) const SizedBox(width: _copySpace),
           ],
         ],
       ),
@@ -70,7 +69,7 @@ class _VariantButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: VitCard(
-        height: AppSpacing.copyTradingV2VariantButtonHeight,
+        height: _copyVariantButtonHeight,
         constraints: const BoxConstraints(
           minWidth: AppSpacing.copyTradingV2VariantButtonMinWidth,
         ),
@@ -114,12 +113,12 @@ class _GlassHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.copyTradingV2GlassHeroHeight,
+      constraints: const BoxConstraints(minHeight: _copyGlassHeroMinHeight),
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.contentPad,
-        top: AppSpacing.contentPad,
-        right: AppSpacing.contentPad,
-        bottom: AppSpacing.contentPad,
+        left: AppSpacing.x4,
+        top: AppSpacing.x4,
+        right: AppSpacing.x4,
+        bottom: AppSpacing.x4,
       ),
       radius: VitCardRadius.lg,
       borderColor: AppColors.accent20,
@@ -138,14 +137,14 @@ class _GlassHero extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const _CopyIconBox(),
-              const SizedBox(height: AppSpacing.contentPad),
+              const SizedBox(height: _copyCardSpace),
               Text('Copy Trading', style: AppTextStyles.sectionTitle),
-              const SizedBox(height: AppSpacing.transferTileGap),
+              const SizedBox(height: _copySpace),
               Text(
                 'Sao chép giao dịch từ trader chuyên nghiệp',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const Spacer(),
+              const SizedBox(height: _copyCardSpace),
               Row(
                 children: [
                   Expanded(
@@ -156,7 +155,7 @@ class _GlassHero extends StatelessWidget {
                       color: _copyPurple,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
+                  const SizedBox(width: _copySpace),
                   Expanded(
                     child: _GlassStatCard(
                       icon: Icons.person_add_alt_1_outlined,
@@ -165,7 +164,7 @@ class _GlassHero extends StatelessWidget {
                       color: AppColors.buy,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
+                  const SizedBox(width: _copySpace),
                   Expanded(
                     child: _GlassStatCard(
                       icon: Icons.trending_up_rounded,
@@ -192,12 +191,12 @@ class _BoldHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.copyTradingV2BoldHeroHeight,
+      constraints: const BoxConstraints(minHeight: _copyBoldHeroMinHeight),
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.contentPad,
-        top: AppSpacing.contentPad,
-        right: AppSpacing.contentPad,
-        bottom: AppSpacing.contentPad,
+        left: AppSpacing.x4,
+        top: AppSpacing.x4,
+        right: AppSpacing.x4,
+        bottom: AppSpacing.x4,
       ),
       radius: VitCardRadius.lg,
       variant: VitCardVariant.hero,
@@ -210,7 +209,7 @@ class _BoldHero extends StatelessWidget {
             icon: Icons.copy_rounded,
             size: VitStatusPillSize.lg,
           ),
-          const SizedBox(height: AppSpacing.rowPy),
+          const SizedBox(height: _copySpace),
           Text(
             'Sao chép trader hàng đầu',
             style: AppTextStyles.sectionTitle.copyWith(
@@ -225,7 +224,7 @@ class _BoldHero extends StatelessWidget {
               color: AppColors.onAccent.withValues(alpha: .90),
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: _copyCardSpace),
           Row(
             children: [
               Expanded(
@@ -235,7 +234,7 @@ class _BoldHero extends StatelessWidget {
                   color: AppColors.buy,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
+              const SizedBox(width: _copySpace),
               Expanded(
                 child: _BoldStatCard(
                   label: 'COPIERS',
@@ -243,7 +242,7 @@ class _BoldHero extends StatelessWidget {
                   color: _copyPrimary,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
+              const SizedBox(width: _copySpace),
               Expanded(
                 child: _BoldStatCard(
                   label: 'AUM',
@@ -265,8 +264,8 @@ class _CopyIconBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      width: AppSpacing.copyTradingV2HeroIconBox,
-      height: AppSpacing.copyTradingV2HeroIconBox,
+      width: _copyHeroIconBox,
+      height: _copyHeroIconBox,
       alignment: Alignment.center,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.portfolioBtnGhostBorder,
@@ -275,7 +274,7 @@ class _CopyIconBox extends StatelessWidget {
       child: const Icon(
         Icons.copy_rounded,
         color: _copyPrimary,
-        size: AppSpacing.copyTradingV2HeroIconGlyph,
+        size: _copyHeroIconGlyph,
       ),
     );
   }
@@ -299,7 +298,7 @@ class _GlassStatCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: AppSpacing.copyTradingV2GlassStatHeight,
+      height: _copyGlassStatHeight,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.x3,
         top: AppSpacing.rowPy,
@@ -311,20 +310,16 @@ class _GlassStatCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           VitCard(
-            width: AppSpacing.copyTradingV2GlassStatIconBox,
-            height: AppSpacing.copyTradingV2GlassStatIconBox,
+            width: _copyGlassStatIconBox,
+            height: _copyGlassStatIconBox,
             alignment: Alignment.center,
             radius: VitCardRadius.lg,
             variant: VitCardVariant.ghost,
             background: ColoredBox(color: color.withValues(alpha: .16)),
             clip: true,
-            child: Icon(
-              icon,
-              color: color,
-              size: AppSpacing.copyTradingV2GlassStatIconGlyph,
-            ),
+            child: Icon(icon, color: color, size: _copyGlassStatIconGlyph),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _copySpace),
           Text(
             label,
             maxLines: 1,
@@ -334,7 +329,7 @@ class _GlassStatCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _copySpace),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -369,7 +364,7 @@ class _BoldStatCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: color.withValues(alpha: .88),
-      height: AppSpacing.copyTradingV2BoldStatHeight,
+      height: _copyBoldStatHeight,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.walletAssetChartBottomGap,
         top: AppSpacing.walletAssetChartBottomGap,
@@ -387,7 +382,7 @@ class _BoldStatCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _copySpace),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(

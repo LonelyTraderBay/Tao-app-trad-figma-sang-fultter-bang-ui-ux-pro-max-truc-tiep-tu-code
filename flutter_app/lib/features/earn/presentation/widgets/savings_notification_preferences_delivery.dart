@@ -47,25 +47,27 @@ class _ProductCard extends StatelessWidget {
     return VitCard(
       key: SavingsNotificationPreferencesKeys.product(product.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.savingsNotificationIconBox,
-                height: AppSpacing.savingsNotificationIconBox,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: .14),
-                  shape: BoxShape.circle,
-                ),
-                child: Text(
-                  product.asset,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
+              SizedBox.square(
+                dimension: AppSpacing.savingsNotificationIconBox,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: color.withValues(alpha: .14),
+                    shape: const CircleBorder(),
+                  ),
+                  child: Center(
+                    child: Text(
+                      product.asset,
+                      style: AppTextStyles.micro.copyWith(
+                        color: color,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -195,20 +197,25 @@ class _ChannelCard extends StatelessWidget {
     return VitCard(
       key: SavingsNotificationPreferencesKeys.channel(channel.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.savingsNotificationIconBox,
-            height: AppSpacing.savingsNotificationIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              savingsNotificationAlertIcon(channel.iconKey),
-              color: color,
-              size: AppSpacing.savingsNotificationAlertIcon,
+          SizedBox.square(
+            dimension: AppSpacing.savingsNotificationIconBox,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: .14),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Center(
+                child: Icon(
+                  savingsNotificationAlertIcon(channel.iconKey),
+                  color: color,
+                  size: AppSpacing.savingsNotificationAlertIcon,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -255,7 +262,7 @@ class _ActionSettingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           Icon(
@@ -299,7 +306,7 @@ class _InfoCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,16 +341,15 @@ class SavingsNotificationSmallChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
-      child: Text(label, style: AppTextStyles.micro.copyWith(color: color)),
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(label, style: AppTextStyles.micro.copyWith(color: color)),
+      ),
     );
   }
 }

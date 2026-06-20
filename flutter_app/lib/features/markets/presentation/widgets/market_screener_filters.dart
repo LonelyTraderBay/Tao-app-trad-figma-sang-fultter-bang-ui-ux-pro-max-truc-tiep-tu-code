@@ -14,13 +14,12 @@ class _PresetScroller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.marketScreenerPresetHeight,
+      height: _presetHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
         itemCount: presets.length,
-        separatorBuilder: (_, _) =>
-            const SizedBox(width: AppSpacing.marketScreenerPresetGap),
+        separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.x1),
         itemBuilder: (context, index) {
           final preset = presets[index];
           final active = preset.id == activePresetId;
@@ -48,9 +47,11 @@ class _PresetScroller extends StatelessWidget {
               borderRadius: AppRadii.lgRadius,
               child: SizedBox(
                 width: chipWidth,
-                height: AppSpacing.marketScreenerPresetHeight,
+                height: _presetHeight,
                 child: Padding(
-                  padding: AppSpacing.marketScreenerPresetPadding,
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.x2,
+                  ),
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Row(
@@ -58,18 +59,16 @@ class _PresetScroller extends StatelessWidget {
                       children: [
                         Icon(
                           preset.icon,
-                          size: AppSpacing.marketScreenerPresetIcon,
+                          size: _presetIconSize,
                           color: active ? _marketPrimary : AppColors.text2,
                         ),
-                        const SizedBox(
-                          width: AppSpacing.marketScreenerPresetIconGap,
-                        ),
+                        const SizedBox(width: AppSpacing.x1),
                         Text(
                           preset.name,
                           style: AppTextStyles.caption.copyWith(
                             color: active ? _marketPrimary : AppColors.text2,
                             fontWeight: AppTextStyles.medium,
-                            height: AppSpacing.marketScreenerPresetLineHeight,
+                            height: 1.0,
                           ),
                         ),
                       ],
@@ -116,7 +115,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: MarketScreenerPage.advancedFiltersKey,
-      padding: AppSpacing.marketScreenerAdvancedPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -133,24 +132,20 @@ class _AdvancedFiltersCard extends StatelessWidget {
               TextButton.icon(
                 key: MarketScreenerPage.resetFiltersKey,
                 onPressed: onReset,
-                icon: const Icon(
-                  Icons.refresh_rounded,
-                  size: AppSpacing.marketScreenerResetIcon,
-                ),
+                icon: const Icon(Icons.refresh_rounded, size: _resetIconSize),
                 label: const Text('Đặt lại'),
                 style: TextButton.styleFrom(
                   foregroundColor: _marketPrimary,
-                  padding: AppSpacing.marketScreenerResetPadding,
-                  minimumSize: const Size(
-                    0,
-                    AppSpacing.marketScreenerResetHeight,
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.x2,
                   ),
+                  minimumSize: const Size(0, _resetMinHeight),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketScreenerAdvancedTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Danh mục',
             style: AppTextStyles.micro.copyWith(
@@ -158,10 +153,10 @@ class _AdvancedFiltersCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketScreenerAdvancedCategoryGap),
+          const SizedBox(height: AppSpacing.x1),
           Wrap(
-            spacing: AppSpacing.marketScreenerAdvancedCategoryGap,
-            runSpacing: AppSpacing.marketScreenerAdvancedCategoryGap,
+            spacing: AppSpacing.x1,
+            runSpacing: AppSpacing.x1,
             children: [
               for (final category in categories)
                 _CategoryChip(
@@ -174,7 +169,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketScreenerAdvancedRangeGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -185,7 +180,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
                       onRangeChanged(minPrice: value, clearMinPrice: clear),
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketScreenerAdvancedRangeGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _RangeInput(
                   label: 'Giá max',
@@ -196,7 +191,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketScreenerAdvancedRangeRowGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -209,7 +204,7 @@ class _AdvancedFiltersCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketScreenerAdvancedRangeGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _RangeInput(
                   label: '% đổi min',
@@ -258,16 +253,18 @@ class _CategoryChip extends StatelessWidget {
           ),
         ),
         child: SizedBox(
-          height: AppSpacing.marketScreenerCategoryChipHeight,
+          height: _categoryChipHeight,
           child: Padding(
-            padding: AppSpacing.marketScreenerCategoryChipPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x2,
+            ),
             child: Center(
               child: Text(
                 label,
                 style: AppTextStyles.caption.copyWith(
                   color: active ? _marketPrimary : AppColors.text3,
                   fontWeight: AppTextStyles.medium,
-                  height: AppSpacing.marketScreenerCategoryChipLineHeight,
+                  height: 1.0,
                 ),
               ),
             ),
@@ -310,7 +307,10 @@ class _RangeInput extends StatelessWidget {
         labelStyle: AppTextStyles.micro.copyWith(color: AppColors.text3),
         filled: true,
         fillColor: AppColors.surface2,
-        contentPadding: AppSpacing.marketScreenerInputPadding,
+        contentPadding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x3,
+          vertical: _rangeInputVerticalPadding,
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: AppColors.borderSolid),
           borderRadius: AppRadii.smRadius,
@@ -345,7 +345,7 @@ class _SortScroller extends StatelessWidget {
     ];
 
     return SizedBox(
-      height: AppSpacing.marketScreenerSortHeight,
+      height: _sortHeight,
       child: Row(
         children: [
           for (var index = 0; index < options.length; index++) ...[
@@ -365,11 +365,11 @@ class _SortScroller extends StatelessWidget {
               ),
             ),
             if (index != options.length - 1)
-              const SizedBox(width: AppSpacing.marketScreenerSortGap),
+              const SizedBox(width: AppSpacing.x1),
           ],
-          const SizedBox(width: AppSpacing.marketScreenerSortResultGap),
+          const SizedBox(width: AppSpacing.x1),
           SizedBox(
-            width: AppSpacing.marketScreenerSortResultWidth,
+            width: _sortResultWidth,
             child: Text(
               '$resultCount kết quả',
               maxLines: 1,
@@ -377,7 +377,7 @@ class _SortScroller extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.marketScreenerPresetLineHeight,
+                height: 1.0,
               ),
             ),
           ),
@@ -418,9 +418,11 @@ class _SortChip extends StatelessWidget {
             : AppColors.transparent,
         borderRadius: AppRadii.lgRadius,
         child: SizedBox(
-          height: AppSpacing.marketScreenerSortChipHeight,
+          height: _sortChipHeight,
           child: Padding(
-            padding: AppSpacing.marketScreenerSortChipPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x1,
+            ),
             child: Center(
               child: FittedBox(
                 fit: BoxFit.scaleDown,
@@ -434,18 +436,12 @@ class _SortChip extends StatelessWidget {
                         fontWeight: active
                             ? AppTextStyles.bold
                             : AppTextStyles.medium,
-                        height: AppSpacing.marketScreenerPresetLineHeight,
+                        height: 1.0,
                       ),
                     ),
                     if (active) ...[
-                      const SizedBox(
-                        width: AppSpacing.marketScreenerSortIconGap,
-                      ),
-                      Icon(
-                        icon,
-                        color: _marketPrimary,
-                        size: AppSpacing.marketScreenerSortIcon,
-                      ),
+                      const SizedBox(width: AppSpacing.x1),
+                      Icon(icon, color: _marketPrimary, size: _sortIconSize),
                     ],
                   ],
                 ),

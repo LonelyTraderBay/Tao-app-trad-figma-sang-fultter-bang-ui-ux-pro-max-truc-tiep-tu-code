@@ -9,7 +9,7 @@ class _LimitsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      runSpacing: AppSpacing.x4,
+      runSpacing: AppSpacing.x3,
       children: [
         SizedBox(
           width: double.infinity,
@@ -22,7 +22,7 @@ class _LimitsGrid extends StatelessWidget {
                   color: color,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: _LimitMetric(
                   label: 'Bán/ngày',
@@ -91,11 +91,11 @@ class _BenefitRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.p2pKycChecklistIconPadding,
+          padding: _p2pKycChecklistIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: color,
-            size: AppSpacing.p2pKycChecklistIcon,
+            size: _p2pKycChecklistIconExtent,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -104,7 +104,7 @@ class _BenefitRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              height: AppSpacing.p2pKycReadableLineHeight,
+              height: _p2pKycReadableLineHeight,
             ),
           ),
         ),
@@ -123,7 +123,7 @@ class _KycSupportCard extends StatelessWidget {
     return VitCard(
       key: P2PKycRequirementsPage.supportKey,
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pKycCardPadding,
+      padding: _p2pKycCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -148,7 +148,7 @@ class _KycSupportCard extends StatelessWidget {
                   snapshot.supportBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pKycReadableLineHeight,
+                    height: _p2pKycReadableLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x3),

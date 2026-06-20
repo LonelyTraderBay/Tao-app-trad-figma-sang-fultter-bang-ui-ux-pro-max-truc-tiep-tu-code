@@ -67,7 +67,7 @@ class _ResultSummary extends StatelessWidget {
               SizedBox(
                 width: width,
                 child: VitCard(
-                  padding: const EdgeInsets.all(AppSpacing.x4),
+                  padding: AppSpacing.dcaPaddingX4,
                   borderColor: item.$3 == AppColors.buy
                       ? AppColors.buy20
                       : AppColors.cardBorder,
@@ -107,7 +107,7 @@ class _GrowthChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -156,7 +156,7 @@ class _MetricsCard extends StatelessWidget {
     ];
 
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -207,7 +207,7 @@ class _DcaAdvantageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

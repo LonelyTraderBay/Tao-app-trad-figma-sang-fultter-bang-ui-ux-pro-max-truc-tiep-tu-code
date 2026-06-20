@@ -37,27 +37,30 @@ class StakingTaxCalculatorTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 children: [
-                  Container(
-                    width: AppSpacing.stakingTaxCalculatorIconBox,
-                    height: AppSpacing.stakingTaxCalculatorIconBox,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary12,
-                      border: Border.all(
-                        color: AppColors.primary20,
-                        width: AppSpacing.stakingTaxBorderWidth,
+                  SizedBox.square(
+                    dimension: AppSpacing.stakingTaxCalculatorIconBox,
+                    child: DecoratedBox(
+                      decoration: const ShapeDecoration(
+                        color: AppColors.primary12,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: AppColors.primary20,
+                            width: AppSpacing.stakingTaxBorderWidth,
+                          ),
+                          borderRadius: AppRadii.cardRadius,
+                        ),
                       ),
-                      borderRadius: AppRadii.cardRadius,
-                    ),
-                    child: const Icon(
-                      Icons.calculate_rounded,
-                      color: AppColors.primary,
-                      size: AppSpacing.stakingTaxCalculatorIcon,
+                      child: const Icon(
+                        Icons.calculate_rounded,
+                        color: AppColors.primary,
+                        size: AppSpacing.stakingTaxCalculatorIcon,
+                      ),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x3),
@@ -154,40 +157,44 @@ class _TaxResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: StakingTaxGuideKeys.calculatorResult,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.cardLargeRadius,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Kết quả:',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.surface2,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardLargeRadius),
+        ),
+        child: Padding(
+          padding: AppSpacing.earnCardPaddingX4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Kết quả:',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+              const SizedBox(height: AppSpacing.x3),
+              _ResultRow(
+                label: 'Tổng phần thưởng',
+                value: stakingTaxMoney(rewards),
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              _ResultRow(
+                label:
+                    'Thuế phải nộp (${rate.toStringAsFixed(rate.truncateToDouble() == rate ? 0 : 1)}%)',
+                value: '-${stakingTaxMoney(taxOwed)}',
+                color: AppColors.sell,
+              ),
+              const Divider(color: AppColors.divider, height: AppSpacing.x5),
+              _ResultRow(
+                label: 'Sau thuế',
+                value: stakingTaxMoney(afterTax),
+                color: AppColors.buy,
+                highlight: true,
+              ),
+            ],
           ),
-          const SizedBox(height: AppSpacing.x3),
-          _ResultRow(
-            label: 'Tổng phần thưởng',
-            value: stakingTaxMoney(rewards),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          _ResultRow(
-            label:
-                'Thuế phải nộp (${rate.toStringAsFixed(rate.truncateToDouble() == rate ? 0 : 1)}%)',
-            value: '-${stakingTaxMoney(taxOwed)}',
-            color: AppColors.sell,
-          ),
-          const Divider(color: AppColors.divider, height: AppSpacing.x5),
-          _ResultRow(
-            label: 'Sau thuế',
-            value: stakingTaxMoney(afterTax),
-            color: AppColors.buy,
-            highlight: true,
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -245,7 +252,7 @@ class _FaqCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

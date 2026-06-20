@@ -20,13 +20,13 @@ class _PlaceholderPanel extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          const SizedBox(height: _riskSectionSpace),
           Text(
             description,
             style: AppTextStyles.navLabel.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.normal,
-              height: AppSpacing.tradeBotLineHeightBody,
+              height: _riskBodyLineHeight,
             ),
           ),
         ],
@@ -89,7 +89,7 @@ class _StressScenarioPanel extends StatelessWidget {
             ),
           ),
           if (scenario != scenarios.last)
-            const SizedBox(height: AppSpacing.tradeBotSmallGap),
+            const SizedBox(height: _riskTinySpace),
         ],
       ],
     );

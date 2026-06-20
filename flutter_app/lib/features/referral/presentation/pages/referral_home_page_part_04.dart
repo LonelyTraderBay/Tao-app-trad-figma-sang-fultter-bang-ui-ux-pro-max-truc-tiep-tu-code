@@ -13,32 +13,7 @@ class _MetricBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      padding: AppSpacing.referralCardPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.base.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-        ],
-      ),
-    );
+    return VitMetricCard(label: label, value: value, accentColor: color);
   }
 }
 
@@ -61,33 +36,37 @@ class _NoticeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: background,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: border),
-          borderRadius: AppRadii.mdRadius,
-        ),
-      ),
-      child: Padding(
-        padding: dense
-            ? AppSpacing.referralNoticePaddingDense
-            : AppSpacing.referralNoticePadding,
-        child: Row(
-          children: [
-            Icon(icon, color: color, size: AppSpacing.iconSm),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.micro.copyWith(
-                  color: dense ? color : AppColors.text2,
-                  fontWeight: dense ? AppTextStyles.bold : AppTextStyles.normal,
-                ),
+    final bannerVariant = _noticeBannerVariant(color, border);
+    if (!dense && bannerVariant != null) {
+      return VitBanner(variant: bannerVariant, icon: icon, message: text);
+    }
+
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: border,
+      clip: true,
+      background: ColoredBox(color: background),
+      padding: dense
+          ? const EdgeInsets.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x2,
+            )
+          : AppSpacing.cardPaddingCompact,
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: AppSpacing.iconSm),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(
+                color: dense ? color : AppColors.text2,
+                fontWeight: dense ? AppTextStyles.bold : AppTextStyles.normal,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -139,35 +118,12 @@ class _CompactAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitStatusPill(
+      label: label,
+      icon: icon,
+      status: VitStatusPillStatus.info,
+      size: VitStatusPillSize.sm,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: AppColors.primary12,
-          shape: const RoundedRectangleBorder(
-            side: BorderSide(color: AppColors.primary30),
-            borderRadius: AppRadii.smRadius,
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.referralCompactPillPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: AppColors.primary, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
@@ -185,24 +141,43 @@ class _TinyPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: background,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.referralTinyPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            height: AppSpacing.referralLineHeightShort,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: _pillAccentColor(color, background),
+      size: VitStatusPillSize.sm,
+      semanticStatus: _pillSemanticStatus(color),
     );
   }
+}
+
+VitBannerVariant? _noticeBannerVariant(Color color, Color border) {
+  if (color == AppColors.warn || border == AppColors.warningBorder) {
+    return VitBannerVariant.warning;
+  }
+  if (color == AppColors.sell || border == AppColors.sell20) {
+    return VitBannerVariant.error;
+  }
+  if (color == AppColors.primary || border == AppColors.primary20) {
+    return VitBannerVariant.info;
+  }
+  return null;
+}
+
+Color _pillAccentColor(Color color, Color background) {
+  if (color == AppColors.bg && background == AppColors.primarySoft) {
+    return AppColors.primary;
+  }
+  return color;
+}
+
+VitStatusPillStatus? _pillSemanticStatus(Color color) {
+  if (color == AppColors.buy) return VitStatusPillStatus.success;
+  if (color == AppColors.warn) return VitStatusPillStatus.warning;
+  if (color == AppColors.primary || color == AppColors.primarySoft) {
+    return VitStatusPillStatus.info;
+  }
+  if (color == AppColors.accent) return VitStatusPillStatus.purple;
+  return null;
 }
 
 class _InlineIconText extends StatelessWidget {
@@ -250,7 +225,7 @@ class _ProgressBar extends StatelessWidget {
     return ClipRRect(
       borderRadius: AppRadii.xsRadius,
       child: SizedBox(
-        height: AppSpacing.referralProgressHeight,
+        height: _progressExtent,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -276,7 +251,7 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.referralCampaignIconBox,
+      dimension: _avatarExtent,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .12),
@@ -308,7 +283,7 @@ class _SharePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.referralCardPadding,
+      padding: AppSpacing.cardPaddingCompact,
       child: Text(
         'Mình đang dùng VitTrade để giao dịch crypto. Đăng ký qua link của mình, cả hai nhận 5 USDT miễn phí.\n$link',
         style: AppTextStyles.caption.copyWith(color: AppColors.text2),

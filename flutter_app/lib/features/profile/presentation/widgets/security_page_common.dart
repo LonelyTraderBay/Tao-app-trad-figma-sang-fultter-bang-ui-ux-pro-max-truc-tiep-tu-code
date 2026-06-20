@@ -14,8 +14,7 @@ class _AntiPhishingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.securityAntiPhishingHeight,
-      padding: AppSpacing.securityCardPadding,
+      density: VitDensity.compact,
       borderColor: _securityBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -37,14 +36,14 @@ class _AntiPhishingCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.securityAntiPhishingTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             '\u0110\u1EB7t m\u00E3 c\u00E1 nh\u00E2n. Email t\u1EEB VitTrade s\u1EBD lu\u00F4n hi\u1EC3n th\u1ECB m\u00E3 n\u00E0y.',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.numericMicro.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.securityAntiPhishingInputGap),
+          const SizedBox(height: AppSpacing.x3),
           VitInput(
             fieldKey: SecurityPage.antiPhishingFieldKey,
             controller: controller,
@@ -57,7 +56,7 @@ class _AntiPhishingCard extends StatelessWidget {
                 key: SecurityPage.antiPhishingSaveKey,
                 onPressed: saving ? null : onSave,
                 loading: saving,
-                height: AppSpacing.securitySaveButtonHeight,
+                density: VitDensity.compact,
                 padding: EdgeInsets.zero,
                 child: Text(saving ? '...' : 'L\u01B0u'),
               ),
@@ -81,8 +80,7 @@ class _SecuritySupportCard extends StatelessWidget {
       onTap: () => context.go(supportRoute),
       behavior: HitTestBehavior.opaque,
       child: VitCard(
-        height: AppSpacing.securitySupportHeight,
-        padding: AppSpacing.securitySupportPadding,
+        density: VitDensity.compact,
         borderColor: _securityBorder,
         child: Row(
           children: [
@@ -112,7 +110,7 @@ class _SecuritySupportCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.securitySupportTextGap),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     'Mở hồ sơ hỗ trợ kèm ngữ cảnh tài khoản',
                     maxLines: 1,

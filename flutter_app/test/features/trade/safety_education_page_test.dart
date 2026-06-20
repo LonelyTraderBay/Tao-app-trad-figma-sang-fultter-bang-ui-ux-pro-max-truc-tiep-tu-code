@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSafetyEducation(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -81,6 +83,25 @@ void main() {
     expect(find.text('Hứa hẹn lợi nhuận đảm bảo'), findsOneWidget);
     expect(find.text('Giả mạo hiệu suất'), findsOneWidget);
     expect(find.text('Exit Scam'), findsOneWidget);
+  });
+
+  testWidgets('SC-080 first viewport reaches first scam card', (tester) async {
+    await pumpSafetyEducation(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SafetyEducationPage',
+      semanticLabel: 'SC-080 SafetyEducationPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(SafetyEducationPage.scamKey('guaranteed-returns')),
+      minVisibleHeight: 24,
+      targetLabel: 'first scam education card',
+      reason:
+          'Safety education must show the first scam card above bottom '
+          'navigation after the safety review and tabs.',
+    );
   });
 
   testWidgets('SC-080 scam cards expand locally', (tester) async {

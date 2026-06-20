@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpMarketMaker(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -85,6 +87,24 @@ void main() {
     expect(find.text('Select Event'), findsOneWidget);
     expect(find.text('Spread (basis points)'), findsOneWidget);
     expect(find.text('Hieu gia bid/ask: 0.50%'), findsOneWidget);
+  });
+
+  testWidgets('SC-037 first viewport reaches liquidity amount input', (
+    tester,
+  ) async {
+    await pumpMarketMaker(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-037 PredictionMarketMakerPage',
+      semanticLabel: 'SC-037 PredictionMarketMakerPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Liquidity Amount (USD)'),
+      targetLabel: 'the liquidity amount input label',
+      minVisibleHeight: 8,
+    );
   });
 
   testWidgets('SC-037 spread and amount controls update locally', (

@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +23,19 @@ part '../widgets/trade_settings_page_common.dart';
 
 const _tradePrimary = AppColors.primary;
 const _chipBackground = AppColors.surface2;
+const _settingsSpace = AppSpacing.x2;
+const _settingsTinySpace = AppSpacing.x1;
+const _settingsVisualScrollClearance = 112.0;
+const _settingsNativeScrollClearance = 72.0;
+const _settingsLineTight = 1.2;
+const _settingsLineBody = 1.24;
+const _settingsChipHeight = 34.0;
+const _settingsChipHeightSm = 30.0;
+const _settingsToggleWidth = 42.0;
+const _settingsToggleHeight = 24.0;
+const _settingsToggleKnob = 18.0;
+const _settingsToggleKnobMargin = EdgeInsets.all(3);
+const _settingsButtonHeight = 44.0;
 
 class TradeSettingsPage extends ConsumerStatefulWidget {
   const TradeSettingsPage({super.key, this.shellRenderMode});
@@ -63,9 +76,11 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
   @override
   Widget build(BuildContext context) {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
+    final scrollEndClearance =
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame
+            ? _settingsVisualScrollClearance
+            : _settingsNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,15 +98,10 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomChrome +
-                        AppSpacing.tradeBotCheckbox +
-                        AppSpacing.tradeBotSmallGap,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: 0,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
@@ -99,8 +109,8 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
                         message:
                             'Confirm order preview, small-order confirmation limits, slippage, chart defaults, and next steps before using these settings for live trading.',
                         contractId: 'SC-052 settings review',
+                        density: VitDensity.compact,
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       _SettingsSection(
                         title: 'Mặc định lệnh',
                         child: _OrderDefaultsCard(
@@ -108,7 +118,6 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
                           onChanged: _updateSettings,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotPanelGap),
                       _SettingsSection(
                         title: 'Xác nhận lệnh',
                         child: _ConfirmationCard(
@@ -116,7 +125,6 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
                           onChanged: _updateSettings,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotPanelGap),
                       _SettingsSection(
                         title: 'Phản hồi',
                         child: _FeedbackCard(
@@ -124,7 +132,6 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
                           onChanged: _updateSettings,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotPanelGap),
                       _SettingsSection(
                         title: 'Hiển thị',
                         child: _DisplayCard(
@@ -132,11 +139,8 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
                           onChanged: _updateSettings,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotPanelGap),
                       _ResetButton(onReset: _resetSettings),
-                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       const _InfoNote(),
-                      const SizedBox(height: AppSpacing.tradeBotCardGap),
                       const TradeBodyReviewSection(
                         title: 'Settings body review',
                         message: 'Trade settings body reviewed',

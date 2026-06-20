@@ -1,43 +1,5 @@
 part of '../pages/launchpad_webhooks_page.dart';
 
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.label, required this.color, this.icon});
-
-  final String label;
-  final Color color;
-  final IconData? icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: .14),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadCompactChipPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (icon != null) ...[
-              Icon(icon, color: color, size: AppSpacing.launchpadFontXs),
-              const SizedBox(width: AppSpacing.launchpadGapXs),
-            ],
-            Text(
-              label,
-              style: AppTextStyles.chartLabelXs.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.launchpadLineHeightTight,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _MiniPill extends StatelessWidget {
   const _MiniPill({required this.label, required this.color});
 
@@ -58,7 +20,7 @@ class _MiniPill extends StatelessWidget {
           style: AppTextStyles.chartLabelXs.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.launchpadLineHeightTight,
+            height: _launchpadWebhooksLineHeightTight,
           ),
         ),
       ),
@@ -71,7 +33,7 @@ class _CopyButton extends StatelessWidget {
     super.key,
     required this.active,
     required this.onTap,
-    this.size = 22,
+    this.size = _launchpadWebhooksCopyButtonExtent,
   });
 
   final bool active;
@@ -100,13 +62,13 @@ class _EmptySubscriptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.launchpadPaddingX6,
+      padding: _launchpadWebhooksCardPadding,
       child: Column(
         children: [
           const Icon(
             Icons.hub_outlined,
             color: AppColors.text3,
-            size: AppSpacing.launchpadIconHuge,
+            size: _launchpadWebhooksEmptyIcon,
           ),
           const SizedBox(height: AppSpacing.x3),
           Text(

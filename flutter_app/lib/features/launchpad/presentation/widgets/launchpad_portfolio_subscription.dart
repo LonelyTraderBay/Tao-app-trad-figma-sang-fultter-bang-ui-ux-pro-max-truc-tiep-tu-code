@@ -19,7 +19,7 @@ class _SubscriptionCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadPortfolioPage.subscriptionKey(subscription.id),
       radius: VitCardRadius.md,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       onTap: () => context.go(receiptRoute),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -117,20 +117,24 @@ class _SubscriptionAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.launchpadBox44,
-      height: AppSpacing.launchpadBox44,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: subscription.accent.withValues(alpha: .12),
-        border: Border.all(color: subscription.accent.withValues(alpha: .35)),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Text(
-        subscription.projectLogo,
-        style: AppTextStyles.caption.copyWith(
-          color: subscription.accent,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox44,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: subscription.accent.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.lgRadius,
+            side: BorderSide(color: subscription.accent.withValues(alpha: .35)),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            subscription.projectLogo,
+            style: AppTextStyles.caption.copyWith(
+              color: subscription.accent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -148,7 +152,7 @@ class _InfoTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -301,32 +305,36 @@ class _ActionRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.inputRadius,
-      child: Container(
-        padding: const EdgeInsets.all(AppSpacing.x4),
-        decoration: BoxDecoration(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
           color: color.withValues(alpha: .10),
-          border: Border.all(color: color.withValues(alpha: .20)),
-          borderRadius: AppRadii.inputRadius,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
+            side: BorderSide(color: color.withValues(alpha: .20)),
+          ),
         ),
-        child: Row(
-          children: [
-            Icon(icon, color: color, size: AppSpacing.iconMd),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
+        child: Padding(
+          padding: AppSpacing.launchpadPaddingX4,
+          child: Row(
+            children: [
+              Icon(icon, color: color, size: AppSpacing.iconMd),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
-            ),
-            Icon(
-              Icons.chevron_right_rounded,
-              color: color,
-              size: AppSpacing.iconMd,
-            ),
-          ],
+              Icon(
+                Icons.chevron_right_rounded,
+                color: color,
+                size: AppSpacing.iconMd,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -340,21 +348,20 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: style.color.withValues(alpha: .12),
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
-      child: Text(
-        style.label,
-        style: AppTextStyles.micro.copyWith(
-          color: style.color,
-          fontWeight: AppTextStyles.bold,
-          height: AppSpacing.launchpadLineHeightShort,
+      child: Padding(
+        padding: AppSpacing.launchpadInlinePillPadding,
+        child: Text(
+          style.label,
+          style: AppTextStyles.micro.copyWith(
+            color: style.color,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.launchpadLineHeightShort,
+          ),
         ),
       ),
     );

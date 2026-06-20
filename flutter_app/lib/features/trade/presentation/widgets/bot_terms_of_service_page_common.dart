@@ -21,7 +21,7 @@ class _TermsCta extends StatelessWidget {
         agreed ? snapshot.enabledCta : snapshot.disabledCta,
         style: AppTextStyles.body.copyWith(
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.tradeBotLineHeightTight,
+          height: _termsLineTight,
         ),
       ),
     );
@@ -37,8 +37,9 @@ class _ComplianceNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      constraints: const BoxConstraints(minHeight: 112),
+      constraints: const BoxConstraints(minHeight: _termsComplianceMinExtent),
       padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,15 +61,15 @@ class _ComplianceNote extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightCaption,
+                    height: _termsLineCaption,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: _termsTinySpace),
                 Text(
                   snapshot.complianceDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightRelaxed,
+                    height: _termsLineReadable,
                   ),
                 ),
               ],

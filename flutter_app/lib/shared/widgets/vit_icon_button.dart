@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
 enum VitIconButtonVariant {
@@ -40,27 +42,27 @@ class VitIconButton extends StatelessWidget {
     switch (size) {
       case VitIconButtonSize.sm:
         return const _IconButtonMetrics(
-          height: 28,
-          iconSize: 14,
+          height: AppSpacing.buttonCompact - AppSpacing.formFieldLabelGap,
+          iconSize: AppSpacing.rowPy,
           labelStyle: AppTextStyles.badge,
-          gap: 4,
-          paddingX: 8,
+          gap: AppSpacing.x1 + AppSpacing.dividerHairline,
+          paddingX: AppSpacing.x3,
         );
       case VitIconButtonSize.md:
         return const _IconButtonMetrics(
-          height: 40,
-          iconSize: 21,
+          height: AppSpacing.buttonCompact + AppSpacing.formFieldLabelGap,
+          iconSize: AppSpacing.iconMd,
           labelStyle: AppTextStyles.caption,
-          gap: 6,
-          paddingX: 12,
+          gap: AppSpacing.formFieldLabelGap,
+          paddingX: AppSpacing.rowPy - AppSpacing.hairlineStroke,
         );
       case VitIconButtonSize.lg:
         return const _IconButtonMetrics(
-          height: 44,
-          iconSize: 20,
+          height: AppSpacing.inputHeight - AppSpacing.x3,
+          iconSize: AppSpacing.contentPad,
           labelStyle: AppTextStyles.control,
-          gap: 8,
-          paddingX: 16,
+          gap: AppSpacing.x3,
+          paddingX: AppSpacing.x4 + AppSpacing.x1,
         );
     }
   }
@@ -115,7 +117,9 @@ class VitIconButton extends StatelessWidget {
             border: AppColors.cardBorder,
           );
     final hasLabel = label != null && label!.isNotEmpty;
-    final radius = BorderRadius.circular(size == VitIconButtonSize.sm ? 8 : 10);
+    final radius = size == VitIconButtonSize.sm
+        ? AppRadii.smRadius
+        : AppRadii.headerActionRadius;
 
     final child = Row(
       mainAxisSize: MainAxisSize.min,
@@ -126,7 +130,7 @@ class VitIconButton extends StatelessWidget {
             width: metrics.iconSize,
             height: metrics.iconSize,
             child: CircularProgressIndicator(
-              strokeWidth: 2,
+              strokeWidth: AppSpacing.hairlineStroke,
               valueColor: AlwaysStoppedAnimation<Color>(style.foreground),
             ),
           )
@@ -139,7 +143,6 @@ class VitIconButton extends StatelessWidget {
             style: metrics.labelStyle.copyWith(
               color: style.foreground,
               fontWeight: AppTextStyles.medium,
-              height: 1,
             ),
           ),
         ],
@@ -159,18 +162,20 @@ class VitIconButton extends StatelessWidget {
             color: AppColors.transparent,
             borderRadius: radius,
             child: Ink(
-              decoration: BoxDecoration(
+              decoration: ShapeDecoration(
                 color: style.background,
-                borderRadius: radius,
-                border: style.border == null
-                    ? null
-                    : Border.all(color: style.border!),
+                shape: RoundedRectangleBorder(
+                  borderRadius: radius,
+                  side: style.border == null
+                      ? BorderSide.none
+                      : BorderSide(color: style.border!),
+                ),
               ),
               child: InkWell(
                 onTap: _enabled ? onPressed : null,
                 borderRadius: radius,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: EdgeInsetsDirectional.symmetric(
                     horizontal: hasLabel ? metrics.paddingX : 0,
                   ),
                   child: Center(child: child),

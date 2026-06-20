@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_leader
 import 'package:vit_trade_flutter/features/arena/presentation/pages/verified_challenges_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpArenaHome(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,6 +72,24 @@ void main() {
     expect(find.text('BTC Weekly Predict'), findsOneWidget);
     expect(find.text('Phòng đang mở'), findsOneWidget);
     expect(find.text('BTC \$70K? — Tuần 9'), findsOneWidget);
+  });
+
+  testWidgets('SC-184 first viewport reaches first arena template card', (
+    tester,
+  ) async {
+    await pumpArenaHome(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ArenaHomePage',
+      semanticLabel: 'SC-184 ArenaHomePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ArenaHomePage.templateKey('prediction')),
+      targetLabel: 'first arena template card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-184 search filters modes and rooms', (tester) async {

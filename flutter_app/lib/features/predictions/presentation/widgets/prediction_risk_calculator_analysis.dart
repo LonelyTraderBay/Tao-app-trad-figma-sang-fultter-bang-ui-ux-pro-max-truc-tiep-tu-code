@@ -12,7 +12,7 @@ class _RiskAnalysis extends StatelessWidget {
       accentColor: _predictionPrimary,
       children: [
         VitCard(
-          padding: AppSpacing.predictionRiskCardPadding,
+          density: VitDensity.compact,
           child: Column(
             children: [
               _RiskMetricRow(
@@ -80,7 +80,7 @@ class _KellyRecommendation extends StatelessWidget {
 
     return VitCard(
       borderColor: AppColors.primary15,
-      padding: AppSpacing.predictionRiskCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -92,7 +92,7 @@ class _KellyRecommendation extends StatelessWidget {
                 color: _predictionPrimary,
                 size: AppSpacing.predictionRiskKellyIcon,
               ),
-              const SizedBox(width: AppSpacing.predictionRiskKellyIconGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,9 +104,7 @@ class _KellyRecommendation extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: AppSpacing.predictionRiskKellySubtitleGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Suggested exposure based on risk budget and edge',
                       style: AppTextStyles.numericMicro.copyWith(
@@ -118,11 +116,11 @@ class _KellyRecommendation extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionRiskKellyValueGap),
+          const SizedBox(height: AppSpacing.x2),
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.end,
-            spacing: AppSpacing.predictionRiskKellyValueWrapGap,
-            runSpacing: AppSpacing.predictionRiskKellyValueRunGap,
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x1,
             children: [
               Text(
                 _formatMoney(metrics.suggestedExposure),
@@ -149,7 +147,7 @@ class _RiskWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.predictionRiskWarningPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -158,7 +156,7 @@ class _RiskWarning extends StatelessWidget {
             color: AppColors.warn,
             size: AppSpacing.predictionRiskWarningIcon,
           ),
-          const SizedBox(width: AppSpacing.predictionRiskWarningGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               'Phan tich rui ro chi mang tinh tham khao. Ket qua thuc te co the khac. Luon quan ly von than trong.',

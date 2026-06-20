@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -26,6 +26,19 @@ part '../widgets/convert_page_header_widgets.dart';
 part '../widgets/convert_page_amount_widgets.dart';
 
 const _tradePrimary = AppColors.primary;
+const _convertSpace = AppSpacing.x2;
+const _convertVisualScrollClearance = 112.0;
+const _convertNativeScrollClearance = 72.0;
+const _convertModeHeight = 44.0;
+const _convertChipHeight = 34.0;
+const _convertControlHeight = 40.0;
+const _convertSwapSize = 40.0;
+const _convertFromCardHeight = 168.0;
+const _convertToCardHeight = 100.0;
+const _convertPairHeight = 44.0;
+const _convertSlippageHeight = 104.0;
+const _convertButtonHeight = 44.0;
+const _convertSparklineHeight = 20.0;
 
 enum _ConvertMode { market, limit, schedule }
 
@@ -93,13 +106,11 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
         .watch(tradeReadModelControllerProvider)
         .previewConvert(request);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndClearance =
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.contentPad);
+        (mode.usesVisualQaFrame
+            ? _convertVisualScrollClearance
+            : _convertNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -116,36 +127,26 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
           ),
           child: SingleChildScrollView(
             key: ConvertPage.contentKey,
-            padding: AppSpacing.zeroInsets.copyWith(
-              left: AppSpacing.contentPad,
-              top: AppSpacing.rowPy,
-              right: AppSpacing.contentPad,
-              bottom: bottomInset,
-            ),
+            padding: EdgeInsets.only(bottom: scrollEndClearance),
             child: VitPageContent(
-              padding: VitContentPadding.none,
-              fullBleed: true,
-              customGap: 0,
+              padding: VitContentPadding.compact,
+              density: VitDensity.compact,
               children: [
                 _ModeTabs(
                   mode: _mode,
                   onChanged: (value) => setState(() => _mode = value),
                 ),
-                const SizedBox(height: AppSpacing.x5),
                 _FavoriteHeader(),
-                const SizedBox(height: AppSpacing.rowGap),
                 _FavoritePairs(
                   pairs: snapshot.favoritePairs,
                   activeFrom: fromAsset.symbol,
                   activeTo: toAsset.symbol,
                   onSelected: _selectFavoritePair,
                 ),
-                const SizedBox(height: AppSpacing.x5),
                 _RateBar(
                   label: quote.quoteLabel,
                   countdown: '${quote.validSeconds}s',
                 ),
-                const SizedBox(height: AppSpacing.x4),
                 _AmountCard(
                   label: 'Từ',
                   asset: fromAsset,
@@ -168,14 +169,11 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
                     onAssetTap: () => _showAssetPicker('to', snapshot.assets),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x4),
                 const _ToolRow(),
-                const SizedBox(height: AppSpacing.x4),
                 _PairMiniCard(
                   fromSymbol: fromAsset.symbol,
                   toSymbol: toAsset.symbol,
                 ),
-                const SizedBox(height: AppSpacing.x4),
                 _SlippageCard(
                   options: snapshot.slippageOptions,
                   active: _slippage,
@@ -184,22 +182,18 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
                     _receipt = null;
                   }),
                 ),
-                const SizedBox(height: AppSpacing.x4),
                 _ConvertRiskReviewPanel(
                   quote: quote,
                   fromSymbol: fromAsset.symbol,
                   toSymbol: toAsset.symbol,
                   slippage: _slippage,
                 ),
-                const SizedBox(height: AppSpacing.x5),
                 _SubmitButton(
                   enabled: quote.canSubmit,
                   receipt: _receipt,
                   onPressed: () => _submit(request),
                 ),
-                const SizedBox(height: AppSpacing.x5),
                 _HistoryHeader(),
-                const SizedBox(height: AppSpacing.rowGap),
                 _HistoryList(records: snapshot.history),
               ],
             ),

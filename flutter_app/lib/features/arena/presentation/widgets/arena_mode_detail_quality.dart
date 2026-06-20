@@ -57,7 +57,7 @@ class ArenaModeQualitySection extends StatelessWidget {
             label: const Text('Hiểu chỉ số này'),
             style: TextButton.styleFrom(
               foregroundColor: AppColors.accent,
-              padding: EdgeInsets.zero,
+              padding: AppSpacing.zeroInsets,
               minimumSize: const Size(0, AppSpacing.buttonCompact),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               textStyle: AppTextStyles.micro.copyWith(
@@ -81,10 +81,7 @@ class _QualityMetricCard extends StatelessWidget {
     final color = arenaMetricColor(metric.status);
     final icon = arenaMetricIcon(metric.status, metric.label);
     return VitCard(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.arenaModeQualityCardPadding,
       child: Row(
         children: [
           Icon(icon, color: color, size: AppSpacing.arenaModeQualityIcon),
@@ -129,12 +126,7 @@ class ArenaModeTrustSheet extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.x5,
-          AppSpacing.x5,
-          AppSpacing.x5,
-          AppSpacing.x6,
-        ),
+        padding: AppSpacing.arenaActionSheetPadding,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -177,7 +169,7 @@ class ArenaModeTrustSheet extends StatelessWidget {
             VitCard(
               variant: VitCardVariant.inner,
               borderColor: AppColors.accent20,
-              padding: const EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.arenaPaddingX3,
               child: Text(
                 'Các chỉ số dựa trên lịch sử challenge, báo cáo cộng đồng và hệ thống kiểm duyệt. Đây là tín hiệu an toàn của Open Arena, không phải chỉ số tài chính.',
                 style: AppTextStyles.caption.copyWith(

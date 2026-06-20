@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpHealthScore(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -82,6 +84,24 @@ void main() {
     expect(find.text('Activity'), findsOneWidget);
     expect(find.text('Risk Management'), findsOneWidget);
     expect(find.text('Backup & Recovery'), findsOneWidget);
+  });
+
+  testWidgets('SC-151 first viewport reaches first health metric', (
+    tester,
+  ) async {
+    await pumpHealthScore(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-151 WalletHealthScorePage',
+      semanticLabel: 'SC-151 WalletHealthScorePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(WalletHealthScorePage.metricKey('Security')),
+      targetLabel: 'the first wallet health metric card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets(

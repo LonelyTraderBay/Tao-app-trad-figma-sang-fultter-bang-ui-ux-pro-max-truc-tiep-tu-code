@@ -21,12 +21,16 @@ class VitSheetHandle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: Container(
+      child: SizedBox(
         width: width,
         height: height,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: AppRadii.pillRadius,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: color,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.pillRadius,
+            ),
+          ),
         ),
       ),
     );
@@ -93,10 +97,12 @@ class VitSheetSurface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(color: color, borderRadius: borderRadius),
-      child: child,
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: color,
+        shape: RoundedRectangleBorder(borderRadius: borderRadius),
+      ),
+      child: Padding(padding: padding, child: child),
     );
   }
 }

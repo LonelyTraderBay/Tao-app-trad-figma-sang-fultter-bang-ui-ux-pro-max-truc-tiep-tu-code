@@ -53,7 +53,7 @@ class VitMarketPairRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = Padding(
-      padding: const EdgeInsets.symmetric(
+      padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.homeSectionHorizontalPadding,
         vertical: AppSpacing.homeSectionVerticalPadding,
       ),
@@ -73,7 +73,7 @@ class VitMarketPairRow extends StatelessWidget {
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   subtitle,
                   maxLines: 1,
@@ -105,7 +105,7 @@ class VitMarketPairRow extends StatelessWidget {
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: AppSpacing.x1)),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   changeLabel,
                   maxLines: 1,
@@ -150,7 +150,7 @@ class VitRankedAssetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = Padding(
-      padding: const EdgeInsets.symmetric(
+      padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.homeSectionHorizontalPadding,
         vertical: AppSpacing.homeSectionVerticalPadding,
       ),
@@ -181,22 +181,24 @@ class VitRankedAssetRow extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.homeRankedRowBadgePaddingHorizontal,
-              vertical: AppSpacing.homeRankedRowBadgePaddingVertical,
-            ),
-            decoration: BoxDecoration(
+          DecoratedBox(
+            decoration: ShapeDecoration(
               color: trend.background,
-              borderRadius: AppRadii.xsRadius,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
             ),
-            child: Text(
-              badgeLabel,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                color: trend.foreground,
-                fontWeight: AppTextStyles.bold,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.homeRankedRowBadgePaddingHorizontal,
+                vertical: AppSpacing.homeRankedRowBadgePaddingVertical,
+              ),
+              child: Text(
+                badgeLabel,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: trend.foreground,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
           ),

@@ -19,7 +19,7 @@ class _SummaryCard extends StatelessWidget {
         : 'T\u1EA5t c\u1EA3 m\u1EA1ng ho\u1EA1t \u0111\u1ED9ng t\u1ED1t';
 
     return VitCard(
-      padding: AppSpacing.walletNetworkSummaryPadding,
+      padding: VitDensity.compact.cardPadding,
       radius: VitCardRadius.lg,
       borderColor: summaryColor.withValues(alpha: .34),
       child: Column(
@@ -27,8 +27,8 @@ class _SummaryCard extends StatelessWidget {
           Row(
             children: [
               VitCard(
-                width: AppSpacing.walletNetworkSummaryIcon,
-                height: AppSpacing.walletNetworkSummaryIcon,
+                width: _networkSummaryIconSize,
+                height: _networkSummaryIconSize,
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.md,
                 borderColor: summaryColor.withValues(alpha: .42),
@@ -45,7 +45,7 @@ class _SummaryCard extends StatelessWidget {
                   size: AppSpacing.walletNetworkSummaryIconGlyph,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletTokenHeroGap),
+              const SizedBox(width: _networkInlineGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +56,7 @@ class _SummaryCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.rowGap),
+                    const SizedBox(height: _networkTinyGap),
                     Text(
                       'C\u1EADp nh\u1EADt t\u1EF1 \u0111\u1ED9ng m\u1ED7i ${snapshot.refreshIntervalSeconds} gi\u00E2y',
                       style: AppTextStyles.micro.copyWith(color: _networkMuted),
@@ -73,7 +73,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletTokenCardGap),
+          const SizedBox(height: _networkCardGap),
           Row(
             children: [
               _SummaryStat(
@@ -81,13 +81,13 @@ class _SummaryCard extends StatelessWidget {
                 label: 'Ho\u1EA1t \u0111\u1ED9ng',
                 color: _networkGreen,
               ),
-              const SizedBox(width: AppSpacing.rowGap),
+              const SizedBox(width: _networkTinyGap),
               _SummaryStat(
                 value: snapshot.issueCount.toString(),
                 label: 'Ch\u1EADm / T\u1EAFc',
                 color: _networkAmber,
               ),
-              const SizedBox(width: AppSpacing.rowGap),
+              const SizedBox(width: _networkTinyGap),
               _SummaryStat(
                 value: snapshot.downCount.toString(),
                 label: 'B\u1EA3o tr\u00EC',
@@ -117,7 +117,7 @@ class _SummaryStat extends StatelessWidget {
     return Expanded(
       child: VitCard(
         variant: VitCardVariant.inner,
-        height: AppSpacing.walletNetworkSummaryStatHeight,
+        height: _networkSummaryStatHeight,
         alignment: Alignment.center,
         borderColor: color.withValues(alpha: .32),
         child: Column(
@@ -131,7 +131,7 @@ class _SummaryStat extends StatelessWidget {
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
-            const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
+            const SizedBox(height: _networkTinyGap),
             Text(
               label,
               style: AppTextStyles.micro.copyWith(color: _networkMuted),

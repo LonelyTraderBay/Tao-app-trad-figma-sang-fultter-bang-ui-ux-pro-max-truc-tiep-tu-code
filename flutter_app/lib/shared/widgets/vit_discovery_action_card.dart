@@ -65,14 +65,18 @@ class VitDiscoveryActionCard extends StatelessWidget {
       padding: metrics.padding,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: metrics.iconContainerSize,
             height: metrics.iconContainerSize,
-            decoration: BoxDecoration(
-              gradient: background,
-              borderRadius: AppRadii.mdRadius,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                gradient: background,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Center(
+                child: Icon(icon, color: accentColor, size: metrics.iconSize),
+              ),
             ),
-            child: Icon(icon, color: accentColor, size: metrics.iconSize),
           ),
           const SizedBox(width: AppSpacing.homeMarketIconGap),
           Expanded(

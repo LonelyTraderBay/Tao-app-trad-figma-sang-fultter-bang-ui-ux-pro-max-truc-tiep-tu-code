@@ -86,7 +86,7 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
                   physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.only(bottom: bottomInset),
                   child: VitPageContent(
-                    gap: VitContentGap.loose,
+                    gap: VitContentGap.defaultGap,
                     children: [
                       if (_showLoading)
                         _DemoSection(

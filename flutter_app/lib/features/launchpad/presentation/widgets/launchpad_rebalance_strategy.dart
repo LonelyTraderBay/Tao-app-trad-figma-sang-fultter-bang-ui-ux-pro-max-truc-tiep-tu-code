@@ -26,7 +26,7 @@ class LaunchpadRebalanceStrategySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: sectionKey,
       child: VitPageSection(
         label: 'Chien luoc',
@@ -75,21 +75,24 @@ class _StrategyCard extends StatelessWidget {
       borderColor: active
           ? strategy.accent.withValues(alpha: .38)
           : AppColors.cardBorder,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       onTap: onTap,
       child: Column(
         children: [
-          Container(
-            width: AppSpacing.launchpadBox28,
-            height: AppSpacing.launchpadBox28,
-            decoration: BoxDecoration(
-              color: strategy.accent.withValues(alpha: .14),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              Icons.shield_outlined,
-              color: strategy.accent,
-              size: AppSpacing.launchpadIconLg,
+          SizedBox.square(
+            dimension: AppSpacing.launchpadBox28,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: strategy.accent.withValues(alpha: .14),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Icon(
+                Icons.shield_outlined,
+                color: strategy.accent,
+                size: AppSpacing.launchpadIconLg,
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.x2),

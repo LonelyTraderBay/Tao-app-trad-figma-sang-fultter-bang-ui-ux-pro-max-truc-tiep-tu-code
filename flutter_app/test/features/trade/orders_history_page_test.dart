@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpOrdersHistory(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -96,6 +98,17 @@ void main() {
 
     expect(find.text('BÁN'), findsWidgets);
     expect(find.text('MUA'), findsNothing);
+  });
+
+  testWidgets('SC-050 first viewport reaches first open order', (tester) async {
+    await pumpOrdersHistory(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(OrdersHistoryPage.orderKey('ord-open-001')),
+      targetLabel: 'the first open order row',
+      minVisibleHeight: 48,
+    );
   });
 
   testWidgets('SC-050 cancel action uses the order action draft', (

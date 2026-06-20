@@ -18,16 +18,17 @@ class _CurrentReport extends StatelessWidget {
     return VitPageContent(
       padding: VitContentPadding.none,
       fullBleed: true,
-      customGap: AppSpacing.tradeBotCardGap,
+      density: VitDensity.compact,
       children: [
         VitPageSection(
           label: 'Top 5 Execution Venues (By Volume)',
-          customGap: AppSpacing.tradeBotCardGap,
+          density: VitDensity.compact,
           children: [for (final venue in venues) _VenueCard(venue: venue)],
         ),
         _AnalysisButton(onTap: onAnalysis),
         VitPageSection(
           label: 'Report Actions',
+          density: VitDensity.compact,
           children: [_ReportActions(onExport: onExport, onPublish: onPublish)],
         ),
       ],
@@ -45,29 +46,27 @@ class _VenueCard extends StatelessWidget {
     final isWinner = venue.rank == 1;
     return VitCard(
       key: BestExecutionReportsPage.venueKey(venue.rank),
-      padding: AppSpacing.cardPadding,
+      density: VitDensity.compact,
       borderColor: _bestBorder.withValues(alpha: .72),
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              VitCard(
-                width: AppSpacing.tradeToolIconTileSm,
-                height: AppSpacing.tradeToolIconTileSm,
-                alignment: Alignment.center,
-                variant: VitCardVariant.inner,
-                borderColor: isWinner ? _bestAmber : AppColors.transparent,
+              CircleAvatar(
+                radius: AppSpacing.x4,
+                backgroundColor: isWinner
+                    ? _bestAmber.withValues(alpha: .12)
+                    : _bestPanel2,
                 child: Text(
                   '#${venue.rank}',
                   style: AppTextStyles.body.copyWith(
                     color: isWinner ? _bestAmber : AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +81,6 @@ class _VenueCard extends StatelessWidget {
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              height: AppSpacing.tradeBotLineHeightTight,
                             ),
                           ),
                         ),
@@ -96,20 +94,19 @@ class _VenueCard extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.walletAssetPillGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${_formatInt(venue.volume)} orders • ${_formatUsd(venue.value)} value',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.tradeBotLineHeightTight,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotCardGap),
+              const SizedBox(width: AppSpacing.x2),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -119,22 +116,18 @@ class _VenueCard extends StatelessWidget {
                       color: _bestGreen,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
-                      height: AppSpacing.tradeBotLineHeightTight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     'Quality',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: AppSpacing.tradeBotLineHeightTight,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.rowPy),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -143,7 +136,7 @@ class _VenueCard extends StatelessWidget {
                   value: '\$${_formatInt(venue.avgPrice)}',
                 ),
               ),
-              const SizedBox(width: AppSpacing.rowGap),
+              const SizedBox(width: AppSpacing.x1),
               Expanded(
                 child: _VenueMetric(
                   label: 'Cost',
@@ -151,7 +144,7 @@ class _VenueCard extends StatelessWidget {
                       '${venue.avgCost.toStringAsFixed(venue.avgCost == .10 ? 1 : 2)}%',
                 ),
               ),
-              const SizedBox(width: AppSpacing.rowGap),
+              const SizedBox(width: AppSpacing.x1),
               Expanded(
                 child: _VenueMetric(
                   label: 'Speed',
@@ -159,7 +152,7 @@ class _VenueCard extends StatelessWidget {
                       '${venue.avgSpeed.toStringAsFixed(venue.avgSpeed == .3 || venue.avgSpeed == .4 || venue.avgSpeed == .5 ? 1 : 2)}s',
                 ),
               ),
-              const SizedBox(width: AppSpacing.rowGap),
+              const SizedBox(width: AppSpacing.x1),
               Expanded(
                 child: _VenueMetric(
                   label: 'Fill Rate',
@@ -168,16 +161,13 @@ class _VenueCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
                 child: Text(
                   'Composite Quality Score',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
               Text(
@@ -185,25 +175,18 @@ class _VenueCard extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: _bestGreen,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.rowGap),
+          const SizedBox(height: AppSpacing.x1),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
-            child: SizedBox(
-              height: AppSpacing.formFieldLabelGap,
-              child: Stack(
-                children: [
-                  const ColoredBox(color: _bestPanel2),
-                  FractionallySizedBox(
-                    widthFactor: (venue.score / 100).clamp(0, 1).toDouble(),
-                    child: const ColoredBox(color: _bestGreen),
-                  ),
-                ],
-              ),
+            child: LinearProgressIndicator(
+              minHeight: 3,
+              value: (venue.score / 100).clamp(0, 1).toDouble(),
+              backgroundColor: _bestPanel2,
+              color: _bestGreen,
             ),
           ),
         ],
@@ -223,8 +206,7 @@ class _VenueMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: AppSpacing.walletNetworkStatHeight,
-      padding: AppSpacing.tradeBotMetricBoxPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -233,12 +215,9 @@ class _VenueMetric extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.walletAssetSmallGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -247,7 +226,6 @@ class _VenueMetric extends StatelessWidget {
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -267,7 +245,7 @@ class _AnalysisButton extends StatelessWidget {
       key: BestExecutionReportsPage.analysisKey,
       onPressed: onTap,
       variant: VitCtaButtonVariant.secondary,
-      height: AppSpacing.searchBarCompactHeight,
+      density: VitDensity.compact,
       leading: const Icon(Icons.bar_chart_rounded, color: AppColors.text1),
       trailing: const Icon(Icons.chevron_right_rounded, color: AppColors.text1),
       child: Text(
@@ -275,7 +253,6 @@ class _AnalysisButton extends StatelessWidget {
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text1,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.tradeBotLineHeightTight,
         ),
       ),
     );

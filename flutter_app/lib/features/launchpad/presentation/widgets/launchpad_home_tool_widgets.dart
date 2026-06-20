@@ -12,21 +12,21 @@ class _StakingEntry extends StatelessWidget {
       radius: VitCardRadius.md,
       borderColor: AppColors.buy20,
       onTap: () => context.go(route),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: VitDensity.compact.cardPadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.launchpadBox48,
-            height: AppSpacing.launchpadBox48,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: AppColors.buy10,
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: const Icon(
-              Icons.savings_outlined,
-              color: AppColors.buy,
-              size: AppSpacing.iconMd,
+          SizedBox.square(
+            dimension: AppSpacing.launchpadBox48,
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.buy10,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+              ),
+              child: const Icon(
+                Icons.savings_outlined,
+                color: AppColors.buy,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -70,6 +70,7 @@ class _ToolSection extends StatelessWidget {
     return VitPageSection(
       label: title,
       accentColor: AppModuleAccents.launchpad,
+      density: VitDensity.compact,
       children: [
         GridView.count(
           crossAxisCount: AppSpacing.launchpadGridColumns,
@@ -78,7 +79,7 @@ class _ToolSection extends StatelessWidget {
           mainAxisSpacing: AppSpacing.x3,
           crossAxisSpacing: AppSpacing.x3,
           childAspectRatio: AppSpacing.launchpadGridAspectTile,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           children: [
             for (final tool in tools)
               _ToolTile(key: LaunchpadPage.toolKey(tool.id), tool: tool),
@@ -100,25 +101,25 @@ class _ToolTile extends StatelessWidget {
       radius: VitCardRadius.sm,
       borderColor: tool.accent.withValues(alpha: .18),
       onTap: () => context.go(tool.route),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.x6,
-            height: AppSpacing.x6,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: tool.accent.withValues(alpha: .12),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              _toolIcon(tool.iconKey),
-              color: tool.accent,
-              size: AppSpacing.iconMd,
+          SizedBox.square(
+            dimension: AppSpacing.x6,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: tool.accent.withValues(alpha: .12),
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Icon(
+                _toolIcon(tool.iconKey),
+                color: tool.accent,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             tool.label,
             maxLines: 1,
@@ -126,7 +127,7 @@ class _ToolTile extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.launchpadLineHeightShort,
+              height: _launchpadLineHeightShort,
             ),
           ),
           Text(
@@ -135,7 +136,7 @@ class _ToolTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.chartLabelXs.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.launchpadLineHeightShort,
+              height: _launchpadLineHeightShort,
             ),
           ),
         ],
@@ -149,46 +150,50 @@ class _SafetyWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       key: LaunchpadPage.safetyKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.sell10,
-        border: Border.all(color: AppColors.sell20),
-        borderRadius: AppRadii.cardRadius,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: const BorderSide(color: AppColors.sell20),
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.error_outline_rounded,
-            color: AppColors.sell,
-            size: AppSpacing.iconMd,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Cảnh báo an toàn',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.sell,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  'Chỉ tham gia qua app chính thức. Không gửi token cho bất kỳ ai yêu cầu. Kiểm tra contract address trước khi tương tác.',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.launchpadLineHeightReadable,
-                  ),
-                ),
-              ],
+      child: Padding(
+        padding: VitDensity.compact.cardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.error_outline_rounded,
+              color: AppColors.sell,
+              size: AppSpacing.iconMd,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Cảnh báo an toàn',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.sell,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    'Chỉ tham gia qua app chính thức. Không gửi token cho bất kỳ ai yêu cầu. Kiểm tra contract address trước khi tương tác.',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      height: _launchpadLineHeightReadable,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

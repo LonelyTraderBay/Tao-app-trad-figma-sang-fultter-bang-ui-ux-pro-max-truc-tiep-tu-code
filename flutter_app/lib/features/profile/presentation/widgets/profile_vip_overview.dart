@@ -11,10 +11,10 @@ class _OverviewTab extends StatelessWidget {
     final children = <Widget>[];
     if (nextTier != null) {
       children.add(_ProgressCard(snapshot: snapshot, nextTier: nextTier));
-      children.add(const SizedBox(height: AppSpacing.profileVipContentGap));
+      children.add(SizedBox(height: VitDensity.compact.pageContentGap));
     }
     children.add(_TierTable(snapshot: snapshot));
-    children.add(const SizedBox(height: AppSpacing.profileVipContentGap));
+    children.add(SizedBox(height: VitDensity.compact.pageContentGap));
     children.add(const _FeeSavingsCard());
 
     return Column(
@@ -40,7 +40,7 @@ class _ProgressCard extends StatelessWidget {
     );
 
     return VitCard(
-      padding: AppSpacing.profileVipProgressPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -50,11 +50,11 @@ class _ProgressCard extends StatelessWidget {
                 'Ti\u1EBFn \u0111\u1ED9 l\u00EAn h\u1EA1ng',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.x3),
               _TierIcon(tier: nextTier),
             ],
           ),
-          const SizedBox(height: AppSpacing.profileVipProgressTitleGap),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           _ProgressLine(
             label: 'Kh\u1ED1i l\u01B0\u1EE3ng 30 ng\u00E0y',
             value:
@@ -64,7 +64,7 @@ class _ProgressCard extends StatelessWidget {
             helper:
                 'C\u1EA7n th\u00EAm ${_formatUsd(nextTier.monthlyVolume - snapshot.monthlyVolume)} \u0111\u1EC3 \u0111\u1EA1t m\u1EE5c ti\u00EAu',
           ),
-          const SizedBox(height: AppSpacing.profileVipProgressLineGap),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           _ProgressLine(
             label: 'T\u00E0i s\u1EA3n \u0111ang gi\u1EEF',
             value:
@@ -121,17 +121,17 @@ class _ProgressLine extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.profileVipProgressBarGap),
+        SizedBox(height: VitDensity.compact.verticalSpace),
         ClipRRect(
           borderRadius: AppRadii.pillRadius,
           child: LinearProgressIndicator(
-            minHeight: AppSpacing.profileVipProgressBarHeight,
+            minHeight: AppSpacing.x3,
             value: progress,
             color: color,
             backgroundColor: AppColors.surface3,
           ),
         ),
-        const SizedBox(height: AppSpacing.profileVipProgressBarGap),
+        SizedBox(height: VitDensity.compact.verticalSpace),
         Text(helper, style: AppTextStyles.micro.copyWith(color: helperColor)),
       ],
     );
@@ -147,6 +147,7 @@ class _TierTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       clip: true,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Padding(
@@ -162,13 +163,13 @@ class _TierTable extends StatelessWidget {
             ),
           ),
           const Divider(
-            height: AppSpacing.profileVipTableDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
           const _TableHeader(),
           for (final tier in snapshot.tiers) ...[
             const Divider(
-              height: AppSpacing.profileVipTableDividerHeight,
+              height: AppSpacing.dividerHairline,
               color: AppColors.divider,
             ),
             _TierRow(tier: tier, active: tier.level == snapshot.currentLevel),
@@ -306,7 +307,7 @@ class _FeeSavingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _vipSuccess.withValues(alpha: .24),
-      padding: AppSpacing.profileVipSavingsPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -327,7 +328,7 @@ class _FeeSavingsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.profileVipSavingsBoxGap),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           Row(
             children: const [
               Expanded(
@@ -369,12 +370,12 @@ class _SavingBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.profileVipSavingBoxPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label, style: AppTextStyles.micro.copyWith(color: _vipMuted)),
-          const SizedBox(height: AppSpacing.profileVipSavingBoxValueGap),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           Text(
             value,
             style: AppTextStyles.base.copyWith(
@@ -383,7 +384,7 @@ class _SavingBox extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.profileVipSavingBoxValueGap),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           Text(sub, style: AppTextStyles.micro.copyWith(color: _vipMuted)),
         ],
       ),

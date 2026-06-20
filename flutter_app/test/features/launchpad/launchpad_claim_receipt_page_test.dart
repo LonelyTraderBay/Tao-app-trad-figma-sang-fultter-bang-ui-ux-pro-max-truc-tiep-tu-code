@@ -113,6 +113,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(LaunchpadClaimReceiptPage.claimSheetKey), findsOneWidget);
+    expect(
+      find.byKey(LaunchpadClaimReceiptPage.claimSheetReviewStateKey),
+      findsOneWidget,
+    );
+    expect(find.text('Review claim receipt'), findsOneWidget);
     expect(find.text('Nhận phần thưởng'), findsOneWidget);
     expect(find.text('Xác nhận nhận 462.5 NEXA'), findsOneWidget);
   });

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_webhooks_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpWebhooks(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -73,6 +75,24 @@ void main() {
     expect(find.text('NexaAI Staking Events'), findsOneWidget);
     expect(find.text('IDO Participation Tracker'), findsOneWidget);
     expect(find.byKey(LaunchpadWebhooksPage.infoKey), findsOneWidget);
+  });
+
+  testWidgets('SC-310 first viewport reaches first subscription', (
+    tester,
+  ) async {
+    await pumpWebhooks(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-310 LaunchpadWebhooksPage',
+      semanticLabel: 'SC-310 LaunchpadWebhooksPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadWebhooksPage.expandKey('wh1')),
+      routeName: 'SC-310 LaunchpadWebhooksPage',
+      actionLabel: 'the first webhook subscription',
+    );
   });
 
   testWidgets('SC-310 expands copies toggles and deletes subscription', (

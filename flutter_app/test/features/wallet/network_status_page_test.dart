@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpNetworkStatus(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,24 @@ void main() {
     expect(find.text('42%'), findsOneWidget);
     expect(find.text('N\u1EA1p OK'), findsWidgets);
     expect(find.text('R\u00FAt OK'), findsWidgets);
+  });
+
+  testWidgets('SC-155 first viewport reaches first network card', (
+    tester,
+  ) async {
+    await pumpNetworkStatus(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'NetworkStatusPage',
+      semanticLabel: 'SC-155 NetworkStatusPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(NetworkStatusPage.networkKey('btc')),
+      routeName: 'NetworkStatusPage',
+      actionLabel: 'the first network status card',
+    );
   });
 
   testWidgets('SC-155 full list includes maintenance and legend', (

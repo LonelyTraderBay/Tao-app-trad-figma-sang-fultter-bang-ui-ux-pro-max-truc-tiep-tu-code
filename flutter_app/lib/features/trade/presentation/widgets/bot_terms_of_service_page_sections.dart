@@ -9,8 +9,9 @@ class _InfoBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      constraints: const BoxConstraints(minHeight: 96),
+      constraints: const BoxConstraints(minHeight: _termsInfoMinExtent),
       padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
       borderColor: _termsPrimary.withValues(alpha: .24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,15 +34,15 @@ class _InfoBanner extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightShort,
+                    height: _termsLineShort,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: _termsTinySpace),
                 Text(
                   snapshot.infoDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.tradeBotLineHeightRelaxed,
+                    height: _termsLineReadable,
                   ),
                 ),
               ],
@@ -62,8 +63,9 @@ class _TermsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotTermsCardHeight,
+      height: _termsCardExtent,
       borderColor: AppColors.cardBorder,
+      density: VitDensity.compact,
       child: ClipRRect(
         borderRadius: AppRadii.cardRadius,
         child: SingleChildScrollView(
@@ -77,22 +79,22 @@ class _TermsCard extends StatelessWidget {
                 snapshot.title,
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: AppColors.text1,
-                  height: AppSpacing.tradeBotLineHeightShort,
+                  height: _termsLineShort,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: _termsSpace),
               Text(
                 snapshot.lastUpdatedLabel,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.tradeBotLineHeightTight,
+                  height: _termsLineTight,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x6),
+              const SizedBox(height: _termsSpace),
               for (final section in snapshot.sections) ...[
                 _TermsSection(section: section),
                 if (section != snapshot.sections.last)
-                  const SizedBox(height: AppSpacing.x5),
+                  const SizedBox(height: _termsSpace),
               ],
               const Divider(
                 color: AppColors.borderSolid,
@@ -126,27 +128,27 @@ class _TermsSection extends StatelessWidget {
           section.title,
           style: AppTextStyles.baseMedium.copyWith(
             color: AppColors.text1,
-            height: AppSpacing.tradeBotLineHeightShort,
+            height: _termsLineShort,
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotStatusGap),
+        const SizedBox(height: _termsSpace),
         if (section.warningTitle != null && section.warningBody != null) ...[
           _CriticalWarning(section: section),
-          const SizedBox(height: AppSpacing.contentPad),
+          const SizedBox(height: _termsSpace),
         ],
         for (final paragraph in section.paragraphs) ...[
           Text(
             paragraph,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.tradeBotLineHeightLegal,
+              height: _termsLineLegal,
             ),
           ),
           if (paragraph != section.paragraphs.last)
-            const SizedBox(height: AppSpacing.tradeBotCardGap),
+            const SizedBox(height: _termsSpace),
         ],
         if (section.bullets.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          const SizedBox(height: _termsSpace),
           for (final bullet in section.bullets)
             Padding(
               padding: AppSpacing.tradeBotTermsBulletPadding,
@@ -154,7 +156,7 @@ class _TermsSection extends StatelessWidget {
                 '- $bullet',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.tradeBotLineHeightReadable,
+                  height: _termsLineReadable,
                 ),
               ),
             ),
@@ -192,7 +194,7 @@ class _CriticalWarning extends StatelessWidget {
               text: TextSpan(
                 style: AppTextStyles.caption.copyWith(
                   color: _termsRed,
-                  height: AppSpacing.tradeBotLineHeightLoose,
+                  height: _termsLineReadable,
                 ),
                 children: [
                   TextSpan(
@@ -222,8 +224,9 @@ class _ScrollWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      constraints: const BoxConstraints(minHeight: 45),
+      constraints: const BoxConstraints(minHeight: _termsWarningMinExtent),
       padding: AppSpacing.tradeBotCompactCardPadding,
+      density: VitDensity.compact,
       borderColor: _termsAmber.withValues(alpha: .32),
       child: Row(
         children: [
@@ -238,7 +241,7 @@ class _ScrollWarning extends StatelessWidget {
               snapshot.scrollWarning,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.tradeBotLineHeightCompact,
+                height: _termsLineBody,
               ),
             ),
           ),
@@ -268,8 +271,9 @@ class _AgreementCard extends StatelessWidget {
       child: VitCard(
         key: BotTermsOfServicePage.agreementKey,
         onTap: enabled ? onTap : null,
-        constraints: const BoxConstraints(minHeight: 122),
+        constraints: const BoxConstraints(minHeight: _termsAgreementMinExtent),
         padding: AppSpacing.tradeBotAgreementPadding,
+        density: VitDensity.compact,
         variant: enabled ? VitCardVariant.inner : VitCardVariant.standard,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -294,15 +298,15 @@ class _AgreementCard extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.tradeBotLineHeightBody,
+                      height: _termsLineBody,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.tradeBotLabelGap),
+                  const SizedBox(height: _termsTinySpace),
                   Text(
                     snapshot.agreementDescription,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.tradeBotLineHeightReadable,
+                      height: _termsLineReadable,
                     ),
                   ),
                 ],

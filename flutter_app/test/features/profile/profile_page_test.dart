@@ -15,6 +15,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpProfile(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -108,6 +110,27 @@ void main() {
     );
     expect(find.text('T\u00C0I KHO\u1EA2N'), findsOneWidget);
     expect(find.text('X\u00E1c minh danh t\u00EDnh (KYC)'), findsOneWidget);
+  });
+
+  testWidgets('SC-156 first viewport previews product hub above bottom nav', (
+    tester,
+  ) async {
+    await pumpProfile(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ProfilePage',
+      semanticLabel: 'SC-156 ProfilePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ProfilePage.productHubKey),
+      minVisibleHeight: 24,
+      targetLabel: 'Profile product hub',
+      reason:
+          'ProfilePage should preview product/support shortcuts above the '
+          'bottom navigation on the 440x956 QA phone viewport.',
+    );
   });
 
   testWidgets('SC-156 profile action edges route to safe placeholders', (

@@ -13,8 +13,8 @@ class _AdIdentityCard extends StatelessWidget {
     final typeLabel = snapshot.tradeType == P2PTradeType.sell ? 'BÁN' : 'MUA';
 
     return VitCard(
-      height: AppSpacing.p2pMarketplaceAnalyticsIdentityHeight,
-      padding: AppSpacing.p2pMarketplaceAnalyticsIdentityPadding,
+      height: _p2pAdAnalyticsIdentityExtent,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
       child: Row(
         children: [
           VitAccentPill(
@@ -150,8 +150,8 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.p2pMarketplaceAnalyticsMetricCardHeight,
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      height: _p2pAdAnalyticsMetricCardExtent,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -161,8 +161,8 @@ class _MetricCard extends StatelessWidget {
                 color: item.color.withValues(alpha: .12),
                 borderRadius: AppRadii.mdRadius,
                 child: SizedBox(
-                  width: AppSpacing.x6,
-                  height: AppSpacing.x6,
+                  width: _p2pAdAnalyticsMetricIconExtent,
+                  height: _p2pAdAnalyticsMetricIconExtent,
                   child: Icon(
                     item.icon,
                     color: item.color,
@@ -181,7 +181,7 @@ class _MetricCard extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             item.value,
             maxLines: 1,
@@ -239,8 +239,8 @@ class _QuickStats extends StatelessWidget {
     ];
 
     return VitCard(
-      height: AppSpacing.p2pMarketplaceAnalyticsQuickStatsHeight,
-      padding: AppSpacing.p2pMarketplaceAnalyticsSelectorPadding,
+      height: _p2pAdAnalyticsQuickStatsExtent,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
       child: Row(
         children: [
           for (var i = 0; i < items.length; i++) ...[
@@ -327,7 +327,7 @@ class _ConversionFunnel extends StatelessWidget {
 
     return VitCard(
       key: P2PAdAnalyticsPage.funnelKey,
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -343,7 +343,7 @@ class _ConversionFunnel extends StatelessWidget {
           ],
           const SizedBox(height: AppSpacing.x4),
           const Divider(
-            height: AppSpacing.p2pMarketplaceAnalyticsDividerHeight,
+            height: _p2pAdAnalyticsDividerExtent,
             color: AppColors.divider,
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -444,7 +444,7 @@ class _PerformanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -459,7 +459,7 @@ class _PerformanceCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: AppSpacing.p2pMarketplaceAnalyticsChartLargeHeight,
+            height: _p2pAdAnalyticsChartLargeExtent,
             child: CustomPaint(
               painter: _PerformanceLinePainter(snapshot.dailyPerformance),
               child: const SizedBox.expand(),

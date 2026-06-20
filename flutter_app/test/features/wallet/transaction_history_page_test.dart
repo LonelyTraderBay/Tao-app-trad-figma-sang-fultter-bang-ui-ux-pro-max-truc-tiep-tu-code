@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpHistory(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -76,6 +78,24 @@ void main() {
     expect(find.text('Nạp USDT'), findsOneWidget);
     expect(find.text('+5,000.00 USDT'), findsOneWidget);
     expect(find.text('Hoàn thành'), findsWidgets);
+  });
+
+  testWidgets('SC-136 first viewport reaches first transaction row', (
+    tester,
+  ) async {
+    await pumpHistory(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'TransactionHistoryPage',
+      semanticLabel: 'SC-136 TxHistoryPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(TransactionHistoryPage.transactionKey('tx001')),
+      routeName: 'TransactionHistoryPage',
+      actionLabel: 'the first transaction row',
+    );
   });
 
   testWidgets('SC-136 filter chips narrow the transaction list', (

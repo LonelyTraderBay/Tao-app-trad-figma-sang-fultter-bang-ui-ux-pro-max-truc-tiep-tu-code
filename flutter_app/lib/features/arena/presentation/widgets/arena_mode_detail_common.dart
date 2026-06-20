@@ -22,22 +22,26 @@ class ArenaModeActionIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: size >= AppSpacing.arenaModeActionIconLargeThreshold
-            ? AppRadii.cardRadius
-            : AppRadii.mdRadius,
-        border: Border.all(color: color.withValues(alpha: .20)),
-      ),
-      child: Icon(
-        icon,
-        color: color,
-        size: size >= AppSpacing.arenaModeActionIconLargeThreshold
-            ? AppSpacing.arenaModeActionIconLargeGlyph
-            : AppSpacing.arenaModeActionIconGlyph,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: color.withValues(alpha: .20)),
+            borderRadius: size >= AppSpacing.arenaModeActionIconLargeThreshold
+                ? AppRadii.cardRadius
+                : AppRadii.mdRadius,
+          ),
+        ),
+        child: Icon(
+          icon,
+          color: color,
+          size: size >= AppSpacing.arenaModeActionIconLargeThreshold
+              ? AppSpacing.arenaModeActionIconLargeGlyph
+              : AppSpacing.arenaModeActionIconGlyph,
+        ),
       ),
     );
   }

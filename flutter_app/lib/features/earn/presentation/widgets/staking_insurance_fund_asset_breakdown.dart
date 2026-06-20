@@ -19,7 +19,7 @@ class StakingInsuranceFundAssetBreakdownCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
           SizedBox.square(
@@ -51,13 +51,17 @@ class StakingInsuranceFundAssetRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.x3,
-            height: AppSpacing.x3,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          SizedBox.square(
+            dimension: AppSpacing.x3,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color,
+                shape: const CircleBorder(),
+              ),
+            ),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

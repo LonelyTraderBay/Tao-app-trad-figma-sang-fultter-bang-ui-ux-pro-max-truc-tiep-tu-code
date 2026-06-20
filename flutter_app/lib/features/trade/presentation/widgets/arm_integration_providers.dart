@@ -7,6 +7,7 @@ class _OperationalAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return const VitHighRiskStatePanel(
       state: VitHighRiskUiState.success,
+      density: VitDensity.compact,
       title: 'All Systems Operational',
       message:
           '3/3 ARM providers online. Failover ready. Average uptime: 99.5%.',
@@ -30,7 +31,8 @@ class _ArmProviderCard extends StatelessWidget {
     final style = _statusStyle(connection.status);
     return VitCard(
       key: ArmIntegrationStatusPage.connectionKey(connection.id),
-      padding: AppSpacing.armIntegrationCardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _armBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -40,17 +42,17 @@ class _ArmProviderCard extends StatelessWidget {
               VitCard(
                 variant: VitCardVariant.inner,
                 radius: VitCardRadius.md,
-                width: AppSpacing.armIntegrationProviderIconBox,
-                height: AppSpacing.armIntegrationProviderIconBox,
+                width: AppSpacing.inputHeight - AppSpacing.x3,
+                height: AppSpacing.inputHeight - AppSpacing.x3,
                 borderColor: style.color.withValues(alpha: .28),
                 alignment: Alignment.center,
                 child: Icon(
                   style.icon,
                   color: style.color,
-                  size: AppSpacing.armIntegrationProviderIcon,
+                  size: AppSpacing.iconMd,
                 ),
               ),
-              const SizedBox(width: AppSpacing.armIntegrationInlineGap),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +67,6 @@ class _ArmProviderCard extends StatelessWidget {
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              height: AppSpacing.armIntegrationLineHeightTight,
                             ),
                           ),
                         ),
@@ -78,22 +79,19 @@ class _ArmProviderCard extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(
-                      height: AppSpacing.rowGapRegular + AppSpacing.x1,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       connection.region,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.armIntegrationLineHeightTight,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.rowGapRegular),
+              const SizedBox(width: AppSpacing.x2),
               VitAccentPill(
                 label: style.label,
                 accentColor: style.color,
@@ -101,7 +99,7 @@ class _ArmProviderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.armIntegrationMetricRowGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -111,14 +109,14 @@ class _ArmProviderCard extends StatelessWidget {
                   color: _armGreen,
                 ),
               ),
-              const SizedBox(width: AppSpacing.armIntegrationInlineGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MetricBox(
                   label: 'Avg Latency',
                   value: '${connection.avgLatency}ms',
                 ),
               ),
-              const SizedBox(width: AppSpacing.armIntegrationInlineGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MetricBox(
                   label: 'Current',
@@ -130,9 +128,9 @@ class _ArmProviderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.armIntegrationCardSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           _ConnectionDetails(connection: connection),
-          const SizedBox(height: AppSpacing.armIntegrationCardSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -142,7 +140,7 @@ class _ArmProviderCard extends StatelessWidget {
                   onTap: onTest,
                 ),
               ),
-              const SizedBox(width: AppSpacing.armIntegrationInlineGap),
+              const SizedBox(width: AppSpacing.x2),
               const _LogsButton(),
             ],
           ),
@@ -167,8 +165,11 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.armIntegrationMetricHeight,
-      padding: AppSpacing.armIntegrationMetricPadding,
+      density: VitDensity.compact,
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -177,12 +178,9 @@ class _MetricBox extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.armIntegrationLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -191,7 +189,6 @@ class _MetricBox extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.armIntegrationLineHeightTight,
             ),
           ),
         ],
@@ -209,7 +206,8 @@ class _ConnectionDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.armIntegrationDetailsPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           _DetailRow(
@@ -217,9 +215,9 @@ class _ConnectionDetails extends StatelessWidget {
             value: connection.endpoint,
             mono: true,
           ),
-          const SizedBox(height: AppSpacing.armIntegrationDetailsGap),
+          const SizedBox(height: AppSpacing.x2),
           _DetailRow(label: 'Last Check:', value: connection.lastCheck),
-          const SizedBox(height: AppSpacing.armIntegrationDetailsGap),
+          const SizedBox(height: AppSpacing.x2),
           _DetailRow(label: 'Cert Expiry:', value: connection.certExpiry),
         ],
       ),
@@ -244,10 +242,7 @@ class _DetailRow extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.armIntegrationLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(
@@ -259,7 +254,6 @@ class _DetailRow extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
               fontFeatures: mono ? AppTextStyles.tabularFigures : null,
-              height: AppSpacing.armIntegrationLineHeightTight,
             ),
           ),
         ),
@@ -285,18 +279,17 @@ class _TestButton extends StatelessWidget {
       key: ArmIntegrationStatusPage.testKey(connectionId),
       onPressed: isTesting ? null : onTap,
       variant: VitCtaButtonVariant.secondary,
-      height: AppSpacing.buttonCompact,
+      density: VitDensity.compact,
       leading: Icon(
         isTesting ? Icons.sync_rounded : Icons.bolt_rounded,
         color: isTesting ? AppColors.text3 : _armPrimary,
-        size: AppSpacing.armIntegrationTestIcon,
+        size: AppSpacing.iconSm,
       ),
       child: Text(
         isTesting ? 'Testing...' : 'Test Connection',
         style: AppTextStyles.caption.copyWith(
           color: isTesting ? AppColors.text3 : _armPrimary,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.armIntegrationLineHeightTight,
         ),
       ),
     );
@@ -312,18 +305,17 @@ class _LogsButton extends StatelessWidget {
       onPressed: () {},
       variant: VitCtaButtonVariant.secondary,
       fullWidth: false,
-      height: AppSpacing.buttonCompact,
+      density: VitDensity.compact,
       leading: const Icon(
         Icons.open_in_new_rounded,
         color: AppColors.text2,
-        size: AppSpacing.armIntegrationLogsIcon,
+        size: AppSpacing.iconSm,
       ),
       child: Text(
         'Logs',
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text2,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.armIntegrationLineHeightTight,
         ),
       ),
     );

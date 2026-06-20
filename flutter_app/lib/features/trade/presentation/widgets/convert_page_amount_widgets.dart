@@ -23,11 +23,12 @@ class _AmountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = input ? 188.0 : 108.0;
+    final height = input ? _convertFromCardHeight : _convertToCardHeight;
     final balanceLabel =
         'Số dư: ${formatConvertBalance(asset.balance, asset.symbol)} ${asset.symbol}';
     return VitCard(
       height: height,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.x4 + AppSpacing.x1,
         top: AppSpacing.x4 + AppSpacing.x1,
@@ -45,7 +46,7 @@ class _AmountCard extends StatelessWidget {
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
-              const Spacer(),
+              const SizedBox(width: _convertSpace),
               Text(
                 balanceLabel,
                 style: AppTextStyles.micro.copyWith(
@@ -55,7 +56,7 @@ class _AmountCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.rowGapRegular),
+          const SizedBox(height: _convertSpace),
           Row(
             children: [
               _AssetButton(
@@ -63,7 +64,7 @@ class _AmountCard extends StatelessWidget {
                 asset: asset,
                 onTap: onAssetTap,
               ),
-              const SizedBox(width: AppSpacing.rowGapRegular),
+              const SizedBox(width: _convertSpace),
               Expanded(
                 child: input
                     ? VitInput(
@@ -102,7 +103,7 @@ class _AmountCard extends StatelessWidget {
             ],
           ),
           if (input) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: _convertSpace),
             Row(
               children: [
                 for (final pct in const [25, 50, 75, 100]) ...[
@@ -111,11 +112,11 @@ class _AmountCard extends StatelessWidget {
                     label: '$pct%',
                     onTap: () => onPercent?.call(pct),
                   ),
-                  if (pct != 100) const SizedBox(width: AppSpacing.rowGap),
+                  if (pct != 100) const SizedBox(width: _convertSpace),
                 ],
               ],
             ),
-            const Spacer(),
+            const SizedBox(height: _convertSpace),
             Row(
               children: [
                 Text(
@@ -148,7 +149,8 @@ class _AssetButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
-      height: AppSpacing.buttonStandard - AppSpacing.rowPy,
+      height: _convertControlHeight,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.rowGapRegular,
         right: AppSpacing.rowGapRegular,
@@ -172,7 +174,7 @@ class _AssetButton extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.rowGap),
+          const SizedBox(width: _convertSpace),
           Text(
             asset.symbol,
             style: AppTextStyles.caption.copyWith(
@@ -203,8 +205,9 @@ class _PercentChip extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
-      width: AppSpacing.inputHeight,
-      height: AppSpacing.buttonCompact,
+      width: _convertControlHeight,
+      height: _convertChipHeight,
+      density: VitDensity.compact,
       alignment: Alignment.center,
       borderColor: _tradePrimary.withValues(alpha: .16),
       child: Text(

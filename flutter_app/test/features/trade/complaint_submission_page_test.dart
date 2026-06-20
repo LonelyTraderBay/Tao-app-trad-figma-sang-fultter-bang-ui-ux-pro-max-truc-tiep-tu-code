@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSubmission(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -73,6 +75,35 @@ void main() {
     await tester.tap(find.byKey(ComplaintSubmissionPage.submitKey));
     await tester.pumpAndSettle();
     expect(find.byType(ComplaintSubmissionPage), findsOneWidget);
+  });
+
+  testWidgets('SC-112 first viewport reaches complaint category field', (
+    tester,
+  ) async {
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(
+            initialLocation: AppRoutePaths.tradeCopyComplaintSubmission,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-112 ComplaintSubmissionPage',
+      semanticLabel: 'SC-112 ComplaintSubmissionPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ComplaintSubmissionPage.categoryKey),
+      targetLabel: 'the complaint category field',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-112 valid form opens SC-113 complaint tracking', (

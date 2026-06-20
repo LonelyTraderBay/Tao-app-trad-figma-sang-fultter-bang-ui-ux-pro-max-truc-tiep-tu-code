@@ -10,12 +10,12 @@ class _NextPurchaseRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: AppSpacing.dcaPrimaryChipPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.x6,
-            height: AppSpacing.x6,
+            width: 28,
+            height: 28,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.primary12,
@@ -31,7 +31,7 @@ class _NextPurchaseRow extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,10 +41,10 @@ class _NextPurchaseRow extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.portfolioTextMuted,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.dcaMainTightLineHeight,
+                    height: 1.04,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   '${overview.nextRelativeTime} · ${_formatCompactVnd(overview.nextAmountVnd)}',
                   maxLines: 1,
@@ -52,7 +52,7 @@ class _NextPurchaseRow extends StatelessWidget {
                   style: AppTextStyles.base.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.dcaMainTightLineHeight,
+                    height: 1.04,
                   ),
                 ),
               ],
@@ -90,14 +90,14 @@ class _OverviewAction extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
       onTap: onTap,
-      padding: AppSpacing.dcaMetricCellPadding,
+      density: VitDensity.compact,
       child: SizedBox(
-        height: AppSpacing.ctaHeight,
+        height: VitDensity.compact.controlHeight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: AppSpacing.iconLg),
-            const SizedBox(height: AppSpacing.x2),
+            Icon(icon, color: color, size: AppSpacing.iconMd),
+            const SizedBox(height: AppSpacing.x1),
             Text(
               label,
               maxLines: 1,
@@ -106,7 +106,7 @@ class _OverviewAction extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.dcaMainTightLineHeight,
+                height: 1.04,
               ),
             ),
           ],
@@ -134,7 +134,7 @@ class _AdvancedTools extends StatelessWidget {
             color: AppColors.text1,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         Row(
           children: [
             Expanded(
@@ -143,7 +143,7 @@ class _AdvancedTools extends StatelessWidget {
                 onTap: () => onOpen(tools[0].route),
               ),
             ),
-            const SizedBox(width: AppSpacing.x4),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: _ToolCard(
                 tool: tools[1],
@@ -152,7 +152,7 @@ class _AdvancedTools extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         Row(
           children: [
             Expanded(
@@ -161,7 +161,7 @@ class _AdvancedTools extends StatelessWidget {
                 onTap: () => onOpen(tools[2].route),
               ),
             ),
-            const SizedBox(width: AppSpacing.x4),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: _ToolCard(
                 tool: tools[3],
@@ -188,53 +188,46 @@ class _ToolCard extends StatelessWidget {
       key: DCAPage.toolKey(tool.route),
       radius: VitCardRadius.md,
       onTap: onTap,
-      padding: AppSpacing.dcaPaddingX5,
-      child: SizedBox(
-        height: AppSpacing.dcaMainToolCardHeight,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: AppSpacing.dcaMainToolIconBox,
-              height: AppSpacing.dcaMainToolIconBox,
-              child: DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: color.withValues(alpha: .13),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.mdRadius,
-                    side: BorderSide(color: color.withValues(alpha: .2)),
-                  ),
-                ),
-                child: Icon(
-                  _toolIcon(tool.icon),
-                  color: color,
-                  size: AppSpacing.dcaMainToolIcon,
+      density: VitDensity.compact,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 32,
+            height: 32,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: .13),
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                  side: BorderSide(color: color.withValues(alpha: .2)),
                 ),
               ),
+              child: Icon(_toolIcon(tool.icon), color: color, size: 18),
             ),
-            const Spacer(),
-            Text(
-              tool.title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.dcaMainTightLineHeight,
-              ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            tool.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+              height: 1.04,
             ),
-            const SizedBox(height: AppSpacing.x3),
-            Text(
-              tool.subtitle,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.dcaMainToolSubtitleLineHeight,
-              ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            tool.subtitle,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              height: 1.18,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -296,7 +289,7 @@ class _PlansList extends StatelessWidget {
     return Column(
       children: [
         for (var index = 0; index < plans.length; index++) ...[
-          if (index > 0) const SizedBox(height: AppSpacing.x5),
+          if (index > 0) const SizedBox(height: AppSpacing.x2),
           _DcaPlanCard(plan: plans[index], onPause: onPause),
         ],
       ],
@@ -324,7 +317,7 @@ class _DcaPlanCard extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: AppSpacing.dcaMainPlanStatusBarHeight,
+            height: 3,
             child: ColoredBox(
               color: plan.status == DcaPlanStatus.active
                   ? AppColors.buy
@@ -332,7 +325,7 @@ class _DcaPlanCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: AppSpacing.dcaPaddingX5,
+            padding: VitDensity.compact.cardPadding,
             child: Column(
               children: [
                 Row(
@@ -353,11 +346,11 @@ class _DcaPlanCard extends StatelessWidget {
                                   style: AppTextStyles.base.copyWith(
                                     color: AppColors.text1,
                                     fontWeight: AppTextStyles.bold,
-                                    height: AppSpacing.dcaMainTightLineHeight,
+                                    height: 1.04,
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: AppSpacing.x3),
+                              const SizedBox(width: AppSpacing.x2),
                               VitStatusPill(
                                 label: _frequencyLabel(plan.frequency),
                                 status: VitStatusPillStatus.neutral,
@@ -365,14 +358,14 @@ class _DcaPlanCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: AppSpacing.x2),
+                          const SizedBox(height: AppSpacing.x1),
                           Text(
                             plan.coinName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text2,
-                              height: AppSpacing.dcaMainTightLineHeight,
+                              height: 1.04,
                             ),
                           ),
                         ],
@@ -386,11 +379,11 @@ class _DcaPlanCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.x2),
                 VitCard(
                   variant: VitCardVariant.inner,
                   radius: VitCardRadius.md,
-                  padding: AppSpacing.dcaPaddingX4,
+                  density: VitDensity.compact,
                   child: Row(
                     children: [
                       Expanded(
@@ -431,11 +424,11 @@ class _DcaPlanCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.x2),
                 VitCard(
                   variant: VitCardVariant.inner,
                   radius: VitCardRadius.sm,
-                  padding: AppSpacing.dcaPrimaryChipPadding,
+                  density: VitDensity.compact,
                   borderColor: AppColors.primary20,
                   child: Row(
                     children: [
@@ -444,7 +437,7 @@ class _DcaPlanCard extends StatelessWidget {
                         color: AppColors.primary,
                         size: AppSpacing.iconMd,
                       ),
-                      const SizedBox(width: AppSpacing.x3),
+                      const SizedBox(width: AppSpacing.x2),
                       Expanded(
                         child: Text(
                           'Lần mua tiếp theo',
@@ -465,25 +458,25 @@ class _DcaPlanCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.x2),
                 Row(
                   children: [
                     Expanded(
                       child: VitCtaButton(
                         onPressed: onPause,
                         variant: VitCtaButtonVariant.secondary,
-                        height: AppSpacing.dcaMainActionHeight,
+                        height: VitDensity.compact.controlHeight,
                         leading: const Icon(Icons.pause_rounded),
                         child: const Text('Tạm dừng'),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.x3),
+                    const SizedBox(width: AppSpacing.x2),
                     _PlanIconButton(
                       icon: Icons.edit_rounded,
                       color: AppColors.text2,
                       onTap: onPause,
                     ),
-                    const SizedBox(width: AppSpacing.x3),
+                    const SizedBox(width: AppSpacing.x2),
                     _PlanIconButton(
                       icon: Icons.delete_outline_rounded,
                       color: AppColors.sell,

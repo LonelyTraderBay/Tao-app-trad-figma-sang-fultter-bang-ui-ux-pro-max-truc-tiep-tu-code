@@ -85,21 +85,25 @@ class PredictionPortfolioPositionCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.predictionPortfolioPositionIconBox,
             height: AppSpacing.predictionPortfolioPositionIconBox,
-            decoration: BoxDecoration(
-              color: statusColor.withValues(alpha: .12),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              isWon
-                  ? Icons.check_circle_outline_rounded
-                  : isOpen
-                  ? Icons.schedule_rounded
-                  : Icons.cancel_outlined,
-              color: statusColor,
-              size: AppSpacing.predictionPortfolioPositionIcon,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: statusColor.withValues(alpha: .12),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Icon(
+                isWon
+                    ? Icons.check_circle_outline_rounded
+                    : isOpen
+                    ? Icons.schedule_rounded
+                    : Icons.cancel_outlined,
+                color: statusColor,
+                size: AppSpacing.predictionPortfolioPositionIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.predictionPortfolioPositionGap),

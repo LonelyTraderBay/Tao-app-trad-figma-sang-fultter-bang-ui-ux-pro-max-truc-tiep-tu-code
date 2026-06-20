@@ -86,17 +86,20 @@ class UnifiedPortfolioModuleIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = unifiedModuleAccent(id);
-    return Container(
-      width: AppSpacing.buttonCompact,
-      height: AppSpacing.buttonCompact,
-      decoration: BoxDecoration(
-        color: accent.withValues(alpha: .14),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Icon(
-        unifiedModuleIcon(id),
-        color: accent,
-        size: AppSpacing.iconMd,
+    return SizedBox.square(
+      dimension: AppSpacing.buttonCompact,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: accent.withValues(alpha: .14),
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+        ),
+        child: Center(
+          child: Icon(
+            unifiedModuleIcon(id),
+            color: accent,
+            size: AppSpacing.iconMd,
+          ),
+        ),
       ),
     );
   }
@@ -110,10 +113,7 @@ class UnifiedArenaBoundaryPill extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x3,
-      ),
+      padding: AppSpacing.crossModuleSelectorPadding,
       child: Text(
         'Arena Points Only - Not included in portfolio value',
         style: AppTextStyles.caption.copyWith(

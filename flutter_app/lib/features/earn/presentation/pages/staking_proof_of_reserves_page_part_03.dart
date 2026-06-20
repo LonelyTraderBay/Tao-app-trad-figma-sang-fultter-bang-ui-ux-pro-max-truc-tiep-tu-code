@@ -108,19 +108,10 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: 0.15),
-      borderRadius: AppRadii.smRadius,
-      child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      semanticStatus: _proofStatusForColor(color),
     );
   }
 }
@@ -258,6 +249,29 @@ String _tabLabel(_ReserveTab tab) {
     _ReserveTab.assets => 'By Asset',
     _ReserveTab.verify => 'Verify',
   };
+}
+
+_ReserveTab _reserveTabFromKey(String key) {
+  return _ReserveTab.values.firstWhere(
+    (tab) => tab.name == key,
+    orElse: () => _ReserveTab.overview,
+  );
+}
+
+VitStatusPillStatus _proofStatusForColor(Color color) {
+  if (color == AppColors.buy) {
+    return VitStatusPillStatus.success;
+  }
+  if (color == AppColors.warn) {
+    return VitStatusPillStatus.warning;
+  }
+  if (color == AppColors.sell) {
+    return VitStatusPillStatus.error;
+  }
+  if (color == AppColors.primary || color == AppColors.primarySoft) {
+    return VitStatusPillStatus.info;
+  }
+  return VitStatusPillStatus.neutral;
 }
 
 String _formatUsd(double value) {

@@ -19,17 +19,18 @@ class PredictionsPortfolioArenaBridgeCard extends StatelessWidget {
       padding: AppSpacing.predictionPortfolioBridgePadding,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.predictionPortfolioBridgeIconBox,
-            height: AppSpacing.predictionPortfolioBridgeIconBox,
-            decoration: BoxDecoration(
-              color: AppColors.warn10,
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: const Icon(
-              Icons.sports_esports_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.predictionPortfolioBridgeIcon,
+          SizedBox.square(
+            dimension: AppSpacing.predictionPortfolioBridgeIconBox,
+            child: const DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.warn10,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Icon(
+                Icons.sports_esports_rounded,
+                color: AppColors.warn,
+                size: AppSpacing.predictionPortfolioBridgeIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.predictionPortfolioBridgeGap),
@@ -69,17 +70,19 @@ class PredictionsPortfolioArenaBridgeCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.predictionPortfolioBridgeBadgeGap),
-          Container(
-            padding: AppSpacing.predictionPortfolioBridgeBadgePadding,
-            decoration: BoxDecoration(
+          DecoratedBox(
+            decoration: const ShapeDecoration(
               color: AppColors.warn10,
-              borderRadius: AppRadii.badgeRadius,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.badgeRadius),
             ),
-            child: Text(
-              'Arena Points',
-              style: AppTextStyles.numericMicro.copyWith(
-                color: AppColors.warn,
-                fontWeight: AppTextStyles.bold,
+            child: Padding(
+              padding: AppSpacing.predictionPortfolioBridgeBadgePadding,
+              child: Text(
+                'Arena Points',
+                style: AppTextStyles.numericMicro.copyWith(
+                  color: AppColors.warn,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
           ),

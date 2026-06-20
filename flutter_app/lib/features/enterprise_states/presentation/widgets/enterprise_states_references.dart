@@ -7,38 +7,11 @@ class _ReferenceBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = _bannerColor(banner.kind);
-    return VitCard(
-      variant: VitCardVariant.inner,
-      borderColor: color.withValues(alpha: .32),
-      padding: AppSpacing.enterpriseStatesCardPadding,
-      child: Row(
-        children: [
-          Icon(_bannerIcon(banner.kind), color: color, size: AppSpacing.iconMd),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  banner.title,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                if (banner.detail != null) ...[
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    banner.detail!,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
+    return VitBanner(
+      variant: _bannerVariant(banner.kind),
+      icon: _bannerIcon(banner.kind),
+      message: banner.title,
+      detail: banner.detail,
     );
   }
 }
@@ -226,6 +199,13 @@ String _previewLabel(EnterprisePreviewState state) {
   }
 }
 
+EnterpriseStateSection _sectionFromKey(String key) {
+  return EnterpriseStateSection.values.firstWhere(
+    (section) => section.name == key,
+    orElse: () => EnterpriseStateSection.stateKit,
+  );
+}
+
 IconData _previewIcon(EnterprisePreviewState state) {
   switch (state) {
     case EnterprisePreviewState.loading:
@@ -256,14 +236,14 @@ VitStatusPillStatus _pillStatus(EnterprisePreviewState state) {
   }
 }
 
-Color _bannerColor(EnterpriseBannerKind kind) {
+VitBannerVariant _bannerVariant(EnterpriseBannerKind kind) {
   switch (kind) {
     case EnterpriseBannerKind.info:
-      return AppColors.primary;
+      return VitBannerVariant.info;
     case EnterpriseBannerKind.warning:
-      return AppColors.warn;
+      return VitBannerVariant.warning;
     case EnterpriseBannerKind.error:
-      return AppColors.sell;
+      return VitBannerVariant.error;
   }
 }
 

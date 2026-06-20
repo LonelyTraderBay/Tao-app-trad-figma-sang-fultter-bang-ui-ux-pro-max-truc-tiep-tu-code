@@ -8,7 +8,7 @@ class _TradingBotsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.inputHeight,
+      height: AppSpacing.inputHeight + AppSpacing.hairlineStroke,
       child: Row(
         children: [
           VitIconButton(
@@ -149,7 +149,7 @@ class _HeroStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: VitCard(
-        height: AppSpacing.launchpadBox64,
+        height: AppSpacing.launchpadBox64 + AppSpacing.x3,
         alignment: Alignment.center,
         variant: VitCardVariant.inner,
         borderColor: AppColors.onAccent.withValues(alpha: .08),

@@ -10,12 +10,13 @@ class _Disclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       padding: AppSpacing.providerLeaderboardDisclaimerPadding,
+      density: VitDensity.compact,
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.providerLeaderboardLineHeightLoose,
+          height: _leaderLineLoose,
         ),
       ),
     );

@@ -17,7 +17,7 @@ class VitInsetScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.only(bottom: bottomInset),
+      padding: EdgeInsetsDirectional.only(bottom: bottomInset),
       physics: physics,
       clipBehavior: clipBehavior,
       child: child,

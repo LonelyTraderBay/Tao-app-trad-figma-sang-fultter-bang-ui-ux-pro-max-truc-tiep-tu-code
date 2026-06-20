@@ -28,7 +28,7 @@ class UnifiedPortfolioAnalysis extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.crossModuleCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -61,7 +61,7 @@ class UnifiedPortfolioAnalysis extends StatelessWidget {
         const SizedBox(height: AppSpacing.sectionGap),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.crossModuleCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -96,7 +96,7 @@ class _RankingRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final returnPercent = unifiedReturnPercent(module);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Row(
         children: [
           SizedBox(

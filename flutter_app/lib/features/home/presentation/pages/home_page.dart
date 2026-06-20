@@ -9,7 +9,6 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
@@ -48,3 +47,14 @@ class HomePage extends ConsumerStatefulWidget {
 enum HomeDensityVariant { compact, comfortable }
 
 enum HomeSurfaceOrder { productsBeforeRecent, recentBeforeProducts }
+
+const double _framedScrollClearance = AppSpacing.buttonStandard + AppSpacing.x7;
+const double _nativeScrollClearance = AppSpacing.buttonStandard + AppSpacing.x5;
+const double _heroActionExtent = AppSpacing.buttonCompact + AppSpacing.x2;
+const double _assetAvatarExtent = AppSpacing.iconMd + AppSpacing.x1;
+const double _recentProductExtent = AppSpacing.buttonStandard + AppSpacing.x6;
+const double _recentProductWidth = AppSpacing.x7 * 2 + AppSpacing.x5;
+const double _trendCardExtent =
+    AppSpacing.buttonStandard + AppSpacing.x7 + AppSpacing.x5;
+const double _trendCardWidth =
+    AppSpacing.x7 * 2 + AppSpacing.x6 + AppSpacing.x1;

@@ -82,19 +82,21 @@ class _PendingCommissionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = items.fold(0.0, (sum, item) => sum + item.amount);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Hoa hồng đang chờ',
+      accentColor: AppColors.warn,
+      density: VitDensity.compact,
       children: [
-        _SectionTitle(
-          title: 'Hoa hồng đang chờ',
-          trailing: '~${_formatUsd(total)}',
-          color: AppColors.warn,
+        Align(
+          alignment: Alignment.centerLeft,
+          child: VitAccentPill(
+            label: '~${_formatUsd(total)}',
+            accentColor: AppColors.warn,
+            size: VitStatusPillSize.sm,
+            semanticStatus: VitStatusPillStatus.warning,
+          ),
         ),
-        const SizedBox(height: AppSpacing.x3),
-        for (final item in items) ...[
-          _PendingCommissionCard(item: item),
-          const SizedBox(height: AppSpacing.x3),
-        ],
+        for (final item in items) _PendingCommissionCard(item: item),
       ],
     );
   }
@@ -108,11 +110,10 @@ class _RewardHighlights extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Thưởng của bạn',
+      accentColor: AppColors.buy,
       children: [
-        const _SectionTitle(title: 'Thưởng của bạn', color: AppColors.buy),
-        const SizedBox(height: AppSpacing.x3),
         Row(
           children: [
             Expanded(
@@ -151,20 +152,21 @@ class _LeaderboardSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.referralCardPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: VitPageSection(
+        label: 'Bảng xếp hạng',
+        accentColor: AppColors.accent,
+        density: VitDensity.compact,
         children: [
-          const _SectionTitle(
-            title: 'Bảng xếp hạng',
-            trailing: 'Tháng 3/2026',
-            color: AppColors.accent,
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: VitAccentPill(
+              label: 'Tháng 3/2026',
+              accentColor: AppColors.accent,
+              size: VitStatusPillSize.sm,
+              semanticStatus: VitStatusPillStatus.purple,
+            ),
           ),
-          const SizedBox(height: AppSpacing.x3),
-          for (final item in items) ...[
-            _LeaderboardRow(item: item),
-            if (item != items.last) const SizedBox(height: AppSpacing.x3),
-          ],
-          const SizedBox(height: AppSpacing.x4),
+          for (final item in items) _LeaderboardRow(item: item),
           const _NoticeCard(
             icon: Icons.info_outline_rounded,
             text:
@@ -256,11 +258,10 @@ class _MonthStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Tháng này',
+      accentColor: AppColors.warn,
       children: [
-        const _SectionTitle(title: 'Tháng này', color: AppColors.warn),
-        const SizedBox(height: AppSpacing.x3),
         Row(
           children: [
             Expanded(
@@ -292,19 +293,21 @@ class _CampaignHistorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Lịch sử sự kiện',
+      accentColor: AppColors.accent,
+      density: VitDensity.compact,
       children: [
-        _SectionTitle(
-          title: 'Lịch sử sự kiện',
-          trailing: '${items.length} sự kiện',
-          color: AppColors.accent,
+        Align(
+          alignment: Alignment.centerLeft,
+          child: VitAccentPill(
+            label: '${items.length} sự kiện',
+            accentColor: AppColors.accent,
+            size: VitStatusPillSize.sm,
+            semanticStatus: VitStatusPillStatus.purple,
+          ),
         ),
-        const SizedBox(height: AppSpacing.x3),
-        for (final item in items) ...[
-          _CampaignHistoryCard(item: item),
-          const SizedBox(height: AppSpacing.x3),
-        ],
+        for (final item in items) _CampaignHistoryCard(item: item),
       ],
     );
   }
@@ -327,7 +330,8 @@ class _HeroMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.referralHeroMetricPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Text(
@@ -458,7 +462,7 @@ class _MilestoneCard extends StatelessWidget {
         : AppColors.text3;
     return SizedBox(
       key: ReferralHomePage.milestoneKey(item.id),
-      width: AppSpacing.referralLeaderboardWidth,
+      width: _milestoneCardWidth,
       child: VitCard(
         borderColor: color.withValues(alpha: .24),
         padding: AppSpacing.referralInnerPadding,
@@ -474,7 +478,7 @@ class _MilestoneCard extends StatelessWidget {
                   color: color,
                   size: AppSpacing.iconMd,
                 ),
-                const Spacer(),
+                const Expanded(child: SizedBox.shrink()),
                 Text(
                   '${item.friends}',
                   style: AppTextStyles.caption.copyWith(

@@ -84,18 +84,20 @@ class _ViewTab extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: SizedBox(
-          height: AppSpacing.pairViewTabHeight,
+          height: VitDensity.compact.controlHeight,
           child: Padding(
-            padding: AppSpacing.pairViewTabPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x2,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   icon,
                   color: selected ? _marketPrimary : AppColors.text3,
-                  size: AppSpacing.pairViewTabIcon,
+                  size: AppSpacing.iconSm,
                 ),
-                const SizedBox(width: AppSpacing.pairViewTabIconGap),
+                const SizedBox(width: AppSpacing.x1),
                 Flexible(
                   child: Text(
                     label,
@@ -179,7 +181,7 @@ class _IndicatorRow extends StatelessWidget {
   Widget build(BuildContext context) {
     const items = ['MA', 'EMA', 'BOLL', 'MACD', 'RSI', 'Vol'];
     return SizedBox(
-      height: AppSpacing.pairIndicatorHeight,
+      height: VitDensity.compact.controlHeight,
       child: ListView(
         padding: AppSpacing.pairIndicatorListPadding,
         scrollDirection: Axis.horizontal,
@@ -228,9 +230,11 @@ class _IndicatorChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: SizedBox(
-          height: AppSpacing.pairIndicatorChipHeight,
+          height: VitDensity.compact.controlHeight,
           child: Padding(
-            padding: AppSpacing.pairIndicatorChipPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+            ),
             child: Center(
               child: Text(
                 label,
@@ -264,9 +268,11 @@ class _AdvancedChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: SizedBox(
-          height: AppSpacing.pairIndicatorChipHeight,
+          height: VitDensity.compact.controlHeight,
           child: Padding(
-            padding: AppSpacing.pairIndicatorChipPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+            ),
             child: Center(
               child: Text(
                 'Nang cao',
@@ -291,7 +297,8 @@ class _PairChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.pairChartHeight,
+      key: PairDetailPage.chartContentKey,
+      height: _pairChartExtent,
       child: CustomPaint(
         painter: _PairChartPainter(series),
         child: const SizedBox.expand(),
@@ -392,7 +399,7 @@ class _LinkCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pairLinkSubtitleGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       subtitle,
                       maxLines: 1,
@@ -480,7 +487,7 @@ class _TradeButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: SizedBox(
-          height: AppSpacing.pairTradeButtonHeight,
+          height: VitDensity.compact.controlHeight,
           child: Center(
             child: Text(
               label,

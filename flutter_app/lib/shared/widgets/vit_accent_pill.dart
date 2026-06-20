@@ -47,24 +47,30 @@ class VitAccentPill extends StatelessWidget {
     final metrics = _metrics;
     return Semantics(
       label: semanticStatus == null ? label : '$label ${semanticStatus!.name}',
-      child: Container(
+      child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: metrics.minHeight),
-        padding: EdgeInsets.symmetric(
-          horizontal: metrics.paddingX,
-          vertical: metrics.paddingY,
-        ),
-        decoration: BoxDecoration(
-          color: accentColor.withValues(alpha: .14),
-          borderRadius: AppRadii.pillRadius,
-          border: Border.all(color: accentColor.withValues(alpha: .26)),
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: metrics.style.copyWith(
-            color: accentColor,
-            fontWeight: AppTextStyles.bold,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: accentColor.withValues(alpha: .14),
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: accentColor.withValues(alpha: .26)),
+              borderRadius: AppRadii.pillRadius,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsetsDirectional.symmetric(
+              horizontal: metrics.paddingX,
+              vertical: metrics.paddingY,
+            ),
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: metrics.style.copyWith(
+                color: accentColor,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
           ),
         ),
       ),

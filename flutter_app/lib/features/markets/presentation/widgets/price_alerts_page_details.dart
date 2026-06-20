@@ -26,7 +26,8 @@ class _AlertCard extends StatelessWidget {
 
     return VitCard(
       key: PriceAlertsPage.cardKey(alert.id),
-      padding: AppSpacing.priceAlertsCardPadding,
+      padding: _alertsCardPadding,
+      density: VitDensity.compact,
       borderColor: _isTriggered
           ? AppColors.buy.withValues(alpha: .24)
           : AppColors.cardBorder,
@@ -41,10 +42,10 @@ class _AlertCard extends StatelessWidget {
               VitAssetAvatar(
                 label: avatarLabel,
                 accentColor: avatarColor,
-                size: AppSpacing.priceAlertsAvatar,
+                size: _alertsAvatar,
                 radius: AppRadii.pillRadius,
               ),
-              const SizedBox(width: AppSpacing.priceAlertsHeaderGap),
+              const SizedBox(width: _alertsHeaderGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,10 +54,10 @@ class _AlertCard extends StatelessWidget {
                       alert.symbol,
                       style: AppTextStyles.baseMedium.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.marketLineHeightShort,
+                        height: _alertsLineHeightShort,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.marketPairPriceGap),
+                    const SizedBox(height: _alertsTrendGap),
                     Row(
                       children: [
                         Icon(
@@ -64,9 +65,9 @@ class _AlertCard extends StatelessWidget {
                               ? Icons.trending_up_rounded
                               : Icons.trending_down_rounded,
                           color: conditionColor,
-                          size: AppSpacing.priceAlertsTrendIcon,
+                          size: _alertsTrendIcon,
                         ),
-                        const SizedBox(width: AppSpacing.priceAlertsTrendGap),
+                        const SizedBox(width: _alertsTrendGap),
                         Flexible(
                           child: Text(
                             '${_isAbove ? 'Tr\u00EAn' : 'D\u01B0\u1EDBi'} ${_formatUsd(alert.targetPrice)}',
@@ -76,7 +77,7 @@ class _AlertCard extends StatelessWidget {
                               color: conditionColor,
                               fontWeight: AppTextStyles.bold,
                               fontFeatures: AppTextStyles.tabularFigures,
-                              height: AppSpacing.marketLineHeightTight,
+                              height: _alertsLineHeightTight,
                             ),
                           ),
                         ),
@@ -102,10 +103,10 @@ class _AlertCard extends StatelessWidget {
                         ? Icons.toggle_on_rounded
                         : Icons.toggle_off_rounded,
                     color: alert.isActive ? AppColors.buy : AppColors.text3,
-                    size: AppSpacing.priceAlertsToggleIcon,
+                    size: _alertsToggleIcon,
                   ),
                 ),
-              const SizedBox(width: AppSpacing.priceAlertsActionGap),
+              const SizedBox(width: _alertsActionGap),
               VitIconButton(
                 key: PriceAlertsPage.deleteKey(alert.id),
                 icon: Icons.delete_outline_rounded,
@@ -116,7 +117,7 @@ class _AlertCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketSocialLargeGap),
+          const SizedBox(height: _alertsSectionGap),
           Row(
             children: [
               Expanded(
@@ -131,11 +132,11 @@ class _AlertCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
-                              height: AppSpacing.marketLineHeightTight,
+                              height: _alertsLineHeightTight,
                             ),
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.marketPairMicroGap),
+                        const SizedBox(width: AppSpacing.x2),
                         Flexible(
                           child: Text(
                             _formatUsd(alert.currentPrice),
@@ -146,17 +147,17 @@ class _AlertCard extends StatelessWidget {
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
                               fontFeatures: AppTextStyles.tabularFigures,
-                              height: AppSpacing.marketLineHeightTight,
+                              height: _alertsLineHeightTight,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.priceAlertsProgressGap),
+                    const SizedBox(height: _alertsProgressGap),
                     ClipRRect(
                       borderRadius: AppRadii.pillRadius,
                       child: SizedBox(
-                        height: AppSpacing.priceAlertsProgressHeight,
+                        height: _alertsProgressHeight,
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
@@ -175,9 +176,9 @@ class _AlertCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.priceAlertsTargetGap),
+              const SizedBox(width: _alertsTargetGap),
               SizedBox(
-                width: AppSpacing.priceAlertsTargetWidth,
+                width: _alertsTargetWidth,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -185,10 +186,10 @@ class _AlertCard extends StatelessWidget {
                       'M\u1EE5c ti\u00EAu',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.marketLineHeightTight,
+                        height: _alertsLineHeightTight,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.priceAlertsActionGap),
+                    const SizedBox(height: _alertsActionGap),
                     Text(
                       _formatUsd(alert.targetPrice),
                       maxLines: 1,
@@ -197,7 +198,7 @@ class _AlertCard extends StatelessWidget {
                         color: conditionColor,
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
-                        height: AppSpacing.marketLineHeightTight,
+                        height: _alertsLineHeightTight,
                       ),
                     ),
                   ],
@@ -206,27 +207,27 @@ class _AlertCard extends StatelessWidget {
             ],
           ),
           if (_isTriggered) ...[
-            const SizedBox(height: AppSpacing.priceAlertsTriggeredGap),
+            const SizedBox(height: _alertsTriggeredGap),
             const Divider(
               height: AppSpacing.hairlineStroke,
               thickness: AppSpacing.hairlineStroke,
               color: AppColors.divider,
             ),
-            const SizedBox(height: AppSpacing.priceAlertsTriggeredDividerGap),
+            const SizedBox(height: _alertsTriggeredDividerGap),
             Row(
               children: [
                 const Icon(
                   Icons.notifications_none_rounded,
                   color: AppColors.buy,
-                  size: AppSpacing.priceAlertsTriggeredIcon,
+                  size: _alertsTriggeredIcon,
                 ),
-                const SizedBox(width: AppSpacing.priceAlertsTriggeredIconGap),
+                const SizedBox(width: _alertsTriggeredIconGap),
                 Expanded(
                   child: Text(
                     'K\u00EDch ho\u1EA1t l\u00FAc 11:30:00 17/2/2024',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.marketLineHeightTight,
+                      height: _alertsLineHeightTight,
                     ),
                   ),
                 ),
@@ -245,15 +246,16 @@ class _EmptyAlertsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.priceAlertsEmptyPadding,
+      padding: _alertsEmptyPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           const Icon(
             Icons.notifications_none_rounded,
             color: AppColors.text3,
-            size: AppSpacing.priceAlertsEmptyIcon,
+            size: _alertsEmptyIcon,
           ),
-          const SizedBox(height: AppSpacing.priceAlertsEmptyGap),
+          const SizedBox(height: _alertsEmptyGap),
           Text(
             'Ch\u01B0a c\u00F3 c\u1EA3nh b\u00E1o n\u00E0o',
             style: AppTextStyles.body.copyWith(color: AppColors.text3),

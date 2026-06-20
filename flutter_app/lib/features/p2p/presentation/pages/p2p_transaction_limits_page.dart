@@ -78,30 +78,22 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
                     padding: AppSpacing.p2pTransactionLimitsScrollPadding(
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: AppSpacing.x5,
                       children: [
                         _TierHero(tier: snapshot.currentTier),
-                        const SizedBox(height: AppSpacing.x5),
                         _CurrentUsage(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x6),
                         _LimitDetails(items: snapshot.detailItems),
-                        const SizedBox(height: AppSpacing.x6),
                         _UpgradeCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x6),
                         _LimitInfoNotice(items: snapshot.infoBullets),
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: 0,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Transaction limits state review',
-                              message:
-                                  'Current tier, used limits, tracker link, limit details, upgrade CTA, and policy notes remain visible before increasing P2P trading capacity.',
-                              contractId: 'SC-266',
-                            ),
-                          ],
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Transaction limits state review',
+                          message:
+                              'Current tier, used limits, tracker link, limit details, upgrade CTA, and policy notes remain visible before increasing P2P trading capacity.',
+                          contractId: 'SC-266',
                         ),
                       ],
                     ),

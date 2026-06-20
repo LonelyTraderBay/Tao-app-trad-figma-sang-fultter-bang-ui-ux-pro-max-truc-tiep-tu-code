@@ -241,45 +241,40 @@ class _AssetTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _assetColor(asset.symbol);
-    return Material(
+    return VitCard(
       key: P2PWalletTransferPage.assetKey(asset.symbol),
-      color: selected
-          ? color.withValues(alpha: .11)
-          : AppColors.surface.withValues(alpha: .50),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.lgRadius,
-        side: BorderSide(color: selected ? color : AppColors.cardBorder),
+      radius: VitCardRadius.lg,
+      variant: VitCardVariant.inner,
+      borderColor: selected ? color : AppColors.cardBorder,
+      background: ColoredBox(
+        color: selected
+            ? color.withValues(alpha: .11)
+            : AppColors.surface.withValues(alpha: .50),
       ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.lgRadius,
-        child: ConstrainedBox(
-          key: selected
-              ? P2PWalletTransferPage.activeAssetKey(asset.symbol)
-              : null,
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.p2pWalletTransferAssetTileMinHeight,
-          ),
-          child: Padding(
-            padding: AppSpacing.p2pWalletTransferAssetTilePadding,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _AssetMark(symbol: asset.symbol, color: color),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  asset.symbol,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: selected ? color : AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.p2pWalletTransferAssetTileMinHeight,
+      ),
+      padding: AppSpacing.p2pWalletTransferAssetTilePadding,
+      clip: true,
+      onTap: onTap,
+      child: Column(
+        key: selected
+            ? P2PWalletTransferPage.activeAssetKey(asset.symbol)
+            : null,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _AssetMark(symbol: asset.symbol, color: color),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            asset.symbol,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: selected ? color : AppColors.text1,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
-        ),
+        ],
       ),
     );
   }

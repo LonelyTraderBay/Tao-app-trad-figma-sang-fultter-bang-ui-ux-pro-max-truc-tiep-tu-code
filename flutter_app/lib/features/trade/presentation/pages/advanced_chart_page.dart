@@ -21,7 +21,6 @@ part '../widgets/advanced_chart_painter.dart';
 
 const _tradePrimary = AppColors.primary;
 const _chartBlack = AppColors.dynamicIslandBg;
-const _toolbarBackground = AppColors.surface3;
 
 class AdvancedChartPage extends ConsumerStatefulWidget {
   const AdvancedChartPage({

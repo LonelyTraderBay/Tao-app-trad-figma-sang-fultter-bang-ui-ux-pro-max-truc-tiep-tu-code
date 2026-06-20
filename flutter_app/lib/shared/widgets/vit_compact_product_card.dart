@@ -29,7 +29,7 @@ class VitCompactProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.symmetric(
+      padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.homeMarketSectionGap,
         vertical: AppSpacing.x2,
       ),
@@ -38,18 +38,23 @@ class VitCompactProductCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: AppSpacing.homeRecentProductIcon,
                 height: AppSpacing.homeRecentProductIcon,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: accentColor.withValues(alpha: .14),
-                  borderRadius: AppRadii.smRadius,
-                ),
-                child: Icon(
-                  icon,
-                  color: accentColor,
-                  size: AppSpacing.homeRecentProductIconText,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: accentColor.withValues(alpha: .14),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      icon,
+                      color: accentColor,
+                      size: AppSpacing.homeRecentProductIconText,
+                    ),
+                  ),
                 ),
               ),
               const Spacer(),
@@ -67,9 +72,7 @@ class VitCompactProductCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: AppSpacing.homeSectionInnerGap),
-          ),
+          const SizedBox(height: AppSpacing.homeSectionInnerGap),
           Text(
             subtitle,
             maxLines: 1,

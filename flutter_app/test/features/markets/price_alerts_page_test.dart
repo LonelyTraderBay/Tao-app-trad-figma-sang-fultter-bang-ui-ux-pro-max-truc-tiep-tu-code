@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   String keyedText(WidgetTester tester, Key key) {
     return tester.widget<Text>(find.byKey(key)).data!;
@@ -85,6 +87,22 @@ void main() {
     expect(find.text('BTC/USDT'), findsOneWidget);
     expect(find.text('Đã kích hoạt'), findsWidgets);
     expect(find.byKey(PriceAlertsPage.addAlertKey), findsOneWidget);
+  });
+
+  testWidgets('SC-014 first viewport reaches first alert card', (tester) async {
+    await pumpAlerts(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'PriceAlertsPage',
+      semanticLabel: 'SC-014 PriceAlertsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(PriceAlertsPage.cardKey('alert001')),
+      targetLabel: 'first price alert card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-014 filters active and triggered alerts', (tester) async {

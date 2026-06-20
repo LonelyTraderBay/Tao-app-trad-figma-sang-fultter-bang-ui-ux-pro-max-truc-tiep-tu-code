@@ -25,9 +25,9 @@ class StakingCustodyPieChart extends StatelessWidget {
         child: Center(
           child: donut
               ? DecoratedBox(
-                  decoration: const BoxDecoration(
+                  decoration: const ShapeDecoration(
                     color: AppColors.cardBg,
-                    shape: BoxShape.circle,
+                    shape: CircleBorder(),
                   ),
                   child: SizedBox(width: size * 0.48, height: size * 0.48),
                 )

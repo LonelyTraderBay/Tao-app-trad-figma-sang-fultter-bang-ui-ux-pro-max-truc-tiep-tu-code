@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -25,6 +25,30 @@ const _pendingPrimary = AppColors.primary;
 const _pendingGreen = AppColors.buy;
 const _pendingAmber = AppColors.caution;
 const _pendingRed = AppColors.sell;
+const _pendingNativeBottomClearance = 88.0;
+const _pendingVisualBottomClearance = 112.0;
+const _pendingSummaryHeight = 76.0;
+const _pendingIconBox = 34.0;
+const _pendingNoticeMinHeight = 34.0;
+const _pendingProgressHeight = 6.0;
+const _pendingProgressDot = 7.0;
+const _pendingGap = 8.0;
+const _pendingTinyGap = 4.0;
+const _pendingInlineGap = 8.0;
+const _pendingScrollTopPad = 0.0;
+const _pendingCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 12);
+const _pendingDetailsPadding = EdgeInsets.symmetric(
+  horizontal: 10,
+  vertical: 10,
+);
+const _pendingNoticePadding = EdgeInsets.symmetric(horizontal: 10, vertical: 8);
+
+double _pendingScrollBottomInset(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? _pendingVisualBottomClearance
+          : _pendingNativeBottomClearance) +
+      MediaQuery.paddingOf(context).bottom;
+}
 
 enum _DepositFilter { all, pending, done }
 
@@ -54,13 +78,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
     final snapshot = ref.watch(walletPendingDepositsProvider);
     final deposits = _filteredDeposits(snapshot.deposits);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletPendingBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletPendingBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = _pendingScrollBottomInset(context, mode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -79,11 +97,13 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: PendingDepositsPage.contentKey,
-                  padding: AppSpacing.walletPendingScrollPadding(bottomInset),
+                  padding: AppSpacing.walletPendingScrollPadding(
+                    bottomInset,
+                  ).copyWith(top: _pendingScrollTopPad),
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.walletPendingContentGap,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(
@@ -91,6 +111,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                         title: 'Review pending deposit status',
                         message:
                             'Check network, confirmations, amount, fee policy, and next step before taking wallet action.',
+                        density: VitDensity.compact,
                       ),
                       _SummaryBanner(
                         pendingCount: snapshot.pendingCount,
@@ -104,18 +125,13 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                       if (deposits.isEmpty)
                         const _EmptyDeposits()
                       else
-                        for (final deposit in deposits) ...[
+                        for (final deposit in deposits)
                           _DepositCard(
                             deposit: deposit,
                             copied: _copiedId == deposit.id,
                             onCopy: () =>
                                 setState(() => _copiedId = deposit.id),
                           ),
-                          if (deposit != deposits.last)
-                            const SizedBox(
-                              height: AppSpacing.walletPendingRowGap,
-                            ),
-                        ],
                       const _InfoNotice(),
                     ],
                   ),

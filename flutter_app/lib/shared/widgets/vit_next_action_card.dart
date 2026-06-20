@@ -31,22 +31,29 @@ class VitNextActionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.homeNextActionCardPadding),
+      padding: const EdgeInsetsDirectional.all(
+        AppSpacing.homeNextActionCardPadding,
+      ),
       borderColor: accentColor.withValues(alpha: .28),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.homeNextActionIconContainer,
             height: AppSpacing.homeNextActionIconContainer,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: accentColor.withValues(alpha: .14),
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: Icon(
-              icon,
-              color: accentColor,
-              size: AppSpacing.homeNextActionIconSize,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: accentColor.withValues(alpha: .14),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+              ),
+              child: Center(
+                child: Icon(
+                  icon,
+                  color: accentColor,
+                  size: AppSpacing.homeNextActionIconSize,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.homeCommandRowSpacing),

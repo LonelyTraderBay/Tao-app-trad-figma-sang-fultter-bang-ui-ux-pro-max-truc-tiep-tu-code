@@ -68,7 +68,7 @@ class _TotalValueCard extends StatelessWidget {
     final pnlPositive = snapshot.totalPnl >= 0;
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -136,7 +136,7 @@ class _DistributionCard extends StatelessWidget {
     final modules = snapshot.financialModules.toList();
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -183,12 +183,15 @@ class _LegendItem extends StatelessWidget {
       width: AppSpacing.buttonHero + AppSpacing.x7,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.x4,
-            height: AppSpacing.x4,
-            decoration: BoxDecoration(
-              color: unifiedModuleAccent(module.id),
-              borderRadius: AppRadii.xsRadius,
+          SizedBox.square(
+            dimension: AppSpacing.x4,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: unifiedModuleAccent(module.id),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.xsRadius,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -232,7 +235,7 @@ class _ModuleCard extends StatelessWidget {
         child: InkWell(
           onTap: () => onOpenRoute(module.route),
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.x4),
+            padding: AppSpacing.crossModuleCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -348,7 +351,7 @@ class _BoundaryInfoCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.crossModuleCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

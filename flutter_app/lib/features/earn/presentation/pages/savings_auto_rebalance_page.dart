@@ -9,7 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -28,6 +28,21 @@ TextStyle get _baseBold =>
     AppTextStyles.base.copyWith(fontWeight: AppTextStyles.bold);
 TextStyle get _smBold =>
     AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold);
+
+const double _savingsRebalanceVisualNavClearance = 112;
+const double _savingsRebalanceNativeNavClearance = 88;
+const double _savingsRebalanceRingExtent = 104;
+const double _savingsRebalanceAssetBadge = AppSpacing.x6;
+const double _savingsRebalanceIconBox = AppSpacing.inputHeight;
+const double _savingsRebalanceIcon = AppSpacing.iconSm;
+const double _savingsRebalanceInlineIcon = AppSpacing.iconSm;
+const double _savingsRebalanceSelectedIcon = AppSpacing.iconSm;
+const double _savingsRebalanceLockIcon = AppSpacing.iconSm;
+const double _savingsRebalanceTrackHeight = AppSpacing.x2;
+const double _savingsRebalanceDriftChartHeight = 150;
+const double _savingsRebalanceCompareLabelWidth = 84;
+const double _savingsRebalanceLegendDot = AppSpacing.x2;
+const EdgeInsets _savingsRebalanceCardPadding = EdgeInsets.all(AppSpacing.x3);
 
 class SavingsAutoRebalancePage extends ConsumerStatefulWidget {
   const SavingsAutoRebalancePage({super.key, this.shellRenderMode});
@@ -66,11 +81,11 @@ class _SavingsAutoRebalancePageState
     final strategy = _activeStrategy(snapshot);
     final drift = _totalDrift(snapshot.positions, strategy);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navInset = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final safeBottom = MediaQuery.paddingOf(context).bottom;
-    final bottomInset = navInset + safeBottom + AppSpacing.x6;
+    final navClearance = mode.usesVisualQaFrame
+        ? _savingsRebalanceVisualNavClearance
+        : _savingsRebalanceNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -119,10 +134,15 @@ class _SavingsAutoRebalancePageState
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
-                      padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        AppSpacing.x3,
+                        AppSpacing.contentPad,
+                        scrollEndPadding,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
-                        gap: VitContentGap.defaultGap,
+                        density: VitDensity.compact,
                         children: [
                           if (activeTab == 'Tổng quan') ...[
                             _AllocationComparisonCard(
@@ -166,6 +186,7 @@ class _SavingsAutoRebalancePageState
                                   setState(() => _autoEnabled = value),
                             ),
                           const VitHighRiskStatePanel(
+                            density: VitDensity.compact,
                             state: VitHighRiskUiState.riskReview,
                             title: 'Savings rebalance review',
                             message:

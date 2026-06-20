@@ -9,6 +9,7 @@ class _ComplianceNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.copyAuditNoticePadding,
+      density: VitDensity.compact,
       borderColor: _auditPrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,7 +19,7 @@ class _ComplianceNotice extends StatelessWidget {
             color: _auditPrimary,
             size: AppSpacing.walletTokenApprovalActionIcon,
           ),
-          const SizedBox(width: AppSpacing.walletAssetPillGap),
+          const SizedBox(width: _auditSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +38,7 @@ class _ComplianceNotice extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: _auditPrimary,
-                    height: AppSpacing.copyAuditNoticeLineHeight,
+                    height: _auditNoticeLineHeight,
                   ),
                 ),
               ],

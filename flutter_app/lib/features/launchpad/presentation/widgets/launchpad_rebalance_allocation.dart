@@ -17,7 +17,7 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -62,12 +62,16 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
+                    SizedBox(
                       width: AppSpacing.launchpadDotMd,
                       height: AppSpacing.launchpadDotMd,
-                      decoration: BoxDecoration(
-                        color: asset.accent,
-                        borderRadius: AppRadii.xsRadius,
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: asset.accent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.xsRadius,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x1),

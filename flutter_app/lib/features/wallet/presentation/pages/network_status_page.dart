@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -28,6 +28,30 @@ const _networkAmber = AppColors.caution;
 const _networkOrange = AppColors.riskHigh;
 const _networkRed = AppColors.sell;
 const _networkMuted = AppColors.text3;
+const _networkNativeBottomClearance = 88.0;
+const _networkVisualBottomClearance = 112.0;
+const _networkScrollTopPad = 0.0;
+const _networkInlineGap = 10.0;
+const _networkTinyGap = 4.0;
+const _networkCardGap = 8.0;
+const _networkSummaryIconSize = 40.0;
+const _networkSummaryStatHeight = 44.0;
+const _networkLogoSize = 36.0;
+const _networkActionIconBoxSize = 34.0;
+const _networkStatHeight = 52.0;
+const _networkAvailabilityHeight = 32.0;
+const _networkLegendIconSize = 28.0;
+const _networkCompactStatPadding = EdgeInsets.symmetric(
+  horizontal: 8,
+  vertical: 4,
+);
+
+double _networkScrollBottomInset(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? _networkVisualBottomClearance
+          : _networkNativeBottomClearance) +
+      MediaQuery.paddingOf(context).bottom;
+}
 
 class NetworkStatusPage extends ConsumerWidget {
   const NetworkStatusPage({super.key, this.shellRenderMode});
@@ -42,13 +66,7 @@ class NetworkStatusPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(walletNetworkStatusProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletBottomInsetVisualChrome
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletBottomInsetNativeChrome) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = _networkScrollBottomInset(context, mode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -68,11 +86,11 @@ class NetworkStatusPage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: NetworkStatusPage.contentKey,
                   padding: AppSpacing.walletNetworkStatusPageScrollPadding
-                      .copyWith(bottom: bottomInset),
+                      .copyWith(top: _networkScrollTopPad, bottom: bottomInset),
                   physics: const BouncingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(
@@ -80,18 +98,12 @@ class NetworkStatusPage extends ConsumerWidget {
                         title: 'Review network availability',
                         message:
                             'Check fee, latency, congestion, and confirmation status before deposit or withdrawal actions.',
+                        density: VitDensity.compact,
                       ),
-                      const SizedBox(height: AppSpacing.walletTokenCardGap),
                       _SummaryCard(snapshot: snapshot),
-                      const SizedBox(height: AppSpacing.walletTokenSectionGap),
-                      for (final network in snapshot.networks) ...[
+                      for (final network in snapshot.networks)
                         _NetworkCard(network: network),
-                        if (network != snapshot.networks.last)
-                          const SizedBox(height: AppSpacing.walletTokenCardGap),
-                      ],
-                      const SizedBox(height: AppSpacing.walletTokenSectionGap),
                       const _LegendCard(),
-                      const SizedBox(height: AppSpacing.walletTokenSectionGap),
                       const _DisclaimerCard(),
                     ],
                   ),

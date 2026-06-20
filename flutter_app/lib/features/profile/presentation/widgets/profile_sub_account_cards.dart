@@ -21,6 +21,7 @@ class _SubAccountCard extends StatelessWidget {
 
     return VitCard(
       key: SubAccountPage.accountCardKey(account.id),
+      padding: AppSpacing.zeroInsets,
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -68,9 +69,7 @@ class _SubAccountCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: AppSpacing.profileSubAccountStatusTopGap,
-                          ),
+                          const SizedBox(height: AppSpacing.x2),
                           Row(
                             children: [
                               Icon(
@@ -123,9 +122,7 @@ class _SubAccountCard extends StatelessWidget {
                             fontFeatures: AppTextStyles.tabularFigures,
                           ),
                         ),
-                        const SizedBox(
-                          height: AppSpacing.profileSubAccountTrailingPnlGap,
-                        ),
+                        const SizedBox(height: AppSpacing.x1),
                         Text(
                           isBalanceHidden
                               ? '\u2022\u2022'

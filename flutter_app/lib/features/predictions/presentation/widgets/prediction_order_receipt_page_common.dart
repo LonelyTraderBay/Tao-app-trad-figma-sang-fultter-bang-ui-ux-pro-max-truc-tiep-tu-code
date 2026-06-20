@@ -2,6 +2,7 @@ part of '../pages/prediction_order_receipt_page.dart';
 
 class _SummaryRow extends StatelessWidget {
   const _SummaryRow({
+    super.key,
     required this.label,
     required this.value,
     this.valueColor = AppColors.text1,
@@ -45,9 +46,7 @@ class _SummaryRow extends StatelessWidget {
                   ),
                 ),
                 if (trailingIcon != null) ...[
-                  const SizedBox(
-                    width: AppSpacing.predictionReceiptSummaryTrailingGap,
-                  ),
+                  const SizedBox(width: AppSpacing.x1),
                   Icon(
                     trailingIcon,
                     color: valueColor,
@@ -72,19 +71,19 @@ class _FillProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: AppSpacing.predictionReceiptFillDividerGap),
+        const SizedBox(height: AppSpacing.x2),
         const SizedBox(
           height: AppSpacing.predictionReceiptTimelineLineWidth,
           child: ColoredBox(color: AppColors.divider),
         ),
-        const SizedBox(height: AppSpacing.predictionReceiptFillDividerGap),
+        const SizedBox(height: AppSpacing.x2),
         Row(
           children: [
             Text(
               'Tiến trình khớp',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            const Spacer(),
+            const Expanded(child: SizedBox.shrink()),
             Text(
               '$percent%',
               style: AppTextStyles.micro.copyWith(
@@ -94,12 +93,12 @@ class _FillProgress extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.predictionReceiptFillBarGap),
+        const SizedBox(height: AppSpacing.x1),
         ClipRRect(
           borderRadius: AppRadii.pillRadius,
           child: LinearProgressIndicator(
             value: percent / 100,
-            minHeight: AppSpacing.predictionReceiptFillBarHeight,
+            minHeight: AppSpacing.x3,
             color: percent == 100 ? AppColors.buy : AppColors.warn,
             backgroundColor: AppColors.surface2,
           ),
@@ -153,7 +152,7 @@ class _TimelineStep extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(width: AppSpacing.predictionReceiptTimelineGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,10 +169,7 @@ class _TimelineStep extends StatelessWidget {
                     step.date,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                if (!isLast)
-                  const SizedBox(
-                    height: AppSpacing.predictionReceiptTimelineItemBottomGap,
-                  ),
+                if (!isLast) const SizedBox(height: AppSpacing.x2),
               ],
             ),
           ),
@@ -199,8 +195,8 @@ class _SoftPill extends StatelessWidget {
     return Material(
       color: background,
       borderRadius: AppRadii.smRadius,
-      child: SizedBox(
-        height: AppSpacing.predictionReceiptSoftPillHeight,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: AppSpacing.x6),
         child: Padding(
           padding: AppSpacing.predictionReceiptSoftPillPadding,
           child: Center(

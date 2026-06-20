@@ -15,8 +15,8 @@ class _LegendDot extends StatelessWidget {
           color: color,
           shape: const CircleBorder(),
           child: const SizedBox(
-            width: AppSpacing.p2pMarketplaceAnalyticsLegendDot,
-            height: AppSpacing.p2pMarketplaceAnalyticsLegendDot,
+            width: _p2pAdAnalyticsLegendDotExtent,
+            height: _p2pAdAnalyticsLegendDotExtent,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -40,8 +40,8 @@ class _HeatLegendCell extends StatelessWidget {
       color: AppColors.buy.withValues(alpha: alpha),
       borderRadius: AppRadii.smRadius,
       child: const SizedBox(
-        width: AppSpacing.p2pMarketplaceAnalyticsLegendDot,
-        height: AppSpacing.p2pMarketplaceAnalyticsLegendDot,
+        width: _p2pAdAnalyticsLegendDotExtent,
+        height: _p2pAdAnalyticsLegendDotExtent,
       ),
     );
   }

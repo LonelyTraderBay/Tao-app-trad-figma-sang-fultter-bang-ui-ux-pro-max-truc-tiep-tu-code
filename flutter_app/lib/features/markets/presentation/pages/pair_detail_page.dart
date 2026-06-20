@@ -7,10 +7,10 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
@@ -26,6 +26,11 @@ part '../widgets/pair_detail_order_widgets.dart';
 part '../widgets/pair_detail_painter_widgets.dart';
 
 const _marketPrimary = AppColors.primary;
+const double _pairFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _pairNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _pairChartExtent = AppSpacing.buttonStandard * 3 + AppSpacing.x7;
 
 enum _PairView { chart, orderBook, trades }
 
@@ -34,6 +39,7 @@ class PairDetailPage extends ConsumerStatefulWidget {
 
   static const contentKey = Key('sc044_pair_detail_content');
   static const chartTabKey = Key('sc044_view_chart');
+  static const chartContentKey = Key('sc044_pair_chart');
   static const orderBookTabKey = Key('sc044_view_orderbook');
   static const tradesTabKey = Key('sc044_view_trades');
   static const infoButtonKey = Key('sc044_token_info');
@@ -68,15 +74,11 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
         .getPairDetail(widget.pairId);
     final pair = snapshot.pair;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.pairDetailVisualBottomExtra
-            : AppSpacing.pairDetailNativeBottomExtra);
+            ? _pairFramedScrollClearance
+            : _pairNativeScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -101,9 +103,9 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
                 behavior: ScrollConfiguration.of(
                   context,
                 ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: PairDetailPage.contentKey,
-                  padding: AppSpacing.pairDetailScrollPadding(bottomInset),
+                  bottomInset: scrollEndClearance,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [

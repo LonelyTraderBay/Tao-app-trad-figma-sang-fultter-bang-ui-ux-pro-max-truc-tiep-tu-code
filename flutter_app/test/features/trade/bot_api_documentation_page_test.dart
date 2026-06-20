@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBotApiDocumentation(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -104,6 +106,19 @@ void main() {
     await tester.tap(find.text('Copy'));
     await tester.pumpAndSettle();
     expect(find.text('Copied!'), findsOneWidget);
+  });
+
+  testWidgets('SC-134 first viewport reaches first endpoint card', (
+    tester,
+  ) async {
+    await pumpBotApiDocumentation(tester);
+
+    expectActionableInFirstViewport(
+      tester,
+      BotApiDocumentationPage.endpointKey('GET', '/api/v1/bots').finder,
+      routeName: 'BotApiDocumentationPage',
+      actionLabel: 'first REST endpoint card',
+    );
   });
 }
 

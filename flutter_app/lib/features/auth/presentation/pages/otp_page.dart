@@ -234,8 +234,8 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                 key: OTPPage.contentKey,
                 padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
-                  padding: VitContentPadding.relaxed,
-                  gap: VitContentGap.relaxed,
+                  padding: VitContentPadding.defaultPadding,
+                  gap: VitContentGap.defaultGap,
                   children: [
                     const VitCard(
                       padding: AppSpacing.zeroInsets,

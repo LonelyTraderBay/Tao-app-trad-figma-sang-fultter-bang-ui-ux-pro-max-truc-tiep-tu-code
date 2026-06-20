@@ -99,23 +99,18 @@ class _QuickPercentRow extends StatelessWidget {
       children: [
         for (var index = 0; index < values.length; index++) ...[
           Expanded(
-            child: Material(
+            child: VitCtaButton(
               key: P2PWalletTransferPage.percentKey(values[index]),
-              color: AppColors.surface2,
-              borderRadius: AppRadii.xlRadius,
-              child: InkWell(
-                onTap: () => onPercent(values[index]),
-                borderRadius: AppRadii.xlRadius,
-                child: Padding(
-                  padding: AppSpacing.p2pWalletTransferPercentPadding,
-                  child: Text(
-                    '${values[index]}%',
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
+              onPressed: () => onPercent(values[index]),
+              height: AppSpacing.buttonCompact,
+              variant: VitCtaButtonVariant.ghost,
+              padding: AppSpacing.p2pWalletTransferPercentPadding,
+              child: Text(
+                '${values[index]}%',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),
@@ -191,9 +186,7 @@ class _EscrowNotice extends StatelessWidget {
       color: AppModuleAccents.p2p.withValues(alpha: .10),
       shape: RoundedRectangleBorder(
         borderRadius: AppRadii.lgRadius,
-        side: BorderSide(
-          color: AppModuleAccents.p2p.withValues(alpha: .32),
-        ),
+        side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .32)),
       ),
       child: Padding(
         padding: AppSpacing.p2pWalletCompactCardPadding,
@@ -235,26 +228,12 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitCtaButton(
       key: P2PWalletTransferPage.submitKey,
-      color: enabled ? AppModuleAccents.p2p : AppColors.surface2,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        onTap: enabled ? onTap : null,
-        borderRadius: AppRadii.lgRadius,
-        child: SizedBox(
-          height: AppSpacing.inputHeight,
-          child: Center(
-            child: Text(
-              label.trim(),
-              style: AppTextStyles.baseMedium.copyWith(
-                color: enabled ? AppColors.onAccent : AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
+      onPressed: enabled ? onTap : null,
+      height: AppSpacing.inputHeight,
+      variant: VitCtaButtonVariant.primary,
+      child: Text(label.trim()),
     );
   }
 }

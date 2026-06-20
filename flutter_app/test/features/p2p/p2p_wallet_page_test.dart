@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_wallet_pag
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_wallet_transfer_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PWallet(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,22 @@ void main() {
     expect(find.byKey(P2PWalletPage.transactionsKey), findsOneWidget);
     expect(find.text('Giải phóng Escrow'), findsOneWidget);
     expect(find.text('+1,500.00 USDT'), findsOneWidget);
+  });
+
+  testWidgets('SC-264 first viewport reaches balances section', (tester) async {
+    await pumpP2PWallet(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-264 P2PWalletPage',
+      semanticLabel: 'SC-264 P2PWalletPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PWalletPage.balanceKey('USDT')),
+      routeName: 'SC-264 P2PWalletPage',
+      actionLabel: 'the first P2P wallet balance card',
+    );
   });
 
   testWidgets('SC-264 toggles privacy and expands an asset breakdown', (

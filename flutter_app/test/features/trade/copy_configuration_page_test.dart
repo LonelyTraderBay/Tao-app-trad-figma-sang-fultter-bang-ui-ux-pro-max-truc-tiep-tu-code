@@ -12,6 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCopyConfiguration(
     WidgetTester tester, {
@@ -95,6 +97,22 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Smart Copy'), findsWidgets);
+  });
+
+  testWidgets('SC-072 first viewport reaches capital field', (tester) async {
+    await pumpCopyConfiguration(tester, providerId: 'ct001');
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-072 CopyConfigurationPage',
+      semanticLabel: 'SC-072 CopyConfigurationPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Số tiền copy (USD)'),
+      targetLabel: 'the copy capital control',
+      minVisibleHeight: 16,
+    );
   });
 
   testWidgets('SC-072 confirmation CTA uses the SC-073 route edge', (

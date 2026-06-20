@@ -99,7 +99,7 @@ class _EmergencyTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.earnPaddingX4,
+              padding: _stakingWithdrawalCardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -107,15 +107,15 @@ class _EmergencyTab extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: AppSpacing.earnWithdrawalEmergencyIconBox,
-                        height: AppSpacing.earnWithdrawalEmergencyIconBox,
+                        width: _stakingWithdrawalEmergencyIconBox,
+                        height: _stakingWithdrawalEmergencyIconBox,
                         child: Material(
                           color: AppColors.sell10,
                           shape: RoundedRectangleBorder(
                             borderRadius: AppRadii.cardRadius,
                             side: const BorderSide(
                               color: AppColors.sell20,
-                              width: AppSpacing.earnWithdrawalBorderWidth,
+                              width: _stakingWithdrawalBorderWidth,
                             ),
                           ),
                           child: const Icon(
@@ -141,7 +141,7 @@ class _EmergencyTab extends StatelessWidget {
                               snapshot.emergencyBody,
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height: AppSpacing.earnWithdrawalInfoLineHeight,
+                                height: _stakingWithdrawalInfoLineHeight,
                               ),
                             ),
                           ],
@@ -160,32 +160,32 @@ class _EmergencyTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         VitPageSection(
           label: 'Quy trình Rút khẩn cấp',
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.earnPaddingX4,
+              padding: _stakingWithdrawalCardPadding,
               child: Column(
                 children: [
                   for (final step in snapshot.emergencySteps) ...[
                     _EmergencyStepRow(step: step),
                     if (step != snapshot.emergencySteps.last)
-                      const Padding(padding: AppSpacing.earnTopPaddingX4),
+                      const Padding(padding: AppSpacing.earnTopPaddingX3),
                   ],
                 ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         VitPageSection(
           label: 'Phí Rút khẩn cấp',
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.earnPaddingX4,
+              padding: _stakingWithdrawalCardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -193,7 +193,7 @@ class _EmergencyTab extends StatelessWidget {
                     'Phí rút khẩn cấp cao hơn phí rút sớm thông thường vì cần xử lý ưu tiên và bỏ qua unbonding period.',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.earnWithdrawalInfoLineHeight,
+                      height: _stakingWithdrawalInfoLineHeight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x3),
@@ -210,9 +210,9 @@ class _EmergencyTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         _WarningBox(text: snapshot.emergencyWarning),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         _SupportCard(contacts: snapshot.supportContacts),
       ],
     );
@@ -230,14 +230,14 @@ class _EmergencyStepRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.earnWithdrawalEmergencyStepBox,
-          height: AppSpacing.earnWithdrawalEmergencyStepBox,
+          width: _stakingWithdrawalEmergencyStepBox,
+          height: _stakingWithdrawalEmergencyStepBox,
           child: Material(
             color: AppColors.primary12,
             shape: const CircleBorder(
               side: BorderSide(
                 color: AppColors.primary20,
-                width: AppSpacing.earnWithdrawalBorderWidth,
+                width: _stakingWithdrawalBorderWidth,
               ),
             ),
             child: Center(
@@ -261,7 +261,7 @@ class _EmergencyStepRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.medium,
-                  height: AppSpacing.earnWithdrawalEmergencyStepLineHeight,
+                  height: _stakingWithdrawalEmergencyStepLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x1),
@@ -270,7 +270,7 @@ class _EmergencyStepRow extends StatelessWidget {
                   const Icon(
                     Icons.timer_outlined,
                     color: AppColors.text3,
-                    size: AppSpacing.earnWithdrawalTimerIcon,
+                    size: _stakingWithdrawalTimerIcon,
                   ),
                   const SizedBox(width: AppSpacing.x1),
                   Text(
@@ -295,10 +295,10 @@ class _EmergencyFeeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.earnWithdrawalFeeTileWidth,
+      width: _stakingWithdrawalFeeTileWidth,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          minHeight: AppSpacing.earnWithdrawalFeeTileMinHeight,
+          minHeight: _stakingWithdrawalFeeTileMinHeight,
         ),
         child: Material(
           color: AppColors.surface2,
@@ -321,7 +321,7 @@ class _EmergencyFeeTile extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.sell,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.earnWithdrawalFeeLineHeight,
+                    height: _stakingWithdrawalFeeLineHeight,
                   ),
                 ),
               ],
@@ -342,7 +342,7 @@ class _SupportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: _stakingWithdrawalCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

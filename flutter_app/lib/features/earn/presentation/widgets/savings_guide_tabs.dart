@@ -19,21 +19,18 @@ class SavingsGuideTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: AppColors.surface,
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.contentPad,
-        AppSpacing.x4,
-        AppSpacing.contentPad,
-        0,
-      ),
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: active,
-        onChanged: onChanged,
-        tabs: [
-          for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
-        ],
+      child: Padding(
+        padding: AppSpacing.earnSurfaceTabsPadding,
+        child: VitTabBar(
+          variant: VitTabBarVariant.underline,
+          activeKey: active,
+          onChanged: onChanged,
+          tabs: [
+            for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
+          ],
+        ),
       ),
     );
   }

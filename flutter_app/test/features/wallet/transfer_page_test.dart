@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTransfer(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -87,6 +89,24 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Spot \u2192 Funding'), findsOneWidget);
+  });
+
+  testWidgets('SC-146 first viewport reaches transfer amount field', (
+    tester,
+  ) async {
+    await pumpTransfer(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'TransferPage',
+      semanticLabel: 'SC-146 TransferPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(TransferPage.amountFieldKey),
+      routeName: 'TransferPage',
+      actionLabel: 'the transfer amount field',
+    );
   });
 
   testWidgets('SC-146 transfer controls support preview confirmation', (

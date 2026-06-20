@@ -19,8 +19,8 @@ class _DustAssetRow extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: VitCard(
-        height: AppSpacing.walletDustAssetRowHeight,
-        padding: AppSpacing.walletDustAssetRowPadding,
+        height: _dustAssetRowHeight,
+        padding: _dustAssetRowPadding,
         variant: VitCardVariant.ghost,
         borderColor: selected
             ? color.withValues(alpha: .45)
@@ -36,15 +36,15 @@ class _DustAssetRow extends StatelessWidget {
                   ? Icons.check_box_rounded
                   : Icons.check_box_outline_blank_rounded,
               color: selected ? _dustPrimary : _dustMuted,
-              size: AppSpacing.walletDustCheckboxIcon,
+              size: AppSpacing.iconSm,
             ),
-            const SizedBox(width: AppSpacing.walletDustAssetCheckboxGap),
+            const SizedBox(width: _dustTinyGap),
             _TokenLogo(
               symbol: asset.symbol,
               color: color,
-              size: AppSpacing.walletDustTokenLogo,
+              size: _dustTokenLogo,
             ),
-            const SizedBox(width: AppSpacing.walletDustAssetInfoGap),
+            const SizedBox(width: _dustInlineGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +57,7 @@ class _DustAssetRow extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.walletDustTextGap),
+                  const SizedBox(height: _dustTinyGap),
                   Text(
                     asset.name,
                     maxLines: 1,
@@ -79,7 +79,7 @@ class _DustAssetRow extends StatelessWidget {
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletDustTextGap),
+                const SizedBox(height: _dustTinyGap),
                 Text(
                   '\u2248 ${_formatUsd(asset.usdValue, preciseSmall: true)}',
                   style: AppTextStyles.micro.copyWith(

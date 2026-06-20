@@ -18,7 +18,7 @@ class ArenaGovernanceStateBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.arena.withValues(alpha: .24),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaStateCardPaddingCompact,
       child: _StateRow(
         icon: Icons.rule_folder_outlined,
         title: 'Governance state',
@@ -42,7 +42,7 @@ class ArenaReportReviewStateCard extends StatelessWidget {
       borderColor: state.canAppeal
           ? AppColors.warningBorder
           : AppColors.borderSolid,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.arenaStateCardPaddingCompact,
       child: _StateRow(
         icon: Icons.gavel_outlined,
         title: state.title,
@@ -64,7 +64,7 @@ class ArenaChallengePointsReviewCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.arena.withValues(alpha: .26),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaStateCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -107,12 +107,14 @@ class _StateRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DecoratedBox(
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: color.withValues(alpha: .12),
-            borderRadius: AppRadii.mdRadius,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.mdRadius,
+            ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.x2),
+            padding: AppSpacing.arenaStateCardIconPadding,
             child: Icon(
               icon,
               color: color,
@@ -159,7 +161,7 @@ class _MetricRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.x2),
+      padding: AppSpacing.arenaStateCardMetricPadding,
       child: Row(
         children: [
           Expanded(
@@ -196,15 +198,12 @@ class _StatePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xlRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.arenaStateCardPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

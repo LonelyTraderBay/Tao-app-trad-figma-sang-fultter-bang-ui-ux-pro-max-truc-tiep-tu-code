@@ -29,6 +29,7 @@ class LaunchpadAddressBookPage extends ConsumerStatefulWidget {
   static const statsKey = Key('sc309_launchpad_address_book_stats');
   static const favoritesKey = Key('sc309_launchpad_address_book_favorites');
   static const allKey = Key('sc309_launchpad_address_book_all');
+  static const emptyKey = Key('sc309_launchpad_address_book_empty');
   static const addSheetKey = Key('sc309_launchpad_address_book_add_sheet');
   static const addSheetCloseKey = Key(
     'sc309_launchpad_address_book_add_sheet_close',
@@ -137,6 +138,14 @@ class _LaunchpadAddressBookPageState
                           setState(() => _chainFilter = value),
                     ),
                     _AddressStats(addresses: _addresses),
+                    if (filtered.isEmpty)
+                      const VitEmptyState(
+                        key: LaunchpadAddressBookPage.emptyKey,
+                        title: 'Khong tim thay dia chi',
+                        message:
+                            'Thu doi tu khoa tim kiem hoac chon tat ca chain de tiep tuc.',
+                        icon: Icons.search_off_rounded,
+                      ),
                     if (favorites.isNotEmpty)
                       VitPageSection(
                         key: LaunchpadAddressBookPage.favoritesKey,

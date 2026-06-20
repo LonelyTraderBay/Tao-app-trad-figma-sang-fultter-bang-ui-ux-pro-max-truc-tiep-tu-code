@@ -10,7 +10,8 @@ class _RecordCard extends StatelessWidget {
     final tone = _toneFor(record.status);
     return VitCard(
       key: CassReconciliationPage.recordKey(record.id),
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _cassBorder.withValues(alpha: .72),
       child: Column(
         children: [
@@ -18,63 +19,58 @@ class _RecordCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               VitCard(
-                width: AppSpacing.tradeBotRecommendationIconBox,
-                height: AppSpacing.tradeBotRecommendationIconBox,
+                width: _recordIconTile,
+                height: _recordIconTile,
                 variant: VitCardVariant.inner,
+                density: VitDensity.compact,
+                padding: EdgeInsets.zero,
                 borderColor: tone.color.withValues(alpha: .24),
                 alignment: Alignment.center,
-                child: Icon(
-                  tone.icon,
-                  color: tone.color,
-                  size: AppSpacing.tradeBotActionIcon,
-                ),
+                child: Icon(tone.icon, color: tone.color, size: AppSpacing.x4),
               ),
-              const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+              const SizedBox(width: _cassSpace),
               Expanded(
-                child: Padding(
-                  padding: AppSpacing.tradeBotRecordIconTopPadding,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              record.displayDate,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            record.displayDate,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                          const SizedBox(width: AppSpacing.tradeBotSmallGap),
-                          VitAccentPill(
-                            label: tone.label,
-                            accentColor: tone.color,
-                          ),
-                        ],
-                      ),
-                      if (record.notes != null) ...[
-                        const SizedBox(height: AppSpacing.tradeBotDisclosureGap),
-                        Text(
-                          record.notes!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                            height: AppSpacing.tradeBotLineHeightTight,
-                          ),
+                        ),
+                        const SizedBox(width: _cassTinySpace),
+                        VitAccentPill(
+                          label: tone.label,
+                          accentColor: tone.color,
                         ),
                       ],
+                    ),
+                    if (record.notes != null) ...[
+                      const SizedBox(height: _cassTinySpace),
+                      Text(
+                        record.notes!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                          height: _cassLineTight,
+                        ),
+                      ),
                     ],
-                  ),
+                  ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotDisclosureGap),
+          const SizedBox(height: _cassSpace),
           Row(
             children: [
               Expanded(
@@ -83,14 +79,14 @@ class _RecordCard extends StatelessWidget {
                   value: _formatUsd(record.clientLedger),
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: _cassTinySpace),
               Expanded(
                 child: _MetricBox(
                   label: 'Bank Balance',
                   value: _formatUsd(record.bankBalance),
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: _cassTinySpace),
               Expanded(
                 child: _MetricBox(
                   label: 'Difference',
@@ -125,9 +121,9 @@ class _MetricBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotCassMetricHeight,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotMetricBoxPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: background.withValues(alpha: .24),
       background: ColoredBox(color: background),
       clip: true,
@@ -140,10 +136,10 @@ class _MetricBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
+              height: _cassLineTight,
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: _cassTinySpace),
           Text(
             value,
             maxLines: 1,
@@ -168,11 +164,8 @@ class _ExportButton extends StatelessWidget {
       key: CassReconciliationPage.exportKey,
       onPressed: () {},
       variant: VitCtaButtonVariant.secondary,
-      height: AppSpacing.tradeBotSheetActionHeight,
-      leading: const Icon(
-        Icons.download_rounded,
-        size: AppSpacing.tradeBotCheckboxIcon,
-      ),
+      height: _exportButtonHeight,
+      leading: const Icon(Icons.download_rounded, size: AppSpacing.x4),
       child: Text(
         'Export Reconciliation Report (CSV)',
         maxLines: 1,

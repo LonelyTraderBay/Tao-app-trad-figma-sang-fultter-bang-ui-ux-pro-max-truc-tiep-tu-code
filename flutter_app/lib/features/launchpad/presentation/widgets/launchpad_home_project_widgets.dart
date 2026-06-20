@@ -18,28 +18,30 @@ class _LaunchpadTabs extends StatelessWidget {
             key: LaunchpadPage.tabKey(tab.id),
             onTap: () => onChanged(tab),
             borderRadius: AppRadii.inputRadius,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 160),
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x4,
-                vertical: AppSpacing.x3,
-              ),
-              decoration: BoxDecoration(
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
                 color: tab == activeTab
                     ? AppColors.primary12
                     : AppColors.surface2,
-                border: Border.all(
-                  color: tab == activeTab
-                      ? AppColors.primary30
-                      : AppColors.cardBorder,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.inputRadius,
+                  side: BorderSide(
+                    color: tab == activeTab
+                        ? AppColors.primary30
+                        : AppColors.cardBorder,
+                  ),
                 ),
-                borderRadius: AppRadii.inputRadius,
               ),
-              child: Text(
-                tab.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: tab == activeTab ? AppColors.primary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
+              child: Padding(
+                padding: AppSpacing.launchpadPaddingX3,
+                child: Text(
+                  tab.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: tab == activeTab
+                        ? AppColors.primary
+                        : AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
             ),
@@ -68,7 +70,7 @@ class _ProjectCard extends StatelessWidget {
           InkWell(
             onTap: () => context.go(AppRoutePaths.launchpadSample),
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: VitDensity.compact.cardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -90,7 +92,7 @@ class _ProjectCard extends StatelessWidget {
                                   project.name,
                                   style: AppTextStyles.baseMedium.copyWith(
                                     fontWeight: AppTextStyles.bold,
-                                    height: AppSpacing.launchpadLineHeightLabel,
+                                    height: _launchpadLineHeightLabel,
                                   ),
                                 ),
                                 _MiniPill(
@@ -115,12 +117,12 @@ class _ProjectCard extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.x3),
                   Text(
                     project.description,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.launchpadLineHeightReadable,
+                      height: _launchpadLineHeightReadable,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x3),
@@ -136,7 +138,7 @@ class _ProjectCard extends StatelessWidget {
                   const SizedBox(height: AppSpacing.x3),
                   _ProjectInfoGrid(project: project),
                   if (project.status != LaunchpadProjectStatus.upcoming) ...[
-                    const SizedBox(height: AppSpacing.x4),
+                    const SizedBox(height: AppSpacing.x3),
                     _ProjectProgress(project: project),
                   ],
                   const SizedBox(height: AppSpacing.x3),
@@ -148,12 +150,7 @@ class _ProjectCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.x4,
-              0,
-              AppSpacing.x4,
-              AppSpacing.x4,
-            ),
+            padding: VitDensity.compact.cardPadding,
             child: _ProjectActions(project: project),
           ),
         ],
@@ -169,20 +166,24 @@ class _ProjectAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: AppSpacing.x7,
-      height: AppSpacing.x7,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: project.accent.withValues(alpha: .12),
-        border: Border.all(color: project.accent.withValues(alpha: .35)),
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Text(
-        project.logo,
-        style: AppTextStyles.baseMedium.copyWith(
-          color: project.accent,
-          fontWeight: AppTextStyles.bold,
+    return SizedBox.square(
+      dimension: AppSpacing.x7,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: project.accent.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.lgRadius,
+            side: BorderSide(color: project.accent.withValues(alpha: .35)),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            project.logo,
+            style: AppTextStyles.baseMedium.copyWith(
+              color: project.accent,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -247,7 +248,7 @@ class _InfoTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -414,6 +415,7 @@ class _ProjectActions extends StatelessWidget {
             child: VitCtaButton(
               key: LaunchpadPage.joinKey(project.id),
               onPressed: HapticFeedback.selectionClick,
+              density: VitDensity.compact,
               leading: const Icon(Icons.rocket_launch_outlined),
               child: const Text('Tham gia'),
             ),

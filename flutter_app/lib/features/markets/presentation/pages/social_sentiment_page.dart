@@ -7,10 +7,10 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -26,6 +26,82 @@ part '../widgets/social_sentiment_token_widgets.dart';
 part '../widgets/social_sentiment_trends_widgets.dart';
 
 const _marketPrimary = AppColors.primary;
+const double _sentimentVisualScrollClearance = 108;
+const double _sentimentNativeScrollClearance = 72;
+const double _sentimentTabsHeight = AppSpacing.buttonCompact;
+const double _sentimentTabIndicatorHeight = AppSpacing.dividerHairline;
+const double _sentimentHeroHeaderGap = AppSpacing.x2;
+const double _sentimentHeroScoreGap = AppSpacing.x2;
+const double _sentimentHeroGaugeGap = AppSpacing.x2;
+const double _sentimentHeroGaugeHeight = 6;
+const double _sentimentHeroLegendGap = AppSpacing.x1;
+const double _sentimentStatGap = AppSpacing.x2;
+const double _sentimentStatIcon = AppSpacing.iconSm;
+const double _sentimentStatIconGap = AppSpacing.x1;
+const double _sentimentStatValueGap = AppSpacing.x1;
+const double _sentimentStatSubGap = AppSpacing.x1;
+const double _sentimentDominanceTitleGap = AppSpacing.x2;
+const double _sentimentDominanceBarHeight = 14;
+const double _sentimentDominanceLegendGap = AppSpacing.x3;
+const double _sentimentLegendDot = AppSpacing.x2;
+const double _sentimentLegendGap = AppSpacing.x1;
+const double _sentimentTimelineTimeWidth = 52;
+const double _sentimentTimelineTimeGap = AppSpacing.x2;
+const double _sentimentTimelineScoreGap = AppSpacing.x2;
+const double _sentimentTimelineScoreWidth = 24;
+const double _sentimentTimelineBarHeight = 5;
+const double _sentimentListGap = AppSpacing.x2;
+const double _sentimentAvatarLg = AppSpacing.buttonCompact;
+const double _sentimentAvatarMd = 34;
+const double _sentimentRowGap = AppSpacing.x2;
+const double _sentimentStatusDot = AppSpacing.x2;
+const double _sentimentSortGap = AppSpacing.x2;
+const double _sentimentSplitBarHeight = 5;
+const double _sentimentTokenMetricGap = AppSpacing.x2;
+const double _sentimentTopicGap = AppSpacing.x2;
+const int _sentimentHeatmapCrossAxisCount = 4;
+const double _sentimentHeatmapGap = 6;
+const double _sentimentHeatmapAspectRatio = 1.05;
+const double _sentimentLeaderboardGap = AppSpacing.x2;
+const double _sentimentLeaderboardRowGap = AppSpacing.x2;
+const double _sentimentLeaderboardRankWidth = 16;
+const double _sentimentVelocitySymbolWidth = 42;
+const double _sentimentVelocityBarHeight = 5;
+const double _sentimentVelocityGap = AppSpacing.x2;
+const double _sentimentVelocityValueWidth = 50;
+const EdgeInsets _sentimentHeroPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _sentimentHeroScorePadding = EdgeInsets.only(
+  bottom: AppSpacing.x1,
+);
+const EdgeInsets _sentimentStatPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _sentimentDominancePadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _sentimentTimelinePadding = EdgeInsets.fromLTRB(
+  AppSpacing.x3,
+  AppSpacing.x2,
+  AppSpacing.x3,
+  AppSpacing.x2,
+);
+const EdgeInsets _sentimentTimelineRowPadding = EdgeInsets.symmetric(
+  vertical: 3,
+);
+const EdgeInsets _sentimentRowPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _sentimentSortChipPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _sentimentTokenDetailPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _sentimentTopicCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _sentimentLeaderboardRowPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _sentimentVelocityRowPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
 
 class SocialSentimentPage extends ConsumerStatefulWidget {
   const SocialSentimentPage({super.key, this.shellRenderMode});
@@ -34,6 +110,7 @@ class SocialSentimentPage extends ConsumerStatefulWidget {
   static const overviewTabKey = Key('sc020_tab_overview');
   static const tokenTabKey = Key('sc020_tab_token');
   static const trendsTabKey = Key('sc020_tab_trends');
+  static const timelineCardKey = Key('sc020_timeline_card');
 
   static Key sortKey(MarketSentimentSort sort) =>
       Key('sc020_sort_${sort.name}');
@@ -55,15 +132,11 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
         .watch(marketControllerProvider)
         .getSocialSentiment(sortBy: _sortBy);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.socialSentimentVisualBottomExtra
-            : AppSpacing.socialSentimentNativeBottomExtra);
+            ? _sentimentVisualScrollClearance
+            : _sentimentNativeScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -90,12 +163,10 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: SocialSentimentPage.contentKey,
-                    padding: AppSpacing.socialSentimentScrollPadding(
-                      bottomInset,
-                    ),
+                    padding: EdgeInsets.only(bottom: scrollEndClearance),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.socialSentimentPageGap,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         if (_tab == 'overview') ...[
                           _SentimentHero(global: snapshot.global),

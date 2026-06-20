@@ -69,7 +69,9 @@ class _TabButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: AppSpacing.tokenInfoTabPadding,
+                padding: const EdgeInsets.symmetric(
+                  vertical: _tokenInfoTabVerticalPadding,
+                ),
                 child: Text(
                   label,
                   style: AppTextStyles.caption.copyWith(
@@ -83,8 +85,8 @@ class _TabButton extends StatelessWidget {
               AnimatedSize(
                 duration: const Duration(milliseconds: 180),
                 child: SizedBox(
-                  height: AppSpacing.tokenInfoTabIndicatorHeight,
-                  width: active ? AppSpacing.tokenInfoTabIndicatorWidth : 0,
+                  height: _tokenInfoTabIndicatorHeight,
+                  width: active ? _tokenInfoTabIndicatorWidth : 0,
                   child: Material(
                     color: active ? _marketPrimary : AppColors.transparent,
                     borderRadius: AppRadii.xsRadius,
@@ -122,13 +124,14 @@ class _OverviewTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _HeroCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const SizedBox(height: _tokenInfoSectionGap),
         VitSectionHeader(
           title: 'Thong ke thi truong',
           accentColor: pair.logoColor,
           variant: VitSectionHeaderVariant.accentBar,
         ),
         _InfoCard(
+          key: TokenInfoPage.marketStatsCardKey,
           rows: [
             _InfoRowData(
               icon: Icons.bar_chart_rounded,
@@ -167,21 +170,21 @@ class _OverviewTab extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Cung token',
           accentColor: _marketPrimary,
           variant: VitSectionHeaderVariant.accentBar,
         ),
         _SupplyCard(fundamentals: fundamentals, supplyPct: supplyPct),
-        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Phan bo cung',
           accentColor: AppColors.accent,
           variant: VitSectionHeaderVariant.accentBar,
         ),
         _DistributionCard(distribution: fundamentals.supplyDistribution),
-        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Ky luc gia',
           accentColor: AppColors.warn,
@@ -192,7 +195,7 @@ class _OverviewTab extends StatelessWidget {
           athDropPct: athDropPct,
           atlGainPct: atlGainPct,
         ),
-        const SizedBox(height: AppSpacing.tokenInfoSectionGap),
+        const SizedBox(height: _tokenInfoSectionGap),
         _ChartLink(pairId: pair.id),
       ],
     );
@@ -211,7 +214,7 @@ class _HeroCard extends StatelessWidget {
     final pair = snapshot.pair;
     final fundamentals = snapshot.fundamentals;
     return VitCard(
-      padding: AppSpacing.tokenInfoHeroPadding,
+      padding: _tokenInfoHeroPadding,
       borderColor: _marketPrimary.withValues(alpha: 0.22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,13 +222,13 @@ class _HeroCard extends StatelessWidget {
           Row(
             children: [
               _TokenAvatar(symbol: pair.baseAsset, color: pair.logoColor),
-              const SizedBox(width: AppSpacing.tokenInfoHeroAvatarGap),
+              const SizedBox(width: _tokenInfoHeroAvatarGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(fundamentals.name, style: AppTextStyles.sectionTitle),
-                    const SizedBox(height: AppSpacing.tokenInfoHeroSubtitleGap),
+                    const SizedBox(height: _tokenInfoHeroSubtitleGap),
                     Text(
                       fundamentals.consensus,
                       maxLines: 1,
@@ -239,7 +242,7 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tokenInfoHeroPriceGap),
+          const SizedBox(height: _tokenInfoHeroPriceGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -273,7 +276,7 @@ class _TokenAvatar extends StatelessWidget {
     return VitAssetAvatar(
       label: symbol,
       accentColor: color,
-      size: AppSpacing.tokenInfoHeroAvatar,
+      size: _tokenInfoHeroAvatar,
       radius: AppRadii.cardRadius,
     );
   }
@@ -315,14 +318,14 @@ class _InfoRowData {
 }
 
 class _InfoCard extends StatelessWidget {
-  const _InfoCard({required this.rows});
+  const _InfoCard({super.key, required this.rows});
 
   final List<_InfoRowData> rows;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tokenInfoInfoCardPadding,
+      padding: _tokenInfoInfoCardPadding,
       child: Column(
         children: [
           for (var i = 0; i < rows.length; i += 1)
@@ -344,15 +347,11 @@ class _InfoRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.tokenInfoInfoRowPadding,
+          padding: _tokenInfoInfoRowPadding,
           child: Row(
             children: [
-              Icon(
-                row.icon,
-                size: AppSpacing.tokenInfoInfoIcon,
-                color: row.iconColor,
-              ),
-              const SizedBox(width: AppSpacing.tokenInfoInfoIconGap),
+              Icon(row.icon, size: _tokenInfoInfoIcon, color: row.iconColor),
+              const SizedBox(width: _tokenInfoInfoIconGap),
               Expanded(
                 child: Text(
                   row.label,

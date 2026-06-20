@@ -11,7 +11,7 @@ class _ActiveOrdersSection extends StatelessWidget {
       return const _EmptyOrders();
     }
 
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadLimitOrdersPage.activeListKey,
       child: VitPageSection(
         label: 'Lenh hoat dong',
@@ -37,7 +37,7 @@ class _LimitOrderCard extends StatelessWidget {
         : AppColors.warn;
     return VitCard(
       key: LaunchpadLimitOrdersPage.orderKey(order.id),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         children: [
           Row(
@@ -153,18 +153,20 @@ class _SideIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final isBuy = side == LaunchpadLimitOrderSide.buy;
     final color = isBuy ? AppColors.buy : AppColors.sell;
-    return Container(
-      width: AppSpacing.launchpadBox40,
-      height: AppSpacing.launchpadBox40,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: Icon(
-        isBuy ? Icons.south_rounded : Icons.north_rounded,
-        color: color,
-        size: AppSpacing.launchpadIcon3xl,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox40,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
+        child: Center(
+          child: Icon(
+            isBuy ? Icons.south_rounded : Icons.north_rounded,
+            color: color,
+            size: AppSpacing.launchpadIcon3xl,
+          ),
+        ),
       ),
     );
   }
@@ -183,17 +185,16 @@ class _MiniIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.launchpadBox32,
-      height: AppSpacing.launchpadBox32,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox32,
       child: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: const ShapeDecoration(
           color: AppColors.bg,
-          borderRadius: AppRadii.smRadius,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: IconButton(
           onPressed: onTap,
-          padding: EdgeInsets.zero,
+          padding: AppSpacing.zeroInsets,
           icon: Icon(icon, color: color, size: AppSpacing.launchpadIconXl),
         ),
       ),
@@ -215,7 +216,7 @@ class _OrderMetricsGrid extends StatelessWidget {
       childAspectRatio: AppSpacing.launchpadGridAspectAction,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       children: [
         _MetricBlock(
           label: 'Target Price',
@@ -329,12 +330,12 @@ class _TinyPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+        padding: AppSpacing.launchpadCompactChipPadding,
         child: Text(
           label,
           style: AppTextStyles.badge.copyWith(

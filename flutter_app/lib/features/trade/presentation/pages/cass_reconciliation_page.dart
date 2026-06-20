@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -28,6 +28,13 @@ const _cassPrimary = AppColors.primary;
 const _cassGreen = AppColors.buy;
 const _cassAmber = AppColors.caution;
 const _cassRed = AppColors.sell;
+const _cassSpace = AppSpacing.x2;
+const _cassTinySpace = AppSpacing.x1;
+const _cassVisualScrollClearance = 112.0;
+const _cassNativeScrollClearance = 72.0;
+const _recordIconTile = 34.0;
+const _exportButtonHeight = 44.0;
+const _cassLineTight = 1.2;
 
 class CassReconciliationPage extends ConsumerStatefulWidget {
   const CassReconciliationPage({super.key, this.shellRenderMode});
@@ -54,11 +61,11 @@ class _CassReconciliationPageState
         .watch(tradeReadModelControllerProvider)
         .getCassReconciliation();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 70
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? _cassVisualScrollClearance
+            : _cassNativeScrollClearance);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -79,19 +86,17 @@ class _CassReconciliationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: CassReconciliationPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    customGap: AppSpacing.tradeBotPageTopGap,
-                    fullBleed: true,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Review CASS reconciliation evidence',
                         message:
                             'Confirm client-money balances, discrepancy status, limits, and next steps before export or escalation.',
+                        density: VitDensity.compact,
                       ),
                       _SummaryGrid(snapshot: snapshot),
                       _Tabs(activeId: _tab, onChanged: _setTab),

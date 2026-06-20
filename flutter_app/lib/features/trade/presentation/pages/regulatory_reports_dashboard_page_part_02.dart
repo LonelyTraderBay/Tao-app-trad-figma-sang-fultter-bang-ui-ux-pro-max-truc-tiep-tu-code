@@ -10,24 +10,26 @@ class _DistributionLegend extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: AppSpacing.tradeBotSmallGap,
+      density: VitDensity.compact,
       children: [
         for (final item in items)
           VitCard(
-            height: 38,
-            padding: AppSpacing.tradeBotCompactCardPadding,
+            density: VitDensity.compact,
             variant: VitCardVariant.inner,
+            constraints: BoxConstraints(
+              minHeight: VitDensity.compact.controlHeight,
+            ),
             child: Row(
               children: [
                 VitCard(
                   variant: VitCardVariant.ghost,
-                  width: AppSpacing.tradeBotChartLegendSwatchWidth,
-                  height: AppSpacing.tradeBotChartLegendSwatchHeight,
+                  width: AppSpacing.x3,
+                  height: AppSpacing.x3,
                   clip: true,
                   background: ColoredBox(color: Color(item.colorHex)),
                   child: const SizedBox.shrink(),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
                     item.name,
@@ -35,7 +37,6 @@ class _DistributionLegend extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.tradeBotLineHeightTight,
                     ),
                   ),
                 ),
@@ -44,7 +45,6 @@ class _DistributionLegend extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ],
@@ -107,27 +107,23 @@ class _ProviderCard extends StatelessWidget {
                 background: ColoredBox(color: color),
                 child: const SizedBox.shrink(),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   provider.name,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
               ),
               Text(
                 '${_formatInt(provider.reports)} reports',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.tradeBotLineHeightTight,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -167,7 +163,7 @@ class _QueueTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Submission Queue Summary',
-      customGap: 10,
+      density: VitDensity.compact,
       children: [
         for (final stat in snapshot.dailyStats.take(4))
           _Card(
@@ -179,7 +175,7 @@ class _QueueTab extends StatelessWidget {
                   color: _dashPrimary,
                   size: AppSpacing.tradeBotActionIcon,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotRowGap),
+                const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Text(
                     stat.date,
@@ -193,7 +189,7 @@ class _QueueTab extends StatelessWidget {
                   label: '${stat.confirmed} confirmed',
                   color: _dashGreen,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                const SizedBox(width: AppSpacing.x2),
                 _SmallPill(label: '${stat.failed} failed', color: _dashRed),
               ],
             ),
@@ -228,13 +224,13 @@ class _ComplianceTab extends StatelessWidget {
     ];
     return VitPageSection(
       label: 'Compliance Metrics',
-      customGap: 12,
+      density: VitDensity.compact,
       children: [
         _Card(
           padding: AppSpacing.tradeBotCardPadding,
           child: VitPageContent(
             padding: VitContentPadding.none,
-            customGap: AppSpacing.tradeBotContentGap,
+            density: VitDensity.compact,
             children: [
               for (final item in items)
                 _ProgressMetric(
@@ -254,7 +250,7 @@ class _ComplianceTab extends StatelessWidget {
                       color: _dashGreen,
                       size: AppSpacing.tradeBotMediumIcon,
                     ),
-                    const SizedBox(width: AppSpacing.tradeBotRowGap),
+                    const SizedBox(width: AppSpacing.x3),
                     Expanded(
                       child: Text(
                         'Full regulatory compliance maintained for 90 consecutive days',
@@ -284,7 +280,7 @@ class _ExportsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Export Reports',
-      customGap: 10,
+      density: VitDensity.compact,
       children: [
         _ExportCard(
           title: 'ISO 20022 XML Export',
@@ -346,11 +342,11 @@ class _ExportCard extends StatelessWidget {
               size: AppSpacing.tradeBotActionIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardGap),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: VitPageContent(
               padding: VitContentPadding.none,
-              customGap: 4,
+              density: VitDensity.compact,
               children: [
                 Text(
                   title,
@@ -411,10 +407,10 @@ class _ProgressMetric extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.tradeBotSmallGap),
+        const SizedBox(height: AppSpacing.x2),
         VitCard(
           variant: VitCardVariant.ghost,
-          height: AppSpacing.tradeBotProgressHeight,
+          height: AppSpacing.x2,
           clip: true,
           background: const ColoredBox(color: _dashPanel2),
           child: Align(

@@ -8,19 +8,21 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: LaunchpadLimitOrdersPage.tabsKey,
       color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.contentPad),
-      child: VitTabBar(
-        tabs: const [
-          VitTabItem(key: 'active', label: 'Hoat dong'),
-          VitTabItem(key: 'history', label: 'Lich su'),
-          VitTabItem(key: 'create', label: 'Tao lenh'),
-        ],
-        activeKey: activeTab.name,
-        onChanged: (key) => onChanged(_LimitOrderTab.values.byName(key)),
-        variant: VitTabBarVariant.underline,
+      child: Padding(
+        padding: AppSpacing.launchpadHorizontalContentPadding,
+        child: VitTabBar(
+          tabs: const [
+            VitTabItem(key: 'active', label: 'Hoat dong'),
+            VitTabItem(key: 'history', label: 'Lich su'),
+            VitTabItem(key: 'create', label: 'Tao lenh'),
+          ],
+          activeKey: activeTab.name,
+          onChanged: (key) => onChanged(_LimitOrderTab.values.byName(key)),
+          variant: VitTabBarVariant.underline,
+        ),
       ),
     );
   }
@@ -35,7 +37,7 @@ class _StatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadLimitOrdersPage.statsKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
           _StatCell(

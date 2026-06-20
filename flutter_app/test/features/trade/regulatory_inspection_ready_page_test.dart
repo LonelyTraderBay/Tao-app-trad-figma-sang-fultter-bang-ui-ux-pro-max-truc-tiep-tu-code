@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpInspection(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,18 @@ void main() {
     expect(find.text('Regulatory Framework Coverage'), findsOneWidget);
     expect(find.text('MiFID II'), findsOneWidget);
     expect(find.text('PRIIPs Regulation'), findsOneWidget);
+  });
+
+  testWidgets('SC-116 first viewport reaches regulatory framework coverage', (
+    tester,
+  ) async {
+    await pumpInspection(tester);
+
+    expectFirstViewportVisible(
+      tester,
+      find.text('MiFID II'),
+      targetLabel: 'first regulatory framework card',
+    );
   });
 
   testWidgets('SC-116 exposes document repository and inspector actions', (

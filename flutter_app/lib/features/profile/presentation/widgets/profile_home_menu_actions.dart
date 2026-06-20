@@ -66,8 +66,7 @@ class _ProfileProductTile extends StatelessWidget {
     return VitCard(
       key: ProfilePage.productShortcutKey(shortcut.id),
       onTap: () => context.go(shortcut.route),
-      height: AppSpacing.profileProductTileHeight,
-      padding: AppSpacing.profileProductTilePadding,
+      density: VitDensity.compact,
       borderColor: accent.withValues(alpha: .22),
       child: Row(
         children: [
@@ -127,8 +126,10 @@ class _MenuRow extends StatelessWidget {
       key: ProfilePage.menuKey(item.id),
       onTap: () => context.go(item.route),
       behavior: HitTestBehavior.opaque,
-      child: SizedBox(
-        height: AppSpacing.profileMenuRowHeight,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: VitDensity.standard.controlHeight,
+        ),
         child: Padding(
           padding: AppSpacing.profileMenuRowPadding,
           child: Row(
@@ -200,12 +201,19 @@ class _ActivityButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      height: AppSpacing.profileActivityButtonHeight,
+      density: VitDensity.compact,
       alignment: Alignment.center,
       borderColor: _profileBorder,
-      child: Text(
-        'Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng',
-        style: AppTextStyles.control.copyWith(color: AppColors.text2),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: VitDensity.compact.controlHeight,
+        ),
+        child: Center(
+          child: Text(
+            'Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng',
+            style: AppTextStyles.control.copyWith(color: AppColors.text2),
+          ),
+        ),
       ),
     );
   }
@@ -221,26 +229,31 @@ class _LogoutButton extends StatelessWidget {
     return VitCard(
       key: ProfilePage.logoutKey,
       onTap: onTap,
-      height: AppSpacing.profileLogoutButtonHeight,
+      density: VitDensity.compact,
       alignment: Alignment.center,
       borderColor: _profileRed.withValues(alpha: .28),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.logout_rounded,
-            color: _profileRed,
-            size: AppSpacing.profileLogoutIcon,
-          ),
-          const SizedBox(width: AppSpacing.profileLogoutGap),
-          Text(
-            '\u0110\u0103ng xu\u1EA5t',
-            style: AppTextStyles.baseMedium.copyWith(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: VitDensity.compact.controlHeight,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.logout_rounded,
               color: _profileRed,
-              fontWeight: AppTextStyles.bold,
+              size: AppSpacing.profileLogoutIcon,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.profileLogoutGap),
+            Text(
+              '\u0110\u0103ng xu\u1EA5t',
+              style: AppTextStyles.baseMedium.copyWith(
+                color: _profileRed,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -258,6 +271,7 @@ class _SectionLabel extends StatelessWidget {
       title: label,
       accentColor: accent,
       variant: VitSectionHeaderVariant.accentBar,
+      density: VitDensity.compact,
     );
   }
 }

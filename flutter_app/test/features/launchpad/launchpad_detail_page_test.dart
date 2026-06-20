@@ -27,6 +27,20 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  Future<void> pumpValidProjectDetail(WidgetTester tester) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      const ProviderScope(
+        child: MaterialApp(home: LaunchpadDetailPage(projectId: 'proj1')),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
   test('SC-318 mock repository exposes launchpad detail BE draft', () {
     final snapshot = const MockLaunchpadRepository().getDetail('sample');
 
@@ -70,6 +84,21 @@ void main() {
       find.text('Vui lòng kiểm tra kết nối mạng và thử lại.'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('SC-318 renders project detail summary surfaces', (tester) async {
+    await pumpValidProjectDetail(tester);
+
+    expect(find.byKey(LaunchpadDetailPage.summaryKey), findsOneWidget);
+    expect(find.text('NexaAI Protocol'), findsOneWidget);
+    expect(find.text('IEO'), findsOneWidget);
+    expect(find.text('Active'), findsOneWidget);
+    expect(find.text('Token price'), findsOneWidget);
+    expect(find.text(r'$0.05'), findsOneWidget);
+    expect(find.text('Raised'), findsOneWidget);
+    expect(find.text(r'$2,500,000'), findsOneWidget);
+    expect(find.text('Launchpad staking review required'), findsOneWidget);
+    expect(find.text('Next step'), findsOneWidget);
   });
 
   testWidgets('SC-318 header back returns to launchpad', (tester) async {

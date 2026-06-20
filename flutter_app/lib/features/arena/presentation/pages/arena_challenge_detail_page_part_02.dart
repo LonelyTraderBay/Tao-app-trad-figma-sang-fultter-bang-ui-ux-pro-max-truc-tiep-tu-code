@@ -8,7 +8,7 @@ class _ClarityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -17,9 +17,9 @@ class _ClarityCard extends StatelessWidget {
               const Icon(
                 Icons.fact_check_outlined,
                 color: AppColors.buy,
-                size: AppSpacing.arenaChallengeLgIcon,
+                size: _challengeLgIcon,
               ),
-              const SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: _challengeTinyGap),
               Expanded(
                 child: Text(
                   'Rule Clarity Score',
@@ -31,17 +31,17 @@ class _ClarityCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _challengeGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.arenaChallengeClarityProgressHeight,
+              minHeight: _challengeProgressHeight,
               value: score / 100,
               color: AppColors.buy,
               backgroundColor: AppColors.surface3,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _challengeTinyGap),
           Row(
             children: [
               Text(
@@ -51,7 +51,7 @@ class _ClarityCard extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: _challengeTinyGap),
               Expanded(
                 child: Text(
                   'Luật càng rõ, room càng tin tưởng',
@@ -80,14 +80,14 @@ class _CreatorCard extends StatelessWidget {
     return VitCard(
       key: ArenaChallengeDetailPage.creatorKey,
       onTap: onTap,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Row(
         children: [
           _IconBubble(
             icon: Icons.workspace_premium_outlined,
             color: AppColors.primary,
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: _challengeGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +99,7 @@ class _CreatorCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const SizedBox(height: _challengeTinyGap),
                 Row(
                   children: [
                     Text(
@@ -109,13 +109,13 @@ class _CreatorCard extends StatelessWidget {
                       ),
                     ),
                     if (creator.fairPlayBadge) ...[
-                      const SizedBox(width: AppSpacing.x2),
+                      const SizedBox(width: _challengeTinyGap),
                       const Icon(
                         Icons.shield_outlined,
                         color: AppColors.buy,
-                        size: AppSpacing.arenaChallengeFairPlayIcon,
+                        size: _challengeSmallIcon,
                       ),
-                      const SizedBox(width: AppSpacing.x1),
+                      const SizedBox(width: _challengeTinyGap),
                       Text(
                         'Fair Play',
                         style: AppTextStyles.micro.copyWith(
@@ -145,14 +145,14 @@ class _SafetyLinkCard extends StatelessWidget {
     return VitCard(
       key: ArenaChallengeDetailPage.safetyKey,
       onTap: onTap,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Row(
         children: [
           _IconBubble(
             icon: Icons.health_and_safety_outlined,
             color: AppColors.buy,
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: _challengeGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +164,7 @@ class _SafetyLinkCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
+                const SizedBox(height: _challengeTinyGap),
                 Text(
                   'Quy tắc, report vi phạm',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -214,7 +214,7 @@ class _Tabs extends StatelessWidget {
               },
             ),
             if (index != entries.length - 1)
-              const SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: _challengeTinyGap),
           ],
         ],
       ),
@@ -247,7 +247,7 @@ class _RulesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Column(
         children: [
           for (var index = 0; index < rules.length; index++) ...[
@@ -255,7 +255,7 @@ class _RulesList extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: AppSpacing.arenaChallengeRuleNumberWidth,
+                  width: _challengeRuleNumberWidth,
                   child: Text(
                     '${index + 1}.',
                     style: AppTextStyles.caption.copyWith(
@@ -269,14 +269,14 @@ class _RulesList extends StatelessWidget {
                     rules[index],
                     style: AppTextStyles.body.copyWith(
                       color: AppColors.text1,
-                      height: AppSpacing.arenaChallengeBodyLineHeight,
+                      height: 1.35,
                     ),
                   ),
                 ),
               ],
             ),
             if (index != rules.length - 1)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: _challengeGap),
           ],
         ],
       ),
@@ -307,7 +307,7 @@ class _ParticipantsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Column(
         children: [
           for (final team in teams) ...[
@@ -319,7 +319,7 @@ class _ParticipantsPanel extends StatelessWidget {
                       ? _arenaAccent
                       : AppColors.sell,
                 ),
-                const SizedBox(width: AppSpacing.x3),
+                const SizedBox(width: _challengeGap),
                 Expanded(
                   child: Text(
                     team.name,
@@ -351,31 +351,27 @@ class _ActivityPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Column(
         children: [
           for (final item in activity) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
-                  Icons.circle,
-                  size: AppSpacing.arenaChallengeActivityDot,
-                  color: AppColors.buy,
-                ),
-                const SizedBox(width: AppSpacing.x3),
+                const Icon(Icons.circle, size: 7, color: AppColors.buy),
+                const SizedBox(width: _challengeGap),
                 Expanded(
                   child: Text(
                     item,
                     style: AppTextStyles.body.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.arenaChallengeBodyLineHeight,
+                      height: 1.35,
                     ),
                   ),
                 ),
               ],
             ),
-            if (item != activity.last) const SizedBox(height: AppSpacing.x3),
+            if (item != activity.last) const SizedBox(height: _challengeGap),
           ],
         ],
       ),
@@ -401,7 +397,7 @@ class _WarningStack extends StatelessWidget {
                 : Icons.warning_amber_rounded,
           ),
           if (index != warnings.length - 1)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: _challengeTinyGap),
         ],
       ],
     );
@@ -423,7 +419,7 @@ class _PredictionBridgeCard extends StatelessWidget {
       key: ArenaChallengeDetailPage.predictionKey,
       onTap: onTap,
       borderColor: _arenaAccent.withValues(alpha: .25),
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -431,17 +427,17 @@ class _PredictionBridgeCard extends StatelessWidget {
             children: [
               const Icon(
                 Icons.info_outline_rounded,
-                size: AppSpacing.arenaChallengeBridgeIcon,
+                size: _challengeMdIcon,
                 color: _arenaAccent,
               ),
-              const SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: _challengeTinyGap),
               Expanded(
                 child: Text(
                   'MARKET CONTEXT ONLY',
                   style: AppTextStyles.micro.copyWith(
                     color: _arenaAccent,
                     fontWeight: AppTextStyles.bold,
-                    letterSpacing: AppSpacing.arenaChallengeBridgeLetterSpacing,
+                    letterSpacing: 0.0,
                   ),
                 ),
               ),
@@ -452,28 +448,28 @@ class _PredictionBridgeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _challengeGap),
           Text(
             'Bối cảnh thị trường',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const SizedBox(height: _challengeTinyGap),
           Text(
             contextDraft.title,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.arenaChallengeBridgeTitleLineHeight,
+              height: 1.25,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _challengeGap),
           Row(
             children: [
               Text(
                 'Xác suất "${contextDraft.outcomeName}":',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: _challengeTinyGap),
               Text(
                 '${contextDraft.probability}%',
                 style: AppTextStyles.body.copyWith(
@@ -483,29 +479,29 @@ class _PredictionBridgeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _challengeTinyGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.arenaChallengeBridgeProgressHeight,
+              minHeight: _challengeProgressHeight,
               value: contextDraft.probability / 100,
               color: AppColors.sell,
               backgroundColor: AppColors.surface3,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _challengeGap),
           _InlineAction(
             label: 'Xem thị trường dự đoán',
             icon: Icons.open_in_new_rounded,
             color: _arenaAccent,
             onTap: onTap,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _challengeGap),
           Text(
             'Thông tin chỉ mang tính tham khảo. Arena Points và Prediction Markets là 2 hệ thống hoàn toàn riêng biệt.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.arenaChallengeBridgeNoticeLineHeight,
+              height: 1.35,
             ),
           ),
         ],

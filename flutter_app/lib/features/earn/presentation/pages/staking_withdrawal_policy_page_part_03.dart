@@ -35,15 +35,15 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
             children: [
               Center(
                 child: SizedBox(
-                  width: AppSpacing.earnWithdrawalSheetHandleWidth,
-                  height: AppSpacing.earnWithdrawalSheetHandleHeight,
+                  width: _stakingWithdrawalSheetHandleWidth,
+                  height: _stakingWithdrawalSheetHandleHeight,
                   child: const Material(
                     color: AppColors.borderSolid,
                     borderRadius: AppRadii.hairlineRadius,
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x3),
               Text(
                 'Tính phí rút sớm',
                 style: AppTextStyles.sectionTitle.copyWith(
@@ -51,7 +51,7 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x3),
               VitInput(
                 controller: _principalController,
                 fieldKey: const Key('sc355_calculator_principal'),
@@ -86,15 +86,15 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
                 onChanged: (_) => setState(() => _previewRequested = false),
               ),
               if (result != null) ...[
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.x3),
                 _CalculatorResult(
                   result: result,
                   previewRequested: _previewRequested,
                 ),
               ],
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x3),
               _WarningBox(text: widget.snapshot.calculatorDisclaimer),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x3),
               VitCtaButton(
                 onPressed: result == null
                     ? null
@@ -164,7 +164,7 @@ class _CalculatorResult extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.cardLargeRadius,
       child: Padding(
-        padding: AppSpacing.earnPaddingX4,
+        padding: _stakingWithdrawalCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -222,14 +222,14 @@ class _NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: _stakingWithdrawalCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.text3,
-            size: AppSpacing.earnWithdrawalNoticeIcon,
+            size: _stakingWithdrawalNoticeIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -237,7 +237,7 @@ class _NoteCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.earnWithdrawalNoticeLineHeight,
+                height: _stakingWithdrawalNoticeLineHeight,
               ),
             ),
           ),
@@ -268,7 +268,7 @@ class _WarningBox extends StatelessWidget {
             const Icon(
               Icons.warning_amber_rounded,
               color: AppColors.warn,
-              size: AppSpacing.earnWithdrawalNoticeIcon,
+              size: _stakingWithdrawalNoticeIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -276,7 +276,7 @@ class _WarningBox extends StatelessWidget {
                 text,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.earnWithdrawalNoticeLineHeight,
+                  height: _stakingWithdrawalNoticeLineHeight,
                 ),
               ),
             ),
@@ -299,10 +299,10 @@ class _BulletLine extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.earnWithdrawalBulletPadding,
+          padding: _stakingWithdrawalBulletPadding,
           child: SizedBox(
-            width: AppSpacing.earnWithdrawalBulletSize,
-            height: AppSpacing.earnWithdrawalBulletSize,
+            width: _stakingWithdrawalBulletSize,
+            height: _stakingWithdrawalBulletSize,
             child: Material(color: color, shape: const CircleBorder()),
           ),
         ),
@@ -312,7 +312,7 @@ class _BulletLine extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.earnWithdrawalBulletLineHeight,
+              height: _stakingWithdrawalBulletLineHeight,
             ),
           ),
         ),
@@ -333,7 +333,7 @@ class _SmallBadge extends StatelessWidget {
       color: color.withValues(alpha: .12),
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.earnWithdrawalBadgePadding,
+        padding: _stakingWithdrawalBadgePadding,
         child: Text(
           label,
           maxLines: 2,
@@ -341,7 +341,7 @@ class _SmallBadge extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.earnWithdrawalBadgeLineHeight,
+            height: _stakingWithdrawalBadgeLineHeight,
           ),
         ),
       ),

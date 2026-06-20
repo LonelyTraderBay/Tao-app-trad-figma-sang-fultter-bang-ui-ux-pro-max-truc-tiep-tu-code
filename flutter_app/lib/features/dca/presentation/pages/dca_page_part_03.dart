@@ -20,8 +20,8 @@ class _CoinAvatar extends StatelessWidget {
       _ => Icons.token_rounded,
     };
     return SizedBox(
-      width: AppSpacing.dcaMainAssetIconBox,
-      height: AppSpacing.dcaMainAssetIconBox,
+      width: 36,
+      height: 36,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .12),
@@ -62,10 +62,10 @@ class _PlanMetric extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.dcaMainTightLineHeight,
+            height: 1.04,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.x1),
         Row(
           children: [
             if (icon != null) ...[
@@ -81,7 +81,7 @@ class _PlanMetric extends StatelessWidget {
                   color: color,
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
-                  height: AppSpacing.dcaMainTightLineHeight,
+                  height: 1.04,
                 ),
               ),
             ),
@@ -91,7 +91,7 @@ class _PlanMetric extends StatelessWidget {
                 unit,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.dcaMainTightLineHeight,
+                  height: 1.04,
                 ),
               ),
             ],
@@ -116,8 +116,8 @@ class _PlanIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.ctaHeight,
-      height: AppSpacing.dcaMainActionHeight,
+      width: VitDensity.compact.controlHeight,
+      height: VitDensity.compact.controlHeight,
       child: VitCard(
         variant: VitCardVariant.inner,
         radius: VitCardRadius.sm,
@@ -136,7 +136,7 @@ class _HistoryPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -164,9 +164,9 @@ class _HistoryPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x2),
           SizedBox(
-            height: AppSpacing.dcaMainHistoryChartHeight,
+            height: VitDensity.compact.controlHeight * 2.6,
             child: CustomPaint(
               painter: _HistoryChartPainter(
                 values: snapshot.history,
@@ -177,7 +177,7 @@ class _HistoryPanel extends StatelessWidget {
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -187,7 +187,7 @@ class _HistoryPanel extends StatelessWidget {
                   color: AppColors.buy,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _HistoryStat(
                   label: 'Đã đầu tư',
@@ -242,7 +242,7 @@ class _CreatePlanSheet extends StatelessWidget {
             VitCard(
               key: DCAPage.createSheetKey,
               radius: VitCardRadius.lg,
-              padding: AppSpacing.dcaContentPadding,
+              density: VitDensity.compact,
               margin: AppSpacing.dcaSheetMargin,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -251,8 +251,8 @@ class _CreatePlanSheet extends StatelessWidget {
                   Row(
                     children: [
                       SizedBox(
-                        width: AppSpacing.dcaMainToolIconBox,
-                        height: AppSpacing.dcaMainToolIconBox,
+                        width: 36,
+                        height: 36,
                         child: const DecoratedBox(
                           decoration: ShapeDecoration(
                             color: AppColors.primary12,
@@ -265,7 +265,7 @@ class _CreatePlanSheet extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.x4),
+                      const SizedBox(width: AppSpacing.x2),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -288,7 +288,7 @@ class _CreatePlanSheet extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x5),
+                  const SizedBox(height: AppSpacing.x2),
                   VitCtaButton(
                     onPressed: onClose,
                     leading: const Icon(Icons.check_rounded),

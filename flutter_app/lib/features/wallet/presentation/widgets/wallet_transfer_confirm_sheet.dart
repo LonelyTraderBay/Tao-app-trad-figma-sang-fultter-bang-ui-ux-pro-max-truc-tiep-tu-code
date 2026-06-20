@@ -23,8 +23,8 @@ class TransferConfirmSheet extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: AppSpacing.transferSheetPaddingWithAdditionalBottom(
-          DeviceMetrics.nativeBottomChrome,
+        padding: _transferSheetPadding.copyWith(
+          bottom: _transferSheetBottomClearance + _transferSectionGap,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -34,10 +34,10 @@ class TransferConfirmSheet extends StatelessWidget {
               'X\u00e1c nh\u1eadn chuy\u1ec3n n\u1ed9i b\u1ed9',
               style: AppTextStyles.baseMedium,
             ),
-            const SizedBox(height: AppSpacing.transferInfoGap),
+            const SizedBox(height: _transferSectionGap),
             VitCard(
               variant: VitCardVariant.inner,
-              padding: AppSpacing.transferCardInnerPadding,
+              padding: _transferCardInnerPadding,
               child: Column(
                 children: [
                   _ConfirmRow(label: 'T\u1eeba', value: fromWallet.name),
@@ -61,9 +61,9 @@ class TransferConfirmSheet extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.rowGap),
+            const SizedBox(height: _transferSectionGap),
             const _ConfirmNote(),
-            const SizedBox(height: AppSpacing.transferInputGap),
+            const SizedBox(height: _transferSectionGap),
             Row(
               children: [
                 Expanded(
@@ -72,9 +72,7 @@ class TransferConfirmSheet extends StatelessWidget {
                     onTap: () => Navigator.of(context).pop(),
                   ),
                 ),
-                const SizedBox(
-                  width: AppSpacing.searchBarHorizontalTrailingPadding,
-                ),
+                const SizedBox(width: _transferInlineGap),
                 Expanded(
                   child: _SheetButton(
                     buttonKey: const Key('sc146_transfer_confirm'),
@@ -108,7 +106,7 @@ class _ConfirmRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.walletTransferConfirmRowPadding,
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
           Expanded(
@@ -138,20 +136,20 @@ class _ConfirmNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.transferNoticePadding,
+      padding: _transferNoticePadding,
       borderColor: _transferPrimary.withValues(alpha: .20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: AppSpacing.walletTransferNoteIconPadding,
+            padding: const EdgeInsets.only(top: 1),
             child: Icon(
               Icons.info_outline_rounded,
               color: _transferPrimary,
-              size: AppSpacing.transferActionIcon,
+              size: _transferActionIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.x2),
+          const SizedBox(width: _transferInlineGap),
           Expanded(
             child: Text(
               'Chuy\u1ec3n n\u1ed9i b\u1ed9 x\u1eed l\u00fd ngay l\u1eadp t\u1ee5c, kh\u00f4ng m\u1ea5t ph\u00ed.',
@@ -185,7 +183,7 @@ class _SheetButton extends StatelessWidget {
       variant: primary
           ? VitCtaButtonVariant.primary
           : VitCtaButtonVariant.secondary,
-      height: AppSpacing.inputHeight,
+      height: _transferButtonHeight,
       child: Text(label),
     );
   }

@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/launchpad/data/launchpad_repository.d
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_swap_aggregator_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
 void main() {
   Future<void> pumpSwapAggregator(WidgetTester tester) async {
@@ -83,6 +84,12 @@ void main() {
     expect(find.text('Best rate: Uniswap V3'), findsOneWidget);
     expect(find.text('Uniswap V3'), findsWidgets);
     expect(find.text('PancakeSwap'), findsOneWidget);
+    expect(find.byType(VitHighRiskStatePanel), findsOneWidget);
+    final panel = tester.widget<VitHighRiskStatePanel>(
+      find.byType(VitHighRiskStatePanel),
+    );
+    expect(panel.state, VitHighRiskUiState.riskReview);
+    expect(panel.contractId, 'Launchpad swap route');
   });
 
   testWidgets('SC-314 expands route details and flips token direction', (
@@ -138,6 +145,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Swap 1000 USDT qua Uniswap V3'), findsOneWidget);
+    expect(find.text('Swap preview ready'), findsOneWidget);
+    expect(find.byType(VitHighRiskStatePanel), findsNWidgets(2));
   });
 
   testWidgets('SC-314 header back returns to launchpad', (tester) async {

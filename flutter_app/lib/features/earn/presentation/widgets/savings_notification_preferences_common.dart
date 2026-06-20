@@ -34,20 +34,19 @@ class SavingsNotificationSeverityPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = savingsNotificationSeverityColor(severity);
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.savingsNotificationSeverityPadV,
-      ),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
-      child: Text(
-        savingsNotificationSeverityLabel(severity),
-        style: AppTextStyles.micro.copyWith(
-          color: color,
-          fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.earnSmallPillPadding,
+        child: Text(
+          savingsNotificationSeverityLabel(severity),
+          style: AppTextStyles.micro.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+          ),
         ),
       ),
     );
@@ -68,9 +67,6 @@ class SavingsNotificationTokenSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final trackColor = value ? AppColors.buy : AppColors.surface3;
-    final thumbColor = value ? AppColors.onAccent : AppColors.text3;
-
     return Semantics(
       button: true,
       toggled: value,
@@ -80,39 +76,67 @@ class SavingsNotificationTokenSwitch extends StatelessWidget {
         child: AnimatedOpacity(
           duration: const Duration(milliseconds: 150),
           opacity: disabled ? .55 : 1,
-          child: AnimatedContainer(
+          child: TweenAnimationBuilder<double>(
             duration: const Duration(milliseconds: 160),
-            width: AppSpacing.savingsNotificationTokenSwitchWidth,
-            height: AppSpacing.savingsNotificationTokenSwitchHeight,
-            padding: const EdgeInsets.all(
-              AppSpacing.savingsNotificationTokenSwitchPadding,
-            ),
-            decoration: BoxDecoration(
-              color: trackColor,
-              borderRadius: AppRadii.xlRadius,
-              border: Border.all(
-                color: value ? AppColors.buy : AppColors.borderSolid,
-              ),
-            ),
-            child: Align(
-              alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 160),
-                width: AppSpacing.savingsNotificationTokenSwitchThumb,
-                height: AppSpacing.savingsNotificationTokenSwitchThumb,
-                decoration: BoxDecoration(
-                  color: thumbColor,
-                  shape: BoxShape.circle,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: AppColors.overlayScrim,
-                      blurRadius: 4,
-                      offset: Offset(0, 1),
+            tween: Tween<double>(end: value ? 1 : 0),
+            builder: (context, progress, _) {
+              final animatedTrackColor = Color.lerp(
+                AppColors.surface3,
+                AppColors.buy,
+                progress,
+              )!;
+              final animatedBorderColor = Color.lerp(
+                AppColors.borderSolid,
+                AppColors.buy,
+                progress,
+              )!;
+              final animatedThumbColor = Color.lerp(
+                AppColors.text3,
+                AppColors.onAccent,
+                progress,
+              )!;
+              final alignment = Alignment.lerp(
+                Alignment.centerLeft,
+                Alignment.centerRight,
+                progress,
+              )!;
+              return SizedBox(
+                width: AppSpacing.savingsNotificationTokenSwitchWidth,
+                height: AppSpacing.savingsNotificationTokenSwitchHeight,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: animatedTrackColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.xlRadius,
+                      side: BorderSide(color: animatedBorderColor),
                     ),
-                  ],
+                  ),
+                  child: Padding(
+                    padding: AppSpacing.savingsNotificationTokenSwitchInset,
+                    child: Align(
+                      alignment: alignment,
+                      child: SizedBox.square(
+                        dimension:
+                            AppSpacing.savingsNotificationTokenSwitchThumb,
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: animatedThumbColor,
+                            shape: const CircleBorder(),
+                            shadows: const [
+                              BoxShadow(
+                                color: AppColors.overlayScrim,
+                                blurRadius: 4,
+                                offset: Offset(0, 1),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       ),

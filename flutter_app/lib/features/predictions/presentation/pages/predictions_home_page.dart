@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -70,15 +71,13 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
           searchQuery: _searchQuery,
         );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollEndPadding =
+        navClearance +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionHomeBottomInsetVisual
-            : AppSpacing.predictionHomeBottomInsetNative);
+        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -116,11 +115,10 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                   child: SingleChildScrollView(
                     key: PredictionsHomePage.contentKey,
                     padding: AppSpacing.predictionHomeScrollPadding(
-                      bottomInset,
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionHomeContentGap,
+                      density: VitDensity.compact,
                       children: [
                         _SearchField(
                           controller: _searchController,
@@ -145,14 +143,6 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                             _category = value;
                           }),
                         ),
-                        if (snapshot.highRiskContractId != null)
-                          VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Prediction market states active',
-                            message:
-                                'Event setup, risk preview, confirmation, receipt, portfolio and support use the shared high-risk flow contract.',
-                            contractId: snapshot.highRiskContractId,
-                          ),
                         if (_searchQuery.isEmpty) ...[
                           _PredictionCtaCard(
                             key: PredictionsHomePage.myPredictionsKey,
@@ -174,6 +164,14 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                             onTap: () => context.go(AppRoutePaths.arena),
                           ),
                         ],
+                        if (snapshot.highRiskContractId != null)
+                          VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Prediction market states active',
+                            message:
+                                'Event setup, risk preview, confirmation, receipt, portfolio and support use the shared high-risk flow contract.',
+                            contractId: snapshot.highRiskContractId,
+                          ),
                         if (snapshot.events.isEmpty)
                           const _PredictionsEmptyState()
                         else

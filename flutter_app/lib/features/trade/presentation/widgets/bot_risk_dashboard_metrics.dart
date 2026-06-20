@@ -46,9 +46,9 @@ class _CriticalMetricsGrid extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: AppSpacing.tradeBotGridColumns,
-      crossAxisSpacing: AppSpacing.tradeBotCardGap,
-      mainAxisSpacing: AppSpacing.x4,
-      childAspectRatio: AppSpacing.tradeBotRiskMetricAspectRatio,
+      crossAxisSpacing: AppSpacing.x2,
+      mainAxisSpacing: AppSpacing.x2,
+      childAspectRatio: 1.85,
       children: [for (final metric in metrics) _MetricCard(metric: metric)],
     );
   }
@@ -80,28 +80,31 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
-              Icon(metric.icon, color: metric.color, size: 18),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              Icon(metric.icon, color: metric.color, size: AppSpacing.x4),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   metric.label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                  style: AppTextStyles.captionSm.copyWith(
+                    color: AppColors.text2,
+                  ),
                 ),
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             metric.value,
-            style: AppTextStyles.sectionTitle.copyWith(
+            style: AppTextStyles.sectionTitleXs.copyWith(
               color:
                   metric.label == 'Total Exposure' ||
                       metric.label == 'VaR (95%)'
@@ -109,12 +112,17 @@ class _MetricCard extends StatelessWidget {
                   : metric.color,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             metric.limit,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.badge.copyWith(
+              color: AppColors.text3,
+              fontWeight: AppTextStyles.normal,
+            ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: AppSpacing.x1),
           _ProgressTrack(value: metric.percent, color: metric.color),
         ],
       ),
@@ -130,7 +138,7 @@ class _ExposureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           for (final exposure in exposures) ...[
@@ -143,35 +151,39 @@ class _ExposureCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                const SizedBox(width: AppSpacing.x2),
                 Text(
                   '${exposure.percentage}%',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const Spacer(),
-                Text(
-                  '\$${_formatCompact(exposure.exposure)}',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      '\$${_formatCompact(exposure.exposure)}',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.tradeBotRowGap),
+            const SizedBox(height: AppSpacing.x2),
             _ProgressTrack(
               value: exposure.percentage / 100,
               color: Color(exposure.colorHex),
             ),
             if (exposure != exposures.last)
-              const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+              const SizedBox(height: AppSpacing.x3),
           ],
-          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+          const SizedBox(height: AppSpacing.x3),
           const Divider(
             color: AppColors.borderSolid,
-            height: AppSpacing.dividerHairline,
+            thickness: AppSpacing.hairlineStroke,
           ),
-          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -206,7 +218,7 @@ class _ProgressTrack extends StatelessWidget {
     return ClipRRect(
       borderRadius: AppRadii.pillRadius,
       child: SizedBox(
-        height: AppSpacing.tradeBotProgressHeight,
+        height: AppSpacing.x1,
         child: LinearProgressIndicator(
           value: value.clamp(0, 1),
           backgroundColor: _riskTrack,

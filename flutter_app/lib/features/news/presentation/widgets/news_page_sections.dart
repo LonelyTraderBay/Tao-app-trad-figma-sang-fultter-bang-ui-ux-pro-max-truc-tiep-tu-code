@@ -19,7 +19,7 @@ class _NewsFilterBar extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: SizedBox(
-        height: AppSpacing.newsFilterBarHeight,
+        height: _newsFilterBarHeight,
         child: ListView(
           scrollDirection: Axis.horizontal,
           padding: AppSpacing.newsFilterBarPadding,
@@ -74,7 +74,7 @@ class _FilterChipButton extends StatelessWidget {
     final textColor = selected ? selectedColor : AppColors.text2;
 
     return SizedBox(
-      height: AppSpacing.newsFilterChipHeight,
+      height: _newsFilterChipHeight,
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
@@ -97,7 +97,7 @@ class _FilterChipButton extends StatelessWidget {
                   style: AppTextStyles.captionSm.copyWith(
                     color: textColor,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.newsLineHeightTight,
+                    height: _newsTightLineHeight,
                   ),
                 ),
               ),
@@ -105,38 +105,6 @@ class _FilterChipButton extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({
-    required this.label,
-    this.icon,
-    this.color = AppColors.text2,
-  });
-
-  final String label;
-  final IconData? icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (icon != null) ...[
-          Icon(icon, size: AppSpacing.newsSectionIconSize, color: color),
-          const SizedBox(width: AppSpacing.x3),
-        ],
-        Text(
-          label,
-          style: AppTextStyles.captionSm.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            letterSpacing: AppSpacing.zero,
-          ),
-        ),
-      ],
     );
   }
 }
@@ -162,7 +130,7 @@ class _NewsArticleCard extends StatelessWidget {
       borderColor: pinned
           ? _newsPrimary.withValues(alpha: .28)
           : AppColors.cardBorder,
-      padding: AppSpacing.newsCardPadding,
+      density: VitDensity.compact,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +139,7 @@ class _NewsArticleCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _TypeAvatar(type: type),
-              const SizedBox(width: AppSpacing.newsFeedGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,18 +149,18 @@ class _NewsArticleCard extends StatelessWidget {
                     Text(
                       article.title,
                       style: AppTextStyles.body.copyWith(
-                        height: AppSpacing.newsTitleLineHeight,
+                        height: _newsTitleLineHeight,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       article.summary,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.newsSummaryLineHeight,
+                        height: _newsSummaryLineHeight,
                       ),
                     ),
                   ],
@@ -210,7 +178,7 @@ class _NewsArticleCard extends StatelessWidget {
             ],
           ),
           if (article.tags.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.newsFeedGap),
+            const SizedBox(height: AppSpacing.x2),
             Wrap(
               spacing: AppSpacing.x3,
               runSpacing: AppSpacing.x2 + 1,
@@ -257,7 +225,7 @@ class _ArticleMeta extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: type.color,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.newsLineHeightTight,
+                height: _newsTightLineHeight,
               ),
             ),
           ),
@@ -275,7 +243,7 @@ class _ArticleMeta extends StatelessWidget {
               article.publishedAtLabel,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.newsLineHeightTight,
+                height: _newsTightLineHeight,
               ),
             ),
           ],
@@ -293,7 +261,7 @@ class _TypeAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.newsArticleAvatarSize,
+      dimension: _newsArticleAvatarSize,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: type.color.withValues(alpha: .18),
@@ -334,7 +302,7 @@ class _TagChip extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.newsLineHeightTight,
+                height: _newsTightLineHeight,
               ),
             ),
           ],
@@ -350,15 +318,15 @@ class _NewsEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: AppSpacing.newsEmptyPadding,
+      padding: EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x5),
       child: Column(
         children: [
           Icon(
             Icons.newspaper_rounded,
             color: AppColors.borderSolid,
-            size: AppSpacing.newsEmptyIconSize,
+            size: _newsEmptyIconSize,
           ),
-          SizedBox(height: AppSpacing.newsFeedGap),
+          SizedBox(height: AppSpacing.x2),
           Text('Không có tin tức nào', style: AppTextStyles.caption),
         ],
       ),

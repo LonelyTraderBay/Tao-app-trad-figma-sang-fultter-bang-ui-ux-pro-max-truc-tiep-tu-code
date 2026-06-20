@@ -28,10 +28,11 @@ class _SignalCard extends StatelessWidget {
     return VitCard(
       clip: true,
       onTap: onTap,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.marketSocialSignalCardPadding,
+            padding: AppSpacing.zeroInsets,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -39,9 +40,7 @@ class _SignalCard extends StatelessWidget {
                   children: [
                     Text(
                       signal.providerAvatar,
-                      style: AppTextStyles.base.copyWith(
-                        height: AppSpacing.marketLineHeightTight,
-                      ),
+                      style: AppTextStyles.base.copyWith(height: 1),
                     ),
                     const SizedBox(width: AppSpacing.marketSocialGap),
                     Flexible(
@@ -68,17 +67,21 @@ class _SignalCard extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const Spacer(),
-                    Text(
-                      signal.timeAgo,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        height: AppSpacing.marketLineHeightTight,
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          signal.timeAgo,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                            height: 1,
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.marketSocialMediumGap),
+                const SizedBox(height: AppSpacing.x2),
                 Row(
                   children: [
                     _TinyBadge(
@@ -86,7 +89,6 @@ class _SignalCard extends StatelessWidget {
                       color: directionColor,
                       background: directionColor.withValues(alpha: .12),
                       padding: AppSpacing.marketSocialTinyBadgePaddingWide,
-                      height: AppSpacing.marketSocialTinyBadgeHeightLg,
                     ),
                     const SizedBox(width: AppSpacing.marketSocialGap),
                     Flexible(
@@ -104,18 +106,16 @@ class _SignalCard extends StatelessWidget {
                       label: statusConfig.label,
                       color: statusConfig.color,
                       background: statusConfig.color.withValues(alpha: .12),
-                      height: AppSpacing.marketSocialTinyBadgeHeightMd,
                     ),
                     const SizedBox(width: AppSpacing.marketSocialCompactGap),
                     _TinyBadge(
                       label: _categoryLabel(signal.category).toLowerCase(),
                       color: AppColors.text3,
                       background: AppColors.surface2,
-                      height: AppSpacing.marketSocialTinyBadgeHeightMd,
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.marketSocialMediumGap),
+                const SizedBox(height: AppSpacing.x2),
                 Row(
                   children: [
                     Expanded(
@@ -174,7 +174,7 @@ class _ExpandedSignalDetail extends StatelessWidget {
           color: AppColors.borderSolid,
         ),
         Padding(
-          padding: AppSpacing.marketSocialExpandedPadding,
+          padding: VitDensity.compact.cardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -185,7 +185,7 @@ class _ExpandedSignalDetail extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.marketSocialCompactGap),
+              const SizedBox(height: AppSpacing.x1),
               Row(
                 children: [
                   for (var index = 0; index < signal.targets.length; index += 1)
@@ -200,16 +200,18 @@ class _ExpandedSignalDetail extends StatelessWidget {
                             borderRadius: AppRadii.smRadius,
                             side: BorderSide(color: AppColors.buy20),
                           ),
-                          child: SizedBox(
-                            height: AppSpacing.marketSocialTargetHeight,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: AppSpacing.x2,
+                            ),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
                                   'TP${index + 1}',
                                   style: AppTextStyles.micro.copyWith(
                                     color: AppColors.text3,
-                                    height: AppSpacing.marketLineHeightTight,
+                                    height: 1,
                                   ),
                                 ),
                                 Text(
@@ -218,7 +220,7 @@ class _ExpandedSignalDetail extends StatelessWidget {
                                     color: AppColors.buy,
                                     fontWeight: AppTextStyles.bold,
                                     fontFeatures: AppTextStyles.tabularFigures,
-                                    height: AppSpacing.marketLineHeightTight,
+                                    height: 1,
                                   ),
                                 ),
                               ],
@@ -229,7 +231,7 @@ class _ExpandedSignalDetail extends StatelessWidget {
                     ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.marketSocialSectionGap),
+              const SizedBox(height: AppSpacing.x3),
               Row(
                 children: [
                   Text(
@@ -256,12 +258,12 @@ class _ExpandedSignalDetail extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.marketSocialGap),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 signal.reasoning,
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                style: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.marketSocialMediumGap),
+              const SizedBox(height: AppSpacing.x2),
               Row(
                 children: [
                   const Icon(
@@ -315,10 +317,10 @@ class _SignalMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.marketLineHeightTight,
+            height: 1,
           ),
         ),
-        const SizedBox(height: AppSpacing.marketSocialTinyGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           maxLines: 1,
@@ -327,7 +329,7 @@ class _SignalMetric extends StatelessWidget {
             color: valueColor,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: AppSpacing.marketLineHeightTight,
+            height: 1,
           ),
         ),
       ],
@@ -340,14 +342,12 @@ class _TinyBadge extends StatelessWidget {
     required this.label,
     required this.color,
     required this.background,
-    this.height = AppSpacing.marketSocialTinyBadgeHeight,
     this.padding = AppSpacing.marketSocialTinyBadgePadding,
   });
 
   final String label;
   final Color color;
   final Color background;
-  final double height;
   final EdgeInsetsGeometry padding;
 
   @override
@@ -356,7 +356,7 @@ class _TinyBadge extends StatelessWidget {
       color: background,
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       child: SizedBox(
-        height: height,
+        height: AppSpacing.x4 + AppSpacing.x1,
         child: Padding(
           padding: padding,
           child: Center(
@@ -367,7 +367,7 @@ class _TinyBadge extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.marketLineHeightTight,
+                height: 1,
               ),
             ),
           ),
@@ -392,7 +392,7 @@ class _ProviderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.marketSocialCardPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Row(
@@ -415,7 +415,7 @@ class _ProviderCard extends StatelessWidget {
                         color: rank <= 3 ? tierConfig.color : AppColors.text3,
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
-                        height: AppSpacing.marketLineHeightTight,
+                        height: 1,
                       ),
                     ),
                   ),
@@ -426,7 +426,7 @@ class _ProviderCard extends StatelessWidget {
                 provider.avatar,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
-                  height: AppSpacing.marketLineHeightTight,
+                  height: 1,
                 ),
               ),
               const SizedBox(width: AppSpacing.marketSocialSectionGap),
@@ -444,7 +444,7 @@ class _ProviderCard extends StatelessWidget {
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              height: AppSpacing.marketLineHeightTight,
+                              height: 1,
                             ),
                           ),
                         ),
@@ -455,18 +455,17 @@ class _ProviderCard extends StatelessWidget {
                           label: tierConfig.label,
                           color: tierConfig.color,
                           background: tierConfig.background,
-                          height: AppSpacing.marketSocialTinyBadgeHeightMd,
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.marketSocialTinyGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${_formatCompact(provider.followers.toDouble())} followers · ${provider.totalSignals} tín hiệu',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.marketLineHeightTight,
+                        height: 1,
                       ),
                     ),
                   ],
@@ -484,26 +483,26 @@ class _ProviderCard extends StatelessWidget {
                           : AppColors.warn,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
-                      height: AppSpacing.marketLineHeightCaption,
+                      height: 1.15,
                     ),
                   ),
                   Text(
                     'Win rate',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.marketLineHeightTight,
+                      height: 1,
                     ),
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketSocialLargeGap),
+          const SizedBox(height: AppSpacing.x3),
           const Divider(
-            height: AppSpacing.marketSocialDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.marketSocialMediumGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(

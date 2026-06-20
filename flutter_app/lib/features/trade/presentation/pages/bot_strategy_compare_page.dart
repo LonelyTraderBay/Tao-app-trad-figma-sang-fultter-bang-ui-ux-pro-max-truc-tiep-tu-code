@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -59,10 +60,14 @@ class _BotStrategyComparePageState
           : best,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final chromeInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
     final bottomInset =
+        chromeInset +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 132
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? AppSpacing.x6 + AppSpacing.x4
+            : AppSpacing.x5 + AppSpacing.x2) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -82,16 +87,20 @@ class _BotStrategyComparePageState
               Expanded(
                 child: SingleChildScrollView(
                   key: BotStrategyComparePage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.contentPad,
+                    top: AppSpacing.x2,
+                    right: AppSpacing.contentPad,
+                    bottom: bottomInset,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
+                    density: VitDensity.compact,
                     fullBleed: true,
-                    customGap: AppSpacing.tradeBotCardGap,
                     children: [
                       VitPageSection(
                         label: 'Select Strategies (2-4)',
+                        density: VitDensity.compact,
                         children: [
                           _StrategySelectionGrid(
                             strategies: snapshot.strategies,
@@ -103,6 +112,7 @@ class _BotStrategyComparePageState
                       _BestStrategyCard(strategy: best),
                       VitPageSection(
                         label: 'Equity Curves Comparison',
+                        density: VitDensity.compact,
                         children: [
                           _EquityChartCard(
                             points: snapshot.equityPoints,
@@ -112,17 +122,19 @@ class _BotStrategyComparePageState
                       ),
                       VitPageSection(
                         label: 'Performance Radar',
+                        density: VitDensity.compact,
                         children: [_RadarCard(strategies: selectedStrategies)],
                       ),
                       VitPageSection(
                         label: 'Detailed Metrics',
+                        density: VitDensity.compact,
                         children: [
                           _MetricsTable(strategies: selectedStrategies),
                         ],
                       ),
                       VitPageSection(
                         label: 'Which Strategy to Choose?',
-                        customGap: 12,
+                        density: VitDensity.compact,
                         children: [
                           for (final recommendation in snapshot.recommendations)
                             _RecommendationCard(
@@ -134,16 +146,13 @@ class _BotStrategyComparePageState
                         ],
                       ),
                       _AnalysisPeriodCard(text: snapshot.analysisPeriod),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Strategy comparison review',
-                          message:
-                              'Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.',
-                          contractId: 'bot-strategy-compare-review',
-                        ),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Strategy comparison review',
+                        message:
+                            'Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.',
+                        contractId: 'bot-strategy-compare-review',
+                        density: VitDensity.compact,
                       ),
                     ],
                   ),

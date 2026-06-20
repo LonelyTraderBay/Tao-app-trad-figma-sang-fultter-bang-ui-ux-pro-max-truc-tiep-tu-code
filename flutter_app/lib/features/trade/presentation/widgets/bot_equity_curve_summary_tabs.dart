@@ -26,9 +26,9 @@ class _SummaryRow extends StatelessWidget {
         for (var i = 0; i < items.length; i++) ...[
           Expanded(
             child: _Card(
-              padding: AppSpacing.tradeBotInnerPanelPadding,
+              padding: AppSpacing.tradeBotCompactPanelPadding,
               child: SizedBox(
-                height: AppSpacing.tradeBotEquitySummaryMetricHeight,
+                height: _equitySummaryMetricExtent,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -54,8 +54,7 @@ class _SummaryRow extends StatelessWidget {
               ),
             ),
           ),
-          if (i != items.length - 1)
-            const SizedBox(width: AppSpacing.tradeBotCardGap),
+          if (i != items.length - 1) const SizedBox(width: AppSpacing.x2),
         ],
       ],
     );

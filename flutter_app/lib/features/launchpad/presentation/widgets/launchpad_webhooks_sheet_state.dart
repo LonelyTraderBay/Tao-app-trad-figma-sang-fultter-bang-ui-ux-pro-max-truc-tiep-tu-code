@@ -31,7 +31,9 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: DeviceMetrics.width),
+            constraints: const BoxConstraints(
+              maxWidth: _launchpadWebhooksSheetMaxWidth,
+            ),
             child: DecoratedBox(
               decoration: const ShapeDecoration(
                 color: AppColors.bg,
@@ -42,15 +44,15 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Padding(
-                  padding: AppSpacing.launchpadCreateSheetPadding,
+                  padding: _launchpadWebhooksSheetPadding,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Center(
                         child: SizedBox(
-                          width: AppSpacing.launchpadBox40,
-                          height: AppSpacing.launchpadSheetHandleHeight,
+                          width: _launchpadWebhooksSheetHandleWidth,
+                          height: _launchpadWebhooksSheetHandleHeight,
                           child: DecoratedBox(
                             decoration: ShapeDecoration(
                               color: AppColors.borderSolid,
@@ -61,7 +63,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.x3),
                       Row(
                         children: [
                           Expanded(
@@ -82,7 +84,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.x3),
                       _SheetInputField(
                         label: 'Ten webhook',
                         hint: 'VD: Staking Monitor',
@@ -105,7 +107,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                         monospace: true,
                         onChanged: (_) => setState(() {}),
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.x3),
                       _ChoiceGroup(
                         label: 'Chain',
                         items: const ['BSC', 'Ethereum', 'Polygon', 'Arbitrum'],
@@ -113,7 +115,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                         colorFor: _chainColor,
                         onChanged: (value) => setState(() => _chain = value),
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.x3),
                       Text(
                         'Events (${_selectedEvents.length})',
                         style: AppTextStyles.micro.copyWith(
@@ -140,7 +142,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                             ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.x3),
                       _ChoiceGroup(
                         label: 'Retry Policy',
                         items: const ['none', 'linear', 'exponential'],
@@ -154,7 +156,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                           };
                         }),
                       ),
-                      const SizedBox(height: AppSpacing.x5),
+                      const SizedBox(height: AppSpacing.x4),
                       VitCtaButton(
                         key: LaunchpadWebhooksPage.createSubmitKey,
                         onPressed: _canSubmit ? _submit : null,

@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_mode_d
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/prediction_event_detail_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpChallengeDetail(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -77,6 +79,25 @@ void main() {
     expect(find.text('Team SOL'), findsWidgets);
     expect(find.text('Team AVAX'), findsWidgets);
     expect(find.text('Tóm tắt luật chơi'), findsOneWidget);
+  });
+
+  testWidgets('SC-190 first viewport reaches live points summary', (
+    tester,
+  ) async {
+    await pumpChallengeDetail(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ArenaChallengeDetailPage',
+      semanticLabel: 'SC-190 ArenaChallengeDetailPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Entry Points'),
+      targetLabel: 'the live Entry Points summary',
+      reason:
+          'ArenaChallengeDetailPage should expose the live Entry Points summary before the bottom navigation.',
+    );
   });
 
   testWidgets('SC-190 tabs and action sheets expose local state', (

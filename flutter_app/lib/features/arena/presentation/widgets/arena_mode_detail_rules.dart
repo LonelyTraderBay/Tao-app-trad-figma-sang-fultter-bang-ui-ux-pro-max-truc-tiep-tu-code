@@ -22,7 +22,7 @@ class ArenaModeDescriptionCard extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Text(
             description,
             style: AppTextStyles.body.copyWith(
@@ -53,7 +53,7 @@ class ArenaModeRulesSummary extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.arenaPaddingX4,
           child: Column(
             children: [
               for (var index = 0; index < rows.length; index++) ...[

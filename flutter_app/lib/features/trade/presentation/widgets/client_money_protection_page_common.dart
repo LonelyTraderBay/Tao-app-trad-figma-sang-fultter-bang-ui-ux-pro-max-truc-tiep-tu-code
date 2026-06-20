@@ -7,10 +7,9 @@ class _Reconciliation extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Daily Reconciliation',
-      customGap: AppSpacing.tradeBotCardGap,
+      density: VitDensity.compact,
       children: [
         _Card(
-          padding: AppSpacing.tradeBotCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -22,47 +21,42 @@ class _Reconciliation extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.tradeBotLineHeightTight,
                       ),
                     ),
                   ),
                   const _MatchedPill(),
                 ],
               ),
-              const SizedBox(height: AppSpacing.tradeBotStatusGap),
+              const SizedBox(height: AppSpacing.x2),
               const _ReconciliationRow(
                 label: 'Client Ledger Balance',
                 value: '\$45,230.50',
               ),
-              const SizedBox(height: AppSpacing.tradeBotSmallGap),
+              const SizedBox(height: AppSpacing.x1),
               const _ReconciliationRow(
                 label: 'Bank Account Balance',
                 value: '\$45,230.50',
               ),
-              const SizedBox(height: AppSpacing.tradeBotSmallGap),
+              const SizedBox(height: AppSpacing.x1),
               const _ReconciliationRow(
                 label: 'Difference',
                 value: '\$0.00',
                 success: true,
               ),
-              const SizedBox(height: AppSpacing.tradeBotRowGap),
+              const SizedBox(height: AppSpacing.x2),
               Text(
                 'Last reconciled: Today at 09:00 UTC - Next: Tomorrow at 09:00 UTC',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.tradeBotLineHeightBody,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeBotStatusGap),
         VitCtaButton(
           key: ClientMoneyProtectionPage.cassHistoryKey,
           onPressed: () =>
               context.go(AppRoutePaths.tradeCopyCassReconciliation),
           variant: VitCtaButtonVariant.secondary,
-          height: AppSpacing.tradeBotSheetActionHeight,
+          density: VitDensity.compact,
           leading: const Icon(
             Icons.visibility_outlined,
             size: AppSpacing.tradeBotCheckboxIcon,
@@ -78,7 +72,6 @@ class _Reconciliation extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ),
@@ -103,11 +96,10 @@ class _Documents extends StatelessWidget {
     ];
     return VitPageSection(
       label: 'CASS Documents',
-      customGap: AppSpacing.tradeBotCardGap,
+      density: VitDensity.compact,
       children: [
         for (final document in documents)
           _Card(
-            padding: AppSpacing.tradeBotClientMoneyDocumentsPadding,
             child: Row(
               children: [
                 VitCard(
@@ -134,15 +126,13 @@ class _Documents extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotLabelGap),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         document.$2,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.tradeBotLineHeightTight,
                         ),
                       ),
                     ],
@@ -172,19 +162,16 @@ class _MetricBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: AppSpacing.tradeBotClientMoneyMetricHeight,
-      padding: AppSpacing.tradeBotClientMoneyMetricPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -192,7 +179,6 @@ class _MetricBox extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -228,7 +214,6 @@ class _ReconciliationRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: success ? _moneyGreen : AppColors.text3,
                 fontWeight: success ? AppTextStyles.bold : AppTextStyles.normal,
-                height: AppSpacing.tradeBotLineHeightTight,
               ),
             ),
           ),
@@ -237,7 +222,6 @@ class _ReconciliationRow extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ],
@@ -260,15 +244,14 @@ class _MatchedPill extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
+  const _Card({required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: padding,
+      density: VitDensity.compact,
       borderColor: _moneyBorder.withValues(alpha: .72),
       child: child,
     );

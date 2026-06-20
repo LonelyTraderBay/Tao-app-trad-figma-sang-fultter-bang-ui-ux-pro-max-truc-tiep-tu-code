@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
@@ -19,6 +18,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
     required this.budgetFieldKey,
     required this.startDateFieldKey,
     required this.previewKey,
+    required this.reviewStateKey,
     required this.frequencyKey,
     required this.tokenController,
     required this.amountController,
@@ -36,6 +36,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
   final Key budgetFieldKey;
   final Key startDateFieldKey;
   final Key previewKey;
+  final Key reviewStateKey;
   final Key Function(LaunchpadDcaFrequency frequency) frequencyKey;
   final TextEditingController tokenController;
   final TextEditingController amountController;
@@ -51,7 +52,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
     final hasPreview =
         amountController.text.trim().isNotEmpty &&
         budgetController.text.trim().isNotEmpty;
-    return Container(
+    return KeyedSubtree(
       key: sectionKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,7 +62,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
             accentColor: AppColors.primary,
             children: [
               VitCard(
-                padding: const EdgeInsets.all(AppSpacing.x4),
+                padding: AppSpacing.launchpadPaddingX4,
                 child: _LabeledField(
                   fieldKey: tokenFieldKey,
                   label: 'Chon token',
@@ -103,7 +104,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
             accentColor: AppColors.primary,
             children: [
               VitCard(
-                padding: const EdgeInsets.all(AppSpacing.x4),
+                padding: AppSpacing.launchpadPaddingX4,
                 child: Column(
                   children: [
                     _LabeledField(
@@ -152,11 +153,19 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
               amount: amountController.text.trim(),
               totalBudget: budgetController.text.trim(),
             ),
+            const SizedBox(height: AppSpacing.x4),
+            VitHighRiskStatePanel(
+              key: reviewStateKey,
+              state: VitHighRiskUiState.riskReview,
+              title: 'Review DCA plan',
+              message: 'Check token, amount, budget, start date, and cadence.',
+              contractId: 'SC-316 / ${tokenController.text.trim()}',
+            ),
           ],
           if (submissionMessage != null) ...[
             const SizedBox(height: AppSpacing.x4),
             VitCard(
-              padding: const EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.launchpadPaddingX3,
               borderColor: AppColors.buy20,
               child: Row(
                 children: [
@@ -199,39 +208,29 @@ class _FrequencyChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: choiceKey,
+      radius: VitCardRadius.md,
+      borderColor: active ? AppColors.primary : AppColors.cardBorder,
+      padding: AppSpacing.launchpadPaddingX4,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Container(
-        padding: const EdgeInsets.all(AppSpacing.x4),
-        decoration: BoxDecoration(
-          color: active
-              ? AppColors.primary.withValues(alpha: .10)
-              : AppColors.surface,
-          border: Border.all(
-            color: active ? AppColors.primary : AppColors.cardBorder,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            launchpadDcaFrequencyIcon(frequency),
+            color: active ? AppColors.primary : AppColors.text3,
           ),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              launchpadDcaFrequencyIcon(frequency),
-              color: active ? AppColors.primary : AppColors.text3,
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            launchpadDcaFrequencyLabel(frequency),
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(
+              color: active ? AppColors.primary : AppColors.text1,
+              fontWeight: AppTextStyles.bold,
             ),
-            const SizedBox(height: AppSpacing.x2),
-            Text(
-              launchpadDcaFrequencyLabel(frequency),
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? AppColors.primary : AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -258,51 +257,17 @@ class _LabeledField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-        ),
-        const SizedBox(height: AppSpacing.x2),
-        TextField(
-          key: fieldKey,
-          controller: controller,
-          keyboardType: keyboardType,
-          inputFormatters: keyboardType == TextInputType.text
-              ? const []
-              : [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
-          onChanged: (_) => onChanged(),
-          style: AppTextStyles.base.copyWith(color: AppColors.text1),
-          decoration: InputDecoration(
-            prefixIcon: prefixIcon == null
-                ? null
-                : Icon(
-                    prefixIcon,
-                    color: AppColors.text3,
-                    size: AppSpacing.launchpadIcon2xl,
-                  ),
-            hintText: hintText,
-            hintStyle: AppTextStyles.base.copyWith(color: AppColors.text3),
-            isDense: true,
-            filled: true,
-            fillColor: AppColors.bg,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.x4,
-              vertical: AppSpacing.x3,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: AppRadii.inputRadius,
-              borderSide: const BorderSide(color: AppColors.cardBorder),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: AppRadii.inputRadius,
-              borderSide: const BorderSide(color: AppColors.primary),
-            ),
-          ),
-        ),
-      ],
+    return VitInput(
+      fieldKey: fieldKey,
+      label: label,
+      controller: controller,
+      hintText: hintText,
+      keyboardType: keyboardType,
+      inputFormatters: keyboardType == TextInputType.text
+          ? const []
+          : [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
+      prefix: prefixIcon == null ? null : Icon(prefixIcon),
+      onChanged: (_) => onChanged(),
     );
   }
 }
@@ -327,14 +292,11 @@ class _StrategyPreview extends StatelessWidget {
     final perOrder = double.tryParse(amount) ?? 0;
     final budget = double.tryParse(totalBudget) ?? 0;
     final estimatedOrders = perOrder == 0 ? 0 : (budget / perOrder).floor();
-    return Container(
+    return VitCard(
       key: previewKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
-        color: AppColors.buy10,
-        border: Border.all(color: AppColors.buy20),
-        borderRadius: AppRadii.cardRadius,
-      ),
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.buy20,
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

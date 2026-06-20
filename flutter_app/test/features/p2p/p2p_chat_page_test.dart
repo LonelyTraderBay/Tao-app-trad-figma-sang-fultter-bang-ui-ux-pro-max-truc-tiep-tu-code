@@ -10,9 +10,12 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_page
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 void main() {
-  Future<void> pumpP2PChat(WidgetTester tester) async {
+  Future<void> pumpP2PChat(
+    WidgetTester tester, {
+    Size viewport = const Size(440, 956),
+  }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -75,6 +78,29 @@ void main() {
     );
     expect(find.text('Chia sẻ bằng chứng'), findsOneWidget);
     expect(find.byKey(P2PChatPage.inputKey), findsOneWidget);
+  });
+
+  testWidgets('SC-320 uses full-height chat workspace at 360x800', (
+    tester,
+  ) async {
+    await pumpP2PChat(tester, viewport: const Size(360, 800));
+
+    expect(find.byType(P2PChatPage), findsOneWidget);
+    expect(find.byKey(P2PChatPage.contentKey), findsOneWidget);
+    expect(find.byKey(P2PChatPage.inputKey), findsOneWidget);
+    expect(find.byKey(P2PChatPage.sendKey), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+
+    final contentRect = tester.getRect(find.byKey(P2PChatPage.contentKey));
+    final inputRect = tester.getRect(find.byKey(P2PChatPage.inputKey));
+    final sendRect = tester.getRect(find.byKey(P2PChatPage.sendKey));
+
+    expect(contentRect.left, closeTo(0, 0.5));
+    expect(contentRect.right, closeTo(360, 0.5));
+    expect(contentRect.height, greaterThan(220));
+    expect(inputRect.bottom, lessThanOrEqualTo(800));
+    expect(sendRect.bottom, lessThanOrEqualTo(800));
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('SC-217 quick reply and send add local message', (tester) async {

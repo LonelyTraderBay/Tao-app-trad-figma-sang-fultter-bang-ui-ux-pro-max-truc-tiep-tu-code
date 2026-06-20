@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -27,6 +27,10 @@ const _reportPrimary = AppColors.primary;
 const _reportGreen = AppColors.buy;
 const _reportAmber = AppColors.caution;
 const _reportRed = AppColors.sell;
+const double _reportFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _reportNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
 
 class ExPostCostsReportPage extends ConsumerStatefulWidget {
   const ExPostCostsReportPage({super.key, this.shellRenderMode});
@@ -51,10 +55,10 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
     final snapshot = repository.getExPostCostsReport();
     final report = snapshot.reportForYear(_selectedYear);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 70
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? _reportFramedScrollClearance
+            : _reportNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -81,28 +85,14 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: ExPostCostsReportPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top:
-                        AppSpacing.x6 -
-                        AppSpacing.x3 +
-                        AppSpacing.x1 -
-                        AppSpacing.hairlineStroke,
-                    bottom: bottomInset,
-                  ),
+                  bottomInset: scrollEndClearance,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: 0,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _ComplianceNotice(year: report.year),
-                      const SizedBox(
-                        height:
-                            AppSpacing.x6 +
-                            AppSpacing.x1 -
-                            AppSpacing.hairlineStroke,
-                      ),
                       Row(
                         children: [
                           Expanded(
@@ -111,7 +101,7 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
                               value: _formatEur(report.totalActual),
                             ),
                           ),
-                          const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
+                          const SizedBox(width: AppSpacing.x2),
                           Expanded(
                             child: _SummaryCard(
                               label: 'Estimated Costs',
@@ -121,15 +111,14 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.success,
                         title: 'Actual cost report ready',
                         message:
                             'Review actual versus estimated costs, variance drivers, fee impact, and next-step export before using this report for disclosure.',
                         contractId: 'SC-107 ${report.year} report',
+                        density: VitDensity.compact,
                       ),
-                      const SizedBox(height: AppSpacing.x5 + AppSpacing.x1),
                       _YearTabs(
                         reports: snapshot.reports,
                         activeYear: _selectedYear,
@@ -137,21 +126,12 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
                           _selectedYear = year;
                         }),
                       ),
-                      const SizedBox(
-                        height:
-                            AppSpacing.x6 -
-                            AppSpacing.x3 +
-                            AppSpacing.x1 -
-                            AppSpacing.hairlineStroke,
-                      ),
                       const _SectionLabel('Actual vs. Estimated'),
-                      const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
                       _CostBreakdownCard(
                         title: 'One-off Costs',
                         actual: report.oneOff,
                         estimate: report.estimatedOneOff,
                       ),
-                      const SizedBox(height: AppSpacing.x4),
                       _CostBreakdownCard(
                         title: 'Recurring Costs',
                         actual: report.recurring,
@@ -160,7 +140,6 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
                           report.estimatedRecurring - report.recurring,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x4),
                       _CostBreakdownCard(
                         title: 'Incidental Costs',
                         actual: report.incidental,
@@ -169,15 +148,7 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
                           report.incidental - report.estimatedIncidental,
                         ),
                       ),
-                      const SizedBox(
-                        height:
-                            AppSpacing.x5 +
-                            AppSpacing.x3 -
-                            AppSpacing.x2 +
-                            AppSpacing.hairlineStroke,
-                      ),
                       const _SectionLabel('Variance Analysis'),
-                      const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
                       _VarianceCard(report: report),
                       const TradeBodyReviewSection(
                         title: 'Cost report body review',

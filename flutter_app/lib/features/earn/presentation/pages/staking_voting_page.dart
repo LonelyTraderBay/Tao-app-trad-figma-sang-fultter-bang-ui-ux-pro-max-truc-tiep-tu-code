@@ -68,8 +68,8 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
                   child: Column(
                     children: [
                       VitPageContent(
-                        padding: VitContentPadding.relaxed,
-                        gap: VitContentGap.relaxed,
+                        padding: VitContentPadding.defaultPadding,
+                        gap: VitContentGap.defaultGap,
                         children: [
                           _ProposalSummary(snapshot: snapshot),
                           _ResultsSection(results: snapshot.results),

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -52,12 +53,13 @@ class _VIPPageState extends ConsumerState<VIPPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(profileControllerProvider).getVip();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome +
-                  AppSpacing.profileVipBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.profileVipBottomInsetNative) +
+                  AppSpacing.x7 +
+                  AppSpacing.x6 +
+                  AppSpacing.x5
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -79,9 +81,10 @@ class _VIPPageState extends ConsumerState<VIPPage> {
                 child: SingleChildScrollView(
                   key: VIPPage.contentKey,
                   physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: scrollClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: AppSpacing.profileVipContentGap,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       _VipHero(snapshot: snapshot),
                       _VipTabs(
@@ -92,7 +95,6 @@ class _VIPPageState extends ConsumerState<VIPPage> {
                         duration: const Duration(milliseconds: 180),
                         child: _tabContent(snapshot),
                       ),
-                      SizedBox(height: bottomInset),
                     ],
                   ),
                 ),

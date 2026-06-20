@@ -16,15 +16,13 @@ class _StatusNotice extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.walletPendingNoticeMinHeight,
-      ),
-      padding: AppSpacing.walletPendingNoticePadding,
+      constraints: const BoxConstraints(minHeight: _pendingNoticeMinHeight),
+      padding: _pendingNoticePadding,
       borderColor: color.withValues(alpha: .22),
       child: Row(
         children: [
           Icon(icon, color: color, size: AppSpacing.walletPendingNoticeIcon),
-          const SizedBox(width: AppSpacing.walletPendingInlineGap),
+          const SizedBox(width: _pendingInlineGap),
           Expanded(
             child: Text(
               text,
@@ -58,28 +56,28 @@ class _DepositDetails extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.walletPendingDetailsPadding,
+      padding: _pendingDetailsPadding,
       child: Column(
         children: [
           _DetailRow(label: 'M\u1EA1ng', value: deposit.network),
-          const SizedBox(height: AppSpacing.walletPendingDetailsGap),
+          const SizedBox(height: _pendingTinyGap),
           _DetailRow(
             label: 'Th\u1EDDi gian d\u1EF1 ki\u1EBFn',
             value: deposit.estimatedArrival,
           ),
-          const SizedBox(height: AppSpacing.walletPendingDetailsGap),
+          const SizedBox(height: _pendingTinyGap),
           _DetailRow(
             label: 'T\u1EEB \u0111\u1ECBa ch\u1EC9',
             value: deposit.fromAddress,
           ),
-          const SizedBox(height: AppSpacing.walletPendingDetailsGap),
+          const SizedBox(height: _pendingTinyGap),
           Row(
             children: [
               Text(
                 'TxHash',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const Spacer(),
+              const SizedBox(width: _pendingInlineGap),
               Flexible(
                 child: Text(
                   deposit.txHash,
@@ -89,7 +87,7 @@ class _DepositDetails extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: _pendingPrimary),
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletPendingTxGap),
+              const SizedBox(width: _pendingTinyGap),
               VitStatusPill(
                 key: PendingDepositsPage.copyKey(deposit.id),
                 label: copied ? '\u0110\u00E3 ch\u00E9p' : 'Copy',
@@ -144,14 +142,14 @@ class _EmptyDeposits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.walletPendingEmptyPadding,
+      padding: _pendingCardPadding,
       child: Column(
         children: [
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            width: AppSpacing.walletPendingEmptyIconBox,
-            height: AppSpacing.walletPendingEmptyIconBox,
+            width: _pendingIconBox,
+            height: _pendingIconBox,
             alignment: Alignment.center,
             child: const Icon(
               Icons.inbox_outlined,
@@ -159,7 +157,7 @@ class _EmptyDeposits extends StatelessWidget {
               size: AppSpacing.walletPendingEmptyIconGlyph,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletPendingRowGap),
+          const SizedBox(height: _pendingGap),
           Text(
             'Kh\u00F4ng c\u00F3 giao d\u1ECBch n\u1EA1p n\u00E0o',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -176,7 +174,7 @@ class _InfoNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletPendingInfoPadding,
+      padding: _pendingNoticePadding,
       borderColor: _pendingPrimary.withValues(alpha: .15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,7 +184,7 @@ class _InfoNotice extends StatelessWidget {
             color: _pendingPrimary,
             size: AppSpacing.walletPendingNoticeIcon,
           ),
-          const SizedBox(width: AppSpacing.walletPendingProgressGap),
+          const SizedBox(width: _pendingInlineGap),
           Expanded(
             child: Text(
               'S\u1ED1 x\u00E1c nh\u1EADn c\u1EA7n thi\u1EBFt ph\u1EE5 thu\u1ED9c v\u00E0o m\u1EA1ng blockchain. N\u1EA1p d\u01B0\u1EDBi m\u1EE9c t\u1ED1i thi\u1EC3u s\u1EBD kh\u00F4ng \u0111\u01B0\u1EE3c ghi nh\u1EADn. Li\u00EAn h\u1EC7 h\u1ED7 tr\u1EE3 n\u1EBFu giao d\u1ECBch ch\u01B0a xu\u1EA5t hi\u1EC7n sau 1 gi\u1EDD.',

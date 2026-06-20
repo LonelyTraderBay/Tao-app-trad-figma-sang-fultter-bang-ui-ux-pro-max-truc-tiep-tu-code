@@ -26,7 +26,7 @@ class _AddressCard extends StatelessWidget {
       borderColor: address.isDefault
           ? address.accent.withValues(alpha: .42)
           : null,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         children: [
@@ -34,7 +34,7 @@ class _AddressCard extends StatelessWidget {
             key: LaunchpadAddressBookPage.expandKey(address.id),
             onTap: onExpand,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.launchpadPaddingX4,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -142,68 +142,84 @@ class _ExpandedAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      padding: const EdgeInsets.all(AppSpacing.x4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.x3),
-            decoration: BoxDecoration(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.inputRadius,
-            ),
-            child: Text(
-              address.address,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text1,
-                height: AppSpacing.launchpadLineHeightReadable,
-                fontWeight: FontWeight.w700,
-              ),
+          const Divider(
+            height: AppSpacing.launchpadDividerWidth,
+            thickness: AppSpacing.launchpadDividerWidth,
+            color: AppColors.divider,
+          ),
+          Padding(
+            padding: AppSpacing.launchpadPaddingX4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                DecoratedBox(
+                  decoration: const ShapeDecoration(
+                    color: AppColors.surface2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.inputRadius,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: AppSpacing.launchpadPaddingX3,
+                    child: Text(
+                      address.address,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text1,
+                        height: AppSpacing.launchpadLineHeightReadable,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                _DetailRow(label: 'Chain', value: address.chain),
+                if (address.lastUsed != null)
+                  _DetailRow(
+                    label: 'Lan dung gan nhat',
+                    value: address.lastUsed!,
+                  ),
+                _DetailRow(
+                  label: 'So lan su dung',
+                  value: '${address.usageCount} lan',
+                ),
+                _DetailRow(label: 'Ngay them', value: address.createdAt),
+                _DetailRow(
+                  label: 'Trang thai',
+                  value: address.verified ? 'Da xac minh' : 'Chua xac minh',
+                ),
+                if (address.notes != null) ...[
+                  const SizedBox(height: AppSpacing.x3),
+                  Text(
+                    address.notes!,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      height: AppSpacing.launchpadLineHeightDense,
+                    ),
+                  ),
+                ],
+                if (!address.isDefault) ...[
+                  const SizedBox(height: AppSpacing.x3),
+                  VitCtaButton(
+                    key: LaunchpadAddressBookPage.defaultKey(address.id),
+                    onPressed: onDefault,
+                    variant: VitCtaButtonVariant.secondary,
+                    height: AppSpacing.launchpadBox42,
+                    leading: const Icon(
+                      Icons.verified_user_outlined,
+                      color: AppColors.text1,
+                      size: AppSpacing.launchpadIconXl,
+                    ),
+                    child: const Text('Dat lam mac dinh'),
+                  ),
+                ],
+              ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
-          _DetailRow(label: 'Chain', value: address.chain),
-          if (address.lastUsed != null)
-            _DetailRow(label: 'Lan dung gan nhat', value: address.lastUsed!),
-          _DetailRow(
-            label: 'So lan su dung',
-            value: '${address.usageCount} lan',
-          ),
-          _DetailRow(label: 'Ngay them', value: address.createdAt),
-          _DetailRow(
-            label: 'Trang thai',
-            value: address.verified ? 'Da xac minh' : 'Chua xac minh',
-          ),
-          if (address.notes != null) ...[
-            const SizedBox(height: AppSpacing.x3),
-            Text(
-              address.notes!,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.launchpadLineHeightDense,
-              ),
-            ),
-          ],
-          if (!address.isDefault) ...[
-            const SizedBox(height: AppSpacing.x3),
-            VitCtaButton(
-              key: LaunchpadAddressBookPage.defaultKey(address.id),
-              onPressed: onDefault,
-              variant: VitCtaButtonVariant.secondary,
-              height: AppSpacing.launchpadBox42,
-              leading: const Icon(
-                Icons.verified_user_outlined,
-                color: AppColors.text1,
-                size: AppSpacing.launchpadIconXl,
-              ),
-              child: const Text('Dat lam mac dinh'),
-            ),
-          ],
         ],
       ),
     );

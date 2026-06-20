@@ -24,7 +24,7 @@ class _ComponentLine extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.arenaProductionCompactLineHeight,
+                  height: 1.08,
                 ),
               ),
             ),
@@ -38,7 +38,7 @@ class _ComponentLine extends StatelessWidget {
                   component.name,
                   style: AppTextStyles.caption.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaProductionTitleLineHeight,
+                    height: 1.14,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -46,7 +46,7 @@ class _ComponentLine extends StatelessWidget {
                   component.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaProductionMetricLineHeight,
+                    height: 1.24,
                   ),
                 ),
               ],
@@ -100,7 +100,7 @@ class _DictionaryLine extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.arenaProductionCompactLineHeight,
+                  height: 1.08,
                 ),
               ),
             ),
@@ -114,7 +114,7 @@ class _DictionaryLine extends StatelessWidget {
                   item.label,
                   style: AppTextStyles.caption.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaProductionTitleLineHeight,
+                    height: 1.14,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -122,7 +122,7 @@ class _DictionaryLine extends StatelessWidget {
                   item.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaProductionMetricLineHeight,
+                    height: 1.24,
                   ),
                 ),
               ],
@@ -157,7 +157,7 @@ class _ChecklistLine extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.arenaProductionCheckLineHeight,
+                height: 1.24,
               ),
             ),
           ),
@@ -175,7 +175,7 @@ class _InternalOnlyFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX3,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -191,7 +191,7 @@ class _InternalOnlyFooter extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaProductionCheckLineHeight,
+                height: 1.24,
               ),
             ),
           ),
@@ -220,7 +220,7 @@ class _StatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.arenaProductionCompactLineHeight,
+            height: 1.08,
           ),
         ),
       ),
@@ -244,7 +244,7 @@ class _StateMiniPill extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaProductionCompactLineHeight,
+            height: 1.08,
           ),
         ),
       ),
@@ -295,9 +295,7 @@ class _StateMatrixPill extends StatelessWidget {
     return Opacity(
       opacity: active ? 1 : .32,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minWidth: AppSpacing.arenaProductionStateMatrixMinWidth,
-        ),
+        constraints: const BoxConstraints(minWidth: 64),
         child: Material(
           color: active ? color.withValues(alpha: .12) : AppColors.surface2,
           borderRadius: AppRadii.xsRadius,

@@ -26,7 +26,7 @@ class _LeaderboardBody extends StatelessWidget {
           entries: snapshot.topCreators,
           onCreator: onCreator,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         _EntrySection(
           title: 'Rising Creators',
           accentColor: AppColors.warn,
@@ -51,28 +51,22 @@ class _Podium extends StatelessWidget {
     final third = entries.firstWhere((entry) => entry.rank == 3);
 
     return Padding(
-      padding: AppSpacing.arenaLeaderboardPodiumPadding,
+      padding: _leaderboardPodiumPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
-            child: _PodiumItem(
-              entry: second,
-              size: AppSpacing.arenaLeaderboardPodiumSideSize,
-            ),
+            child: _PodiumItem(entry: second, size: _leaderboardPodiumSideSize),
           ),
           Expanded(
             child: _PodiumItem(
               entry: first,
-              size: AppSpacing.arenaLeaderboardPodiumWinnerSize,
+              size: _leaderboardPodiumWinnerSize,
               crown: true,
             ),
           ),
           Expanded(
-            child: _PodiumItem(
-              entry: third,
-              size: AppSpacing.arenaLeaderboardPodiumSideSize,
-            ),
+            child: _PodiumItem(entry: third, size: _leaderboardPodiumSideSize),
           ),
         ],
       ),
@@ -110,16 +104,15 @@ class _PodiumItem extends StatelessWidget {
                 borderRadius: crown ? AppRadii.cardRadius : AppRadii.mdRadius,
                 side: BorderSide(
                   color: color,
-                  width: AppSpacing.arenaLeaderboardPodiumBorderWidth,
+                  width: _leaderboardPodiumBorderWidth,
                 ),
               ),
               shadows: crown
                   ? [
                       BoxShadow(
                         color: AppColors.warn.withValues(alpha: .24),
-                        blurRadius: AppSpacing.arenaLeaderboardPodiumShadowBlur,
-                        spreadRadius:
-                            AppSpacing.arenaLeaderboardPodiumShadowSpread,
+                        blurRadius: _leaderboardPodiumShadowBlur,
+                        spreadRadius: _leaderboardPodiumShadowSpread,
                       ),
                     ]
                   : null,
@@ -128,7 +121,7 @@ class _PodiumItem extends StatelessWidget {
               child: Icon(
                 _leaderboardIcon(entry.icon),
                 color: color,
-                size: AppSpacing.arenaLeaderboardPodiumIcon,
+                size: _leaderboardPodiumIcon,
               ),
             ),
           ),
@@ -139,7 +132,7 @@ class _PodiumItem extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.arenaLeaderboardLineHeight,
+            height: _leaderboardLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -151,7 +144,7 @@ class _PodiumItem extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.arenaLeaderboardLineHeight,
+            height: _leaderboardLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -160,7 +153,7 @@ class _PodiumItem extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.buy,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.arenaLeaderboardLineHeight,
+            height: _leaderboardLineHeight,
           ),
         ),
       ],
@@ -192,6 +185,7 @@ class _EntrySection extends StatelessWidget {
         VitCard(
           clip: true,
           padding: AppSpacing.zeroInsets,
+          density: VitDensity.compact,
           child: Column(
             children: [
               for (final entry in entries) ...[
@@ -204,7 +198,7 @@ class _EntrySection extends StatelessWidget {
                 ),
                 if (entry != entries.last)
                   const Divider(
-                    height: AppSpacing.arenaLeaderboardDividerHeight,
+                    height: _leaderboardDividerHeight,
                     color: AppColors.divider,
                   ),
               ],
@@ -227,8 +221,8 @@ class _SectionLabel extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.arenaLeaderboardSectionMarkerWidth,
-          height: AppSpacing.arenaLeaderboardSectionMarkerHeight,
+          width: _leaderboardSectionMarkerWidth,
+          height: _leaderboardSectionMarkerHeight,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: accentColor,

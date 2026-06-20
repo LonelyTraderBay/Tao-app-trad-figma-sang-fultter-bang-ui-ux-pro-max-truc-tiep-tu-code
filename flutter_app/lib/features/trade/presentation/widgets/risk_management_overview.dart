@@ -16,7 +16,7 @@ class _IntroCard extends StatelessWidget {
             color: _riskPrimary,
             size: AppSpacing.tradeToolIconTileSm,
           ),
-          const SizedBox(width: AppSpacing.tradeToolCardGap),
+          const SizedBox(width: _riskCardSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,12 +27,10 @@ class _IntroCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.formFieldLabelGap),
+                const SizedBox(height: _riskTinySpace),
                 Text(
                   '3 công cụ quản lý rủi ro chuyên nghiệp giúp bảo vệ vốn và tối ưu hóa lợi nhuận. Đây là foundation quan trọng nhất cho enterprise trading platform.',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -63,7 +61,7 @@ class _FeatureCard extends StatelessWidget {
             color: color,
             size: AppSpacing.tradeToolIconTileMd,
           ),
-          const SizedBox(width: AppSpacing.tradeToolCardGap),
+          const SizedBox(width: _riskCardSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,14 +75,12 @@ class _FeatureCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   feature.description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeToolInlineGap),
+          const SizedBox(width: _riskSpace),
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
@@ -143,15 +139,14 @@ class _BenefitsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: _riskSpace),
           for (final benefit in _benefits) ...[
             _BenefitItem(
               icon: benefit.$1,
               title: benefit.$2,
               description: benefit.$3,
             ),
-            if (benefit != _benefits.last)
-              const SizedBox(height: AppSpacing.tradeToolCardGap),
+            if (benefit != _benefits.last) const SizedBox(height: _riskSpace),
           ],
         ],
       ),
@@ -176,7 +171,7 @@ class _BenefitItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, color: _riskPrimary, size: AppSpacing.tradeToolBodyIcon),
-        const SizedBox(width: AppSpacing.tradeToolIconGap),
+        const SizedBox(width: _riskSpace),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,12 +183,10 @@ class _BenefitItem extends StatelessWidget {
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeToolMicroGap),
+              const SizedBox(height: _riskTinySpace),
               Text(
                 description,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -221,7 +214,7 @@ class _StatusCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: _riskSpace),
           for (final item in items) ...[
             Row(
               children: [
@@ -254,8 +247,9 @@ class _StatusPill extends StatelessWidget {
     return VitStatusPill(
       label: complete ? 'Complete' : 'Pending',
       icon: complete ? Icons.check_rounded : Icons.schedule_rounded,
-      status:
-          complete ? VitStatusPillStatus.success : VitStatusPillStatus.warning,
+      status: complete
+          ? VitStatusPillStatus.success
+          : VitStatusPillStatus.warning,
       size: VitStatusPillSize.sm,
     );
   }

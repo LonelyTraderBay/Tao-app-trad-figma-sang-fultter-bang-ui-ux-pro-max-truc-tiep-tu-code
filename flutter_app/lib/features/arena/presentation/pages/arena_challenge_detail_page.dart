@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -25,6 +25,40 @@ part 'arena_challenge_detail_page_part_02.dart';
 part 'arena_challenge_detail_page_part_03.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
+const _challengeNativeBottomClearance = 88.0;
+const _challengeVisualBottomClearance = 112.0;
+const _challengeGap = 8.0;
+const _challengeTinyGap = 4.0;
+const _challengeInlineGap = 8.0;
+const _challengeCardPadding = EdgeInsets.symmetric(
+  horizontal: 12,
+  vertical: 12,
+);
+const _challengeCardPaddingTight = EdgeInsets.symmetric(
+  horizontal: 12,
+  vertical: 10,
+);
+const _challengeSheetPadding = EdgeInsets.fromLTRB(16, 14, 16, 16);
+const _challengeSmallIcon = 16.0;
+const _challengeMdIcon = 20.0;
+const _challengeLgIcon = 22.0;
+const _challengeCountdownHeight = 42.0;
+const _challengeProgressHeight = 5.0;
+const _challengeShareSize = 42.0;
+const _challengeSummaryLabelWidth = 110.0;
+const _challengeIconBubble = 34.0;
+const _challengeIconBubbleIcon = 18.0;
+const _challengeInitialBadge = 22.0;
+const _challengeLiveDot = 7.0;
+const _challengeTeamDot = 8.0;
+const _challengeRuleNumberWidth = 24.0;
+
+double _challengeScrollBottomInset(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? _challengeVisualBottomClearance
+          : _challengeNativeBottomClearance) +
+      MediaQuery.paddingOf(context).bottom;
+}
 
 enum _ChallengeTab { rules, evidence, participants, activity }
 
@@ -66,11 +100,7 @@ class _ArenaChallengeDetailPageState
     final snapshot = controller.state.snapshot;
     final pointsReview = controller.pointsReview();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = _challengeScrollBottomInset(context, mode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -95,10 +125,13 @@ class _ArenaChallengeDetailPageState
                   child: SingleChildScrollView(
                     key: ArenaChallengeDetailPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    padding: AppSpacing.contentInsets.copyWith(
+                      top: 0,
+                      bottom: bottomInset,
+                    ),
                     child: VitPageContent(
-                      padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      padding: VitContentPadding.none,
+                      density: VitDensity.compact,
                       children: [
                         _ChallengeIntro(
                           snapshot: snapshot,
@@ -228,8 +261,10 @@ class _ArenaChallengeDetailPageState
       ),
       builder: (context) => SafeArea(
         top: false,
-        child: Padding(
-          padding: AppSpacing.arenaActionSheetPadding,
+        child: VitSheetSurface(
+          color: AppColors.surface,
+          borderRadius: AppRadii.sheetTopRadius,
+          padding: _challengeSheetPadding,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,7 +272,7 @@ class _ArenaChallengeDetailPageState
               Row(
                 children: [
                   _IconBubble(icon: icon, color: _arenaAccent),
-                  const SizedBox(width: AppSpacing.x3),
+                  const SizedBox(width: _challengeInlineGap),
                   Expanded(
                     child: Text(
                       title,
@@ -249,15 +284,15 @@ class _ArenaChallengeDetailPageState
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: _challengeGap),
               Text(
                 body,
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.arenaChallengeBodyLineHeight,
+                  height: 1.35,
                 ),
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: _challengeGap),
               VitCtaButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text('Đã hiểu'),

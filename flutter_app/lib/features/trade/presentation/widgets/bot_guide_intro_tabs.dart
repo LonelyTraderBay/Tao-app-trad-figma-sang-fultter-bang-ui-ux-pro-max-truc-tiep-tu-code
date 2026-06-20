@@ -6,7 +6,8 @@ class _IntroBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _guidePrimary.withValues(alpha: .35),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -14,9 +15,9 @@ class _IntroBanner extends StatelessWidget {
           const Icon(
             Icons.menu_book_outlined,
             color: _guidePrimary,
-            size: AppSpacing.tradeBotMethodTextIndent,
+            size: AppSpacing.inputPrefixIcon,
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +29,7 @@ class _IntroBanner extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotRowGap),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   'Learn how each bot strategy works, when to use it, and '
                   'how to avoid common mistakes. Perfect for beginners and '
@@ -52,19 +53,11 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const tabs = [
-      'strategies',
-      'best-practices',
-      'mistakes',
-    ];
+    const tabs = ['strategies', 'best-practices', 'mistakes'];
     return VitTabBar(
       tabs: [
         for (final tab in tabs)
-          VitTabItem(
-            key: tab,
-            label: tab,
-            widgetKey: BotGuidePage.tabKey(tab),
-          ),
+          VitTabItem(key: tab, label: tab, widgetKey: BotGuidePage.tabKey(tab)),
       ],
       activeKey: active,
       onChanged: onChanged,

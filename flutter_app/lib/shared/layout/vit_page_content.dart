@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
@@ -14,6 +16,7 @@ class VitPageContent extends StatelessWidget {
     required this.children,
     this.padding = VitContentPadding.defaultPadding,
     this.gap = VitContentGap.defaultGap,
+    this.density,
     this.customGap,
     this.grow = false,
     this.fullBleed = false,
@@ -22,43 +25,46 @@ class VitPageContent extends StatelessWidget {
   final List<Widget> children;
   final VitContentPadding padding;
   final VitContentGap gap;
+  final VitDensity? density;
   final double? customGap;
   final bool grow;
   final bool fullBleed;
 
   double get _topPadding {
+    if (density != null) return density!.pageContentTopPadding;
     switch (padding) {
       case VitContentPadding.compact:
-        return 8;
+        return AppSpacing.pageContentTopCompact;
       case VitContentPadding.defaultPadding:
-        return 12;
+        return AppSpacing.pageContentTopDefault;
       case VitContentPadding.relaxed:
-        return 16;
+        return AppSpacing.pageContentTopRelaxed;
       case VitContentPadding.none:
-        return 0;
+        return AppSpacing.zero;
     }
   }
 
   double get _gap {
     if (customGap != null) return customGap!;
+    if (density != null) return density!.pageContentGap;
     switch (gap) {
       case VitContentGap.tight:
-        return 8;
+        return AppSpacing.pageContentGapTight;
       case VitContentGap.defaultGap:
-        return 16;
+        return AppSpacing.pageContentGapDefault;
       case VitContentGap.relaxed:
-        return 24;
+        return AppSpacing.pageContentGapRelaxed;
       case VitContentGap.loose:
-        return 32;
+        return AppSpacing.pageContentGapLoose;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final content = Padding(
-      padding: EdgeInsets.only(
-        left: fullBleed ? 0 : AppSpacing.contentPad,
-        right: fullBleed ? 0 : AppSpacing.contentPad,
+      padding: EdgeInsetsDirectional.only(
+        start: fullBleed ? AppSpacing.zero : AppSpacing.contentPad,
+        end: fullBleed ? AppSpacing.zero : AppSpacing.contentPad,
         top: _topPadding,
       ),
       child: Column(
@@ -79,6 +85,7 @@ class VitPageSection extends StatelessWidget {
     this.label,
     this.accentColor = AppColors.primary,
     this.gap = VitContentGap.tight,
+    this.density,
     this.customGap,
   });
 
@@ -86,19 +93,21 @@ class VitPageSection extends StatelessWidget {
   final String? label;
   final Color accentColor;
   final VitContentGap gap;
+  final VitDensity? density;
   final double? customGap;
 
   double get _gap {
     if (customGap != null) return customGap!;
+    if (density != null) return density!.pageContentGap;
     switch (gap) {
       case VitContentGap.tight:
-        return 8;
+        return AppSpacing.pageContentGapTight;
       case VitContentGap.defaultGap:
-        return 16;
+        return AppSpacing.pageContentGapDefault;
       case VitContentGap.relaxed:
-        return 24;
+        return AppSpacing.pageContentGapRelaxed;
       case VitContentGap.loose:
-        return 32;
+        return AppSpacing.pageContentGapLoose;
     }
   }
 
@@ -108,27 +117,41 @@ class VitPageSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (label != null) ...[
-          Row(
-            children: [
-              Container(
-                width: 4,
-                height: 14,
-                decoration: BoxDecoration(
-                  color: accentColor,
-                  borderRadius: BorderRadius.circular(2),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(
+              bottom: AppSpacing.pageSectionLabelBottomGap,
+            ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    end: AppSpacing.pageSectionLabelGap,
+                  ),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints.tightFor(
+                      width: AppSpacing.pageSectionAccentWidth,
+                      height: AppSpacing.pageSectionAccentHeight,
+                    ),
+                    child: DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: accentColor,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: AppRadii.hairlineRadius,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 6),
-              Text(
-                label!,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
+                Text(
+                  label!,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: 8),
         ],
         ..._withGaps(children, _gap),
       ],

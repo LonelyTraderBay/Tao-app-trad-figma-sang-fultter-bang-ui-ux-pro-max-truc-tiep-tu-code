@@ -13,8 +13,8 @@ class _ChallengeIntro extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Wrap(
-          spacing: AppSpacing.x2,
-          runSpacing: AppSpacing.x2,
+          spacing: _challengeTinyGap,
+          runSpacing: _challengeTinyGap,
           children: [
             VitStatusPill(
               label: challenge.statusLabel,
@@ -43,16 +43,16 @@ class _ChallengeIntro extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _challengeGap),
         Text(
           challenge.title,
           style: AppTextStyles.sectionTitle.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.heavy,
-            height: AppSpacing.arenaChallengeTitleLineHeight,
+            height: 1.15,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: _challengeTinyGap),
         _InlineAction(
           key: ArenaChallengeDetailPage.modeLinkKey,
           label: challenge.modeName,
@@ -60,12 +60,12 @@ class _ChallengeIntro extends StatelessWidget {
           color: _arenaAccent,
           onTap: onMode,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: _challengeTinyGap),
         Text(
           challenge.description,
           style: AppTextStyles.body.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaChallengeBodyLineHeight,
+            height: 1.35,
           ),
         ),
       ],
@@ -81,7 +81,7 @@ class _LiveStatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX5,
+      padding: _challengeCardPadding,
       child: Column(
         children: [
           Row(
@@ -102,20 +102,17 @@ class _LiveStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
-          const Divider(
-            height: AppSpacing.arenaChallengeDividerHeight,
-            color: AppColors.divider,
-          ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _challengeGap),
+          const Divider(height: 1, color: AppColors.divider),
+          const SizedBox(height: _challengeGap),
           Row(
             children: [
               const Icon(
                 Icons.schedule_outlined,
-                size: AppSpacing.arenaChallengeSmallIcon,
+                size: _challengeSmallIcon,
                 color: AppColors.text3,
               ),
-              const SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: _challengeTinyGap),
               Expanded(
                 child: Text(
                   'Đã kết thúc',
@@ -123,7 +120,7 @@ class _LiveStatusCard extends StatelessWidget {
                 ),
               ),
               const _LiveDot(),
-              const SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: _challengeTinyGap),
               Text(
                 'Live',
                 style: AppTextStyles.micro.copyWith(
@@ -133,14 +130,14 @@ class _LiveStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _challengeGap),
           SizedBox(
-            height: AppSpacing.arenaChallengeCountdownHeight,
+            height: _challengeCountdownHeight,
             child: Material(
               color: AppColors.surface2,
               borderRadius: AppRadii.inputRadius,
               child: Padding(
-                padding: AppSpacing.arenaHorizontalPaddingX4,
+                padding: _challengeCardPaddingTight,
                 child: Row(
                   children: [
                     Expanded(
@@ -153,10 +150,10 @@ class _LiveStatusCard extends StatelessWidget {
                     ),
                     const Icon(
                       Icons.timer_outlined,
-                      size: AppSpacing.arenaChallengeSmallIcon,
+                      size: _challengeSmallIcon,
                       color: AppColors.sell,
                     ),
-                    const SizedBox(width: AppSpacing.x2),
+                    const SizedBox(width: _challengeTinyGap),
                     Text(
                       challenge.countdownLabel,
                       style: AppTextStyles.body.copyWith(
@@ -169,7 +166,7 @@ class _LiveStatusCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _challengeGap),
           Row(
             children: [
               Expanded(
@@ -187,11 +184,11 @@ class _LiveStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _challengeTinyGap),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.arenaChallengeProgressHeight,
+              minHeight: _challengeProgressHeight,
               value: challenge.fillPercent / 100,
               color: AppColors.sell,
               backgroundColor: AppColors.surface3,
@@ -209,7 +206,7 @@ class _PoolFeeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Column(
         children: [
           Row(
@@ -218,7 +215,7 @@ class _PoolFeeCard extends StatelessWidget {
                 icon: Icons.receipt_long_outlined,
                 color: AppColors.primary,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: _challengeGap),
               Expanded(
                 child: Text(
                   'Chi tiết Pool & Phí',
@@ -233,7 +230,7 @@ class _PoolFeeCard extends StatelessWidget {
                 status: VitStatusPillStatus.success,
                 size: VitStatusPillSize.sm,
               ),
-              const SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: _challengeTinyGap),
               const Icon(Icons.expand_more_rounded, color: AppColors.text3),
             ],
           ),
@@ -251,7 +248,7 @@ class _RewardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -261,7 +258,7 @@ class _RewardCard extends StatelessWidget {
                 icon: Icons.workspace_premium_outlined,
                 color: AppColors.primary,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: _challengeGap),
               Expanded(
                 child: Text(
                   'Cách chia thưởng',
@@ -278,21 +275,21 @@ class _RewardCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _challengeGap),
           for (final tier in tiers)
             Material(
               color: AppColors.warningBg,
               borderRadius: AppRadii.cardRadius,
               child: Padding(
-                padding: AppSpacing.arenaPaddingX4,
+                padding: _challengeCardPadding,
                 child: Row(
                   children: [
                     const Icon(
                       Icons.emoji_events_outlined,
                       color: AppColors.primary,
-                      size: AppSpacing.arenaChallengeMdIcon,
+                      size: _challengeMdIcon,
                     ),
-                    const SizedBox(width: AppSpacing.x3),
+                    const SizedBox(width: _challengeGap),
                     Expanded(
                       child: Text(
                         tier.label,
@@ -343,21 +340,17 @@ class _TeamsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return VitPageSection(
+      label: 'Thành viên',
+      accentColor: _arenaAccent,
       children: [
-        const VitModuleSectionHeader(
-          title: 'Thành viên',
-          accentColor: _arenaAccent,
-        ),
-        const SizedBox(height: AppSpacing.x3),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             for (var index = 0; index < teams.length; index++) ...[
               Expanded(child: _TeamCard(team: teams[index])),
               if (index != teams.length - 1)
-                const SizedBox(width: AppSpacing.x3),
+                const SizedBox(width: _challengeGap),
             ],
           ],
         ),
@@ -378,18 +371,18 @@ class _TeamCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _color.withValues(alpha: .34),
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.arenaChallengeTeamDot,
-                height: AppSpacing.arenaChallengeTeamDot,
+                width: _challengeTeamDot,
+                height: _challengeTeamDot,
                 child: Material(color: _color, shape: const CircleBorder()),
               ),
-              const SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: _challengeTinyGap),
               Expanded(
                 child: Text(
                   team.name,
@@ -403,10 +396,10 @@ class _TeamCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _challengeGap),
           Wrap(
-            spacing: AppSpacing.x1,
-            runSpacing: AppSpacing.x1,
+            spacing: _challengeTinyGap,
+            runSpacing: _challengeTinyGap,
             children: [
               for (final member in team.members)
                 _MemberChip(member: member, color: _color),
@@ -435,7 +428,7 @@ class _MemberChip extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _InitialBadge(name: member.name, color: color),
-            const SizedBox(width: AppSpacing.x1),
+            const SizedBox(width: _challengeTinyGap),
             Flexible(
               child: Text(
                 member.name,
@@ -444,12 +437,12 @@ class _MemberChip extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
                   fontWeight: AppTextStyles.medium,
-                  height: AppSpacing.arenaChallengeMemberLineHeight,
+                  height: 1.2,
                 ),
               ),
             ),
             if (member.role.isNotEmpty) ...[
-              const SizedBox(width: AppSpacing.x1),
+              const SizedBox(width: _challengeTinyGap),
               Flexible(
                 child: Text(
                   member.role,
@@ -458,7 +451,7 @@ class _MemberChip extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaChallengeMemberLineHeight,
+                    height: 1.2,
                   ),
                 ),
               ),
@@ -494,7 +487,7 @@ class _GovernanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: _challengeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -503,9 +496,9 @@ class _GovernanceCard extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.buy,
-                size: AppSpacing.arenaChallengeLgIcon,
+                size: _challengeLgIcon,
               ),
-              const SizedBox(width: AppSpacing.x2),
+              const SizedBox(width: _challengeTinyGap),
               Expanded(
                 child: Text(
                   'Governance & Trust',
@@ -520,8 +513,8 @@ class _GovernanceCard extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: Wrap(
                     alignment: WrapAlignment.end,
-                    spacing: AppSpacing.x1,
-                    runSpacing: AppSpacing.x1,
+                    spacing: _challengeTinyGap,
+                    runSpacing: _challengeTinyGap,
                     children: [
                       VitStatusPill(
                         label: challenge.trustRiskLabel,
@@ -539,7 +532,7 @@ class _GovernanceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _challengeGap),
           for (final row in rows)
             _SummaryRow(label: row.label, value: row.value),
         ],

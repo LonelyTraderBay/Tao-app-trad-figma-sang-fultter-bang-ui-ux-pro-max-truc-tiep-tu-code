@@ -18,7 +18,7 @@ class StakingInsuranceFundStatusCard extends StatelessWidget {
     return VitCard(
       key: StakingInsuranceFundKeys.fundStatus,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         children: [
           Row(
@@ -185,7 +185,7 @@ class StakingInsuranceFundInlineStatCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: color.withValues(alpha: 0.16),
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: StakingInsuranceFundMetricBlock(
         label: label,
         value: value,

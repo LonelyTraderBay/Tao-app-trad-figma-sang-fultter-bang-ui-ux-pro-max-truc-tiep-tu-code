@@ -139,7 +139,7 @@ class _DisclaimerCard extends StatelessWidget {
               text,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
+                height: _dcaPortfolioBodyLineHeight,
               ),
             ),
           ),

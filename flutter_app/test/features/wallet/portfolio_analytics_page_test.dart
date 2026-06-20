@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPortfolioAnalytics(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,6 +72,24 @@ void main() {
     expect(find.text('1M'), findsOneWidget);
     expect(find.text('Chỉ số hiệu suất'), findsOneWidget);
     expect(find.text('Vị thế hiện tại'), findsOneWidget);
+  });
+
+  testWidgets('SC-142 first viewport reaches period selector controls', (
+    tester,
+  ) async {
+    await pumpPortfolioAnalytics(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'PortfolioAnalyticsPage',
+      semanticLabel: 'SC-142 PortfolioAnalyticsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(PortfolioAnalyticsPage.periodKey('1M')),
+      routeName: 'PortfolioAnalyticsPage',
+      actionLabel: 'the active period selector',
+    );
   });
 
   testWidgets('SC-142 view and period controls update local state', (

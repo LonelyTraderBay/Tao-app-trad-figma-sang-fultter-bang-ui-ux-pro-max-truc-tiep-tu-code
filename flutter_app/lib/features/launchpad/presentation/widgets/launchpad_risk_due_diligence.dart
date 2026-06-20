@@ -8,7 +8,7 @@ class _DueDiligenceTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final score = snapshot.project.score;
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadRiskAnalyticsPage.dueDiligenceKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -98,7 +98,7 @@ class _DueDiligenceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _scoreColor(score);
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         children: [
           Row(

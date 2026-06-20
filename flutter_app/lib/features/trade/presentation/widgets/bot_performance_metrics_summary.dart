@@ -43,8 +43,8 @@ class _AdvancedMetricsGrid extends StatelessWidget {
 
     return GridView.count(
       crossAxisCount: AppSpacing.tradeBotGridColumns,
-      crossAxisSpacing: AppSpacing.tradeBotCardGap,
-      mainAxisSpacing: AppSpacing.tradeBotCardGap,
+      crossAxisSpacing: _analyticsSpace,
+      mainAxisSpacing: _analyticsSpace,
       childAspectRatio: AppSpacing.tradeBotAnalyticsMetricAspectRatio,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -80,23 +80,24 @@ class _AdvancedMetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(item.icon, color: item.color, size: 22),
-          const Spacer(),
+          const SizedBox(height: _analyticsTinySpace),
           Text(
             item.label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: _analyticsTinySpace),
           Text(
             item.value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: item.valueColor ?? AppColors.text1,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: _analyticsTinySpace),
           Text(
             item.helper,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -116,8 +117,9 @@ class _DurationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.tradeBotCardPaddingTall,
+      density: VitDensity.compact,
       child: SizedBox(
-        height: AppSpacing.tradeBotDashboardChartHeight,
+        height: _analyticsDonutExtent,
         child: CustomPaint(
           painter: _DurationDonutPainter(distribution),
           size: Size.infinite,
@@ -145,6 +147,7 @@ class _PerformanceSummaryCard extends StatelessWidget {
 
     return VitCard(
       padding: AppSpacing.tradeBotCardPaddingTall,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -155,11 +158,10 @@ class _PerformanceSummaryCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+          const SizedBox(height: _analyticsSpace),
           for (final row in rows) ...[
             _SummaryRow(label: row.$1, value: row.$2, suffix: row.$3),
-            if (row != rows.last)
-              const SizedBox(height: AppSpacing.tradeBotRowGap),
+            if (row != rows.last) const SizedBox(height: _analyticsTinySpace),
           ],
         ],
       ),
@@ -182,10 +184,9 @@ class _SummaryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotControlCompact,
-      ),
+      constraints: const BoxConstraints(minHeight: _analyticsMetricMinExtent),
       padding: AppSpacing.tradeBotControlPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           Expanded(
@@ -206,7 +207,7 @@ class _SummaryRow extends StatelessWidget {
                 ),
               ),
               if (suffix.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.tradeBotTinyGap),
+                const SizedBox(height: _analyticsTinySpace),
                 Text(
                   suffix,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -228,6 +229,7 @@ class _RatingCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
       borderColor: _analyticsGreen.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,7 +239,7 @@ class _RatingCard extends StatelessWidget {
             color: _analyticsGreen,
             size: 22,
           ),
-          const SizedBox(width: AppSpacing.tradeBotPageTopGap),
+          const SizedBox(width: _analyticsSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,7 +251,7 @@ class _RatingCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotRowGap),
+                const SizedBox(height: _analyticsTinySpace),
                 Text(
                   'Your bots are performing above average. Sharpe ratio > 1.5, win rate > 65%, and profit factor > 2 indicate strong risk-adjusted returns. Keep monitoring and adjusting as market conditions change.',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),

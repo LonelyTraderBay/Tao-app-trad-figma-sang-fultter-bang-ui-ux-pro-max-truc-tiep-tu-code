@@ -17,7 +17,7 @@ class _SummaryGrid extends StatelessWidget {
             captionColor: _cassGreen,
           ),
         ),
-        const SizedBox(width: AppSpacing.tradeBotCardGap),
+        const SizedBox(width: _cassTinySpace),
         Expanded(
           child: _SummaryCard(
             label: 'Resolved',
@@ -26,7 +26,7 @@ class _SummaryGrid extends StatelessWidget {
             captionColor: AppColors.text3,
           ),
         ),
-        const SizedBox(width: AppSpacing.tradeBotCardGap),
+        const SizedBox(width: _cassTinySpace),
         Expanded(
           child: _SummaryCard(
             label: 'Outstanding',
@@ -56,8 +56,8 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.tradeBotCassSummaryHeight,
-      padding: AppSpacing.tradeBotStrategyCardPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: _cassBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,26 +68,26 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
+              height: _cassLineTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: _cassTinySpace),
           Text(
             value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: AppColors.text1,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.tradeBotLineHeightTight,
+              height: _cassLineTight,
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: _cassTinySpace),
           Text(
             caption,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: captionColor,
-              height: AppSpacing.tradeBotLineHeightTight,
+              height: _cassLineTight,
             ),
           ),
         ],
@@ -106,9 +106,9 @@ class _Tabs extends StatelessWidget {
   Widget build(BuildContext context) {
     const tabs = [('recent', 'Recent (7 Days)'), ('history', 'History')];
     return VitCard(
-      height: AppSpacing.tradeBotCassTabsHeight,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCompactPanelPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: VitTabBar(
         tabs: [
           for (final tab in tabs)

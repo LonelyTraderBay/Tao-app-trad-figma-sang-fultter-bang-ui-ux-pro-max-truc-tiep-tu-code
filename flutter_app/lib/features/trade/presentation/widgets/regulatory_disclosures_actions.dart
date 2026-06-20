@@ -20,7 +20,7 @@ class _ActionTile extends StatelessWidget {
       borderRadius: AppRadii.cardRadius,
       child: VitCard(
         variant: VitCardVariant.ghost,
-        padding: AppSpacing.regulatoryDisclosuresActionPadding,
+        density: VitDensity.compact,
         borderColor: color,
         child: Row(
           children: [
@@ -29,7 +29,7 @@ class _ActionTile extends StatelessWidget {
               color: color,
               size: AppSpacing.regulatoryDisclosuresActionIcon,
             ),
-            const SizedBox(width: AppSpacing.regulatoryDisclosuresActionGap),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Text(
                 title,
@@ -64,7 +64,7 @@ class _ContactTile extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: VitCard(
-        padding: AppSpacing.regulatoryDisclosuresContactPadding,
+        density: VitDensity.compact,
         child: Row(
           children: [
             Icon(
@@ -72,7 +72,7 @@ class _ContactTile extends StatelessWidget {
               color: _legalPrimary,
               size: AppSpacing.regulatoryDisclosuresContactIcon,
             ),
-            const SizedBox(width: AppSpacing.regulatoryDisclosuresContactGap),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,20 +82,12 @@ class _ContactTile extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height:
-                          AppSpacing.regulatoryDisclosuresLineHeightCompact,
                     ),
                   ),
-                  const SizedBox(
-                    height: AppSpacing.regulatoryDisclosuresContactTextGap,
-                  ),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     contact.subtitle,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height:
-                          AppSpacing.regulatoryDisclosuresLineHeightCompact,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -124,7 +116,7 @@ class _DocumentTile extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.cardRadius,
       child: VitCard(
-        padding: AppSpacing.regulatoryDisclosuresActionPadding,
+        density: VitDensity.compact,
         child: Row(
           children: [
             Icon(
@@ -132,7 +124,7 @@ class _DocumentTile extends StatelessWidget {
               color: _legalPrimary,
               size: AppSpacing.regulatoryDisclosuresActionIcon,
             ),
-            const SizedBox(width: AppSpacing.regulatoryDisclosuresActionGap),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Text(
                 document.title,
@@ -168,25 +160,21 @@ class _RegulatoryNoticePanel extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: VitCard(
-            padding: AppSpacing.regulatoryDisclosuresNoticePadding,
             radius: VitCardRadius.lg,
+            density: VitDensity.compact,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text('Regulatory document', style: AppTextStyles.baseMedium),
-                const SizedBox(
-                  height: AppSpacing.regulatoryDisclosuresNoticeTitleGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   text,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(
-                  height: AppSpacing.regulatoryDisclosuresNoticeActionGap,
-                ),
+                const SizedBox(height: AppSpacing.x2),
                 VitCtaButton(
-                  height: AppSpacing.searchBarCompactHeight,
+                  density: VitDensity.compact,
                   onPressed: onClose,
                   child: const Text('Done'),
                 ),

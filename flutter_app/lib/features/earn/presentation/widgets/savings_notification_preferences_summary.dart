@@ -29,22 +29,23 @@ class SavingsNotificationMasterSummaryCard extends StatelessWidget {
       key: SavingsNotificationPreferencesKeys.summary,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
-          Container(
-            width: AppSpacing.savingsNotificationSummaryIconBox,
-            height: AppSpacing.savingsNotificationSummaryIconBox,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: .14),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              masterEnabled
-                  ? Icons.notifications_none_rounded
-                  : Icons.notifications_off_outlined,
-              color: color,
-              size: AppSpacing.savingsNotificationSummaryIcon,
+          SizedBox.square(
+            dimension: AppSpacing.savingsNotificationSummaryIconBox,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color.withValues(alpha: .14),
+                shape: const CircleBorder(),
+              ),
+              child: Icon(
+                masterEnabled
+                    ? Icons.notifications_none_rounded
+                    : Icons.notifications_off_outlined,
+                color: color,
+                size: AppSpacing.savingsNotificationSummaryIcon,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -143,7 +144,7 @@ class SavingsNotificationStatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -180,12 +181,12 @@ class SavingsNotificationTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: const ShapeDecoration(
         color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.divider)),
+        shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+        padding: AppSpacing.earnHorizontalPaddingX4,
         child: VitTabBar(
           variant: VitTabBarVariant.underline,
           activeKey: active,

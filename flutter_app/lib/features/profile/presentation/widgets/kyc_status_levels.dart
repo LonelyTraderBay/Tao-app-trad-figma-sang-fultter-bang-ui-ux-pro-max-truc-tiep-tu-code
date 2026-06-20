@@ -9,8 +9,7 @@ class _KycStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: KYCPage.statusCardKey,
-      height: AppSpacing.kycStatusHeight,
-      padding: AppSpacing.kycStatusPadding,
+      density: VitDensity.compact,
       borderColor: _kycGreen.withValues(alpha: .45),
       child: Row(
         children: [
@@ -44,7 +43,7 @@ class _KycStatusCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.kycStatusTextGap),
+                const SizedBox(height: AppSpacing.x1),
                 Row(
                   children: [
                     Flexible(
@@ -108,8 +107,10 @@ class _KycLevelCard extends StatelessWidget {
             key: KYCPage.levelKey(level.level),
             onTap: onTap,
             behavior: HitTestBehavior.opaque,
-            child: SizedBox(
-              height: AppSpacing.kycLevelRowHeight,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,
+              ),
               child: Padding(
                 padding: AppSpacing.kycLevelRowPadding,
                 child: Row(
@@ -130,7 +131,7 @@ class _KycLevelCard extends StatelessWidget {
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.kycStatusTextGap),
+                          const SizedBox(height: AppSpacing.x1),
                           if (done)
                             Row(
                               children: [
@@ -269,19 +270,19 @@ class _ExpandedLevelDetails extends StatelessWidget {
           title: 'Gi\u1EDBi h\u1EA1n giao d\u1ECBch:',
           lines: level.limits,
         ),
-        const SizedBox(height: AppSpacing.kycLevelDetailsGap),
+        const SizedBox(height: AppSpacing.x3),
         _DetailsBlock(
           title: 'T\u00EDnh n\u0103ng m\u1EDF kh\u00F3a:',
           lines: level.features,
           done: done,
         ),
         if (canStart) ...[
-          const SizedBox(height: AppSpacing.kycLevelDetailsGap),
+          const SizedBox(height: AppSpacing.x3),
           VitCtaButton(
             key: KYCPage.startKey(level.level),
             onPressed: submitting ? null : onStart,
             loading: submitting,
-            height: AppSpacing.inputHeight,
+            density: VitDensity.compact,
             child: Text(
               submitting
                   ? '\u0110ang g\u1EEDi...'

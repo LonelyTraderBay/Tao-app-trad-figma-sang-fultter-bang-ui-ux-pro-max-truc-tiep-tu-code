@@ -137,32 +137,13 @@ class _StatusButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = _statusColor(status);
-    return Material(
-      color: color.withValues(alpha: .12),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.pillRadius,
-        side: BorderSide(color: color.withValues(alpha: .3)),
-      ),
-      child: InkWell(
-        key: SavingsAutoPilotPage.statusButtonKey,
-        onTap: onPressed,
-        borderRadius: AppRadii.pillRadius,
-        child: Padding(
-          padding: AppSpacing.earnPillPaddingLarge,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(_statusIcon(status), color: color, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                _statusLabel(status),
-                style: _microBold.copyWith(color: color),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitStatusPill(
+      key: SavingsAutoPilotPage.statusButtonKey,
+      label: _statusLabel(status),
+      icon: _statusIcon(status),
+      status: _statusPillStatus(status),
+      size: VitStatusPillSize.md,
+      onTap: onPressed,
     );
   }
 }
@@ -288,15 +269,12 @@ class _OverviewTab extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x2),
         ],
-        OutlinedButton.icon(
+        VitCtaButton(
           onPressed: onShowActions,
-          icon: const Icon(Icons.chevron_right_rounded),
-          label: const Text('Xem tất cả'),
-          style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.primary,
-            side: const BorderSide(color: AppColors.primary30),
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-          ),
+          variant: VitCtaButtonVariant.secondary,
+          leading: const Icon(Icons.list_alt_rounded),
+          trailing: const Icon(Icons.chevron_right_rounded),
+          child: const Text('Xem tất cả'),
         ),
         const SizedBox(height: AppSpacing.x4),
         _InfoCallout(text: snapshot.disclaimer, tone: EarnRiskLevel.medium),

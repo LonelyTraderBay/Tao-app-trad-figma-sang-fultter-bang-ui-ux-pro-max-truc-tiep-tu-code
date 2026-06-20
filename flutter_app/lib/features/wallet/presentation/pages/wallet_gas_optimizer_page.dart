@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -41,6 +42,8 @@ class WalletGasOptimizerPage extends ConsumerStatefulWidget {
   static const refreshKey = Key('sc149_gas_optimizer_refresh');
   static Key tabKey(String label) => Key('sc149_gas_optimizer_tab_$label');
   static Key speedKey(String speed) => Key('sc149_gas_optimizer_speed_$speed');
+  static Key comparisonKey(String type) =>
+      Key('sc149_gas_optimizer_comparison_$type');
 
   final ShellRenderMode? shellRenderMode;
 
@@ -58,12 +61,13 @@ class _WalletGasOptimizerPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(walletGasOptimizerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.walletGasBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletGasBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollEndPadding =
+        navClearance +
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -86,7 +90,7 @@ class _WalletGasOptimizerPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: WalletGasOptimizerPage.contentKey,
-                  padding: AppSpacing.walletGasScrollPadding(bottomInset),
+                  padding: AppSpacing.walletGasScrollPadding(scrollEndPadding),
                   child: _contentForTab(snapshot),
                 ),
               ),
@@ -108,11 +112,6 @@ class _WalletGasOptimizerPageState
       ),
     };
 
-    return VitPageContent(
-      padding: VitContentPadding.none,
-      customGap: 0,
-      fullBleed: true,
-      children: [tabContent],
-    );
+    return tabContent;
   }
 }

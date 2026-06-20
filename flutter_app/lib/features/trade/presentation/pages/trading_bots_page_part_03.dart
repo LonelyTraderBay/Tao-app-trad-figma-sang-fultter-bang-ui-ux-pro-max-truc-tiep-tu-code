@@ -125,30 +125,11 @@ class _StrategyDetail extends StatelessWidget {
 class _BotInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
-      borderColor: AppColors.warn.withValues(alpha: .20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.tradeBotCheckboxIcon,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              'Lưu ý quan trọng: Bot giao dịch không đảm bảo lợi nhuận. '
-              'Hiệu suất trong quá khứ không đại diện cho kết quả tương lai.',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.tradeBotLineHeightLoose,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return const VitBanner(
+      variant: VitBannerVariant.warning,
+      icon: Icons.warning_amber_rounded,
+      message: 'Lưu ý quan trọng: Bot giao dịch không đảm bảo lợi nhuận.',
+      detail: 'Hiệu suất trong quá khứ không đại diện cho kết quả tương lai.',
     );
   }
 }
@@ -160,33 +141,13 @@ class _EmptyBots extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: AppSpacing.x6),
-        const VitCard(
-          width: AppSpacing.launchpadBox64,
-          height: AppSpacing.launchpadBox64,
-          variant: VitCardVariant.inner,
-          alignment: Alignment.center,
-          child: Icon(
-            Icons.smart_toy_outlined,
-            color: AppColors.text3,
-            size: AppSpacing.iconLg,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.x4),
-        Text(
-          'Chưa có bot nào đang chạy',
-          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-        ),
-        const SizedBox(height: AppSpacing.x4),
-        _BotActionButton(
-          label: 'Tạo Bot mới',
-          icon: Icons.add_rounded,
-          color: _botPrimary,
-          onTap: onAdd,
-        ),
-      ],
+    return VitEmptyState(
+      title: 'Chưa có bot nào đang chạy',
+      message: 'Chọn chiến lược phù hợp để khởi chạy bot đầu tiên.',
+      icon: Icons.smart_toy_outlined,
+      actionLabel: 'Tạo Bot mới',
+      actionKey: TradingBotsPage.addBotKey,
+      onAction: onAdd,
     );
   }
 }

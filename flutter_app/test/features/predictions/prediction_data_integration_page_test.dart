@@ -10,12 +10,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDataIntegration(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+    configureFirstViewport(tester, VitFirstViewport.qaPhone);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -53,6 +52,24 @@ void main() {
         PredictionScreenState.offline,
         PredictionScreenState.realtimeRefresh,
       ]),
+    );
+  });
+
+  testWidgets('SC-043 first viewport reaches configured source content', (
+    tester,
+  ) async {
+    await pumpDataIntegration(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-043 PredictionDataIntegrationPage',
+      semanticLabel: 'SC-043 PredictionDataIntegrationPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('CoinGecko Price Oracle'),
+      targetLabel: 'the first configured source card',
+      minVisibleHeight: 12,
     );
   });
 

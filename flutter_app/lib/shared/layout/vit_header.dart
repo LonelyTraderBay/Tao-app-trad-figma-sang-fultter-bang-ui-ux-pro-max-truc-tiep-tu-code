@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_top_header_tokens.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
@@ -60,12 +61,12 @@ class VitHeader extends StatelessWidget {
 
     final hasSubtitle = subtitle != null && subtitle!.isNotEmpty;
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: transparent
             ? AppTopHeaderTokens.transparentSurfaceColor
             : AppTopHeaderTokens.surfaceColor,
-        border: transparent
-            ? null
+        shape: transparent
+            ? const Border()
             : const Border(
                 bottom: BorderSide(color: AppTopHeaderTokens.dividerColor),
               ),
@@ -75,7 +76,7 @@ class VitHeader extends StatelessWidget {
           minHeight: AppTopHeaderTokens.detailMinHeight,
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: EdgeInsetsDirectional.symmetric(
             horizontal: AppTopHeaderTokens.horizontalPadding,
             vertical: hasSubtitle
                 ? AppTopHeaderTokens.detailVerticalPaddingWithSubtitle
@@ -282,34 +283,38 @@ class _CountBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ConstrainedBox(
       constraints: const BoxConstraints(
         minWidth: AppTopHeaderTokens.badgeMinSize,
       ),
-      height: AppTopHeaderTokens.badgeHeight,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppTopHeaderTokens.badgeHorizontalPadding,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.sell,
-        borderRadius: BorderRadius.circular(
-          AppTopHeaderTokens.titleBadgeRadius,
-        ),
-        boxShadow: const [
-          BoxShadow(
-            color: AppColors.sell20,
-            blurRadius: 6,
-            offset: Offset(0, 2),
+      child: SizedBox(
+        height: AppTopHeaderTokens.badgeHeight,
+        child: DecoratedBox(
+          decoration: const ShapeDecoration(
+            color: AppColors.sell,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+            shadows: [
+              BoxShadow(
+                color: AppColors.sell20,
+                blurRadius: 6,
+                offset: Offset(0, 2),
+              ),
+            ],
           ),
-        ],
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        count > 99 ? '99+' : '$count',
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.onAccent,
-          fontWeight: AppTextStyles.bold,
-          height: 1,
+          child: Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppTopHeaderTokens.badgeHorizontalPadding,
+            ),
+            child: Center(
+              child: Text(
+                count > 99 ? '99+' : '$count',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.onAccent,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

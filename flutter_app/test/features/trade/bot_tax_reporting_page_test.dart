@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBotTaxReporting(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -106,5 +108,18 @@ void main() {
     await tester.tap(find.byKey(BotTaxReportingPage.generateKey));
     await tester.pumpAndSettle();
     expect(find.text('Generate 1 Report for 2026'), findsOneWidget);
+  });
+
+  testWidgets('SC-133 first viewport reaches report type selection', (
+    tester,
+  ) async {
+    await pumpBotTaxReporting(tester);
+
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(BotTaxReportingPage.reportKey('turbotax')),
+      routeName: 'BotTaxReportingPage',
+      actionLabel: 'secondary report type selection',
+    );
   });
 }

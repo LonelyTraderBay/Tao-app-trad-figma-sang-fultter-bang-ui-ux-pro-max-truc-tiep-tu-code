@@ -51,7 +51,7 @@ class StakingTaxJurisdictionTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: const EdgeInsets.all(AppSpacing.x4),
+              padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 children: [
                   for (final resource in selected.resources) ...[
@@ -94,30 +94,31 @@ class _JurisdictionChip extends StatelessWidget {
         key: StakingTaxGuideKeys.jurisdiction(jurisdiction.id),
         onTap: onTap,
         borderRadius: AppRadii.lgRadius,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: selected ? AppColors.primary20 : AppColors.cardBorder,
-            ),
-            borderRadius: AppRadii.lgRadius,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              StakingTaxCodeBadge(code: jurisdiction.code, small: true),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                jurisdiction.name.split('(').first.trim(),
-                style: AppTextStyles.micro.copyWith(
-                  color: selected ? AppColors.primary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: selected ? AppColors.primary20 : AppColors.cardBorder,
               ),
-            ],
+              borderRadius: AppRadii.lgRadius,
+            ),
+          ),
+          child: Padding(
+            padding: AppSpacing.earnCardPaddingX3X2,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                StakingTaxCodeBadge(code: jurisdiction.code, small: true),
+                const SizedBox(width: AppSpacing.x2),
+                Text(
+                  jurisdiction.name.split('(').first.trim(),
+                  style: AppTextStyles.micro.copyWith(
+                    color: selected ? AppColors.primary : AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -134,7 +135,7 @@ class _JurisdictionDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -211,32 +212,36 @@ class _JurisdictionMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ConstrainedBox(
       constraints: const BoxConstraints(
         minHeight: AppSpacing.stakingTaxJurisdictionMetricMinHeight,
       ),
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.lgRadius,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          color: AppColors.surface2,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+        ),
+        child: Padding(
+          padding: AppSpacing.earnCardPaddingX3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                value,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.stakingTaxJurisdictionMetricLineHeight,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            value,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              height: AppSpacing.stakingTaxJurisdictionMetricLineHeight,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -249,35 +254,37 @@ class _ResourceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.x3),
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        borderRadius: AppRadii.lgRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.public_rounded,
-            color: AppColors.primary,
-            size: AppSpacing.stakingTaxResourceIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              resource.label,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: AppTextStyles.medium,
+      child: Padding(
+        padding: AppSpacing.earnCardPaddingX3,
+        child: Row(
+          children: [
+            const Icon(
+              Icons.public_rounded,
+              color: AppColors.primary,
+              size: AppSpacing.stakingTaxResourceIcon,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                resource.label,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: AppTextStyles.medium,
+                ),
               ),
             ),
-          ),
-          const Icon(
-            Icons.open_in_new_rounded,
-            color: AppColors.primary,
-            size: AppSpacing.stakingTaxResourceExternalIcon,
-          ),
-        ],
+            const Icon(
+              Icons.open_in_new_rounded,
+              color: AppColors.primary,
+              size: AppSpacing.stakingTaxResourceExternalIcon,
+            ),
+          ],
+        ),
       ),
     );
   }

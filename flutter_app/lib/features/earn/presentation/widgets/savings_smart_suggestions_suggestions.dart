@@ -66,7 +66,7 @@ class SavingsSmartSuggestionCard extends StatelessWidget {
     return VitCard(
       key: SavingsSmartSuggestionsKeys.suggestion(suggestion.id),
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -254,9 +254,9 @@ class SavingsSmartSuggestionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xlRadius,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: SizedBox(
         width: AppSpacing.x6,
@@ -284,15 +284,12 @@ class SavingsSmartMetaPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.xsRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -312,7 +309,7 @@ class SavingsSmartNewDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.only(top: AppSpacing.x1),
+      padding: AppSpacing.earnTopPaddingX1,
       child: Icon(Icons.circle, color: AppColors.sell, size: AppSpacing.x2),
     );
   }
@@ -358,7 +355,7 @@ class SavingsSmartDisclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       borderColor: AppColors.warn15,
       child: Row(
         children: [

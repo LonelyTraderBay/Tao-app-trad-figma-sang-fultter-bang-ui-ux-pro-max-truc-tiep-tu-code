@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -56,15 +57,15 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
     final controller = ref.watch(tradeActiveCopiesControllerProvider);
     final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final chromeInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollClearance =
+        chromeInset +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.activeCopiesBottomInsetVisual
-            : AppSpacing.activeCopiesBottomInsetNative);
+            ? AppSpacing.x6 + AppSpacing.x6
+            : AppSpacing.x5 + AppSpacing.x5);
     final copies = _filteredCopies(snapshot.copies);
 
     return VitPageLayout(
@@ -93,17 +94,21 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: ActiveCopiesPage.contentKey,
-                      padding: AppSpacing.activeCopiesScrollPadding(
-                        bottomInset,
+                      padding: EdgeInsets.fromLTRB(
+                        AppSpacing.contentPad,
+                        AppSpacing.tradeBotCardGap,
+                        AppSpacing.contentPad,
+                        scrollClearance,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.none,
-                        customGap: AppSpacing.sectionGap,
+                        density: VitDensity.compact,
                         fullBleed: true,
                         children: [
                           _PortfolioOverview(snapshot: snapshot.portfolio),
                           VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
+                            density: VitDensity.compact,
                             title: 'Review active copy exposure',
                             message:
                                 'Check open provider risk, stop-loss rules, cooling-off status, and current P/L before changing or stopping a copy.',

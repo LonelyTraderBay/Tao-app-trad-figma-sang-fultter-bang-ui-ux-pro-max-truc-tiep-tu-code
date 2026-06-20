@@ -28,7 +28,7 @@ class ArenaModePredictionContext extends StatelessWidget {
     return VitCard(
       key: predictionKey,
       borderColor: AppColors.accent20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.arenaModePredictionCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

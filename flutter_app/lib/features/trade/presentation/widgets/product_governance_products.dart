@@ -9,7 +9,7 @@ class _ProductsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Copy Trading Products',
-      customGap: AppSpacing.productGovernanceContentGap,
+      density: VitDensity.compact,
       children: [
         for (final product in products) _ProductCard(product: product),
       ],
@@ -28,7 +28,7 @@ class _ProductCard extends StatelessWidget {
     final risk = _riskStyle(product.riskLevel);
     return _Card(
       key: ProductGovernancePage.productKey(product.id),
-      padding: AppSpacing.productGovernanceCardPadding,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,21 +46,16 @@ class _ProductCard extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.productGovernanceLineHeightTight,
                       ),
                     ),
-                    const SizedBox(
-                      height: AppSpacing.productGovernanceReviewTextGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Row(
                       children: [
                         VitAccentPill(
                           label: status.label,
                           accentColor: status.color,
                         ),
-                        const SizedBox(
-                          width: AppSpacing.productGovernancePillGap,
-                        ),
+                        const SizedBox(width: AppSpacing.x2),
                         VitAccentPill(
                           label: risk.label,
                           accentColor: risk.color,
@@ -70,7 +65,7 @@ class _ProductCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.productGovernanceInlineGap),
+              const SizedBox(width: AppSpacing.x2),
               VitIconButton(
                 key: ProductGovernancePage.targetMarketKey(product.id),
                 onPressed: () => context.go(
@@ -85,11 +80,11 @@ class _ProductCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           _TagSection(label: 'Target Market:', tags: product.targetMarket),
-          const SizedBox(height: AppSpacing.productGovernanceTargetGap),
+          const SizedBox(height: AppSpacing.x2),
           _NegativeTarget(tags: product.negativeTarget),
-          const SizedBox(height: AppSpacing.productGovernanceDateSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -98,7 +93,7 @@ class _ProductCard extends StatelessWidget {
                   value: product.lastReview,
                 ),
               ),
-              const SizedBox(width: AppSpacing.productGovernanceInlineGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _DateBox(
                   label: 'Next Review',
@@ -126,15 +121,12 @@ class _TagSection extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.productGovernanceLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.productGovernancePillGap),
+        const SizedBox(height: AppSpacing.x1),
         Wrap(
-          spacing: AppSpacing.productGovernanceTagGap,
-          runSpacing: AppSpacing.productGovernanceTagGap,
+          spacing: AppSpacing.x2,
+          runSpacing: AppSpacing.x1,
           children: [
             for (final tag in tags)
               VitAccentPill(label: tag, accentColor: AppColors.text2),
@@ -157,15 +149,12 @@ class _NegativeTarget extends StatelessWidget {
       children: [
         Text(
           'Negative Target:',
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.productGovernanceLineHeightTight,
-          ),
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.productGovernanceReviewTextGap),
+        const SizedBox(height: AppSpacing.x1),
         Wrap(
-          spacing: AppSpacing.productGovernanceNegativeTagGap,
-          runSpacing: AppSpacing.productGovernanceReviewTextGap,
+          spacing: AppSpacing.x2,
+          runSpacing: AppSpacing.x1,
           children: [
             for (final tag in tags)
               Text(
@@ -173,7 +162,6 @@ class _NegativeTarget extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.productGovernanceLineHeightTight,
                 ),
               ),
           ],
@@ -194,25 +182,21 @@ class _DateBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      height: AppSpacing.productGovernanceDateBoxHeight,
-      padding: AppSpacing.productGovernanceDateBoxPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.productGovernanceLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             value,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.productGovernanceLineHeightTight,
             ),
           ),
         ],

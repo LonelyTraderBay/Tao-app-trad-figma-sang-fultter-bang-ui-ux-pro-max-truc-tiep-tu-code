@@ -135,7 +135,7 @@ class _PriceOverview extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.pairPriceStatsGap),
+              const SizedBox(height: AppSpacing.x2),
               Row(
                 children: [
                   Expanded(
@@ -193,7 +193,7 @@ class _PriceStat extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.pairPriceStatGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: AppTextStyles.numericMicro.copyWith(

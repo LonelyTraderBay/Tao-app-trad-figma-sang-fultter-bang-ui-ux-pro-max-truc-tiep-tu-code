@@ -23,7 +23,7 @@ class StakingInsuranceFundInfoBanner extends StatelessWidget {
       key: StakingInsuranceFundKeys.info,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -67,9 +67,9 @@ class StakingInsuranceFundTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       key: StakingInsuranceFundKeys.tabs,
-      decoration: const BoxDecoration(color: AppColors.surface),
+      color: AppColors.surface,
       child: Row(
         children: [
           for (final tab in StakingInsuranceFundTab.values)
@@ -80,7 +80,7 @@ class StakingInsuranceFundTabs extends StatelessWidget {
                   key: StakingInsuranceFundKeys.tab(tab.name),
                   onTap: () => onChanged(tab),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.x4),
+                    padding: AppSpacing.earnTopPaddingX4,
                     child: Column(
                       children: [
                         Text(
@@ -93,15 +93,22 @@ class StakingInsuranceFundTabs extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x4),
-                        AnimatedContainer(
+                        AnimatedSize(
                           duration: const Duration(milliseconds: 160),
-                          width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: AppSpacing.stakingProductTabIndicatorHeight,
-                          decoration: BoxDecoration(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.transparent,
-                            borderRadius: AppRadii.xsRadius,
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            width: active == tab ? AppSpacing.buttonHero : 0,
+                            height: AppSpacing.stakingProductTabIndicatorHeight,
+                            child: DecoratedBox(
+                              decoration: ShapeDecoration(
+                                color: active == tab
+                                    ? AppColors.primarySoft
+                                    : AppColors.transparent,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: AppRadii.xsRadius,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ],

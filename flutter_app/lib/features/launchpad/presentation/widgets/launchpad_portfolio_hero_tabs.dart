@@ -32,25 +32,29 @@ class _PortfolioHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
-      padding: const EdgeInsets.all(AppSpacing.x5),
+      padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Container(
-                width: AppSpacing.launchpadBox48,
-                height: AppSpacing.launchpadBox48,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.primary12,
-                  border: Border.all(color: AppColors.primary30),
-                  borderRadius: AppRadii.lgRadius,
-                ),
-                child: const Icon(
-                  Icons.business_center_outlined,
-                  color: AppColors.primary,
-                  size: AppSpacing.iconMd,
+              SizedBox.square(
+                dimension: AppSpacing.launchpadBox48,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.primary12,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.lgRadius,
+                      side: const BorderSide(color: AppColors.primary30),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.business_center_outlined,
+                      color: AppColors.primary,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -124,10 +128,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x4,
-      ),
+      padding: AppSpacing.launchpadMetricCardPadding,
       child: Column(
         children: [
           Text(
@@ -170,23 +171,32 @@ class _PortfolioTabs extends StatelessWidget {
             key: LaunchpadPortfolioPage.tabKey(tab.id),
             onTap: () => onChanged(tab),
             borderRadius: AppRadii.inputRadius,
-            child: AnimatedContainer(
+            child: TweenAnimationBuilder<Color?>(
               duration: const Duration(milliseconds: 160),
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.x4,
-                vertical: AppSpacing.x3,
-              ),
-              decoration: BoxDecoration(
-                color: tab == activeTab
+              tween: ColorTween(
+                end: tab == activeTab
                     ? AppColors.primary12
                     : AppColors.surface2,
-                border: Border.all(
-                  color: tab == activeTab
-                      ? AppColors.primary30
-                      : AppColors.cardBorder,
-                ),
-                borderRadius: AppRadii.inputRadius,
               ),
+              builder: (context, color, child) {
+                return DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: color,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.inputRadius,
+                      side: BorderSide(
+                        color: tab == activeTab
+                            ? AppColors.primary30
+                            : AppColors.cardBorder,
+                      ),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: AppSpacing.launchpadActionButtonPadding,
+                    child: child,
+                  ),
+                );
+              },
               child: Text(
                 tab.label,
                 style: AppTextStyles.caption.copyWith(

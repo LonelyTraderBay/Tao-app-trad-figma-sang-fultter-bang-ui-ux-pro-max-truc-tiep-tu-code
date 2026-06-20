@@ -9,6 +9,7 @@ class _RiskAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
+      density: VitDensity.compact,
       title: 'Cảnh báo rủi ro',
       message:
           'Một copy đang lỗ >5%. Xem xét dừng copy hoặc điều chỉnh stop-loss.',
@@ -26,6 +27,7 @@ class _ActionStatusBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitHighRiskStatePanel(
       state: VitHighRiskUiState.success,
+      density: VitDensity.compact,
       title: 'Copy action recorded',
       message: text,
       contractId: 'Active copy action',
@@ -94,17 +96,18 @@ class _StopCopyModalState extends State<_StopCopyModal> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const VitSheetHandle(),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.x3),
                 Row(
                   children: [
-                    const VitCard(
-                      variant: VitCardVariant.inner,
-                      radius: VitCardRadius.sm,
-                      width: AppSpacing.searchBarCompactHeight,
-                      height: AppSpacing.searchBarCompactHeight,
-                      borderColor: AppColors.sell20,
-                      alignment: Alignment.center,
-                      child: Icon(Icons.stop_rounded, color: AppColors.sell),
+                    const SizedBox.square(
+                      dimension: AppSpacing.searchBarCompactHeight,
+                      child: VitCard(
+                        variant: VitCardVariant.inner,
+                        radius: VitCardRadius.sm,
+                        borderColor: AppColors.sell20,
+                        alignment: Alignment.center,
+                        child: Icon(Icons.stop_rounded, color: AppColors.sell),
+                      ),
                     ),
                     const SizedBox(width: AppSpacing.cardGap),
                     Expanded(
@@ -138,16 +141,15 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                     'Cảnh báo: khi dừng copy, các vị thế đang mở có thể được đóng. Hành động này cần xác nhận rõ ràng.',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.sell,
-                      height: AppSpacing.activeCopiesLineHeightNotice,
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.cardGap),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   'Nhập STOP để xác nhận',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
-                const SizedBox(height: AppSpacing.formFieldLabelGap),
+                const SizedBox(height: AppSpacing.x1),
                 VitInput(
                   controller: _confirmController,
                   fieldKey: ActiveCopiesPage.stopConfirmInputKey,
@@ -155,7 +157,7 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                   textInputAction: TextInputAction.done,
                   onChanged: widget.onTextChanged,
                 ),
-                const SizedBox(height: AppSpacing.cardGap),
+                const SizedBox(height: AppSpacing.x3),
                 Row(
                   children: [
                     Expanded(
@@ -197,10 +199,10 @@ class _SheetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       onPressed: onTap,
+      density: VitDensity.compact,
       variant: danger
           ? VitCtaButtonVariant.danger
           : VitCtaButtonVariant.secondary,
-      height: AppSpacing.inputHeight,
       child: Text(label),
     );
   }

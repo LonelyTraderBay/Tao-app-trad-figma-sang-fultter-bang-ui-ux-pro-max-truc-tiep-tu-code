@@ -11,13 +11,13 @@ class _ReviewsTab extends StatelessWidget {
       label: 'Review Schedule',
       children: [
         _Card(
-          padding: AppSpacing.productGovernanceCardPadding,
+          padding: AppSpacing.cardPaddingCompact,
           child: Column(
             children: [
               for (final product in products) ...[
                 _ReviewRow(product: product),
                 if (product != products.last)
-                  const SizedBox(height: AppSpacing.productGovernanceReviewGap),
+                  const SizedBox(height: AppSpacing.x2),
               ],
             ],
           ),
@@ -38,7 +38,8 @@ class _ReviewRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.productGovernanceReviewRowPadding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
           Expanded(
@@ -50,18 +51,12 @@ class _ReviewRow extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.productGovernanceLineHeightTight,
                   ),
                 ),
-                const SizedBox(
-                  height: AppSpacing.productGovernanceReviewTextGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Due: ${product.nextReview}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.productGovernanceLineHeightTight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -74,19 +69,13 @@ class _ReviewRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: urgent ? _govAmber : AppColors.text2,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.productGovernanceLineHeightTight,
                 ),
               ),
               if (urgent) ...[
-                const SizedBox(
-                  height: AppSpacing.productGovernanceReviewActionGap,
-                ),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Action needed',
-                  style: AppTextStyles.micro.copyWith(
-                    color: _govAmber,
-                    height: AppSpacing.productGovernanceLineHeightTight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: _govAmber),
                 ),
               ],
             ],
@@ -107,26 +96,26 @@ class _DistributionTab extends StatelessWidget {
     const channels = ['App', 'Web Platform', 'API'];
     return VitPageSection(
       label: 'Distribution Channels',
-      customGap: AppSpacing.productGovernanceContentGap,
+      density: VitDensity.compact,
       children: [
         for (final channel in channels)
           _Card(
-            padding: AppSpacing.productGovernanceDistributionCardPadding,
+            padding: AppSpacing.cardPaddingCompact,
             child: Row(
               children: [
                 VitCard(
-                  width: AppSpacing.productGovernanceChannelIconBox,
-                  height: AppSpacing.productGovernanceChannelIconBox,
+                  width: AppSpacing.buttonCompact,
+                  height: AppSpacing.buttonCompact,
                   variant: VitCardVariant.inner,
                   alignment: Alignment.center,
                   borderColor: _govPrimary.withValues(alpha: .35),
                   child: const Icon(
                     Icons.monitor_heart_outlined,
                     color: _govPrimary,
-                    size: AppSpacing.productGovernanceActionIcon,
+                    size: AppSpacing.inputPrefixIcon,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.productGovernanceReviewGap),
+                const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,17 +125,13 @@ class _DistributionTab extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.productGovernanceLineHeightTight,
                         ),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.productGovernanceReviewTextGap,
-                      ),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         '${_productCountForChannel(products, channel)} products',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.productGovernanceLineHeightTight,
                         ),
                       ),
                     ],
@@ -155,7 +140,7 @@ class _DistributionTab extends StatelessWidget {
                 const Icon(
                   Icons.check_circle_outline,
                   color: _govGreen,
-                  size: AppSpacing.productGovernanceChannelStatusIcon,
+                  size: AppSpacing.inputPrefixIcon,
                 ),
               ],
             ),
@@ -174,6 +159,7 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      density: VitDensity.compact,
       padding: padding,
       borderColor: _govBorder.withValues(alpha: .72),
       child: child,

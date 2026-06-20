@@ -29,7 +29,7 @@ class _TournamentTabBar extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.predictionTournamentTabsHeight,
+        height: VitDensity.compact.controlHeight,
         child: Stack(
           children: [
             Row(
@@ -120,7 +120,7 @@ class _FeaturedTournamentBlock extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.predictionTournamentFeaturedCardGap),
+        const SizedBox(height: AppSpacing.x2),
         _TournamentCard(tournament: tournament),
       ],
     );
@@ -143,6 +143,7 @@ class _TournamentSection extends StatelessWidget {
     return VitPageSection(
       label: label,
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         if (tournaments.isEmpty)
           empty ?? const SizedBox.shrink()
@@ -173,7 +174,10 @@ class _TournamentCard extends StatelessWidget {
       onTap: () =>
           context.go(AppRoutePaths.marketsPredictionTournament(tournament.id)),
       child: Padding(
-        padding: AppSpacing.predictionTournamentCardPadding,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x3,
+          vertical: AppSpacing.x3,
+        ),
         child: Column(
           children: [
             Row(
@@ -208,9 +212,7 @@ class _TournamentCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: AppSpacing.predictionTournamentDescriptionGap,
-                      ),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         tournament.description,
                         maxLines: 2,
@@ -227,60 +229,56 @@ class _TournamentCard extends StatelessWidget {
               ],
             ),
             if (tournament.isJoined && tournament.myRank != null) ...[
-              const SizedBox(height: AppSpacing.predictionTournamentRankGap),
+              const SizedBox(height: AppSpacing.x2),
               Material(
                 color: AppColors.buy.withValues(alpha: .08),
                 borderRadius: AppRadii.cardRadius,
-                child: SizedBox(
-                  height: AppSpacing.predictionTournamentRankHeight,
-                  child: Padding(
-                    padding: AppSpacing.predictionTournamentRankPadding,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Your rank',
-                            style: AppTextStyles.numericMicro.copyWith(
-                              color: AppColors.text2,
-                            ),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.x3,
+                    vertical: AppSpacing.x2,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Your rank',
+                          style: AppTextStyles.numericMicro.copyWith(
+                            color: AppColors.text2,
                           ),
                         ),
-                        Text(
-                          '#${tournament.myRank} - ${tournament.myScore} pts',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.buy,
-                            fontWeight: AppTextStyles.bold,
-                          ),
+                      ),
+                      Text(
+                        '#${tournament.myRank} - ${tournament.myScore} pts',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.buy,
+                          fontWeight: AppTextStyles.bold,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ],
-            const SizedBox(height: AppSpacing.predictionTournamentStatsGap),
+            const SizedBox(height: AppSpacing.x2),
             _TournamentStatsGrid(tournament: tournament),
-            const SizedBox(
-              height: AppSpacing.predictionTournamentDividerTopGap,
-            ),
-            const Divider(
-              color: AppColors.border,
-              height: AppSpacing.predictionTournamentDividerHeight,
-            ),
-            const SizedBox(
-              height: AppSpacing.predictionTournamentDividerBottomGap,
-            ),
+            const SizedBox(height: AppSpacing.x2),
+            const Divider(color: AppColors.border, height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.x1),
             Row(
               children: [
                 _CategoryChip(label: tournament.category),
-                const Spacer(),
-                Text(
-                  tournament.isJoined ? 'Joined' : 'View Details',
-                  style: AppTextStyles.numericMicro.copyWith(
-                    color: tournament.isJoined
-                        ? AppColors.buy
-                        : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    tournament.isJoined ? 'Joined' : 'View Details',
+                    textAlign: TextAlign.end,
+                    style: AppTextStyles.numericMicro.copyWith(
+                      color: tournament.isJoined
+                          ? AppColors.buy
+                          : AppColors.text3,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(

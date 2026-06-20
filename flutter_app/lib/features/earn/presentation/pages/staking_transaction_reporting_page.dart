@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -21,6 +21,20 @@ part '../widgets/staking_transaction_reporting_transaction_widgets.dart';
 part '../widgets/staking_transaction_reporting_sheet_widgets.dart';
 
 enum _ReportingTab { summary, transactions, export }
+
+const double _transactionReportingVisualNavClearance = 112;
+const double _transactionReportingNativeNavClearance = 88;
+const double _transactionReportingControlExtent = 46;
+const double _transactionReportingIconBox = 42;
+const double _transactionReportingIndicatorExtent = 3;
+const double _transactionReportingDividerExtent = 1;
+const double _transactionReportingBodyLineHeight = 1.22;
+const double _transactionReportingMetricLineHeight = 1.18;
+const double _transactionReportingNoticeLineHeight = 1.2;
+const double _transactionReportingMethodLineHeight = 1.2;
+const EdgeInsets _transactionReportingCardPadding = EdgeInsets.all(
+  AppSpacing.x3,
+);
 
 class StakingTransactionReportingPage extends ConsumerStatefulWidget {
   const StakingTransactionReportingPage({super.key, this.shellRenderMode});
@@ -71,10 +85,10 @@ class _StakingTransactionReportingPageState
         .watch(stakingTransactionReportingRepositoryProvider)
         .getReporting();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? _transactionReportingVisualNavClearance
+            : _transactionReportingNativeNavClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -94,10 +108,15 @@ class _StakingTransactionReportingPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    scrollEndPadding,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    density: VitDensity.compact,
                     children: [
                       _InfoBanner(snapshot: snapshot),
                       _Selectors(

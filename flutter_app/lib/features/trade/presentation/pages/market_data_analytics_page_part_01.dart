@@ -10,11 +10,11 @@ class _MarketDataAnalyticsPageState
         .watch(tradeReadModelControllerProvider)
         .getMarketDataAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -34,17 +34,16 @@ class _MarketDataAnalyticsPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: MarketDataAnalyticsPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top:
-                        AppSpacing.x4 +
-                        AppSpacing.x1 -
-                        AppSpacing.hairlineStroke,
-                    bottom: bottomInset,
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.tradeBotCardGap,
+                    AppSpacing.contentPad,
+                    scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: AppSpacing.x4 + AppSpacing.x1,
+                    density: VitDensity.compact,
                     children: [
                       _PairSelector(snapshot: snapshot),
                       _MarketAnalyticsRiskPanel(snapshot: snapshot),
@@ -78,12 +77,7 @@ class _PairSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height:
-          AppSpacing.x7 +
-          AppSpacing.x5 +
-          AppSpacing.x3 -
-          AppSpacing.hairlineStroke,
-      padding: AppSpacing.tradeBotCardPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           Expanded(
@@ -115,6 +109,7 @@ class _MarketAnalyticsRiskPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
+      density: VitDensity.compact,
       title: 'Market data risk review',
       message:
           'Use ${snapshot.selectedPair} analytics as a preview input only. Confirm margin, liquidation risk, funding fee, position limits, and next steps before placing a trade.',
@@ -148,10 +143,7 @@ class _HeaderValue extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.text3,
-            height: AppSpacing.tradeBotLineHeightCaption,
-          ),
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         Text(
           value,
@@ -159,7 +151,6 @@ class _HeaderValue extends StatelessWidget {
             color: valueColor,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: AppSpacing.tradeBotLineHeightTight,
           ),
         ),
       ],
@@ -182,8 +173,7 @@ class _UnderlineTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.x7,
-      padding: AppSpacing.zeroInsets,
+      density: VitDensity.compact,
       child: VitTabBar(
         activeKey: activeId,
         onChanged: onChanged,
@@ -210,7 +200,8 @@ class _MarketDataTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: AppSpacing.tradeBotCardGap,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _OpenInterestCard(
           pair: snapshot.selectedPair,
@@ -235,7 +226,8 @@ class _OpenInterestCard extends StatelessWidget {
     return _AnalyticsCard(
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotStatusGap,
+        fullBleed: true,
+        density: VitDensity.compact,
         children: [
           _CardHeader(
             icon: Icons.show_chart_rounded,
@@ -245,10 +237,7 @@ class _OpenInterestCard extends StatelessWidget {
           ),
           Text(
             'Total Open Interest',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -263,12 +252,11 @@ class _OpenInterestCard extends StatelessWidget {
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
-                      height: AppSpacing.tradeBotLineHeightTight,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               _SmallBadge(
                 label: '+${data.change24hPct.toStringAsFixed(2)}%',
                 color: _analyticsGreen,
@@ -284,14 +272,14 @@ class _OpenInterestCard extends StatelessWidget {
                   color: _analyticsGreen,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MetricBubble(
                   label: 'High 24h',
                   value: _formatMillions(data.high24h),
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MetricBubble(
                   label: 'Low 24h',
@@ -320,7 +308,8 @@ class _LongShortRatioCard extends StatelessWidget {
     return _AnalyticsCard(
       child: VitPageContent(
         padding: VitContentPadding.none,
-        customGap: AppSpacing.tradeBotCardGap,
+        fullBleed: true,
+        density: VitDensity.compact,
         children: [
           _CardHeader(
             icon: Icons.groups_2_outlined,
@@ -364,10 +353,7 @@ class _LongShortRatioCard extends StatelessWidget {
           Text(
             'Long/Short Ratio',
             textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightTight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           Text(
             data.ratio.toStringAsFixed(2),
@@ -376,7 +362,6 @@ class _LongShortRatioCard extends StatelessWidget {
               color: _analyticsGreen,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
           Row(
@@ -389,7 +374,7 @@ class _LongShortRatioCard extends StatelessWidget {
                   bg: _analyticsGreen.withValues(alpha: .09),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3 + AppSpacing.hairlineStroke),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _MetricBubble(
                   label: 'Short Accounts',

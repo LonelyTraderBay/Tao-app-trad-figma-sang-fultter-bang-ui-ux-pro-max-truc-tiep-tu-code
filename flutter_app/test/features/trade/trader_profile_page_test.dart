@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTraderProfile(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -66,6 +68,22 @@ void main() {
     expect(find.text('+342.5%'), findsOneWidget);
     expect(find.text('\$2.45M'), findsOneWidget);
     expect(find.byKey(TraderProfilePage.copyButtonKey), findsOneWidget);
+  });
+
+  testWidgets('SC-087 first viewport reaches copy action', (tester) async {
+    await pumpTraderProfile(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'TraderProfilePage',
+      semanticLabel: 'SC-087 TraderProfilePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(TraderProfilePage.copyButtonKey),
+      routeName: 'TraderProfilePage',
+      actionLabel: 'copy trader action',
+    );
   });
 
   testWidgets('SC-087 local tabs and follow state update', (tester) async {

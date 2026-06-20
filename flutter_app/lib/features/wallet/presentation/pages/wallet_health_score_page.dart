@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -41,6 +42,8 @@ class WalletHealthScorePage extends ConsumerStatefulWidget {
 
   static const contentKey = Key('sc151_health_score_content');
   static Key tabKey(String label) => Key('sc151_health_score_tab_$label');
+  static Key metricKey(String category) =>
+      Key('sc151_health_score_metric_$category');
   static Key recommendationKey(String id) =>
       Key('sc151_health_score_recommendation_$id');
 

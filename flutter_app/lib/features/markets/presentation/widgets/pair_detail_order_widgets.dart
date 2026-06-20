@@ -21,19 +21,22 @@ class _OrderBookPanel extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Spacer(),
-                Text(
-                  'Mid ${_formatPrice(snapshot.depth.midPrice)}',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    'Mid ${_formatPrice(snapshot.depth.midPrice)}',
+                    textAlign: TextAlign.right,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.pairOrderSectionGap),
+            const SizedBox(height: AppSpacing.x2),
             for (final level in snapshot.depth.asks.take(4).toList().reversed)
               _DepthRow(level: level, side: MarketOrderSide.sell),
             const Divider(
               color: AppColors.divider,
-              height: AppSpacing.pairOrderDividerHeight,
+              height: AppSpacing.dividerHairline,
             ),
             for (final level in snapshot.depth.bids.take(4))
               _DepthRow(level: level, side: MarketOrderSide.buy),

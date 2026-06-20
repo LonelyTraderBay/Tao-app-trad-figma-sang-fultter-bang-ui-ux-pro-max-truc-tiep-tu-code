@@ -11,19 +11,22 @@ class _ScoreCard extends StatelessWidget {
 
     return VitCard(
       key: SecurityPage.scoreCardKey,
-      height: AppSpacing.securityScoreHeight,
-      padding: AppSpacing.securityCardPadding,
+      density: VitDensity.compact,
       borderColor: _securityBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Text(
-                '\u0110i\u1EC3m b\u1EA3o m\u1EADt',
-                style: AppTextStyles.control.copyWith(color: AppColors.text2),
+              Expanded(
+                child: Text(
+                  '\u0110i\u1EC3m b\u1EA3o m\u1EADt',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.control.copyWith(color: AppColors.text2),
+                ),
               ),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.x3),
               Text(
                 '${snapshot.scoreLabel} (${snapshot.score}/4)',
                 style: AppTextStyles.control.copyWith(
@@ -33,13 +36,13 @@ class _ScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.securityScoreBarsGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               for (var i = 0; i < 4; i++) ...[
                 Expanded(
                   child: SizedBox(
-                    height: AppSpacing.securityScoreBarHeight,
+                    height: AppSpacing.x2,
                     child: Material(
                       color: i < snapshot.score
                           ? scoreColor
@@ -55,38 +58,35 @@ class _ScoreCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.securityScoreAlertGap),
-          SizedBox(
-            height: AppSpacing.securityScoreAlertHeight,
-            child: Material(
-              color: _securityAmber.withValues(alpha: .12),
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.cardRadius,
-                side: BorderSide(color: _securityAmber.withValues(alpha: .28)),
-              ),
-              child: Padding(
-                padding: AppSpacing.securityScoreAlertPadding,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.warning_amber_rounded,
-                      color: _securityAmber,
-                      size: AppSpacing.securitySmallIcon,
-                    ),
-                    const SizedBox(width: AppSpacing.securityIconGap),
-                    Expanded(
-                      child: Text(
-                        'B\u1EADt t\u1EA5t c\u1EA3 t\u00EDnh n\u0103ng b\u1EA3o m\u1EADt \u0111\u1EC3 b\u1EA3o v\u1EC7 t\u00E0i s\u1EA3n c\u1EE7a b\u1EA1n\n'
-                        't\u1ED1t nh\u1EA5t.',
-                        style: AppTextStyles.numericMicro.copyWith(
-                          color: _securityAmber,
-                          fontWeight: AppTextStyles.bold,
-                        ),
+          const SizedBox(height: AppSpacing.x3),
+          Material(
+            color: _securityAmber.withValues(alpha: .12),
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.cardRadius,
+              side: BorderSide(color: _securityAmber.withValues(alpha: .28)),
+            ),
+            child: Padding(
+              padding: AppSpacing.securityScoreAlertPadding,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.warning_amber_rounded,
+                    color: _securityAmber,
+                    size: AppSpacing.securitySmallIcon,
+                  ),
+                  const SizedBox(width: AppSpacing.securityIconGap),
+                  Expanded(
+                    child: Text(
+                      'B\u1EADt t\u1EA5t c\u1EA3 t\u00EDnh n\u0103ng b\u1EA3o m\u1EADt \u0111\u1EC3 b\u1EA3o v\u1EC7 t\u00E0i s\u1EA3n c\u1EE7a b\u1EA1n\n'
+                      't\u1ED1t nh\u1EA5t.',
+                      style: AppTextStyles.numericMicro.copyWith(
+                        color: _securityAmber,
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -140,8 +140,10 @@ class _SecurityRow extends StatelessWidget {
       key: SecurityPage.itemKey(item.id),
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: SizedBox(
-        height: AppSpacing.securityRowHeight,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,
+        ),
         child: Padding(
           padding: AppSpacing.securityRowPadding,
           child: Row(
@@ -176,7 +178,7 @@ class _SecurityRow extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.securityRowSubtitleGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       item.description,
                       maxLines: 2,
@@ -233,7 +235,7 @@ class _DeviceList extends StatelessWidget {
           'THI\u1EBET B\u1ECA \u0110\u0102NG NH\u1EACP',
           style: AppTextStyles.badge.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.securityDeviceHeaderGap),
+        const SizedBox(height: AppSpacing.x2),
         VitCard(
           borderColor: _securityBorder,
           clip: true,
@@ -306,7 +308,7 @@ class _DeviceRow extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.securityDeviceNameGap),
+                  const SizedBox(height: AppSpacing.x2),
                   Text(
                     '${device.os} \u2022 ${device.location}',
                     maxLines: 1,
@@ -315,7 +317,7 @@ class _DeviceRow extends StatelessWidget {
                       color: _securityMuted,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.securityDeviceMetaGap),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     device.lastSeen,
                     style: AppTextStyles.numericMicro.copyWith(

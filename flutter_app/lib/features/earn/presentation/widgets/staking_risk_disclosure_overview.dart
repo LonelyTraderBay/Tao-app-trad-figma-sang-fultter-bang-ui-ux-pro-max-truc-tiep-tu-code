@@ -10,7 +10,7 @@ class _WarningBanner extends StatelessWidget {
     return ConstrainedBox(
       key: StakingRiskDisclosurePage.warningKey,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.stakingRiskDisclosureWarningMinHeight,
+        minHeight: _stakingRiskWarningMinHeight,
       ),
       child: Material(
         color: AppColors.sell10,
@@ -18,7 +18,7 @@ class _WarningBanner extends StatelessWidget {
           borderRadius: AppRadii.cardLargeRadius,
           side: const BorderSide(
             color: AppColors.sell20,
-            width: AppSpacing.stakingRiskDisclosureBorderWidth,
+            width: _stakingRiskBorderWidth,
           ),
         ),
         child: Padding(
@@ -29,7 +29,7 @@ class _WarningBanner extends StatelessWidget {
               const Icon(
                 Icons.warning_amber_rounded,
                 color: AppColors.sell,
-                size: AppSpacing.stakingRiskDisclosureWarningIcon,
+                size: _stakingRiskWarningIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -48,7 +48,7 @@ class _WarningBanner extends StatelessWidget {
                       snapshot.warningBody,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.stakingRiskDisclosureBodyLineHeight,
+                        height: _stakingRiskBodyLineHeight,
                       ),
                     ),
                   ],
@@ -76,9 +76,7 @@ class _RiskTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.stakingRiskDisclosureTabsMinHeight,
-      ),
+      constraints: const BoxConstraints(minHeight: _stakingRiskTabsMinHeight),
       child: Material(
         color: AppColors.surface2,
         child: Padding(
@@ -115,7 +113,7 @@ class _OverviewTab extends StatelessWidget {
         _SectionLabel(snapshot.summaryTitle),
         const SizedBox(height: AppSpacing.x3),
         _RiskSummaryCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         _SectionLabel(snapshot.productSectionTitle),
         const SizedBox(height: AppSpacing.x3),
         for (final product in snapshot.products) ...[
@@ -123,17 +121,17 @@ class _OverviewTab extends StatelessWidget {
           if (product != snapshot.products.last)
             const SizedBox(height: AppSpacing.x3),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnPaddingX4,
+          padding: _stakingRiskCardPadding,
           child: Text(
             snapshot.disclaimer,
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.stakingRiskDisclosureNoticeLineHeight,
+              height: _stakingRiskNoticeLineHeight,
             ),
           ),
         ),
@@ -151,7 +149,7 @@ class _RiskSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: _stakingRiskCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -159,7 +157,7 @@ class _RiskSummaryCard extends StatelessWidget {
             snapshot.summaryBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingRiskDisclosureSummaryLineHeight,
+              height: _stakingRiskSummaryLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x4),
@@ -187,9 +185,7 @@ class _RiskCountTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _riskColor(count.level);
     return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.stakingRiskDisclosureCountMinHeight,
-      ),
+      constraints: const BoxConstraints(minHeight: _stakingRiskCountMinHeight),
       child: Material(
         color: _riskTint(count.level),
         shape: RoundedRectangleBorder(
@@ -206,7 +202,7 @@ class _RiskCountTile extends StatelessWidget {
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.stakingRiskDisclosureCompactLineHeight,
+                  height: _stakingRiskCompactLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x1),
@@ -237,10 +233,10 @@ class _RiskProductCard extends StatelessWidget {
       radius: VitCardRadius.lg,
       constraints: BoxConstraints(
         minHeight: product.risks.length > 3
-            ? AppSpacing.stakingRiskDisclosureProductMinHeightTall
-            : AppSpacing.stakingRiskDisclosureProductMinHeight,
+            ? _stakingRiskProductMinHeightTall
+            : _stakingRiskProductMinHeight,
       ),
-      padding: AppSpacing.earnPaddingX4,
+      padding: _stakingRiskCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -273,8 +269,7 @@ class _RiskProductCard extends StatelessWidget {
                       risk,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height:
-                            AppSpacing.stakingRiskDisclosureCompactLineHeight,
+                        height: _stakingRiskCompactLineHeight,
                       ),
                     ),
                   ),

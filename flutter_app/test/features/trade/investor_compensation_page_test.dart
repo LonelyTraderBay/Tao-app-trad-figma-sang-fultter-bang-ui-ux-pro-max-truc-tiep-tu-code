@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpInvestorCompensation(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,25 @@ void main() {
     expect(find.text('What Is FSCS?'), findsOneWidget);
     expect(find.text('Coverage Limits'), findsOneWidget);
     expect(find.byKey(InvestorCompensationPage.faqKey), findsOneWidget);
+  });
+
+  testWidgets('SC-104 first viewport reaches FSCS overview', (tester) async {
+    await pumpInvestorCompensation(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'InvestorCompensationPage',
+      semanticLabel: 'SC-104 InvestorCompensationPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(InvestorCompensationPage.overviewKey),
+      minVisibleHeight: 24,
+      targetLabel: 'FSCS overview section',
+      reason:
+          'Investor compensation must preview FSCS protection detail above '
+          'bottom navigation after the coverage summary.',
+    );
   });
 
   testWidgets('SC-104 switches eligibility and claim tabs', (tester) async {

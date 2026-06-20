@@ -7,10 +7,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -32,6 +32,13 @@ const _riyPrimary = AppColors.primary;
 const _riyGreen = AppColors.buy;
 const _riyRed = AppColors.sell;
 const _riyGrid = AppColors.portfolioBtnGhost;
+const double _riyFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _riyNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _riyMetricExtent = AppSpacing.buttonCompact + AppSpacing.x3;
+const double _riyCostImpactExtent = AppSpacing.buttonStandard + AppSpacing.x6;
+const double _riyChartExtent = AppSpacing.buttonStandard * 2 + AppSpacing.x7;
 
 class RIYCalculatorPage extends ConsumerStatefulWidget {
   const RIYCalculatorPage({super.key, this.shellRenderMode});
@@ -69,10 +76,10 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
   @override
   Widget build(BuildContext context) {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 70
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? _riyFramedScrollClearance
+            : _riyNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
     final projections = _buildProjections(
       investment: _investment,
@@ -99,97 +106,90 @@ class _RIYCalculatorPageState extends ConsumerState<RIYCalculatorPage> {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.tradeCopyExAnteCosts),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: RIYCalculatorPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    customGap: 12,
-                    fullBleed: true,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review cost impact before proceeding',
-                        message:
-                            'Confirm fees, risk assumptions, holding period, and next steps before using RIY projections for copy trading.',
-                      ),
-                      const VitSectionHeader(
-                        title: 'Investment Parameters',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _riyPrimary,
-                      ),
-                      _InputCard(
-                        investment: _investment,
-                        expectedReturn: _expectedReturn,
-                        totalCosts: _totalCosts,
-                        years: _years,
-                        onInvestmentChanged: (value) =>
-                            setState(() => _investment = value),
-                        onExpectedReturnChanged: (value) =>
-                            setState(() => _expectedReturn = value),
-                        onTotalCostsChanged: (value) =>
-                            setState(() => _totalCosts = value),
-                        onYearsChanged: (value) =>
-                            setState(() => _years = value),
-                      ),
-                      const VitSectionHeader(
-                        title: 'Impact Analysis',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _riyPrimary,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _ResultMetric(
-                              label: 'Without Costs',
-                              value: _formatEur(finalWithoutCosts),
-                              color: _riyGreen,
-                            ),
-                          ),
-                          const SizedBox(width: AppSpacing.tradeBotCardGap),
-                          Expanded(
-                            child: _ResultMetric(
-                              label: 'With Costs',
-                              value: _formatEur(finalWithCosts),
-                              color: _riyRed,
-                            ),
-                          ),
-                        ],
-                      ),
-                      _CostImpactCard(
-                        years: _years,
-                        difference: difference,
-                        lossPct: lossPct,
-                      ),
-                      const VitSectionHeader(
-                        title: 'Growth Comparison',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _riyPrimary,
-                      ),
-                      _ChartCard(projections: projections),
-                      const TradeBodyReviewSection(
-                        title: 'RIY body review',
-                        message: 'RIY calculator body reviewed',
-                        detail:
-                            'Investment, return, cost, holding period, chart, empty, and result states stay visible.',
-                        primary:
-                            'Input assumptions remain above cost-impact outputs.',
-                        secondary:
-                            'Without-cost and with-cost values stay comparable.',
-                        tertiary:
-                            'Projection copy remains cost analysis, not performance advice.',
-                      ),
-                    ],
-                  ),
+          child: VitInsetScrollView(
+            key: RIYCalculatorPage.contentKey,
+            bottomInset: scrollEndClearance,
+            child: VitPageContent(
+              padding: VitContentPadding.compact,
+              density: VitDensity.compact,
+              children: [
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Review cost impact before proceeding',
+                  message:
+                      'Confirm fees, risk assumptions, holding period, and next steps before using RIY projections for copy trading.',
+                  density: VitDensity.compact,
                 ),
-              ),
-            ],
+                const VitSectionHeader(
+                  title: 'Investment Parameters',
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _riyPrimary,
+                  density: VitDensity.compact,
+                ),
+                _InputCard(
+                  investment: _investment,
+                  expectedReturn: _expectedReturn,
+                  totalCosts: _totalCosts,
+                  years: _years,
+                  onInvestmentChanged: (value) =>
+                      setState(() => _investment = value),
+                  onExpectedReturnChanged: (value) =>
+                      setState(() => _expectedReturn = value),
+                  onTotalCostsChanged: (value) =>
+                      setState(() => _totalCosts = value),
+                  onYearsChanged: (value) => setState(() => _years = value),
+                ),
+                const VitSectionHeader(
+                  title: 'Impact Analysis',
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _riyPrimary,
+                  density: VitDensity.compact,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ResultMetric(
+                        label: 'Without Costs',
+                        value: _formatEur(finalWithoutCosts),
+                        color: _riyGreen,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.x3),
+                    Expanded(
+                      child: _ResultMetric(
+                        label: 'With Costs',
+                        value: _formatEur(finalWithCosts),
+                        color: _riyRed,
+                      ),
+                    ),
+                  ],
+                ),
+                _CostImpactCard(
+                  years: _years,
+                  difference: difference,
+                  lossPct: lossPct,
+                ),
+                const VitSectionHeader(
+                  title: 'Growth Comparison',
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _riyPrimary,
+                  density: VitDensity.compact,
+                ),
+                _ChartCard(projections: projections),
+                const TradeBodyReviewSection(
+                  title: 'RIY body review',
+                  message: 'RIY calculator body reviewed',
+                  detail:
+                      'Investment, return, cost, holding period, chart, empty, and result states stay visible.',
+                  primary:
+                      'Input assumptions remain above cost-impact outputs.',
+                  secondary:
+                      'Without-cost and with-cost values stay comparable.',
+                  tertiary:
+                      'Projection copy remains cost analysis, not performance advice.',
+                ),
+              ],
+            ),
           ),
         ),
       ),

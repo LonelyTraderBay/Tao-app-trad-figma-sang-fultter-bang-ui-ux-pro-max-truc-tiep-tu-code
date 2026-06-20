@@ -30,8 +30,7 @@ class _RateLimitsCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last)
-              const SizedBox(height: AppSpacing.tradeBotSectionMarkerHeight),
+            if (item != items.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -48,9 +47,11 @@ class _AuthCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCardPaddingTall,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      density: VitDensity.compact,
+      child: VitPageContent(
+        padding: VitContentPadding.none,
+        fullBleed: true,
+        density: VitDensity.compact,
         children: [
           Row(
             children: [
@@ -65,21 +66,15 @@ class _AuthCard extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotContentGap),
           Text(
             'All API requests require an API key. Generate yours in Security '
             'Settings. Include in header:',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightRelaxed,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x3),
           _CodeBlock(text: header, compact: true, dark: true),
         ],
       ),
@@ -94,7 +89,7 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(padding: AppSpacing.tradeBotCardPadding, child: child);
+    return VitCard(density: VitDensity.compact, child: child);
   }
 }
 
@@ -125,9 +120,6 @@ class _CodeBlock extends StatelessWidget {
           text,
           style: AppTextStyles.micro.copyWith(
             color: compact ? _apiPrimary : AppColors.text2,
-            height: example
-                ? AppSpacing.tradeBotLineHeightLegal
-                : AppSpacing.tradeBotLineHeightLong,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -151,21 +143,6 @@ class _MethodBadge extends StatelessWidget {
         _ => VitStatusPillStatus.warning,
       },
       size: VitStatusPillSize.sm,
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: _apiPrimary,
     );
   }
 }

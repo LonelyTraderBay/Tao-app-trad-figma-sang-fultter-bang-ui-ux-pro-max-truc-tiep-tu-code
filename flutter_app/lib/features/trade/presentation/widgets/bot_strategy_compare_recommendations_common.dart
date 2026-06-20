@@ -13,50 +13,41 @@ class _RecommendationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(strategy.colorHex);
     return _Card(
-      padding: AppSpacing.tradeBotCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VitCard(
-            width: AppSpacing.tradeBotRecommendationIconBox,
-            height: AppSpacing.tradeBotRecommendationIconBox,
             variant: VitCardVariant.inner,
+            density: VitDensity.compact,
             borderColor: color.withValues(alpha: .24),
             alignment: Alignment.center,
             child: Icon(
               Icons.trending_up_rounded,
               color: color,
-              size: AppSpacing.tradeBotCardIcon,
+              size: AppSpacing.iconSm,
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeBotStatusGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   recommendation.title,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotLabelGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   recommendation.strategy,
                   style: AppTextStyles.caption.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   recommendation.reason,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.tradeBotLineHeightLoose,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),
@@ -76,7 +67,7 @@ class _AnalysisPeriodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -85,16 +76,12 @@ class _AnalysisPeriodCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             text,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.tradeBotLineHeightLong,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -103,13 +90,12 @@ class _AnalysisPeriodCard extends StatelessWidget {
 }
 
 class _Card extends StatelessWidget {
-  const _Card({required this.child, required this.padding});
+  const _Card({required this.child});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(padding: padding, child: child);
+    return VitCard(density: VitDensity.compact, child: child);
   }
 }

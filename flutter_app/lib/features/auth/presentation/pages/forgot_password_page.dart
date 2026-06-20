@@ -246,8 +246,8 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                 key: ForgotPasswordPage.contentKey,
                 padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
-                  padding: VitContentPadding.relaxed,
-                  gap: VitContentGap.relaxed,
+                  padding: VitContentPadding.defaultPadding,
+                  gap: VitContentGap.defaultGap,
                   children: [
                     if (_step == _ForgotPasswordStep.input)
                       VitCard(

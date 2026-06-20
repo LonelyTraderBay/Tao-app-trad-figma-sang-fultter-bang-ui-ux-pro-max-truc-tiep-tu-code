@@ -19,10 +19,7 @@ class StakingCustodyActionButton extends StatelessWidget {
         borderRadius: AppRadii.lgRadius,
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x4,
-            vertical: AppSpacing.x3,
-          ),
+          padding: AppSpacing.earnCardPaddingX4X3,
           child: Text(
             label,
             textAlign: TextAlign.center,
@@ -50,13 +47,15 @@ class StakingCustodyLargeIconBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        border: Border.all(
-          color: color.withValues(alpha: 0.32),
-          width: AppSpacing.stakingCustodyActionBorderWidth,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: color.withValues(alpha: 0.32),
+            width: AppSpacing.stakingCustodyActionBorderWidth,
+          ),
+          borderRadius: AppRadii.xlRadius,
         ),
-        borderRadius: AppRadii.xlRadius,
       ),
       child: SizedBox(
         width: AppSpacing.stakingCustodyActionIconBox,
@@ -84,15 +83,12 @@ class StakingCustodySmallPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: AppRadii.mdRadius,
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
+        padding: AppSpacing.earnSmallPillPadding,
         child: Text(
           label,
           maxLines: 1,
@@ -117,7 +113,7 @@ class StakingCustodyFooterNote extends StatelessWidget {
     return VitCard(
       key: StakingCustodyKeys.footer,
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,

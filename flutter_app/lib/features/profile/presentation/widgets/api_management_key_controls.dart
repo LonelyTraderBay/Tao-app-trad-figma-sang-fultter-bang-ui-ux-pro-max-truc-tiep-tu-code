@@ -58,45 +58,45 @@ class _SecretRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.profileApiSecretRowHeight,
-      child: Material(
-        color: _apiPanel2,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.inputRadius,
-          side: redBorder
-              ? BorderSide(color: _apiRed.withValues(alpha: .1))
-              : BorderSide.none,
+    return Material(
+      color: _apiPanel2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: redBorder
+            ? BorderSide(color: _apiRed.withValues(alpha: .1))
+            : BorderSide.none,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.x3,
+          vertical: AppSpacing.x2,
         ),
-        child: Padding(
-          padding: AppSpacing.profileApiSecretPadding,
-          child: Row(
-            children: [
-              SizedBox(
-                width: AppSpacing.profileApiSecretLabelWidth,
-                child: Text(
-                  label,
-                  style: AppTextStyles.micro.copyWith(
-                    color: labelColor,
-                    fontWeight: AppTextStyles.extraBold,
-                  ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: AppSpacing.x6 + AppSpacing.x4,
+              child: Text(
+                label,
+                style: AppTextStyles.micro.copyWith(
+                  color: labelColor,
+                  fontWeight: AppTextStyles.extraBold,
                 ),
               ),
-              Expanded(
-                child: Text(
-                  value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.extraBold,
-                  ),
+            ),
+            Expanded(
+              child: Text(
+                value,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.extraBold,
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileApiSecretTrailingGap),
-              trailing,
-            ],
-          ),
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            trailing,
+          ],
         ),
       ),
     );
@@ -167,36 +167,32 @@ class _SmallBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.profileApiSmallBadgeHeight,
-      child: Material(
-        color: color.withValues(alpha: .12),
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.smRadius,
-          side: BorderSide(color: color.withValues(alpha: .24)),
+    return Material(
+      color: color.withValues(alpha: .12),
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.smRadius,
+        side: BorderSide(color: color.withValues(alpha: .24)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.x2,
+          vertical: AppSpacing.x1,
         ),
-        child: Padding(
-          padding: AppSpacing.profileApiSmallBadgePadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) ...[
-                Icon(
-                  icon,
-                  color: color,
-                  size: AppSpacing.profileApiSmallBadgeIcon,
-                ),
-                const SizedBox(width: AppSpacing.profileApiSmallBadgeIconGap),
-              ],
-              Text(
-                label,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.extraBold,
-                ),
-              ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, color: color, size: AppSpacing.iconSm),
+              const SizedBox(width: AppSpacing.x1),
             ],
-          ),
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.extraBold,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -244,7 +240,7 @@ class _RegenerateButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       onPressed: onTap,
-      height: AppSpacing.profileApiActionHeight,
+      density: VitDensity.compact,
       variant: VitCtaButtonVariant.secondary,
       leading: const Icon(Icons.sync_rounded),
       child: const Text('T\u1EA1o l\u1EA1i Secret'),

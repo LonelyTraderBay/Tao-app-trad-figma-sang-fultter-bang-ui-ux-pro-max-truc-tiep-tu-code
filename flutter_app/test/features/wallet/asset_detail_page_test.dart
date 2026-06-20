@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAssetDetail(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -87,6 +89,24 @@ void main() {
     expect(find.text('Biểu đồ giá'), findsOneWidget);
     expect(find.text('Lịch sử giao dịch'), findsOneWidget);
     expect(find.text('+0.100000 BTC'), findsOneWidget);
+  });
+
+  testWidgets('SC-147 first viewport reaches first transaction row', (
+    tester,
+  ) async {
+    await pumpAssetDetail(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'AssetDetailPage',
+      semanticLabel: 'SC-147 AssetDetailPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(AssetDetailPage.transactionKey('tx001')),
+      routeName: 'AssetDetailPage',
+      actionLabel: 'the first transaction row',
+    );
   });
 
   testWidgets('SC-147 period, action, and transaction navigation work', (

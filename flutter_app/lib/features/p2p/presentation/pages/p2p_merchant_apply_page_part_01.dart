@@ -31,13 +31,11 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pMerchantApplyProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                AppSpacing.p2pMerchantApplyBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                AppSpacing.p2pMerchantApplyBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _p2pMerchantApplyVisualNavClearance
+        : _p2pMerchantApplyNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -64,8 +62,11 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
                   child: SingleChildScrollView(
                     key: P2PMerchantApplyPage.contentKey,
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.p2pMerchantApplyScrollPadding(
-                      bottomInset,
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      scrollEndPadding,
                     ),
                     child: _submitted
                         ? _SuccessState(
@@ -75,7 +76,7 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
                         : VitPageContent(
                             padding: VitContentPadding.none,
                             fullBleed: true,
-                            customGap: AppSpacing.x6,
+                            density: VitDensity.compact,
                             children: [
                               AnimatedSwitcher(
                                 duration: const Duration(milliseconds: 180),
@@ -266,7 +267,7 @@ class _StepConnector extends StatelessWidget {
     return Padding(
       padding: AppSpacing.p2pMerchantApplyConnectorPadding,
       child: SizedBox(
-        height: AppSpacing.p2pMerchantApplyConnectorHeight,
+        height: _p2pMerchantApplyConnectorHeight,
         child: Material(
           color: active ? AppColors.buy : AppColors.surface3,
           shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
@@ -312,7 +313,7 @@ class _StepDot extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: active ? AppColors.onAccent : AppColors.text3,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.p2pMerchantApplyTightLineHeight,
+                    height: _p2pMerchantApplyTightLineHeight,
                   ),
                 ),
         ),
@@ -328,18 +329,16 @@ class _RequirementsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageSection(
       key: const ValueKey('sc227_step_requirements'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      density: VitDensity.compact,
       children: [
         const _StepIntro(
           title: 'Trở thành Merchant',
           subtitle:
               'Nâng cấp tài khoản để nhận ưu đãi độc quyền và tăng uy tín.',
         ),
-        const SizedBox(height: AppSpacing.x5),
         _BenefitGrid(benefits: snapshot.benefits),
-        const SizedBox(height: AppSpacing.x5),
         _RequirementChecklist(requirements: snapshot.requirements),
       ],
     );
@@ -361,7 +360,7 @@ class _BenefitGrid extends StatelessWidget {
         crossAxisCount: AppSpacing.p2pMerchantApplyBenefitCrossAxisCount,
         crossAxisSpacing: AppSpacing.x3,
         mainAxisSpacing: AppSpacing.x3,
-        mainAxisExtent: AppSpacing.p2pMerchantApplyBenefitMainAxisExtent,
+        mainAxisExtent: _p2pMerchantApplyBenefitExtent,
       ),
       itemBuilder: (context, index) => _BenefitCard(benefit: benefits[index]),
     );
@@ -377,12 +376,12 @@ class _BenefitCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final tone = _toneColor(benefit.toneKey);
     return VitCard(
-      padding: AppSpacing.p2pMerchantApplyCardPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _IconBadge(icon: _iconFor(benefit.iconKey), color: tone),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             benefit.title,
             maxLines: 1,
@@ -399,7 +398,7 @@ class _BenefitCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.p2pMerchantApplyCompactLineHeight,
+              height: _p2pMerchantApplyCompactLineHeight,
             ),
           ),
         ],
@@ -416,7 +415,7 @@ class _RequirementChecklist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMerchantApplyCardPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

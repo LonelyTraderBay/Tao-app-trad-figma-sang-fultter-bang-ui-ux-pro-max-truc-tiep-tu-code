@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_performance_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPerformance(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -71,6 +73,24 @@ void main() {
     expect(
       find.byKey(LaunchpadPerformancePage.distributionKey),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-297 first viewport reaches best and worst projects', (
+    tester,
+  ) async {
+    await pumpPerformance(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-297 LaunchpadPerformancePage',
+      semanticLabel: 'SC-297 LaunchpadPerformancePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadPerformancePage.bestWorstKey),
+      routeName: 'SC-297 LaunchpadPerformancePage',
+      actionLabel: 'the best and worst project comparison',
     );
   });
 

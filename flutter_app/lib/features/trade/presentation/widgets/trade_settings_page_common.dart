@@ -25,6 +25,7 @@ class _ChoiceChipButton extends StatelessWidget {
       alignment: Alignment.center,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
+      density: VitDensity.compact,
       borderColor: active ? _tradePrimary : AppColors.surface3,
       clip: true,
       background: ColoredBox(
@@ -37,7 +38,7 @@ class _ChoiceChipButton extends StatelessWidget {
         style: labelStyle.copyWith(
           color: active ? _tradePrimary : AppColors.textMutedLight,
           fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-          height: AppSpacing.tradeBotLineHeightTight,
+          height: _settingsLineTight,
         ),
       ),
     );
@@ -68,25 +69,25 @@ class _SettingRow extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightCompact,
+                  height: _settingsLineTight,
                 ),
               ),
               if (description != null) ...[
-                const SizedBox(height: AppSpacing.tradeBotTinyGap),
+                const SizedBox(height: _settingsTinySpace),
                 Text(
                   description!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.navLabel.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.tradeBotLineHeightCompact,
+                    height: _settingsLineBody,
                   ),
                 ),
               ],
             ],
           ),
         ),
-        const SizedBox(width: AppSpacing.tradeBotCardGap),
+        const SizedBox(width: _settingsSpace),
         trailing,
       ],
     );
@@ -108,10 +109,10 @@ class _VitToggle extends StatelessWidget {
         onTap: onToggle,
         child: VitTogglePill(
           enabled: on,
-          width: AppSpacing.walletAddressAddSwitchWidth,
-          height: AppSpacing.walletAddressAddSwitchHeight,
-          knobSize: AppSpacing.walletAddressAddSwitchKnob,
-          knobMargin: AppSpacing.walletAddressAddSwitchKnobMargin,
+          width: _settingsToggleWidth,
+          height: _settingsToggleHeight,
+          knobSize: _settingsToggleKnob,
+          knobMargin: _settingsToggleKnobMargin,
           inactiveColor: AppColors.surface3,
           inactiveKnobColor: AppColors.onAccent,
           inactiveBorderColor: AppColors.surface3,
@@ -132,7 +133,7 @@ class _ResetButton extends StatelessWidget {
       key: TradeSettingsPage.resetKey,
       onPressed: onReset,
       variant: VitCtaButtonVariant.danger,
-      height: AppSpacing.tradeBotFooterButtonHeight,
+      height: _settingsButtonHeight,
       leading: const Icon(Icons.restart_alt_rounded),
       child: const Text('Đặt lại mặc định'),
     );
@@ -150,6 +151,7 @@ class _InfoNote extends StatelessWidget {
       message:
           'Settings are saved on this device and apply immediately. Other devices keep default settings until changed there.',
       contractId: 'SC-052 local settings result',
+      density: VitDensity.compact,
     );
   }
 }

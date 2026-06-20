@@ -7,6 +7,7 @@ class _ComplianceNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return const VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
+      density: VitDensity.compact,
       title: 'MiFID II RTS 27/28 Compliance',
       message:
           'Quarterly disclosure of Top 5 execution venues by trading volume. Review price, cost, speed, execution likelihood, settlement, and next steps before publishing.',
@@ -75,12 +76,7 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height:
-          AppSpacing.x7 +
-          AppSpacing.x6 +
-          AppSpacing.x3 -
-          AppSpacing.hairlineStroke,
-      padding: AppSpacing.bestExecutionSummaryCardPadding,
+      density: VitDensity.compact,
       borderColor: _bestBorder.withValues(alpha: .72),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,15 +90,12 @@ class _SummaryCard extends StatelessWidget {
                   label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.bestExecutionSummaryLineHeight,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4 + AppSpacing.x1),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             maxLines: 1,
@@ -111,18 +104,14 @@ class _SummaryCard extends StatelessWidget {
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.bestExecutionSummaryLineHeight,
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             subtitle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppSpacing.bestExecutionSummaryLineHeight,
-            ),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -140,9 +129,8 @@ class _Tabs extends StatelessWidget {
   Widget build(BuildContext context) {
     const tabs = [('current', 'Q1 2026 (Current)'), ('archive', 'Archive')];
     return VitCard(
-      height: AppSpacing.inputHeight,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.zeroInsets,
+      density: VitDensity.compact,
       child: VitTabBar(
         activeKey: activeId,
         onChanged: onChanged,

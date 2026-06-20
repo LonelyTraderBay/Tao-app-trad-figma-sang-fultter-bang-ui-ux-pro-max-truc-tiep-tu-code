@@ -7,17 +7,14 @@ class _MifidTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _SectionLabel(snapshot.mifidTitle),
-        const SizedBox(height: AppSpacing.x3 + AppSpacing.x1),
-        for (final article in snapshot.mifidArticles) ...[
+        for (final article in snapshot.mifidArticles)
           _DisclosureCard(block: article),
-          if (article != snapshot.mifidArticles.last)
-            const SizedBox(height: AppSpacing.tradeBotCardGap),
-        ],
-        const SizedBox(height: AppSpacing.x5 - AppSpacing.formFieldLabelGap),
         _CommitmentCard(text: snapshot.commitmentText),
       ],
     );
@@ -32,23 +29,20 @@ class _ProtectionTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _SectionLabel('Investor Protection Scheme'),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
         _DisclosureCard(
           block: protection.coverage,
           color: _legalGreen,
           tint: _legalGreen.withValues(alpha: .13),
         ),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _DisclosureCard(block: protection.covered),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _DisclosureCard(block: protection.notCovered),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _DisclosureCard(block: protection.claimSteps, numbered: true),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _ActionTile(
           title: protection.contactLabel,
           icon: Icons.phone_outlined,
@@ -67,18 +61,17 @@ class _RestrictionsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _SectionLabel('Jurisdictional Restrictions'),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
         _WarningList(
           title: 'Copy Trading Not Available In:',
           items: restrictions.unavailableCountries,
         ),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _LeverageRules(rules: restrictions.leverageRules),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _DisclosureCard(block: restrictions.taxReporting),
       ],
     );
@@ -92,22 +85,20 @@ class _LiabilityTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _SectionLabel('Liability Limitations'),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
         _DisclosureCard(block: liability.platformRole),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _DisclosureCard(block: liability.userResponsibility),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _DisclosureCard(
           block: liability.indemnification,
           color: AppColors.sell,
           tint: AppColors.sell10,
           icon: Icons.warning_amber_rounded,
         ),
-        const SizedBox(height: AppSpacing.tradeBotCardGap),
         _DisclosureCard(block: liability.limitation),
       ],
     );
@@ -129,37 +120,29 @@ class _ContactTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         _SectionLabel('Regulatory Contact Information'),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
-        for (final contact in contacts) ...[
+        for (final contact in contacts)
           _ContactTile(
             contact: contact,
             onTap: () => onNotice('${contact.title} would open externally.'),
           ),
-          if (contact != contacts.last)
-            const SizedBox(height: AppSpacing.rowGap),
-        ],
-        const SizedBox(height: AppSpacing.x4 + AppSpacing.x2),
         _SectionLabel('Whistleblower Protection'),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
         _DisclosureCard(
           block: whistleblower,
           color: _legalGreen,
           tint: _legalGreen.withValues(alpha: .13),
         ),
-        const SizedBox(height: AppSpacing.x4 + AppSpacing.x2),
         _SectionLabel('Terms & Privacy'),
-        const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
-        for (final document in terms) ...[
+        for (final document in terms)
           _DocumentTile(
             document: document,
             onTap: () => onNotice('${document.title} would open here.'),
           ),
-          if (document != terms.last) const SizedBox(height: AppSpacing.rowGap),
-        ],
       ],
     );
   }

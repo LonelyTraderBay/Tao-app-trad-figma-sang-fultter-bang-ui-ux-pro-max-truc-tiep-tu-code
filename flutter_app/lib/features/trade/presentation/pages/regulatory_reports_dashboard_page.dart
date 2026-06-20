@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -34,6 +35,7 @@ class RegulatoryReportsDashboardPage extends ConsumerStatefulWidget {
   const RegulatoryReportsDashboardPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc094_regulatory_reports_content');
+  static const kpiGridKey = Key('sc094_regulatory_reports_kpi_grid');
   static Key tabKey(String id) => Key('sc094_regulatory_tab_$id');
   static Key rangeKey(String id) => Key('sc094_regulatory_range_$id');
   static Key actionKey(String id) => Key('sc094_regulatory_action_$id');

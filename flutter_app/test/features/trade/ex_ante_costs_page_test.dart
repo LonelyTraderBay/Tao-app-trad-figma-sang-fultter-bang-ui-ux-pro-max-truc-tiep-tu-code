@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpExAnteCosts(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -71,6 +73,24 @@ void main() {
     expect(find.text('Cost Summary'), findsOneWidget);
     expect(find.text('€450'), findsOneWidget);
     expect(find.text('4.50%'), findsOneWidget);
+  });
+
+  testWidgets('SC-105 first viewport reaches cost summary content', (
+    tester,
+  ) async {
+    await pumpExAnteCosts(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-105 ExAnteCostsPage',
+      semanticLabel: 'SC-105 ExAnteCostsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('One-off Costs'),
+      targetLabel: 'the first ex-ante cost summary row',
+      minVisibleHeight: 18,
+    );
   });
 
   testWidgets('SC-105 switches breakdown and scenarios tabs', (tester) async {

@@ -58,12 +58,12 @@ class _EventLogCard extends StatelessWidget {
       borderColor: selected
           ? color.withValues(alpha: .44)
           : AppColors.cardBorder,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.x3),
+            padding: AppSpacing.launchpadPaddingX3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -167,21 +167,20 @@ class _EventDetails extends StatelessWidget {
       if (event.blockNumber != null)
         ('Block', '#${event.blockNumber!.toString()}'),
     ];
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.divider)),
-      ),
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.x3,
-        AppSpacing.x2,
-        AppSpacing.x3,
-        AppSpacing.x3,
-      ),
-      child: Column(
-        children: [
-          for (final row in rows) _DetailRow(label: row.$1, value: row.$2),
-        ],
+      child: DecoratedBox(
+        decoration: const ShapeDecoration(
+          shape: Border(top: BorderSide(color: AppColors.divider)),
+        ),
+        child: Padding(
+          padding: AppSpacing.launchpadPaddingX3,
+          child: Column(
+            children: [
+              for (final row in rows) _DetailRow(label: row.$1, value: row.$2),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -196,7 +195,7 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+      padding: AppSpacing.launchpadVerticalPaddingX1,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

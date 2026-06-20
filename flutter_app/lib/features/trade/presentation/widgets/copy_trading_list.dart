@@ -40,7 +40,6 @@ class _TraderCard extends StatelessWidget {
     final risk = _riskFor(trader.riskLevel);
     return _Panel(
       key: CopyTradingPage.traderKey(trader.id),
-      padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -48,7 +47,7 @@ class _TraderCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _AvatarBadge(trader: trader, tier: tier),
-              const SizedBox(width: AppSpacing.tradeBotCardGap),
+              const SizedBox(width: _copySpace),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,9 +66,7 @@ class _TraderCard extends StatelessWidget {
                           ),
                         ),
                         if (trader.isFollowing) ...[
-                          const SizedBox(
-                            width: AppSpacing.tradeBotNarrowIconGap,
-                          ),
+                          const SizedBox(width: AppSpacing.x1),
                           const Icon(
                             Icons.star_rounded,
                             color: AppColors.caution,
@@ -78,10 +75,10 @@ class _TraderCard extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Wrap(
-                      spacing: AppSpacing.tradeBotNarrowIconGap,
-                      runSpacing: AppSpacing.tradeBotNarrowIconGap,
+                      spacing: AppSpacing.x1,
+                      runSpacing: AppSpacing.x1,
                       children: [
                         _MiniBadge(label: tier.label, color: tier.color),
                         for (final tag in trader.tags.take(2))
@@ -95,15 +92,15 @@ class _TraderCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: AppSpacing.x1),
               _RoiBlock(trader: trader),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotStatusGap),
+          const SizedBox(height: _copySpace),
           _MetricsGrid(trader: trader),
-          const SizedBox(height: AppSpacing.tradeBotStatusGap),
+          const SizedBox(height: _copySpace),
           _WeeklyChart(values: trader.weeklyPnl),
-          const SizedBox(height: AppSpacing.tradeBotStatusGap),
+          const SizedBox(height: _copySpace),
           _DetailsButton(traderId: trader.id, onOpen: onOpen),
         ],
       ),
@@ -136,10 +133,12 @@ class _AvatarBadge extends StatelessWidget {
             right: 0,
             bottom: 0,
             child: VitCard(
-              width: AppSpacing.statusPillHeightSm,
-              height: AppSpacing.statusPillHeightSm,
+              width: _copyBadgeSize,
+              height: _copyBadgeSize,
               variant: VitCardVariant.inner,
               radius: VitCardRadius.sm,
+              density: VitDensity.compact,
+              padding: EdgeInsets.zero,
               borderColor: tier.color,
               alignment: Alignment.center,
               child: Icon(
@@ -181,7 +180,7 @@ class _RoiBlock extends StatelessWidget {
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotNarrowIconGap),
+                const SizedBox(width: AppSpacing.x1),
                 Text(
                   '${trader.maxDrawdown.toStringAsFixed(1)}%',
                   style: AppTextStyles.caption.copyWith(
@@ -218,7 +217,7 @@ class _DetailsButton extends StatelessWidget {
       key: CopyTradingPage.detailKey(traderId),
       onPressed: onOpen,
       variant: VitCtaButtonVariant.secondary,
-      height: AppSpacing.tradeBotQuestionIconBox,
+      height: _copyButtonHeight,
       trailing: const Icon(Icons.chevron_right_rounded),
       child: const Text('Xem chi tiết'),
     );

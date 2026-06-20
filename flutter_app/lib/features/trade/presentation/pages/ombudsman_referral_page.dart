@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +23,15 @@ const _ombudsmanBorder = AppColors.borderSolid;
 const _ombudsmanPrimary = AppColors.primary;
 const _ombudsmanGreen = AppColors.buy;
 const _ombudsmanAmber = AppColors.caution;
+const double _ombudsmanFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _ombudsmanNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _ombudsmanIntroIconExtent =
+    AppSpacing.buttonCompact + AppSpacing.x4;
+const double _ombudsmanContactIconExtent =
+    AppSpacing.buttonCompact + AppSpacing.x1;
+const double _ombudsmanStepMarkerExtent = AppSpacing.buttonCompact;
 
 class OmbudsmanReferralPage extends ConsumerWidget {
   const OmbudsmanReferralPage({super.key, this.shellRenderMode});
@@ -38,10 +47,10 @@ class OmbudsmanReferralPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getOmbudsmanReferral();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.complaintCaseBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.complaintCaseBottomInsetNative) +
+            ? _ombudsmanFramedScrollClearance
+            : _ombudsmanNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -56,62 +65,54 @@ class OmbudsmanReferralPage extends ConsumerWidget {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.tradeCopyComplaintsHandling),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  padding: AppSpacing.ombudsmanScrollPadding(bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    customGap: AppSpacing.ombudsmanSectionGap,
-                    fullBleed: true,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review ombudsman referral route',
-                        message:
-                            'Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.',
-                      ),
-                      _IntroCard(snapshot: snapshot),
-                      const VitSectionHeader(
-                        title: 'When Can You Refer?',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _ombudsmanPrimary,
-                      ),
-                      _EligibilityCard(items: snapshot.eligibility),
-                      const VitSectionHeader(
-                        title: 'Contact Information',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _ombudsmanPrimary,
-                      ),
-                      _ContactCard(contacts: snapshot.contacts),
-                      const VitSectionHeader(
-                        title: 'How It Works',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _ombudsmanPrimary,
-                      ),
-                      for (final step in snapshot.processSteps)
-                        _ProcessStepCard(step: step),
-                      _VisitButton(snapshot: snapshot),
-                      const TradeBodyReviewSection(
-                        title: 'Ombudsman body review',
-                        message: 'Ombudsman referral body reviewed',
-                        detail:
-                            'Eligibility, contact, process, visit CTA, empty, and result states stay visible.',
-                        primary:
-                            'Eligibility remains above external referral actions.',
-                        secondary:
-                            'Contact and process steps stay separated for regulated escalation.',
-                        tertiary:
-                            'Visit CTA remains framed as external dispute resolution.',
-                      ),
-                    ],
-                  ),
+          child: VitInsetScrollView(
+            key: contentKey,
+            bottomInset: scrollEndClearance,
+            child: VitPageContent(
+              padding: VitContentPadding.compact,
+              density: VitDensity.compact,
+              children: [
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Review ombudsman referral route',
+                  message:
+                      'Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.',
                 ),
-              ),
-            ],
+                _IntroCard(snapshot: snapshot),
+                const VitSectionHeader(
+                  title: 'When Can You Refer?',
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _ombudsmanPrimary,
+                ),
+                _EligibilityCard(items: snapshot.eligibility),
+                const VitSectionHeader(
+                  title: 'Contact Information',
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _ombudsmanPrimary,
+                ),
+                _ContactCard(contacts: snapshot.contacts),
+                const VitSectionHeader(
+                  title: 'How It Works',
+                  variant: VitSectionHeaderVariant.accentBar,
+                  accentColor: _ombudsmanPrimary,
+                ),
+                for (final step in snapshot.processSteps)
+                  _ProcessStepCard(step: step),
+                _VisitButton(snapshot: snapshot),
+                const TradeBodyReviewSection(
+                  title: 'Ombudsman body review',
+                  message: 'Ombudsman referral body reviewed',
+                  detail:
+                      'Eligibility, contact, process, visit CTA, empty, and result states stay visible.',
+                  primary:
+                      'Eligibility remains above external referral actions.',
+                  secondary:
+                      'Contact and process steps stay separated for regulated escalation.',
+                  tertiary:
+                      'Visit CTA remains framed as external dispute resolution.',
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -132,8 +133,8 @@ class _IntroCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VitCard(
-            width: AppSpacing.x7 + AppSpacing.x1,
-            height: AppSpacing.x7 + AppSpacing.x1,
+            width: _ombudsmanIntroIconExtent,
+            height: _ombudsmanIntroIconExtent,
             variant: VitCardVariant.ghost,
             borderColor: _ombudsmanGreen.withValues(alpha: .24),
             alignment: Alignment.center,
@@ -161,7 +162,6 @@ class _IntroCard extends StatelessWidget {
                     snapshot.infoDescription,
                     style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.complaintCaseLineHeightReadable,
                     ),
                   ),
                 ],
@@ -222,16 +222,12 @@ class _EligibilityRow extends StatelessWidget {
                 item.title,
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
-                  height: AppSpacing.complaintCaseLineHeightSlight,
                 ),
               ),
               const SizedBox(height: AppSpacing.x2),
               Text(
                 item.description,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.complaintCaseLineHeightDense,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
@@ -285,8 +281,8 @@ class _ContactRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         VitCard(
-          width: AppSpacing.buttonCompact + AppSpacing.formFieldLabelGap,
-          height: AppSpacing.ombudsmanContactIconBox,
+          width: _ombudsmanContactIconExtent,
+          height: _ombudsmanContactIconExtent,
           variant: VitCardVariant.ghost,
           borderColor: color.withValues(alpha: .24),
           alignment: Alignment.center,
@@ -299,10 +295,7 @@ class _ContactRow extends StatelessWidget {
             children: [
               Text(
                 contact.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.complaintCaseLineHeightTight,
-                ),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               const SizedBox(height: AppSpacing.x2),
               Text(
@@ -314,20 +307,13 @@ class _ContactRow extends StatelessWidget {
                         .copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.medium,
-                           height:
-                               contact.icon == TradeOmbudsmanContactIcon.address
-                               ? AppSpacing.complaintCaseLineHeightReadable
-                               : AppSpacing.complaintCaseLineHeightSlight,
                         ),
               ),
               if (contact.detail != null) ...[
                 const SizedBox(height: AppSpacing.x2),
                 Text(
                   contact.detail!,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.complaintCaseLineHeightBody,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ],
@@ -351,8 +337,8 @@ class _ProcessStepCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VitCard(
-            width: AppSpacing.statusPillHeightLg,
-            height: AppSpacing.statusPillHeightLg,
+            width: _ombudsmanStepMarkerExtent,
+            height: _ombudsmanStepMarkerExtent,
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
             alignment: Alignment.center,
@@ -361,7 +347,6 @@ class _ProcessStepCard extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: _ombudsmanPrimary,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.complaintCaseLineHeightTight,
               ),
             ),
           ),
@@ -376,16 +361,12 @@ class _ProcessStepCard extends StatelessWidget {
                     step.title,
                     style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.text1,
-                      height: AppSpacing.complaintCaseLineHeightSlight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x3),
                   Text(
                     step.description,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: AppSpacing.complaintCaseLineHeightSlight,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -416,7 +397,6 @@ class _VisitButton extends StatelessWidget {
         style: AppTextStyles.control.copyWith(
           color: AppColors.onAccent,
           fontWeight: AppTextStyles.bold,
-          height: AppSpacing.complaintCaseLineHeightTight,
         ),
       ),
     );

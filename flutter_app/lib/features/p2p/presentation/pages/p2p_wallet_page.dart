@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -21,6 +21,15 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_w
 part '../widgets/p2p_wallet_hero.dart';
 part '../widgets/p2p_wallet_balances.dart';
 part '../widgets/p2p_wallet_actions_history.dart';
+
+const double _p2pWalletVisualNavClearance = 112;
+const double _p2pWalletNativeNavClearance = 88;
+const double _p2pWalletIconBoxExtent = AppSpacing.inputHeight - AppSpacing.x2;
+const double _p2pWalletActionMinHeight = AppSpacing.inputHeight - AppSpacing.x1;
+const double _p2pWalletDividerExtent = AppSpacing.dividerHairline;
+const double _p2pWalletTransactionAmountMaxWidth = 132;
+const EdgeInsets _p2pWalletCardPadding = AppSpacing.p2pWalletCompactCardPadding;
+const EdgeInsets _p2pWalletHeroPadding = EdgeInsets.all(AppSpacing.x4);
 
 class P2PWalletPage extends ConsumerStatefulWidget {
   const P2PWalletPage({super.key, this.shellRenderMode});
@@ -57,11 +66,11 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pWalletProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _p2pWalletVisualNavClearance
+        : _p2pWalletNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -92,7 +101,12 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.p2pWalletScrollPadding(bottomInset),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSpacing.contentPad,
+                      AppSpacing.x3,
+                      AppSpacing.contentPad,
+                      scrollEndPadding,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -110,9 +124,9 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
                             '${snapshot.transferRoute}?direction=to-main',
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: AppSpacing.x3),
                         _WalletInfoBanner(text: snapshot.infoNote),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         _BalanceSection(
                           snapshot: snapshot,
                           expandedAsset: _expandedAsset,
@@ -125,11 +139,10 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
                             });
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x6),
+                        const SizedBox(height: AppSpacing.x4),
                         _RecentTransactions(snapshot: snapshot),
                         VitPageContent(
                           padding: VitContentPadding.compact,
-                          customGap: 0,
                           children: const [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
@@ -137,6 +150,7 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
                               message:
                                   'Masked balance, transfer directions, escrow balances, expanded asset actions, recent transactions, and history route remain visible before moving funds.',
                               contractId: 'SC-264',
+                              density: VitDensity.compact,
                             ),
                           ],
                         ),

@@ -75,7 +75,7 @@ class _StatCell extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.predictionTournamentStatValueGap),
+        const SizedBox(height: AppSpacing.x1),
         Center(
           child: Text(
             value,
@@ -147,7 +147,7 @@ class _TournamentInfoCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: _predictionPrimary.withValues(alpha: .18),
-      padding: AppSpacing.predictionTournamentInfoPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -180,7 +180,7 @@ class _MyTournamentStats extends StatelessWidget {
         .map((item) => item.myRank ?? 999)
         .reduce((a, b) => a < b ? a : b);
     return VitCard(
-      padding: AppSpacing.predictionTournamentCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -188,7 +188,7 @@ class _MyTournamentStats extends StatelessWidget {
             'Tournament Stats',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(height: AppSpacing.predictionTournamentMineStatsGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -238,9 +238,7 @@ class _CenteredMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(
-          height: AppSpacing.predictionTournamentCenteredMetricGap,
-        ),
+        const SizedBox(height: AppSpacing.x1),
         Text(value, style: AppTextStyles.sectionTitle.copyWith(color: color)),
       ],
     );

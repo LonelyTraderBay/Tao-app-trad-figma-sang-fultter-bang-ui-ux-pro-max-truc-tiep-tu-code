@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -53,15 +54,13 @@ class _PredictionTournamentsPageState
         .watch(predictionsReadModelControllerProvider)
         .getTournaments();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final footerChrome = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final footerPadding =
+        footerChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.predictionTournamentBottomInsetVisual
-            : AppSpacing.predictionTournamentBottomInsetNative);
+        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,11 +88,10 @@ class _PredictionTournamentsPageState
                   child: SingleChildScrollView(
                     key: PredictionTournamentsPage.contentKey,
                     padding: AppSpacing.predictionTournamentScrollPadding(
-                      bottomInset,
+                      footerPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionTournamentContentGap,
+                      density: VitDensity.compact,
                       children: switch (_activeTab) {
                         _TournamentTab.active => [
                           for (final tournament

@@ -11,7 +11,7 @@ class _SystemNoteCard extends StatelessWidget {
       title: 'Ghi chú hệ thống',
       accentColor: AppColors.text3,
       child: VitCard(
-        padding: AppSpacing.arenaReportCardPadding,
+        density: VitDensity.compact,
         child: _SystemNotePanel(note: note),
       ),
     );
@@ -31,14 +31,14 @@ class _SystemNotePanel extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.arenaReportInnerPadding,
+        padding: _reportInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.info_outline,
               color: AppColors.text3,
-              size: AppSpacing.arenaReportSmallIcon,
+              size: _reportSmallIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -46,7 +46,7 @@ class _SystemNotePanel extends StatelessWidget {
                 note,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.arenaReportNoticeLineHeight,
+                  height: _reportNoticeLineHeight,
                 ),
               ),
             ),
@@ -66,7 +66,7 @@ class _AppealNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaReportCardPadding,
+      density: VitDensity.compact,
       borderColor: AppColors.warningBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +94,7 @@ class _AppealNotice extends StatelessWidget {
                       'Nếu cho rằng kết luận chưa chính xác, bạn có thể mở khiếu nại trong 7 ngày kể từ ngày kết luận.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.arenaReportNoticeLineHeight,
+                        height: _reportNoticeLineHeight,
                       ),
                     ),
                   ],
@@ -114,7 +114,7 @@ class _AppealNotice extends StatelessWidget {
               onPressed: onAppeal,
               variant: VitCtaButtonVariant.ghost,
               fullWidth: false,
-              height: AppSpacing.arenaReportAppealCtaHeight,
+              height: _reportAppealCtaHeight,
               child: const Text('Mở khiếu nại'),
             ),
         ],
@@ -141,14 +141,10 @@ class _LinkedActionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: AppSpacing.arenaReportCardPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
-          Icon(
-            icon,
-            color: accentColor,
-            size: AppSpacing.arenaReportInlineIcon,
-          ),
+          Icon(icon, color: accentColor, size: _reportInlineIcon),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
@@ -162,7 +158,7 @@ class _LinkedActionRow extends StatelessWidget {
           const Icon(
             Icons.chevron_right,
             color: AppColors.text3,
-            size: AppSpacing.arenaReportInlineIcon,
+            size: _reportInlineIcon,
           ),
         ],
       ),

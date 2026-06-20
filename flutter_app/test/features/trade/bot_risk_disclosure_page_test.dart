@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskDisclosure(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,6 +72,24 @@ void main() {
     expect(find.text('Risk Categories'), findsOneWidget);
     expect(find.text('Market Volatility Risk'), findsOneWidget);
     expect(find.text('Acknowledge Risks to Continue'), findsOneWidget);
+  });
+
+  testWidgets('SC-118 first viewport reaches first risk category', (
+    tester,
+  ) async {
+    await pumpRiskDisclosure(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-118 BotRiskDisclosurePage',
+      semanticLabel: 'SC-118 BotRiskDisclosurePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(BotRiskDisclosurePage.categoryKey('market')),
+      targetLabel: 'the first bot risk category card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-118 acknowledgment enables canonical suitability route', (

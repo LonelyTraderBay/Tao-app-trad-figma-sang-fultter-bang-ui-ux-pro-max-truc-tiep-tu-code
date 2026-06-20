@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -65,11 +66,15 @@ class _BotApiDocumentationPageState
         .watch(tradeReadModelControllerProvider)
         .getBotApiDocumentation();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final chromeInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollClearance =
+        chromeInset +
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.tradeBotBottomInsetNative) +
-        MediaQuery.paddingOf(context).bottom;
+            ? AppSpacing.x6 + AppSpacing.x6
+            : AppSpacing.x5 + AppSpacing.x5);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -88,30 +93,34 @@ class _BotApiDocumentationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: BotApiDocumentationPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.tradeBotCardGap,
+                    AppSpacing.contentPad,
+                    scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    density: VitDensity.compact,
                     children: [
                       const _IntroCard(),
-                      const SizedBox(height: AppSpacing.tradeBotCardGap),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        density: VitDensity.compact,
+                        child: VitPageContent(
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          density: VitDensity.compact,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
+                              density: VitDensity.compact,
                               title: 'Bot API operational review',
                               message:
                                   'Endpoints, authentication, rate limits, websocket events and support path are reviewed before bot integration.',
                               contractId: 'bot-api-documentation-review',
                             ),
-                            SizedBox(height: AppSpacing.tradeBotSmallGap),
                             VitStatusPill(
                               label: 'Read-only documentation',
                               status: VitStatusPillStatus.info,
@@ -120,43 +129,36 @@ class _BotApiDocumentationPageState
                           ],
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       _Tabs(
                         tabs: snapshot.tabs,
                         active: _view,
                         onChanged: (view) => setState(() => _view = view),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotContentGap),
+                      if (_view == 'endpoints')
+                        _EndpointsView(endpoints: snapshot.endpoints)
+                      else if (_view == 'websocket')
+                        _WebSocketView(
+                          url: snapshot.websocketUrl,
+                          events: snapshot.websocketEvents,
+                        )
+                      else
+                        _ExamplesView(
+                          examples: snapshot.codeExamples,
+                          language: _language,
+                          copied: _copied,
+                          onLanguageChanged: (language) {
+                            setState(() {
+                              _language = language;
+                              _copied = false;
+                            });
+                          },
+                          onCopy: _copy,
+                        ),
                       VitPageSection(
-                        customGap: 0,
-                        children: [
-                          if (_view == 'endpoints')
-                            _EndpointsView(endpoints: snapshot.endpoints)
-                          else if (_view == 'websocket')
-                            _WebSocketView(
-                              url: snapshot.websocketUrl,
-                              events: snapshot.websocketEvents,
-                            )
-                          else
-                            _ExamplesView(
-                              examples: snapshot.codeExamples,
-                              language: _language,
-                              copied: _copied,
-                              onLanguageChanged: (language) {
-                                setState(() {
-                                  _language = language;
-                                  _copied = false;
-                                });
-                              },
-                              onCopy: _copy,
-                            ),
-                        ],
+                        label: 'Rate Limits',
+                        density: VitDensity.compact,
+                        children: [_RateLimitsCard(items: snapshot.rateLimits)],
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotContentGap),
-                      const _SectionLabel('Rate Limits'),
-                      const SizedBox(height: AppSpacing.tradeBotRowGap),
-                      _RateLimitsCard(items: snapshot.rateLimits),
-                      const SizedBox(height: AppSpacing.tradeBotContentGap),
                       _AuthCard(header: snapshot.authenticationHeader),
                     ],
                   ),

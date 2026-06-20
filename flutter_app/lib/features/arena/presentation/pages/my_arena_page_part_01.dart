@@ -52,7 +52,6 @@ class _PointsHero extends StatelessWidget {
                       formatArenaPoints(stats.currentBalance),
                       style: AppTextStyles.heroNumber.copyWith(
                         fontWeight: AppTextStyles.heavy,
-                        height: AppSpacing.myArenaBalanceLineHeight,
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x2),
@@ -63,7 +62,6 @@ class _PointsHero extends StatelessWidget {
                         style: AppTextStyles.base.copyWith(
                           color: AppColors.text3,
                           fontWeight: AppTextStyles.medium,
-                          height: AppSpacing.myArenaBalanceLineHeight,
                         ),
                       ),
                     ),
@@ -73,7 +71,7 @@ class _PointsHero extends StatelessWidget {
             ),
           ),
           const Divider(
-            height: AppSpacing.myArenaDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
           Padding(
@@ -88,7 +86,7 @@ class _PointsHero extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: AppSpacing.myArenaPointsDeltaDividerHeight,
+                  height: AppSpacing.x6,
                   child: VerticalDivider(
                     width: AppSpacing.x5,
                     color: AppColors.divider,
@@ -166,7 +164,6 @@ class _PointsDelta extends StatelessWidget {
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: AppSpacing.myArenaBalanceLineHeight,
           ),
         ),
       ],
@@ -259,9 +256,9 @@ class _ArenaStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.myArenaStatCardMinHeight,
+        minHeight: AppSpacing.x7 + AppSpacing.x5,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -308,7 +305,6 @@ class _ArenaStatCard extends StatelessWidget {
               color: item.color,
               fontWeight: AppTextStyles.heavy,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.myArenaBalanceLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -376,8 +372,10 @@ class _QuickLinkButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.myArenaQuickLinkHeight,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: VitDensity.compact.controlHeight,
+          ),
           child: Material(
             color: AppColors.surface2,
             shape: RoundedRectangleBorder(
@@ -509,8 +507,10 @@ class _ArenaTabPill extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.myArenaTabHeight,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: VitDensity.compact.controlHeight,
+          ),
           child: Material(
             color: active ? AppColors.warn08 : AppColors.surface2,
             shape: RoundedRectangleBorder(
@@ -535,7 +535,6 @@ class _ArenaTabPill extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(
                       color: color,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.myArenaBalanceLineHeight,
                     ),
                   ),
                 ],

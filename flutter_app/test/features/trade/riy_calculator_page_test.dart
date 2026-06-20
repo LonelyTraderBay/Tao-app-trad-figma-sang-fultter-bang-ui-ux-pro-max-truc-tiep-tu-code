@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiyCalculator(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -67,6 +69,25 @@ void main() {
     expect(find.text('€14,693'), findsOneWidget);
     expect(find.text('€11,877'), findsOneWidget);
     expect(find.text('-€2,816'), findsOneWidget);
+  });
+
+  testWidgets('SC-106 first viewport reaches investment input', (tester) async {
+    await pumpRiyCalculator(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'RIYCalculatorPage',
+      semanticLabel: 'SC-106 RIYCalculatorPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(RIYCalculatorPage.investmentKey),
+      minVisibleHeight: 32,
+      targetLabel: 'RIY investment input',
+      reason:
+          'RIY calculator should expose the first editable assumption above '
+          'bottom navigation on the QA phone viewport.',
+    );
   });
 
   testWidgets('SC-106 recalculates when cost input changes', (tester) async {

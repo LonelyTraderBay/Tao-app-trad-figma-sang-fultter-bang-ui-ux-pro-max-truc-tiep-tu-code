@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_data_viz_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,6 +24,25 @@ part '../widgets/market_correlations_pairs_widgets.dart';
 part '../widgets/market_correlations_diversification_widgets.dart';
 
 const _marketPrimary = AppColors.primary;
+const double _corrVisualScrollClearance = 108;
+const double _corrNativeScrollClearance = 72;
+const double _corrTabsHeight = AppSpacing.buttonCompact;
+const double _corrTabIndicatorHeight = AppSpacing.dividerHairline;
+const double _corrChipGap = AppSpacing.x2;
+const double _corrTimeframeChipHeight = AppSpacing.buttonCompact;
+const double _corrSortChipHeight = AppSpacing.buttonCompact;
+const double _corrMatrixGap = AppSpacing.x2;
+const double _corrInfoTitleGap = AppSpacing.x1;
+const double _corrBodyLineHeight = 1.25;
+const double _corrInsightValueGap = AppSpacing.x1;
+const double _corrInsightSubGap = AppSpacing.x1;
+const double _corrRecommendationTitleGap = AppSpacing.x1;
+const double _corrHeroLabelGap = AppSpacing.x1;
+const double _corrHeroProgressGap = AppSpacing.x2;
+const double _corrHeroProgressHeight = 6;
+const double _corrHeroScaleGap = AppSpacing.x1;
+const double _corrMetricValueGap = AppSpacing.x1;
+const double _corrScoreBarHeight = 6;
 
 class MarketCorrelationsPage extends ConsumerStatefulWidget {
   const MarketCorrelationsPage({super.key, this.shellRenderMode});
@@ -37,6 +56,7 @@ class MarketCorrelationsPage extends ConsumerStatefulWidget {
   static const timeframe90dKey = Key('sc026_timeframe_90d');
   static const sortHighKey = Key('sc026_sort_high');
   static const sortLowKey = Key('sc026_sort_low');
+  static const matrixCardKey = Key('sc026_matrix_card');
 
   static Key pairKey(String pair) => Key('sc026_pair_$pair');
 
@@ -61,15 +81,11 @@ class _MarketCorrelationsPageState
       sortOrder: _sortOrder,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.marketCorrelationsVisualBottomExtra
-            : AppSpacing.marketCorrelationsNativeBottomExtra);
+            ? _corrVisualScrollClearance
+            : _corrNativeScrollClearance) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -96,12 +112,10 @@ class _MarketCorrelationsPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketCorrelationsPage.contentKey,
-                    padding: AppSpacing.marketCorrelationsScrollPadding(
-                      bottomInset,
-                    ),
+                    padding: EdgeInsets.only(bottom: scrollEndClearance),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.marketCorrelationsPageGap,
+                      padding: VitContentPadding.compact,
+                      density: VitDensity.compact,
                       children: [
                         _TimeframeChips(
                           timeframe: _timeframe,

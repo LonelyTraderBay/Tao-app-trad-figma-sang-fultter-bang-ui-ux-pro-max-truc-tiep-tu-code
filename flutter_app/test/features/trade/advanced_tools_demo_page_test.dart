@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAdvancedTools(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -81,6 +83,24 @@ void main() {
     expect(find.text('Trading Speed: 3x Faster'), findsOneWidget);
     expect(find.text('Advanced Tools Benefits'), findsOneWidget);
     expect(find.text('Phase 3 Progress'), findsOneWidget);
+  });
+
+  testWidgets('SC-062 first viewport reaches first advanced tool', (
+    tester,
+  ) async {
+    await pumpAdvancedTools(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-062 AdvancedToolsDemoPage',
+      semanticLabel: 'SC-062 AdvancedToolsDemoPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(AdvancedToolsDemoPage.featureKey('ladder')),
+      targetLabel: 'the first advanced tool card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-062 tab switching shows bulk and shortcuts actions', (

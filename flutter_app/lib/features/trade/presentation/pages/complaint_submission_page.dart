@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -28,6 +28,25 @@ const _submissionPanel = AppColors.surface;
 const _submissionPanel2 = AppColors.surface3;
 const _submissionBorder = AppColors.borderSolid;
 const _submissionPrimary = AppColors.primary;
+const _submissionSpace = AppSpacing.x2;
+const _submissionSmallSpace = AppSpacing.x1;
+const _submissionCardSpace = AppSpacing.x3;
+const _submissionLineTight = 1.0;
+const _submissionLineShort = 1.16;
+const _submissionLineBody = 1.24;
+const _submissionLineHint = 1.28;
+const _submissionLineReadable = 1.3;
+const _submissionLineLong = 1.34;
+const _submissionFooterHeight = 48.0;
+const _submissionCategoryHeight = 46.0;
+const _submissionMultilineHeight = 104.0;
+const _submissionEvidenceHeight = 124.0;
+const _submissionEvidenceIconSize = 40.0;
+const _submissionCheckboxSize = 24.0;
+const _submissionVisualFooterClearance = 90.0;
+const _submissionNativeFooterClearance = 72.0;
+const _submissionVisualScrollClearance = 150.0;
+const _submissionNativeScrollClearance = 126.0;
 
 class ComplaintSubmissionPage extends ConsumerStatefulWidget {
   const ComplaintSubmissionPage({super.key, this.shellRenderMode});
@@ -66,13 +85,17 @@ class _ComplaintSubmissionPageState
         .watch(tradeReadModelControllerProvider)
         .getComplaintSubmission();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final footerBottom = bottomChrome + MediaQuery.paddingOf(context).bottom;
-    final scrollBottomInset = mode.usesVisualQaFrame
-        ? AppSpacing.complaintSubmissionBottomInsetVisual
-        : AppSpacing.complaintSubmissionBottomInsetNative;
+    final safeArea = MediaQuery.paddingOf(context).bottom;
+    final footerClearance =
+        safeArea +
+        (mode.usesVisualQaFrame
+            ? _submissionVisualFooterClearance
+            : _submissionNativeFooterClearance);
+    final scrollEndClearance =
+        safeArea +
+        (mode.usesVisualQaFrame
+            ? _submissionVisualScrollClearance
+            : _submissionNativeScrollClearance);
     final canSubmit = _canSubmit(snapshot);
 
     return VitPageLayout(
@@ -93,19 +116,17 @@ class _ComplaintSubmissionPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ComplaintSubmissionPage.contentKey,
-                  padding: AppSpacing.complaintSubmissionScrollPadding(
-                    scrollBottomInset,
-                  ),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    customGap: AppSpacing.complaintSubmissionSectionGap,
-                    fullBleed: true,
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Review complaint submission',
                         message:
                             'Confirm evidence, personal details, deadlines, and next steps before submitting this regulated complaint.',
+                        density: VitDensity.compact,
                       ),
                       _ProcessNotice(snapshot: snapshot),
                       const _SectionLabel('Complaint Details'),
@@ -156,8 +177,11 @@ class _ComplaintSubmissionPageState
                 ),
               ),
               Padding(
-                padding: AppSpacing.complaintSubmissionFooterInset(
-                  footerBottom,
+                padding: EdgeInsets.fromLTRB(
+                  AppSpacing.contentPad,
+                  _submissionSmallSpace,
+                  AppSpacing.contentPad,
+                  footerClearance,
                 ),
                 child: _SubmissionFooter(
                   enabled: canSubmit,

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_creato
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_leaderboard_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpLeaderboard(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -86,6 +88,24 @@ void main() {
     expect(find.text('Top Creators'), findsOneWidget);
     expect(find.text('PredictorPro'), findsWidgets);
     expect(find.text('Rising Creators'), findsOneWidget);
+  });
+
+  testWidgets('SC-194 first viewport reaches first creator row', (
+    tester,
+  ) async {
+    await pumpLeaderboard(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ArenaLeaderboardPage',
+      semanticLabel: 'SC-194 ArenaLeaderboardPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ArenaLeaderboardPage.creatorRowKey),
+      targetLabel: 'first creator row',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-194 tab state switches to players view', (tester) async {

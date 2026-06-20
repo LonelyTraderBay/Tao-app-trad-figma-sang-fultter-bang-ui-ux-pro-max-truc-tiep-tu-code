@@ -10,9 +10,10 @@ class _RiskMetricsSection extends StatelessWidget {
     return VitPageSection(
       label: 'Risk Exposure',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [
         VitCard(
-          padding: AppSpacing.predictionAnalyzerCardPadding,
+          density: VitDensity.compact,
           child: Column(
             children: const [
               _RiskMetricRow(
@@ -52,7 +53,7 @@ class _CategoryRiskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionAnalyzerCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,11 +61,9 @@ class _CategoryRiskCard extends StatelessWidget {
             'Risk by Category',
             style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
           ),
-          const SizedBox(
-            height: AppSpacing.predictionAnalyzerRiskChartTitleGap,
-          ),
+          const SizedBox(height: AppSpacing.x2),
           SizedBox(
-            height: AppSpacing.predictionAnalyzerRiskChartHeight,
+            height: AppSpacing.x7 * 4,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -89,7 +88,7 @@ class _DiversificationCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.predictionAnalyzerCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -112,9 +111,7 @@ class _DiversificationCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: AppSpacing.predictionAnalyzerRiskTextGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Portfolio da phan tan hop ly qua ${snapshot.categories.length} categories',
                       style: AppTextStyles.micro.copyWith(
@@ -126,7 +123,7 @@ class _DiversificationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionAnalyzerScoreGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -156,7 +153,7 @@ class _RiskWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.predictionAnalyzerWarningPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -200,7 +197,7 @@ class _SummaryMetric extends StatelessWidget {
           label,
           style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.predictionAnalyzerSummaryMetricGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           style: (small ? AppTextStyles.caption : AppTextStyles.baseMedium)
@@ -326,7 +323,7 @@ class _CategoryRiskBar extends StatelessWidget {
               borderRadius: BorderRadius.vertical(top: AppRadii.smCorner),
             ),
           ),
-          const SizedBox(height: AppSpacing.predictionAnalyzerRiskBarLabelGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             category.name,
             maxLines: 1,

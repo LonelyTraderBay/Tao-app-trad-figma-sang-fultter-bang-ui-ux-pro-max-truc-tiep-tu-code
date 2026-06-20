@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_merchant_apply_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PMerchantApply(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -91,6 +93,24 @@ void main() {
     expect(find.text('KYC cấp 2+'), findsOneWidget);
     expect(find.text('<= 2 tranh chấp'), findsOneWidget);
     expect(find.text('Tiếp tục'), findsOneWidget);
+  });
+
+  testWidgets('SC-227 first viewport reaches merchant requirements', (
+    tester,
+  ) async {
+    await pumpP2PMerchantApply(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-227 P2PMerchantApplyPage',
+      semanticLabel: 'SC-227 P2PMerchantApplyPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Yêu cầu tối thiểu'),
+      targetLabel: 'merchant minimum requirements',
+      minVisibleHeight: 18,
+    );
   });
 
   testWidgets('SC-227 merchant wizard submits and routes back to P2P', (

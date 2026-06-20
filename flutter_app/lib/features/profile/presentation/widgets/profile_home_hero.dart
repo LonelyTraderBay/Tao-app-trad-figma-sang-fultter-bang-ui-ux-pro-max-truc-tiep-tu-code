@@ -16,11 +16,11 @@ class _ProfileHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.profileHeroHeight,
-      padding: AppSpacing.profileHeroPadding,
+      density: VitDensity.compact,
       radius: VitCardRadius.lg,
       variant: VitCardVariant.hero,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -77,7 +77,7 @@ class _ProfileHero extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          SizedBox(height: VitDensity.compact.verticalSpace),
           Row(
             children: [
               Expanded(
@@ -140,8 +140,8 @@ class _HeroInfoBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.profileHeroInfoHeight,
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: VitDensity.compact.controlHeight),
       child: Material(
         color: AppColors.onAccent.withValues(alpha: .08),
         shape: RoundedRectangleBorder(
@@ -157,7 +157,7 @@ class _HeroInfoBox extends StatelessWidget {
                 label,
                 style: AppTextStyles.badge.copyWith(color: AppColors.text2),
               ),
-              const Spacer(),
+              const SizedBox(height: AppSpacing.x1),
               Row(
                 children: [
                   Flexible(

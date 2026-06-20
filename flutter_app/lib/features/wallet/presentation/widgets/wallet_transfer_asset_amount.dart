@@ -16,7 +16,7 @@ class TransferAssetCard extends StatelessWidget {
       key: const Key('sc146_transfer_asset'),
       onTap: onTap,
       variant: VitCardVariant.standard,
-      padding: AppSpacing.transferCardPadding,
+      padding: _transferCardInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,19 +24,17 @@ class TransferAssetCard extends StatelessWidget {
             'T\u00e0i s\u1ea3n',
             style: AppTextStyles.badge.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.transferTileGap),
+          const SizedBox(height: _transferTinyGap),
           Row(
             children: [
-              _AssetLogo(asset: asset, size: AppSpacing.transferIcon),
-              const SizedBox(
-                width: AppSpacing.searchBarHorizontalTrailingPadding,
-              ),
+              _AssetLogo(asset: asset, size: _transferIconBox),
+              const SizedBox(width: _transferInlineGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(asset.symbol, style: AppTextStyles.baseMedium),
-                    const SizedBox(height: AppSpacing.x2 + AppSpacing.x1),
+                    const SizedBox(height: _transferTinyGap),
                     Text(
                       'Kh\u1ea3 d\u1ee5ng: ${formatTransferAssetAmount(asset.available)} ${asset.symbol}',
                       style: AppTextStyles.micro.copyWith(
@@ -49,7 +47,7 @@ class TransferAssetCard extends StatelessWidget {
               Icon(
                 Icons.keyboard_arrow_down_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.transferActionIcon,
+                size: _transferActionIcon,
               ),
             ],
           ),
@@ -95,7 +93,7 @@ class TransferAmountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.standard,
-      padding: AppSpacing.transferCardPadding,
+      padding: _transferCardInnerPadding,
       child: Column(
         children: [
           Row(
@@ -117,28 +115,31 @@ class TransferAmountCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.rowGap),
+          const SizedBox(height: _transferSectionGap),
           Row(
             children: [
               Expanded(
-                child: TextField(
-                  key: const Key('sc146_transfer_amount'),
-                  controller: controller,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                  ],
-                  onChanged: (_) => onChanged(),
-                  style: AppTextStyles.amountSm,
-                  decoration: InputDecoration(
-                    hintText: '0.00',
-                    hintStyle: AppTextStyles.amountSm.copyWith(
-                      color: AppColors.text2,
+                child: SizedBox(
+                  height: 30,
+                  child: TextField(
+                    key: const Key('sc146_transfer_amount'),
+                    controller: controller,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
                     ),
-                    border: InputBorder.none,
-                    isCollapsed: true,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                    ],
+                    onChanged: (_) => onChanged(),
+                    style: AppTextStyles.amountSm,
+                    decoration: InputDecoration(
+                      hintText: '0.00',
+                      hintStyle: AppTextStyles.amountSm.copyWith(
+                        color: AppColors.text2,
+                      ),
+                      border: InputBorder.none,
+                      isCollapsed: true,
+                    ),
                   ),
                 ),
               ),
@@ -161,23 +162,21 @@ class TransferInfoNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.transferNoticeMinHeight,
-      ),
-      padding: AppSpacing.transferNoticePadding,
+      constraints: const BoxConstraints(minHeight: 52),
+      padding: _transferNoticePadding,
       borderColor: _transferPrimary.withValues(alpha: .20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: AppSpacing.walletTransferNoteIconPadding,
+            padding: EdgeInsets.only(top: 1),
             child: Icon(
               Icons.info_outline_rounded,
               color: _transferPrimary,
-              size: AppSpacing.transferBadgeIcon,
+              size: _transferActionIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: _transferInlineGap),
           Expanded(
             child: Text(
               'Chuy\u1ec3n n\u1ed9i b\u1ed9 gi\u00e1 tr\u1ecb v\u00ed, t\u00ednh ph\u00ed, x\u1eed l\u00fd ngay l\u1eadp t\u1ee5c. Kh\u00f4ng c\u1ea7n x\u00e1c nh\u1eadn blockchain.',
@@ -200,6 +199,7 @@ class TransferButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       onPressed: enabled ? onTap : null,
+      height: _transferButtonHeight,
       child: Text(
         'X\u00e1c nh\u1eadn chuy\u1ec3n',
         style: AppTextStyles.control.copyWith(

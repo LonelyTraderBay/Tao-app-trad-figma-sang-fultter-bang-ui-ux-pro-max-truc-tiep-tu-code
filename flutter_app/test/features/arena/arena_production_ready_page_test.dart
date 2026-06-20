@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_points
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_production_ready_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpReleaseReadiness(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,24 @@ void main() {
     expect(find.text('ArenaHomePage'), findsOneWidget);
     expect(find.text('/arena'), findsOneWidget);
     expect(find.text('ArenaChallengeDetailPage'), findsOneWidget);
+  });
+
+  testWidgets('SC-206 first viewport reaches first canonical screen card', (
+    tester,
+  ) async {
+    await pumpReleaseReadiness(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-206 ArenaProductionReadyPage',
+      semanticLabel: 'SC-206 ArenaProductionReadyPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ArenaProductionReadyPage.screenKey('ArenaHomePage')),
+      targetLabel: 'the first Arena canonical screen card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-206 switches readiness tabs with stable mock data', (

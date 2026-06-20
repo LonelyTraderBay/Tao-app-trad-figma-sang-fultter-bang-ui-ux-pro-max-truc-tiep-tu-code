@@ -22,45 +22,49 @@ class _OrderPreview extends StatelessWidget {
     final price = double.tryParse(targetPrice) ?? 0;
     final size = double.tryParse(amount) ?? 0;
     final sideLabel = side == LaunchpadLimitOrderSide.buy ? 'BUY' : 'SELL';
-    return Container(
+    return DecoratedBox(
       key: LaunchpadLimitOrdersPage.previewKey,
-      padding: const EdgeInsets.all(AppSpacing.x4),
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.primary.withValues(alpha: .10),
-        border: Border.all(color: AppColors.primary20),
-        borderRadius: AppRadii.cardRadius,
+        shape: const RoundedRectangleBorder(
+          side: BorderSide(color: AppColors.primary20),
+          borderRadius: AppRadii.cardRadius,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Order Preview',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.launchpadPaddingX4,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Order Preview',
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              _PreviewMetric(label: 'Type', value: '$sideLabel $token'),
-              _PreviewMetric(
-                label: 'Total Value',
-                value: '\$${(price * size).toStringAsFixed(2)}',
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              _PreviewMetric(label: 'Expires', value: '$expiryDays days'),
-              _PreviewMetric(
-                label: 'Partial',
-                value: partialFill ? 'Yes' : 'No',
-              ),
-            ],
-          ),
-        ],
+            const SizedBox(height: AppSpacing.x3),
+            Row(
+              children: [
+                _PreviewMetric(label: 'Type', value: '$sideLabel $token'),
+                _PreviewMetric(
+                  label: 'Total Value',
+                  value: '\$${(price * size).toStringAsFixed(2)}',
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.x3),
+            Row(
+              children: [
+                _PreviewMetric(label: 'Expires', value: '$expiryDays days'),
+                _PreviewMetric(
+                  label: 'Partial',
+                  value: partialFill ? 'Yes' : 'No',
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -100,30 +104,11 @@ class _EmptyOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x4,
-        vertical: AppSpacing.x6,
-      ),
-      child: Column(
-        children: [
-          const Icon(
-            Icons.schedule_rounded,
-            color: AppColors.text3,
-            size: AppSpacing.launchpadBox42,
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          Text(
-            'No active orders',
-            style: AppTextStyles.base.copyWith(color: AppColors.text2),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            'Create a limit order to get started',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          ),
-        ],
+    return const VitCard(
+      child: VitEmptyState(
+        title: 'No active orders',
+        message: 'Create a limit order to get started',
+        icon: Icons.schedule_rounded,
       ),
     );
   }

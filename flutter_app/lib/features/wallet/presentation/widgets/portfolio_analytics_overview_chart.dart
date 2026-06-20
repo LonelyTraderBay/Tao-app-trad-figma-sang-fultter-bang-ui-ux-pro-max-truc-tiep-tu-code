@@ -21,11 +21,11 @@ class _OverviewContent extends StatelessWidget {
           active: activePeriod,
           onChanged: onPeriodChanged,
         ),
-        const SizedBox(height: AppSpacing.walletAnalyticsOverviewPeriodGap),
+        const SizedBox(height: AppSpacing.x2),
         _ChartCard(points: snapshot.history),
-        const SizedBox(height: AppSpacing.walletAnalyticsOverviewChartGap),
+        const SizedBox(height: AppSpacing.x2),
         _MetricsCard(metrics: snapshot.metrics),
-        const SizedBox(height: AppSpacing.walletAnalyticsOverviewMetricsGap),
+        const SizedBox(height: AppSpacing.x2),
         _AssetsCard(assets: snapshot.assets, totalUsd: snapshot.totalUsd),
       ],
     );
@@ -59,7 +59,7 @@ class _PeriodSelector extends StatelessWidget {
                 onTap: () => onChanged(period),
                 borderRadius: AppRadii.inputRadius,
                 child: SizedBox(
-                  height: AppSpacing.walletAnalyticsPeriodHeight,
+                  height: VitDensity.compact.controlHeight,
                   child: Center(
                     child: Text(
                       period,
@@ -88,11 +88,13 @@ class _ChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _VitCardSurface(
-      height: AppSpacing.walletAnalyticsChartHeight,
       padding: AppSpacing.walletAnalyticsChartPadding,
-      child: CustomPaint(
-        painter: _PortfolioAreaPainter(points),
-        child: const SizedBox.expand(),
+      child: AspectRatio(
+        aspectRatio: _walletAnalyticsChartAspectRatio,
+        child: CustomPaint(
+          painter: _PortfolioAreaPainter(points),
+          child: const SizedBox.expand(),
+        ),
       ),
     );
   }

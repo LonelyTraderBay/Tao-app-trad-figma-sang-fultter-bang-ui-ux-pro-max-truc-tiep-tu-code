@@ -13,12 +13,11 @@ class _RecommendationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final impactColor = _impactColor(recommendation.impact);
     return VitCard(
-      padding: AppSpacing.walletHealthCardPadding,
+      density: VitDensity.compact,
       borderColor: _healthBorder,
       child: VitPageContent(
-        padding: VitContentPadding.none,
+        density: VitDensity.compact,
         fullBleed: true,
-        customGap: AppSpacing.walletHealthRecommendationGap,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,13 +43,13 @@ class _RecommendationCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.45,
+              height: 1.28,
             ),
           ),
           VitCtaButton(
             key: WalletHealthScorePage.recommendationKey(recommendation.id),
             onPressed: onTap,
-            height: AppSpacing.walletHealthActionHeight,
+            height: VitDensity.compact.controlHeight,
             trailing: const Icon(Icons.arrow_forward_rounded),
             child: Text(
               recommendation.actionLabel,
@@ -75,9 +74,7 @@ class _SecurityTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final metric = snapshot.metricByCategory('Security');
     return VitPageContent(
-      padding: VitContentPadding.none,
-      fullBleed: true,
-      customGap: AppSpacing.walletHealthContentGap,
+      density: VitDensity.compact,
       children: [
         _ScoreSummaryCard(
           icon: Icons.shield_outlined,
@@ -106,9 +103,7 @@ class _DiversificationTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final metric = snapshot.metricByCategory('Diversification');
     return VitPageContent(
-      padding: VitContentPadding.none,
-      fullBleed: true,
-      customGap: AppSpacing.walletHealthContentGap,
+      density: VitDensity.compact,
       children: [
         _ScoreSummaryCard(
           icon: Icons.track_changes_rounded,
@@ -156,13 +151,13 @@ class _ScoreSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletHealthCardPadding,
+      density: VitDensity.compact,
       borderColor: _healthBorder,
       child: Row(
         children: [
           VitCard(
-            width: AppSpacing.walletHealthSummaryIconBox,
-            height: AppSpacing.walletHealthSummaryIconBox,
+            width: 36,
+            height: 36,
             alignment: Alignment.center,
             borderColor: iconColor.withValues(alpha: .20),
             child: Icon(
@@ -171,13 +166,13 @@ class _ScoreSummaryCard extends StatelessWidget {
               size: AppSpacing.walletHealthSummaryIconGlyph,
             ),
           ),
-          const SizedBox(width: AppSpacing.walletHealthSectionGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.walletHealthSummaryTextGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   subtitle,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -214,14 +209,14 @@ class _ChecklistCard extends StatelessWidget {
     final color = item.enabled ? _healthGreen : _healthRed;
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: AppSpacing.walletHealthCompactCardPadding,
+      density: VitDensity.compact,
       borderColor: _healthBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VitCard(
-            width: AppSpacing.walletHealthChecklistIconBox,
-            height: AppSpacing.walletHealthChecklistIconBox,
+            width: 32,
+            height: 32,
             alignment: Alignment.center,
             radius: VitCardRadius.sm,
             borderColor: color.withValues(alpha: .20),
@@ -233,7 +228,7 @@ class _ChecklistCard extends StatelessWidget {
               size: AppSpacing.walletHealthChecklistIconGlyph,
             ),
           ),
-          const SizedBox(width: AppSpacing.walletHealthSectionGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,7 +240,7 @@ class _ChecklistCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletHealthSummaryTextGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   item.description,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -266,7 +261,7 @@ class _ActionRequiredCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: AppSpacing.walletHealthCompactCardPadding,
+      density: VitDensity.compact,
       borderColor: _healthRed.withValues(alpha: .15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +271,7 @@ class _ActionRequiredCard extends StatelessWidget {
             color: _healthRed,
             size: AppSpacing.walletHealthActionIcon,
           ),
-          const SizedBox(width: AppSpacing.walletHealthNoticeGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -288,12 +283,12 @@ class _ActionRequiredCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletHealthInlineGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Backup your seed phrase and enable withdrawal whitelist to improve security score.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: 1.28,
                   ),
                 ),
               ],
@@ -313,7 +308,7 @@ class _AssetDistributionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletHealthCardPadding,
+      density: VitDensity.compact,
       borderColor: _healthBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -325,15 +320,15 @@ class _AssetDistributionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletHealthSectionGap),
+          const SizedBox(height: AppSpacing.x2),
           SizedBox(
-            height: AppSpacing.walletHealthPieHeight,
+            height: VitDensity.compact.controlHeight * 2.8,
             child: CustomPaint(
               painter: _PiePainter(slices),
               child: const SizedBox.expand(),
             ),
           ),
-          const SizedBox(height: AppSpacing.walletHealthSectionGap),
+          const SizedBox(height: AppSpacing.x2),
           Wrap(
             spacing: AppSpacing.walletHealthLegendSpacing,
             runSpacing: AppSpacing.walletHealthLegendRunSpacing,
@@ -345,14 +340,14 @@ class _AssetDistributionCard extends StatelessWidget {
                     children: [
                       VitCard(
                         width: AppSpacing.walletHealthLegendSwatch,
-                        height: AppSpacing.walletHealthLegendSwatch,
+                        height: 10,
                         radius: VitCardRadius.sm,
                         borderColor: Color(slice.colorHex),
                         background: ColoredBox(color: Color(slice.colorHex)),
                         clip: true,
                         child: const SizedBox.expand(),
                       ),
-                      const SizedBox(width: AppSpacing.walletHealthInlineGap),
+                      const SizedBox(width: AppSpacing.x1),
                       Text(
                         slice.name,
                         style: AppTextStyles.micro.copyWith(
@@ -376,7 +371,7 @@ class _ConcentrationRiskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletHealthCardPadding,
+      density: VitDensity.compact,
       borderColor: _healthAmber.withValues(alpha: .15),
       child: Column(
         children: [
@@ -388,7 +383,7 @@ class _ConcentrationRiskCard extends StatelessWidget {
                 color: _healthAmber,
                 size: AppSpacing.walletHealthActionIcon,
               ),
-              const SizedBox(width: AppSpacing.walletHealthNoticeGap),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -400,12 +395,12 @@ class _ConcentrationRiskCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.walletHealthInlineGap),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       '42% of your portfolio is in BTC. Consider rebalancing to reduce single-asset risk.',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: 1.45,
+                        height: 1.28,
                       ),
                     ),
                   ],
@@ -413,13 +408,13 @@ class _ConcentrationRiskCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletHealthConcentrationGap),
+          const SizedBox(height: AppSpacing.x2),
           const _AllocationRow(
             label: 'Recommended BTC allocation',
             value: '25-30%',
             color: _healthAmber,
           ),
-          const SizedBox(height: AppSpacing.walletHealthAllocationGap),
+          const SizedBox(height: AppSpacing.x1),
           const _AllocationRow(
             label: 'Current BTC allocation',
             value: '42%',

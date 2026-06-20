@@ -27,7 +27,7 @@ class _RiskTabs extends StatelessWidget {
     ];
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.tradeToolRiskTabHeight,
+      height: _riskTabExtent,
       padding: AppSpacing.tradeSegmentedPadding,
       child: VitTabBar(
         tabs: tabs,
@@ -53,7 +53,7 @@ class _OcoTab extends StatelessWidget {
           'Nhấn nút bên dưới để mở form đặt lệnh OCO',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeToolCardGap),
+        const SizedBox(height: _riskSpace),
         _GradientButton(
           key: RiskManagementDemoPage.ocoButtonKey,
           label: 'Mở OCO Order Form',
@@ -80,7 +80,7 @@ class _CalculatorTab extends StatelessWidget {
           'Nhấn nút bên dưới để mở calculator',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeToolCardGap),
+        const SizedBox(height: _riskSpace),
         _GradientButton(
           key: RiskManagementDemoPage.calculatorButtonKey,
           label: 'Mở Position Sizing Calculator',
@@ -127,10 +127,10 @@ class _PositionsTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeToolCardGap),
+        const SizedBox(height: _riskSpace),
         for (final position in positions) ...[
           _PositionTile(position: position),
-          const SizedBox(height: AppSpacing.tradeToolIconGap),
+          const SizedBox(height: _riskSpace),
         ],
       ],
     );
@@ -157,7 +157,7 @@ class _MiniMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeToolTinyGap),
+        const SizedBox(height: _riskTinySpace),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
@@ -190,7 +190,7 @@ class _PositionTile extends StatelessWidget {
             color: color,
             size: AppSpacing.tradeToolIconTileSm,
           ),
-          const SizedBox(width: AppSpacing.tradeToolCardGap),
+          const SizedBox(width: _riskCardSpace),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,7 +214,7 @@ class _PositionTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.tradeToolTinyGap),
+                const SizedBox(height: _riskTinySpace),
                 Text(
                   '${position.side.name.toUpperCase()} · ${position.amount.toStringAsFixed(position.amount >= 10 ? 0 : 2)} ${position.baseAsset} · Entry ${_formatMoney(position.entryPrice)}',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),

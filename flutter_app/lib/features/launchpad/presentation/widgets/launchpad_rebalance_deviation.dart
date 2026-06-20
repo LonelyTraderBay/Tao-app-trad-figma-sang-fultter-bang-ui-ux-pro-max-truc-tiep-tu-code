@@ -15,7 +15,7 @@ class LaunchpadRebalanceDeviationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,7 +45,7 @@ class _DeviationRow extends StatelessWidget {
   Widget build(BuildContext context) {
     const maxPercent = 36.0;
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+      padding: AppSpacing.launchpadBottomPaddingX2,
       child: Row(
         children: [
           SizedBox(
@@ -99,12 +99,16 @@ class _DeviationBar extends StatelessWidget {
         final width = constraints.maxWidth * (value / maxValue).clamp(0, 1);
         return Align(
           alignment: Alignment.centerLeft,
-          child: Container(
+          child: SizedBox(
             width: width,
             height: AppSpacing.launchpadDotXs,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: AppRadii.swatchRadius,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: color,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.swatchRadius,
+                ),
+              ),
             ),
           ),
         );

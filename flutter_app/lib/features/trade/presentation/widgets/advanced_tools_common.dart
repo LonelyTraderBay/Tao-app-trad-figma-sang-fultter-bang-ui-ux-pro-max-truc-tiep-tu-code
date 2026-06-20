@@ -37,6 +37,7 @@ class _GradientButton extends StatelessWidget {
     return VitCtaButton(
       onPressed: onTap,
       variant: _ctaVariantFor(colors),
+      height: _toolsButtonHeight,
       leading: Icon(icon),
       child: Text(
         label,
@@ -70,6 +71,7 @@ class _IconTile extends StatelessWidget {
       alignment: Alignment.center,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
+      density: VitDensity.compact,
       borderColor: color.withValues(alpha: .28),
       child: Icon(icon, color: color, size: size * .5),
     );
@@ -77,20 +79,16 @@ class _IconTile extends StatelessWidget {
 }
 
 class _Panel extends StatelessWidget {
-  const _Panel({
-    required this.child,
-    this.padding = AppSpacing.tradeToolRiskIntroPadding,
-    this.borderColor = AppColors.cardBorder,
-  });
+  const _Panel({required this.child, this.borderColor = AppColors.cardBorder});
 
   final Widget child;
-  final EdgeInsetsGeometry padding;
   final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: padding,
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       borderColor: borderColor,
       child: child,
@@ -169,7 +167,7 @@ class _SuccessToast extends StatelessWidget {
               color: AppColors.buy,
               size: AppSpacing.tradeToolBodyIcon,
             ),
-            const SizedBox(width: AppSpacing.tradeToolIconGap),
+            const SizedBox(width: _toolsSpace),
             Expanded(
               child: Text(
                 message,

@@ -36,9 +36,10 @@ class _VarianceNoteView extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       width: double.infinity,
-      padding: isHigher
-          ? AppSpacing.exPostCostsReportVarianceNoteHigherPadding
-          : AppSpacing.exPostCostsReportVarianceNoteLowerPadding,
+      padding: EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x2,
+        vertical: isHigher ? AppSpacing.x2 : AppSpacing.x1,
+      ),
       borderColor: isHigher ? _reportAmber.withValues(alpha: .26) : null,
       background: ColoredBox(color: bg),
       child: Row(
@@ -46,18 +47,15 @@ class _VarianceNoteView extends StatelessWidget {
           Icon(
             isHigher ? Icons.warning_amber_rounded : Icons.check_rounded,
             color: color,
-            size: AppSpacing.exPostCostsReportVarianceNoteIcon,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(
-            width: AppSpacing.exPostCostsReportVarianceNoteIconGap,
-          ),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
               style: AppTextStyles.micro.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.exPostCostsReportLineHeightTight,
               ),
             ),
           ),
@@ -85,7 +83,7 @@ class _VarianceCard extends StatelessWidget {
         : 'Actual costs matched estimates exactly.';
 
     return _Card(
-      padding: AppSpacing.exPostCostsReportVariancePadding,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         children: [
           Row(
@@ -96,7 +94,6 @@ class _VarianceCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.exPostCostsReportLineHeightTight,
                   ),
                 ),
               ),
@@ -109,22 +106,21 @@ class _VarianceCard extends StatelessWidget {
                 '${_formatEur(variance.abs())}',
                 style: AppTextStyles.amountSm.copyWith(
                   color: higher ? _reportRed : _reportGreen,
-                  height: AppSpacing.exPostCostsReportLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.exPostCostsReportVarianceGap),
+          const SizedBox(height: AppSpacing.x2),
           VitCard(
             variant: VitCardVariant.inner,
             width: double.infinity,
-            padding: AppSpacing.exPostCostsReportVarianceBodyPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x2,
+            ),
             child: Text(
               text,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: AppSpacing.exPostCostsReportLineHeightBody,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
           ),
         ],

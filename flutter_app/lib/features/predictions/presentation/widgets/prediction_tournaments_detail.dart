@@ -20,12 +20,10 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
         .getTournaments();
     final tournament = _findTournament(snapshot.tournaments, tournamentId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final footerPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.predictionTournamentBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.predictionTournamentBottomInsetNative) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x5
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -48,11 +46,10 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
                   key: contentKey,
                   physics: const BouncingScrollPhysics(),
                   padding: AppSpacing.predictionTournamentScrollPadding(
-                    bottomInset,
+                    footerPadding,
                   ),
                   child: VitPageContent(
-                    padding: VitContentPadding.relaxed,
-                    customGap: AppSpacing.predictionTournamentContentGap,
+                    density: VitDensity.compact,
                     children: [
                       if (tournament == null)
                         const _EmptyStateCard(
@@ -98,7 +95,7 @@ class _TournamentDetailHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionTournamentCardPadding,
+      density: VitDensity.compact,
       borderColor: _predictionPrimary.withValues(alpha: .28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,11 +106,16 @@ class _TournamentDetailHero extends StatelessWidget {
                 status: tournament.status,
                 color: _statusColor(tournament.status),
               ),
-              const Spacer(),
-              _CategoryChip(label: tournament.category),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: _CategoryChip(label: tournament.category),
+                ),
+              ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionTournamentDetailHeroGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             tournament.name,
             style: AppTextStyles.sectionTitle.copyWith(
@@ -121,17 +123,13 @@ class _TournamentDetailHero extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(
-            height: AppSpacing.predictionTournamentDetailDescriptionGap,
-          ),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             tournament.description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           if (tournament.isJoined && tournament.myRank != null) ...[
-            const SizedBox(
-              height: AppSpacing.predictionTournamentDetailHeroGap,
-            ),
+            const SizedBox(height: AppSpacing.x2),
             Material(
               color: AppColors.buy.withValues(alpha: .08),
               borderRadius: AppRadii.cardRadius,
@@ -145,12 +143,15 @@ class _TournamentDetailHero extends StatelessWidget {
                         color: AppColors.text2,
                       ),
                     ),
-                    const Spacer(),
-                    Text(
-                      '#${tournament.myRank} - ${tournament.myScore} pts',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.buy,
-                        fontWeight: AppTextStyles.bold,
+                    const SizedBox(width: AppSpacing.x2),
+                    Expanded(
+                      child: Text(
+                        '#${tournament.myRank} - ${tournament.myScore} pts',
+                        textAlign: TextAlign.end,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.buy,
+                          fontWeight: AppTextStyles.bold,
+                        ),
                       ),
                     ),
                   ],

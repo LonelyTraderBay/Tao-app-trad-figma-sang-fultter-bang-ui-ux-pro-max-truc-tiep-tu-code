@@ -24,17 +24,18 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pnlColor = snapshot.totalPnl >= 0 ? AppColors.buy : AppColors.sell;
-    return Container(
-      padding: AppSpacing.predictionPortfolioSummaryPadding,
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [AppColors.surface, AppColors.surface2],
         ),
-        border: Border.all(color: AppColors.accent20),
-        borderRadius: AppRadii.cardRadius,
-        boxShadow: [
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.accent20),
+        ),
+        shadows: [
           BoxShadow(
             color: predictionPortfolioPrimary.withValues(alpha: .12),
             blurRadius: 18,
@@ -43,132 +44,145 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                'Portfolio Value',
-                style: AppTextStyles.badge.copyWith(
-                  color: AppColors.portfolioTextDim,
-                ),
-              ),
-              const Spacer(),
-              SizedBox(
-                key: predictionPortfolioVisibilityToggleKey,
-                width: AppSpacing.predictionPortfolioVisibilityButton,
-                height: AppSpacing.predictionPortfolioVisibilityButton,
-                child: IconButton(
-                  onPressed: onToggleHidden,
-                  padding: EdgeInsets.zero,
-                  icon: Icon(
-                    isHidden
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: AppColors.portfolioTextDim,
-                    size: AppSpacing.predictionPortfolioVisibilityIcon,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.predictionPortfolioValueGap),
-          Text(
-            isHidden
-                ? '\u2022\u2022\u2022\u2022\u2022\u2022'
-                : formatPredictionPortfolioMoney(snapshot.totalCurrentValue),
-            style: AppTextStyles.amountMd.copyWith(color: AppColors.onAccent),
-          ),
-          if (!isHidden) ...[
-            const SizedBox(height: AppSpacing.predictionPortfolioPnlGap),
+      child: Padding(
+        padding: AppSpacing.predictionPortfolioSummaryPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Row(
               children: [
-                Flexible(
-                  child: Container(
-                    padding: AppSpacing.predictionPortfolioPnlPillPadding,
-                    decoration: BoxDecoration(
-                      color: pnlColor.withValues(alpha: .16),
-                      border: Border.all(
-                        color: pnlColor.withValues(alpha: .22),
-                      ),
-                      borderRadius: AppRadii.mdRadius,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          snapshot.totalPnl >= 0
-                              ? Icons.trending_up_rounded
-                              : Icons.trending_down_rounded,
-                          color: pnlColor,
-                          size: AppSpacing.predictionPortfolioPnlIcon,
-                        ),
-                        const SizedBox(
-                          width: AppSpacing.predictionPortfolioPnlIconGap,
-                        ),
-                        Flexible(
-                          child: Text(
-                            '${formatPredictionPortfolioSignedMoney(snapshot.totalPnl)} '
-                            '(${snapshot.totalPnlPct.toStringAsFixed(1)}%)',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.badge.copyWith(
-                              color: pnlColor,
-                              fontFeatures: AppTextStyles.tabularFigures,
-                            ),
-                          ),
-                        ),
-                      ],
+                Text(
+                  'Portfolio Value',
+                  style: AppTextStyles.badge.copyWith(
+                    color: AppColors.portfolioTextDim,
+                  ),
+                ),
+                const Spacer(),
+                SizedBox(
+                  key: predictionPortfolioVisibilityToggleKey,
+                  width: AppSpacing.predictionPortfolioVisibilityButton,
+                  height: AppSpacing.predictionPortfolioVisibilityButton,
+                  child: IconButton(
+                    onPressed: onToggleHidden,
+                    padding: EdgeInsets.zero,
+                    icon: Icon(
+                      isHidden
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
+                      color: AppColors.portfolioTextDim,
+                      size: AppSpacing.predictionPortfolioVisibilityIcon,
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.predictionPortfolioPnlIconGap),
-                Text(
-                  'all time',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.portfolioTextMuted,
-                    fontWeight: AppTextStyles.bold,
+              ],
+            ),
+            const SizedBox(height: AppSpacing.predictionPortfolioValueGap),
+            Text(
+              isHidden
+                  ? '\u2022\u2022\u2022\u2022\u2022\u2022'
+                  : formatPredictionPortfolioMoney(snapshot.totalCurrentValue),
+              style: AppTextStyles.amountMd.copyWith(color: AppColors.onAccent),
+            ),
+            if (!isHidden) ...[
+              const SizedBox(height: AppSpacing.predictionPortfolioPnlGap),
+              Row(
+                children: [
+                  Flexible(
+                    child: DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: pnlColor.withValues(alpha: .16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: AppRadii.mdRadius,
+                          side: BorderSide(
+                            color: pnlColor.withValues(alpha: .22),
+                          ),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: AppSpacing.predictionPortfolioPnlPillPadding,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              snapshot.totalPnl >= 0
+                                  ? Icons.trending_up_rounded
+                                  : Icons.trending_down_rounded,
+                              color: pnlColor,
+                              size: AppSpacing.predictionPortfolioPnlIcon,
+                            ),
+                            const SizedBox(
+                              width: AppSpacing.predictionPortfolioPnlIconGap,
+                            ),
+                            Flexible(
+                              child: Text(
+                                '${formatPredictionPortfolioSignedMoney(snapshot.totalPnl)} '
+                                '(${snapshot.totalPnlPct.toStringAsFixed(1)}%)',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.badge.copyWith(
+                                  color: pnlColor,
+                                  fontFeatures: AppTextStyles.tabularFigures,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: AppSpacing.predictionPortfolioPnlIconGap,
+                  ),
+                  Text(
+                    'all time',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.portfolioTextMuted,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+            const SizedBox(
+              height: AppSpacing.predictionPortfolioSummaryStatsGap,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: PredictionPortfolioSummaryStat(
+                    label: 'Positions',
+                    value: isHidden
+                        ? '\u2022\u2022'
+                        : '${snapshot.activeCount}',
+                  ),
+                ),
+                const SizedBox(
+                  width: AppSpacing.predictionPortfolioSummaryStatGap,
+                ),
+                Expanded(
+                  child: PredictionPortfolioSummaryStat(
+                    label: 'P/L',
+                    value: isHidden
+                        ? '\u2022\u2022'
+                        : formatPredictionPortfolioSignedMoney(
+                            snapshot.totalPnl,
+                            decimals: 0,
+                          ),
+                  ),
+                ),
+                const SizedBox(
+                  width: AppSpacing.predictionPortfolioSummaryStatGap,
+                ),
+                Expanded(
+                  child: PredictionPortfolioSummaryStat(
+                    label: 'Open Orders',
+                    value: isHidden ? '\u2022\u2022' : '$openOrderCount',
                   ),
                 ),
               ],
             ),
           ],
-          const SizedBox(height: AppSpacing.predictionPortfolioSummaryStatsGap),
-          Row(
-            children: [
-              Expanded(
-                child: PredictionPortfolioSummaryStat(
-                  label: 'Positions',
-                  value: isHidden ? '\u2022\u2022' : '${snapshot.activeCount}',
-                ),
-              ),
-              const SizedBox(
-                width: AppSpacing.predictionPortfolioSummaryStatGap,
-              ),
-              Expanded(
-                child: PredictionPortfolioSummaryStat(
-                  label: 'P/L',
-                  value: isHidden
-                      ? '\u2022\u2022'
-                      : formatPredictionPortfolioSignedMoney(
-                          snapshot.totalPnl,
-                          decimals: 0,
-                        ),
-                ),
-              ),
-              const SizedBox(
-                width: AppSpacing.predictionPortfolioSummaryStatGap,
-              ),
-              Expanded(
-                child: PredictionPortfolioSummaryStat(
-                  label: 'Open Orders',
-                  value: isHidden ? '\u2022\u2022' : '$openOrderCount',
-                ),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -186,34 +200,40 @@ class PredictionPortfolioSummaryStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: AppSpacing.predictionPortfolioSummaryStatHeight,
-      padding: AppSpacing.predictionPortfolioSummaryStatPadding,
-      decoration: BoxDecoration(
-        color: AppColors.onAccent.withValues(alpha: .10),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.numericMicro.copyWith(
-              color: AppColors.portfolioTextMuted,
-            ),
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: AppColors.onAccent.withValues(alpha: .10),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
           ),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.badge.copyWith(
-              color: AppColors.onAccent,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
+        ),
+        child: Padding(
+          padding: AppSpacing.predictionPortfolioSummaryStatPadding,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.numericMicro.copyWith(
+                  color: AppColors.portfolioTextMuted,
+                ),
+              ),
+              Text(
+                value,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.badge.copyWith(
+                  color: AppColors.onAccent,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -224,70 +244,74 @@ class PredictionPortfolioSharesNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: AppSpacing.predictionPortfolioSharesNotePadding,
-      decoration: BoxDecoration(
+    return DecoratedBox(
+      decoration: ShapeDecoration(
         color: predictionPortfolioPrimary.withValues(alpha: .07),
-        border: Border.all(
-          color: predictionPortfolioPrimary.withValues(alpha: .18),
-        ),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: predictionPortfolioPrimary,
-            size: AppSpacing.predictionPortfolioSharesNoteIcon,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(
+            color: predictionPortfolioPrimary.withValues(alpha: .18),
           ),
-          const SizedBox(width: AppSpacing.predictionPortfolioSharesNoteGap),
-          Expanded(
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  const TextSpan(text: 'Shares'),
-                  TextSpan(
-                    text:
-                        ' represent your stake in a market outcome. Each share pays ',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.normal,
+        ),
+      ),
+      child: Padding(
+        padding: AppSpacing.predictionPortfolioSharesNotePadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.info_outline_rounded,
+              color: predictionPortfolioPrimary,
+              size: AppSpacing.predictionPortfolioSharesNoteIcon,
+            ),
+            const SizedBox(width: AppSpacing.predictionPortfolioSharesNoteGap),
+            Expanded(
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    const TextSpan(text: 'Shares'),
+                    TextSpan(
+                      text:
+                          ' represent your stake in a market outcome. Each share pays ',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontWeight: AppTextStyles.normal,
+                      ),
                     ),
-                  ),
-                  const TextSpan(text: '\$1.00'),
-                  TextSpan(
-                    text: ' if correct, ',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.normal,
+                    const TextSpan(text: '\$1.00'),
+                    TextSpan(
+                      text: ' if correct, ',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontWeight: AppTextStyles.normal,
+                      ),
                     ),
-                  ),
-                  const TextSpan(text: '\$0.00'),
-                  TextSpan(
-                    text: ' if wrong. ',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.normal,
+                    const TextSpan(text: '\$0.00'),
+                    TextSpan(
+                      text: ' if wrong. ',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontWeight: AppTextStyles.normal,
+                      ),
                     ),
-                  ),
-                  const TextSpan(text: 'P/L'),
-                  TextSpan(
-                    text: ' = current value minus amount invested.',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.normal,
+                    const TextSpan(text: 'P/L'),
+                    TextSpan(
+                      text: ' = current value minus amount invested.',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontWeight: AppTextStyles.normal,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.bold,
+                  ],
+                ),
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

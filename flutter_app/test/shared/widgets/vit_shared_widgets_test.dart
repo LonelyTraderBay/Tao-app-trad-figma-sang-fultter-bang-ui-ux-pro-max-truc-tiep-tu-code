@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 Widget _wrap(Widget child) {
@@ -102,16 +103,20 @@ void main() {
       findsOneWidget,
     );
 
-    final heroContainer = tester.widget<Container>(
+    final heroDecoratedBox = tester.widget<DecoratedBox>(
       find
           .ancestor(
             of: find.text('hero card'),
-            matching: find.byType(Container),
+            matching: find.byWidgetPredicate(
+              (widget) =>
+                  widget is DecoratedBox &&
+                  widget.decoration is ShapeDecoration,
+            ),
           )
           .first,
     );
-    final heroDecoration = heroContainer.decoration! as BoxDecoration;
-    expect(heroDecoration.boxShadow, const [
+    final heroDecoration = heroDecoratedBox.decoration as ShapeDecoration;
+    expect(heroDecoration.shadows, const [
       BoxShadow(
         color: AppColors.primary08,
         blurRadius: AppSpacing.ctaElevationBlur,
@@ -119,6 +124,114 @@ void main() {
         offset: Offset(0, AppSpacing.ctaElevationYOffset),
       ),
     ]);
+  });
+
+  testWidgets('shared primitives expose opt-in compact density', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    var infoRowTaps = 0;
+
+    await tester.pumpWidget(
+      _wrap(
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const VitPageContent(
+              key: ValueKey('density_content'),
+              density: VitDensity.compact,
+              children: [
+                Text('first compact section'),
+                Text('second compact section'),
+              ],
+            ),
+            const SizedBox(height: 8),
+            const VitCard(
+              key: ValueKey('density_card'),
+              density: VitDensity.compact,
+              child: Text('compact card'),
+            ),
+            const SizedBox(height: 8),
+            const VitMetricCard(
+              label: 'Compact metric',
+              value: '\$12.4K',
+              density: VitDensity.compact,
+            ),
+            const SizedBox(height: 8),
+            const VitSectionHeader(
+              title: 'Compact section',
+              density: VitDensity.compact,
+            ),
+            const SizedBox(height: 8),
+            VitInfoRow(
+              label: 'Network',
+              value: 'Ethereum',
+              density: VitDensity.compact,
+              leading: const Icon(Icons.account_tree_outlined),
+              onTap: () => infoRowTaps++,
+            ),
+          ],
+        ),
+      ),
+    );
+
+    final contentPadding = tester.widget<Padding>(
+      find
+          .descendant(
+            of: find.byKey(const ValueKey('density_content')),
+            matching: find.byType(Padding),
+          )
+          .first,
+    );
+    expect(
+      contentPadding.padding,
+      const EdgeInsetsDirectional.only(
+        start: AppSpacing.contentPad,
+        end: AppSpacing.contentPad,
+        top: AppSpacing.pageContentTopCompact,
+      ),
+    );
+
+    final contentGap = tester.widget<SizedBox>(
+      find
+          .descendant(
+            of: find.byKey(const ValueKey('density_content')),
+            matching: find.byType(SizedBox),
+          )
+          .first,
+    );
+    expect(contentGap.height, AppSpacing.pageContentGapTight);
+
+    final cardPadding = tester.widget<Padding>(
+      find
+          .descendant(
+            of: find.byKey(const ValueKey('density_card')),
+            matching: find.byType(Padding),
+          )
+          .first,
+    );
+    expect(cardPadding.padding, VitDensity.compact.cardPadding);
+    expect(VitDensity.hero.pageContentGap, AppSpacing.pageContentGapDefault);
+    expect(VitDensity.tool.cardVerticalPadding, AppSpacing.x2);
+    expect(find.text('Compact section'), findsOneWidget);
+
+    final infoRowBox = tester.widget<ConstrainedBox>(
+      find
+          .ancestor(
+            of: find.text('Network'),
+            matching: find.byType(ConstrainedBox),
+          )
+          .first,
+    );
+    expect(infoRowBox.constraints.minHeight, VitDensity.compact.controlHeight);
+
+    await tester.tap(find.text('Network'));
+    await tester.pump();
+
+    expect(infoRowTaps, 1);
+    final infoNode = tester.getSemantics(find.byType(VitInfoRow));
+    expect(infoNode.label, 'Network, Ethereum');
+    semantics.dispose();
   });
 
   testWidgets('VitCtaButton and VitIconButton expose action states', (
@@ -219,18 +332,159 @@ void main() {
     final field = tester.widget<TextField>(find.byType(TextField));
     expect(field.obscureText, isTrue);
 
-    final container = tester.widget<Container>(
+    final inputPadding = tester.widget<Padding>(
+      find
+          .ancestor(of: find.byType(TextField), matching: find.byType(Padding))
+          .first,
+    );
+    expect(
+      inputPadding.padding,
+      const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x4),
+    );
+
+    final shell = tester.widget<DecoratedBox>(
       find
           .ancestor(
             of: find.byType(TextField),
-            matching: find.byType(Container),
+            matching: find.byType(DecoratedBox),
           )
           .first,
     );
-    final decoration = container.decoration! as BoxDecoration;
-    expect(decoration.border, isA<Border>());
+    final decoration = shell.decoration as ShapeDecoration;
+    final shape = decoration.shape as RoundedRectangleBorder;
+    expect(shape.side.color, AppColors.sell);
+    expect(shape.side.width, AppSpacing.borderWidth);
 
     controller.dispose();
+  });
+
+  testWidgets('VitTabBar variants render and dispatch changes', (tester) async {
+    var selected = '';
+    var pillActive = 'spot';
+    var segmentActive = 'overview';
+    var underlineActive = 'open';
+
+    await tester.pumpWidget(
+      _wrap(
+        SizedBox(
+          width: 360,
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  VitTabBar(
+                    activeKey: pillActive,
+                    onChanged: (key) {
+                      selected = 'pill:$key';
+                      setState(() => pillActive = key);
+                    },
+                    tabs: const [
+                      VitTabItem(
+                        key: 'spot',
+                        label: 'Spot',
+                        icon: Icons.show_chart_rounded,
+                        widgetKey: Key('pill_spot'),
+                      ),
+                      VitTabItem(
+                        key: 'margin',
+                        label: 'Margin',
+                        widgetKey: Key('pill_margin'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  VitTabBar(
+                    variant: VitTabBarVariant.segment,
+                    activeKey: segmentActive,
+                    onChanged: (key) {
+                      selected = 'segment:$key';
+                      setState(() => segmentActive = key);
+                    },
+                    tabs: const [
+                      VitTabItem(
+                        key: 'overview',
+                        label: 'Overview',
+                        widgetKey: Key('segment_overview'),
+                      ),
+                      VitTabItem(
+                        key: 'history',
+                        label: 'History',
+                        widgetKey: Key('segment_history'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  VitTabBar(
+                    variant: VitTabBarVariant.underline,
+                    activeKey: underlineActive,
+                    onChanged: (key) {
+                      selected = 'underline:$key';
+                      setState(() => underlineActive = key);
+                    },
+                    tabs: const [
+                      VitTabItem(
+                        key: 'open',
+                        label: 'Open',
+                        widgetKey: Key('underline_open'),
+                      ),
+                      VitTabItem(
+                        key: 'closed',
+                        label: 'Closed',
+                        widgetKey: Key('underline_closed'),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(VitTabBar), findsNWidgets(3));
+    expect(find.text('Spot'), findsOneWidget);
+    expect(find.text('Overview'), findsOneWidget);
+    expect(find.text('Open'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('pill_margin')));
+    await tester.pump();
+    expect(selected, 'pill:margin');
+
+    await tester.tap(find.byKey(const Key('segment_history')));
+    await tester.pump();
+    expect(selected, 'segment:history');
+
+    await tester.tap(find.byKey(const Key('underline_closed')));
+    await tester.pump();
+    expect(selected, 'underline:closed');
+  });
+
+  testWidgets('VitStatusPill supports count overflow and tap', (tester) async {
+    var taps = 0;
+
+    await tester.pumpWidget(
+      _wrap(
+        VitStatusPill(
+          label: 'Queued',
+          status: VitStatusPillStatus.warning,
+          icon: Icons.schedule_rounded,
+          count: 120,
+          outline: true,
+          onTap: () => taps++,
+        ),
+      ),
+    );
+
+    expect(find.text('Queued'), findsOneWidget);
+    expect(find.text('99+'), findsOneWidget);
+    expect(find.byIcon(Icons.schedule_rounded), findsOneWidget);
+
+    await tester.tap(find.text('Queued'));
+    await tester.pump();
+
+    expect(taps, 1);
   });
 
   testWidgets('status and state primitives render shared Home-proof states', (
@@ -263,6 +517,7 @@ void main() {
     );
 
     expect(find.text('Live'), findsOneWidget);
+    expect(find.text('3'), findsOneWidget);
     expect(find.text('No assets'), findsOneWidget);
     expect(find.text('Offline. Showing latest cached data.'), findsOneWidget);
 
@@ -589,6 +844,53 @@ void main() {
     expect(find.text('Action 2'), findsNothing);
   });
 
+  testWidgets('Vit module cards render labels and dispatch actions', (
+    tester,
+  ) async {
+    var heroTaps = 0;
+    var actionTaps = 0;
+
+    await tester.pumpWidget(
+      _wrap(
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            VitModuleHeroCard(
+              accentColor: AppColors.primary,
+              onTap: () => heroTaps++,
+              child: const Text('Arena points hero'),
+            ),
+            const SizedBox(height: 8),
+            const VitMetricCard(
+              label: 'Volume',
+              value: '\$12.4K',
+              trailing: Icon(Icons.trending_up_rounded),
+            ),
+            const SizedBox(height: 8),
+            VitModuleSectionHeader(
+              title: 'Quick actions',
+              actionLabel: 'View all',
+              onAction: () => actionTaps++,
+            ),
+          ],
+        ),
+      ),
+    );
+
+    expect(find.text('Arena points hero'), findsOneWidget);
+    expect(find.text('Volume'), findsOneWidget);
+    expect(find.text('\$12.4K'), findsOneWidget);
+    expect(find.byIcon(Icons.trending_up_rounded), findsOneWidget);
+    expect(find.text('Quick actions'), findsOneWidget);
+
+    await tester.tap(find.text('Arena points hero'));
+    await tester.tap(find.text('View all'));
+    await tester.pump();
+
+    expect(heroTaps, 1);
+    expect(actionTaps, 1);
+  });
+
   testWidgets('VitAnnouncementBanner supports compact, dots, and dismiss', (
     tester,
   ) async {
@@ -684,7 +986,7 @@ void main() {
       final handleSize = tester.getSize(
         find.descendant(
           of: find.byType(VitSheetHandle),
-          matching: find.byType(Container),
+          matching: find.byType(SizedBox),
         ),
       );
 
@@ -702,18 +1004,27 @@ void main() {
 
     expect(find.text('Surface child'), findsOneWidget);
 
-    final surface = tester.widget<Container>(
+    final surfacePadding = tester.widget<Padding>(
       find
           .descendant(
             of: find.byType(VitSheetSurface),
-            matching: find.byType(Container),
+            matching: find.byType(Padding),
           )
           .first,
     );
-    final decoration = surface.decoration as BoxDecoration;
+    final surfaceDecoration = tester.widget<DecoratedBox>(
+      find
+          .descendant(
+            of: find.byType(VitSheetSurface),
+            matching: find.byType(DecoratedBox),
+          )
+          .first,
+    );
+    final decoration = surfaceDecoration.decoration as ShapeDecoration;
+    final shape = decoration.shape as RoundedRectangleBorder;
 
-    expect(surface.padding, AppSpacing.homeMoreProductsSheetPadding);
+    expect(surfacePadding.padding, AppSpacing.homeMoreProductsSheetPadding);
     expect(decoration.color, AppColors.bg);
-    expect(decoration.borderRadius, AppRadii.sheetTopLargeRadius);
+    expect(shape.borderRadius, AppRadii.sheetTopLargeRadius);
   });
 }

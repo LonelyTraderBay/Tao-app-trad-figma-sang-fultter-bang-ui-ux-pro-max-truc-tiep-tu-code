@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpMyArena(
     WidgetTester tester, {
@@ -119,6 +121,42 @@ void main() {
     expect(find.text('2.2K'), findsOneWidget);
     expect(find.text('T\u1EA1o challenge m\u1EDBi'), findsOneWidget);
     expect(find.text('BTC \$70K? - Tu\u1EA7n 9'), findsOneWidget);
+  });
+
+  testWidgets('SC-168 first viewport reaches create challenge action', (
+    tester,
+  ) async {
+    await pumpMyArena(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'Profile MyArenaPage',
+      semanticLabel: 'SC-168 MyArenaPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(MyArenaPage.createChallengeKey),
+      routeName: 'Profile MyArenaPage',
+      actionLabel: 'create challenge action',
+    );
+  });
+
+  testWidgets('SC-205 first viewport reaches create challenge action', (
+    tester,
+  ) async {
+    await pumpMyArena(tester, initialLocation: AppRoutePaths.arenaMy);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'Arena MyArenaPage',
+      semanticLabel: 'SC-205 MyArenaPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(MyArenaPage.createChallengeKey),
+      routeName: 'Arena MyArenaPage',
+      actionLabel: 'create challenge action',
+    );
   });
 
   testWidgets('SC-168 switches local tabs with stable mock data', (

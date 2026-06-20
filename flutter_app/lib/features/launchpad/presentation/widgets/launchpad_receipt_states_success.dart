@@ -10,11 +10,11 @@ class _ReceiptErrorState extends StatelessWidget {
       title: 'Không tải được dữ liệu',
       message: 'Vui lòng kiểm tra kết nối mạng và thử lại.',
       icon: Icons.error_outline_rounded,
-      iconContainerSize: 48,
-      iconSize: 24,
+      iconContainerSize: AppSpacing.launchpadBox48,
+      iconSize: AppSpacing.iconMd,
       iconShape: BoxShape.circle,
-      verticalPadding: 48,
-      horizontalPadding: 24,
+      verticalPadding: AppSpacing.launchpadBox48,
+      horizontalPadding: AppSpacing.x6,
       titleStyle: AppTextStyles.baseMedium.copyWith(
         color: AppColors.text1,
         fontWeight: AppTextStyles.bold,
@@ -46,6 +46,14 @@ class _ReceiptSuccess extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         _ReceiptDetailsCard(subscription: subscription, status: status),
         const SizedBox(height: AppSpacing.x4),
+        VitHighRiskStatePanel(
+          state: VitHighRiskUiState.success,
+          title: 'Receipt reviewed',
+          message:
+              'Fees, limits, allocation risk, next step, and refund review stay attached to this receipt.',
+          contractId: subscription.id,
+        ),
+        const SizedBox(height: AppSpacing.x4),
         const _ReceiptNextSteps(),
         const SizedBox(height: AppSpacing.x4),
         const _ReceiptDisclosure(),
@@ -76,21 +84,25 @@ class _SuccessHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+      padding: AppSpacing.launchpadVerticalPaddingX4,
       child: Column(
         children: [
-          Container(
-            width: AppSpacing.launchpadBox64,
-            height: AppSpacing.launchpadBox64,
-            decoration: BoxDecoration(
-              color: AppColors.buy15,
-              border: Border.all(color: AppColors.buy.withValues(alpha: .30)),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.check_circle_outline_rounded,
-              color: AppColors.buy,
-              size: AppSpacing.launchpadIconHuge,
+          SizedBox.square(
+            dimension: AppSpacing.launchpadBox64,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.buy15,
+                shape: CircleBorder(
+                  side: BorderSide(color: AppColors.buy.withValues(alpha: .30)),
+                ),
+              ),
+              child: const Center(
+                child: Icon(
+                  Icons.check_circle_outline_rounded,
+                  color: AppColors.buy,
+                  size: AppSpacing.launchpadIconHuge,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.x4),

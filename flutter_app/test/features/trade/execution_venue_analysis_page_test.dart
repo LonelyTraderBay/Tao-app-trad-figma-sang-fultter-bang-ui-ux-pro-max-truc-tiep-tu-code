@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpVenueAnalysis(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,27 @@ void main() {
     expect(find.text('Sort\nby:'), findsOneWidget);
     expect(find.text('Venue Comparison'), findsOneWidget);
     expect(find.text('Binance'), findsOneWidget);
+  });
+
+  testWidgets('SC-097 first viewport reaches venue comparison data', (
+    tester,
+  ) async {
+    await pumpVenueAnalysis(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'ExecutionVenueAnalysisPage',
+      semanticLabel: 'SC-097 ExecutionVenueAnalysisPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ExecutionVenueAnalysisPage.venueKey('Binance')),
+      minVisibleHeight: 24,
+      targetLabel: 'first execution venue card',
+      reason:
+          'Execution venue analysis must show the first venue comparison row '
+          'above bottom navigation after summary and controls.',
+    );
   });
 
   testWidgets('SC-097 sort and tabs update local comparison content', (

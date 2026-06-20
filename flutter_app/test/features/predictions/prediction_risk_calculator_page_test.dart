@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskCalculator(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -93,6 +95,24 @@ void main() {
     expect(find.text('68.0%'), findsOneWidget);
     expect(find.text('1:0.54'), findsOneWidget);
     expect(find.text('\$857.14'), findsOneWidget);
+  });
+
+  testWidgets('SC-036 first viewport reaches position input fields', (
+    tester,
+  ) async {
+    await pumpRiskCalculator(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-036 PredictionRiskCalculatorPage',
+      semanticLabel: 'SC-036 PredictionRiskCalculatorPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Shares'),
+      targetLabel: 'the shares input label',
+      minVisibleHeight: 8,
+    );
   });
 
   testWidgets('SC-036 inputs recalculate local metrics', (tester) async {

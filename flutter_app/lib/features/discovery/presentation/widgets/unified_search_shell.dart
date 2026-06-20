@@ -45,43 +45,37 @@ class _NoQueryState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      customGap: AppSpacing.x5,
       children: [
-        _SectionTitle(
-          icon: Icons.trending_up_rounded,
-          iconColor: AppModuleAccents.predictions,
+        VitPageSection(
           label: 'Trending',
-        ),
-        const SizedBox(height: AppSpacing.x3),
-        Wrap(
-          key: UnifiedSearchPage.trendingKey,
-          spacing: AppSpacing.x3,
-          runSpacing: AppSpacing.x3,
+          accentColor: AppModuleAccents.predictions,
           children: [
-            for (final query in snapshot.trendingQueries)
-              _TrendingChip(
-                query: query,
-                onTap: () {
-                  HapticFeedback.selectionClick();
-                  onQuerySelected(query.label);
-                },
-              ),
+            Wrap(
+              key: UnifiedSearchPage.trendingKey,
+              spacing: AppSpacing.x3,
+              runSpacing: AppSpacing.x3,
+              children: [
+                for (final query in snapshot.trendingQueries)
+                  _TrendingChip(
+                    query: query,
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      onQuerySelected(query.label);
+                    },
+                  ),
+              ],
+            ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
-        Text(
-          'Khám phá theo module',
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-          ),
+        VitPageSection(
+          label: 'Khám phá theo module',
+          accentColor: AppModuleAccents.discovery,
+          children: [
+            for (final module in snapshot.modules) _ModuleCard(module: module),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x3),
-        for (final module in snapshot.modules) ...[
-          _ModuleCard(module: module),
-          const SizedBox(height: AppSpacing.x3),
-        ],
       ],
     );
   }

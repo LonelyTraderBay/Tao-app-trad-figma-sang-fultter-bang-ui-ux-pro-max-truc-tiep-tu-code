@@ -9,7 +9,7 @@ class _ClaimCalculatorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pTrustProgressCardPadding,
+      padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -27,7 +27,7 @@ class _ClaimCalculatorCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x2),
           VitCard(
-            height: AppSpacing.p2pTrustProgressInputHeight,
+            height: _p2pInsuranceInputHeight,
             alignment: Alignment.centerLeft,
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.sm,
@@ -60,7 +60,7 @@ class _PlatformStatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pTrustProgressCardPadding,
+      padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -130,6 +130,7 @@ class _ClaimsContent extends StatelessWidget {
         VitCtaButton(
           key: P2PInsuranceFundPage.submitClaimKey,
           onPressed: () => HapticFeedback.selectionClick(),
+          density: VitDensity.compact,
           child: const Text('Gửi yêu cầu bồi thường'),
         ),
         const SizedBox(height: AppSpacing.x4),
@@ -157,7 +158,7 @@ class _InsuranceTourOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = math.min(
       MediaQuery.sizeOf(context).height,
-      AppSpacing.p2pTrustProgressTourMaxHeight,
+      _p2pInsuranceTourMaxHeight,
     );
     return Positioned(
       top: 0,
@@ -172,133 +173,134 @@ class _InsuranceTourOverlay extends StatelessWidget {
             padding: AppSpacing.p2pTrustProgressTourPadding,
             child: VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.p2pTrustProgressCardPadding,
+              padding: AppSpacing.p2pTrustProgressCompactPadding,
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      children: [
-                        for (var i = 0; i < 5; i++) ...[
-                          Expanded(
-                            child: VitCard(
-                              height: AppSpacing.p2pTrustProgressTourStepHeight,
-                              variant: VitCardVariant.ghost,
-                              radius: VitCardRadius.sm,
-                              background: ColoredBox(
-                                color: i == 0
-                                    ? AppModuleAccents.p2p
-                                    : AppColors.surface3,
-                              ),
-                              clip: true,
-                              child: const SizedBox.shrink(),
-                            ),
-                          ),
-                          if (i != 4) const SizedBox(width: AppSpacing.x2),
-                        ],
-                        const SizedBox(width: AppSpacing.x3),
-                        VitIconButton(
-                          icon: Icons.close_rounded,
-                          tooltip: 'Đóng',
-                          size: VitIconButtonSize.sm,
-                          variant: VitIconButtonVariant.ghost,
-                          onPressed: onClose,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.x4),
-                    Text(
-                      '1 / 5',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x4),
-                    Align(
-                      alignment: Alignment.center,
-                      child: VitCard(
-                        width: AppSpacing.x7,
-                        height: AppSpacing.x7,
-                        variant: VitCardVariant.ghost,
-                        radius: VitCardRadius.md,
-                        background: const ColoredBox(color: AppColors.primary12),
-                        clip: true,
-                        child: const Icon(
-                          Icons.shield_outlined,
-                          color: AppModuleAccents.p2p,
-                          size: AppSpacing.iconLg,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x5),
-                    Text(
-                      'Chào mừng đến Quỹ Bảo Hiểm P2P',
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.sectionTitle.copyWith(
-                        color: AppColors.text1,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x3),
-                    Text(
-                      'Quỹ bảo hiểm P2P bảo vệ bạn khi giao dịch P2P gặp sự cố.\nMỗi giao dịch của bạn đều được trích một phần nhỏ vào quỹ để đảm bảo an toàn cho cộng đồng.',
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                        height: AppSpacing.p2pTrustProgressBodyLineHeight,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x5),
-                    _TourInfoCard(
-                      title: 'Dành cho bạn',
-                      icon: Icons.star_border_rounded,
-                      items: [
-                        'Bạn đã hoàn thành 47 giao dịch — mọi GD đều được bảo vệ tự động',
-                        'Với khối lượng GD cao, bảo hiểm là lớp phòng vệ quan trọng',
-                        '180 ngày thành viên — cảm ơn bạn đã tin tưởng sử dụng',
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.x3),
-                    _TourInfoCard(
-                      title: 'Thông tin chung',
-                      icon: Icons.check_circle_outline_rounded,
-                      muted: true,
-                      items: const [
-                        'Quỹ được trích từ 0.1% mỗi giao dịch',
-                        'Hoàn toàn tự động — không cần đăng ký',
-                        'Bảo vệ cả buyer và seller',
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.x4),
-                    Row(
-                      children: [
-                        TextButton(
-                          onPressed: onClose,
-                          child: Text(
-                            'Bỏ qua',
-                            style: AppTextStyles.baseMedium.copyWith(
-                              color: AppColors.text3,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.x3),
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      for (var i = 0; i < 5; i++) ...[
                         Expanded(
-                          child: VitCtaButton(
-                            key: P2PInsuranceFundPage.tourContinueKey,
-                            onPressed: onContinue,
-                            trailing: const Icon(
-                              Icons.chevron_right_rounded,
-                              color: AppColors.onAccent,
-                              size: AppSpacing.iconMd,
+                          child: VitCard(
+                            height: _p2pInsuranceTourStepHeight,
+                            variant: VitCardVariant.ghost,
+                            radius: VitCardRadius.sm,
+                            background: ColoredBox(
+                              color: i == 0
+                                  ? AppModuleAccents.p2p
+                                  : AppColors.surface3,
                             ),
-                            child: const Text('Tiếp tục'),
+                            clip: true,
+                            child: const SizedBox.shrink(),
                           ),
                         ),
+                        if (i != 4) const SizedBox(width: AppSpacing.x2),
                       ],
+                      const SizedBox(width: AppSpacing.x3),
+                      VitIconButton(
+                        icon: Icons.close_rounded,
+                        tooltip: 'Đóng',
+                        size: VitIconButtonSize.sm,
+                        variant: VitIconButtonVariant.ghost,
+                        onPressed: onClose,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.x3),
+                  Text(
+                    '1 / 5',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text3,
                     ),
-                  ],
+                  ),
+                  const SizedBox(height: AppSpacing.x3),
+                  Align(
+                    alignment: Alignment.center,
+                    child: VitCard(
+                      width: _p2pInsuranceTourIconBox,
+                      height: _p2pInsuranceTourIconBox,
+                      variant: VitCardVariant.ghost,
+                      radius: VitCardRadius.md,
+                      background: const ColoredBox(color: AppColors.primary12),
+                      clip: true,
+                      child: const Icon(
+                        Icons.shield_outlined,
+                        color: AppModuleAccents.p2p,
+                        size: AppSpacing.iconLg,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x4),
+                  Text(
+                    'Chào mừng đến Quỹ Bảo Hiểm P2P',
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.sectionTitle.copyWith(
+                      color: AppColors.text1,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x2),
+                  Text(
+                    'Quỹ bảo hiểm P2P bảo vệ bạn khi giao dịch P2P gặp sự cố.\nMỗi giao dịch của bạn đều được trích một phần nhỏ vào quỹ để đảm bảo an toàn cho cộng đồng.',
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      height: _p2pInsuranceBodyLineHeight,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x4),
+                  _TourInfoCard(
+                    title: 'Dành cho bạn',
+                    icon: Icons.star_border_rounded,
+                    items: [
+                      'Bạn đã hoàn thành 47 giao dịch — mọi GD đều được bảo vệ tự động',
+                      'Với khối lượng GD cao, bảo hiểm là lớp phòng vệ quan trọng',
+                      '180 ngày thành viên — cảm ơn bạn đã tin tưởng sử dụng',
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.x2),
+                  _TourInfoCard(
+                    title: 'Thông tin chung',
+                    icon: Icons.check_circle_outline_rounded,
+                    muted: true,
+                    items: const [
+                      'Quỹ được trích từ 0.1% mỗi giao dịch',
+                      'Hoàn toàn tự động — không cần đăng ký',
+                      'Bảo vệ cả buyer và seller',
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.x3),
+                  Row(
+                    children: [
+                      TextButton(
+                        onPressed: onClose,
+                        child: Text(
+                          'Bỏ qua',
+                          style: AppTextStyles.baseMedium.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.x3),
+                      Expanded(
+                        child: VitCtaButton(
+                          key: P2PInsuranceFundPage.tourContinueKey,
+                          onPressed: onContinue,
+                          density: VitDensity.compact,
+                          trailing: const Icon(
+                            Icons.chevron_right_rounded,
+                            color: AppColors.onAccent,
+                            size: AppSpacing.iconMd,
+                          ),
+                          child: const Text('Tiếp tục'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
       ),
     );
   }
@@ -364,7 +366,7 @@ class _TourInfoCard extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.medium,
-                      height: AppSpacing.p2pTrustProgressCaptionLineHeight,
+                      height: _p2pInsuranceCaptionLineHeight,
                     ),
                   ),
                 ),
@@ -388,7 +390,7 @@ class _ClaimCard extends StatelessWidget {
     final config = _claimStatusConfig(claim.status);
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pTrustProgressCardPadding,
+      padding: AppSpacing.p2pTrustProgressCompactPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pClaim(claim.id));

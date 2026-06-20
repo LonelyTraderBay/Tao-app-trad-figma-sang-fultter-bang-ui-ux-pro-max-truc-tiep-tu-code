@@ -65,7 +65,7 @@ class _HandoffCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -81,11 +81,11 @@ class _HandoffCard extends StatelessWidget {
             subtitle,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           for (final child in children) ...[
             child,
             if (child != children.last)
-              const Divider(height: AppSpacing.x5, color: AppColors.divider),
+              const Divider(height: AppSpacing.x4, color: AppColors.divider),
           ],
         ],
       ),
@@ -131,7 +131,7 @@ class _HandoffRow extends StatelessWidget {
                 subtitle,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.arenaEcosystemCheckLineHeight,
+                  height: _ecosystemCheckLineHeight,
                 ),
               ),
             ],
@@ -201,57 +201,11 @@ class _InfoLine extends StatelessWidget {
             text,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.arenaEcosystemCheckLineHeight,
+              height: _ecosystemCheckLineHeight,
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _SmallTextAction extends StatelessWidget {
-  const _SmallTextAction({
-    required this.label,
-    required this.icon,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: Padding(
-          padding: AppSpacing.arenaVerticalPaddingX2,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                icon,
-                color: color,
-                size: AppSpacing.arenaEcosystemCompactIcon,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                label,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
@@ -264,7 +218,11 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _MiniPill(label: label, color: color);
+    return VitStatusPill(
+      label: label,
+      status: _semanticStatusForColor(color),
+      size: VitStatusPillSize.sm,
+    );
   }
 }
 
@@ -276,26 +234,10 @@ class _MiniPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.arenaEcosystemPillMinHeight,
-      ),
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: color.withValues(alpha: .12),
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-        ),
-        child: Padding(
-          padding: AppSpacing.arenaPresetPillPadding,
-          child: Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      semanticStatus: _semanticStatusForColor(color),
     );
   }
 }
@@ -348,7 +290,7 @@ class _EcosystemFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.arenaPaddingX3,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -363,7 +305,7 @@ class _EcosystemFooter extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaEcosystemBodyLineHeight,
+                height: _ecosystemBodyLineHeight,
               ),
             ),
           ),
@@ -491,6 +433,28 @@ Color _toneColor(ArenaBridgeTone tone) {
     ArenaBridgeTone.blocked => AppColors.sell,
     ArenaBridgeTone.neutral => AppColors.text2,
   };
+}
+
+VitStatusPillStatus _semanticStatusForColor(Color color) {
+  if (color == AppColors.buy) {
+    return VitStatusPillStatus.success;
+  }
+  if (color == AppColors.sell) {
+    return VitStatusPillStatus.error;
+  }
+  if (color == AppColors.warn) {
+    return VitStatusPillStatus.warning;
+  }
+  if (color == AppColors.primary) {
+    return VitStatusPillStatus.info;
+  }
+  if (color == AppModuleAccents.arena) {
+    return VitStatusPillStatus.orange;
+  }
+  if (color == AppModuleAccents.predictions) {
+    return VitStatusPillStatus.purple;
+  }
+  return VitStatusPillStatus.neutral;
 }
 
 IconData _toneIcon(ArenaBridgeTone tone) {

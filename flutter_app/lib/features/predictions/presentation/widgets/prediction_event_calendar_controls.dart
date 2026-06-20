@@ -32,7 +32,7 @@ class _EventCalendarTabBar extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.predictionCalendarTabsHeight,
+        height: VitDensity.compact.controlHeight,
         child: Stack(
           children: [
             Row(
@@ -64,8 +64,7 @@ class _EventCalendarTabBar extends StatelessWidget {
                               color: _predictionPrimary,
                               borderRadius: AppRadii.hairlineRadius,
                               child: SizedBox(
-                                height: AppSpacing
-                                    .predictionCalendarTabIndicatorHeight,
+                                height: AppSpacing.dividerHairline,
                                 width: activeTab == item.tab
                                     ? AppSpacing
                                           .predictionCalendarTabIndicatorWidth
@@ -109,8 +108,8 @@ class _CategoryFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.predictionCalendarFilterGap,
-      runSpacing: AppSpacing.predictionCalendarFilterGap,
+      spacing: AppSpacing.x2,
+      runSpacing: AppSpacing.x2,
       children: [
         _CategoryChip(
           label: 'Tat ca',
@@ -158,7 +157,10 @@ class _CategoryChip extends StatelessWidget {
             borderRadius: AppRadii.mdRadius,
           ),
           child: Padding(
-            padding: AppSpacing.predictionCalendarFilterChipPadding,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x1,
+            ),
             child: Text(
               label,
               style: AppTextStyles.caption.copyWith(

@@ -26,7 +26,7 @@ class _HoldersContent extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.predictionDetailHolderHeaderGap),
+        const SizedBox(height: AppSpacing.x2),
         for (var index = 0; index < snapshot.topHolders.length; index += 1)
           _HolderRow(rank: index + 1, holder: snapshot.topHolders[index]),
       ],

@@ -15,13 +15,13 @@ class _DriftBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.sell20,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: _dcaPortfolioCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.x7,
-            height: AppSpacing.x7,
+            width: _dcaPortfolioHeroIconExtent,
+            height: _dcaPortfolioHeroIconExtent,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.sell10,
@@ -65,7 +65,7 @@ class _DriftBanner extends StatelessWidget {
                   'Danh mục đã lệch ${snapshot.driftPercent.toStringAsFixed(1)}% so với phân bổ mục tiêu (ngưỡng: ${snapshot.driftThresholdPercent.toStringAsFixed(0)}%). Xem xét tái cân bằng.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.dcaPortfolioOptimizerBodyLineHeight,
+                    height: _dcaPortfolioBodyLineHeight,
                   ),
                 ),
                 const Padding(padding: AppSpacing.dcaTopPaddingX3),

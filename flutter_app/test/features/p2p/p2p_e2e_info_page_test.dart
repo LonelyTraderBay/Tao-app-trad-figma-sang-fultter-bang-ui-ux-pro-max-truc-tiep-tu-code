@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_chat_page.
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_e2e_info_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpE2EInfo(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -97,6 +99,24 @@ void main() {
     expect(find.byKey(P2PE2EInfoPage.stepsKey), findsOneWidget);
     expect(find.text('Cách hoạt động'), findsOneWidget);
     expect(find.textContaining('Zero-Knowledge'), findsOneWidget);
+  });
+
+  testWidgets('SC-259 first viewport reaches first security item', (
+    tester,
+  ) async {
+    await pumpE2EInfo(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-259 P2PE2EInfoPage',
+      semanticLabel: 'SC-259 P2PE2EInfoPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PE2EInfoPage.infoItemKey('aes_rsa')),
+      routeName: 'SC-259 P2PE2EInfoPage',
+      actionLabel: 'the first E2E security explanation card',
+    );
   });
 
   testWidgets('SC-259 chat E2E action opens info page', (tester) async {

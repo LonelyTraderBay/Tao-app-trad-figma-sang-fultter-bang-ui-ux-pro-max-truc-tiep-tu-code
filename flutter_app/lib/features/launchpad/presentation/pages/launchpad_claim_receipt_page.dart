@@ -39,6 +39,9 @@ class LaunchpadClaimReceiptPage extends ConsumerStatefulWidget {
     'sc302_launchpad_claim_receipt_vesting_preview',
   );
   static const claimSheetKey = Key('sc302_launchpad_claim_receipt_claim_sheet');
+  static const claimSheetReviewStateKey = Key(
+    'sc302_launchpad_claim_receipt_claim_sheet_review_state',
+  );
 
   static Key tabKey(String id) => Key('sc302_launchpad_claim_receipt_tab_$id');
   static Key vestingKey(String id) =>

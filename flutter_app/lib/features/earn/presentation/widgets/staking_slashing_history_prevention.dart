@@ -31,7 +31,7 @@ class StakingSlashingPreventionTab extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.buy20,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -80,18 +80,21 @@ class _PreventionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: const EdgeInsets.all(AppSpacing.x4),
+      padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: AppSpacing.ctaHeight,
-            height: AppSpacing.ctaHeight,
-            decoration: BoxDecoration(
-              color: AppColors.buy.withValues(alpha: 0.12),
-              borderRadius: AppRadii.lgRadius,
+          SizedBox.square(
+            dimension: AppSpacing.ctaHeight,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.buy.withValues(alpha: 0.12),
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+              ),
+              child: const Center(
+                child: Icon(Icons.shield_outlined, color: AppColors.buy),
+              ),
             ),
-            child: const Icon(Icons.shield_outlined, color: AppColors.buy),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

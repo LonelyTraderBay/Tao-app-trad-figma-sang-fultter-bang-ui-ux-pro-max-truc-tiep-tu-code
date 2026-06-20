@@ -40,7 +40,7 @@ class StakingRecommendationsStrategyDetailSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: const EdgeInsets.all(AppSpacing.x4),
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             children: [
               StakingRecommendationsSheetMetric(
@@ -200,16 +200,14 @@ class StakingRecommendationsBulletSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  top: AppSpacing.stakingRecommendationsBulletTop,
-                ),
+                padding: AppSpacing.stakingRecommendationsBulletPadding,
                 child: SizedBox(
                   width: AppSpacing.x1,
                   height: AppSpacing.x1,
                   child: DecoratedBox(
-                    decoration: BoxDecoration(
+                    decoration: ShapeDecoration(
                       color: color,
-                      shape: BoxShape.circle,
+                      shape: const CircleBorder(),
                     ),
                   ),
                 ),
@@ -248,7 +246,7 @@ class StakingRecommendationsSheetMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: AppSpacing.earnVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(

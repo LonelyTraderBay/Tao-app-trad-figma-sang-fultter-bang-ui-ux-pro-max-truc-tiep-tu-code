@@ -148,74 +148,80 @@ class _VitSearchBarState extends State<VitSearchBar> {
           const SizedBox(width: AppSpacing.x3),
         ],
         Expanded(
-          child: Container(
+          child: SizedBox(
             height: _height,
-            padding: const EdgeInsets.only(
-              left: AppSpacing.searchBarHorizontalPadding,
-              right: AppSpacing.searchBarHorizontalTrailingPadding,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.searchBg,
-              border: Border.all(
-                color: _focusNode.hasFocus
-                    ? AppColors.primary
-                    : AppColors.searchBorder,
-                width: _focusNode.hasFocus
-                    ? AppSpacing.searchBarFocusBorder
-                    : AppSpacing.searchBarNormalBorder,
-              ),
-              borderRadius: _radius,
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.search_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.searchBarIcon,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.searchBg,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: _focusNode.hasFocus
+                        ? AppColors.primary
+                        : AppColors.searchBorder,
+                    width: _focusNode.hasFocus
+                        ? AppSpacing.searchBarFocusBorder
+                        : AppSpacing.searchBarNormalBorder,
+                  ),
+                  borderRadius: _radius,
                 ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: TextField(
-                    key: widget.fieldKey,
-                    controller: _controller,
-                    focusNode: _focusNode,
-                    autofocus: widget.autofocus,
-                    enabled: widget.enabled,
-                    onChanged: widget.onChanged,
-                    onSubmitted: widget.onSubmitted,
-                    textInputAction: TextInputAction.search,
-                    cursorColor: AppColors.primary,
-                    style: textStyle,
-                    decoration: InputDecoration.collapsed(
-                      hintText: widget.placeholder,
-                      hintStyle: textStyle.copyWith(
-                        color: AppColors.searchPlaceholder,
+              ),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(
+                  start: AppSpacing.searchBarHorizontalPadding,
+                  end: AppSpacing.searchBarHorizontalTrailingPadding,
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.search_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.searchBarIcon,
+                    ),
+                    const SizedBox(width: AppSpacing.x3),
+                    Expanded(
+                      child: TextField(
+                        key: widget.fieldKey,
+                        controller: _controller,
+                        focusNode: _focusNode,
+                        autofocus: widget.autofocus,
+                        enabled: widget.enabled,
+                        onChanged: widget.onChanged,
+                        onSubmitted: widget.onSubmitted,
+                        textInputAction: TextInputAction.search,
+                        cursorColor: AppColors.primary,
+                        style: textStyle,
+                        decoration: InputDecoration.collapsed(
+                          hintText: widget.placeholder,
+                          hintStyle: textStyle.copyWith(
+                            color: AppColors.searchPlaceholder,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    if (hasValue && widget.enabled)
+                      VitIconButton(
+                        icon: Icons.close_rounded,
+                        tooltip: 'Clear search',
+                        onPressed: _clear,
+                        variant: VitIconButtonVariant.defaultAction,
+                        size: VitIconButtonSize.sm,
+                      ),
+                    if (widget.onFilterTap != null && widget.filterInline)
+                      VitIconButton(
+                        key: widget.filterKey,
+                        icon: Icons.tune_rounded,
+                        tooltip: widget.filterActive
+                            ? 'Disable filters'
+                            : 'Enable filters',
+                        onPressed: widget.onFilterTap,
+                        variant: widget.filterActive
+                            ? VitIconButtonVariant.primary
+                            : VitIconButtonVariant.defaultAction,
+                        size: VitIconButtonSize.sm,
+                      ),
+                  ],
                 ),
-                if (hasValue && widget.enabled)
-                  VitIconButton(
-                    icon: Icons.close_rounded,
-                    tooltip: 'Clear search',
-                    onPressed: _clear,
-                    variant: VitIconButtonVariant.defaultAction,
-                    size: VitIconButtonSize.sm,
-                  ),
-                if (widget.onFilterTap != null && widget.filterInline)
-                  VitIconButton(
-                    key: widget.filterKey,
-                    icon: Icons.tune_rounded,
-                    tooltip: widget.filterActive
-                        ? 'Disable filters'
-                        : 'Enable filters',
-                    onPressed: widget.onFilterTap,
-                    variant: widget.filterActive
-                        ? VitIconButtonVariant.primary
-                        : VitIconButtonVariant.defaultAction,
-                    size: VitIconButtonSize.sm,
-                  ),
-              ],
+              ),
             ),
           ),
         ),

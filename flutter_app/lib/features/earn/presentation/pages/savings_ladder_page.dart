@@ -6,10 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,6 +24,17 @@ part 'savings_ladder_page_part_03.dart';
 part 'savings_ladder_page_part_04.dart';
 
 const _today = '09/03/2026';
+const _visualNavClearance = 90.0;
+const _nativeNavClearance = 72.0;
+const _visualScrollExtra = 28.0;
+const _nativeScrollExtra = 20.0;
+const _templateLineHeight = 1.18;
+const _timelineBarHeight = 20.0;
+const _maturityBadgeHeight = 44.0;
+const _liquidityRingSize = 56.0;
+const _liquidityLineHeight = 1.22;
+const _sectionMarkerHeight = 12.0;
+const _disclaimerLineHeight = 1.22;
 
 TextStyle get _captionBold =>
     AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold);
@@ -74,10 +85,10 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
     final annualInterest = _annualInterest(rungs);
     final liquidityScore = _liquidityScore(rungs);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? _visualNavClearance + _visualScrollExtra
+            : _nativeNavClearance + _nativeScrollExtra) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -97,10 +108,9 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EdgeInsets.only(bottom: scrollEndPadding),
                   child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    density: VitDensity.compact,
                     children: [
                       _LadderHero(
                         snapshot: snapshot,
@@ -139,6 +149,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                         ),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
+                        density: VitDensity.compact,
                         title: 'Savings ladder confirmation review',
                         message:
                             'Capital allocation, rung schedule, APY estimate, liquidity score, auto-renew flags, confirmation sheet, success state, and risk disclaimer are reviewed before a ladder is created.',

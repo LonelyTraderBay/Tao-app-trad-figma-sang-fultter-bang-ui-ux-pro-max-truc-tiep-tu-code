@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -17,6 +18,7 @@ class VitSectionHeader extends StatelessWidget {
     this.onAction,
     this.variant = VitSectionHeaderVariant.plain,
     this.accentColor = AppColors.primary,
+    this.density = VitDensity.standard,
   });
 
   final String title;
@@ -26,6 +28,10 @@ class VitSectionHeader extends StatelessWidget {
   final VoidCallback? onAction;
   final VitSectionHeaderVariant variant;
   final Color accentColor;
+  final VitDensity density;
+
+  bool get _isCompact =>
+      density == VitDensity.compact || density == VitDensity.tool;
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +39,16 @@ class VitSectionHeader extends StatelessWidget {
     return Row(
       children: [
         if (showAccent) ...[
-          Container(
+          SizedBox(
             width: AppSpacing.serviceTileAccentBarThickness,
-            height: AppSpacing.serviceTileSectionBarHeight,
-            decoration: BoxDecoration(
-              color: accentColor,
-              borderRadius: AppRadii.xsRadius,
+            height: _isCompact
+                ? AppSpacing.pageSectionAccentHeight
+                : AppSpacing.serviceTileSectionBarHeight,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: accentColor,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -54,11 +64,15 @@ class VitSectionHeader extends StatelessWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.sectionTitle.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.homeSectionHeaderTitleLineHeight,
-              ),
+              style:
+                  (_isCompact
+                          ? AppTextStyles.caption
+                          : AppTextStyles.sectionTitle)
+                      .copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                        height: AppSpacing.homeSectionHeaderTitleLineHeight,
+                      ),
             ),
           ),
         ),
@@ -69,7 +83,7 @@ class VitSectionHeader extends StatelessWidget {
               onTap: onAction,
               borderRadius: AppRadii.smRadius,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: const EdgeInsetsDirectional.symmetric(
                   horizontal: AppSpacing.x3,
                   vertical: AppSpacing.x2,
                 ),

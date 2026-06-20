@@ -9,9 +9,8 @@ class _EquityChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPadding,
-      child: SizedBox(
-        height: AppSpacing.tradeBotAnalyticsChartHeight,
+      child: AspectRatio(
+        aspectRatio: 2.15,
         child: CustomPaint(
           painter: _EquityChartPainter(points, strategies),
           size: Size.infinite,
@@ -29,9 +28,8 @@ class _RadarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCardPadding,
-      child: SizedBox(
-        height: AppSpacing.tradeBotRadarChartHeight,
+      child: AspectRatio(
+        aspectRatio: 1.85,
         child: CustomPaint(
           painter: _RadarPainter(strategies),
           size: Size.infinite,
@@ -60,7 +58,6 @@ class _MetricsTable extends StatelessWidget {
     ];
 
     return _Card(
-      padding: AppSpacing.tradeBotCardPadding,
       child: Column(
         children: [
           _TableHeader(strategies: strategies),
@@ -97,10 +94,11 @@ class _TableHeader extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.tradeBotMetricTableHeaderPadding,
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
           child: Row(
             children: [
               Expanded(
+                flex: 2,
                 child: Text(
                   'Metric',
                   style: AppTextStyles.micro.copyWith(
@@ -110,8 +108,7 @@ class _TableHeader extends StatelessWidget {
                 ),
               ),
               for (final strategy in strategies)
-                SizedBox(
-                  width: AppSpacing.tradeBotMetricTableColumnWidth,
+                Expanded(
                   child: Text(
                     strategy.name,
                     textAlign: TextAlign.center,
@@ -126,7 +123,7 @@ class _TableHeader extends StatelessWidget {
         ),
         const Divider(
           color: AppColors.borderSolid,
-          height: AppSpacing.tradeBotHairline,
+          thickness: AppSpacing.hairlineStroke,
         ),
       ],
     );
@@ -163,21 +160,18 @@ class _TableMetricRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.tradeBotMetricTableRowPadding,
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
           child: Row(
             children: [
               Expanded(
+                flex: 2,
                 child: Text(
                   row.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
               for (final strategy in strategies)
-                SizedBox(
-                  width: AppSpacing.tradeBotMetricTableColumnWidth,
+                Expanded(
                   child: _TableValue(
                     metricKey: row.key,
                     strategy: strategy,
@@ -194,7 +188,7 @@ class _TableMetricRow extends StatelessWidget {
         if (showDivider)
           const Divider(
             color: AppColors.borderSolid,
-            height: AppSpacing.tradeBotHairline,
+            thickness: AppSpacing.hairlineStroke,
           ),
       ],
     );
@@ -233,17 +227,12 @@ class _TableValue extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.tradeBotLineHeightTight,
             ),
           ),
         ),
         if (isBest) ...[
-          const Padding(padding: AppSpacing.tradeBotMetricTableStarGap),
-          Icon(
-            Icons.star_rounded,
-            color: color,
-            size: AppSpacing.tradeBotRowGap,
-          ),
+          const SizedBox(width: AppSpacing.x1),
+          Icon(Icons.star_rounded, color: color, size: AppSpacing.x3),
         ],
       ],
     );

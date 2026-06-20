@@ -40,7 +40,7 @@ class StakingCustodyMetricTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -76,7 +76,7 @@ class StakingCustodyLegendRow extends StatelessWidget {
     final color = stakingCustodyToneColor(item.tone);
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -133,7 +133,7 @@ class StakingCustodyStorageTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: 0.18),
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -177,7 +177,7 @@ class StakingCustodyReconciliationLogCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         children: [
           Row(
@@ -271,9 +271,9 @@ class StakingCustodyMatchStatus extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const DecoratedBox(
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: AppColors.buy,
-            shape: BoxShape.circle,
+            shape: CircleBorder(),
           ),
           child: SizedBox(
             width: AppSpacing.stakingCustodyStatusDot,
@@ -302,7 +302,7 @@ class StakingCustodyAddressRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsets.all(AppSpacing.x3),
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           Expanded(

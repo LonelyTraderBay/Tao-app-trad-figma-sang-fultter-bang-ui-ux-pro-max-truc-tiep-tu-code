@@ -32,7 +32,7 @@ class _CreateOrderSection extends StatelessWidget {
     final hasPreview =
         targetPriceController.text.trim().isNotEmpty &&
         amountController.text.trim().isNotEmpty;
-    return Container(
+    return KeyedSubtree(
       key: LaunchpadLimitOrdersPage.createKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,7 +68,7 @@ class _CreateOrderSection extends StatelessWidget {
             accentColor: AppColors.primary,
             children: [
               VitCard(
-                padding: const EdgeInsets.all(AppSpacing.x4),
+                padding: AppSpacing.launchpadPaddingX4,
                 child: Column(
                   children: [
                     _LabeledField(
@@ -181,7 +181,7 @@ class _CreateOrderSection extends StatelessWidget {
           if (submissionMessage != null) ...[
             const SizedBox(height: AppSpacing.x4),
             VitCard(
-              padding: const EdgeInsets.all(AppSpacing.x3),
+              padding: AppSpacing.launchpadPaddingX3,
               borderColor: AppColors.buy20,
               child: Row(
                 children: [

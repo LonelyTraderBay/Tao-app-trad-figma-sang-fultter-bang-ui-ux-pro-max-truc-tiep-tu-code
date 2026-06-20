@@ -13,6 +13,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSecurity(
     WidgetTester tester, {
@@ -96,6 +98,27 @@ void main() {
     expect(find.text('Mã chống lừa đảo'), findsOneWidget);
     expect(find.text('Nhập mã 4–8 ký tự'), findsOneWidget);
     expect(find.text('Lưu'), findsOneWidget);
+  });
+
+  testWidgets('SC-158 first viewport reaches security action list', (
+    tester,
+  ) async {
+    await pumpSecurity(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SecurityPage',
+      semanticLabel: 'SC-158 SecurityPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(SecurityPage.itemKey('withdraw-whitelist')),
+      minVisibleHeight: 20,
+      targetLabel: 'withdraw whitelist security action',
+      reason:
+          'Security review must expose actionable account-protection rows '
+          'above the bottom navigation, not only the risk/score summary.',
+    );
   });
 
   testWidgets('SC-158 wires direct navigation and local device reveal', (

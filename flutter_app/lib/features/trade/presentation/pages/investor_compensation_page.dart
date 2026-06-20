@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -30,6 +31,7 @@ class InvestorCompensationPage extends ConsumerStatefulWidget {
   const InvestorCompensationPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc104_investor_compensation_content');
+  static const overviewKey = Key('sc104_investor_compensation_overview');
   static const faqKey = Key('sc104_investor_compensation_faq');
   static Key tabKey(String id) => Key('sc104_investor_compensation_tab_$id');
 
@@ -50,11 +52,11 @@ class _InvestorCompensationPageState
         .watch(tradeReadModelControllerProvider)
         .getInvestorCompensation();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollClearance =
+        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 70
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -74,25 +76,29 @@ class _InvestorCompensationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: InvestorCompensationPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
+                  padding: EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.tradeBotCardGap,
+                    AppSpacing.contentPad,
+                    scrollClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 12,
+                    density: VitDensity.compact,
                     children: [
                       _ProtectionCard(snapshot: snapshot),
                       const VitCard(
                         variant: VitCardVariant.inner,
-                        padding: AppSpacing.cardPaddingCompact,
+                        density: VitDensity.compact,
                         child: VitPageContent(
                           padding: VitContentPadding.none,
                           fullBleed: true,
-                          customGap: 8,
+                          density: VitDensity.compact,
                           children: [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
+                              density: VitDensity.compact,
                               title: 'Compensation coverage review',
                               message:
                                   'Eligibility, coverage limit, claim path, exclusions and next steps are reviewed before relying on protection.',

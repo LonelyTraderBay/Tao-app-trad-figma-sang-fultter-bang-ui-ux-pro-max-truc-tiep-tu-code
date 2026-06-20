@@ -153,7 +153,7 @@ class _LeaderboardRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.referralRankWidth,
+          width: _rankSlot,
           child: Text(
             '#${item.rank}',
             style: AppTextStyles.micro.copyWith(
@@ -313,8 +313,8 @@ class _StepRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: AppSpacing.referralRankWidth,
-            height: AppSpacing.referralStepBox,
+            width: _stepBadgeExtent,
+            height: _stepBadgeExtent,
             child: DecoratedBox(
               decoration: const ShapeDecoration(
                 color: AppColors.surface2,
@@ -396,7 +396,7 @@ class _CampaignHistoryCard extends StatelessWidget {
                       color: AppColors.accent,
                       background: AppColors.accent10,
                     ),
-                    const Spacer(),
+                    const Expanded(child: SizedBox.shrink()),
                     Text(
                       '${_formatCompactInt(item.participants)} tham gia',
                       style: AppTextStyles.micro.copyWith(
@@ -501,49 +501,14 @@ class _HistoryDatum extends StatelessWidget {
 class _SectionTitle extends StatelessWidget {
   const _SectionTitle({
     required this.title,
-    this.trailing,
     this.color = AppModuleAccents.referral,
   });
 
   final String title;
-  final String? trailing;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: AppSpacing.referralSectionMarkerWidth,
-          height: AppSpacing.referralSectionMarkerHeight,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: color,
-              shape: const RoundedRectangleBorder(
-                borderRadius: AppRadii.xsRadius,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: Text(
-            title,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-        if (trailing != null)
-          Text(
-            trailing!,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-      ],
-    );
+    return VitModuleSectionHeader(title: title, accentColor: color);
   }
 }

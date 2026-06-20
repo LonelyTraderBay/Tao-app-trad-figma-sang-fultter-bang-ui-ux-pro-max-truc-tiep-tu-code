@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/profile/presentation/pages/profile_pa
 import 'package:vit_trade_flutter/features/profile/presentation/pages/sub_account_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRoute(WidgetTester tester, String route) async {
     tester.view.devicePixelRatio = 1;
@@ -64,6 +66,28 @@ void main() {
     expect(find.byKey(SubAccountPage.accountCardKey('sub001')), findsOneWidget);
     expect(find.byKey(SubAccountPage.accountCardKey('sub005')), findsOneWidget);
     expect(find.text('Team Member - Linh'), findsOneWidget);
+  });
+
+  testWidgets('SC-166 first viewport reaches first account card', (
+    tester,
+  ) async {
+    await pumpRoute(tester, AppRoutePaths.profileSubAccounts);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SubAccountPage',
+      semanticLabel: 'SC-166 SubAccountPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(SubAccountPage.accountCardKey('sub001')),
+      minVisibleHeight: 24,
+      targetLabel: 'first sub-account card',
+      reason:
+          'Sub-account management must preview real account content above '
+          'the bottom navigation instead of spending the whole viewport on '
+          'summary and risk chrome.',
+    );
   });
 
   testWidgets('SC-166 supports balance masking, create form, and expansion', (

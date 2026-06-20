@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAnalytics(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -81,6 +83,24 @@ void main() {
     expect(find.byKey(StakingAnalyticsPage.assetKey('BTC')), findsOneWidget);
     expect(find.byKey(StakingAnalyticsPage.assetKey('LP')), findsOneWidget);
     expect(find.textContaining('Dữ liệu được cập nhật'), findsOneWidget);
+  });
+
+  testWidgets('SC-359 first viewport reaches calculator action', (
+    tester,
+  ) async {
+    await pumpAnalytics(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-359 StakingAnalyticsPage',
+      semanticLabel: 'SC-359 StakingAnalyticsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingAnalyticsPage.calculateButtonKey),
+      routeName: 'SC-359 StakingAnalyticsPage',
+      actionLabel: 'the staking calculator action',
+    );
   });
 
   testWidgets('SC-359 supports analytics tab state changes', (tester) async {

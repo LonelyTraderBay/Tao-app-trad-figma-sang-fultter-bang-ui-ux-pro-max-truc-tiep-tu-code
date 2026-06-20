@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCassReconciliation(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -73,6 +75,24 @@ void main() {
     expect(find.text('March 8, 2026'), findsOneWidget);
     expect(find.text('Pending deposit cleared'), findsOneWidget);
     expect(find.text('Export Reconciliation Report (CSV)'), findsOneWidget);
+  });
+
+  testWidgets('SC-103 first viewport reaches first reconciliation record', (
+    tester,
+  ) async {
+    await pumpCassReconciliation(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-103 CASSReconciliationPage',
+      semanticLabel: 'SC-103 CASSReconciliationPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(CassReconciliationPage.recordKey('cass-2026-03-08')),
+      targetLabel: 'the first CASS reconciliation record',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-103 switches tab state without losing records', (

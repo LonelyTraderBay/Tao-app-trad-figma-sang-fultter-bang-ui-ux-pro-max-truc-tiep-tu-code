@@ -6,10 +6,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -28,6 +28,14 @@ const _drawdownAmber = AppColors.caution;
 const _drawdownGreen = AppColors.buy;
 const _drawdownPrimary = AppColors.primary;
 const _drawdownAxis = AppColors.chartAxisStrong;
+const double _drawdownFramedScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x7;
+const double _drawdownNativeScrollClearance =
+    AppSpacing.buttonStandard + AppSpacing.x5;
+const double _drawdownUnderwaterExtent =
+    AppSpacing.buttonStandard * 3 + AppSpacing.x2;
+const double _drawdownDurationExtent =
+    AppSpacing.buttonStandard * 2 + AppSpacing.x5;
 
 class BotDrawdownAnalyzerPage extends ConsumerWidget {
   const BotDrawdownAnalyzerPage({super.key, this.shellRenderMode});
@@ -42,11 +50,10 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getBotDrawdownAnalyzer();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.tradeBotBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.tradeBotBottomInsetNative) +
+            ? _drawdownFramedScrollClearance
+            : _drawdownNativeScrollClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -60,44 +67,34 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
             showBack: true,
             onBack: () => context.go(AppRoutePaths.tradeBots),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    customGap: AppSpacing.tradeBotCardGap,
-                    children: [
-                      _MetricGrid(summary: snapshot.summary),
-                      const _SectionLabel('Underwater Equity'),
-                      _UnderwaterCard(points: snapshot.underwaterPoints),
-                      const _SectionLabel('Drawdown Duration Distribution'),
-                      _DurationCard(buckets: snapshot.durationBuckets),
-                      const _SectionLabel('Major Drawdown Events'),
-                      _EventsList(events: snapshot.events),
-                      _AnalysisCard(insights: snapshot.insights),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Drawdown review state',
-                          message:
-                              'Peak-to-trough metrics, duration distribution, event evidence and mitigation next steps are reviewed before strategy changes.',
-                          contractId: 'bot-drawdown-review',
-                        ),
-                      ),
-                    ],
+          child: VitInsetScrollView(
+            key: contentKey,
+            bottomInset: scrollEndClearance,
+            child: VitPageContent(
+              padding: VitContentPadding.compact,
+              density: VitDensity.compact,
+              children: [
+                _MetricGrid(summary: snapshot.summary),
+                const VitCard(
+                  variant: VitCardVariant.inner,
+                  padding: AppSpacing.tradeBotCompactCardPadding,
+                  child: VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.riskReview,
+                    title: 'Drawdown review state',
+                    message:
+                        'Peak-to-trough metrics, duration distribution, event evidence and mitigation next steps are reviewed before strategy changes.',
+                    contractId: 'bot-drawdown-review',
                   ),
                 ),
-              ),
-            ],
+                const _SectionLabel('Underwater Equity'),
+                _UnderwaterCard(points: snapshot.underwaterPoints),
+                const _SectionLabel('Drawdown Duration Distribution'),
+                _DurationCard(buckets: snapshot.durationBuckets),
+                const _SectionLabel('Major Drawdown Events'),
+                _EventsList(events: snapshot.events),
+                _AnalysisCard(insights: snapshot.insights),
+              ],
+            ),
           ),
         ),
       ),

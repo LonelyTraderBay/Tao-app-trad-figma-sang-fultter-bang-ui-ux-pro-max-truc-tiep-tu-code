@@ -34,27 +34,33 @@ class _Summary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionLabel('Cost Summary'),
-        const SizedBox(height: AppSpacing.tradeListGap),
-        for (final item in categories) ...[
-          _CategoryCard(
-            color: item.$4,
-            title: item.$2,
-            description: item.$3,
-            amount: item.$5,
-          ),
-          if (item != categories.last) const SizedBox(height: AppSpacing.x4),
-        ],
-        const SizedBox(height: AppSpacing.x5 + AppSpacing.x2),
-        const _SectionLabel('Impact on Returns'),
-        const SizedBox(height: AppSpacing.tradeListGap),
-        _RiyCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.contentPad),
-        _FullWidthButton(
-          key: ExAnteCostsPage.riyKey,
-          icon: Icons.calculate_outlined,
-          label: 'Use RIY Calculator',
-          onPressed: () => context.go(AppRoutePaths.tradeCopyRiyCalculator),
+        VitPageSection(
+          label: 'Cost Summary',
+          accentColor: _costPrimary,
+          density: VitDensity.compact,
+          children: [
+            for (final item in categories)
+              _CategoryCard(
+                color: item.$4,
+                title: item.$2,
+                description: item.$3,
+                amount: item.$5,
+              ),
+          ],
+        ),
+        VitPageSection(
+          label: 'Impact on Returns',
+          accentColor: _costPrimary,
+          density: VitDensity.compact,
+          children: [
+            _RiyCard(snapshot: snapshot),
+            _FullWidthButton(
+              key: ExAnteCostsPage.riyKey,
+              icon: Icons.calculate_outlined,
+              label: 'Use RIY Calculator',
+              onPressed: () => context.go(AppRoutePaths.tradeCopyRiyCalculator),
+            ),
+          ],
         ),
       ],
     );
@@ -77,7 +83,7 @@ class _CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeFeeCardPadding,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Row(
@@ -85,13 +91,13 @@ class _CategoryCard extends StatelessWidget {
               VitCard(
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.sm,
-                width: AppSpacing.statusPillIconSizeMd,
-                height: AppSpacing.statusPillIconSizeMd,
+                width: _costSwatchExtent,
+                height: _costSwatchExtent,
                 clip: true,
                 background: ColoredBox(color: color),
                 child: const SizedBox.shrink(),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: _costSpace),
               Expanded(
                 child: Text(
                   title,
@@ -109,12 +115,15 @@ class _CategoryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.transferSectionGap),
+          const SizedBox(height: _costTinySpace),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
               description,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                height: _costLineTight,
+              ),
             ),
           ),
         ],
@@ -131,7 +140,7 @@ class _RiyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeFeeCardPadding,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Row(
@@ -140,13 +149,13 @@ class _RiyCard extends StatelessWidget {
               VitCard(
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.sm,
-                width: AppSpacing.walletTransactionExplorerHeight,
-                height: AppSpacing.walletTransactionExplorerHeight,
+                width: _costIconTile,
+                height: _costIconTile,
                 clip: true,
                 background: ColoredBox(color: _costRed.withValues(alpha: .13)),
                 child: const Icon(Icons.trending_down_rounded, color: _costRed),
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: _costSpace),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,12 +167,13 @@ class _RiyCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: _costTinySpace),
                     Text(
                       'How much costs reduce your returns over '
                       '${snapshot.holdingPeriodYears} years',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
+                        height: _costLineTight,
                       ),
                     ),
                   ],
@@ -171,11 +181,11 @@ class _RiyCard extends StatelessWidget {
               ),
               Text(
                 '${snapshot.reductionInYield.toStringAsFixed(2)}%',
-                style: AppTextStyles.heroNumber.copyWith(color: _costRed),
+                style: AppTextStyles.sectionTitle.copyWith(color: _costRed),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.transferSectionGap),
+          const SizedBox(height: _costSpace),
           _WarningBox(
             text:
                 'Example: If the investment returns 8% per year, after costs '
@@ -198,13 +208,14 @@ class _Breakdown extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionLabel('Detailed Cost Breakdown'),
-        const SizedBox(height: AppSpacing.tradeListGap),
-        for (final cost in snapshot.costs) ...[
-          _CostItemCard(cost: cost),
-          if (cost != snapshot.costs.last)
-            const SizedBox(height: AppSpacing.tradeListGap),
-        ],
+        VitPageSection(
+          label: 'Detailed Cost Breakdown',
+          accentColor: _costPrimary,
+          density: VitDensity.compact,
+          children: [
+            for (final cost in snapshot.costs) _CostItemCard(cost: cost),
+          ],
+        ),
       ],
     );
   }
@@ -232,9 +243,12 @@ class _CostItemCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           Text(
             cost.description,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: _costLineTight,
+            ),
           ),
-          const SizedBox(height: AppSpacing.tradeFeeRowGap),
+          const SizedBox(height: _costSpace),
           Row(
             children: [
               Expanded(
@@ -243,7 +257,7 @@ class _CostItemCard extends StatelessWidget {
                   value: _formatEur(cost.amountEur),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: _costTinySpace),
               Expanded(
                 child: _MetricBox(
                   label: '% of Investment',

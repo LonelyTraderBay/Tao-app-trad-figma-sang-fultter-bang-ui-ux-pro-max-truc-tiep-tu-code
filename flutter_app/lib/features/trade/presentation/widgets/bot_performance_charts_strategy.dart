@@ -9,6 +9,7 @@ class _KeyMetricsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.tradeBotCardPaddingTall,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Row(
@@ -36,7 +37,7 @@ class _KeyMetricsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+          const SizedBox(height: _analyticsSpace),
           VitCard(
             variant: VitCardVariant.inner,
             width: double.infinity,
@@ -51,7 +52,7 @@ class _KeyMetricsCard extends StatelessWidget {
                   color: _analyticsGreen,
                   size: AppSpacing.iconSm,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                const SizedBox(width: _analyticsSpace),
                 Flexible(
                   child: Text(
                     'Excellent performance - Sharpe > 1.5 indicates strong risk-adjusted returns',
@@ -89,7 +90,7 @@ class _MetricColumn extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.tradeBotRowGap),
+        const SizedBox(height: _analyticsTinySpace),
         Text(value, style: AppTextStyles.sectionTitle.copyWith(color: color)),
       ],
     );
@@ -135,9 +136,11 @@ class _PnlChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      key: BotPerformanceAnalyticsPage.pnlChartKey,
       padding: AppSpacing.tradeBotCardPaddingTall,
+      density: VitDensity.compact,
       child: SizedBox(
-        height: AppSpacing.tradeBotAnalyticsChartHeight,
+        height: _analyticsChartExtent,
         child: CustomPaint(
           painter: _PnlChartPainter(points),
           size: Size.infinite,
@@ -156,8 +159,9 @@ class _WinLossChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.tradeBotCardPaddingTall,
+      density: VitDensity.compact,
       child: SizedBox(
-        height: AppSpacing.tradeBotDistributionChartHeight,
+        height: _analyticsDistributionExtent,
         child: CustomPaint(
           painter: _WinLossChartPainter(points),
           size: Size.infinite,
@@ -180,12 +184,13 @@ class _StrategyPerformanceCard extends StatelessWidget {
 
     return VitCard(
       padding: AppSpacing.tradeBotCardPaddingLoose,
+      density: VitDensity.compact,
       child: Column(
         children: [
           for (final strategy in strategies) ...[
             _StrategyRow(strategy: strategy, maxPnl: maxPnl),
             if (strategy != strategies.last)
-              const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+              const SizedBox(height: _analyticsSpace),
           ],
         ],
       ),
@@ -209,7 +214,7 @@ class _StrategyRow extends StatelessWidget {
         Row(
           children: [
             Icon(Icons.circle, color: color, size: AppSpacing.tradeBotCardGap),
-            const SizedBox(width: AppSpacing.tradeBotSmallGap),
+            const SizedBox(width: _analyticsSpace),
             Expanded(
               child: Text(
                 '${strategy.strategy} Bot',
@@ -228,11 +233,11 @@ class _StrategyRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.tradeBotRowGap),
+        const SizedBox(height: _analyticsTinySpace),
         ClipRRect(
           borderRadius: AppRadii.pillRadius,
           child: SizedBox(
-            height: AppSpacing.tradeBotProgressHeight,
+            height: _analyticsProgressExtent,
             child: LinearProgressIndicator(
               value: widthFactor.clamp(0, 1),
               backgroundColor: _chartTrack,

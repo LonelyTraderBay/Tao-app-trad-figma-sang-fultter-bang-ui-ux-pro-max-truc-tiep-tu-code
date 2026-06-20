@@ -32,7 +32,7 @@ class _DataIntegrationTabBar extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.predictionDataTabBarHeight,
+        height: VitDensity.compact.controlHeight,
         child: Stack(
           children: [
             Row(
@@ -64,8 +64,7 @@ class _DataIntegrationTabBar extends StatelessWidget {
                               color: _predictionPrimary,
                               borderRadius: AppRadii.hairlineRadius,
                               child: SizedBox(
-                                height:
-                                    AppSpacing.predictionDataTabIndicatorHeight,
+                                height: AppSpacing.dividerHairline,
                                 width: activeTab == item.tab
                                     ? AppSpacing.predictionDataTabIndicatorWidth
                                     : 0,
@@ -102,7 +101,7 @@ class _SourcesOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.predictionDataCardPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           Row(
@@ -130,9 +129,7 @@ class _SourcesOverview extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: AppSpacing.predictionDataHeroTitleGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'External data feeds for event resolution',
                       style: AppTextStyles.caption.copyWith(
@@ -144,7 +141,7 @@ class _SourcesOverview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionDataOverviewMetricsGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -196,7 +193,7 @@ class _OverviewMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.predictionDataMetricValueGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           maxLines: 1,
@@ -222,6 +219,7 @@ class _SourceSection extends StatelessWidget {
     return VitPageSection(
       label: 'Configured Sources',
       accentColor: _predictionPrimary,
+      density: VitDensity.compact,
       children: [for (final source in sources) _SourceCard(source: source)],
     );
   }
@@ -237,7 +235,7 @@ class _SourceCard extends StatelessWidget {
     final color = _sourceStatusColor(source.status);
     return VitCard(
       key: PredictionDataIntegrationPage.sourceKey(source.id),
-      padding: AppSpacing.predictionDataCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -265,9 +263,7 @@ class _SourceCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: AppSpacing.predictionDataSmallTopGap,
-                    ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${source.provider} - ${source.category}',
                       style: AppTextStyles.micro.copyWith(
@@ -291,7 +287,7 @@ class _SourceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.predictionDataSourceMetricsGap),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -316,7 +312,7 @@ class _SourceCard extends StatelessWidget {
             ],
           ),
           if (source.apiUrl != null) ...[
-            const SizedBox(height: AppSpacing.predictionDataSourceUrlGap),
+            const SizedBox(height: AppSpacing.x1),
             Row(
               children: [
                 const Icon(

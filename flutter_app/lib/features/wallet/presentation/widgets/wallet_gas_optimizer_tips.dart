@@ -8,9 +8,7 @@ class _TipsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-      padding: VitContentPadding.none,
-      fullBleed: true,
-      customGap: AppSpacing.walletGasSecondaryContentGap,
+      density: VitDensity.compact,
       children: [
         const _SectionLabel(label: 'Gas Optimization Tips'),
         for (var i = 0; i < snapshot.tips.length; i++) ...[
@@ -36,14 +34,14 @@ class _TipCard extends StatelessWidget {
       _ => AppColors.text3,
     };
     return VitCard(
-      padding: AppSpacing.walletGasTipPadding,
+      density: VitDensity.compact,
       borderColor: _gasBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VitCard(
-            width: AppSpacing.walletGasTipIconBox,
-            height: AppSpacing.walletGasTipIconBox,
+            width: 32,
+            height: 32,
             alignment: Alignment.center,
             radius: VitCardRadius.sm,
             borderColor: _gasAmber.withValues(alpha: .20),
@@ -53,7 +51,7 @@ class _TipCard extends StatelessWidget {
               size: AppSpacing.walletGasTipIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.walletGasTipIconGap),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -75,29 +73,39 @@ class _TipCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.walletGasTipTitleGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   tip.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.45,
+                    height: 1.28,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletGasTipFooterGap),
+                const SizedBox(height: AppSpacing.x2),
                 Row(
                   children: [
                     _CategoryPill(label: tip.category),
-                    const Spacer(),
-                    const Icon(
-                      Icons.attach_money_rounded,
-                      color: _gasGreen,
-                      size: AppSpacing.walletGasSavingIcon,
-                    ),
-                    Text(
-                      tip.potentialSaving,
-                      style: AppTextStyles.caption.copyWith(
-                        color: _gasGreen,
-                        fontWeight: AppTextStyles.bold,
+                    const SizedBox(width: AppSpacing.x2),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.attach_money_rounded,
+                              color: _gasGreen,
+                              size: AppSpacing.walletGasSavingIcon,
+                            ),
+                            Text(
+                              tip.potentialSaving,
+                              style: AppTextStyles.caption.copyWith(
+                                color: _gasGreen,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -140,7 +148,7 @@ class _QuickActionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletGasTipPadding,
+      density: VitDensity.compact,
       borderColor: _gasBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -151,7 +159,7 @@ class _QuickActionsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletGasQuickActionsTitleGap),
+          const SizedBox(height: AppSpacing.x2),
           for (final label in const [
             'Set Gas Price Alert',
             'Schedule Transaction',
@@ -162,8 +170,8 @@ class _QuickActionsCard extends StatelessWidget {
                 bottom: AppSpacing.walletGasQuickActionBottomGap,
               ),
               child: VitCard(
-                height: AppSpacing.walletGasQuickActionHeight,
-                padding: AppSpacing.walletGasQuickActionPadding,
+                height: VitDensity.compact.controlHeight,
+                density: VitDensity.compact,
                 radius: VitCardRadius.sm,
                 borderColor: _gasBorder,
                 onTap: () {},
@@ -174,9 +182,7 @@ class _QuickActionsCard extends StatelessWidget {
                       color: AppColors.text3,
                       size: AppSpacing.walletGasQuickActionIcon,
                     ),
-                    const SizedBox(
-                      width: AppSpacing.walletGasQuickActionIconGap,
-                    ),
+                    const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: Text(
                         label,

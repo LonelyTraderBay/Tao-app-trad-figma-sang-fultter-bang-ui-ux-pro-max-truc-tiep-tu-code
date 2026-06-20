@@ -20,7 +20,7 @@ class _PositionModeCard extends StatelessWidget {
                 color: AppColors.primary,
                 size: 18,
               ),
-              const SizedBox(width: AppSpacing.tradeToolInlineGap),
+              const SizedBox(width: _advancedSpace),
               Text(
                 'Position Mode',
                 style: AppTextStyles.body.copyWith(
@@ -28,7 +28,7 @@ class _PositionModeCard extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const Spacer(),
+              const Expanded(child: SizedBox.shrink()),
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.text3,
@@ -36,10 +36,11 @@ class _PositionModeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeToolPageTopGap),
+          const SizedBox(height: _advancedSpace),
           VitCard(
-            height: AppSpacing.tradeToolRiskTabHeight,
+            height: _advancedModeControlExtent,
             padding: AppSpacing.tradeToolMetricPadding,
+            density: VitDensity.compact,
             variant: VitCardVariant.inner,
             child: Row(
               children: [
@@ -58,14 +59,14 @@ class _PositionModeCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeToolIconGap),
+          const SizedBox(height: _advancedSpace),
           Text(
             activeMode == 'one-way'
                 ? 'Chỉ được giữ Long HOẶC Short cho mỗi cặp. Đơn giản, phù hợp beginner.'
                 : 'Có thể giữ đồng thời Long VÀ Short cho cùng 1 cặp. Dùng cho hedging strategy.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.5,
+              height: _advancedLineBody,
             ),
           ),
         ],
@@ -162,24 +163,24 @@ class _PositionTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeToolInlineGap),
+              const SizedBox(height: _advancedTinySpace),
               Text(
                 'Professional tools để quản lý vị thế hiệu quả',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: 1.45,
+                  height: _advancedLineBody,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeToolPageTopGap),
+              const SizedBox(height: _advancedSpace),
               for (final action in snapshot.positionActions) ...[
                 _ActionButton(action: action, onTap: () => onAction(action)),
                 if (action != snapshot.positionActions.last)
-                  const SizedBox(height: AppSpacing.tradeToolInlineGap),
+                  const SizedBox(height: _advancedTinySpace),
               ],
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeToolPageTopGap),
+        const SizedBox(height: _advancedSpace),
         _MockPositionCard(position: snapshot.position),
       ],
     );
@@ -197,7 +198,7 @@ class _ActionButton extends StatelessWidget {
     return VitCard(
       key: AdvancedTradingDemoPage.actionKey(action.id),
       onTap: onTap,
-      constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
+      constraints: const BoxConstraints(minHeight: _advancedActionMinExtent),
       alignment: Alignment.center,
       padding: AppSpacing.tradeToolMetricRowPadding,
       variant: VitCardVariant.inner,
@@ -233,17 +234,17 @@ class _MockPositionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: _advancedSpace),
           _ValueRow(
             label: 'Pair',
             value: '${position.pair} · ${position.side.toUpperCase()}',
           ),
-          const SizedBox(height: AppSpacing.tradeToolInlineGap),
+          const SizedBox(height: _advancedTinySpace),
           _ValueRow(
             label: 'Size',
             value: '${position.currentSize.toStringAsFixed(1)} BTC',
           ),
-          const SizedBox(height: AppSpacing.tradeToolInlineGap),
+          const SizedBox(height: _advancedTinySpace),
           _ValueRow(
             label: 'Unrealized PnL',
             value: '+\$${position.currentPnl.toStringAsFixed(2)}',
@@ -276,16 +277,16 @@ class _OrdersTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeToolIconGap),
+              const SizedBox(height: _advancedSpace),
               Wrap(
-                spacing: AppSpacing.tradeToolInlineGap,
-                runSpacing: AppSpacing.tradeToolInlineGap,
+                spacing: _advancedSpace,
+                runSpacing: _advancedSpace,
                 children: [
                   for (final type in snapshot.orderTypes)
                     _ChoiceChip(label: type.label, active: type.id == 'limit'),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: _advancedSpace),
               Text(
                 'Time In Force',
                 style: AppTextStyles.caption.copyWith(
@@ -293,10 +294,10 @@ class _OrdersTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeToolIconGap),
+              const SizedBox(height: _advancedSpace),
               Wrap(
-                spacing: AppSpacing.tradeToolInlineGap,
-                runSpacing: AppSpacing.tradeToolInlineGap,
+                spacing: _advancedSpace,
+                runSpacing: _advancedSpace,
                 children: [
                   for (final tif in snapshot.timeInForce)
                     _ChoiceChip(label: tif.label, active: tif.id == 'GTC'),
@@ -305,7 +306,7 @@ class _OrdersTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.tradeToolPageTopGap),
+        const SizedBox(height: _advancedSpace),
         _MetricsCard(title: 'Order Summary', metrics: snapshot.orderSummary),
       ],
     );

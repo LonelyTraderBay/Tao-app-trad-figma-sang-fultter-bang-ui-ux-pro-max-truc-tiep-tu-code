@@ -31,8 +31,7 @@ class _CurrencyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.settingsCurrencyCardHeight,
-      padding: AppSpacing.settingsCurrencyCardPadding,
+      density: VitDensity.compact,
       radius: VitCardRadius.lg,
       borderColor: _settingsBorder,
       child: Row(
@@ -54,7 +53,7 @@ class _CurrencyCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.settingsCurrencyTitleGap),
+                const SizedBox(height: AppSpacing.x2),
                 Row(
                   children: [
                     for (final currency in currencies) ...[
@@ -100,8 +99,10 @@ class _CurrencyChip extends StatelessWidget {
         constraints: const BoxConstraints(
           minWidth: AppSpacing.settingsCurrencyChipMinWidth,
         ),
-        child: SizedBox(
-          height: AppSpacing.settingsCurrencyChipHeight,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: VitDensity.compact.controlHeight,
+          ),
           child: Material(
             color: selected ? _settingsPrimary : _settingsPanel2,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
@@ -180,8 +181,10 @@ class _LanguageRow extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: Material(
         color: selected ? _settingsSelected : AppColors.transparent,
-        child: SizedBox(
-          height: AppSpacing.settingsLanguageRowHeight,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: VitDensity.compact.controlHeight + AppSpacing.x2,
+          ),
           child: Padding(
             padding: AppSpacing.settingsLanguageRowPadding,
             child: Row(
@@ -218,13 +221,11 @@ class _SettingsListCard extends StatelessWidget {
     required this.rows,
     required this.toggles,
     required this.onToggle,
-    required this.rowHeight,
   });
 
   final List<ProfileSettingsItem> rows;
   final Map<String, bool> toggles;
   final void Function(String id, bool value) onToggle;
-  final double rowHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -239,7 +240,6 @@ class _SettingsListCard extends StatelessWidget {
               row: row,
               enabled: toggles[row.id] ?? false,
               onToggle: (value) => onToggle(row.id, value),
-              height: rowHeight,
             ),
             if (row != rows.last)
               const Divider(
@@ -258,20 +258,20 @@ class _SettingsRow extends StatelessWidget {
     required this.row,
     required this.enabled,
     required this.onToggle,
-    required this.height,
   });
 
   final ProfileSettingsItem row;
   final bool enabled;
   final ValueChanged<bool> onToggle;
-  final double height;
 
   @override
   Widget build(BuildContext context) {
     final hasIcon = row.iconKey != 'none';
 
-    return SizedBox(
-      height: height,
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,
+      ),
       child: Padding(
         padding: hasIcon
             ? AppSpacing.settingsRowPaddingWithIcon
@@ -300,7 +300,7 @@ class _SettingsRow extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.settingsRowSubtitleGap),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     row.subtitle,
                     maxLines: 1,

@@ -7,23 +7,22 @@ class _OverviewContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         const VitSectionHeader(
           title: 'Complaint Categories',
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
-        const SizedBox(height: AppSpacing.complaintsHandlingReviewGap),
         _CategoryGrid(categories: snapshot.categories),
-        const SizedBox(height: AppSpacing.complaintsHandlingPrimaryGap),
         const VitSectionHeader(
           title: 'Resolution Timeline',
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
-        const SizedBox(height: AppSpacing.complaintsHandlingReviewGap),
         _TimelineCard(timeline: snapshot.timeline),
       ],
     );
@@ -37,40 +36,48 @@ class _CategoryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: AppSpacing.complaintsHandlingGridGap,
-      runSpacing: AppSpacing.complaintsHandlingGridGap,
-      children: [
-        for (final category in categories)
-          SizedBox(
-            width: AppSpacing.complaintsHandlingCategoryWidth,
-            height: AppSpacing.complaintsHandlingCategoryHeight,
-            child: _Card(
-              padding: AppSpacing.complaintsHandlingCategoryPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    _iconForCategory(category.icon),
-                    color: _complaintsPrimary,
-                    size: AppSpacing.complaintCaseSmallIcon,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const gap = AppSpacing.x2;
+        final columns = constraints.maxWidth >= 360 ? 2 : 1;
+        final tileWidth = columns == 1
+            ? constraints.maxWidth
+            : (constraints.maxWidth - gap) / 2;
+
+        return Wrap(
+          spacing: gap,
+          runSpacing: gap,
+          children: [
+            for (final category in categories)
+              SizedBox(
+                width: tileWidth,
+                child: _Card(
+                  child: Row(
+                    children: [
+                      Icon(
+                        _iconForCategory(category.icon),
+                        color: _complaintsPrimary,
+                        size: AppSpacing.complaintCaseSmallIcon,
+                      ),
+                      const SizedBox(width: AppSpacing.x2),
+                      Expanded(
+                        child: Text(
+                          category.label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  const Spacer(),
-                  Text(
-                    category.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.complaintCaseLineHeightTight,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-      ],
+          ],
+        );
+      },
     );
   }
 }
@@ -83,27 +90,23 @@ class _TimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.complaintsHandlingTimelinePadding,
       child: Column(
         children: [
           for (final item in timeline) ...[
             Row(
               children: [
-                VitCard(
-                  width: AppSpacing.complaintsHandlingTimelineStepSize,
-                  height: AppSpacing.complaintsHandlingTimelineStepSize,
-                  variant: VitCardVariant.inner,
-                  alignment: Alignment.center,
+                CircleAvatar(
+                  radius: AppSpacing.x3,
+                  backgroundColor: AppColors.surface2,
                   child: Text(
                     '${item.step}',
                     style: AppTextStyles.caption.copyWith(
                       color: _complaintsPrimary,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.complaintCaseLineHeightTight,
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.complaintsHandlingGridGap),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,17 +116,13 @@ class _TimelineCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.complaintCaseLineHeightTight,
                         ),
                       ),
-                      const SizedBox(
-                        height: AppSpacing.complaintsHandlingTimelineLabelGap,
-                      ),
+                      const SizedBox(height: AppSpacing.x1),
                       Text(
                         item.time,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.complaintCaseLineHeightTight,
                         ),
                       ),
                     ],
@@ -131,10 +130,7 @@ class _TimelineCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != timeline.last)
-              const SizedBox(
-                height: AppSpacing.complaintsHandlingTimelineItemGap,
-              ),
+            if (item != timeline.last) const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -149,20 +145,18 @@ class _MyComplaintsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageContent(
+      padding: VitContentPadding.none,
+      fullBleed: true,
+      density: VitDensity.compact,
       children: [
         const VitSectionHeader(
           title: 'Your Complaints',
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
-        const SizedBox(height: AppSpacing.complaintsHandlingReviewGap),
-        for (final complaint in complaints) ...[
+        for (final complaint in complaints)
           _ComplaintCard(complaint: complaint),
-          if (complaint != complaints.last)
-            const SizedBox(height: AppSpacing.complaintsHandlingReviewGap),
-        ],
       ],
     );
   }
@@ -182,23 +176,18 @@ class _ComplaintCard extends StatelessWidget {
       onTap: () =>
           context.go(AppRoutePaths.tradeCopyComplaintTracking(complaint.id)),
       child: _Card(
-        padding: AppSpacing.complaintCaseCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            VitCard(
-              width: AppSpacing.walletAddressIconSize,
-              height: AppSpacing.walletAddressIconSize,
-              variant: VitCardVariant.ghost,
-              borderColor: status.color.withValues(alpha: .24),
-              alignment: Alignment.center,
+            SizedBox.square(
+              dimension: AppSpacing.walletAddressIconSize,
               child: Icon(
                 Icons.chat_bubble_outline_rounded,
                 color: status.color,
                 size: AppSpacing.complaintCaseTrailingIcon,
               ),
             ),
-            const SizedBox(width: AppSpacing.x4),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,7 +201,6 @@ class _ComplaintCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.complaintCaseLineHeightTight,
                         ),
                       ),
                       VitAccentPill(
@@ -221,21 +209,17 @@ class _ComplaintCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.complaintsHandlingGridGap),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     complaint.subject,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.complaintCaseLineHeightBody,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.formFieldLabelGap),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     '${complaint.category} - Submitted ${complaint.submittedDate}',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: AppSpacing.complaintCaseLineHeightTight,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),

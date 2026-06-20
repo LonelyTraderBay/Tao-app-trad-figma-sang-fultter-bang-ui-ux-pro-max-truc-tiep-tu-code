@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpMarginTrading(
     WidgetTester tester, {
@@ -80,6 +82,19 @@ void main() {
     expect(find.text('Giá tham chiếu'), findsOneWidget);
     expect(find.text('BTC/USDT'), findsOneWidget);
     expect(find.text('Rủi ro đòn bẩy 5x'), findsOneWidget);
+  });
+
+  testWidgets('SC-085 first viewport reaches the order side controls', (
+    tester,
+  ) async {
+    await pumpMarginTrading(tester);
+
+    expectActionableInFirstViewport(
+      tester,
+      MarginTradingPage.sideKey('long').asFinder(),
+      routeName: 'MarginTradingPage',
+      actionLabel: 'long side toggle',
+    );
   });
 
   testWidgets('SC-085 tabs and controls update locally', (tester) async {

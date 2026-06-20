@@ -143,6 +143,11 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.byKey(LaunchpadBridgeComparePage.confirmKey), findsOneWidget);
+    expect(
+      find.byKey(LaunchpadBridgeComparePage.confirmStateKey),
+      findsOneWidget,
+    );
+    expect(find.text('Review bridge route'), findsOneWidget);
 
     await tester.tap(
       find.descendant(

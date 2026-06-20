@@ -13,9 +13,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
 void main() {
-  Future<void> pumpFutures(WidgetTester tester) async {
+  Future<void> pumpFutures(
+    WidgetTester tester, {
+    Size viewport = const Size(440, 956),
+  }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -95,6 +98,42 @@ void main() {
     expect(find.text('Thị trường'), findsWidgets);
     expect(find.text('10x'), findsOneWidget);
     expect(find.text('Nhập ký quỹ'), findsOneWidget);
+  });
+
+  testWidgets('SC-320 uses full-width futures workspace at 360x800', (
+    tester,
+  ) async {
+    await pumpFutures(tester, viewport: const Size(360, 800));
+
+    expect(find.byType(FuturesPage), findsOneWidget);
+    expect(find.byType(VitBottomNav), findsOneWidget);
+    expect(find.byKey(FuturesPage.closeKey), findsOneWidget);
+    expect(find.byKey(FuturesPage.chartKey), findsOneWidget);
+    expect(find.byKey(FuturesPage.leverageKey), findsOneWidget);
+    expect(find.byKey(FuturesPage.marginFieldKey), findsOneWidget);
+
+    final scrollFinder = find.descendant(
+      of: find.byType(FuturesPage),
+      matching: find.byType(SingleChildScrollView),
+    );
+    expect(scrollFinder, findsOneWidget);
+
+    final scrollRect = tester.getRect(scrollFinder);
+    final closeRect = tester.getRect(find.byKey(FuturesPage.closeKey));
+    final chartRect = tester.getRect(find.byKey(FuturesPage.chartKey));
+
+    expect(scrollRect.left, closeTo(0, 0.5));
+    expect(scrollRect.right, closeTo(360, 0.5));
+    expect(scrollRect.height, greaterThan(560));
+    expect(closeRect.top, greaterThanOrEqualTo(0));
+    expect(chartRect.right, lessThanOrEqualTo(360));
+
+    await tester.ensureVisible(find.byKey(FuturesPage.submitKey));
+    await tester.pumpAndSettle();
+
+    final submitRect = tester.getRect(find.byKey(FuturesPage.submitKey));
+    expect(submitRect.bottom, lessThanOrEqualTo(800));
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('SC-057 side, percent, TP/SL, and submit are local', (

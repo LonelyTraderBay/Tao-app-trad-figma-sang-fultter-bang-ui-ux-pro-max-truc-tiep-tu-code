@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDashboard(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,25 @@ void main() {
     expect(find.text('Total Reports'), findsOneWidget);
     expect(find.text('Submission Trend (Last 7 Days)'), findsOneWidget);
     expect(find.text('ARM Provider Performance'), findsOneWidget);
+  });
+
+  testWidgets('SC-094 first viewport reaches KPI summary', (tester) async {
+    await pumpDashboard(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'RegulatoryReportsDashboardPage',
+      semanticLabel: 'SC-094 RegulatoryReportsDashboardPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(RegulatoryReportsDashboardPage.kpiGridKey),
+      minVisibleHeight: 24,
+      targetLabel: 'regulatory report KPI grid',
+      reason:
+          'Regulatory reports dashboard must expose report KPI content above '
+          'bottom navigation after the compliance alert.',
+    );
   });
 
   testWidgets('SC-094 switches range and local tabs', (tester) async {

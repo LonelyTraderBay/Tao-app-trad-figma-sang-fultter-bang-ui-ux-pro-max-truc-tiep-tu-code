@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpNews(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -76,6 +78,22 @@ void main() {
     expect(find.text('GHIM (2)'), findsOneWidget);
     expect(find.text('Phí giao dịch 0% cho BTC/USDT'), findsOneWidget);
     expect(find.text('Ra mắt tính năng P2P Trading'), findsOneWidget);
+  });
+
+  testWidgets('SC-047 first viewport reaches pinned news card', (tester) async {
+    await pumpNews(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-047 NewsPage',
+      semanticLabel: 'SC-047 NewsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(NewsPage.articleCardKey('news001')),
+      targetLabel: 'the first pinned news card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-047 filters by article type', (tester) async {

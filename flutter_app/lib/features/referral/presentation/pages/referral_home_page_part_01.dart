@@ -7,15 +7,12 @@ class _CampaignBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return VitCard(
       key: ReferralHomePage.campaignKey,
-      decoration: ShapeDecoration(
-        color: AppColors.primaryDark,
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(color: AppColors.primary40),
-          borderRadius: AppRadii.cardRadius,
-        ),
-      ),
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.primary40,
+      clip: true,
+      background: const ColoredBox(color: AppColors.primaryDark),
       child: Padding(
         padding: AppSpacing.referralCardPadding,
         child: Column(
@@ -42,7 +39,7 @@ class _CampaignBanner extends StatelessWidget {
                             campaign.title,
                             style: AppTextStyles.baseMedium.copyWith(
                               color: AppColors.text1,
-                              height: AppSpacing.referralLineHeightShort,
+                              height: _refLineTight,
                             ),
                           ),
                           _TinyPill(
@@ -83,21 +80,17 @@ class _CampaignBanner extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppSpacing.x3),
-            DecoratedBox(
-              decoration: ShapeDecoration(
-                color: AppColors.primary12,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(color: AppColors.primary30),
-                  borderRadius: AppRadii.smRadius,
-                ),
-              ),
-              child: Padding(
-                padding: AppSpacing.referralCompactPillPadding,
-                child: _InlineIconText(
-                  icon: Icons.emoji_events_rounded,
-                  text: campaign.extraReward,
-                  color: AppColors.portfolioTextDim,
-                ),
+            VitCard(
+              variant: VitCardVariant.ghost,
+              radius: VitCardRadius.sm,
+              borderColor: AppColors.primary30,
+              clip: true,
+              background: const ColoredBox(color: AppColors.primary12),
+              padding: AppSpacing.referralCompactPillPadding,
+              child: _InlineIconText(
+                icon: Icons.emoji_events_rounded,
+                text: campaign.extraReward,
+                color: AppColors.portfolioTextDim,
               ),
             ),
           ],
@@ -210,7 +203,7 @@ class _ReferralHero extends StatelessWidget {
                 icon: Icons.military_tech_rounded,
                 color: AppColors.primarySoft,
                 background: AppColors.primary20,
-                size: AppSpacing.referralHeroIcon,
+                size: _heroBubble,
               ),
               const SizedBox(width: AppSpacing.x4),
               Expanded(
@@ -336,8 +329,8 @@ class _ReferralHero extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  width: AppSpacing.referralSplitDividerWidth,
-                  height: AppSpacing.referralSplitDividerHeight,
+                  width: AppSpacing.hairlineStroke,
+                  height: _dividerExtent,
                   child: ColoredBox(color: AppColors.buy20),
                 ),
                 const Expanded(
@@ -356,7 +349,7 @@ class _ReferralHero extends StatelessWidget {
                 child: VitCtaButton(
                   key: ReferralHomePage.copyLinkKey,
                   onPressed: onCopyLink,
-                  height: AppSpacing.referralCtaHeight,
+                  height: _ctaExtent,
                   leading: Icon(
                     copied ? Icons.check_circle_rounded : Icons.copy_rounded,
                   ),
@@ -368,9 +361,9 @@ class _ReferralHero extends StatelessWidget {
                 key: ReferralHomePage.shareKey,
                 onPressed: onShare,
                 fullWidth: false,
-                height: AppSpacing.referralCtaHeight,
+                height: _ctaExtent,
                 variant: VitCtaButtonVariant.secondary,
-                padding: AppSpacing.referralFilterChipPadding,
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
                 child: const Icon(Icons.share_rounded),
               ),
             ],
@@ -427,15 +420,21 @@ class _MilestoneSection extends StatelessWidget {
     }
     final remaining = next == null ? 0 : (next.friends - stats.totalFriends);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Mốc thành tích',
+      accentColor: AppColors.warn,
+      density: VitDensity.compact,
       children: [
-        _SectionTitle(
-          title: 'Mốc thành tích',
-          trailing: next == null ? null : 'Còn ${remaining.clamp(0, 999)} bạn',
-          color: AppColors.warn,
-        ),
-        const SizedBox(height: AppSpacing.x3),
+        if (next != null)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: VitAccentPill(
+              label: 'Còn ${remaining.clamp(0, 999)} bạn',
+              accentColor: AppColors.warn,
+              size: VitStatusPillSize.sm,
+              semanticStatus: VitStatusPillStatus.warning,
+            ),
+          ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           clipBehavior: Clip.none,
