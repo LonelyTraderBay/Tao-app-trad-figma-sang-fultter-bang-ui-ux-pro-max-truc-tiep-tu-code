@@ -90,7 +90,7 @@ class _BestExecutionReportsPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: BestExecutionReportsPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(
+                      padding: EdgeInsetsDirectional.fromSTEB(
                         AppSpacing.contentPad,
                         AppSpacing.tradeBotCardGap,
                         AppSpacing.contentPad,

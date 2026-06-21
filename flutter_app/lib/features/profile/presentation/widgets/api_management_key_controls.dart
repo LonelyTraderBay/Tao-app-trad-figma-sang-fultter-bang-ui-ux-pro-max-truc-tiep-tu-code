@@ -67,7 +67,7 @@ class _SecretRow extends StatelessWidget {
             : BorderSide.none,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
+        padding: const EdgeInsetsDirectional.symmetric(
           horizontal: AppSpacing.x3,
           vertical: AppSpacing.x2,
         ),
@@ -174,7 +174,7 @@ class _SmallBadge extends StatelessWidget {
         side: BorderSide(color: color.withValues(alpha: .24)),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
+        padding: const EdgeInsetsDirectional.symmetric(
           horizontal: AppSpacing.x2,
           vertical: AppSpacing.x1,
         ),

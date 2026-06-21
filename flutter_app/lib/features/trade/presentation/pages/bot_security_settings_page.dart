@@ -91,7 +91,7 @@ class _BotSecuritySettingsPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: BotSecuritySettingsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.tradeBotCardGap,
                     AppSpacing.contentPad,

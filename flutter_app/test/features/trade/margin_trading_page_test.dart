@@ -81,6 +81,9 @@ void main() {
     expect(find.text('Tổng vốn ký quỹ'), findsOneWidget);
     expect(find.text('Giá tham chiếu'), findsOneWidget);
     expect(find.text('BTC/USDT'), findsOneWidget);
+    expect(find.text('Margin order preview'), findsOneWidget);
+    expect(find.text('Available margin'), findsOneWidget);
+    expect(find.text('Risk check'), findsOneWidget);
     expect(find.text('Rủi ro đòn bẩy 5x'), findsOneWidget);
   });
 

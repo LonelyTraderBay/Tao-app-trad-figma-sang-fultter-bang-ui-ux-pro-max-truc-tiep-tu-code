@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpMovers(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -83,6 +85,22 @@ void main() {
     expect(find.byKey(const Key('sc010_mover_zro')), findsOneWidget);
     expect(find.text('ZRO'), findsWidgets);
     expect(find.text('LayerZero'), findsOneWidget);
+  });
+
+  testWidgets('SC-010 first viewport reaches first mover row', (tester) async {
+    await pumpMovers(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-010 MarketMoversPage',
+      semanticLabel: 'SC-010 MarketMoversPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(const Key('sc010_mover_zro')),
+      targetLabel: 'the first market mover row',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-010 supports tab, timeframe, category, and sort controls', (

@@ -9,7 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -25,6 +25,11 @@ part '../widgets/arena_studio_steps.dart';
 part '../widgets/arena_studio_footer.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
+const _studioDescriptionLineRatio = AppSpacing.arenaStudioDescriptionLineHeight;
+const _studioFeeBodyLineRatio = AppSpacing.arenaStudioFeeBodyLineHeight;
+const _studioStepLabelLineRatio = AppSpacing.arenaStudioStepLabelLineHeight;
+const _studioStepperLineExtent = AppSpacing.arenaStudioStepperLineHeight;
+const _studioTemplateLineRatio = AppSpacing.arenaStudioTemplateLineHeight;
 
 class ArenaStudioPage extends ConsumerStatefulWidget {
   const ArenaStudioPage({super.key, this.shellRenderMode});
@@ -35,6 +40,7 @@ class ArenaStudioPage extends ConsumerStatefulWidget {
   static const exportKey = Key('sc185_export');
   static const importKey = Key('sc185_import');
   static const backStepKey = Key('sc185_back_step');
+  static const smartRuleBuilderKey = Key('sc185_smart_rule_builder');
 
   static Key templateKey(String id) => Key('sc185_template_$id');
 
@@ -55,11 +61,12 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
         .watch(arenaReadModelControllerProvider)
         .getArenaStudio();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,11 +90,11 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaStudioPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      gap: VitContentGap.tight,
                       children: [
                         _StudioStepper(steps: snapshot.steps, step: _step),
                         _PlatformFeeBanner(
@@ -98,6 +105,8 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
                           snapshot: snapshot,
                           selectedTemplateId: _templateId,
                           onTemplateSelected: _selectTemplate,
+                          onOpenSmartRules: () =>
+                              context.go(AppRoutePaths.arenaStudioSmartRules),
                         ),
                         _CommunityRulesFooter(
                           trustSignals: snapshot.trustSignals,

@@ -298,11 +298,15 @@ class _ResultRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+        Expanded(
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          ),
         ),
-        const Spacer(),
+        const SizedBox(width: AppSpacing.x3),
         Flexible(
           child: Text(
             value,

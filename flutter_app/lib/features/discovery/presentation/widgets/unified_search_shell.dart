@@ -46,7 +46,7 @@ class _NoQueryState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
-      customGap: AppSpacing.x5,
+      gap: VitContentGap.tight,
       children: [
         VitPageSection(
           label: 'Trending',

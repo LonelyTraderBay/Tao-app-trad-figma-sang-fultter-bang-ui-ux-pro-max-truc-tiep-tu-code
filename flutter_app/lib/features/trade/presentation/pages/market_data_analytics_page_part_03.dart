@@ -364,12 +364,10 @@ class _ImplicationRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: AppSpacing.x1,
-            constraints: const BoxConstraints(
-              minHeight: AppSpacing.buttonCompact,
-            ),
-            color: color,
+            height: AppSpacing.buttonCompact,
+            child: ColoredBox(color: color),
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

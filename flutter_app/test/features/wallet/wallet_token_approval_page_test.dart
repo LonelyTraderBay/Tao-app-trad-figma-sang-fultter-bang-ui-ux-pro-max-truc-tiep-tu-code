@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTokenApprovals(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -129,5 +131,29 @@ void main() {
     expect(find.text('Security Settings'), findsOneWidget);
     expect(find.text('Auto-revoke Unused Approvals'), findsOneWidget);
     expect(find.text('Scan for Risky Approvals'), findsOneWidget);
+  });
+
+  testWidgets('SC-150 first viewport reaches approval controls', (
+    tester,
+  ) async {
+    await pumpTokenApprovals(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-150 WalletTokenApprovalPage',
+      semanticLabel: 'SC-150 WalletTokenApprovalPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(WalletTokenApprovalPage.tabKey('Ho\u1EA1t \u0111\u1ED9ng')),
+      routeName: 'SC-150 WalletTokenApprovalPage',
+      actionLabel: 'active approvals tab',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(WalletTokenApprovalPage.approvalKey('a3')),
+      routeName: 'SC-150 WalletTokenApprovalPage',
+      actionLabel: 'critical approval row',
+    );
   });
 }

@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCompare(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -108,6 +110,28 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(ComparisonToolPage.tokenKey('ethusdt')), findsNothing);
+  });
+
+  testWidgets('SC-016 first viewport reaches compare actions', (tester) async {
+    await pumpCompare(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-016 ComparisonToolPage',
+      semanticLabel: 'SC-016 ComparisonToolPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ComparisonToolPage.addTokenKey),
+      routeName: 'SC-016 ComparisonToolPage',
+      actionLabel: 'add token action',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ComparisonToolPage.tokenKey('btcusdt')),
+      routeName: 'SC-016 ComparisonToolPage',
+      actionLabel: 'selected token chip',
+    );
   });
 
   testWidgets('SC-016 picker search filters available tokens', (tester) async {

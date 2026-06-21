@@ -76,7 +76,7 @@ class _SecurityNotice extends StatelessWidget {
                 'Multi-sig yeu cau ${safe.threshold}/${safe.owners.length} chu ky truoc khi thuc hien. Moi giao dich co thoi han 7 ngay. Dam bao tat ca signers xac nhan truoc khi het han.',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.launchpadLineHeightLong,
+                  height: AppSpacing.launchpadLineHeightShort,
                 ),
               ),
             ),
@@ -151,7 +151,7 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                     const Center(
                       child: SizedBox(
                         width: AppSpacing.launchpadBox40,
-                        height: AppSpacing.launchpadSheetHandleHeight,
+                        height: AppSpacing.x1,
                         child: DecoratedBox(
                           decoration: ShapeDecoration(
                             color: AppColors.borderSolid,

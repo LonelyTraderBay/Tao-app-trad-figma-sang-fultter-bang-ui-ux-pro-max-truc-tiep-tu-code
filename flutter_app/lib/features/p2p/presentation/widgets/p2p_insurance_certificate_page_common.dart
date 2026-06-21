@@ -92,7 +92,11 @@ class _CertificateInfoRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.text3, size: AppSpacing.p2pDocumentRowIcon),
+          Icon(
+            icon,
+            color: AppColors.text3,
+            size: AppSpacing.p2pDocumentRowIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(

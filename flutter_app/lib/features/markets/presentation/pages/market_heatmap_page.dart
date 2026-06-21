@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -45,13 +44,11 @@ class _MarketHeatmapPageState extends ConsumerState<MarketHeatmapPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(marketControllerProvider).getMarketHeatmap();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 50 : 20);
+    final scrollEndClearance =
+        (mode.usesVisualQaFrame
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
+        MediaQuery.paddingOf(context).bottom;
     final visibleCoins = _visibleCoins(snapshot);
     final selectedCoin = marketHeatmapFindCoin(snapshot.coins, _selectedCoinId);
     final totalMarketCap = visibleCoins.fold<double>(
@@ -85,10 +82,10 @@ class _MarketHeatmapPageState extends ConsumerState<MarketHeatmapPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketHeatmapPage.contentKey,
-                    padding: AppSpacing.marketScrollPadding(bottomInset),
+                    padding: AppSpacing.marketScrollPadding(scrollEndClearance),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.marketHeatmapSectionGap,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         MarketHeatmapSummaryStrip(
                           totalMarketCap: totalMarketCap,

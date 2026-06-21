@@ -50,14 +50,15 @@ const double _stakingWithdrawalFeeLineHeight = 1.2;
 const double _stakingWithdrawalNoticeLineHeight = 1.3;
 const double _stakingWithdrawalBulletLineHeight = 1.3;
 const double _stakingWithdrawalBadgeLineHeight = 1.15;
-const EdgeInsets _stakingWithdrawalCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _stakingWithdrawalBulletPadding = EdgeInsets.only(
-  top: AppSpacing.x2,
-);
-const EdgeInsets _stakingWithdrawalBadgePadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x1,
-);
+const EdgeInsetsDirectional _stakingWithdrawalCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _stakingWithdrawalBulletPadding =
+    EdgeInsetsDirectional.only(top: AppSpacing.x2);
+const EdgeInsetsDirectional _stakingWithdrawalBadgePadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x2,
+      vertical: AppSpacing.x1,
+    );
 
 class StakingWithdrawalPolicyPage extends ConsumerStatefulWidget {
   const StakingWithdrawalPolicyPage({super.key, this.shellRenderMode});

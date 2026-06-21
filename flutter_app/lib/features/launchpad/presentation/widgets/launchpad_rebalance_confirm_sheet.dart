@@ -19,7 +19,7 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
     required this.suggestions,
     required this.totalGas,
     required this.onClose,
-    this.bottomInset = 0,
+    this.bottomReserve = 0,
   });
 
   final Key sheetKey;
@@ -28,7 +28,7 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
   final List<RebalanceSuggestion> suggestions;
   final double totalGas;
   final VoidCallback onClose;
-  final double bottomInset;
+  final double bottomReserve;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
               ),
               child: Padding(
                 padding: AppSpacing.launchpadSheetPadding(
-                  AppSpacing.x6 + bottomInset,
+                  AppSpacing.x4 + bottomReserve,
                 ).copyWith(top: AppSpacing.x3),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -61,7 +61,7 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                     Center(
                       child: SizedBox(
                         width: AppSpacing.launchpadBox40,
-                        height: AppSpacing.launchpadSheetHandleHeight,
+                        height: AppSpacing.x1,
                         child: DecoratedBox(
                           decoration: const ShapeDecoration(
                             color: AppColors.borderSolid,

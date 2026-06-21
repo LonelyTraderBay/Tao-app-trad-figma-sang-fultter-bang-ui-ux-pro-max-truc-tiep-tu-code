@@ -62,7 +62,7 @@ class _EnterpriseStatesPageState extends ConsumerState<EnterpriseStatesPage> {
           behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
           child: SingleChildScrollView(
             key: EnterpriseStatesPage.contentKey,
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             padding: AppSpacing.enterpriseStatesScrollPadding(bottomInset),
             child: VitPageContent(
               padding: VitContentPadding.none,

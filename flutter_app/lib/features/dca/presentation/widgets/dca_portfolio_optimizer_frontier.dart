@@ -54,7 +54,7 @@ class _FrontierContent extends StatelessWidget {
           height: _dcaPortfolioFrontierChipListHeight,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             itemCount: snapshot.frontier.length,
             separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.x3),
             itemBuilder: (context, index) {

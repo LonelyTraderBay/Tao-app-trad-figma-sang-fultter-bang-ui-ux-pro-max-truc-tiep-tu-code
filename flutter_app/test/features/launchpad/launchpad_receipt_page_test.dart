@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   void configurePhoneView(WidgetTester tester) {
     tester.view.devicePixelRatio = 1;
@@ -96,6 +98,22 @@ void main() {
     expect(
       find.text('Vui lòng kiểm tra kết nối mạng và thử lại.'),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-301 first viewport reaches receipt state', (tester) async {
+    await pumpReceipt(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-301 LaunchpadReceiptPage',
+      semanticLabel: 'SC-301 LaunchpadReceiptPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(LaunchpadReceiptPage.errorKey),
+      targetLabel: 'the receipt state panel',
+      minVisibleHeight: 24,
     );
   });
 

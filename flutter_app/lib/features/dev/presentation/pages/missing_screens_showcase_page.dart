@@ -72,7 +72,7 @@ class _MissingScreensShowcasePageState
               Expanded(
                 child: SingleChildScrollView(
                   key: MissingScreensShowcasePage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.devScrollPadding(bottomInset),
                   child: VitPageContent(
                     gap: VitContentGap.defaultGap,

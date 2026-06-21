@@ -61,26 +61,22 @@ class P2PAmlScreeningPage extends ConsumerWidget {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      gap: VitContentGap.tight,
                       children: [
                         _AmlHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         _AmlSchedule(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x6),
                         Text(
                           'Chi tiết kiểm tra',
                           style: AppTextStyles.baseMedium.copyWith(
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         _AmlCheckList(checks: snapshot.checks),
-                        const SizedBox(height: AppSpacing.x5),
                         _AmlInfoNotice(snapshot: snapshot),
                       ],
                     ),
@@ -110,7 +106,7 @@ class _AmlHero extends StatelessWidget {
         side: BorderSide(color: AppColors.buy),
       ),
       child: Padding(
-        padding: AppSpacing.p2pComplianceCardPadding,
+        padding: AppSpacing.p2pComplianceCompactCardPadding,
         child: Row(
           children: [
             Material(
@@ -119,12 +115,12 @@ class _AmlHero extends StatelessWidget {
                 borderRadius: AppRadii.lgRadius,
               ),
               child: const SizedBox(
-                width: AppSpacing.p2pComplianceIconBox,
-                height: AppSpacing.p2pComplianceIconBox,
+                width: AppSpacing.buttonCompact,
+                height: AppSpacing.buttonCompact,
                 child: Icon(
                   Icons.shield_outlined,
                   color: AppColors.onAccent,
-                  size: AppSpacing.iconMd,
+                  size: AppSpacing.iconSm,
                 ),
               ),
             ),
@@ -137,7 +133,7 @@ class _AmlHero extends StatelessWidget {
                     snapshot.statusLabel,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.sectionTitle.copyWith(
+                    style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.onAccent,
                       fontWeight: AppTextStyles.bold,
                     ),
@@ -172,7 +168,7 @@ class _AmlSchedule extends StatelessWidget {
     return VitCard(
       key: P2PAmlScreeningPage.scheduleKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pComplianceCardPadding,
+      padding: AppSpacing.p2pComplianceCompactCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -266,7 +262,7 @@ class _AmlCheckRow extends StatelessWidget {
 
     return Padding(
       key: P2PAmlScreeningPage.checkKey(check.id),
-      padding: AppSpacing.p2pComplianceCardPadding,
+      padding: AppSpacing.p2pComplianceCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -276,12 +272,12 @@ class _AmlCheckRow extends StatelessWidget {
               borderRadius: AppRadii.lgRadius,
             ),
             child: SizedBox(
-              width: AppSpacing.p2pComplianceIconBox,
-              height: AppSpacing.p2pComplianceIconBox,
+              width: AppSpacing.buttonCompact,
+              height: AppSpacing.buttonCompact,
               child: Icon(
                 config.icon,
                 color: config.color,
-                size: AppSpacing.iconMd,
+                size: AppSpacing.iconSm,
               ),
             ),
           ),
@@ -297,7 +293,7 @@ class _AmlCheckRow extends StatelessWidget {
                         check.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.baseMedium.copyWith(
+                        style: AppTextStyles.caption.copyWith(
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),

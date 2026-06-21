@@ -31,24 +31,24 @@ class _HoursSection extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: AppSpacing.p2pSettingsSegmentRailPadding,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: _SegmentButton(
-                        label: '24/7',
-                        selected: mode == '247',
-                        onTap: () => onChanged('247'),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: _SegmentButton(
+                          label: '24/7',
+                          selected: mode == '247',
+                          onTap: () => onChanged('247'),
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: _SegmentButton(
-                        label: 'Tùy chỉnh',
-                        selected: mode == 'custom',
-                        onTap: () => onChanged('custom'),
+                      Expanded(
+                        child: _SegmentButton(
+                          label: 'Tùy chỉnh',
+                          selected: mode == 'custom',
+                          onTap: () => onChanged('custom'),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: AppSpacing.x3),

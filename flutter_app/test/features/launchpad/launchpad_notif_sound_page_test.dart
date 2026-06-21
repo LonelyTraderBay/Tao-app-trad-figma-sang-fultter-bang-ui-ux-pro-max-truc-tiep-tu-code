@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpNotifSound(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -83,6 +85,22 @@ void main() {
     );
     expect(find.byKey(LaunchpadNotifSoundPage.footerKey), findsOneWidget);
     expect(find.byKey(LaunchpadNotifSoundPage.saveKey), findsOneWidget);
+  });
+
+  testWidgets('SC-306 first viewport reaches sound controls', (tester) async {
+    await pumpNotifSound(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-306 LaunchpadNotifSoundPage',
+      semanticLabel: 'SC-306 LaunchpadNotifSoundPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadNotifSoundPage.quickTogglesKey),
+      routeName: 'SC-306 LaunchpadNotifSoundPage',
+      actionLabel: 'the notification quick toggles',
+    );
   });
 
   testWidgets('SC-306 expands category and previews sound state', (

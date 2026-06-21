@@ -1,5 +1,8 @@
 part of '../pages/market_movers_page.dart';
 
+const double _marketMoverRowExtent = 64;
+const double _marketMoverSparklineExtent = 28;
+
 class _MoverRow extends StatelessWidget {
   const _MoverRow({
     super.key,
@@ -26,7 +29,7 @@ class _MoverRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: SizedBox(
-        height: AppSpacing.marketMoverRowHeight,
+        height: _marketMoverRowExtent,
         child: Column(
           children: [
             Expanded(
@@ -42,7 +45,7 @@ class _MoverRow extends StatelessWidget {
                     const SizedBox(width: AppSpacing.marketMoverRowGap),
                     SizedBox(
                       width: AppSpacing.marketMoverSparklineWidth,
-                      height: AppSpacing.marketMoverSparklineHeight,
+                      height: _marketMoverSparklineExtent,
                       child: VitSparkline(
                         values: mover.sparkline,
                         color: metricColor,

@@ -72,8 +72,9 @@ class _ExecutionBars extends StatelessWidget {
       0,
       (max, execution) => execution.tokens > max ? execution.tokens : max,
     );
+    final chartHeight = AppSpacing.launchpadDcaHistoryChartHeight;
     return SizedBox(
-      height: AppSpacing.launchpadDcaHistoryChartHeight,
+      height: chartHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [

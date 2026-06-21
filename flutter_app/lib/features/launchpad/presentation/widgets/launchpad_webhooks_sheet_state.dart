@@ -42,7 +42,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                 ),
               ),
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 child: Padding(
                   padding: _launchpadWebhooksSheetPadding,
                   child: Column(

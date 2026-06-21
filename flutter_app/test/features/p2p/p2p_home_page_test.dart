@@ -13,6 +13,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_merchant_p
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_my_orders_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpHome(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -95,6 +97,36 @@ void main() {
     expect(
       find.text('Merchant mới - kiểm tra kỹ trước khi giao dịch'),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-282 first viewport reaches searchable offer preview', (
+    tester,
+  ) async {
+    await pumpHome(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-282 P2PHomePage',
+      semanticLabel: 'SC-282 P2PHomePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PHomePage.searchKey),
+      routeName: 'SC-282 P2PHomePage',
+      actionLabel: 'market search',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PHomePage.adKey('ad001')),
+      routeName: 'SC-282 P2PHomePage',
+      actionLabel: 'first offer preview',
+      minVisibleHeight: 24,
+    );
+    expect(
+      tester.getSize(find.byKey(P2PHomePage.quickHubKey)).height,
+      lessThanOrEqualTo(220),
+      reason: 'P2P quick hub should not consume the first viewport.',
     );
   });
 

@@ -44,7 +44,7 @@ class _ProfileHero extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.profileHeroTextGap),
+                    const SizedBox(height: AppSpacing.x2),
                     Text(
                       user.email,
                       maxLines: 1,
@@ -53,10 +53,10 @@ class _ProfileHero extends StatelessWidget {
                         color: AppColors.text2,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.profileHeroEmailGap),
+                    const SizedBox(height: AppSpacing.x2),
                     Wrap(
-                      spacing: AppSpacing.profileHeroPillGap,
-                      runSpacing: AppSpacing.profileHeroPillRunGap,
+                      spacing: AppSpacing.x2,
+                      runSpacing: AppSpacing.x2,
                       children: [
                         _HeroPill(label: user.vipLevel, color: _profileAmber),
                         _HeroPill(

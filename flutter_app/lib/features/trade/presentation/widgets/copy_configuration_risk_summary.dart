@@ -48,36 +48,46 @@ class _FeeSection extends StatelessWidget {
       accentColor: AppColors.warn,
       density: VitDensity.compact,
       children: [
-        VitCard(
+        VitFinancialSafetySummary(
+          title: 'Copy fee preview',
+          contractId: 'SC-072 Copy configuration',
           density: VitDensity.compact,
-          padding: AppSpacing.cardPaddingCompact,
-          child: Column(
-            children: [
-              _SummaryRow(
-                label: 'Platform fee (0.1%)',
-                value: '\$${preview.feePreview.platformFee.toStringAsFixed(2)}',
-              ),
-              _SummaryRow(
-                label: 'Trading fees ước tính',
-                value:
-                    '\$${preview.feePreview.estimatedTradingFees.toStringAsFixed(2)}',
-              ),
-              _SummaryRow(
-                label: 'Performance fee',
-                value: preview.feePreview.performanceFeeNote,
-              ),
-              const Divider(
-                color: AppColors.divider,
-                height: _configurationDividerHeight,
-              ),
-              _SummaryRow(
-                label: 'Tổng phí cố định',
-                value:
-                    '\$${preview.feePreview.totalFixedFees.toStringAsFixed(2)}',
-                valueColor: _configurationRed,
-              ),
-            ],
-          ),
+          footer:
+              'Review platform fee, trading fee estimate, performance fee, and copy risk before confirmation.',
+          items: [
+            VitFinancialSafetyItem(
+              label: 'Platform fee',
+              value: '\$${preview.feePreview.platformFee.toStringAsFixed(2)}',
+              leading: const Icon(Icons.account_balance_outlined),
+              valueColor: AppColors.text2,
+            ),
+            VitFinancialSafetyItem(
+              label: 'Estimated trading fees',
+              value:
+                  '\$${preview.feePreview.estimatedTradingFees.toStringAsFixed(2)}',
+              leading: const Icon(Icons.receipt_long_outlined),
+              valueColor: AppColors.text2,
+            ),
+            VitFinancialSafetyItem(
+              label: 'Performance fee',
+              value: preview.feePreview.performanceFeeNote,
+              leading: const Icon(Icons.percent_rounded),
+              valueColor: AppColors.text2,
+            ),
+            VitFinancialSafetyItem(
+              label: 'Fixed fees total',
+              value:
+                  '\$${preview.feePreview.totalFixedFees.toStringAsFixed(2)}',
+              leading: const Icon(Icons.payments_outlined),
+              valueColor: _configurationRed,
+            ),
+            const VitFinancialSafetyItem(
+              label: 'Risk check',
+              value: 'Confirm copier limits before submit',
+              leading: Icon(Icons.verified_user_outlined),
+              valueColor: AppColors.warn,
+            ),
+          ],
         ),
       ],
     );

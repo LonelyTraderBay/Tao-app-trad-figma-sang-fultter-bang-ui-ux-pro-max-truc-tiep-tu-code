@@ -95,7 +95,9 @@ class _PredictionsBreakingPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsBreakingPage.contentKey,
-                    padding: EdgeInsets.only(bottom: scrollEndClearance),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,

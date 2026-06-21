@@ -83,7 +83,7 @@ class _P2PMerchantProfilePageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PMerchantProfilePage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pMerchantCommerceRelaxedScrollPadding(
                       bottomInset,
                     ),

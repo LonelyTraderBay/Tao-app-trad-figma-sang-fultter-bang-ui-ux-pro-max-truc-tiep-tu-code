@@ -94,7 +94,7 @@ class _AcknowledgementRow extends StatelessWidget {
                   label,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.arenaJoinAcknowledgementLineHeight,
+                    height: _joinAcknowledgementLineRatio,
                   ),
                 ),
               ),

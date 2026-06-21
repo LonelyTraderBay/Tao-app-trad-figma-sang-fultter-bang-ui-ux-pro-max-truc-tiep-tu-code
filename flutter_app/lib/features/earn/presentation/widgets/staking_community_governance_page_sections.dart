@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingCommunityGovernancePage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent30,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +31,7 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingGovernanceInfoLineHeight,
+                    height: AppTextStyles.caption.height,
                   ),
                 ),
               ],
@@ -54,12 +54,12 @@ class _OverviewCard extends StatelessWidget {
     return VitCard(
       key: StakingCommunityGovernancePage.overviewKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(title, style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -93,7 +93,7 @@ class _StatTile extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: _toneBorder(stat.tone),
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -132,7 +132,7 @@ class _ActiveProposal extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: AppSpacing.earnCardPaddingX3,
           onTap: onTap,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -191,7 +191,7 @@ class _DecisionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -235,7 +235,7 @@ class _GovernanceSteps extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             children: [
               for (var i = 0; i < steps.length; i++) ...[
@@ -244,7 +244,7 @@ class _GovernanceSteps extends StatelessWidget {
                   const Padding(
                     padding: AppSpacing.earnVerticalPaddingX3,
                     child: Divider(
-                      height: AppSpacing.stakingGovernanceDividerHeight,
+                      height: AppSpacing.dividerHairline,
                       color: AppColors.divider,
                     ),
                   ),
@@ -272,16 +272,15 @@ class _StepRow extends StatelessWidget {
             color: AppColors.accent,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
           ),
-          child: SizedBox(
-            width: AppSpacing.x6,
-            height: AppSpacing.x6,
+          child: SizedBox.square(
+            dimension: AppSpacing.x6,
             child: Center(
               child: Text(
                 '${step.step}',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.navCenterIcon,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.stakingGovernancePillLineHeight,
+                  height: AppTextStyles.body.height,
                 ),
               ),
             ),
@@ -298,7 +297,7 @@ class _StepRow extends StatelessWidget {
                 step.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.stakingGovernanceStepLineHeight,
+                  height: AppTextStyles.caption.height,
                 ),
               ),
             ],

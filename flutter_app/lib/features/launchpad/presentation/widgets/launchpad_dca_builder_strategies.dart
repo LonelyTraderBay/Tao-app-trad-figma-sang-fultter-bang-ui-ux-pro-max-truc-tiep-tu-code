@@ -105,7 +105,7 @@ class _StrategyCard extends StatelessWidget {
           _PnlBand(strategy: strategy),
           const SizedBox(height: AppSpacing.x3),
           const Divider(
-            height: AppSpacing.launchpadDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.border,
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -172,9 +172,8 @@ class _MiniIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.launchpadBox32,
-      height: AppSpacing.launchpadBox32,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox32,
       child: DecoratedBox(
         decoration: const ShapeDecoration(
           color: AppColors.bg,

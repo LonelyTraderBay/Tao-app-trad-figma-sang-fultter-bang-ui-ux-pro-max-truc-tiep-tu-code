@@ -122,7 +122,7 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: DisputeResolutionPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(
+                      padding: EdgeInsetsDirectional.fromSTEB(
                         AppSpacing.contentPad,
                         _activeTabId == 'file' ? AppSpacing.x3 : AppSpacing.x4,
                         AppSpacing.contentPad,

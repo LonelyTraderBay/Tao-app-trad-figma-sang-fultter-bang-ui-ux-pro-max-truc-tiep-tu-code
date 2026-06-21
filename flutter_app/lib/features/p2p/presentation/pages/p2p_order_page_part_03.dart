@@ -64,7 +64,9 @@ class _InfoLine extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.p2pOrderInfoLinePadding,
+          padding: const EdgeInsetsDirectional.symmetric(
+            vertical: AppSpacing.x2,
+          ),
           child: Row(
             children: [
               Expanded(

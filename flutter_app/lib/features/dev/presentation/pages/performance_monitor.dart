@@ -52,7 +52,7 @@ class PerformanceMonitor extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: PerformanceMonitor.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.devScrollPadding(bottomInset),
                   child: VitPageContent(
                     gap: VitContentGap.defaultGap,

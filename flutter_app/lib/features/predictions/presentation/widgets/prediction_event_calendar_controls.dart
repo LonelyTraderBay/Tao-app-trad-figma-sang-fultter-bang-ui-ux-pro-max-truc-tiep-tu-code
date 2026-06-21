@@ -157,7 +157,7 @@ class _CategoryChip extends StatelessWidget {
             borderRadius: AppRadii.mdRadius,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
+            padding: const EdgeInsetsDirectional.symmetric(
               horizontal: AppSpacing.x3,
               vertical: AppSpacing.x1,
             ),

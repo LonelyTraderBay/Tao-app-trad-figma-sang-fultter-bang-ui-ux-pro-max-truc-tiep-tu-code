@@ -77,7 +77,7 @@ class _LaunchpadBridgeOrderPageState
           ),
           child: SingleChildScrollView(
             key: LaunchpadBridgeOrderPage.contentKey,
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: VitPageContent(
               padding: VitContentPadding.defaultPadding,
               customGap: AppSpacing.x4,

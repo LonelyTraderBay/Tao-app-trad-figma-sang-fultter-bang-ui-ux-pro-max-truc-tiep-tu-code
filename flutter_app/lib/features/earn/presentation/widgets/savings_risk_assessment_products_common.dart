@@ -9,7 +9,7 @@ class _StrategyMatchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           const Icon(
@@ -56,7 +56,7 @@ class _ProductResultTile extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           _AssetBadge(asset: product.asset, color: accent),
@@ -126,9 +126,8 @@ class _BulletRow extends StatelessWidget {
       children: [
         Padding(
           padding: AppSpacing.earnBulletTopMarginX3,
-          child: SizedBox(
-            width: AppSpacing.x1,
-            height: AppSpacing.x1,
+          child: SizedBox.square(
+            dimension: AppSpacing.x1,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color,
@@ -143,7 +142,7 @@ class _BulletRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.savingsConsumerCompactBodyLineHeight,
+              height: AppTextStyles.caption.height,
             ),
           ),
         ),
@@ -168,16 +167,15 @@ class _AssetBadge extends StatelessWidget {
           borderRadius: AppRadii.xlRadius,
         ),
       ),
-      child: SizedBox(
-        width: AppSpacing.x7,
-        height: AppSpacing.x7,
+      child: SizedBox.square(
+        dimension: AppSpacing.x7,
         child: Center(
           child: Text(
             asset,
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.savingsConsumerPillLineHeight,
+              height: AppTextStyles.micro.height,
             ),
           ),
         ),

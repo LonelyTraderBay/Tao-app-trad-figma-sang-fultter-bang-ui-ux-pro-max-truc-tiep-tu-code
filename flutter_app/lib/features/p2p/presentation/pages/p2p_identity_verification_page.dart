@@ -83,15 +83,14 @@ class _P2PIdentityVerificationPageState
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pKycScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.p2pKycContentGap,
+                      gap: VitContentGap.tight,
                       children: [
                         _IdentityHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
                         if (selectedDocument == null)
                           _DocumentTypePicker(
                             documents: snapshot.documentTypes,
@@ -102,7 +101,6 @@ class _P2PIdentityVerificationPageState
                           )
                         else ...[
                           _GuidelinesCard(snapshot: snapshot),
-                          const SizedBox(height: AppSpacing.x5),
                           _UploadSection(
                             selectedDocument: selectedDocument,
                             frontUploaded: _frontUploaded,
@@ -129,9 +127,7 @@ class _P2PIdentityVerificationPageState
                               setState(() => _backUploaded = false);
                             },
                           ),
-                          const SizedBox(height: AppSpacing.x5),
                           _SecurityCard(snapshot: snapshot),
-                          const SizedBox(height: AppSpacing.x5),
                           VitCtaButton(
                             key: P2PIdentityVerificationPage.submitKey,
                             onPressed: _frontUploaded && _backUploaded
@@ -144,10 +140,9 @@ class _P2PIdentityVerificationPageState
                             child: const Text('Tiếp tục'),
                           ),
                         ],
-                        const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pKycNoticePadding,
+                          padding: EdgeInsetsDirectional.all(AppSpacing.x3),
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Identity document review',

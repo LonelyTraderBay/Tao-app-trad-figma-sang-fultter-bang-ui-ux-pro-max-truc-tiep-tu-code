@@ -209,7 +209,9 @@ class WalletManagerSecurityNotice extends StatelessWidget {
       padding: AppSpacing.walletManagerSecurityPadding,
       variant: VitCardVariant.ghost,
       borderColor: walletManagerPrimary.withValues(alpha: .20),
-      background: ColoredBox(color: walletManagerPrimary.withValues(alpha: .08)),
+      background: ColoredBox(
+        color: walletManagerPrimary.withValues(alpha: .08),
+      ),
       clip: true,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

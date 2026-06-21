@@ -47,7 +47,7 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
@@ -73,17 +73,16 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PReviewsPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.p2pMerchantCommerceRelaxedScrollPadding(
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.p2pMerchantCommerceScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      gap: VitContentGap.tight,
                       children: [
                         _ReviewSummaryCard(reviews: reviews),
-                        const SizedBox(height: AppSpacing.x4),
                         VitTabBar(
                           variant: VitTabBarVariant.segment,
                           activeKey: _tab.name,
@@ -96,7 +95,6 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
                             VitTabItem(key: 'given', label: 'Đã viết'),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x5),
                         _ReviewList(
                           reviews: reviews,
                           emptyTitle: snapshot.emptyTitle,
@@ -135,7 +133,7 @@ class _ReviewSummaryCard extends StatelessWidget {
     final negativeCount = reviews.length - positiveCount;
 
     return VitCard(
-      padding: AppSpacing.p2pMerchantCommerceLargePadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -143,22 +141,19 @@ class _ReviewSummaryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width: AppSpacing.p2pMerchantCommerceReviewScoreWidth,
+                width: AppSpacing.x7 + AppSpacing.x5,
                 child: Column(
                   children: [
                     Text(
                       avgRating.toStringAsFixed(1),
-                      style: AppTextStyles.heroNumber.copyWith(
+                      style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.warn,
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),
-                    _StarStrip(
-                      rating: roundedRating,
-                      size: AppSpacing.p2pMerchantCommerceRatingIcon,
-                    ),
+                    _StarStrip(rating: roundedRating, size: 12),
                     const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${reviews.length} đánh giá',
@@ -169,7 +164,7 @@ class _ReviewSummaryCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.x5),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
                   children: [
@@ -181,19 +176,16 @@ class _ReviewSummaryCard extends StatelessWidget {
                             .length,
                         total: reviews.length,
                       ),
-                      if (star != 1) const SizedBox(height: AppSpacing.x2),
+                      if (star != 1) const SizedBox(height: AppSpacing.x1),
                     ],
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
-          const Divider(
-            color: AppColors.divider,
-            height: AppSpacing.p2pMerchantCommerceDividerHeight,
-          ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x1),
+          const Divider(color: AppColors.divider, height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Row(
             children: [
               _ToneCount(
@@ -202,7 +194,7 @@ class _ReviewSummaryCard extends StatelessWidget {
                 label: 'tích cực',
                 color: AppColors.buy,
               ),
-              const SizedBox(width: AppSpacing.x5),
+              const SizedBox(width: AppSpacing.x2),
               _ToneCount(
                 icon: Icons.thumb_down_alt_outlined,
                 count: negativeCount,
@@ -343,7 +335,7 @@ class _ReviewList extends StatelessWidget {
       children: [
         for (final review in reviews) ...[
           _ReviewCard(review: review, tab: tab),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -366,7 +358,7 @@ class _ReviewCard extends StatelessWidget {
     return VitCard(
       key: P2PReviewsPage.reviewKey(review.id),
       radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pMerchantCommerceCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -382,7 +374,7 @@ class _ReviewCard extends StatelessWidget {
                       displayUser,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.body.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
                       ),
@@ -403,31 +395,30 @@ class _ReviewCard extends StatelessWidget {
                     ? Icons.thumb_up_alt_outlined
                     : Icons.thumb_down_alt_outlined,
                 color: review.positive ? AppColors.buy : AppColors.sell,
-                size: AppSpacing.p2pMerchantCommerceSmallIcon,
+                size: AppSpacing.iconSm,
               ),
               const SizedBox(width: AppSpacing.x2),
-              _StarStrip(
-                rating: review.rating,
-                size: AppSpacing.p2pMerchantCommerceSmallIcon,
-              ),
+              _StarStrip(rating: review.rating, size: AppSpacing.iconSm),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             review.comment,
-            style: AppTextStyles.caption.copyWith(
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.p2pMerchantCommerceBodyLineHeight,
+              height: 1.25,
             ),
           ),
           if (review.reply != null) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
             IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(
-                    width: AppSpacing.p2pMerchantCommerceReplyBorderWidth,
+                    width: AppSpacing.dividerHairline,
                     child: ColoredBox(color: AppColors.warningBorder),
                   ),
                   const SizedBox(width: AppSpacing.x3),
@@ -438,19 +429,20 @@ class _ReviewCard extends StatelessWidget {
                         style: AppTextStyles.micro.copyWith(
                           color: AppModuleAccents.p2p,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.p2pMerchantCommerceBodyLineHeight,
+                          height: 1.25,
                         ),
                         children: [
                           TextSpan(
                             text: review.reply,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              height:
-                                  AppSpacing.p2pMerchantCommerceBodyLineHeight,
+                              height: 1.25,
                             ),
                           ),
                         ],
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
@@ -478,7 +470,7 @@ class _ReviewAvatar extends StatelessWidget {
     return VitAssetAvatar(
       label: letter,
       accentColor: AppColors.accent,
-      size: AppSpacing.p2pMerchantCommerceAvatarSize,
+      size: AppSpacing.x6,
       radius: AppRadii.pillRadius,
     );
   }

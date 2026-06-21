@@ -33,7 +33,7 @@ class _ClaimSheet extends StatelessWidget {
                   Align(
                     child: SizedBox(
                       width: AppSpacing.launchpadBox40,
-                      height: AppSpacing.launchpadSheetHandleHeight,
+                      height: AppSpacing.x1,
                       child: const DecoratedBox(
                         decoration: ShapeDecoration(
                           color: AppColors.borderSolid,

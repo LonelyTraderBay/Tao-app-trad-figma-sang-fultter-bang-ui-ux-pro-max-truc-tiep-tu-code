@@ -72,7 +72,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
                       'Mọi challenge đều được trích ${widget.platformFeePct}% tổng pool để duy trì hệ thống. Phần này được hiển thị công khai cho tất cả người tham gia.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.arenaStudioFeeBodyLineHeight,
+                        height: _studioFeeBodyLineRatio,
                       ),
                     ),
                   ],

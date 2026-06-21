@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_home_p
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_resolution_center_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpResolution(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -60,6 +62,25 @@ void main() {
     expect(find.byKey(ArenaResolutionCenterPage.emptyKey), findsOneWidget);
     expect(find.text('Không tìm thấy'), findsOneWidget);
     expect(find.text('Challenge không tồn tại hoặc đã bị xoá'), findsOneWidget);
+  });
+
+  testWidgets('SC-192 first viewport exposes empty resolution state', (
+    tester,
+  ) async {
+    await pumpResolution(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-192 ArenaResolutionCenterPage',
+      semanticLabel: 'SC-192 ArenaResolutionCenterPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaResolutionCenterPage.emptyKey),
+      routeName: 'SC-192 ArenaResolutionCenterPage',
+      actionLabel: 'the empty resolution state',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-192 back edge returns to Arena home safely', (tester) async {

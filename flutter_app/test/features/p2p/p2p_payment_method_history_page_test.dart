@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_payment_method_history_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PPaymentMethodHistory(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,32 @@ void main() {
     expect(find.text('16.800.000'), findsOneWidget);
     expect(find.text('25.000.000'), findsOneWidget);
     expect(find.text('Đã hủy'), findsOneWidget);
+  });
+
+  testWidgets('SC-236 first viewport reaches stats and first transaction', (
+    tester,
+  ) async {
+    await pumpP2PPaymentMethodHistory(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-236 P2PPaymentMethodHistoryPage',
+      semanticLabel: 'SC-236 P2PPaymentMethodHistoryPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.text('45'),
+      routeName: 'SC-236 P2PPaymentMethodHistoryPage',
+      actionLabel: 'the payment history totals',
+      minVisibleHeight: 18,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PPaymentMethodHistoryPage.txKey('1')),
+      routeName: 'SC-236 P2PPaymentMethodHistoryPage',
+      actionLabel: 'the first payment history transaction',
+      minVisibleHeight: 40,
+    );
   });
 
   testWidgets('SC-236 header back returns to payment methods list', (

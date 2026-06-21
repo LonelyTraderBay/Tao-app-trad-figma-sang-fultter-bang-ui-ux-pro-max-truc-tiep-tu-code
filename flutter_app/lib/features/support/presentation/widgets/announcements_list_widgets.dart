@@ -221,11 +221,11 @@ class _TypeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: AppSpacing.supportAnnouncementIconBox,
-      child: Material(
-        color: style.color.withValues(alpha: .14),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+    return Material(
+      color: style.color.withValues(alpha: .14),
+      shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
         child: Icon(
           style.icon,
           color: style.color,

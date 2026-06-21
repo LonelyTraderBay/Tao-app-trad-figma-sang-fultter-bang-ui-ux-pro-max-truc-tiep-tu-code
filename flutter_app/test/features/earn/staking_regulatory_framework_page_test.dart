@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_regulatory_framework_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpFramework(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -101,6 +103,26 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Regulator'), findsNothing);
+  });
+
+  testWidgets('SC-373 first viewport reaches first license card', (
+    tester,
+  ) async {
+    await pumpFramework(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-373 StakingRegulatoryFrameworkPage',
+      semanticLabel: 'SC-373 StakingRegulatoryFrameworkPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(
+        StakingRegulatoryFrameworkPage.licenseKey('MSB-31000198765432'),
+      ),
+      targetLabel: 'the first regulatory license card',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-373 tabs show protection and complaints content', (

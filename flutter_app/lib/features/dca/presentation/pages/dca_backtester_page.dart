@@ -64,7 +64,7 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: DCABacktesterPage.contentKey,
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 child: VitPageContent(
                   customGap: AppSpacing.x5,
                   children: [

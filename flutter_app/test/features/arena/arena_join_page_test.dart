@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_challe
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_join_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpJoinPage(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -73,6 +75,31 @@ void main() {
     expect(find.text('Xem chính sách hủy/void'), findsOneWidget);
     expect(find.text('Xác nhận tham gia · 200 pts'), findsOneWidget);
     expect(find.text('Từ chối'), findsOneWidget);
+  });
+
+  testWidgets('SC-191 first viewport exposes safety acknowledgements', (
+    tester,
+  ) async {
+    await pumpJoinPage(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-191 ArenaJoinPage',
+      semanticLabel: 'SC-191 ArenaJoinPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaJoinPage.safetyPolicyKey),
+      routeName: 'SC-191 ArenaJoinPage',
+      actionLabel: 'the safety policy link',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaJoinPage.rulesCheckboxKey),
+      routeName: 'SC-191 ArenaJoinPage',
+      actionLabel: 'the rules acknowledgement checkbox',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-191 acknowledgements enable join confirmation', (

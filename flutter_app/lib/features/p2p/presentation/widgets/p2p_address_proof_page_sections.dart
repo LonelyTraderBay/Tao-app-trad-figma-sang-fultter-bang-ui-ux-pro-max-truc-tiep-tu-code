@@ -15,36 +15,37 @@ class _AddressHero extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: AppSpacing.inputHeight,
-            height: AppSpacing.inputHeight,
-            child: Material(
-              color: AppColors.primary15,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.lgRadius,
-                side: const BorderSide(color: AppColors.primary20),
-              ),
-              child: const Icon(
+          Material(
+            color: AppColors.primary15,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.lgRadius,
+              side: const BorderSide(color: AppColors.primary20),
+            ),
+            child: const Padding(
+              padding: EdgeInsetsDirectional.all(AppSpacing.x2),
+              child: Icon(
                 Icons.location_on_outlined,
                 color: AppModuleAccents.p2p,
-                size: AppSpacing.iconMd,
+                size: AppSpacing.iconSm,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   snapshot.heroTitle,
-                  style: AppTextStyles.sectionTitle.copyWith(
+                  style: AppTextStyles.sectionTitleXs.copyWith(
                     color: AppModuleAccents.p2p,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
                 Text(
                   snapshot.heroBody,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                     height: AppSpacing.p2pAddressProofReadableLineHeight,
@@ -78,11 +79,11 @@ class _RequirementsCard extends StatelessWidget {
             title: 'Yêu cầu tài liệu',
             color: AppModuleAccents.p2p,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           for (final requirement in snapshot.requirements) ...[
             _ChecklistRow(text: requirement, color: AppColors.buy),
             if (requirement != snapshot.requirements.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.x1),
           ],
         ],
       ),
@@ -111,7 +112,7 @@ class _DocumentTypePicker extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         for (final document in documents) ...[
           VitCard(
             key: P2PAddressProofPage.documentTypeKey(document.id),
@@ -124,12 +125,11 @@ class _DocumentTypePicker extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: AppSpacing.buttonCompact,
-                      height: AppSpacing.buttonCompact,
-                      child: Material(
-                        color: AppColors.primary12,
-                        borderRadius: AppRadii.smRadius,
+                    Material(
+                      color: AppColors.primary12,
+                      borderRadius: AppRadii.smRadius,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
                         child: Icon(
                           _documentIcon(document.iconKey),
                           color: AppModuleAccents.p2p,
@@ -137,7 +137,7 @@ class _DocumentTypePicker extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.x4),
+                    const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +165,7 @@ class _DocumentTypePicker extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x2),
                 Padding(
                   padding: AppSpacing.p2pAddressProofDocumentExamplePadding,
                   child: Wrap(
@@ -192,7 +192,7 @@ class _DocumentTypePicker extends StatelessWidget {
               ],
             ),
           ),
-          if (document != documents.last) const SizedBox(height: AppSpacing.x4),
+          if (document != documents.last) const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -250,16 +250,15 @@ class _UploadSection extends StatelessWidget {
           child: uploaded
               ? Row(
                   children: [
-                    SizedBox(
-                      width: AppSpacing.inputHeight,
-                      height: AppSpacing.inputHeight,
-                      child: Material(
-                        color: AppColors.buy10,
-                        borderRadius: AppRadii.lgRadius,
-                        child: const Icon(
+                    Material(
+                      color: AppColors.buy10,
+                      borderRadius: AppRadii.lgRadius,
+                      child: const Padding(
+                        padding: EdgeInsetsDirectional.all(AppSpacing.x3),
+                        child: Icon(
                           Icons.check_circle_outline_rounded,
                           color: AppColors.buy,
-                          size: AppSpacing.iconMd,
+                          size: AppSpacing.iconSm,
                         ),
                       ),
                     ),
@@ -291,21 +290,22 @@ class _UploadSection extends StatelessWidget {
                     ),
                   ],
                 )
-              : SizedBox(
-                  height: AppSpacing.p2pAddressProofUploadDropHeight,
+              : Padding(
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    vertical: AppSpacing.x4,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        width: AppSpacing.x7,
-                        height: AppSpacing.x7,
-                        child: Material(
-                          color: AppColors.primary12,
-                          shape: const CircleBorder(),
-                          child: const Icon(
+                      Material(
+                        color: AppColors.primary12,
+                        shape: const CircleBorder(),
+                        child: const Padding(
+                          padding: EdgeInsetsDirectional.all(AppSpacing.x3),
+                          child: Icon(
                             Icons.cloud_upload_outlined,
                             color: AppModuleAccents.p2p,
-                            size: AppSpacing.iconLg,
+                            size: AppSpacing.iconMd,
                           ),
                         ),
                       ),

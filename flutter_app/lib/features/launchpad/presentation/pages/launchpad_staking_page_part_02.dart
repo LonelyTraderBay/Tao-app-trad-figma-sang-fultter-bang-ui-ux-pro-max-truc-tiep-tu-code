@@ -442,11 +442,14 @@ class _CapacityBar extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
-              'Pool capacity',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+            Expanded(
+              child: Text(
+                'Pool capacity',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+              ),
             ),
-            const Spacer(),
             Text(
               '${percentage.toStringAsFixed(1)}%',
               style: AppTextStyles.caption.copyWith(

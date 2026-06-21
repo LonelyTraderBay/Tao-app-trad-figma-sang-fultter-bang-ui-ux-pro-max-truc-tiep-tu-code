@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_page
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_proof_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2POrder(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -87,6 +89,39 @@ void main() {
     expect(find.text('Đã thanh toán'), findsOneWidget);
     expect(find.text('Hủy đơn hàng'), findsOneWidget);
     expect(find.text('HÀNH ĐỘNG NHANH'), findsOneWidget);
+  });
+
+  testWidgets('SC-216 first viewport reaches escrow and payment controls', (
+    tester,
+  ) async {
+    await pumpP2POrder(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-216 P2POrderPage',
+      semanticLabel: 'SC-216 P2POrderPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2POrderPage.escrowKey),
+      routeName: 'SC-216 P2POrderPage',
+      actionLabel: 'the escrow protection link',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.text('VT-P2P-20240223-001'),
+      routeName: 'SC-216 P2POrderPage',
+      actionLabel: 'the order summary',
+      minVisibleHeight: 12,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2POrderPage.copyAllKey),
+      routeName: 'SC-216 P2POrderPage',
+      actionLabel: 'the copy payment details action',
+      minVisibleHeight: 32,
+    );
   });
 
   testWidgets('SC-216 copy, QR, and mark-paid state interactions work', (

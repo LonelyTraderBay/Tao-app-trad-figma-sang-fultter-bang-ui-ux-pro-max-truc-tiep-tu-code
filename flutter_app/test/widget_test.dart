@@ -56,4 +56,22 @@ void main() {
       const Size(440, 956),
     );
   });
+
+  testWidgets('VitTradeApp clamps scroll physics globally', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(VitTradeApp(routerConfig: createAppRouter()));
+    await tester.pumpAndSettle();
+
+    final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
+    final scrollBehavior = materialApp.scrollBehavior;
+
+    expect(scrollBehavior, isNotNull);
+    expect(
+      scrollBehavior!.getScrollPhysics(
+        tester.element(find.byType(MaterialApp)),
+      ),
+      isA<ClampingScrollPhysics>(),
+    );
+  });
 }

@@ -39,10 +39,16 @@ const _detailProgressLineHeight = 22.0;
 const _detailInfoRowMinHeight = 44.0;
 const _detailExplorerHeight = 44.0;
 const _detailActionHeight = 44.0;
-const _detailCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 12);
-const _detailHeaderPadding = EdgeInsets.fromLTRB(12, 12, 12, 8);
-const _detailRowPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
-const _detailLinePadding = EdgeInsets.symmetric(vertical: 3);
+const _detailCardPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 12,
+);
+const _detailHeaderPadding = EdgeInsetsDirectional.fromSTEB(12, 12, 12, 8);
+const _detailRowPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 8,
+);
+const _detailLinePadding = EdgeInsetsDirectional.symmetric(vertical: 3);
 
 double _detailScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame

@@ -103,8 +103,11 @@ void main() {
     expect(find.text('Market'), findsOneWidget);
     expect(find.text('Cặp thường dùng'), findsOneWidget);
     expect(find.text('USDT/BTC'), findsWidgets);
-    expect(find.text('1 USDT = 0.000015 BTC'), findsOneWidget);
+    expect(find.text('1 USDT = 0.000015 BTC'), findsWidgets);
     expect(find.text('Slippage tolerance'), findsOneWidget);
+    expect(find.text('Quote review'), findsOneWidget);
+    expect(find.text('Estimated receive'), findsOneWidget);
+    expect(find.text('Risk check'), findsOneWidget);
     expect(find.text('Giao dịch gần đây'), findsOneWidget);
   });
 
@@ -134,7 +137,7 @@ void main() {
     await tester.tap(find.byKey(ConvertPage.favoriteKey('USDT/ETH')));
     await tester.pumpAndSettle();
     expect(find.text('USDT/ETH · 24h'), findsOneWidget);
-    expect(find.text('1 USDT = 0.000284 ETH'), findsOneWidget);
+    expect(find.text('1 USDT = 0.000284 ETH'), findsWidgets);
 
     await tester.tap(find.byKey(ConvertPage.swapKey));
     await tester.pumpAndSettle();

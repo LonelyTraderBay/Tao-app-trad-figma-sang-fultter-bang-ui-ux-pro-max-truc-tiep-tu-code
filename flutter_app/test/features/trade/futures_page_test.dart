@@ -145,9 +145,14 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(FuturesPage.pctKey(10)));
     await tester.pumpAndSettle();
+    expect(find.text('Futures order preview'), findsOneWidget);
+    expect(find.text('Liquidation estimate'), findsOneWidget);
+    expect(find.text('Risk check'), findsOneWidget);
     await tester.tap(find.byKey(FuturesPage.takeProfitKey));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(FuturesPage.stopLossKey));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(FuturesPage.submitKey));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(FuturesPage.submitKey));
     await tester.pumpAndSettle();

@@ -123,7 +123,7 @@ class _PresetSectionHeader extends StatelessWidget {
           subtitle,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaPresetCaptionLineHeight,
+            height: _presetCaptionLineRatio,
           ),
         ),
       ],
@@ -208,7 +208,7 @@ class _ExampleRow extends StatelessWidget {
                 text,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  height: AppSpacing.arenaPresetBodyLineHeight,
+                  height: _presetBodyLineRatio,
                 ),
               ),
             ),

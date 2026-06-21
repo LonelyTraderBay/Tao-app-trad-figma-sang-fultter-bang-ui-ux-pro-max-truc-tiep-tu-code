@@ -83,7 +83,7 @@ class _RouteCard extends StatelessWidget {
             ),
           ),
           const Divider(
-            height: AppSpacing.launchpadDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
           InkWell(
@@ -473,7 +473,7 @@ class _ExpandedRouteDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Divider(
-            height: AppSpacing.launchpadDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
           Padding(

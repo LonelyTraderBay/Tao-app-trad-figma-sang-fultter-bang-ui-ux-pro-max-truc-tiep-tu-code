@@ -213,7 +213,7 @@ class _TrustHeader extends StatelessWidget {
       children: [
         const SizedBox(
           width: AppSpacing.arenaCreatorSectionMarkerWidth,
-          height: AppSpacing.arenaCreatorSectionMarkerHeight,
+          height: _creatorSectionMarkerExtent,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: AppColors.buy,

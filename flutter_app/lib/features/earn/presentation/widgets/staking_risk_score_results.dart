@@ -18,7 +18,7 @@ class _RiskScoreCard extends StatelessWidget {
     return VitCard(
       key: StakingRiskScoreCalculatorPage.scoreKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         children: [
           Text(
@@ -27,8 +27,8 @@ class _RiskScoreCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           SizedBox(
-            width: AppSpacing.buttonHero + AppSpacing.x6 + AppSpacing.x3,
-            height: AppSpacing.buttonHero + AppSpacing.x6 + AppSpacing.x3,
+            width: AppSpacing.x7 * 2,
+            height: AppSpacing.x7 * 2,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: 0.12),
@@ -61,7 +61,7 @@ class _RiskScoreCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           DecoratedBox(
             decoration: ShapeDecoration(
               color: color.withValues(alpha: 0.16),
@@ -94,7 +94,7 @@ class _RiskScoreCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           SizedBox(
             key: StakingRiskScoreCalculatorPage.radarKey,
-            height: AppSpacing.stakingRiskScoreRadarHeight,
+            height: AppSpacing.x7 * 3,
             child: _RiskRadarChart(axes: axes, color: color),
           ),
         ],
@@ -138,7 +138,7 @@ class _RecommendationCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: 0.28),
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -160,7 +160,7 @@ class _RecommendationCard extends StatelessWidget {
                   recommendation.body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingAssessmentHelpLineHeight,
+                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
               ],

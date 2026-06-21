@@ -43,15 +43,30 @@ const _dustSelectAllHeight = 40.0;
 const _dustAssetRowHeight = 58.0;
 const _dustTokenLogo = 34.0;
 const _dustButtonHeight = 46.0;
-const _dustHeroPadding = EdgeInsets.all(12);
-const _dustHeroStatPadding = EdgeInsets.symmetric(horizontal: 8, vertical: 4);
-const _dustTargetPadding = EdgeInsets.symmetric(horizontal: 10, vertical: 6);
-const _dustSelectAllPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
-const _dustAssetRowPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
-const _dustFooterPadding = EdgeInsets.fromLTRB(16, 8, 16, 8);
-const _dustSheetPadding = EdgeInsets.fromLTRB(16, 14, 16, 16);
-const _dustPreviewPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 12);
-const _dustConvertedPadding = EdgeInsets.symmetric(
+const _dustHeroPadding = EdgeInsetsDirectional.all(12);
+const _dustHeroStatPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 8,
+  vertical: 4,
+);
+const _dustTargetPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 10,
+  vertical: 6,
+);
+const _dustSelectAllPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 8,
+);
+const _dustAssetRowPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 8,
+);
+const _dustFooterTopPad = 8.0;
+const _dustSheetPadding = EdgeInsetsDirectional.fromSTEB(16, 14, 16, 16);
+const _dustPreviewPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 12,
+);
+const _dustConvertedPadding = EdgeInsetsDirectional.symmetric(
   horizontal: 12,
   vertical: 10,
 );
@@ -122,7 +137,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                     top: _dustScrollTopPad,
                     bottom: _dustGap,
                   ),
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,

@@ -9,7 +9,6 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -68,10 +67,10 @@ class _SupportPageState extends ConsumerState<SupportPage> {
         )
         .toList();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -98,12 +97,14 @@ class _SupportPageState extends ConsumerState<SupportPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: SupportPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.supportScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.supportScrollPadding(
+                      scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.x5,
+                      gap: VitContentGap.tight,
                       children: [
                         if (widget.supportContext != null)
                           Padding(

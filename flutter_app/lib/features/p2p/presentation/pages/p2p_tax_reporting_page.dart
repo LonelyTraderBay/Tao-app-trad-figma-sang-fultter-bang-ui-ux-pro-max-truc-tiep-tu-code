@@ -93,7 +93,7 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pDocumentScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,

@@ -12,6 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDepth(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -121,6 +123,22 @@ void main() {
 
     expect(find.byKey(MarketDepthPage.levelKey(15)), findsOneWidget);
     expect(find.text('Mua 54.7%'), findsOneWidget);
+  });
+
+  testWidgets('SC-019 first viewport reaches depth controls', (tester) async {
+    await pumpDepth(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-019 MarketDepthPage',
+      semanticLabel: 'SC-019 MarketDepthPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(MarketDepthPage.depthChartTabKey),
+      routeName: 'SC-019 MarketDepthPage',
+      actionLabel: 'depth chart tab',
+    );
   });
 
   testWidgets('SC-019 Order Book tab renders bid and ask rows', (tester) async {

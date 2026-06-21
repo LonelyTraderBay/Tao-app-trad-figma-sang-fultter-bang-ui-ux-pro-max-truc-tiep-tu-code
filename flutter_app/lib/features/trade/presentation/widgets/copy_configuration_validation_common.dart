@@ -88,20 +88,15 @@ class _ValidationCard extends StatelessWidget {
 }
 
 class _SummaryRow extends StatelessWidget {
-  const _SummaryRow({
-    required this.label,
-    required this.value,
-    this.valueColor = AppColors.text1,
-  });
+  const _SummaryRow({required this.label, required this.value});
 
   final String label;
   final String value;
-  final Color valueColor;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+      padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x1),
       child: Row(
         children: [
           Expanded(
@@ -114,7 +109,7 @@ class _SummaryRow extends StatelessWidget {
           Text(
             value,
             style: AppTextStyles.caption.copyWith(
-              color: valueColor,
+              color: AppColors.text1,
               fontWeight: FontWeight.w700,
             ),
           ),

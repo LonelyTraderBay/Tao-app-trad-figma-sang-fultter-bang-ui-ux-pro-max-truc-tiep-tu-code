@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_report
 import 'package:vit_trade_flutter/features/arena/presentation/pages/my_arena_reports_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpReports(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -81,6 +83,31 @@ void main() {
     expect(find.text('ToxicTrader'), findsOneWidget);
     expect(find.text('ArenaKing'), findsOneWidget);
     expect(find.text('4 báo cáo'), findsOneWidget);
+  });
+
+  testWidgets('SC-204 first viewport exposes report filters and preview', (
+    tester,
+  ) async {
+    await pumpReports(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-204 MyArenaReportsPage',
+      semanticLabel: 'SC-204 MyArenaReportsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(MyArenaReportsPage.filterKey('submitted')),
+      routeName: 'SC-204 MyArenaReportsPage',
+      actionLabel: 'the submitted reports filter',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(MyArenaReportsPage.reportKey('rpt001')),
+      routeName: 'SC-204 MyArenaReportsPage',
+      actionLabel: 'the first report row',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-204 filters reports by status', (tester) async {

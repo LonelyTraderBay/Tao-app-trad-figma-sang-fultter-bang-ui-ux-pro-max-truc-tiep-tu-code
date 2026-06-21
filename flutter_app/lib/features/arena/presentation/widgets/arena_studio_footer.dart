@@ -32,7 +32,7 @@ class _InlineStudioActions extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.arenaStudioCardPadding,
+      padding: AppSpacing.arenaPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -71,7 +71,7 @@ class _InlineStudioActions extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           _InlineStudioStateLine(
             label: stateLabel,
             active: canContinue,
@@ -79,7 +79,7 @@ class _InlineStudioActions extends StatelessWidget {
                 ? Icons.check_circle_outline_rounded
                 : Icons.info_outline_rounded,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               if (onBack != null)
@@ -96,7 +96,7 @@ class _InlineStudioActions extends StatelessWidget {
                     child: const Icon(Icons.chevron_left_rounded),
                   ),
                 ),
-              const Spacer(),
+              const Expanded(child: SizedBox.shrink()),
               SizedBox(
                 width: isLastStep
                     ? AppSpacing.arenaStudioFooterSubmitWidth

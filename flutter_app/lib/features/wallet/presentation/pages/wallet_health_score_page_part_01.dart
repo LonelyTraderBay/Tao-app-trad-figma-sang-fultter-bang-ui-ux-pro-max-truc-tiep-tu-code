@@ -39,7 +39,7 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
                   padding: AppSpacing.walletHealthScrollPadding(
                     scrollEndPadding,
                   ),
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: _buildTab(snapshot),
                 ),
               ),
@@ -126,7 +126,7 @@ class _HealthTabs extends StatelessWidget {
     return Material(
       color: _healthPanel,
       child: SizedBox(
-        height: 48,
+        height: _healthTabBarHeight,
         child: Column(
           children: [
             Expanded(
@@ -202,13 +202,13 @@ class _OverallScoreCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 88,
-            height: 88,
+            width: _healthCompactGaugeSize,
+            height: _healthCompactGaugeSize,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 CustomPaint(
-                  size: const Size.square(88),
+                  size: const Size.square(_healthCompactGaugeSize),
                   painter: _GaugePainter(
                     score: snapshot.overallScore,
                     color: scoreColor,
@@ -345,7 +345,7 @@ class _MetricCard extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: SizedBox(
-              height: 5,
+              height: _healthMetricProgressHeight,
               child: LinearProgressIndicator(
                 value: metric.score / metric.maxScore,
                 backgroundColor: _healthBackground,

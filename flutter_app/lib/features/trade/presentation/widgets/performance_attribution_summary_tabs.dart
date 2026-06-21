@@ -8,12 +8,12 @@ class _SummaryGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 2,
+      crossAxisCount: AppSpacing.tradeBotGridColumns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       mainAxisSpacing: AppSpacing.x3,
       crossAxisSpacing: AppSpacing.x3,
-      childAspectRatio: 1.65,
+      childAspectRatio: AppSpacing.tradeBotAttributionMetricAspectRatio,
       children: [
         _MetricTile(
           label: 'Total Return',

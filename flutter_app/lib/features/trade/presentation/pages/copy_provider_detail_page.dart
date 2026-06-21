@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -12,6 +13,7 @@ import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -63,9 +65,7 @@ class CopyProviderDetailPage extends ConsumerWidget {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.copyProviderDetailBottomInsetVisualExtra
-            : AppSpacing.copyProviderDetailBottomInsetNativeExtra);
+        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -85,14 +85,12 @@ class CopyProviderDetailPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: AppSpacing.copyProviderDetailScrollPadding(
-                    bottomInset,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  padding: EdgeInsetsDirectional.only(bottom: bottomInset),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.tight,
                     children: [
                       const _RiskWarning(),
-                      const SizedBox(height: AppSpacing.cardGap),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: AppSpacing.cardPaddingCompact,
@@ -104,17 +102,14 @@ class CopyProviderDetailPage extends ConsumerWidget {
                           contractId: 'copy-provider-detail-review',
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.rowPy),
                       _ProviderCard(provider: provider),
-                      const SizedBox(height: AppSpacing.rowPy),
                       _MetricGrid(provider: provider),
-                      const SizedBox(height: AppSpacing.transferSectionGap),
                       VitCtaButton(
                         key: assessmentKey,
                         onPressed: () => context.go(
                           AppRoutePaths.tradeCopyProviderAssessment(providerId),
                         ),
-                        height: AppSpacing.walletTransactionExplorerHeight,
+                        height: VitDensity.compact.controlHeight,
                         trailing: const Icon(Icons.chevron_right_rounded),
                         child: Text(
                           'ÄÃ¡nh giÃ¡ rá»§i ro',
@@ -124,7 +119,6 @@ class CopyProviderDetailPage extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.cardGap),
                       Text(
                         'Hiá»‡u suáº¥t quÃ¡ khá»© khÃ´ng Ä‘áº£m báº£o káº¿t quáº£ tÆ°Æ¡ng lai. Copy Trading cÃ³ rá»§i ro cao.',
                         textAlign: TextAlign.center,
@@ -134,7 +128,6 @@ class CopyProviderDetailPage extends ConsumerWidget {
                               AppSpacing.copyProviderDetailDisclaimerLineHeight,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.rowPy),
                       const TradeBodyReviewSection(
                         title: 'Provider detail body review',
                         message: 'Copy provider detail body reviewed',
@@ -252,7 +245,7 @@ class _ProviderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      padding: VitDensity.compact.cardPadding,
       child: Row(
         children: [
           VitAssetAvatar(

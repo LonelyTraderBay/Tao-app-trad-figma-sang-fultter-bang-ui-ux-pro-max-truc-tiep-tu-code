@@ -57,30 +57,23 @@ class P2PInsurancePolicyPage extends ConsumerWidget {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pDocumentScrollPadding(bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _PolicyHeroCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
                         _PolicyNoticeCard(text: snapshot.notice),
-                        const SizedBox(height: AppSpacing.x5),
                         _PolicySectionList(sections: snapshot.sections),
-                        const SizedBox(height: AppSpacing.x5),
                         _PrivacyNoticeCard(text: snapshot.privacyNotice),
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: 0,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'P2P insurance policy state review',
-                              message:
-                                  'Policy version, coverage notice, section terms, privacy handling, and current policy state stay visible before insurance decisions.',
-                              contractId: 'SC-241',
-                            ),
-                          ],
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'P2P insurance policy state review',
+                          message:
+                              'Policy version, coverage notice, section terms, privacy handling, and current policy state stay visible before insurance decisions.',
+                          contractId: 'SC-241',
                         ),
                       ],
                     ),
@@ -105,7 +98,7 @@ class _PolicyHeroCard extends StatelessWidget {
     return VitCard(
       key: P2PInsurancePolicyPage.heroKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pDocumentLargePadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -113,7 +106,7 @@ class _PolicyHeroCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox.square(
-                dimension: AppSpacing.p2pDocumentHeroIconBox,
+                dimension: AppSpacing.x6,
                 child: Material(
                   color: AppColors.primary12,
                   shape: RoundedRectangleBorder(
@@ -123,25 +116,29 @@ class _PolicyHeroCard extends StatelessWidget {
                   child: Icon(
                     Icons.shield_outlined,
                     color: AppModuleAccents.p2p,
-                    size: AppSpacing.iconMd,
+                    size: AppSpacing.iconSm,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       snapshot.title,
-                      style: AppTextStyles.baseMedium.copyWith(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),
                     Text(
                       snapshot.subtitle,
-                      style: AppTextStyles.caption.copyWith(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
                     ),
@@ -150,10 +147,10 @@ class _PolicyHeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Wrap(
-            spacing: AppSpacing.x4,
-            runSpacing: AppSpacing.x2,
+            spacing: AppSpacing.x3,
+            runSpacing: AppSpacing.x1,
             children: [
               _PolicyMetaChip(
                 icon: Icons.description_outlined,
@@ -212,7 +209,7 @@ class _PolicyNoticeCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary30,
-      padding: AppSpacing.p2pDocumentCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -225,9 +222,11 @@ class _PolicyNoticeCard extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.caption.copyWith(
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
                 color: AppModuleAccents.p2p,
-                height: AppSpacing.p2pDocumentPolicyLineHeight,
+                height: 1.35,
               ),
             ),
           ),
@@ -250,8 +249,7 @@ class _PolicySectionList extends StatelessWidget {
       children: [
         for (var i = 0; i < sections.length; i++) ...[
           _PolicySectionCard(section: sections[i]),
-          if (i != sections.length - 1)
-            const SizedBox(height: AppSpacing.sectionGap),
+          if (i != sections.length - 1) const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -267,21 +265,21 @@ class _PolicySectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pDocumentLargePadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             section.title,
-            style: AppTextStyles.baseMedium.copyWith(
+            style: AppTextStyles.caption.copyWith(
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           for (final item in section.content) ...[
             _PolicyBullet(text: item),
             if (item != section.content.last)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -303,19 +301,16 @@ class _PolicyBullet extends StatelessWidget {
           padding: AppSpacing.p2pDocumentBulletTopPadding,
           child: const SizedBox.square(
             dimension: AppSpacing.p2pDocumentBullet,
-            child: Material(
-              color: AppColors.text3,
-              shape: CircleBorder(),
-            ),
+            child: Material(color: AppColors.text3, shape: CircleBorder()),
           ),
         ),
-        const SizedBox(width: AppSpacing.x4),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.p2pDocumentPolicyLineHeight,
+              height: 1.35,
             ),
           ),
         ),
@@ -335,7 +330,7 @@ class _PrivacyNoticeCard extends StatelessWidget {
       key: P2PInsurancePolicyPage.privacyKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pDocumentCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

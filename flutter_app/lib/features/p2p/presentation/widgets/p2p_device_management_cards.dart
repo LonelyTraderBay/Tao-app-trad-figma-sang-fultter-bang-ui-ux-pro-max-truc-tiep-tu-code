@@ -217,7 +217,11 @@ class _InlineMeta extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: AppColors.text3, size: AppSpacing.p2pSecurityDetailsMetaIcon),
+        Icon(
+          icon,
+          color: AppColors.text3,
+          size: AppSpacing.p2pSecurityDetailsMetaIcon,
+        ),
         const SizedBox(width: AppSpacing.x1),
         Text(text, style: AppTextStyles.micro.copyWith(color: AppColors.text3)),
       ],
@@ -249,67 +253,67 @@ class _ExpandedDeviceDetails extends StatelessWidget {
         ),
         Padding(
           padding: AppSpacing.p2pSecurityDetailsCardPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: _DetailValue(label: 'IP Address', value: device.ip),
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: _DetailValue(
-                    label: 'First Seen',
-                    value: device.firstSeen,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.x3),
-            _DetailValue(label: 'Fingerprint', value: device.fingerprint),
-            const SizedBox(height: AppSpacing.x4),
-            if (device.isCurrent)
-              const _CurrentDeviceMessage()
-            else
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
               Row(
                 children: [
                   Expanded(
-                    child: device.isTrusted
-                        ? _ActionButton(
-                            key: P2PDeviceManagementPage.revokeButtonKey(
-                              device.id,
-                            ),
-                            label: 'Hủy tin cậy',
-                            icon: Icons.cancel_outlined,
-                            color: AppColors.warn,
-                            onTap: onRevoke,
-                          )
-                        : _ActionButton(
-                            key: P2PDeviceManagementPage.trustButtonKey(
-                              device.id,
-                            ),
-                            label: 'Đánh dấu tin cậy',
-                            icon: Icons.shield_outlined,
-                            color: AppColors.buy,
-                            onTap: onTrust,
-                          ),
+                    child: _DetailValue(label: 'IP Address', value: device.ip),
                   ),
-                  const SizedBox(width: AppSpacing.x2),
-                  _ActionButton(
-                    key: P2PDeviceManagementPage.removeButtonKey(device.id),
-                    label: 'Xóa',
-                    icon: Icons.delete_outline_rounded,
-                    color: AppColors.sell,
-                    compact: true,
-                    onTap: onRemove,
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: _DetailValue(
+                      label: 'First Seen',
+                      value: device.firstSeen,
+                    ),
                   ),
                 ],
               ),
-          ],
+              const SizedBox(height: AppSpacing.x3),
+              _DetailValue(label: 'Fingerprint', value: device.fingerprint),
+              const SizedBox(height: AppSpacing.x4),
+              if (device.isCurrent)
+                const _CurrentDeviceMessage()
+              else
+                Row(
+                  children: [
+                    Expanded(
+                      child: device.isTrusted
+                          ? _ActionButton(
+                              key: P2PDeviceManagementPage.revokeButtonKey(
+                                device.id,
+                              ),
+                              label: 'Hủy tin cậy',
+                              icon: Icons.cancel_outlined,
+                              color: AppColors.warn,
+                              onTap: onRevoke,
+                            )
+                          : _ActionButton(
+                              key: P2PDeviceManagementPage.trustButtonKey(
+                                device.id,
+                              ),
+                              label: 'Đánh dấu tin cậy',
+                              icon: Icons.shield_outlined,
+                              color: AppColors.buy,
+                              onTap: onTrust,
+                            ),
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    _ActionButton(
+                      key: P2PDeviceManagementPage.removeButtonKey(device.id),
+                      label: 'Xóa',
+                      icon: Icons.delete_outline_rounded,
+                      color: AppColors.sell,
+                      compact: true,
+                      onTap: onRemove,
+                    ),
+                  ],
+                ),
+            ],
+          ),
         ),
-      ),
-    ],
+      ],
     );
   }
 }

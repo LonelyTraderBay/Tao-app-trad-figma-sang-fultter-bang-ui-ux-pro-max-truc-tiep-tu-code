@@ -34,7 +34,7 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: AdvancedAnalyticsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.tradeBotCardGap,
                     AppSpacing.contentPad,

@@ -64,7 +64,7 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: Column(
                     children: [
                       VitPageContent(

@@ -188,7 +188,7 @@ class _Tabs extends StatelessWidget {
     ];
     return VitCard(
       density: VitDensity.tool,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
       child: VitTabBar(
         tabs: tabs,
         activeKey: activeId,

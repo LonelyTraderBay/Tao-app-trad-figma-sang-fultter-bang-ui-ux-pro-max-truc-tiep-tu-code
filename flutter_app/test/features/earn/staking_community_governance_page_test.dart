@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_forum_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpGovernance(
     WidgetTester tester, {
@@ -83,6 +85,24 @@ void main() {
     expect(find.text('45,000'), findsOneWidget);
     expect(find.text('Active Voters'), findsOneWidget);
     expect(find.text('89/127'), findsOneWidget);
+  });
+
+  testWidgets('SC-388 first viewport reaches governance overview', (
+    tester,
+  ) async {
+    await pumpGovernance(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-388 StakingCommunityGovernancePage',
+      semanticLabel: 'SC-388 StakingCommunityGovernancePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(StakingCommunityGovernancePage.overviewKey),
+      targetLabel: 'the governance overview',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-388 renders proposal entry and recent decisions', (

@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpEmergencyStop(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -125,5 +127,23 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(TradingBotsPage), findsOneWidget);
+  });
+
+  testWidgets('SC-121 first viewport keeps emergency action visible', (
+    tester,
+  ) async {
+    await pumpEmergencyStop(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-121 BotEmergencyStopPage',
+      semanticLabel: 'SC-121 BotEmergencyStopPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(const Key('sc121_bot_emergency_stop_warning')),
+      routeName: 'SC-121 BotEmergencyStopPage',
+      actionLabel: 'the emergency warning panel',
+    );
   });
 }

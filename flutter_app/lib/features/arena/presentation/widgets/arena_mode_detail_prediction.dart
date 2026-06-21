@@ -7,6 +7,11 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+const _modePredictionNoticeLineRatio =
+    AppSpacing.arenaModePredictionNoticeLineHeight;
+const _modePredictionTitleLineRatio =
+    AppSpacing.arenaModePredictionTitleLineHeight;
+
 class ArenaModePredictionContext extends StatelessWidget {
   const ArenaModePredictionContext({
     super.key,
@@ -71,7 +76,7 @@ class ArenaModePredictionContext extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.arenaModePredictionTitleLineHeight,
+              height: _modePredictionTitleLineRatio,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -133,7 +138,7 @@ class ArenaModePredictionContext extends StatelessWidget {
             'Thông tin chỉ mang tính tham khảo. Arena Points và Prediction Markets là 2 hệ thống hoàn toàn riêng biệt.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.arenaModePredictionNoticeLineHeight,
+              height: _modePredictionNoticeLineRatio,
             ),
           ),
         ],

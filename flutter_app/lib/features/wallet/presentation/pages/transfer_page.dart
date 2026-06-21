@@ -28,8 +28,11 @@ const _transferVisualBottomClearance = 112.0;
 const _transferScrollTopPad = 0.0;
 const _transferGap = 8.0;
 const _transferTinyGap = 4.0;
-const _transferCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 10);
-const _transferSheetPadding = EdgeInsets.fromLTRB(16, 14, 16, 16);
+const _transferCardPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 10,
+);
+const _transferSheetPadding = EdgeInsetsDirectional.fromSTEB(16, 14, 16, 16);
 
 double _transferScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame

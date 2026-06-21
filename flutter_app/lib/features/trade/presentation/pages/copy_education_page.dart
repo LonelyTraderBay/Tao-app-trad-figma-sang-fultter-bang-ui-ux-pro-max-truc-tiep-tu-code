@@ -50,13 +50,13 @@ class _CopyEducationPageState extends ConsumerState<CopyEducationPage> {
         .watch(tradeReadModelControllerProvider)
         .getCopyEducation();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
+    final chromeReserve = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
+    final scrollTailReserve =
+        chromeReserve +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 146 : 28);
+        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.x3);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -79,11 +79,11 @@ class _CopyEducationPageState extends ConsumerState<CopyEducationPage> {
                     left: AppSpacing.contentPad,
                     top: AppSpacing.x4,
                     right: AppSpacing.contentPad,
-                    bottom: bottomInset,
+                    bottom: scrollTailReserve,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.sectionGapRegular,
+                    gap: VitContentGap.tight,
                     fullBleed: true,
                     children: [
                       _IntroBanner(snapshot: snapshot),

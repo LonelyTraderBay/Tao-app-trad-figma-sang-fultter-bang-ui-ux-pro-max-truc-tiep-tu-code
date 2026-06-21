@@ -61,8 +61,8 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PMerchantApplyPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.fromSTEB(
                       AppSpacing.contentPad,
                       AppSpacing.x3,
                       AppSpacing.contentPad,

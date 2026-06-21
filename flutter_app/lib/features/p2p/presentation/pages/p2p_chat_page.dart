@@ -92,7 +92,7 @@ class _P2PChatPageState extends ConsumerState<P2PChatPage> {
                 ).copyWith(scrollbars: false),
                 child: SingleChildScrollView(
                   key: P2PChatPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.p2pChatScrollPadding,
                   child: Column(
                     children: [

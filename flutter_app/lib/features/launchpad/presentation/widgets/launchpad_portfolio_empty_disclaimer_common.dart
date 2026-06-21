@@ -61,7 +61,7 @@ class _PortfolioDisclaimer extends StatelessWidget {
             'Phân bổ thực tế phụ thuộc vào tổng số đăng ký. Token mở khóa theo lịch vesting của từng dự án.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.launchpadLineHeightReadable,
+              height: AppSpacing.launchpadLineHeightShort,
             ),
           ),
         ),

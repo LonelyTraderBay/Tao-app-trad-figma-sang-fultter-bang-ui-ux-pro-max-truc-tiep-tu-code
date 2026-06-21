@@ -139,7 +139,7 @@ class _P2PSelfieVerificationPageState
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         padding: AppSpacing.p2pSelfieScrollPadding(bottomInset),
         child: VitPageContent(
           padding: VitContentPadding.none,

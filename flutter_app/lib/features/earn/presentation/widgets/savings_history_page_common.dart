@@ -22,7 +22,7 @@ class _TransactionCard extends StatelessWidget {
         context.go(receiptRoute);
       },
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX4,
+        padding: AppSpacing.earnCardPaddingX3,
         child: Row(
           children: [
             DecoratedBox(
@@ -128,7 +128,7 @@ class _StatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.savingsHistoryBadgeLineHeight,
+            height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
           ),
         ),
       ),

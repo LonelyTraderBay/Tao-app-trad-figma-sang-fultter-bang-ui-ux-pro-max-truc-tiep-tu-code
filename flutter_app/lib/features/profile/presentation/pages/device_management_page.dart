@@ -88,7 +88,7 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: DeviceManagementPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.profileDevicesScrollPadding(
                     scrollClearance,
                   ),

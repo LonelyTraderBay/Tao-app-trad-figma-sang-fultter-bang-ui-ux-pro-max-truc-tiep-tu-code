@@ -76,7 +76,7 @@ class _InvestorCompensationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: InvestorCompensationPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.tradeBotCardGap,
                     AppSpacing.contentPad,

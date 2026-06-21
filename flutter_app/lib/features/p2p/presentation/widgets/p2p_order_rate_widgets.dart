@@ -9,29 +9,39 @@ class _MerchantSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pOrderLifecycleHeroPadding,
-      child: Column(
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           VitAssetAvatar(
             label: order.merchant,
             accentColor: AppColors.primary,
-            size: AppSpacing.p2pOrderRatingMerchantAvatarSize,
+            size: AppSpacing.inputHeight,
             radius: AppRadii.avatarRadius,
           ),
-          const SizedBox(height: AppSpacing.x3),
-          Text(
-            order.merchant,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  order.merchant,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.baseMedium.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  '${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset} - ${_formatVnd(order.totalVnd)}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            '${order.typeLabel} ${_formatAmount(order.amount)} ${order.asset} - ${_formatVnd(order.totalVnd)}',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -48,7 +58,7 @@ class _RatingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderLifecycleSuccessPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         children: [
           Text(
@@ -59,7 +69,7 @@ class _RatingCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -72,7 +82,7 @@ class _RatingCard extends StatelessWidget {
             ],
           ),
           if (rating > 0) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
             Text(
               _ratingLabel(rating),
               textAlign: TextAlign.center,
@@ -137,18 +147,22 @@ class _QuickTags extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
-        Wrap(
-          spacing: AppSpacing.x2,
-          runSpacing: AppSpacing.x2,
-          children: [
-            for (final tag in tags)
-              _TagChip(
-                tag: tag,
-                selected: selectedTags.contains(tag.label),
-                onPressed: () => onToggle(tag.label),
-              ),
-          ],
+        const SizedBox(height: AppSpacing.x1),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const ClampingScrollPhysics(),
+          child: Row(
+            children: [
+              for (final tag in tags) ...[
+                _TagChip(
+                  tag: tag,
+                  selected: selectedTags.contains(tag.label),
+                  onPressed: () => onToggle(tag.label),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+              ],
+            ],
+          ),
         ),
       ],
     );
@@ -206,7 +220,7 @@ class _ReviewBox extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.x1),
         VitInput(
           fieldKey: P2POrderRatePage.reviewKey,
           controller: controller,

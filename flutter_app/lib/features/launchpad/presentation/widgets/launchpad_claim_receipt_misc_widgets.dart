@@ -163,7 +163,7 @@ class _DetailLine extends StatelessWidget {
           ),
         ),
         const Divider(
-          height: AppSpacing.launchpadDividerHeight,
+          height: AppSpacing.dividerHairline,
           color: AppColors.divider,
         ),
       ],

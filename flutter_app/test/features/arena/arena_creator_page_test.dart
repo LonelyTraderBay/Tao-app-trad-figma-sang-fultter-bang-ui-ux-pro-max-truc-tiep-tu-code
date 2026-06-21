@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_mode_d
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_studio_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCreator(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,31 @@ void main() {
     expect(find.text('Xem mode'), findsOneWidget);
     expect(find.text('Dùng mode'), findsOneWidget);
     expect(find.text('Chính sách creator'), findsOneWidget);
+  });
+
+  testWidgets('SC-193 first viewport exposes trust and mode actions', (
+    tester,
+  ) async {
+    await pumpCreator(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-193 ArenaCreatorPage',
+      semanticLabel: 'SC-193 ArenaCreatorPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaCreatorPage.trustDetailKey),
+      routeName: 'SC-193 ArenaCreatorPage',
+      actionLabel: 'the trust detail action',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaCreatorPage.modeKey('mode001')),
+      routeName: 'SC-193 ArenaCreatorPage',
+      actionLabel: 'the first creator mode',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-193 tab state switches to about content', (tester) async {

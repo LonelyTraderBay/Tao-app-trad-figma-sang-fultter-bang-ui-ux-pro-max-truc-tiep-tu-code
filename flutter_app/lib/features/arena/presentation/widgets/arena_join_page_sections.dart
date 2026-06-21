@@ -235,7 +235,7 @@ class _RuleLine extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.arenaJoinBodyLineHeight,
+              height: _joinBodyLineRatio,
             ),
           ),
         ),
@@ -350,7 +350,7 @@ class _NoticeCard extends StatelessWidget {
               text,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaJoinNoticeLineHeight,
+                height: _joinNoticeLineRatio,
               ),
             ),
           ),

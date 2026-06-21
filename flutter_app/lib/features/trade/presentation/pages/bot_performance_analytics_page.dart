@@ -92,7 +92,9 @@ class _BotPerformanceAnalyticsPageState
                 child: SingleChildScrollView(
                   key: BotPerformanceAnalyticsPage.contentKey,
                   clipBehavior: Clip.none,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

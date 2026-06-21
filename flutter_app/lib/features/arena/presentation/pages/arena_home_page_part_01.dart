@@ -46,8 +46,10 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaHomePage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: scrollEndPadding),
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
@@ -80,16 +82,23 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                             onCreate: () => _go(AppRoutePaths.arenaStudio),
                             onExplore: _scrollToTemplates,
                           ),
-                          _TemplateSection(
-                            anchorKey: _templatesAnchorKey,
-                            templates: snapshot.templates,
-                            onTap: (_) => _go(AppRoutePaths.arenaStudio),
-                          ),
-                          _FeaturedModesSection(
-                            modes: snapshot.featuredModes,
-                            onViewAll: () =>
-                                _go(AppRoutePaths.arenaLeaderboard),
-                            onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              _TemplateSection(
+                                anchorKey: _templatesAnchorKey,
+                                templates: snapshot.templates,
+                                onTap: (_) => _go(AppRoutePaths.arenaStudio),
+                              ),
+                              const SizedBox(height: AppSpacing.x2),
+                              _FeaturedModesSection(
+                                modes: snapshot.featuredModes,
+                                onViewAll: () =>
+                                    _go(AppRoutePaths.arenaLeaderboard),
+                                onMode: (id) =>
+                                    _go(AppRoutePaths.arenaMode(id)),
+                              ),
+                            ],
                           ),
                           _LiveRoomsSection(
                             rooms: snapshot.liveRooms,
@@ -206,7 +215,7 @@ class _IntroBlock extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Row(
             children: [
               _QuickChip(
@@ -329,7 +338,7 @@ class _HeroCard extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             'Tạo sân chơi',
             style: AppTextStyles.sectionTitle.copyWith(
@@ -337,7 +346,7 @@ class _HeroCard extends StatelessWidget {
               height: _arenaHomeHeroTitleLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Row(
             children: [
               const VitStatusPill(
@@ -360,23 +369,31 @@ class _HeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
                 child: VitCtaButton(
                   key: ArenaHomePage.createChallengeKey,
                   onPressed: onCreate,
+                  density: VitDensity.compact,
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.x3,
+                  ),
                   leading: const Icon(Icons.auto_awesome_rounded),
                   child: const Text('Tạo challenge'),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: VitCtaButton(
                   key: ArenaHomePage.exploreModeKey,
                   onPressed: onExplore,
                   variant: VitCtaButtonVariant.secondary,
+                  density: VitDensity.compact,
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: AppSpacing.x3,
+                  ),
                   leading: const Icon(Icons.search_rounded),
                   child: const Text('Khám phá mode'),
                 ),
@@ -413,22 +430,27 @@ class _TemplateSection extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
         GridView.builder(
+          padding: EdgeInsetsDirectional.all(AppSpacing.zero),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: templates.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: AppSpacing.arenaHomeTemplateColumns,
-            crossAxisSpacing: AppSpacing.x3,
-            mainAxisSpacing: AppSpacing.x3,
+            crossAxisSpacing: AppSpacing.x2,
+            mainAxisSpacing: AppSpacing.x2,
             mainAxisExtent: AppSpacing.arenaHomeTemplateExtent,
           ),
           itemBuilder: (context, index) {
             final template = templates[index];
             final accent = _templateColor(template.kind);
+            final tags = template.tags.take(2).join(' · ');
             return VitCard(
               key: ArenaHomePage.templateKey(template.id),
               onTap: () => onTap(template.id),
-              density: VitDensity.compact,
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x3,
+                vertical: AppSpacing.x2,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -452,31 +474,28 @@ class _TemplateSection extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     template.description,
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
                       height: _arenaHomeTemplateDescriptionLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
-                  Wrap(
-                    spacing: AppSpacing.x3,
-                    runSpacing: AppSpacing.x1,
-                    children: [
-                      for (final tag in template.tags.take(2))
-                        Text(
-                          tag,
-                          style: AppTextStyles.micro.copyWith(
-                            color: accent,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                    ],
-                  ),
+                  if (tags.isNotEmpty) ...[
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      tags,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: accent,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             );

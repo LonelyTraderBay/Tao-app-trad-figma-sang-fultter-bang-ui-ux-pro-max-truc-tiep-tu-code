@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_insurance_
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_insurance_policy_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PInsurancePolicy(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,39 @@ void main() {
     expect(find.text('10. Sửa đổi điều khoản'), findsOneWidget);
     expect(find.byKey(P2PInsurancePolicyPage.privacyKey), findsOneWidget);
     expect(find.textContaining('support@platform.com'), findsOneWidget);
+  });
+
+  testWidgets('SC-241 first viewport reaches policy notice and sections', (
+    tester,
+  ) async {
+    await pumpP2PInsurancePolicy(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-241 P2PInsurancePolicyPage',
+      semanticLabel: 'SC-241 P2PInsurancePolicyPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PInsurancePolicyPage.heroKey),
+      routeName: 'SC-241 P2PInsurancePolicyPage',
+      actionLabel: 'the policy version summary',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PInsurancePolicyPage.noticeKey),
+      routeName: 'SC-241 P2PInsurancePolicyPage',
+      actionLabel: 'the policy coverage notice',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PInsurancePolicyPage.sectionsKey),
+      routeName: 'SC-241 P2PInsurancePolicyPage',
+      actionLabel: 'the policy section list',
+      minVisibleHeight: 32,
+    );
   });
 
   testWidgets('SC-241 back navigation returns to insurance fund', (

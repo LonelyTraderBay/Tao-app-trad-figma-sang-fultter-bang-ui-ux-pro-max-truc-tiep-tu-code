@@ -105,7 +105,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PMyAdsPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pMerchantCommerceScrollPadding(
                       bottomInset,
                     ),

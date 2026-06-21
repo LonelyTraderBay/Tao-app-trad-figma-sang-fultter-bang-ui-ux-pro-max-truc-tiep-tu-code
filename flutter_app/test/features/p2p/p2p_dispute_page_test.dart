@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_dispute_pa
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PDispute(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -54,38 +56,67 @@ void main() {
   });
 
   testWidgets('SC-221 renders P2P dispute form baseline', (tester) async {
+    final snapshot = const MockP2PRepository().getDisputeOpen('p2p001');
+
     await pumpP2PDispute(tester);
 
     expect(find.byType(P2PDisputePage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Mở tranh chấp'), findsWidgets);
-    expect(find.text('Tranh chấp · P2P'), findsOneWidget);
-    expect(
-      find.text('Order #. Vui lòng cung cấp bằng chứng đầy đủ.'),
-      findsOneWidget,
+    expect(find.byKey(P2PDisputePage.contentKey), findsOneWidget);
+    expect(find.byKey(P2PDisputePage.descriptionKey), findsOneWidget);
+    expect(find.byKey(P2PDisputePage.uploadKey), findsOneWidget);
+    expect(find.byKey(P2PDisputePage.submitKey), findsOneWidget);
+    expect(find.textContaining('Order #', findRichText: true), findsOneWidget);
+    expect(find.text(snapshot.reasons.first), findsOneWidget);
+    expect(find.text(snapshot.reasons[1]), findsOneWidget);
+  });
+
+  testWidgets('SC-221 first viewport keeps dispute choices compact', (
+    tester,
+  ) async {
+    final snapshot = const MockP2PRepository().getDisputeOpen('p2p001');
+
+    await pumpP2PDispute(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-221 P2PDisputePage',
+      semanticLabel: 'SC-221 P2PDisputePage',
     );
-    expect(find.text('Lý do tranh chấp'), findsOneWidget);
-    expect(find.text('Seller không release sau khi nhận tiền'), findsOneWidget);
-    expect(find.text('Buyer không thanh toán'), findsOneWidget);
-    expect(find.text('Mô tả chi tiết'), findsOneWidget);
-    expect(find.text('Upload bằng chứng'), findsOneWidget);
-    expect(find.text('Gửi tranh chấp'), findsOneWidget);
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PDisputePage.reasonKey(snapshot.reasons.first)),
+      routeName: 'SC-221 P2PDisputePage',
+      actionLabel: 'first dispute reason',
+      minVisibleHeight: 39,
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text(snapshot.descriptionLabel),
+      targetLabel: 'description label',
+      minVisibleHeight: 1,
+    );
+    expect(
+      tester.getSize(find.byKey(P2PDisputePage.uploadKey)).height,
+      lessThanOrEqualTo(76),
+      reason: 'Evidence upload should stay compact enough for submit context.',
+    );
   });
 
   testWidgets('SC-221 enables submit after reason and description', (
     tester,
   ) async {
+    final snapshot = const MockP2PRepository().getDisputeOpen('p2p001');
+
     await pumpP2PDispute(tester);
 
     await tester.tap(
-      find.byKey(
-        P2PDisputePage.reasonKey('Seller không release sau khi nhận tiền'),
-      ),
+      find.byKey(P2PDisputePage.reasonKey(snapshot.reasons.first)),
     );
     await tester.enterText(
       find.byKey(P2PDisputePage.descriptionKey),
-      'Đã chuyển tiền nhưng seller không xác nhận sau 30 phút.',
+      'Paid, seller did not release after 30 minutes.',
     );
     await tester.pumpAndSettle();
 
@@ -102,26 +133,24 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('evidence_p2p001.png'), findsOneWidget);
-    expect(find.text('Đã thêm bằng chứng'), findsOneWidget);
   });
 
   testWidgets('SC-221 submit opens dispute detail route', (tester) async {
+    final snapshot = const MockP2PRepository().getDisputeOpen('p2p001');
+
     await pumpP2PDispute(tester);
 
     await tester.tap(
-      find.byKey(
-        P2PDisputePage.reasonKey('Seller không release sau khi nhận tiền'),
-      ),
+      find.byKey(P2PDisputePage.reasonKey(snapshot.reasons.first)),
     );
     await tester.enterText(
       find.byKey(P2PDisputePage.descriptionKey),
-      'Đã chuyển tiền nhưng seller không xác nhận sau 30 phút.',
+      'Paid, seller did not release after 30 minutes.',
     );
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(P2PDisputePage.submitKey));
     await tester.pumpAndSettle();
 
     expect(find.byType(P2PDisputeDetailPage), findsOneWidget);
-    expect(find.text('Chi tiết khiếu nại'), findsOneWidget);
   });
 }

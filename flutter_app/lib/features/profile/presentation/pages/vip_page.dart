@@ -80,8 +80,8 @@ class _VIPPageState extends ConsumerState<VIPPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: VIPPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: scrollClearance),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(bottom: scrollClearance),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

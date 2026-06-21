@@ -164,7 +164,7 @@ class _ModerationNote extends StatelessWidget {
               'Governance Gate giúp bạn tạo room chất lượng, không cản bạn sáng tạo. Custom mode vẫn mở cho mọi lĩnh vực, nhưng room public cần rule rõ ràng để bảo vệ người tham gia.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaGovernanceNoticeLineHeight,
+                height: _governanceNoticeLineRatio,
               ),
             ),
           ),

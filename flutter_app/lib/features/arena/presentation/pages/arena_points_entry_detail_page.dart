@@ -8,7 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -20,6 +20,11 @@ import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_
 
 part '../widgets/arena_points_entry_detail_page_sections.dart';
 part '../widgets/arena_points_entry_detail_page_common.dart';
+
+const _entryBodyLineRatio = AppSpacing.arenaPointsBodyLineHeight;
+const _entryNoticeLineRatio = AppSpacing.arenaPointsNoticeLineHeight;
+const _entrySectionMarkerExtent =
+    AppSpacing.arenaPointsEntrySectionMarkerHeight;
 
 class ArenaPointsEntryDetailPage extends ConsumerStatefulWidget {
   const ArenaPointsEntryDetailPage({
@@ -53,11 +58,12 @@ class _ArenaPointsEntryDetailPageState
         .watch(arenaReadModelControllerProvider)
         .getArenaPointsEntryDetail(widget.entryId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -81,8 +87,8 @@ class _ArenaPointsEntryDetailPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaPointsEntryDetailPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: snapshot.entry == null
                         ? VitPageContent(
                             padding: VitContentPadding.none,
@@ -96,7 +102,7 @@ class _ArenaPointsEntryDetailPageState
                           )
                         : VitPageContent(
                             padding: VitContentPadding.compact,
-                            customGap: AppSpacing.x5,
+                            gap: VitContentGap.tight,
                             children: [
                               _AmountHero(entry: snapshot.entry!),
                               _EntryDetails(entry: snapshot.entry!),

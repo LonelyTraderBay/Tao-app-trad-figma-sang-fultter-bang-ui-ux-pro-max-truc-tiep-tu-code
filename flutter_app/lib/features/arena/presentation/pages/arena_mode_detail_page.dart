@@ -8,7 +8,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_actions.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_hero.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_prediction.dart';
@@ -56,11 +56,12 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
         .watch(arenaReadModelControllerProvider)
         .getArenaModeDetail(widget.modeId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -84,11 +85,11 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaModeDetailPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      gap: VitContentGap.tight,
                       children: [
                         VitCard(
                           padding: AppSpacing.zeroInsets,
@@ -104,6 +105,12 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
                             ),
                           ),
                         ),
+                        ArenaModeActions(
+                          useModeKey: ArenaModeDetailPage.useModeKey,
+                          createRoomKey: ArenaModeDetailPage.createRoomKey,
+                          onUseMode: () => _go(AppRoutePaths.arenaStudio),
+                          onCreateRoom: () => _go(AppRoutePaths.arenaStudio),
+                        ),
                         VitCard(
                           padding: AppSpacing.zeroInsets,
                           child: ArenaModeDescriptionCard(
@@ -118,12 +125,6 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
                           infoKey: ArenaModeDetailPage.infoKey,
                           metrics: snapshot.qualityMetrics,
                           onInfo: _showTrustSheet,
-                        ),
-                        ArenaModeActions(
-                          useModeKey: ArenaModeDetailPage.useModeKey,
-                          createRoomKey: ArenaModeDetailPage.createRoomKey,
-                          onUseMode: () => _go(AppRoutePaths.arenaStudio),
-                          onCreateRoom: () => _go(AppRoutePaths.arenaStudio),
                         ),
                         if (snapshot.relatedRooms.isNotEmpty)
                           ArenaModeRelatedRooms(

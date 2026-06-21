@@ -108,7 +108,7 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.profileApiCreateScrollPadding(
                     scrollClearance,
                   ),

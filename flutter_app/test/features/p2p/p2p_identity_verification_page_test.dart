@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_kyc_status
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_selfie_verification_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpIdentityVerification(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -79,6 +81,31 @@ void main() {
     expect(find.text('CMND cũ (9 số)'), findsOneWidget);
     expect(find.text('Hộ chiếu'), findsOneWidget);
     expect(find.text('Passport quốc tế'), findsOneWidget);
+  });
+
+  testWidgets('SC-249 first viewport reaches document choice safely', (
+    tester,
+  ) async {
+    await pumpIdentityVerification(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-249 P2PIdentityVerificationPage',
+      semanticLabel: 'SC-249 P2PIdentityVerificationPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PIdentityVerificationPage.documentTypeKey('cccd')),
+      routeName: 'SC-249 P2PIdentityVerificationPage',
+      actionLabel: 'first identity document type',
+      minVisibleHeight: 48,
+    );
+    expect(
+      tester.getSize(find.byKey(P2PIdentityVerificationPage.heroKey)).height,
+      lessThanOrEqualTo(112),
+      reason:
+          'Identity KYC hero should preserve safety copy without dominating.',
+    );
   });
 
   testWidgets('SC-249 supports mock upload state and face-match navigation', (

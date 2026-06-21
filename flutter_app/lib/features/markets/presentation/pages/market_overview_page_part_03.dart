@@ -43,14 +43,14 @@ class _FearGreedHistory extends StatelessWidget {
                     '7 ngày trước',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
+                      height: AppTextStyles.numericMicro.height,
                     ),
                   ),
                   Text(
                     'Hôm nay',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
+                      height: AppTextStyles.numericMicro.height,
                     ),
                   ),
                 ],
@@ -83,7 +83,7 @@ class _HistoryBar extends StatelessWidget {
             // T3.3 exception: compact chart-axis label for Fear&Greed bars.
             // Keep 8px equivalent spacing to prevent overlap on mini chart points.
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1,
+            height: AppTextStyles.chartLabelXs.height,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -199,7 +199,7 @@ class _MarketTool extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.body.copyWith(
                 fontWeight: AppTextStyles.bold,
-                height: 1.15,
+                height: AppTextStyles.numericMicro.height,
               ),
             ),
           ),
@@ -234,7 +234,7 @@ class _MiniHeader extends StatelessWidget {
             style: AppTextStyles.captionSm.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppTextStyles.badge.height,
             ),
           ),
         ),

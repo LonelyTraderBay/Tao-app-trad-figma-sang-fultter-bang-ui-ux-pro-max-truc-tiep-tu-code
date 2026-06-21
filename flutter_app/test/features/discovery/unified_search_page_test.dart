@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/features/markets/presentation/pages/pair_detai
 import 'package:vit_trade_flutter/features/predictions/presentation/pages/predictions_home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSearch(
     WidgetTester tester, {
@@ -98,6 +100,22 @@ void main() {
     expect(find.text('Prediction Markets'), findsOneWidget);
     expect(find.text('Open Arena'), findsOneWidget);
     expect(find.text('Topic Hub'), findsOneWidget);
+  });
+
+  testWidgets('SC-283 first viewport reaches search input', (tester) async {
+    await pumpSearch(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-283 UnifiedSearchPage',
+      semanticLabel: 'SC-283 UnifiedSearchPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(UnifiedSearchPage.searchKey),
+      routeName: 'SC-283 UnifiedSearchPage',
+      actionLabel: 'the unified search input',
+    );
   });
 
   testWidgets('SC-283 renders offline banner only for cached offline state', (

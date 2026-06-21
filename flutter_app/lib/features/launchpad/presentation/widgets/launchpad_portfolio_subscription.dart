@@ -277,7 +277,7 @@ class _InlineNotice extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.launchpadLineHeightBody,
+              height: AppSpacing.launchpadLineHeightShort,
             ),
           ),
         ),
@@ -360,7 +360,7 @@ class _StatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: style.color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.launchpadLineHeightShort,
+            height: AppSpacing.launchpadLineHeightTight,
           ),
         ),
       ),

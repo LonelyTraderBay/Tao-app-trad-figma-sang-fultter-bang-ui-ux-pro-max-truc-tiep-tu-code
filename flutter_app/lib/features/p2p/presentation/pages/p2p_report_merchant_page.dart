@@ -90,17 +90,19 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PReportMerchantPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.p2pRiskControlsReportScrollPadding(
-                      bottomInset,
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.only(
+                      start: AppSpacing.contentPad,
+                      top: AppSpacing.x3,
+                      end: AppSpacing.contentPad,
+                      bottom: bottomInset,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      gap: VitContentGap.tight,
                       children: [
                         _MerchantSummaryCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x2),
                         _ReportActionRow(
                           key: P2PReportMerchantPage.blockButtonKey,
                           icon: Icons.person_remove_alt_1_outlined,
@@ -114,7 +116,6 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                             context.go(snapshot.blacklistAddRoute);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x2),
                         _ReportActionRow(
                           key: P2PReportMerchantPage.profileButtonKey,
                           icon: Icons.groups_2_outlined,
@@ -128,30 +129,31 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                             context.go(snapshot.merchantProfileRoute);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
-                        Text(
-                          'Báo cáo vi phạm',
-                          style: AppTextStyles.sectionTitle.copyWith(
-                            color: AppColors.text1,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Báo cáo vi phạm',
+                              style: AppTextStyles.sectionTitleXs.copyWith(
+                                color: AppColors.text1,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.x1),
+                            Text(
+                              'Chọn lý do báo cáo. Đội ngũ VitTrade sẽ xem xét trong 24-48h.',
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                                height: 1.25,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: AppSpacing.x1),
-                        Text(
-                          'Chọn lý do báo cáo. Đội ngũ VitTrade sẽ xem xét trong 24-48h.',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text3,
-                            height: AppSpacing.p2pRiskControlsBodyLineHeight,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        for (final reason in snapshot.reasons) ...[
+                        for (final reason in snapshot.reasons)
                           _ReasonCard(
                             reason: reason,
                             selected: reason.id == _selectedReasonId,
                             onTap: () => _selectReason(reason.id),
                           ),
-                          const SizedBox(height: AppSpacing.x3),
-                        ],
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 180),
                           child: selectedReason.isEmpty
@@ -167,7 +169,6 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                                 ),
                         ),
                         _NoticeCard(text: snapshot.reviewNotice),
-                        const SizedBox(height: AppSpacing.x4),
                         VitCtaButton(
                           key: P2PReportMerchantPage.submitButtonKey,
                           variant: VitCtaButtonVariant.danger,

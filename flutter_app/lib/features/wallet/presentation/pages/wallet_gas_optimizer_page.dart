@@ -30,6 +30,7 @@ const _gasPrimary = AppColors.primary;
 const _gasGreen = AppColors.buy;
 const _gasAmber = AppColors.caution;
 const _gasRed = AppColors.sell;
+const _gasTabBarHeight = 48.0;
 
 const _tabCurrent = 'Hien tai';
 const _tabTrends = 'Xu huong';

@@ -33,15 +33,24 @@ const _bookGap = 8.0;
 const _bookTinyGap = 4.0;
 const _bookInlineGap = 8.0;
 const _bookFilterHeight = 34.0;
-const _bookStatsHeight = 52.0;
+const _bookStatsHeight = 62.0;
 const _bookCardMinHeight = 124.0;
 const _bookIconBox = 34.0;
 const _bookCopyHeight = 38.0;
 const _bookActionSize = 38.0;
 const _bookSecurityHeight = 62.0;
-const _bookCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 10);
-const _bookFilterPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 6);
-const _bookSecurityPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 10);
+const _bookCardPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 10,
+);
+const _bookFilterPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 6,
+);
+const _bookSecurityPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 10,
+);
 
 double _bookScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame

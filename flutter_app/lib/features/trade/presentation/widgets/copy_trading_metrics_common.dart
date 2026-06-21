@@ -120,7 +120,7 @@ class _Disclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
       child: Text(
         text,
         textAlign: TextAlign.center,

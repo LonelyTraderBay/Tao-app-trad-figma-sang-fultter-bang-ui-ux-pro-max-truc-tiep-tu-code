@@ -1,5 +1,8 @@
 part of 'referral_rewards_page.dart';
 
+const double _rewardChartExtent =
+    AppSpacing.x7 + AppSpacing.x6 + AppSpacing.x5 + AppSpacing.x4;
+
 class _RewardChart extends StatelessWidget {
   const _RewardChart({required this.snapshot});
 
@@ -11,7 +14,7 @@ class _RewardChart extends StatelessWidget {
       key: ReferralRewardsPage.chartKey,
       padding: AppSpacing.referralChartPadding,
       child: SizedBox(
-        height: AppSpacing.referralChartHeight,
+        height: _rewardChartExtent,
         child: CustomPaint(
           painter: _ReferralRewardChartPainter(snapshot.chartPoints),
           child: Align(
@@ -89,7 +92,7 @@ class _FilterButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: SizedBox(
-          height: AppSpacing.inputHeight - AppSpacing.x3,
+          height: VitDensity.compact.controlHeight,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: active ? AppColors.primary : AppColors.transparent,
@@ -246,7 +249,7 @@ class _RewardLedger extends StatelessWidget {
             ),
           ),
           const Divider(
-            height: AppSpacing.referralDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
           if (snapshot.records.isEmpty)
@@ -266,7 +269,7 @@ class _RewardLedger extends StatelessWidget {
               ),
               if (i < snapshot.records.length - 1)
                 const Divider(
-                  height: AppSpacing.referralDividerHeight,
+                  height: AppSpacing.dividerHairline,
                   color: AppColors.divider,
                 ),
             ],

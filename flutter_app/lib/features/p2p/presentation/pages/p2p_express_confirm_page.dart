@@ -96,30 +96,30 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PExpressConfirmPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pExpressScrollPadding(bottomInset),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _Hero(snapshot: snapshot, accent: accent),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: AppSpacing.x2),
                         _SummaryCard(snapshot: snapshot, accent: accent),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: AppSpacing.x2),
                         _MerchantCard(ad: snapshot.ad),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.x2),
                         _NoticeCard(
                           icon: Icons.lock_outline,
                           text:
                               '${_formatAmount(snapshot.cryptoAmount)} ${snapshot.asset} ${snapshot.escrowNote}',
                           color: AppColors.buy,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.x2),
                         _NoticeCard(
                           icon: Icons.warning_amber_outlined,
                           text: snapshot.warningNote,
                           color: AppColors.warn,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         _ActionRow(
                           processing: _processing,
                           isBuy: snapshot.isBuy,
@@ -128,7 +128,6 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                         ),
                         VitPageContent(
                           padding: VitContentPadding.compact,
-                          customGap: 0,
                           children: const [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
@@ -186,9 +185,8 @@ class _Hero extends StatelessWidget {
         Material(
           color: accent,
           borderRadius: AppRadii.lgRadius,
-          child: const SizedBox(
-            width: AppSpacing.ctaHeight,
-            height: AppSpacing.ctaHeight,
+          child: const SizedBox.square(
+            dimension: AppSpacing.buttonCompact,
             child: Center(
               child: Icon(
                 Icons.bolt_outlined,
@@ -198,14 +196,16 @@ class _Hero extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.x4),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Express ${snapshot.isBuy ? 'Mua' : 'Bán'}',
-                style: AppTextStyles.sectionTitle,
+                style: AppTextStyles.baseMedium.copyWith(
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
               const SizedBox(height: AppSpacing.x1),
               Text(
@@ -262,7 +262,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       borderColor: accent.withValues(alpha: .30),
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pOrderLifecycleHorizontalPadding,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
       child: Column(
         children: [
           for (var index = 0; index < rows.length; index++)
@@ -298,7 +298,9 @@ class _SummaryLine extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.p2pOrderLifecycleSummaryLinePadding,
+          padding: const EdgeInsetsDirectional.symmetric(
+            vertical: AppSpacing.x2,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -447,6 +449,8 @@ class _NoticeCard extends StatelessWidget {
             Expanded(
               child: Text(
                 text,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(color: color),
               ),
             ),
@@ -482,7 +486,7 @@ class _ActionRow extends StatelessWidget {
             child: const Text('Hủy bỏ'),
           ),
         ),
-        const SizedBox(width: AppSpacing.x4),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: VitCtaButton(
             key: P2PExpressConfirmPage.confirmKey,

@@ -146,7 +146,7 @@ class _DemoSheet extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(
+            padding: EdgeInsetsDirectional.fromSTEB(
               AppSpacing.contentPad,
               0,
               AppSpacing.contentPad,

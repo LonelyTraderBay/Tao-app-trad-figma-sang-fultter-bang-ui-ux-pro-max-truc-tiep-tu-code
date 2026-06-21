@@ -61,7 +61,7 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pRiskControlsScrollPadding(
                       bottomInset,
                     ),

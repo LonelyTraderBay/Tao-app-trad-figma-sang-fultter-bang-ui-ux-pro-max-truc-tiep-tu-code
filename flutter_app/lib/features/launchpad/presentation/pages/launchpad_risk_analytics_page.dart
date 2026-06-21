@@ -54,11 +54,11 @@ class _LaunchpadRiskAnalyticsPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(launchpadControllerProvider).getRiskAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navInset = mode.usesVisualQaFrame
+    final chromeReserve = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        navInset + MediaQuery.paddingOf(context).bottom + AppSpacing.x6;
+    final scrollTailReserve =
+        chromeReserve + MediaQuery.paddingOf(context).bottom + AppSpacing.x3;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -66,7 +66,7 @@ class _LaunchpadRiskAnalyticsPageState
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
+          bottomInset: scrollTailReserve,
           semanticLabel: 'SC-317 LaunchpadRiskAnalyticsPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
@@ -82,10 +82,10 @@ class _LaunchpadRiskAnalyticsPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: LaunchpadRiskAnalyticsPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    customGap: AppSpacing.x4,
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.tight,
                     children: [
                       if (_activeTab == _RiskAnalyticsTab.overview) ...[
                         _OverallRiskCard(project: snapshot.project),

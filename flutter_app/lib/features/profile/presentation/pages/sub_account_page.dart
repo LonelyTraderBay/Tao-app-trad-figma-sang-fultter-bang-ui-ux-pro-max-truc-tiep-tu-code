@@ -79,7 +79,7 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: SubAccountPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.profileSubAccountScrollPadding(
                     scrollClearance,
                   ),

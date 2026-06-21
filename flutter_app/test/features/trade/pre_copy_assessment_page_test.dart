@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPreCopyAssessment(
     WidgetTester tester, {
@@ -66,6 +68,22 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Đánh giá rủi ro'), findsNothing);
     expect(find.text('Provider Not Found'), findsNothing);
+  });
+
+  testWidgets('SC-071 first viewport reaches assessment start', (tester) async {
+    await pumpPreCopyAssessment(tester, providerId: 'ct001');
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-071 PreCopyAssessmentPage',
+      semanticLabel: 'SC-071 PreCopyAssessmentPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(PreCopyAssessmentPage.startKey),
+      routeName: 'SC-071 PreCopyAssessmentPage',
+      actionLabel: 'the assessment start action',
+    );
   });
 
   testWidgets('SC-071 valid provider starts the assessment flow', (

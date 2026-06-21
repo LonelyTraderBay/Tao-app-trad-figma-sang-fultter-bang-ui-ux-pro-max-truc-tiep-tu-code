@@ -26,7 +26,7 @@ class _AutoPilotHero extends StatelessWidget {
       key: SavingsAutoPilotPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX5,
+      padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -51,7 +51,7 @@ class _AutoPilotHero extends StatelessWidget {
               _StatusButton(status: status, onPressed: onToggleStatus),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -99,7 +99,7 @@ class _AutoPilotHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -247,7 +247,7 @@ class _OverviewTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _MetricGrid(metrics: snapshot.metrics),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         const _SectionTitle(label: 'Modules đang hoạt động'),
         const SizedBox(height: AppSpacing.x3),
         for (final module in snapshot.modules) ...[

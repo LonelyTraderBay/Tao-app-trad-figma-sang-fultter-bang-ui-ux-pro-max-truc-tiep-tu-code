@@ -58,7 +58,7 @@ class _NewsCard extends StatelessWidget {
                           style: AppTextStyles.body.copyWith(
                             color: AppColors.text1,
                             fontWeight: AppTextStyles.bold,
-                            height: _marketTitleLineHeight,
+                            height: AppTextStyles.body.height,
                           ),
                         ),
                         const SizedBox(height: _marketTinySpace),
@@ -72,7 +72,7 @@ class _NewsCard extends StatelessWidget {
                     onTap: onToggleSaved,
                     borderRadius: AppRadii.cardRadius,
                     child: Padding(
-                      padding: const EdgeInsets.all(AppSpacing.x1),
+                      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
                       child: Icon(
                         saved
                             ? Icons.bookmark_rounded
@@ -163,9 +163,11 @@ class _TagPill extends StatelessWidget {
       color: color.withValues(alpha: strong ? .16 : .08),
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          AppSpacing.x2,
+          AppSpacing.x1,
+          AppSpacing.x2,
+          AppSpacing.x1,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -243,7 +245,10 @@ class _MetaSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x1),
+      padding: const EdgeInsetsDirectional.only(
+        start: AppSpacing.x1,
+        end: AppSpacing.x1,
+      ),
       child: Text('•', style: style),
     );
   }
@@ -270,7 +275,7 @@ class _ExpandedNewsDetails extends StatelessWidget {
                 news.summary,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: _marketSummaryLineHeight,
+                  height: AppTextStyles.caption.height,
                 ),
               ),
               const SizedBox(height: _marketSpace),
@@ -295,9 +300,11 @@ class _ExpandedNewsDetails extends StatelessWidget {
                         onTap: () => onTokenTap(token),
                         borderRadius: AppRadii.mdRadius,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.x2,
-                            vertical: AppSpacing.x1,
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                            AppSpacing.x2,
+                            AppSpacing.x1,
+                            AppSpacing.x2,
+                            AppSpacing.x1,
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -359,9 +366,11 @@ class _NewsEmptyState extends StatelessWidget {
               onTap: onReset,
               borderRadius: AppRadii.cardRadius,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.x3,
-                  vertical: AppSpacing.x2,
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  AppSpacing.x3,
+                  AppSpacing.x2,
+                  AppSpacing.x3,
+                  AppSpacing.x2,
                 ),
                 child: Text(
                   'Xem tất cả',

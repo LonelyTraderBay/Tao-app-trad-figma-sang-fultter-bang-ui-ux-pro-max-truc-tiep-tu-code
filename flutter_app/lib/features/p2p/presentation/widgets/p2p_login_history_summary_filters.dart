@@ -58,12 +58,15 @@ class _StatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pLoginHistoryStatPadding,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x2,
+        vertical: AppSpacing.x2,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox.square(
-            dimension: AppSpacing.p2pLoginHistoryIconBox,
+            dimension: AppSpacing.buttonCompact,
             child: Material(
               type: MaterialType.transparency,
               color: color.withValues(alpha: .12),
@@ -71,7 +74,7 @@ class _StatTile extends StatelessWidget {
               child: Icon(icon, color: color, size: AppSpacing.iconMd),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             style: AppTextStyles.baseMedium.copyWith(
@@ -126,12 +129,13 @@ class _FilterTabs extends StatelessWidget {
 
 class _FilterPill extends StatelessWidget {
   const _FilterPill({
-    super.key,
+    Key? key,
     required this.label,
     required this.selected,
     required this.onTap,
-  });
+  }) : widgetKey = key;
 
+  final Key? widgetKey;
   final String label;
   final bool selected;
   final VoidCallback onTap;
@@ -139,6 +143,7 @@ class _FilterPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      key: widgetKey,
       color: selected ? AppModuleAccents.p2p : AppColors.surface2,
       borderRadius: AppRadii.xlRadius,
       child: InkWell(
@@ -175,7 +180,7 @@ class _RiskWarning extends StatelessWidget {
         side: BorderSide(color: AppColors.warningBorder),
       ),
       child: Padding(
-        padding: AppSpacing.p2pLoginHistoryNoticePadding,
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -199,9 +204,11 @@ class _RiskWarning extends StatelessWidget {
                   const SizedBox(height: AppSpacing.x1),
                   Text(
                     snapshot.warningBody,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.p2pLoginHistoryWarningLineHeight,
+                      height: 1.35,
                     ),
                   ),
                 ],

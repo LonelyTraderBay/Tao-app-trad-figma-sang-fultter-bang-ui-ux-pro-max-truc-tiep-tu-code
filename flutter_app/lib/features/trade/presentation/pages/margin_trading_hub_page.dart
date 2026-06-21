@@ -35,7 +35,10 @@ const _hubHeroIconTile = 44.0;
 const _hubIconTile = 34.0;
 const _hubLineTight = 1.2;
 const _hubLineBody = 1.24;
-const _hubComplianceGridExtent = 34.0;
+const _hubComplianceGridColumns =
+    AppSpacing.marginTradingHubComplianceGridColumns;
+const _hubComplianceGridExtent =
+    AppSpacing.marginTradingHubComplianceGridExtent;
 
 class MarginTradingHubPage extends ConsumerWidget {
   const MarginTradingHubPage({super.key, this.shellRenderMode});
@@ -76,7 +79,9 @@ class MarginTradingHubPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

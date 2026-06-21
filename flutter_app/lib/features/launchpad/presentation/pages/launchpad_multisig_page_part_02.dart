@@ -293,7 +293,7 @@ class _TxDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Divider(
-            height: AppSpacing.launchpadDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
           Padding(
@@ -421,7 +421,7 @@ class _DetailRow extends StatelessWidget {
           ),
         ),
         const Divider(
-          height: AppSpacing.launchpadDividerHeight,
+          height: AppSpacing.dividerHairline,
           color: AppColors.divider,
         ),
       ],

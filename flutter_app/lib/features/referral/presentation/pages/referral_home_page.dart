@@ -95,8 +95,10 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ReferralHomePage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: scrollEndClearance),
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,

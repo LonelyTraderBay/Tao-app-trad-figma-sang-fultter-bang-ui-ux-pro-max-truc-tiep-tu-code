@@ -60,9 +60,8 @@ class _ChainBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.launchpadBox32,
-      height: AppSpacing.launchpadBox32,
+    return SizedBox.square(
+      dimension: AppSpacing.launchpadBox32,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: price.accent.withValues(alpha: .14),

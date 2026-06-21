@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBridgeCompare(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -93,6 +95,24 @@ void main() {
     expect(find.text('VitBridge Aggregator'), findsOneWidget);
     expect(find.text('Direct Bridge'), findsOneWidget);
     expect(find.byKey(LaunchpadBridgeComparePage.riskKey), findsOneWidget);
+  });
+
+  testWidgets('SC-305 first viewport reaches recommended route', (
+    tester,
+  ) async {
+    await pumpBridgeCompare(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-305 LaunchpadBridgeComparePage',
+      semanticLabel: 'SC-305 LaunchpadBridgeComparePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadBridgeComparePage.routeKey('rc_1')),
+      routeName: 'SC-305 LaunchpadBridgeComparePage',
+      actionLabel: 'the recommended bridge route',
+    );
   });
 
   testWidgets('SC-305 sort, expand, and selection states work', (tester) async {

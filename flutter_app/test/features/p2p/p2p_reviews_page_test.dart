@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_reviews_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PReviews(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,6 +72,23 @@ void main() {
     expect(
       find.text('Người mua thanh toán rất nhanh, hợp tác vui vẻ!'),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-231 first viewport reaches review preview', (tester) async {
+    await pumpP2PReviews(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-231 P2PReviewsPage',
+      semanticLabel: 'SC-231 P2PReviewsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PReviewsPage.reviewKey('rv006')),
+      routeName: 'SC-231 P2PReviewsPage',
+      actionLabel: 'first received review preview',
+      minVisibleHeight: 72,
     );
   });
 

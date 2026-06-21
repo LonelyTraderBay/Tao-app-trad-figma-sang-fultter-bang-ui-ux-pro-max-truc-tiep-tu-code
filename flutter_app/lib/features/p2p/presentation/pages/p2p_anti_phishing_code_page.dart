@@ -79,8 +79,8 @@ class _P2PAntiPhishingCodePageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x4
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -104,7 +104,7 @@ class _P2PAntiPhishingCodePageState
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pSecurityDetailsScrollPadding(
                       bottomInset,
                     ),
@@ -112,25 +112,24 @@ class _P2PAntiPhishingCodePageState
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _StatusCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         _ExplainerCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x6),
+                        const SizedBox(height: AppSpacing.x3),
                         _SectionTitle(
                           _editing ? 'Thiết lập code' : 'Code hiện tại',
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.x2),
                         _editing
                             ? _editCodeCard()
                             : _currentCodeCard(code: _code),
-                        const SizedBox(height: AppSpacing.x6),
-                        const _SectionTitle('Ví dụ email'),
                         const SizedBox(height: AppSpacing.x3),
+                        const _SectionTitle('Ví dụ email'),
+                        const SizedBox(height: AppSpacing.x2),
                         _EmailExamples(examples: snapshot.examples),
-                        const SizedBox(height: AppSpacing.x6),
+                        const SizedBox(height: AppSpacing.x3),
                         _WarningCard(snapshot: snapshot),
                         VitPageContent(
                           padding: VitContentPadding.compact,
-                          customGap: 0,
                           children: const [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
@@ -157,7 +156,7 @@ class _P2PAntiPhishingCodePageState
     return VitCard(
       key: P2PAntiPhishingCodePage.codeCardKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pSecurityDetailsCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -184,23 +183,26 @@ class _P2PAntiPhishingCodePageState
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           VitCard(
             radius: VitCardRadius.md,
             variant: VitCardVariant.inner,
             borderColor: AppColors.borderSolid,
-            padding: AppSpacing.p2pSecurityDetailsCodePadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x2,
+            ),
             child: Center(
               child: Text(
                 _showCode ? code : List.filled(code.length, '•').join(),
-                style: AppTextStyles.sectionTitle.copyWith(
+                style: AppTextStyles.baseMedium.copyWith(
                   fontFeatures: AppTextStyles.tabularFigures,
                   letterSpacing: 2,
                 ),
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -240,7 +242,7 @@ class _P2PAntiPhishingCodePageState
     return VitCard(
       key: P2PAntiPhishingCodePage.codeCardKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pSecurityDetailsCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -264,7 +266,7 @@ class _P2PAntiPhishingCodePageState
               }
             },
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           _SoftActionButton(
             key: P2PAntiPhishingCodePage.generateKey,
             label: 'Tạo code ngẫu nhiên',
@@ -275,7 +277,7 @@ class _P2PAntiPhishingCodePageState
               _codeController.text = 'SEC8F2K9';
             },
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           VitCtaButton(
             key: P2PAntiPhishingCodePage.saveKey,
             variant: VitCtaButtonVariant.success,

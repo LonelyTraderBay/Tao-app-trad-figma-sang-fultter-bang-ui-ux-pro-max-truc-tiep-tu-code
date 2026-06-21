@@ -249,7 +249,7 @@ class _AbiEntryDetails extends StatelessWidget {
                               entry.riskNote!,
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height: AppSpacing.launchpadLineHeightDense,
+                                height: AppSpacing.launchpadLineHeightCompact,
                               ),
                             ),
                           ),
@@ -305,7 +305,7 @@ class _SignatureBlock extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.extraBold,
-                    height: AppSpacing.launchpadLineHeightDense,
+                    height: AppSpacing.launchpadLineHeightCompact,
                   ),
                 ),
               ),
@@ -378,7 +378,7 @@ class _RiskWarning extends StatelessWidget {
                 'Day la so sanh ABI tu dong. Can kiem tra source code thuc te de hieu day du anh huong cua cac thay doi.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.launchpadLineHeightReadable,
+                  height: AppSpacing.launchpadLineHeightShort,
                 ),
               ),
             ),

@@ -55,7 +55,7 @@ class LaunchpadContractPage extends ConsumerWidget {
           ),
           child: SingleChildScrollView(
             key: contentKey,
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: VitPageContent(
               padding: VitContentPadding.defaultPadding,
               children: [

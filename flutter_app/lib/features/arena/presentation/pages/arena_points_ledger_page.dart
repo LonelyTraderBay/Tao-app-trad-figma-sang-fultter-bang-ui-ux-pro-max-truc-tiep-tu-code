@@ -8,7 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -20,6 +20,10 @@ import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_
 
 part '../widgets/arena_points_ledger_page_sections.dart';
 part '../widgets/arena_points_ledger_page_common.dart';
+
+const _ledgerCompactLineRatio = AppSpacing.arenaPointsCompactLineHeight;
+const _ledgerDividerExtent = AppSpacing.arenaPointsDividerHeight;
+const _ledgerNoticeLineRatio = AppSpacing.arenaPointsNoticeLineHeight;
 
 class ArenaPointsLedgerPage extends ConsumerStatefulWidget {
   const ArenaPointsLedgerPage({super.key, this.shellRenderMode});
@@ -50,11 +54,12 @@ class _ArenaPointsLedgerPageState extends ConsumerState<ArenaPointsLedgerPage> {
         .getArenaPointsLedger();
     final entries = _filteredEntries(snapshot.entries);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -78,10 +83,11 @@ class _ArenaPointsLedgerPageState extends ConsumerState<ArenaPointsLedgerPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaPointsLedgerPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         _BalanceSummary(summary: snapshot.summary),
                         VitSearchBar(

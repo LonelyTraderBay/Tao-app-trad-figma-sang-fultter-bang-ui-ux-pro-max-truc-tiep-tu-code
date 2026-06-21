@@ -7,10 +7,10 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(launchpadControllerProvider).getStaking();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -19,7 +19,7 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
+          bottomInset: scrollTailReserve,
           semanticLabel: 'SC-298 LaunchpadStakingPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
@@ -40,10 +40,10 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: LaunchpadStakingPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      customGap: AppSpacing.x4,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         _StakingHero(snapshot: snapshot),
                         switch (_activeTab) {
@@ -132,7 +132,7 @@ class _StakingTabs extends StatelessWidget {
             ],
           ),
           const Divider(
-            height: AppSpacing.launchpadDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
         ],

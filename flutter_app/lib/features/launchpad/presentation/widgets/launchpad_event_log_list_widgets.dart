@@ -112,7 +112,7 @@ class _EventLogCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.extraBold,
-                          height: AppSpacing.launchpadLineHeightEvent,
+                          height: AppSpacing.launchpadLineHeightLabel,
                         ),
                       ),
                       if (event.tags.isNotEmpty) ...[
@@ -213,7 +213,7 @@ class _DetailRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
                 fontWeight: AppTextStyles.medium,
-                height: AppSpacing.launchpadLineHeightDense,
+                height: AppSpacing.launchpadLineHeightCompact,
               ),
             ),
           ),

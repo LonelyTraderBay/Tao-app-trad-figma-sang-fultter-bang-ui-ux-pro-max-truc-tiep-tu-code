@@ -53,8 +53,8 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x4
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
     final filteredEvents = snapshot.events
         .where((event) {
@@ -102,7 +102,7 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                     ).copyWith(scrollbars: false),
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(
-                        parent: BouncingScrollPhysics(),
+                        parent: ClampingScrollPhysics(),
                       ),
                       padding: AppSpacing.p2pLoginHistoryScrollPadding(
                         bottomInset,
@@ -111,7 +111,7 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           _LoginStats(snapshot: snapshot),
-                          const SizedBox(height: AppSpacing.x4),
+                          const SizedBox(height: AppSpacing.x2),
                           _FilterTabs(
                             activeFilter: _filter,
                             onChanged: (value) {
@@ -124,10 +124,10 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                           ),
                           if (snapshot.riskEventCount > 0 &&
                               _filter != 'success') ...[
-                            const SizedBox(height: AppSpacing.x4),
+                            const SizedBox(height: AppSpacing.x2),
                             _RiskWarning(snapshot: snapshot),
                           ],
-                          const SizedBox(height: AppSpacing.x4),
+                          const SizedBox(height: AppSpacing.x2),
                           if (filteredEvents.isEmpty)
                             _EmptyState(snapshot: snapshot)
                           else
@@ -136,11 +136,10 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                               expandedEventId: _expandedEventId,
                               onToggle: _toggleExpanded,
                             ),
-                          const SizedBox(height: AppSpacing.x6),
+                          const SizedBox(height: AppSpacing.x3),
                           _SecurityInfo(snapshot: snapshot),
                           VitPageContent(
                             padding: VitContentPadding.compact,
-                            customGap: 0,
                             children: const [
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,

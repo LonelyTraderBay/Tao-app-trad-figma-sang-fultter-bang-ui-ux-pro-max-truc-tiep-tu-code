@@ -83,10 +83,10 @@ class _LaunchpadAddressBookPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(launchpadControllerProvider).getAddressBook();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
     final filtered = _filteredAddresses();
     final favorites = filtered.where((address) => address.isFavorite).toList();
@@ -100,7 +100,7 @@ class _LaunchpadAddressBookPageState
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
+              bottomInset: scrollTailReserve,
               semanticLabel: 'SC-309 LaunchpadAddressBookPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
@@ -116,10 +116,10 @@ class _LaunchpadAddressBookPageState
               ),
               child: SingleChildScrollView(
                 key: LaunchpadAddressBookPage.contentKey,
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  customGap: AppSpacing.x4,
+                  padding: VitContentPadding.compact,
+                  gap: VitContentGap.tight,
                   children: [
                     _SearchField(
                       controller: _searchController,

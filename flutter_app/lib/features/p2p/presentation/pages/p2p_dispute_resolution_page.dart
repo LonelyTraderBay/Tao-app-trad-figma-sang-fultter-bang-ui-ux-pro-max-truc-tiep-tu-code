@@ -75,7 +75,7 @@ class _P2PDisputeResolutionPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PDisputeResolutionPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pDisputeScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,

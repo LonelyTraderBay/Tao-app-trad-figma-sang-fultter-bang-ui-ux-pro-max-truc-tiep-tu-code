@@ -54,7 +54,6 @@ class _TextInput extends StatelessWidget {
     super.key,
     required this.controller,
     required this.hint,
-    this.height = AppSpacing.inputHeight,
     this.maxLength,
     this.onChanged,
     this.onSubmitted,
@@ -62,7 +61,6 @@ class _TextInput extends StatelessWidget {
 
   final TextEditingController controller;
   final String hint;
-  final double height;
   final int? maxLength;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
@@ -70,7 +68,7 @@ class _TextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height,
+      height: AppSpacing.inputHeight,
       child: VitInput(
         fieldKey: key,
         controller: controller,
@@ -145,7 +143,7 @@ class _SimpleStepScaffold extends StatelessWidget {
                   padding: AppSpacing.profileApiCreateStepScrollPadding(
                     scrollClearance,
                   ),
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,

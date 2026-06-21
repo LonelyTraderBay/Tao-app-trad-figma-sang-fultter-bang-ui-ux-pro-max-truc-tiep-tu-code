@@ -61,7 +61,7 @@ class _IntroStep extends StatelessWidget {
             height: AppSpacing.providerApplicationIntroDescriptionLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.x6 + AppSpacing.x3),
+        const SizedBox(height: AppSpacing.x5),
         _SectionLabel(label: 'Lợi ích', color: _providerGreen),
         const SizedBox(height: AppSpacing.x3 + AppSpacing.hairlineStroke),
         for (final benefit in snapshot.benefits) ...[
@@ -69,7 +69,7 @@ class _IntroStep extends StatelessWidget {
           if (benefit != snapshot.benefits.last)
             const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
         ],
-        const SizedBox(height: AppSpacing.ctaLoadingIcon),
+        const SizedBox(height: AppSpacing.x5),
         _ResponsibilitiesCard(items: snapshot.responsibilities),
         const SizedBox(
           height: AppSpacing.x4 + AppSpacing.x1 - AppSpacing.hairlineStroke,
@@ -120,9 +120,8 @@ class _BenefitCard extends StatelessWidget {
                   benefit.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height:
-                        AppSpacing
-                            .providerApplicationBenefitDescriptionLineHeight,
+                    height: AppSpacing
+                        .providerApplicationBenefitDescriptionLineHeight,
                   ),
                 ),
               ],
@@ -173,9 +172,8 @@ class _ResponsibilitiesCard extends StatelessWidget {
                       '• $item',
                       style: AppTextStyles.caption.copyWith(
                         color: _providerWarning,
-                        height:
-                            AppSpacing
-                                .providerApplicationResponsibilityLineHeight,
+                        height: AppSpacing
+                            .providerApplicationResponsibilityLineHeight,
                       ),
                     ),
                   ),

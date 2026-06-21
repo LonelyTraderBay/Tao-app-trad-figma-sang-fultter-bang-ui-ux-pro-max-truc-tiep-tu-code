@@ -120,7 +120,7 @@ class TransferAmountCard extends StatelessWidget {
             children: [
               Expanded(
                 child: SizedBox(
-                  height: 30,
+                  height: _transferAmountFieldHeight,
                   child: TextField(
                     key: const Key('sc146_transfer_amount'),
                     controller: controller,
@@ -169,7 +169,7 @@ class TransferInfoNotice extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 1),
+            padding: const EdgeInsetsDirectional.only(top: 1),
             child: Icon(
               Icons.info_outline_rounded,
               color: _transferPrimary,

@@ -73,7 +73,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
@@ -138,7 +138,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
                   top: false,
                   child: SingleChildScrollView(
                     key: StakingGuidePage.tutorialSheetKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.earnSheetContentPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

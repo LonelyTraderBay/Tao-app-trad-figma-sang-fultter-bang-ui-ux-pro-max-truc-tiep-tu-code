@@ -34,7 +34,6 @@ const double _receiptFramedFooterClearance =
 const double _receiptNativeFooterClearance =
     AppSpacing.buttonStandard + AppSpacing.x3;
 const double _receiptHeroExtent = AppSpacing.buttonCompact + AppSpacing.x3;
-const double _receiptDetailLabelExtent = AppSpacing.buttonStandard * 2;
 const double _receiptCopyActionExtent = AppSpacing.buttonCompact;
 
 class OrderReceiptPage extends ConsumerStatefulWidget {

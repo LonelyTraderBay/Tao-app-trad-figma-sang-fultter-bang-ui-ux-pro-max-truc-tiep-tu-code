@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/referral/data/referral_repository.dar
 import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_rules_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRules(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -68,6 +70,24 @@ void main() {
     expect(find.byKey(ReferralRulesPage.rewardTypesKey), findsOneWidget);
     expect(find.text('Thưởng KYC cố định'), findsOneWidget);
     expect(find.text('Hoa hồng giao dịch'), findsOneWidget);
+  });
+
+  testWidgets('SC-288 first viewport reaches referral tier table', (
+    tester,
+  ) async {
+    await pumpRules(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-288 ReferralRulesPage',
+      semanticLabel: 'SC-288 ReferralRulesPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ReferralRulesPage.tierTableKey),
+      routeName: 'SC-288 ReferralRulesPage',
+      actionLabel: 'the referral tier table',
+    );
   });
 
   testWidgets('SC-288 FAQ accordion updates state', (tester) async {

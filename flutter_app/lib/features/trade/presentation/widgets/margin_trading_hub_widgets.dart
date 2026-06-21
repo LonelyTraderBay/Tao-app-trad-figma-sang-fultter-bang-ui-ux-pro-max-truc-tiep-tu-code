@@ -17,10 +17,7 @@ class MarginHubPhaseBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitAccentPill(
-      label: label,
-      accentColor: color,
-    );
+    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

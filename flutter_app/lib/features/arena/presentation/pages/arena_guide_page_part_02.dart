@@ -303,7 +303,7 @@ class _ChecklistCard extends StatelessWidget {
                           '${index + 1}',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            height: AppSpacing.arenaGuideChecklistLineHeight,
+                            height: _guideChecklistLineRatio,
                           ),
                         ),
                       ),

@@ -201,7 +201,10 @@ class _ActivityCard extends StatelessWidget {
               ],
             ),
             if (activity != activities.last)
-              const Divider(color: AppColors.borderSolid, height: 1),
+              const Divider(
+                color: AppColors.borderSolid,
+                height: AppSpacing.dividerHairline,
+              ),
           ],
         ],
       ),

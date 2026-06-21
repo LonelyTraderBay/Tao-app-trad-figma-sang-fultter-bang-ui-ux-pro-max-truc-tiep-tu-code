@@ -82,7 +82,7 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: TraderProfilePage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.tradeBotCardGap,
                     AppSpacing.contentPad,

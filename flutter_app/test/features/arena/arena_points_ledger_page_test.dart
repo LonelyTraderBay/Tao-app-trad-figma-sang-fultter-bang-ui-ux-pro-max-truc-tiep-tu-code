@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_points
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_safety_center_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpLedger(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -82,6 +84,37 @@ void main() {
     expect(find.text('Check-in ngày 5'), findsOneWidget);
     expect(find.text('Đạt \$500 khối lượng Spot'), findsOneWidget);
     expect(find.text('Quy tắc cộng đồng'), findsOneWidget);
+  });
+
+  testWidgets('SC-201 first viewport exposes ledger controls and preview', (
+    tester,
+  ) async {
+    await pumpLedger(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-201 ArenaPointsLedgerPage',
+      semanticLabel: 'SC-201 ArenaPointsLedgerPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaPointsLedgerPage.searchKey),
+      routeName: 'SC-201 ArenaPointsLedgerPage',
+      actionLabel: 'the ledger search field',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      ArenaPointsLedgerPage.filterKey('all').finder,
+      routeName: 'SC-201 ArenaPointsLedgerPage',
+      actionLabel: 'the all ledger filter',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      ArenaPointsLedgerPage.entryKey('le001').finder,
+      routeName: 'SC-201 ArenaPointsLedgerPage',
+      actionLabel: 'the first ledger entry',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-201 filters and searches ledger entries', (tester) async {

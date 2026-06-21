@@ -69,7 +69,7 @@ class _TabButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: const EdgeInsetsDirectional.symmetric(
                   vertical: _tokenInfoTabVerticalPadding,
                 ),
                 child: Text(

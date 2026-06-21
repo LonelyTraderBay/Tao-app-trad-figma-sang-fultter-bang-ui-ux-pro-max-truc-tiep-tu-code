@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -89,15 +88,11 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
           comparisonFindPair(snapshot.marketPairs, id)!,
     ];
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.comparisonToolVisualBottomExtra
-            : AppSpacing.comparisonToolNativeBottomExtra);
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -121,11 +116,11 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
                   child: SingleChildScrollView(
                     key: ComparisonToolPage.contentKey,
                     padding: AppSpacing.comparisonToolScrollPadding(
-                      bottomInset,
+                      scrollEndClearance,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.comparisonToolPageGap,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         ComparisonSelectedTokensStrip(
                           selectedPairs: selectedPairs,

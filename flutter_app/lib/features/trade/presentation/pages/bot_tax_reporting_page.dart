@@ -101,7 +101,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: BotTaxReportingPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(
+                      padding: EdgeInsetsDirectional.fromSTEB(
                         AppSpacing.contentPad,
                         AppSpacing.tradeBotCardGap,
                         AppSpacing.contentPad,

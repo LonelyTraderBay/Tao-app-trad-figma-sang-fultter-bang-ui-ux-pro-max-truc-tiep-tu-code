@@ -77,7 +77,7 @@ class _KYCPageState extends ConsumerState<KYCPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: KYCPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.kycScrollPadding(scrollClearance),
                   child: VitPageContent(
                     padding: VitContentPadding.none,

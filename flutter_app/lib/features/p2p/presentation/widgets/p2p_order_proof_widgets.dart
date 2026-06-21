@@ -156,27 +156,27 @@ class _UploadSourceCard extends StatelessWidget {
       padding: AppSpacing.p2pFinancialSafetyCardPadding,
       borderColor: color.withValues(alpha: .45),
       onTap: enabled ? onPressed : null,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: AppSpacing.iconLg),
-              const SizedBox(height: AppSpacing.x3),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x2),
-              Text(
-                caption,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: color, size: AppSpacing.iconLg),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            caption,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -337,22 +337,22 @@ class _ProofWarning extends StatelessWidget {
       padding: AppSpacing.p2pFinancialSafetyInnerPadding,
       clip: true,
       child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.iconSm,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: AppColors.warn,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              message,
+              style: AppTextStyles.micro.copyWith(color: AppColors.warn),
             ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text(
-                message,
-                style: AppTextStyles.micro.copyWith(color: AppColors.warn),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 }

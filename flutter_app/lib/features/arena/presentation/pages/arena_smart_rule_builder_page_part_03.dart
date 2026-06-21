@@ -137,7 +137,7 @@ class _ModerationNote extends StatelessWidget {
               'Challenge sẽ được kiểm duyệt tự động. Nội dung vi phạm sẽ bị ẩn. Arena Points không phải tài sản tài chính.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaSmartRuleBodyLineHeight,
+                height: _smartRuleBodyLineRatio,
               ),
             ),
           ),
@@ -147,32 +147,259 @@ class _ModerationNote extends StatelessWidget {
   }
 }
 
-class _FooterActions extends StatelessWidget {
-  const _FooterActions({
-    required this.canProceed,
-    required this.clarityScore,
-    required this.onBack,
-    required this.onContinue,
-    required this.onSave,
-    this.statusLabel,
+class _BackendPayloadPreviewCard extends StatelessWidget {
+  const _BackendPayloadPreviewCard({
+    required this.creationState,
+    required this.draft,
   });
 
-  final bool canProceed;
-  final int clarityScore;
-  final VoidCallback onBack;
-  final VoidCallback onContinue;
-  final VoidCallback onSave;
-  final String? statusLabel;
+  final ArenaCreationViewState creationState;
+  final ArenaCreateChallengeDraft draft;
 
   @override
   Widget build(BuildContext context) {
+    final activeDraft = creationState.previewDraft ?? draft;
+    final ready = activeDraft.hasRequiredShape;
+    final statusLabel =
+        creationState.statusLabel ??
+        (ready ? 'Sẵn sàng preview payload' : 'Hoàn thiện rule để preview');
+
+    return VitCard(
+      padding: AppSpacing.arenaSmartRuleCardPadding,
+      borderColor: ready ? AppColors.buy20 : AppColors.borderSolid,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                ready ? Icons.cloud_done_outlined : Icons.cloud_queue_outlined,
+                color: ready ? AppColors.buy : AppColors.text3,
+                size: AppSpacing.arenaSmartRuleIcon,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  'Backend handoff',
+                  style: AppTextStyles.base.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+              VitStatusPill(
+                label: ready ? 'Contract-ready' : 'Draft',
+                status: ready
+                    ? VitStatusPillStatus.success
+                    : VitStatusPillStatus.neutral,
+                size: VitStatusPillSize.sm,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            statusLabel,
+            style: AppTextStyles.caption.copyWith(
+              color: ready ? AppColors.buy : AppColors.text3,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Wrap(
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x2,
+            children: [
+              for (final row in activeDraft.backendPayloadRows())
+                VitStatusPill(
+                  label: row,
+                  status: row == ArenaCreateChallengeDraft.endpoint
+                      ? VitStatusPillStatus.orange
+                      : VitStatusPillStatus.neutral,
+                  size: VitStatusPillSize.sm,
+                ),
+            ],
+          ),
+          if (creationState.errorMessage != null) ...[
+            const SizedBox(height: AppSpacing.x3),
+            Text(
+              creationState.errorMessage!,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.sell,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _CreationSafetyChecklist extends StatelessWidget {
+  const _CreationSafetyChecklist({
+    required this.ruleReviewAccepted,
+    required this.pointsBoundaryAccepted,
+    required this.moderationAccepted,
+    required this.onRuleReview,
+    required this.onPointsBoundary,
+    required this.onModeration,
+  });
+
+  final bool ruleReviewAccepted;
+  final bool pointsBoundaryAccepted;
+  final bool moderationAccepted;
+  final VoidCallback onRuleReview;
+  final VoidCallback onPointsBoundary;
+  final VoidCallback onModeration;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      padding: AppSpacing.arenaSmartRuleCardPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.verified_user_outlined,
+                color: AppColors.primary,
+                size: AppSpacing.arenaSmartRuleIcon,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  'Xác nhận trước khi gửi',
+                  style: AppTextStyles.base.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          _ChecklistRow(
+            key: ArenaSmartRuleBuilderPage.rulesAckKey,
+            value: ruleReviewAccepted,
+            title: 'Luật chơi đã rõ',
+            description:
+                'Có điều kiện thắng, luật hòa/hủy và hạn chốt kết quả.',
+            onTap: onRuleReview,
+          ),
+          _ChecklistRow(
+            key: ArenaSmartRuleBuilderPage.pointsAckKey,
+            value: pointsBoundaryAccepted,
+            title: 'Arena Points only',
+            description:
+                'Không dùng ví, giá trị tiền, lợi nhuận hoặc cam kết hoàn điểm.',
+            onTap: onPointsBoundary,
+          ),
+          _ChecklistRow(
+            key: ArenaSmartRuleBuilderPage.moderationAckKey,
+            value: moderationAccepted,
+            title: 'Sẵn sàng moderation',
+            description: 'Challenge có thể bị ẩn nếu vi phạm fair-play/safety.',
+            onTap: onModeration,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ChecklistRow extends StatelessWidget {
+  const _ChecklistRow({
+    super.key,
+    required this.value,
+    required this.title,
+    required this.description,
+    required this.onTap,
+  });
+
+  final bool value;
+  final String title;
+  final String description;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.arenaSmartRuleSwitchRowPadding,
+        child: Row(
+          children: [
+            Checkbox(
+              value: value,
+              activeColor: _arenaAccent,
+              onChanged: (_) => onTap(),
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  Text(
+                    description,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FooterActions extends StatelessWidget {
+  const _FooterActions({
+    required this.canProceed,
+    required this.canSubmit,
+    required this.clarityScore,
+    required this.onBack,
+    required this.onContinue,
+    required this.onPreview,
+    required this.onSave,
+    required this.onSubmit,
+    required this.onReset,
+    this.statusLabel,
+    this.commandStatusLabel,
+  });
+
+  final bool canProceed;
+  final bool canSubmit;
+  final int clarityScore;
+  final VoidCallback onBack;
+  final VoidCallback onContinue;
+  final VoidCallback onPreview;
+  final VoidCallback onSave;
+  final VoidCallback onSubmit;
+  final VoidCallback onReset;
+  final String? statusLabel;
+  final String? commandStatusLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final footerLabel = statusLabel ?? commandStatusLabel;
     return Column(
       children: [
         Row(
           children: [
             SizedBox(
-              width: AppSpacing.ctaHeight,
-              height: AppSpacing.ctaHeight,
+              width: _smartRuleActionExtent,
+              height: _smartRuleActionExtent,
               child: VitCtaButton(
                 onPressed: onBack,
                 variant: VitCtaButtonVariant.secondary,
@@ -185,15 +412,47 @@ class _FooterActions extends StatelessWidget {
             Expanded(
               child: VitCtaButton(
                 key: ArenaSmartRuleBuilderPage.continueKey,
-                onPressed: canProceed ? onContinue : null,
+                onPressed: onContinue,
+                variant: canProceed
+                    ? VitCtaButtonVariant.primary
+                    : VitCtaButtonVariant.secondary,
                 trailing: const Icon(Icons.chevron_right_rounded),
-                child: const Text('Tiếp tục'),
+                child: Text(canProceed ? 'Tiếp tục' : 'Kiểm tra thiếu'),
               ),
             ),
           ],
         ),
         const SizedBox(height: AppSpacing.x3),
         Row(
+          children: [
+            Expanded(
+              child: VitCtaButton(
+                key: ArenaSmartRuleBuilderPage.previewKey,
+                onPressed: onPreview,
+                variant: VitCtaButtonVariant.secondary,
+                leading: const Icon(Icons.visibility_outlined),
+                child: const Text('Xem payload'),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: VitCtaButton(
+                key: ArenaSmartRuleBuilderPage.submitKey,
+                onPressed: onSubmit,
+                variant: canSubmit
+                    ? VitCtaButtonVariant.primary
+                    : VitCtaButtonVariant.secondary,
+                leading: const Icon(Icons.send_outlined),
+                child: const Text('Gửi duyệt'),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        Wrap(
+          spacing: AppSpacing.x2,
+          runSpacing: AppSpacing.x1,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             TextButton.icon(
               key: ArenaSmartRuleBuilderPage.saveKey,
@@ -204,18 +463,15 @@ class _FooterActions extends StatelessWidget {
               ),
               label: const Text('Lưu nháp'),
             ),
-            if (statusLabel != null)
-              Expanded(
-                child: Text(
-                  statusLabel!,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.buy),
-                ),
-              )
-            else
-              const Spacer(),
+            TextButton.icon(
+              key: ArenaSmartRuleBuilderPage.resetKey,
+              onPressed: onReset,
+              icon: const Icon(
+                Icons.refresh_rounded,
+                size: AppSpacing.arenaSmartRuleTinyIcon,
+              ),
+              label: const Text('Làm mới'),
+            ),
             VitStatusPill(
               label: 'Clarity: $clarityScore',
               status: clarityScore >= 35
@@ -230,7 +486,304 @@ class _FooterActions extends StatelessWidget {
             ),
           ],
         ),
+        if (footerLabel != null && footerLabel.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            footerLabel,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.micro.copyWith(color: AppColors.buy),
+          ),
+        ],
       ],
+    );
+  }
+}
+
+class _SmartOptionSheet extends StatelessWidget {
+  const _SmartOptionSheet({
+    required this.title,
+    required this.options,
+    required this.selectedId,
+  });
+
+  final String title;
+  final List<ArenaSmartOptionDraft> options;
+  final String selectedId;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height * .78,
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: AppSpacing.arenaSmartRuleCardPadding,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _OptionSheetHeader(title: title),
+                const SizedBox(height: AppSpacing.x3),
+                for (final option in options) ...[
+                  _OptionTile(
+                    title: option.label,
+                    description: option.description,
+                    selected: selectedId == option.id,
+                    onTap: () => Navigator.of(context).pop(option),
+                  ),
+                  const SizedBox(height: AppSpacing.x2),
+                ],
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TextOptionSheet extends StatelessWidget {
+  const _TextOptionSheet({
+    required this.title,
+    required this.options,
+    required this.selectedValue,
+  });
+
+  final String title;
+  final List<String> options;
+  final String selectedValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height * .78,
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: AppSpacing.arenaSmartRuleCardPadding,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _OptionSheetHeader(title: title),
+                const SizedBox(height: AppSpacing.x3),
+                for (final option in options) ...[
+                  _OptionTile(
+                    title: option,
+                    selected: selectedValue == option,
+                    onTap: () => Navigator.of(context).pop(option),
+                  ),
+                  const SizedBox(height: AppSpacing.x2),
+                ],
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _OptionSheetHeader extends StatelessWidget {
+  const _OptionSheetHeader({required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Icon(
+          Icons.tune_rounded,
+          color: _arenaAccent,
+          size: AppSpacing.arenaSmartRuleIcon,
+        ),
+        const SizedBox(width: AppSpacing.x2),
+        Expanded(
+          child: Text(
+            title,
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _OptionTile extends StatelessWidget {
+  const _OptionTile({
+    required this.title,
+    required this.selected,
+    required this.onTap,
+    this.description,
+  });
+
+  final String title;
+  final String? description;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      borderColor: selected ? AppColors.accent20 : AppColors.borderSolid,
+      padding: AppSpacing.arenaSmartRuleSelectorPadding,
+      onTap: onTap,
+      child: Row(
+        children: [
+          Icon(
+            selected
+                ? Icons.check_circle_rounded
+                : Icons.radio_button_unchecked_rounded,
+            color: selected ? AppColors.buy : AppColors.text3,
+            size: AppSpacing.arenaSmartRuleIcon,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                if (description != null && description!.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    description!,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      height: _smartRuleBodyLineRatio,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SubmitChallengeSheet extends StatelessWidget {
+  const _SubmitChallengeSheet({required this.draft});
+
+  final ArenaCreateChallengeDraft draft;
+
+  @override
+  Widget build(BuildContext context) {
+    final padding = AppSpacing.arenaSmartRuleCardPadding;
+    return SafeArea(
+      top: false,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height * .86,
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: padding.copyWith(bottom: padding.bottom + AppSpacing.x3),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.outbox_outlined,
+                      color: _arenaAccent,
+                      size: AppSpacing.arenaSmartRuleIcon,
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    Expanded(
+                      child: Text(
+                        'Xác nhận gửi challenge',
+                        style: AppTextStyles.sectionTitle.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                Text(
+                  draft.normalizedTitle,
+                  style: AppTextStyles.base.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  'Challenge sẽ được gửi theo contract POST /arena/challenges. Bản demo lưu local để kiểm thử UI, sau này thay bằng remote repository.',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    height: _smartRuleBodyLineRatio,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                Wrap(
+                  spacing: AppSpacing.x2,
+                  runSpacing: AppSpacing.x2,
+                  children: [
+                    VitStatusPill(
+                      label: '${draft.entryPoints} pts entry',
+                      status: VitStatusPillStatus.orange,
+                      size: VitStatusPillSize.sm,
+                    ),
+                    VitStatusPill(
+                      label: '${draft.slotsTotal} slots',
+                      status: VitStatusPillStatus.neutral,
+                      size: VitStatusPillSize.sm,
+                    ),
+                    VitStatusPill(
+                      label: 'Clarity ${draft.clarityScore}',
+                      status: VitStatusPillStatus.success,
+                      size: VitStatusPillSize.sm,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x4),
+                Row(
+                  children: [
+                    Expanded(
+                      child: VitCtaButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        variant: VitCtaButtonVariant.secondary,
+                        child: const Text('Kiểm tra lại'),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.x3),
+                    Expanded(
+                      child: VitCtaButton(
+                        key: ArenaSmartRuleBuilderPage.confirmSubmitKey,
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: const Text('Xác nhận gửi'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

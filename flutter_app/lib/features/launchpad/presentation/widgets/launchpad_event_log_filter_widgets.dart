@@ -46,7 +46,7 @@ class _LevelFilterBar extends StatelessWidget {
     return SingleChildScrollView(
       key: LaunchpadEventLogPage.levelsKey,
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Row(
         children: [
           for (final value in values) ...[
@@ -104,7 +104,7 @@ class _ActionBar extends StatelessWidget {
     return SingleChildScrollView(
       key: LaunchpadEventLogPage.actionsKey,
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

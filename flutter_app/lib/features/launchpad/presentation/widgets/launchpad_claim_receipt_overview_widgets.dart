@@ -15,9 +15,8 @@ class _ClaimableBanner extends StatelessWidget {
       padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
-          const SizedBox(
-            width: AppSpacing.launchpadBox36,
-            height: AppSpacing.launchpadBox36,
+          const SizedBox.square(
+            dimension: AppSpacing.launchpadBox36,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.buy15,
@@ -42,7 +41,7 @@ class _ClaimableBanner extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.buy,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.launchpadLineHeightShort,
+                    height: AppSpacing.launchpadLineHeightTight,
                   ),
                 ),
                 Text(

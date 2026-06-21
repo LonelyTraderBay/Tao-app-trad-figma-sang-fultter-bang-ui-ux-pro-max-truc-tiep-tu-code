@@ -16,7 +16,7 @@ class _StrategyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: AppSpacing.earnPaddingX3,
       borderColor: strategy.recommended ? AppColors.primary : null,
       onTap: onTap,
       child: Column(
@@ -208,7 +208,7 @@ class _InsightCard extends StatelessWidget {
                   insight.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.savingsRecommendationsInsightLineHeight,
+                    height: AppTextStyles.caption.height,
                   ),
                 ),
               ],
@@ -271,7 +271,7 @@ class _Disclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: AppSpacing.earnPaddingX4,
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -286,7 +286,7 @@ class _Disclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.savingsRecommendationsNoteLineHeight,
+                height: AppTextStyles.micro.height,
               ),
             ),
           ),

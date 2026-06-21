@@ -75,8 +75,8 @@ class _LaunchpadNotifSoundPageState
     final navInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        navInset + MediaQuery.paddingOf(context).bottom + AppSpacing.x4;
+    final scrollTailReserve =
+        navInset + MediaQuery.paddingOf(context).bottom + AppSpacing.x3;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -84,7 +84,7 @@ class _LaunchpadNotifSoundPageState
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
+          bottomInset: scrollTailReserve,
           semanticLabel: 'SC-306 LaunchpadNotifSoundPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
@@ -93,10 +93,10 @@ class _LaunchpadNotifSoundPageState
           ),
           child: SingleChildScrollView(
             key: LaunchpadNotifSoundPage.contentKey,
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: VitPageContent(
-              padding: VitContentPadding.defaultPadding,
-              customGap: AppSpacing.x4,
+              padding: VitContentPadding.compact,
+              gap: VitContentGap.tight,
               children: [
                 _MasterSoundHero(
                   masterEnabled: _masterEnabled,

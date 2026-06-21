@@ -17,7 +17,7 @@ class _ApiKeySheetState extends State<_ApiKeySheet> {
   Widget build(BuildContext context) {
     final keyText = widget.snapshot.generatedApiKeyPreview;
     return Padding(
-      padding: EdgeInsets.fromLTRB(
+      padding: EdgeInsetsDirectional.fromSTEB(
         AppSpacing.contentPad,
         AppSpacing.contentPad,
         AppSpacing.contentPad,
@@ -122,7 +122,7 @@ class _IpSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(
+      padding: EdgeInsetsDirectional.fromSTEB(
         AppSpacing.contentPad,
         AppSpacing.contentPad,
         AppSpacing.contentPad,

@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCopyNotifications(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -79,6 +81,24 @@ void main() {
     expect(find.text('Cảnh báo rủi ro cao'), findsOneWidget);
     expect(find.text('Lệnh mới được copy'), findsOneWidget);
     expect(find.text('Chốt lời thành công'), findsOneWidget);
+  });
+
+  testWidgets('SC-068 first viewport reaches notification filters', (
+    tester,
+  ) async {
+    await pumpCopyNotifications(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-068 CopyNotificationsPage',
+      semanticLabel: 'SC-068 CopyNotificationsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(CopyNotificationsPage.tabKey('all')),
+      routeName: 'SC-068 CopyNotificationsPage',
+      actionLabel: 'the all notifications filter',
+    );
   });
 
   testWidgets('SC-068 filters by risk notifications', (tester) async {

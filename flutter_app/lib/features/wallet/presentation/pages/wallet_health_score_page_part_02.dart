@@ -340,7 +340,7 @@ class _AssetDistributionCard extends StatelessWidget {
                     children: [
                       VitCard(
                         width: AppSpacing.walletHealthLegendSwatch,
-                        height: 10,
+                        height: _healthLegendSwatchHeight,
                         radius: VitCardRadius.sm,
                         borderColor: Color(slice.colorHex),
                         background: ColoredBox(color: Color(slice.colorHex)),

@@ -19,9 +19,8 @@ class _CoinAvatar extends StatelessWidget {
       'SOL' => Icons.blur_on_rounded,
       _ => Icons.token_rounded,
     };
-    return SizedBox(
-      width: 36,
-      height: 36,
+    return SizedBox.square(
+      dimension: AppSpacing.buttonCompact + AppSpacing.hairlineStroke,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .12),
@@ -62,7 +61,7 @@ class _PlanMetric extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
             fontWeight: AppTextStyles.bold,
-            height: 1.04,
+            height: AppTextStyles.badge.height,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -81,7 +80,7 @@ class _PlanMetric extends StatelessWidget {
                   color: color,
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
-                  height: 1.04,
+                  height: AppTextStyles.badge.height,
                 ),
               ),
             ),
@@ -91,7 +90,7 @@ class _PlanMetric extends StatelessWidget {
                 unit,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1.04,
+                  height: AppTextStyles.badge.height,
                 ),
               ),
             ],
@@ -250,9 +249,10 @@ class _CreatePlanSheet extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      SizedBox(
-                        width: 36,
-                        height: 36,
+                      SizedBox.square(
+                        dimension:
+                            AppSpacing.buttonCompact +
+                            AppSpacing.hairlineStroke,
                         child: const DecoratedBox(
                           decoration: ShapeDecoration(
                             color: AppColors.primary12,

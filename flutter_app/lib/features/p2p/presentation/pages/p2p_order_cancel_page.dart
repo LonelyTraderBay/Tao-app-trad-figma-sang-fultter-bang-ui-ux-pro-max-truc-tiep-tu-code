@@ -74,13 +74,13 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2POrderCancelPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pRiskControlsBottomScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.x6,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         const _CancelHero(),
                         _OrderSummary(order: snapshot.order),
@@ -153,26 +153,26 @@ class _CancelHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pRiskControlsOrderHeroPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.p2pRiskControlsOrderHeroIconBox,
+            dimension: AppSpacing.buttonCompact,
             child: const Material(
               color: AppColors.sell10,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
               child: Icon(
                 Icons.close_rounded,
                 color: AppColors.sell,
-                size: AppSpacing.iconLg,
+                size: AppSpacing.iconSm,
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Hủy đơn hàng?',
             textAlign: TextAlign.center,
-            style: AppTextStyles.sectionTitle.copyWith(
+            style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
             ),
@@ -215,7 +215,7 @@ class _OrderSummary extends StatelessWidget {
       _SummaryRowDraft(label: 'Merchant', value: order.merchant),
     ];
     return VitCard(
-      padding: AppSpacing.p2pRiskControlsCardPadding,
+      padding: AppSpacing.p2pRiskControlsInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -226,7 +226,7 @@ class _OrderSummary extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           for (var index = 0; index < rows.length; index++)
             _SummaryRow(row: rows[index], showDivider: index < rows.length - 1),
         ],
@@ -254,7 +254,7 @@ class _SummaryRow extends StatelessWidget {
                   row.label,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-            ),
+              ),
               const SizedBox(width: AppSpacing.x3),
               Flexible(
                 child: Text(
@@ -271,8 +271,7 @@ class _SummaryRow extends StatelessWidget {
             ],
           ),
         ),
-        if (showDivider)
-          const Divider(height: AppSpacing.dividerHairline),
+        if (showDivider) const Divider(height: AppSpacing.dividerHairline),
       ],
     );
   }
@@ -303,15 +302,15 @@ class _ReasonSelector extends StatelessWidget {
       children: [
         Text(
           'Lý do hủy',
-          style: AppTextStyles.baseMedium.copyWith(
+          style: AppTextStyles.caption.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.x2),
         for (final reason in reasons)
           Padding(
-            padding: AppSpacing.p2pRiskControlsReasonItemPadding,
+            padding: const EdgeInsetsDirectional.only(bottom: AppSpacing.x1),
             child: _ReasonButton(
               reason: reason,
               selected: selectedReason == reason,
@@ -351,15 +350,19 @@ class _ReasonButton extends StatelessWidget {
           borderRadius: AppRadii.inputRadius,
         ),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
+          constraints: const BoxConstraints(
+            minHeight: AppSpacing.buttonCompact,
+          ),
           child: Padding(
-            padding: AppSpacing.p2pRiskControlsReasonButtonPadding,
-          child: Row(
-            children: [
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+            ),
+            child: Row(
+              children: [
                 SizedBox.square(
-                  dimension: AppSpacing.p2pRiskControlsChoiceBox,
+                  dimension: AppSpacing.x4,
                   child: Material(
-                  color: selected ? AppColors.sell : AppColors.transparent,
+                    color: selected ? AppColors.sell : AppColors.transparent,
                     shape: CircleBorder(
                       side: BorderSide(
                         color: selected
@@ -377,20 +380,22 @@ class _ReasonButton extends StatelessWidget {
                         : null,
                   ),
                 ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Text(
-                  reason,
-                  style: AppTextStyles.caption.copyWith(
-                    color: selected ? AppColors.sell : AppColors.text2,
-                    fontWeight: selected
-                        ? AppTextStyles.bold
-                        : AppTextStyles.medium,
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    reason,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: selected ? AppColors.sell : AppColors.text2,
+                      fontWeight: selected
+                          ? AppTextStyles.bold
+                          : AppTextStyles.medium,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
           ),
         ),
       ),

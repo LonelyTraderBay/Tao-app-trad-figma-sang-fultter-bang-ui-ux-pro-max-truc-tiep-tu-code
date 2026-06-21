@@ -211,7 +211,9 @@ class _IconCircle extends StatelessWidget {
           color: muted
               ? AppColors.dynamicIslandBg.withValues(alpha: .16)
               : color.withValues(alpha: .12),
-          child: Center(child: Icon(icon, color: color, size: size * .56)),
+          child: Center(
+            child: Icon(icon, color: color, size: size * .56),
+          ),
         ),
       ),
     );

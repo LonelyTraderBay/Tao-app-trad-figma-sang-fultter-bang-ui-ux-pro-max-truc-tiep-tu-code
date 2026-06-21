@@ -11,7 +11,7 @@ class _HeroCard extends StatelessWidget {
       key: StakingRegulatoryFrameworkPage.heroKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,12 +26,12 @@ class _HeroCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(snapshot.heroTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingRegulatoryBodyLineHeight,
+                    height: AppTextStyles.caption.height,
                   ),
                 ),
               ],
@@ -97,13 +97,13 @@ class _LicensesTab extends StatelessWidget {
                     onTap: () => onLicenseTap(license),
                   ),
                   if (license != snapshot.licenses.last)
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.x2),
                 ],
               ],
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.x2),
         _InfoNote(text: snapshot.licenseNote, icon: Icons.verified_outlined),
       ],
     );
@@ -120,13 +120,13 @@ class _LicenseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _RoundIcon(icon: Icons.location_on_outlined, color: AppColors.buy),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,7 +147,7 @@ class _LicenseCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   license.licenseNumber,
                   style: AppTextStyles.micro.copyWith(
@@ -155,10 +155,10 @@ class _LicenseCard extends StatelessWidget {
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x2),
                 Wrap(
                   spacing: AppSpacing.x2,
-                  runSpacing: AppSpacing.x2,
+                  runSpacing: AppSpacing.x1,
                   children: [
                     for (final scope in license.scope.take(2))
                       _SmallPill(label: scope, color: AppColors.text2),

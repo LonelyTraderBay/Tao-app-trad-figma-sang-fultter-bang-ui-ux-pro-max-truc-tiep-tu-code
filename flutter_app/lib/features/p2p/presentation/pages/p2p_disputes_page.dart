@@ -62,27 +62,24 @@ class P2PDisputesPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PDisputesPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pDisputesScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      gap: VitContentGap.tight,
                       children: [
                         _StatsRow(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         _SafetyNotice(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
                         _ListHeader(activeCount: snapshot.activeCount),
-                        const SizedBox(height: AppSpacing.x3),
                         if (snapshot.disputes.isEmpty)
                           _EmptyDisputes(snapshot: snapshot)
                         else
                           for (final dispute in snapshot.disputes) ...[
                             _DisputeListTile(dispute: dispute),
-                            const SizedBox(height: AppSpacing.x3),
+                            if (dispute != snapshot.disputes.last)
+                              const SizedBox(height: AppSpacing.x2),
                           ],
-                        const SizedBox(height: AppSpacing.x2),
                         _GuideCard(snapshot: snapshot),
                       ],
                     ),
@@ -114,7 +111,7 @@ class _StatsRow extends StatelessWidget {
             color: AppColors.sell,
           ),
         ),
-        const SizedBox(width: AppSpacing.x4),
+        const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: _StatCard(
             icon: Icons.schedule_rounded,
@@ -123,7 +120,7 @@ class _StatsRow extends StatelessWidget {
             color: AppColors.warn,
           ),
         ),
-        const SizedBox(width: AppSpacing.x4),
+        const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: _StatCard(
             icon: Icons.check_circle_outline_rounded,
@@ -155,26 +152,26 @@ class _StatCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      height: AppSpacing.p2pDisputeStatCardHeight,
       padding: AppSpacing.p2pDisputeCompactCardPadding,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Material(
             color: color.withValues(alpha: .12),
             shape: const CircleBorder(),
             child: SizedBox(
-              width: AppSpacing.p2pDisputeStatIconBox,
-              height: AppSpacing.p2pDisputeStatIconBox,
+              width: AppSpacing.buttonCompact,
+              height: AppSpacing.buttonCompact,
               child: Icon(icon, color: color, size: AppSpacing.iconSm),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
-            style: AppTextStyles.sectionTitle.copyWith(
+            style: AppTextStyles.baseMedium.copyWith(
               color: color == AppColors.sell ? AppColors.text1 : color,
               fontFeatures: AppTextStyles.tabularFigures,
+              fontWeight: AppTextStyles.bold,
             ),
           ),
           Text(
@@ -202,44 +199,39 @@ class _SafetyNotice extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
         side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .18)),
       ),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minHeight: AppSpacing.p2pDisputeNoticeMinHeight,
-        ),
-        child: Padding(
-          padding: AppSpacing.p2pDisputeNoticePadding,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.verified_user_outlined,
-                color: AppModuleAccents.p2p,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      snapshot.noticeTitle,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
+      child: Padding(
+        padding: AppSpacing.p2pDisputeCompactCardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.verified_user_outlined,
+              color: AppModuleAccents.p2p,
+              size: AppSpacing.iconSm,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    snapshot.noticeTitle,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
                     ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      snapshot.notice,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    snapshot.notice,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -334,7 +326,7 @@ class _DisputeListTile extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pDisputeDetail(dispute.id));
       },
-      padding: AppSpacing.p2pDisputeCardPadding,
+      padding: AppSpacing.p2pDisputeCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -345,9 +337,13 @@ class _DisputeListTile extends StatelessWidget {
                 color: color.withValues(alpha: .12),
                 shape: const CircleBorder(),
                 child: SizedBox(
-                  width: AppSpacing.inputHeight,
-                  height: AppSpacing.inputHeight,
-                  child: Icon(_statusIcon(dispute.status), color: color),
+                  width: AppSpacing.buttonCompact,
+                  height: AppSpacing.buttonCompact,
+                  child: Icon(
+                    _statusIcon(dispute.status),
+                    color: color,
+                    size: AppSpacing.iconSm,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -382,21 +378,21 @@ class _DisputeListTile extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             dispute.reason,
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               _MetaItem(
                 icon: Icons.description_outlined,
                 label: '${dispute.evidenceCount} bằng chứng',
               ),
-              const SizedBox(width: AppSpacing.x5),
+              const SizedBox(width: AppSpacing.x3),
               _MetaItem(
                 icon: Icons.schedule_rounded,
                 label: '${dispute.timelineCount} sự kiện',
@@ -452,10 +448,7 @@ class _GuideCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.p2pDisputeGuideMinHeight,
-      ),
-      padding: AppSpacing.p2pDisputeCardPadding,
+      padding: AppSpacing.p2pDisputeCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

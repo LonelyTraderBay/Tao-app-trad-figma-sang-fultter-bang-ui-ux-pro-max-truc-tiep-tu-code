@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_rate_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2POrderRate(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -69,6 +71,41 @@ void main() {
     expect(find.text('Bo qua'), findsOneWidget);
     expect(find.text('Gui danh gia'), findsOneWidget);
     expect(find.text('Nhan xet nhanh'), findsNothing);
+  });
+
+  testWidgets('SC-213 first viewport reaches rating actions', (tester) async {
+    await pumpP2POrderRate(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-213 P2POrderRatePage',
+      semanticLabel: 'SC-213 P2POrderRatePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2POrderRatePage.starKey(5)),
+      routeName: 'SC-213 P2POrderRatePage',
+      actionLabel: 'the 5-star rating control',
+      minVisibleHeight: 40,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2POrderRatePage.submitKey),
+      routeName: 'SC-213 P2POrderRatePage',
+      actionLabel: 'the submit rating action',
+      minVisibleHeight: 40,
+    );
+
+    await tester.tap(find.byKey(P2POrderRatePage.starKey(5)));
+    await tester.pumpAndSettle();
+
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2POrderRatePage.tagKey('Giao dich nhanh')),
+      routeName: 'SC-213 P2POrderRatePage',
+      actionLabel: 'the first quick feedback tag',
+      minVisibleHeight: 32,
+    );
   });
 
   testWidgets('SC-213 rating unlocks tags, review, and submit success', (

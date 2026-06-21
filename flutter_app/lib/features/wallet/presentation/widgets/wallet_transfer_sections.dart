@@ -21,22 +21,27 @@ const _transferSectionGap = 8.0;
 const _transferTinyGap = 4.0;
 const _transferInlineGap = 8.0;
 const _transferIconBox = 34.0;
+const _transferWalletLabelWidth = 34.0;
 const _transferSwapButtonSize = 32.0;
 const _transferActionIcon = 18.0;
 const _transferWalletCardHeight = 70.0;
+const _transferAmountFieldHeight = 30.0;
 const _transferButtonHeight = 46.0;
 const _transferSheetBottomClearance = 88.0;
-const _transferCardInnerPadding = EdgeInsets.symmetric(
+const _transferCardInnerPadding = EdgeInsetsDirectional.symmetric(
   horizontal: 12,
   vertical: 10,
 );
-const _transferTilePadding = EdgeInsets.symmetric(horizontal: 12, vertical: 6);
-const _transferNoticePadding = EdgeInsets.symmetric(
+const _transferTilePadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 6,
+);
+const _transferNoticePadding = EdgeInsetsDirectional.symmetric(
   horizontal: 12,
   vertical: 10,
 );
-const _transferSheetPadding = EdgeInsets.fromLTRB(16, 14, 16, 16);
-const _transferHistoryRowPadding = EdgeInsets.symmetric(
+const _transferSheetPadding = EdgeInsetsDirectional.fromSTEB(16, 14, 16, 16);
+const _transferHistoryRowPadding = EdgeInsetsDirectional.symmetric(
   horizontal: 12,
   vertical: 8,
 );

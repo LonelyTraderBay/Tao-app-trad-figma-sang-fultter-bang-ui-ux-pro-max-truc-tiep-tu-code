@@ -41,7 +41,7 @@ class _StakingLiquidStakingPageState
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,

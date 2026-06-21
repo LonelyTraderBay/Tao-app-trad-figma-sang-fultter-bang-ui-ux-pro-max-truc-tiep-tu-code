@@ -256,7 +256,7 @@ class _ReceiptNextSteps extends StatelessWidget {
                       _steps[i],
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.launchpadLineHeightReadable,
+                        height: AppSpacing.launchpadLineHeightShort,
                       ),
                     ),
                   ),
@@ -288,7 +288,7 @@ class _ReceiptDisclosure extends StatelessWidget {
             'Phân bổ thực tế có thể khác dự kiến nếu tổng đăng ký vượt hard cap. Hiệu suất quá khứ không đảm bảo kết quả tương lai.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.launchpadLineHeightLong,
+              height: AppSpacing.launchpadLineHeightShort,
             ),
           ),
         ),

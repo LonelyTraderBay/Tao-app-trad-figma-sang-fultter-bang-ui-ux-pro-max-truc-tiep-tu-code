@@ -65,8 +65,8 @@ class _SafetyScoreCard extends StatelessWidget {
           if (score < 100) ...[
             const SizedBox(height: AppSpacing.x3),
             Material(
-                color: AppColors.warn10,
-                borderRadius: AppRadii.lgRadius,
+              color: AppColors.warn10,
+              borderRadius: AppRadii.lgRadius,
               child: Padding(
                 padding: AppSpacing.p2pFraudInnerPadding,
                 child: Row(
@@ -253,32 +253,32 @@ class _ExpandedPattern extends StatelessWidget {
         ),
         Padding(
           padding: AppSpacing.p2pFraudPatternPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _DetailList(
-              title: 'CÁCH THỨC HOẠT ĐỘNG',
-              items: pattern.howItWorks,
-              color: AppColors.text2,
-              numbered: true,
-            ),
-            const SizedBox(height: AppSpacing.x4),
-            _DetailList(
-              title: 'DẤU HIỆU NHẬN BIẾT',
-              items: pattern.redFlags,
-              color: AppColors.sell,
-              icon: Icons.error_outline_rounded,
-            ),
-            const SizedBox(height: AppSpacing.x4),
-            _DetailList(
-              title: 'CÁCH PHÒNG TRÁNH',
-              items: pattern.prevention,
-              color: AppColors.buy,
-              icon: Icons.check_circle_outline_rounded,
-            ),
-          ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _DetailList(
+                title: 'CÁCH THỨC HOẠT ĐỘNG',
+                items: pattern.howItWorks,
+                color: AppColors.text2,
+                numbered: true,
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              _DetailList(
+                title: 'DẤU HIỆU NHẬN BIẾT',
+                items: pattern.redFlags,
+                color: AppColors.sell,
+                icon: Icons.error_outline_rounded,
+              ),
+              const SizedBox(height: AppSpacing.x4),
+              _DetailList(
+                title: 'CÁCH PHÒNG TRÁNH',
+                items: pattern.prevention,
+                color: AppColors.buy,
+                icon: Icons.check_circle_outline_rounded,
+              ),
+            ],
+          ),
         ),
-      ),
       ],
     );
   }

@@ -9,7 +9,6 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -56,10 +55,10 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
     final pinned = filtered.where((item) => item.isPinned).toList();
     final regular = filtered.where((item) => !item.isPinned).toList();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -84,11 +83,13 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: AnnouncementsPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.supportScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.supportScrollPadding(
+                      scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
-                      gap: VitContentGap.relaxed,
+                      gap: VitContentGap.tight,
                       fullBleed: true,
                       children: [
                         _FilterRail(

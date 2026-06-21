@@ -127,7 +127,7 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
           ),
           child: SingleChildScrollView(
             key: ConvertPage.contentKey,
-            padding: EdgeInsets.only(bottom: scrollEndClearance),
+            padding: EdgeInsetsDirectional.only(bottom: scrollEndClearance),
             child: VitPageContent(
               padding: VitContentPadding.compact,
               density: VitDensity.compact,

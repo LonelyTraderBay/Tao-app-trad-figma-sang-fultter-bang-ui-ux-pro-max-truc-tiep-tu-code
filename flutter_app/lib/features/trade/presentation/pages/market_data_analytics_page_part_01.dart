@@ -34,7 +34,7 @@ class _MarketDataAnalyticsPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: MarketDataAnalyticsPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.tradeBotCardGap,
                     AppSpacing.contentPad,

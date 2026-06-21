@@ -48,7 +48,7 @@ class _NoticeCard extends StatelessWidget {
       clip: true,
       background: ColoredBox(color: background),
       padding: dense
-          ? const EdgeInsets.symmetric(
+          ? const EdgeInsetsDirectional.symmetric(
               horizontal: AppSpacing.x3,
               vertical: AppSpacing.x2,
             )

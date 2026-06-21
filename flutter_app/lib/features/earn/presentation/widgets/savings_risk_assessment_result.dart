@@ -10,7 +10,7 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,7 +25,7 @@ class _InfoBanner extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.savingsConsumerBodyLineHeight,
+                height: AppTextStyles.micro.height,
               ),
             ),
           ),
@@ -66,7 +66,7 @@ class _ResultView extends StatelessWidget {
           key: SavingsRiskAssessmentPage.resultCardKey,
           radius: VitCardRadius.lg,
           borderColor: accent,
-          padding: AppSpacing.earnCardPaddingX5,
+          padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -102,7 +102,7 @@ class _ResultView extends StatelessWidget {
                 result.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.savingsConsumerBodyLineHeight,
+                  height: AppTextStyles.caption.height,
                 ),
               ),
               const SizedBox(height: AppSpacing.x4),

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_dispute_de
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_disputes_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PDisputes(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -76,6 +78,32 @@ void main() {
     expect(find.text('2 bằng chứng'), findsOneWidget);
     expect(find.text('5 sự kiện'), findsOneWidget);
     expect(find.text('Cách mở tranh chấp'), findsOneWidget);
+  });
+
+  testWidgets('SC-222 first viewport reaches dispute list start', (
+    tester,
+  ) async {
+    await pumpP2PDisputes(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-222 P2PDisputesPage',
+      semanticLabel: 'SC-222 P2PDisputesPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.text('1'),
+      routeName: 'SC-222 P2PDisputesPage',
+      actionLabel: 'the active dispute count',
+      minVisibleHeight: 18,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PDisputesPage.disputeKey('disp001')),
+      routeName: 'SC-222 P2PDisputesPage',
+      actionLabel: 'the first dispute tile',
+      minVisibleHeight: 40,
+    );
   });
 
   testWidgets('SC-222 dispute tile opens dispute detail route', (tester) async {

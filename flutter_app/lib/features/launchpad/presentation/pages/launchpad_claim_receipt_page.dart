@@ -69,11 +69,12 @@ class _LaunchpadClaimReceiptPageState
         .getClaimReceipt(widget.positionId);
     final receipt = snapshot.receipt;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome
+            : DeviceMetrics.nativeBottomChrome) +
+        MediaQuery.paddingOf(context).bottom +
+        AppSpacing.x3;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,7 +84,7 @@ class _LaunchpadClaimReceiptPageState
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
+              bottomInset: scrollTailReserve,
               semanticLabel: 'SC-302 LaunchpadClaimReceiptPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
@@ -122,7 +123,7 @@ class _LaunchpadClaimReceiptPageState
                           ),
                         ),
                         const Divider(
-                          height: AppSpacing.launchpadDividerHeight,
+                          height: AppSpacing.dividerHairline,
                           color: AppColors.border,
                         ),
                       ],
@@ -131,10 +132,10 @@ class _LaunchpadClaimReceiptPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: LaunchpadClaimReceiptPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       child: VitPageContent(
-                        padding: VitContentPadding.defaultPadding,
-                        customGap: AppSpacing.x4,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
                         children: [
                           _RewardHero(receipt: receipt),
                           if (_activeTab == _ClaimReceiptTab.overview) ...[

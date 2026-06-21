@@ -30,15 +30,23 @@ const _challengeVisualBottomClearance = 112.0;
 const _challengeGap = 8.0;
 const _challengeTinyGap = 4.0;
 const _challengeInlineGap = 8.0;
-const _challengeCardPadding = EdgeInsets.symmetric(
-  horizontal: 12,
-  vertical: 12,
-);
-const _challengeCardPaddingTight = EdgeInsets.symmetric(
-  horizontal: 12,
-  vertical: 10,
-);
-const _challengeSheetPadding = EdgeInsets.fromLTRB(16, 14, 16, 16);
+const EdgeInsetsGeometry _challengeCardPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: _challengeGap + _challengeTinyGap,
+      vertical: _challengeGap + _challengeTinyGap,
+    );
+const EdgeInsetsGeometry _challengeCardPaddingTight =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: _challengeGap + _challengeTinyGap,
+      vertical: _challengeGap + (_challengeTinyGap / 2),
+    );
+const EdgeInsetsGeometry _challengeSheetPadding =
+    EdgeInsetsDirectional.fromSTEB(
+      _challengeGap * 2,
+      _challengeGap + _challengeTinyGap + (_challengeTinyGap / 2),
+      _challengeGap * 2,
+      _challengeGap * 2,
+    );
 const _challengeSmallIcon = 16.0;
 const _challengeMdIcon = 20.0;
 const _challengeLgIcon = 22.0;
@@ -124,7 +132,7 @@ class _ArenaChallengeDetailPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaChallengeDetailPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.contentInsets.copyWith(
                       top: 0,
                       bottom: bottomInset,
@@ -289,7 +297,7 @@ class _ArenaChallengeDetailPageState
                 body,
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: 1.35,
+                  height: AppTextStyles.numericMicro.height,
                 ),
               ),
               const SizedBox(height: _challengeGap),

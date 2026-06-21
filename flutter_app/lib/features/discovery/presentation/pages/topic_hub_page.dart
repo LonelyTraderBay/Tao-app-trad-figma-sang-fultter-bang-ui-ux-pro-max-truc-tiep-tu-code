@@ -126,7 +126,7 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: TopicHubPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.discoveryContentScrollPadding(
                       bottomInset,
                     ),

@@ -93,7 +93,9 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: ExAnteCostsPage.contentKey,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

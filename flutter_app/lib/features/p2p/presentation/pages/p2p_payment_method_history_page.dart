@@ -56,18 +56,18 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodHistoryPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
-                      customGap: AppSpacing.x4,
+                      gap: VitContentGap.tight,
                       children: [
                         _StatsCard(snapshot: snapshot),
                         if (snapshot.transactions.isEmpty)
                           VitEmptyState(title: snapshot.emptyTitle)
                         else
                           VitPageSection(
-                            customGap: AppSpacing.x3,
+                            gap: VitContentGap.tight,
                             children: [
                               for (final transaction in snapshot.transactions)
                                 _TransactionCard(transaction: transaction),
@@ -101,7 +101,7 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: AppSpacing.p2pPaymentCompactCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -151,7 +151,7 @@ class _StatBlock extends StatelessWidget {
           textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.sectionTitle.copyWith(
+          style: AppTextStyles.baseMedium.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
@@ -188,7 +188,7 @@ class _TransactionCard extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodHistoryPage.txKey(transaction.id),
       radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: AppSpacing.p2pPaymentCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -223,7 +223,7 @@ class _TransactionCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   _formatVnd(transaction.amount),
-                  style: AppTextStyles.baseMedium.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
@@ -298,12 +298,12 @@ class _TrendIcon extends StatelessWidget {
           : AppColors.surface2,
       shape: const CircleBorder(),
       child: SizedBox(
-        width: AppSpacing.x7,
-        height: AppSpacing.x7,
+        width: AppSpacing.x6,
+        height: AppSpacing.x6,
         child: Icon(
           isBuy ? Icons.trending_up_rounded : Icons.trending_down_rounded,
           color: tone,
-          size: AppSpacing.iconMd,
+          size: AppSpacing.iconSm,
         ),
       ),
     );

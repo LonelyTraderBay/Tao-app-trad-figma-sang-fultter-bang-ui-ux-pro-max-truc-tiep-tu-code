@@ -10,7 +10,7 @@ class _SummaryStats extends StatelessWidget {
     return VitCard(
       key: StakingValidatorHealthMonitorPage.statsKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           Expanded(
@@ -66,7 +66,7 @@ class _SummaryTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: borderColor,
-      padding: AppSpacing.earnCardPaddingX2X4,
+      padding: AppSpacing.earnCardPaddingX3X2,
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
@@ -112,7 +112,7 @@ class _ValidatorCard extends StatelessWidget {
       key: StakingValidatorHealthMonitorPage.validatorKey(validator.id),
       radius: VitCardRadius.lg,
       onTap: onTap,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -120,8 +120,8 @@ class _ValidatorCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: AppSpacing.ctaHeight,
-                height: AppSpacing.ctaHeight,
+                width: AppSpacing.x6,
+                height: AppSpacing.x6,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: statusColor.withValues(alpha: 0.12),
@@ -226,7 +226,7 @@ class _ValidatorCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.x3),
             const Divider(
               color: AppColors.borderSolid,
-              height: AppSpacing.stakingValidatorHealthDividerHeight,
+              height: AppSpacing.dividerHairline,
             ),
             const SizedBox(height: AppSpacing.x3),
             Row(
@@ -324,11 +324,11 @@ class _TrendSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             children: [
               SizedBox(
-                height: AppSpacing.stakingValidatorHealthTrendHeight,
+                height: AppSpacing.x7 * 2 + AppSpacing.x4,
                 child: CustomPaint(
                   painter: _UptimeTrendPainter(points),
                   child: const SizedBox.expand(),

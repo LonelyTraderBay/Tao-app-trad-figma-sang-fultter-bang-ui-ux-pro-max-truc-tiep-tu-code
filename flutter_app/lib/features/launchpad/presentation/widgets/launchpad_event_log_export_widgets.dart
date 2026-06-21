@@ -50,7 +50,7 @@ class _ExportSheet extends StatelessWidget {
                       const Center(
                         child: SizedBox(
                           width: AppSpacing.launchpadBox44,
-                          height: AppSpacing.launchpadSheetHandleHeight,
+                          height: AppSpacing.x1,
                           child: DecoratedBox(
                             decoration: ShapeDecoration(
                               color: AppColors.borderSolid,
@@ -141,7 +141,7 @@ class _ExportSheet extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            height: AppSpacing.launchpadLineHeightReadable,
+                            height: AppSpacing.launchpadLineHeightShort,
                           ),
                         ),
                       ),

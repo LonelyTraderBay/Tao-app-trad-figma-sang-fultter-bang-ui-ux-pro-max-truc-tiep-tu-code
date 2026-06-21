@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpMultisig(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -78,6 +80,24 @@ void main() {
     expect(find.text('Tao giao dich moi'), findsOneWidget);
     expect(find.text('Withdraw staking rewards'), findsOneWidget);
     expect(find.text('Approve bridge router'), findsOneWidget);
+  });
+
+  testWidgets('SC-313 first viewport reaches create transaction action', (
+    tester,
+  ) async {
+    await pumpMultisig(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-313 LaunchpadMultisigPage',
+      semanticLabel: 'SC-313 LaunchpadMultisigPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadMultisigPage.createKey),
+      routeName: 'SC-313 LaunchpadMultisigPage',
+      actionLabel: 'the create transaction card',
+    );
   });
 
   testWidgets('SC-313 signs and executes queue transactions', (tester) async {

@@ -100,7 +100,7 @@ class _ProviderCta extends StatelessWidget {
       key: CopyEducationPage.providerCtaKey,
       onPressed: onTap,
       leading: const Icon(Icons.visibility_outlined),
-      height: AppSpacing.inputHeight,
+      height: AppSpacing.buttonCompact,
       child: const Text('Xem danh sách providers'),
     );
   }

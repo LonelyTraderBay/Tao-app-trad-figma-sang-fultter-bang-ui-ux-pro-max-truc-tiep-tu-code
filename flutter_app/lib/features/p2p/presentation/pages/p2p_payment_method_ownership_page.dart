@@ -83,7 +83,7 @@ class _P2PPaymentMethodOwnershipPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodOwnershipPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

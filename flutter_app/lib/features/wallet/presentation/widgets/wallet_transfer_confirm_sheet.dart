@@ -106,7 +106,7 @@ class _ConfirmRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
       child: Row(
         children: [
           Expanded(
@@ -142,7 +142,7 @@ class _ConfirmNote extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 1),
+            padding: const EdgeInsetsDirectional.only(top: 1),
             child: Icon(
               Icons.info_outline_rounded,
               color: _transferPrimary,

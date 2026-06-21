@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/auto_compound
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAutoCompound(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -78,6 +80,22 @@ void main() {
     expect(find.text('BTC Linh hoạt'), findsOneWidget);
     expect(find.textContaining('Auto-compound đang tắt'), findsOneWidget);
     expect(find.byKey(AutoCompoundSettingsPage.calculatorKey), findsOneWidget);
+  });
+
+  testWidgets('SC-341 first viewport reaches first position', (tester) async {
+    await pumpAutoCompound(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-341 AutoCompoundSettingsPage',
+      semanticLabel: 'SC-341 AutoCompoundSettingsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(AutoCompoundSettingsPage.positionKey('cp1')),
+      routeName: 'SC-341 AutoCompoundSettingsPage',
+      actionLabel: 'the first auto-compound position',
+    );
   });
 
   testWidgets('SC-341 toggle enables disabled BTC compound state', (

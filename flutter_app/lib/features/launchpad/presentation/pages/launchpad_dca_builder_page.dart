@@ -91,7 +91,7 @@ class _LaunchpadDcaBuilderPageState
         _budgetController.text.trim().isNotEmpty &&
         _startDateController.text.trim().isNotEmpty;
     final ctaInset = showCta ? 118.0 : 0.0;
-    final bottomInset = navInset + safeBottom + AppSpacing.x6 + ctaInset;
+    final scrollTailReserve = navInset + safeBottom + AppSpacing.x3 + ctaInset;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -101,7 +101,7 @@ class _LaunchpadDcaBuilderPageState
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
+              bottomInset: scrollTailReserve,
               semanticLabel: 'SC-316 LaunchpadDcaBuilderPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
@@ -127,10 +127,10 @@ class _LaunchpadDcaBuilderPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: LaunchpadDcaBuilderPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       child: VitPageContent(
-                        padding: VitContentPadding.defaultPadding,
-                        customGap: AppSpacing.x4,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
                         children: [
                           if (_activeTab ==
                               LaunchpadDcaBuilderTab.strategies) ...[

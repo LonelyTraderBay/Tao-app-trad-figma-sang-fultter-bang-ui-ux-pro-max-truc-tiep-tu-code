@@ -8,7 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -20,6 +20,11 @@ import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_
 
 part '../widgets/my_arena_reports_page_sections.dart';
 part '../widgets/my_arena_reports_page_common.dart';
+
+const _reportsBadgeExtent = AppSpacing.myArenaReportsBadgeHeight;
+const _reportsBodyLineRatio = AppSpacing.myArenaReportsBodyLineHeight;
+const _reportsDividerExtent = AppSpacing.myArenaReportsDividerHeight;
+const _reportsFilterExtent = AppSpacing.myArenaReportsFilterHeight;
 
 class MyArenaReportsPage extends ConsumerStatefulWidget {
   const MyArenaReportsPage({super.key, this.shellRenderMode});
@@ -47,11 +52,12 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
         .getMyArenaReports();
     final reports = _filteredReports(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -75,10 +81,11 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MyArenaReportsPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         _ReportsSummary(summary: snapshot.summary),
                         _FilterRail(

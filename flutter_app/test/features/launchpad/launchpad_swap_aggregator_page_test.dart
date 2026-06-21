@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSwapAggregator(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -90,6 +92,22 @@ void main() {
     );
     expect(panel.state, VitHighRiskUiState.riskReview);
     expect(panel.contractId, 'Launchpad swap route');
+  });
+
+  testWidgets('SC-314 first viewport reaches swap input', (tester) async {
+    await pumpSwapAggregator(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-314 LaunchpadSwapAggregatorPage',
+      semanticLabel: 'SC-314 LaunchpadSwapAggregatorPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadSwapAggregatorPage.inputKey),
+      routeName: 'SC-314 LaunchpadSwapAggregatorPage',
+      actionLabel: 'the swap input card',
+    );
   });
 
   testWidgets('SC-314 expands route details and flips token direction', (

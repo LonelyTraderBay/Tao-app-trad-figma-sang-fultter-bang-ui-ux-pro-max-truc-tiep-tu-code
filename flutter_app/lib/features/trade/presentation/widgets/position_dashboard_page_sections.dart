@@ -19,19 +19,7 @@ class _SummaryCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      height: AppSpacing.walletAddressStatsHeight + AppSpacing.hairlineStroke,
-      margin: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.contentPad,
-        top: AppSpacing.walletAssetChartBottomGap,
-        right: AppSpacing.contentPad,
-        bottom: AppSpacing.walletAssetSectionGap,
-      ),
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletAssetSectionGap,
-        top: AppSpacing.rowPy,
-        right: AppSpacing.walletAssetSectionGap,
-        bottom: AppSpacing.walletAssetHeroTopGap,
-      ),
+      padding: VitDensity.compact.cardPadding,
       child: Row(
         children: [
           Expanded(
@@ -88,12 +76,12 @@ class _SummaryMetric extends StatelessWidget {
             height: AppSpacing.positionDashboardLabelLineHeight,
           ),
         ),
-        const SizedBox(height: AppSpacing.transferTileGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: (large ? AppTextStyles.amountSm : AppTextStyles.numericCode)
+          style: (large ? AppTextStyles.baseMedium : AppTextStyles.numericCode)
               .copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
@@ -125,25 +113,18 @@ class _TypeTabs extends StatelessWidget {
       ('margin', 'Margin (${_count(TradePositionType.margin)})'),
     ];
 
-    return Padding(
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.contentPad,
-        right: AppSpacing.contentPad,
-        bottom: AppSpacing.walletAssetHeroTopGap,
-      ),
-      child: VitTabBar(
-        variant: VitTabBarVariant.segment,
-        activeKey: active,
-        onChanged: onChanged,
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.$1,
-              label: tab.$2,
-              widgetKey: PositionDashboardPage.tabKey(tab.$1),
-            ),
-        ],
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: active,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: PositionDashboardPage.tabKey(tab.$1),
+          ),
+      ],
     );
   }
 
@@ -166,30 +147,27 @@ class _SortChips extends StatelessWidget {
       ('size', 'Kích thước'),
     ];
 
-    return Padding(
-      padding: AppSpacing.pageHorizontal,
-      child: Row(
-        children: [
-          Text(
-            'SẮP XẾP',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-              height: AppSpacing.positionDashboardTightLineHeight,
-            ),
+    return Row(
+      children: [
+        Text(
+          'SẮP XẾP',
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.positionDashboardTightLineHeight,
           ),
-          const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
-          for (final sort in sorts) ...[
-            _SortChip(
-              key: PositionDashboardPage.sortKey(sort.$1),
-              label: sort.$2,
-              active: active == sort.$1,
-              onTap: () => onChanged(sort.$1),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-          ],
+        ),
+        const SizedBox(width: AppSpacing.x3),
+        for (final sort in sorts) ...[
+          _SortChip(
+            key: PositionDashboardPage.sortKey(sort.$1),
+            label: sort.$2,
+            active: active == sort.$1,
+            onTap: () => onChanged(sort.$1),
+          ),
+          const SizedBox(width: AppSpacing.x3),
         ],
-      ),
+      ],
     );
   }
 }
@@ -211,7 +189,7 @@ class _SortChip extends StatelessWidget {
     return VitCtaButton(
       onPressed: onTap,
       fullWidth: false,
-      height: AppSpacing.statusPillHeightLg,
+      height: AppSpacing.buttonCompact,
       variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.rowPy,

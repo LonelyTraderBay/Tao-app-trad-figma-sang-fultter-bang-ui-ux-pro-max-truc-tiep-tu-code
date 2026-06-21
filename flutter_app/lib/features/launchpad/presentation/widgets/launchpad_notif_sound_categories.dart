@@ -194,8 +194,8 @@ class _ExpandedCategorySettings extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Divider(
-          height: AppSpacing.launchpadDividerWidth,
-          thickness: AppSpacing.launchpadDividerWidth,
+          height: AppSpacing.dividerHairline,
+          thickness: AppSpacing.dividerHairline,
           color: AppColors.divider,
         ),
         Padding(
@@ -266,7 +266,7 @@ class _ExpandedCategorySettings extends StatelessWidget {
                 onTap: onPreview,
                 borderRadius: AppRadii.inputRadius,
                 child: SizedBox(
-                  height: AppSpacing.ctaHeight,
+                  height: AppSpacing.buttonCompact,
                   child: DecoratedBox(
                     decoration: const ShapeDecoration(
                       color: AppColors.surface2,
@@ -299,22 +299,30 @@ class _ExpandedCategorySettings extends StatelessWidget {
                             ),
                           ),
                           if (playingPreview) ...[
-                            const Spacer(),
+                            const SizedBox(width: AppSpacing.x3),
                             for (var i = 0; i < 4; i++) ...[
                               const SizedBox(width: AppSpacing.x1),
-                              SizedBox(
-                                width: AppSpacing.launchpadVerticalMarkerWidth,
-                                height:
-                                    AppSpacing.launchpadSoundBarBaseHeight +
-                                    i * AppSpacing.launchpadSoundBarHeightStep,
-                                child: DecoratedBox(
-                                  decoration: ShapeDecoration(
-                                    color: category.accent,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: AppRadii.xsRadius,
+                              Builder(
+                                builder: (context) {
+                                  final barHeight =
+                                      AppSpacing.launchpadSoundBarBaseHeight +
+                                      i *
+                                          AppSpacing
+                                              .launchpadSoundBarHeightStep;
+                                  return SizedBox(
+                                    width:
+                                        AppSpacing.launchpadVerticalMarkerWidth,
+                                    height: barHeight,
+                                    child: DecoratedBox(
+                                      decoration: ShapeDecoration(
+                                        color: category.accent,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: AppRadii.xsRadius,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                  );
+                                },
                               ),
                             ],
                           ],

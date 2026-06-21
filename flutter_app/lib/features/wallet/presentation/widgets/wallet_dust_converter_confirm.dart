@@ -22,9 +22,10 @@ class _ConvertFooter extends StatelessWidget {
     return ColoredBox(
       color: AppColors.modalScrimStrong,
       child: Padding(
-        padding: _dustFooterPadding.copyWith(
-          left: horizontalPadding,
-          right: horizontalPadding,
+        padding: EdgeInsetsDirectional.only(
+          start: horizontalPadding,
+          top: _dustFooterTopPad,
+          end: horizontalPadding,
           bottom: bottomSpace + _dustGap,
         ),
         child: _PrimaryButton(

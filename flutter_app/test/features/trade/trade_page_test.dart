@@ -134,6 +134,8 @@ void main() {
     expect(find.text('BÁN'), findsOneWidget);
     expect(find.text('Giới hạn'), findsOneWidget);
     expect(find.text('TP/SL'), findsOneWidget);
+    expect(find.text('Order preview'), findsOneWidget);
+    expect(find.text('Risk check'), findsOneWidget);
   });
 
   testWidgets('SC-048 first viewport reaches order side switch', (

@@ -11,6 +11,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpHeatmap(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -96,6 +98,28 @@ void main() {
     expect(find.text('10'), findsOneWidget);
     expect(find.byKey(MarketHeatmapPage.tileKey('btc')), findsOneWidget);
     expect(find.byKey(MarketHeatmapPage.tileKey('matic')), findsNothing);
+  });
+
+  testWidgets('SC-013 first viewport reaches heatmap controls', (tester) async {
+    await pumpHeatmap(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-013 MarketHeatmapPage',
+      semanticLabel: 'SC-013 MarketHeatmapPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(MarketHeatmapPage.metric24hKey),
+      routeName: 'SC-013 MarketHeatmapPage',
+      actionLabel: '24h metric control',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(MarketHeatmapPage.tileKey('btc')),
+      routeName: 'SC-013 MarketHeatmapPage',
+      actionLabel: 'BTC heatmap tile',
+    );
   });
 
   testWidgets('SC-013 opens selected coin detail and routes to pair detail', (

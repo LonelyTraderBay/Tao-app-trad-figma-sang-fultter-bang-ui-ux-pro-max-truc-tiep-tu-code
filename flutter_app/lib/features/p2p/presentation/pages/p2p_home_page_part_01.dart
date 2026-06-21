@@ -88,12 +88,12 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PHomePage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pHomeScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.x4,
+                      gap: VitContentGap.tight,
                       children: [
                         if (showOfflineWithCache) ...[
                           Padding(
@@ -236,7 +236,7 @@ class _QuickHub extends StatelessWidget {
       key: P2PHomePage.quickHubKey,
       radius: VitCardRadius.lg,
       borderColor: AppModuleAccents.p2p.withValues(alpha: .22),
-      padding: AppSpacing.p2pHomeCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
       child: Column(
         children: [
           Row(
@@ -249,15 +249,16 @@ class _QuickHub extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Thao tác nhanh',
-                  style: AppTextStyles.baseMedium.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
               const _LivePill(),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               for (
@@ -269,16 +270,16 @@ class _QuickHub extends StatelessWidget {
                   child: _QuickActionCard(action: snapshot.quickActions[index]),
                 ),
                 if (index != snapshot.quickActions.length - 1)
-                  const SizedBox(width: AppSpacing.x3),
+                  const SizedBox(width: AppSpacing.x2),
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -290,7 +291,7 @@ class _QuickHub extends StatelessWidget {
                   color: AppColors.buy,
                 ),
               ),
-              const _VerticalDivider(),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _HubStat(
                   icon: Icons.group_outlined,
@@ -300,7 +301,7 @@ class _QuickHub extends StatelessWidget {
                   color: AppColors.buy,
                 ),
               ),
-              const _VerticalDivider(),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _HubStat(
                   icon: Icons.trending_up_rounded,
@@ -312,12 +313,12 @@ class _QuickHub extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               _SmallIconBox(
@@ -366,18 +367,18 @@ class _QuickActionCard extends StatelessWidget {
       radius: VitCardRadius.md,
       borderColor: color.withValues(alpha: .28),
       onTap: () => context.go(action.route),
-      padding: AppSpacing.p2pHomeCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
       child: Row(
         children: [
           _ActionIcon(icon: icon, color: color),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   action.title,
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
@@ -387,7 +388,7 @@ class _QuickActionCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   action.subtitle,
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
@@ -397,7 +398,7 @@ class _QuickActionCard extends StatelessWidget {
           Icon(
             Icons.arrow_forward_rounded,
             color: color,
-            size: AppSpacing.p2pHomeInlineIcon,
+            size: AppSpacing.iconSm,
           ),
         ],
       ),
@@ -416,7 +417,7 @@ class _TradeTabs extends StatelessWidget {
     return VitCard(
       key: P2PHomePage.tradeTabsKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pHomeTabsPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
       child: Row(
         children: [
           _TradeTab(
@@ -462,14 +463,16 @@ class _TradeTab extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadii.cardRadius,
           child: Padding(
-            padding: AppSpacing.p2pHomeTradeTabPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              vertical: AppSpacing.x2,
+            ),
             child: Text(
               label,
               textAlign: TextAlign.center,
               style: AppTextStyles.caption.copyWith(
                 color: active ? AppColors.onAccent : AppColors.text3,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.p2pHomeTextTightLineHeight,
+                height: AppTextStyles.numericMicro.height,
               ),
             ),
           ),
@@ -502,7 +505,7 @@ class _AssetFiatRail extends StatelessWidget {
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: Row(
               children: [
                 for (final asset in snapshot.assets) ...[

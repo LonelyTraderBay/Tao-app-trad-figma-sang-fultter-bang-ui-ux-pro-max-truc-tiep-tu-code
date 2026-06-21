@@ -99,7 +99,7 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,

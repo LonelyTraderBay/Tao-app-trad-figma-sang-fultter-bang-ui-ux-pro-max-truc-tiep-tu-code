@@ -64,9 +64,7 @@ class _NetworkChip extends StatelessWidget {
           SizedBox(
             width: AppSpacing.walletAddressAddNetworkDot,
             height: AppSpacing.walletAddressAddNetworkDot,
-            child: ClipOval(
-              child: ColoredBox(color: Color(network.colorHex)),
-            ),
+            child: ClipOval(child: ColoredBox(color: Color(network.colorHex))),
           ),
           const SizedBox(width: AppSpacing.rowGap),
           Expanded(

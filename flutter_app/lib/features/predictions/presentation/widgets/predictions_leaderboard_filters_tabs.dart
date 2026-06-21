@@ -21,7 +21,7 @@ class _TimeFilters extends StatelessWidget {
       child: SizedBox(
         height: _boardControlExtent,
         child: Padding(
-          padding: const EdgeInsets.all(_boardTinySpace),
+          padding: const EdgeInsetsDirectional.all(_boardTinySpace),
           child: Row(
             children: [
               for (final item in filters)
@@ -103,7 +103,7 @@ class _MetricTabs extends StatelessWidget {
             onTap: onInfoTap,
             borderRadius: AppRadii.smRadius,
             child: const Padding(
-              padding: EdgeInsets.only(left: _boardTinySpace),
+              padding: EdgeInsetsDirectional.only(start: _boardTinySpace),
               child: Icon(
                 Icons.help_outline_rounded,
                 color: AppColors.text3,
@@ -161,7 +161,9 @@ class _MetricTab extends StatelessWidget {
         child: SizedBox(
           height: _boardControlExtent,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCopyEducation(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -78,6 +80,22 @@ void main() {
     expect(find.text('Sao chép tự động'), findsOneWidget);
     expect(find.text('Các chế độ sao chép'), findsOneWidget);
     expect(find.text('Mirror Copy'), findsOneWidget);
+  });
+
+  testWidgets('SC-065 first viewport reaches education tabs', (tester) async {
+    await pumpCopyEducation(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-065 CopyEducationPage',
+      semanticLabel: 'SC-065 CopyEducationPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(CopyEducationPage.tabKey('fees')),
+      routeName: 'SC-065 CopyEducationPage',
+      actionLabel: 'the education fee tab',
+    );
   });
 
   testWidgets('SC-065 tab buttons switch educational content', (tester) async {

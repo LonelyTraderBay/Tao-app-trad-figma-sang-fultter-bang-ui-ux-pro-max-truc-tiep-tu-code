@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDcaBuilder(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,22 @@ void main() {
     expect(find.text('Arbitrum'), findsOneWidget);
     expect(find.text('Optimism'), findsOneWidget);
     expect(find.text('ACTIVE'), findsWidgets);
+  });
+
+  testWidgets('SC-316 first viewport reaches first strategy', (tester) async {
+    await pumpDcaBuilder(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-316 LaunchpadDcaBuilderPage',
+      semanticLabel: 'SC-316 LaunchpadDcaBuilderPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadDcaBuilderPage.strategyKey('dca_001')),
+      routeName: 'SC-316 LaunchpadDcaBuilderPage',
+      actionLabel: 'the first DCA strategy card',
+    );
   });
 
   testWidgets('SC-316 switches to execution history', (tester) async {

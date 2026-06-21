@@ -49,22 +49,23 @@ const double _leaderboardCompactIcon = AppSpacing.iconMd + AppSpacing.x2;
 const double _leaderboardFooterIcon = AppSpacing.iconSm + AppSpacing.x2;
 const double _leaderboardFooterShieldIcon = AppSpacing.iconSm + AppSpacing.x2;
 const double _leaderboardFooterLineHeight = 1.25;
-const EdgeInsets _leaderboardFilterPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _leaderboardRowPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x4,
-  vertical: AppSpacing.x3,
-);
-const EdgeInsets _leaderboardFooterActionPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _leaderboardPodiumPadding = EdgeInsets.only(
-  top: AppSpacing.x1,
-  bottom: AppSpacing.x3,
-);
+const EdgeInsetsDirectional _leaderboardFilterPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x2,
+    );
+const EdgeInsetsDirectional _leaderboardRowPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x4,
+      vertical: AppSpacing.x3,
+    );
+const EdgeInsetsDirectional _leaderboardFooterActionPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x2,
+      vertical: AppSpacing.x2,
+    );
+const EdgeInsetsDirectional _leaderboardPodiumPadding =
+    EdgeInsetsDirectional.only(top: AppSpacing.x1, bottom: AppSpacing.x3);
 
 class ArenaLeaderboardPage extends ConsumerStatefulWidget {
   const ArenaLeaderboardPage({super.key, this.shellRenderMode});
@@ -120,7 +121,7 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaLeaderboardPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.arenaBottomScrollPadding(
                       scrollEndClearance,
                     ),

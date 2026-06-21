@@ -422,7 +422,7 @@ class _ArenaTabs extends StatelessWidget {
     return SingleChildScrollView(
       key: MyArenaPage.tabsScrollKey,
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Row(
         children: [
           for (final tab in _tabConfigs) ...[

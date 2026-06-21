@@ -10,7 +10,7 @@ class _SecurityCard extends StatelessWidget {
     return VitCard(
       key: P2PIdentityVerificationPage.securityKey,
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pKycCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -19,11 +19,11 @@ class _SecurityCard extends StatelessWidget {
             title: 'Bảo mật & Quyền riêng tư',
             color: AppColors.buy,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           for (final note in snapshot.securityNotes) ...[
             _ChecklistRow(text: note, color: AppColors.buy),
             if (note != snapshot.securityNotes.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.x1),
           ],
         ],
       ),
@@ -51,7 +51,7 @@ class _SectionTitle extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: AppTextStyles.baseMedium.copyWith(
+            style: AppTextStyles.caption.copyWith(
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -73,20 +73,20 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.p2pKycChecklistIconPadding,
+          padding: const EdgeInsetsDirectional.only(top: AppSpacing.x1),
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: color,
-            size: AppSpacing.p2pKycChecklistIcon,
+            size: AppSpacing.iconSm,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.p2pKycReadableLineHeight,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
         ),

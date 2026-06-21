@@ -19,7 +19,7 @@ class _GovernanceStepper extends StatelessWidget {
               padding: AppSpacing.arenaGovernanceStepperLineMargin,
               child: SizedBox(
                 width: AppSpacing.x5,
-                height: AppSpacing.arenaGovernanceStepperLineHeight,
+                height: _governanceStepperLineRatio,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: steps[i].index < step
@@ -119,7 +119,7 @@ class _GovernanceTitle extends StatelessWidget {
           'Governance Gate tự động kiểm tra rule trước khi publish',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaGovernanceSubtitleLineHeight,
+            height: _governanceSubtitleLineRatio,
           ),
         ),
       ],

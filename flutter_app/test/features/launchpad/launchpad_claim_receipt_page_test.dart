@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_staking_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpClaimReceipt(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,22 @@ void main() {
     expect(find.byKey(LaunchpadClaimReceiptPage.detailsKey), findsOneWidget);
     expect(find.text('Chi tiết vị trí'), findsOneWidget);
     expect(find.text('Lịch vesting'), findsOneWidget);
+  });
+
+  testWidgets('SC-302 first viewport reaches claimable reward', (tester) async {
+    await pumpClaimReceipt(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-302 LaunchpadClaimReceiptPage',
+      semanticLabel: 'SC-302 LaunchpadClaimReceiptPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadClaimReceiptPage.claimableKey),
+      routeName: 'SC-302 LaunchpadClaimReceiptPage',
+      actionLabel: 'the claimable reward card',
+    );
   });
 
   testWidgets('SC-302 tab state switches to vesting and history', (

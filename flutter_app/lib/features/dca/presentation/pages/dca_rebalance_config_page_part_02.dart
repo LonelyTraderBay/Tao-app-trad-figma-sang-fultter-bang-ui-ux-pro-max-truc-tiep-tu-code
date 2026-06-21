@@ -476,83 +476,94 @@ class _PreviewSheet extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(
+            padding: EdgeInsetsDirectional.fromSTEB(
               AppSpacing.contentPad,
               AppSpacing.zero,
               AppSpacing.contentPad,
               _dcaRebalancePreviewNavClearance +
                   MediaQuery.paddingOf(context).bottom,
             ),
-            child: VitCard(
+            child: Column(
               key: DCARebalanceConfig.previewSheetKey,
-              radius: VitCardRadius.lg,
-              padding: VitDensity.compact.cardPadding,
-              child: SafeArea(
-                top: false,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      children: [
-                        const _AccentIcon(icon: Icons.preview_outlined),
-                        const SizedBox(width: AppSpacing.x4),
-                        Expanded(
-                          child: Text(
-                            'Preview Simulation',
-                            style: AppTextStyles.baseMedium.copyWith(
-                              color: AppColors.text1,
-                            ),
-                          ),
-                        ),
-                        _IconBadgeButton(
-                          icon: Icons.close_rounded,
-                          onTap: onClose,
-                          color: AppColors.text2,
-                          neutral: true,
-                        ),
-                      ],
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                VitFinancialSafetySummary(
+                  title: 'Rebalance execution preview',
+                  contractId: 'SC-170 DCA rebalance',
+                  density: VitDensity.compact,
+                  footer:
+                      'Review trade count, estimated fees, and automation risk before saving rebalance execution.',
+                  items: [
+                    VitFinancialSafetyItem(
+                      label: 'Planned trades',
+                      value: '${previews.length}',
+                      leading: const Icon(Icons.swap_horiz_rounded),
                     ),
-                    const SizedBox(height: AppSpacing.x3),
-                    ...previews.map(
-                      (preview) => Padding(
-                        padding: AppSpacing.dcaBottomPaddingX3,
-                        child: _PreviewRow(preview: preview),
-                      ),
+                    VitFinancialSafetyItem(
+                      label: 'Estimated fees',
+                      value: '\$${totalFeesUsd.toStringAsFixed(2)}',
+                      leading: const Icon(Icons.receipt_long_outlined),
+                      valueColor: AppColors.text2,
                     ),
-                    const Divider(color: AppColors.borderSolid),
-                    Row(
-                      children: [
-                        Text(
-                          'Phí ước tính',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text2,
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '\$${totalFeesUsd.toStringAsFixed(2)}',
-                              style: AppTextStyles.baseMedium.copyWith(
-                                color: AppColors.text1,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.x3),
-                    VitCtaButton(
-                      key: DCARebalanceConfig.confirmSaveKey,
-                      onPressed: onConfirm,
-                      density: VitDensity.compact,
-                      leading: const Icon(Icons.check_rounded),
-                      child: const Text('Xác nhận lưu'),
+                    const VitFinancialSafetyItem(
+                      label: 'Risk check',
+                      value: 'Preview before save',
+                      leading: Icon(Icons.verified_user_outlined),
+                      valueColor: AppColors.warn,
                     ),
                   ],
                 ),
-              ),
+                const SizedBox(height: AppSpacing.x3),
+                VitCard(
+                  radius: VitCardRadius.lg,
+                  padding: VitDensity.compact.cardPadding,
+                  child: SafeArea(
+                    top: false,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          children: [
+                            const _AccentIcon(icon: Icons.preview_outlined),
+                            const SizedBox(width: AppSpacing.x4),
+                            Expanded(
+                              child: Text(
+                                'Preview Simulation',
+                                style: AppTextStyles.baseMedium.copyWith(
+                                  color: AppColors.text1,
+                                ),
+                              ),
+                            ),
+                            _IconBadgeButton(
+                              icon: Icons.close_rounded,
+                              onTap: onClose,
+                              color: AppColors.text2,
+                              neutral: true,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.x3),
+                        ...previews.map(
+                          (preview) => Padding(
+                            padding: AppSpacing.dcaBottomPaddingX3,
+                            child: _PreviewRow(preview: preview),
+                          ),
+                        ),
+                        const Divider(color: AppColors.borderSolid),
+                        VitCtaButton(
+                          key: DCARebalanceConfig.confirmSaveKey,
+                          onPressed: onConfirm,
+                          density: VitDensity.compact,
+                          leading: const Icon(Icons.check_rounded),
+                          child: const Text('Xác nhận lưu'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_ad_detail_
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PAdDetail(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -86,6 +88,39 @@ void main() {
     expect(find.text('KYC cấp 1+'), findsOneWidget);
     expect(find.text('Điều kiện giao dịch'), findsOneWidget);
     expect(find.textContaining('Escrow VitTrade'), findsOneWidget);
+  });
+
+  testWidgets('SC-224 first viewport reaches amount controls and buy action', (
+    tester,
+  ) async {
+    await pumpP2PAdDetail(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-224 P2PAdDetailPage',
+      semanticLabel: 'SC-224 P2PAdDetailPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.text('CryptoKing_VN'),
+      routeName: 'SC-224 P2PAdDetailPage',
+      actionLabel: 'the merchant summary',
+      minVisibleHeight: 16,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAdDetailPage.percentKey(25)),
+      routeName: 'SC-224 P2PAdDetailPage',
+      actionLabel: 'the 25 percent amount shortcut',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAdDetailPage.buyButtonKey),
+      routeName: 'SC-224 P2PAdDetailPage',
+      actionLabel: 'the sticky buy action',
+      minVisibleHeight: 40,
+    );
   });
 
   testWidgets('SC-224 percent selection enables order creation route', (

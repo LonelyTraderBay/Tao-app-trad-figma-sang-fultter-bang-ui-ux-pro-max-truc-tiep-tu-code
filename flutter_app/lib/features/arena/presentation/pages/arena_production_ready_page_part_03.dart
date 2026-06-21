@@ -24,7 +24,7 @@ class _ComponentLine extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.08,
+                  height: AppTextStyles.microTiny.height,
                 ),
               ),
             ),
@@ -38,7 +38,7 @@ class _ComponentLine extends StatelessWidget {
                   component.name,
                   style: AppTextStyles.caption.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.14,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -46,7 +46,7 @@ class _ComponentLine extends StatelessWidget {
                   component.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.24,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
               ],
@@ -100,7 +100,7 @@ class _DictionaryLine extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: 1.08,
+                  height: AppTextStyles.microTiny.height,
                 ),
               ),
             ),
@@ -114,7 +114,7 @@ class _DictionaryLine extends StatelessWidget {
                   item.label,
                   style: AppTextStyles.caption.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: 1.14,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -122,7 +122,7 @@ class _DictionaryLine extends StatelessWidget {
                   item.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.24,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
               ],
@@ -157,7 +157,7 @@ class _ChecklistLine extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.24,
+                height: AppTextStyles.numericMicro.height,
               ),
             ),
           ),
@@ -191,7 +191,7 @@ class _InternalOnlyFooter extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: 1.24,
+                height: AppTextStyles.numericMicro.height,
               ),
             ),
           ),
@@ -220,7 +220,7 @@ class _StatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1.08,
+            height: AppTextStyles.microTiny.height,
           ),
         ),
       ),
@@ -244,7 +244,7 @@ class _StateMiniPill extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: 1.08,
+            height: AppTextStyles.microTiny.height,
           ),
         ),
       ),

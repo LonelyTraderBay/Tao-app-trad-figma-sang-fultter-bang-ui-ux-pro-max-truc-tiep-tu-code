@@ -141,7 +141,7 @@ class _TinyBadge extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: color,
-            height: 1.1,
+            height: AppSpacing.predictionRewardsTinyBadgeLineHeight,
             fontWeight: AppTextStyles.bold,
           ),
         ),

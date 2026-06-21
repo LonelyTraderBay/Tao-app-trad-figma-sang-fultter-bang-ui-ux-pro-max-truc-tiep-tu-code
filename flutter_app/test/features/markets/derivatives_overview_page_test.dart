@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDerivatives(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -84,6 +86,22 @@ void main() {
     expect(find.text('Thanh lý theo thời gian (24h)'), findsOneWidget);
     expect(find.text('Top Open Interest'), findsOneWidget);
     expect(find.text('BTC/USDT'), findsOneWidget);
+  });
+
+  testWidgets('SC-018 first viewport reaches derivatives tabs', (tester) async {
+    await pumpDerivatives(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-018 DerivativesOverviewPage',
+      semanticLabel: 'SC-018 DerivativesOverviewPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(DerivativesOverviewPage.overviewTabKey),
+      routeName: 'SC-018 DerivativesOverviewPage',
+      actionLabel: 'the overview derivatives tab',
+    );
   });
 
   testWidgets('SC-018 switches to Perpetual tab and sorts by funding', (

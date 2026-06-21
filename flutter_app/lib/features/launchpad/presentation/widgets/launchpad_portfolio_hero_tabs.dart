@@ -144,7 +144,7 @@ class _HeroMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              height: AppSpacing.launchpadLineHeightShort,
+              height: AppSpacing.launchpadLineHeightTight,
             ),
           ),
         ],

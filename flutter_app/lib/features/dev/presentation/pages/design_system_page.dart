@@ -100,7 +100,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: DesignSystemPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.devScrollPadding(bottomInset),
                   child: VitPageContent(
                     gap: VitContentGap.loose,

@@ -85,7 +85,9 @@ class _AdvancedTradingDemoPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: AdvancedTradingDemoPage.contentKey,
-                      padding: EdgeInsets.only(bottom: scrollEndClearance),
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollEndClearance,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,

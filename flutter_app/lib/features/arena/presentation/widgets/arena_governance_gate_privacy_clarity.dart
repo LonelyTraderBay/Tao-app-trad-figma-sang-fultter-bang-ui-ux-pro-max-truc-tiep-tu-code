@@ -79,7 +79,7 @@ class _PrivacyCard extends StatelessWidget {
               'Public room yêu cầu tất cả mục rule bắt buộc. Governance Gate sẽ kiểm tra tự động.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaGovernanceBodyLineHeight,
+                height: _governanceBodyLineRatio,
               ),
             ),
           ],

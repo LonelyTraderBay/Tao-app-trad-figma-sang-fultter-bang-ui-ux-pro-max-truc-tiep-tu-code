@@ -1,4 +1,4 @@
-﻿part of '../pages/bot_portfolio_dashboard_page.dart';
+part of '../pages/bot_portfolio_dashboard_page.dart';
 
 class _HealthCard extends StatelessWidget {
   const _HealthCard({required this.items});
@@ -35,7 +35,7 @@ class _HealthCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotPageTopGap),
+          const SizedBox(height: AppSpacing.x2),
           for (final item in items) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,8 +56,7 @@ class _HealthCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last)
-              const SizedBox(height: AppSpacing.tradeBotCardGap),
+            if (item != items.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),

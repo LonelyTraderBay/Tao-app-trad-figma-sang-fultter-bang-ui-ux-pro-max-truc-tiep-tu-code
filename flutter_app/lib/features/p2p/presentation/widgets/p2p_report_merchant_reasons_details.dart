@@ -35,11 +35,14 @@ class _ReasonCard extends StatelessWidget {
             borderRadius: AppRadii.cardRadius,
           ),
           child: Padding(
-            padding: AppSpacing.p2pRiskControlsReasonPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x2,
+            ),
             child: Row(
               children: [
                 SizedBox.square(
-                  dimension: AppSpacing.p2pRiskControlsReasonIconBox,
+                  dimension: AppSpacing.x6,
                   child: Material(
                     color: tone.withValues(alpha: 0.12),
                     shape: const RoundedRectangleBorder(

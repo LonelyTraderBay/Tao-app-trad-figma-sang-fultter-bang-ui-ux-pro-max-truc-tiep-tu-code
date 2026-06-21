@@ -164,7 +164,7 @@ class _VestingMiniRow extends StatelessWidget {
           ),
         ),
         const Divider(
-          height: AppSpacing.launchpadDividerHeight,
+          height: AppSpacing.dividerHairline,
           color: AppColors.divider,
         ),
       ],

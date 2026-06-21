@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,6 +24,10 @@ part '../widgets/arena_join_page_sections.dart';
 part '../widgets/arena_join_page_common.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
+const _joinAcknowledgementLineRatio =
+    AppSpacing.arenaJoinAcknowledgementLineHeight;
+const _joinBodyLineRatio = AppSpacing.arenaJoinBodyLineHeight;
+const _joinNoticeLineRatio = AppSpacing.arenaJoinNoticeLineHeight;
 
 class ArenaJoinPage extends ConsumerStatefulWidget {
   const ArenaJoinPage({
@@ -63,11 +68,12 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
       understandPoints: _understandPoints,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -87,25 +93,18 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: ArenaJoinPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
                       maxWidth: DeviceMetrics.width,
                     ),
                     child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         _ChallengeSummaryCard(challenge: challenge),
-                        _RoomInfoCard(challenge: challenge),
-                        _CreatorCard(creator: snapshot.creator),
                         _RulesCard(rules: snapshot.rules),
-                        _BalanceCard(
-                          currentBalance: snapshot.currentBalance,
-                          entryPoints: challenge.entryPoints,
-                          remainingBalance: remainingBalance,
-                          hasEnough: hasEnough,
-                        ),
-                        _NoticeCard(text: snapshot.refundNotice),
                         _SafetyPolicyLink(
                           onTap: () => _go(AppRoutePaths.arenaSafety),
                         ),
@@ -115,15 +114,20 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
                           onRules: () => _toggleRules(),
                           onPoints: () => _togglePoints(),
                         ),
+                        _RoomInfoCard(challenge: challenge),
+                        _CreatorCard(creator: snapshot.creator),
+                        _BalanceCard(
+                          currentBalance: snapshot.currentBalance,
+                          entryPoints: challenge.entryPoints,
+                          remainingBalance: remainingBalance,
+                          hasEnough: hasEnough,
+                        ),
+                        _NoticeCard(text: snapshot.refundNotice),
                         _ActionStack(
                           entryPoints: challenge.entryPoints,
                           canJoin: canJoin,
                           onConfirm: _confirmJoin,
                           onDecline: _decline,
-                        ),
-                        const SizedBox(
-                          height:
-                              DeviceMetrics.nativeBottomChrome + AppSpacing.x6,
                         ),
                       ],
                     ),

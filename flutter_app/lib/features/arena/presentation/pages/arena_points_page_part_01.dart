@@ -19,10 +19,10 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
         widget.snapshotOverride ??
         ref.watch(arenaReadModelControllerProvider).getArenaPoints();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
     final visibleTasks = snapshot.tasks
         .where(
@@ -49,11 +49,11 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
             ).copyWith(scrollbars: false),
             child: SingleChildScrollView(
               key: ArenaPointsPage.contentKey,
-              physics: const BouncingScrollPhysics(),
-              padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+              physics: const ClampingScrollPhysics(),
+              padding: AppSpacing.arenaBottomScrollPadding(scrollEndClearance),
               child: VitPageContent(
                 padding: VitContentPadding.compact,
-                customGap: AppSpacing.x5,
+                gap: VitContentGap.tight,
                 children: [
                   _RewardsHero(
                     snapshot: snapshot,

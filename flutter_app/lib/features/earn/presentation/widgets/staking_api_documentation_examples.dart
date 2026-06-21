@@ -54,7 +54,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: EdgeInsets.zero,
+              padding: EdgeInsetsDirectional.all(AppSpacing.zero),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [

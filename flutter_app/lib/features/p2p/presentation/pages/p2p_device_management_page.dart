@@ -101,7 +101,7 @@ class _P2PDeviceManagementPageState
                     ).copyWith(scrollbars: false),
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(
-                        parent: BouncingScrollPhysics(),
+                        parent: ClampingScrollPhysics(),
                       ),
                       padding: AppSpacing.p2pSecurityDetailsScrollPadding(
                         bottomInset,

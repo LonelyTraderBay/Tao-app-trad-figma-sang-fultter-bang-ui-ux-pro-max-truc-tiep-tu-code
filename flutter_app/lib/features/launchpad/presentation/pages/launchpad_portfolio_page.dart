@@ -52,11 +52,12 @@ class _LaunchpadPortfolioPageState
     final snapshot = ref.watch(launchpadControllerProvider).getPortfolio();
     final subscriptions = _subscriptionsFor(snapshot.subscriptions, _activeTab);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome
+            : DeviceMetrics.nativeBottomChrome) +
+        MediaQuery.paddingOf(context).bottom +
+        AppSpacing.x3;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -64,7 +65,7 @@ class _LaunchpadPortfolioPageState
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
+          bottomInset: scrollTailReserve,
           semanticLabel: 'SC-296 LaunchpadPortfolioPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
@@ -78,10 +79,10 @@ class _LaunchpadPortfolioPageState
             ).copyWith(scrollbars: false),
             child: SingleChildScrollView(
               key: LaunchpadPortfolioPage.contentKey,
-              physics: const BouncingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               child: VitPageContent(
-                padding: VitContentPadding.defaultPadding,
-                customGap: AppSpacing.x4,
+                padding: VitContentPadding.compact,
+                gap: VitContentGap.tight,
                 children: [
                   _PortfolioHero(subscriptions: snapshot.subscriptions),
                   _PortfolioTabs(

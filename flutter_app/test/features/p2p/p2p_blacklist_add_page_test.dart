@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_blacklist_
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_blacklist_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBlacklistAdd(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,37 @@ void main() {
     expect(find.text('Ghi chú (tùy chọn)'), findsOneWidget);
     expect(find.byKey(P2PBlacklistAddPage.warningKey), findsOneWidget);
     expect(find.text('Chặn người dùng'), findsAtLeastNWidgets(1));
+  });
+
+  testWidgets('SC-276 first viewport reaches user and reason controls', (
+    tester,
+  ) async {
+    await pumpBlacklistAdd(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-276 P2PBlacklistAddPage',
+      semanticLabel: 'SC-276 P2PBlacklistAddPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(const Key('sc276_p2p_blacklist_add_username_control')),
+      routeName: 'SC-276 P2PBlacklistAddPage',
+      actionLabel: 'blocked username field',
+      minVisibleHeight: 48,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PBlacklistAddPage.reasonKey('scam')),
+      routeName: 'SC-276 P2PBlacklistAddPage',
+      actionLabel: 'first blacklist reason',
+      minVisibleHeight: 39,
+    );
+    expect(
+      tester.getSize(find.byKey(P2PBlacklistAddPage.heroKey)).height,
+      lessThanOrEqualTo(112),
+      reason: 'Blacklist add hero should not push form controls down.',
+    );
   });
 
   testWidgets('SC-276 reason selection updates form state', (tester) async {

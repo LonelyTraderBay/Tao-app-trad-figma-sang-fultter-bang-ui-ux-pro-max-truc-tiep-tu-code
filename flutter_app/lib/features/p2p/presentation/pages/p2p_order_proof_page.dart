@@ -77,7 +77,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2POrderProofPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pFinancialSafetyBottomPadding(
                       bottomInset,
                     ),

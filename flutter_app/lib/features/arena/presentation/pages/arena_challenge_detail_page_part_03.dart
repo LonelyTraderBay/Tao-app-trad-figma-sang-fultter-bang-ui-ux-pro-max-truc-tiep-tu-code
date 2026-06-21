@@ -192,7 +192,9 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsetsDirectional.symmetric(
+        vertical: _challengeTinyGap,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -211,7 +213,7 @@ class _SummaryRow extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1.25,
+                height: AppTextStyles.numericMicro.height,
               ),
             ),
           ),
@@ -259,7 +261,7 @@ class _InfoCard extends StatelessWidget {
                   text,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: 1.35,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
               ],
@@ -340,7 +342,9 @@ class _InlineAction extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.smRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
+          padding: const EdgeInsetsDirectional.symmetric(
+            vertical: AppSpacing.x1 - AppSpacing.dividerHairline,
+          ),
           child: Row(
             children: [
               Flexible(
@@ -466,7 +470,7 @@ class _InitialBadge extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: 1.0,
+              height: AppTextStyles.microTiny.height,
             ),
           ),
         ),

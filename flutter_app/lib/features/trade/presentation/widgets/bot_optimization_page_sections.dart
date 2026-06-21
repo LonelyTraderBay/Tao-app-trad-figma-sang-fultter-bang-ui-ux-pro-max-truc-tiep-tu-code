@@ -7,7 +7,7 @@ class _IntroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: AppSpacing.tradeBotCardPadding,
       borderColor: _optimizationPrimary.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,7 +17,7 @@ class _IntroCard extends StatelessWidget {
             color: _optimizationPrimary,
             size: AppSpacing.iconMd,
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,12 +28,10 @@ class _IntroCard extends StatelessWidget {
                     color: AppColors.text1,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotRowGap),
+                const SizedBox(height: AppSpacing.x3),
                 Text(
                   'Use genetic algorithms to find optimal bot parameters that maximize Sharpe ratio while minimizing drawdown. This typically takes 2-5 minutes.',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -58,7 +56,7 @@ class _TargetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: AppSpacing.tradeBotCompactCardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -69,8 +67,7 @@ class _TargetCard extends StatelessWidget {
               selected: target.id == selectedId,
               onTap: () => onChanged(target.id),
             ),
-            if (target != targets.last)
-              const SizedBox(height: AppSpacing.tradeBotCardGap),
+            if (target != targets.last) const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -97,9 +94,7 @@ class _TargetTile extends StatelessWidget {
       borderRadius: AppRadii.cardRadius,
       child: VitCard(
         variant: VitCardVariant.inner,
-        constraints: const BoxConstraints(
-          minHeight: AppSpacing.tradeBotOptionMinHeight,
-        ),
+        constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
         padding: AppSpacing.tradeBotChipPadding,
         borderColor: selected ? _optimizationPrimary : AppColors.borderSolid,
         child: Row(
@@ -111,7 +106,7 @@ class _TargetTile extends StatelessWidget {
               color: selected ? _optimizationPrimary : AppColors.borderSolid,
               size: AppSpacing.iconMd,
             ),
-            const SizedBox(width: AppSpacing.tradeBotRowGap),
+            const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -124,12 +119,10 @@ class _TargetTile extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.tradeBotRowGap),
+                  const SizedBox(height: AppSpacing.x2),
                   Text(
                     target.description,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -162,7 +155,7 @@ class _RangeCard extends StatelessWidget {
     final rangePct = ranges.firstWhere((item) => item.id == 'gridRange');
 
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: AppSpacing.tradeBotCardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -172,7 +165,7 @@ class _RangeCard extends StatelessWidget {
             value: gridCount,
             onChanged: onGridCountChanged,
           ),
-          const SizedBox(height: AppSpacing.iconMd),
+          const SizedBox(height: AppSpacing.x3),
           _RangeSliderRow(
             key: BotOptimizationPage.rangeKey(rangePct.id),
             range: rangePct,
@@ -207,9 +200,7 @@ class _RangeSliderRow extends StatelessWidget {
             Expanded(
               child: Text(
                 range.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
             Text(
@@ -221,16 +212,16 @@ class _RangeSliderRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.tradeBotRowGap),
+        const SizedBox(height: AppSpacing.x3),
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
-            trackHeight: AppSpacing.tradeBotSmallGap,
+            trackHeight: AppSpacing.x3,
             activeTrackColor: _optimizationPrimary,
             inactiveTrackColor: AppColors.onAccent,
             thumbColor: _optimizationPrimary,
             overlayColor: _optimizationPrimary.withValues(alpha: .12),
             thumbShape: const RoundSliderThumbShape(
-              enabledThumbRadius: AppSpacing.tradeBotSmallGap,
+              enabledThumbRadius: AppSpacing.x3,
             ),
             overlayShape: SliderComponentShape.noOverlay,
           ),
@@ -258,7 +249,7 @@ class _HowItWorksCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: AppSpacing.tradeBotCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -269,7 +260,7 @@ class _HowItWorksCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          const SizedBox(height: AppSpacing.x3),
           for (final step in steps) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -279,7 +270,7 @@ class _HowItWorksCard extends StatelessWidget {
                   color: AppColors.text3,
                   size: AppSpacing.x2,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotRowGap),
+                const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Text(
                     step,
@@ -290,8 +281,7 @@ class _HowItWorksCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (step != steps.last)
-              const SizedBox(height: AppSpacing.tradeBotRowGap),
+            if (step != steps.last) const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),
@@ -308,7 +298,7 @@ class _QueuedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotControlPadding,
+      padding: AppSpacing.tradeBotCompactCardPadding,
       borderColor: _optimizationPrimary.withValues(alpha: .24),
       child: Text(
         'Optimization queued (${result.jobId}) - about ${result.estimatedMinutes} min',

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_address_pr
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_kyc_status_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAddressProof(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -77,6 +79,37 @@ void main() {
     expect(find.text('Bank statement 3 tháng gần nhất'), findsOneWidget);
     expect(find.text('Giấy tờ chính phủ'), findsOneWidget);
     expect(find.text('Hợp đồng thuê nhà'), findsOneWidget);
+  });
+
+  testWidgets('SC-250 first viewport reaches document choice safely', (
+    tester,
+  ) async {
+    await pumpAddressProof(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-250 P2PAddressProofPage',
+      semanticLabel: 'SC-250 P2PAddressProofPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAddressProofPage.requirementsKey),
+      routeName: 'SC-250 P2PAddressProofPage',
+      actionLabel: 'document requirements',
+      minVisibleHeight: 48,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAddressProofPage.documentTypeKey('utility')),
+      routeName: 'SC-250 P2PAddressProofPage',
+      actionLabel: 'first document type',
+      minVisibleHeight: 48,
+    );
+    expect(
+      tester.getSize(find.byKey(P2PAddressProofPage.heroKey)).height,
+      lessThanOrEqualTo(112),
+      reason: 'Address proof hero should preserve KYC copy without dominating.',
+    );
   });
 
   testWidgets('SC-250 supports mock upload state and status navigation', (

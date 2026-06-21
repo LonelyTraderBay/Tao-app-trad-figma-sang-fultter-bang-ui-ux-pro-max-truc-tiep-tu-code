@@ -20,9 +20,11 @@ class _BreakingNewsCard extends StatelessWidget {
                 color: AppColors.sell.withValues(alpha: .16),
                 borderRadius: AppRadii.smRadius,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.x2,
-                    vertical: AppSpacing.x1,
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                    AppSpacing.x2,
+                    AppSpacing.x1,
+                    AppSpacing.x2,
+                    AppSpacing.x1,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -57,7 +59,7 @@ class _BreakingNewsCard extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: _marketTitleLineHeight,
+              height: AppTextStyles.body.height,
             ),
           ),
           const SizedBox(height: _marketSpace),
@@ -70,9 +72,11 @@ class _BreakingNewsCard extends StatelessWidget {
                   color: AppColors.surface2,
                   borderRadius: AppRadii.smRadius,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.x2,
-                      vertical: AppSpacing.x1,
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      AppSpacing.x2,
+                      AppSpacing.x1,
+                      AppSpacing.x2,
+                      AppSpacing.x1,
                     ),
                     child: Text(
                       token,
@@ -159,9 +163,11 @@ class _CategoryChip extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x1,
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            AppSpacing.x2,
+            AppSpacing.x1,
+            AppSpacing.x2,
+            AppSpacing.x1,
           ),
           child: Text(
             category.label,
@@ -247,9 +253,11 @@ class _SentimentChip extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x1,
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            AppSpacing.x2,
+            AppSpacing.x1,
+            AppSpacing.x2,
+            AppSpacing.x1,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,

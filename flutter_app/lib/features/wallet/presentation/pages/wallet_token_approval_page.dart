@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_active_approvals_tab.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
@@ -50,10 +49,10 @@ class _WalletTokenApprovalPageState
   Widget build(BuildContext context) {
     final controller = ref.watch(tokenApprovalControllerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -80,7 +79,7 @@ class _WalletTokenApprovalPageState
                   key: WalletTokenApprovalPage.contentKey,
                   padding: AppSpacing.contentInsets.copyWith(
                     top: AppSpacing.x4,
-                    bottom: bottomInset,
+                    bottom: scrollEndClearance,
                   ),
                   child: _tabSurface(_contentForTab(controller)),
                 ),
@@ -97,7 +96,7 @@ class _WalletTokenApprovalPageState
     if (_tab == walletTokenApprovalTabHistory) {
       return VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 0,
+        gap: VitContentGap.tight,
         fullBleed: true,
         children: [WalletTokenApprovalHistoryTab(snapshot: snapshot)],
       );
@@ -105,7 +104,7 @@ class _WalletTokenApprovalPageState
     if (_tab == walletTokenApprovalTabSettings) {
       return VitPageContent(
         padding: VitContentPadding.none,
-        customGap: 0,
+        gap: VitContentGap.tight,
         fullBleed: true,
         children: [
           WalletTokenApprovalSettingsTab(
@@ -121,7 +120,7 @@ class _WalletTokenApprovalPageState
     }
     return VitPageContent(
       padding: VitContentPadding.none,
-      customGap: 16,
+      gap: VitContentGap.tight,
       fullBleed: true,
       children: [
         VitHighRiskStatePanel(

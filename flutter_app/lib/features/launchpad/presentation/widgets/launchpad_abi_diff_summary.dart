@@ -449,7 +449,7 @@ class _FilterRow extends StatelessWidget {
             ),
           ),
         ),
-        const Spacer(),
+        const SizedBox(width: AppSpacing.x3),
         Text(
           '$count entries',
           style: AppTextStyles.micro.copyWith(

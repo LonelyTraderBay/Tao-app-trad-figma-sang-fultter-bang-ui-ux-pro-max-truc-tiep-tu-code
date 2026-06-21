@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/cross_module/data/cross_module_analyt
 import 'package:vit_trade_flutter/features/cross_module/presentation/pages/cross_module_analytics.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAnalytics(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,6 +72,24 @@ void main() {
     expect(find.text('Best ROI'), findsOneWidget);
     expect(find.text('ROI by Module'), findsOneWidget);
     expect(find.text('Monthly ROI Trends'), findsOneWidget);
+  });
+
+  testWidgets('SC-322 first viewport reaches analytics tabs', (tester) async {
+    await pumpAnalytics(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-322 CrossModuleAnalytics',
+      semanticLabel: 'SC-322 CrossModuleAnalytics',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(
+        CrossModuleAnalytics.tabKey(CrossModuleAnalyticsTab.performance),
+      ),
+      routeName: 'SC-322 CrossModuleAnalytics',
+      actionLabel: 'the performance analytics tab',
+    );
   });
 
   testWidgets('SC-322 switches metrics and comparison tabs locally', (

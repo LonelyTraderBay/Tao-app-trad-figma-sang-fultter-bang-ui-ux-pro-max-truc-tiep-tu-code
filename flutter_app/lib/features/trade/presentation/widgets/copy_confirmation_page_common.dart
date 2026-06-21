@@ -150,7 +150,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+      padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x1),
       child: Row(
         children: [
           Expanded(

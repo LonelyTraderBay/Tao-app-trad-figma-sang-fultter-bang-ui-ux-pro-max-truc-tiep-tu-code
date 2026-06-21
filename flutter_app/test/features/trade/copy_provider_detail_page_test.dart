@@ -12,6 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCopyProviderDetail(
     WidgetTester tester, {
@@ -68,6 +70,24 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Provider Not Found'), findsOneWidget);
     expect(find.byKey(CopyProviderDetailPage.notFoundKey), findsOneWidget);
+  });
+
+  testWidgets('SC-070 first viewport reaches risk assessment CTA', (
+    tester,
+  ) async {
+    await pumpCopyProviderDetail(tester, providerId: 'ct001');
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-070 CopyProviderDetailPage',
+      semanticLabel: 'SC-070 CopyProviderDetailPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(CopyProviderDetailPage.assessmentKey),
+      routeName: 'SC-070 CopyProviderDetailPage',
+      actionLabel: 'the risk assessment CTA',
+    );
   });
 
   testWidgets('SC-070 back returns to SC-063 CopyTradingPage', (tester) async {

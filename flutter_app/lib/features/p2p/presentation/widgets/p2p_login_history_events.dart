@@ -23,7 +23,7 @@ class _LoginEventList extends StatelessWidget {
             expanded: expandedEventId == events[index].id,
             onTap: () => onToggle(events[index].id),
           ),
-          if (index != events.length - 1) const SizedBox(height: AppSpacing.x3),
+          if (index != events.length - 1) const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -55,7 +55,7 @@ class _LoginEventCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: AppSpacing.p2pLoginHistoryEventPadding,
+            padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -133,7 +133,7 @@ class _EventMainInfo extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.x1),
         Wrap(
           spacing: AppSpacing.x2,
           runSpacing: AppSpacing.x1,
@@ -156,10 +156,7 @@ class _EventMainInfo extends StatelessWidget {
 }
 
 class _EventTrailing extends StatelessWidget {
-  const _EventTrailing({
-    required this.event,
-    required this.expanded,
-  });
+  const _EventTrailing({required this.event, required this.expanded});
 
   final P2PLoginEventDraft event;
   final bool expanded;
@@ -205,71 +202,71 @@ class _ExpandedDetails extends StatelessWidget {
           child: ColoredBox(color: AppColors.divider),
         ),
         Padding(
-        padding: AppSpacing.p2pLoginHistoryEventPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: _DetailValue(label: 'IP Address', value: event.ip),
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: _DetailValue(
-                    label: 'Login Method',
-                    value: event.methodLabel,
+          padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: _DetailValue(label: 'IP Address', value: event.ip),
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: _DetailValue(
+                      label: 'Login Method',
+                      value: event.methodLabel,
+                    ),
+                  ),
+                ],
+              ),
+              if (event.status == 'suspicious') ...[
+                const SizedBox(height: AppSpacing.x3),
+                Material(
+                  type: MaterialType.transparency,
+                  color: AppColors.warn10,
+                  borderRadius: AppRadii.mdRadius,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.warning_amber_rounded,
+                          color: AppColors.warn,
+                          size: AppSpacing.iconSm,
+                        ),
+                        const SizedBox(width: AppSpacing.x2),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Đăng nhập đáng ngờ',
+                                style: AppTextStyles.micro.copyWith(
+                                  color: AppColors.warn,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
+                              ),
+                              const SizedBox(height: AppSpacing.x1),
+                              Text(
+                                'Vị trí không quen thuộc. Nếu không phải bạn, hãy đổi mật khẩu ngay.',
+                                style: AppTextStyles.micro.copyWith(
+                                  color: AppColors.text2,
+                                  height: 1.35,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
-            ),
-            if (event.status == 'suspicious') ...[
-              const SizedBox(height: AppSpacing.x3),
-              Material(
-                type: MaterialType.transparency,
-                color: AppColors.warn10,
-                borderRadius: AppRadii.mdRadius,
-                child: Padding(
-                  padding: AppSpacing.p2pLoginHistoryNoticePadding,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(
-                        Icons.warning_amber_rounded,
-                        color: AppColors.warn,
-                        size: AppSpacing.iconSm,
-                      ),
-                      const SizedBox(width: AppSpacing.x2),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Đăng nhập đáng ngờ',
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.warn,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.x1),
-                            Text(
-                              'Vị trí không quen thuộc. Nếu không phải bạn, hãy đổi mật khẩu ngay.',
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.text2,
-                                height: AppSpacing.p2pLoginHistoryRiskLineHeight,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ],
-          ],
+          ),
         ),
-      ),
       ],
     );
   }

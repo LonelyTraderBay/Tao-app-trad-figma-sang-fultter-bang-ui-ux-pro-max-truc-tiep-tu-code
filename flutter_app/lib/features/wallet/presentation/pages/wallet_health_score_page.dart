@@ -32,6 +32,10 @@ const _healthAmber = AppColors.caution;
 const _healthOrange = AppColors.riskHigh;
 const _healthRed = AppColors.sell;
 const _healthPurple = AppColors.accent;
+const _healthTabBarHeight = 48.0;
+const _healthCompactGaugeSize = 88.0;
+const _healthMetricProgressHeight = 5.0;
+const _healthLegendSwatchHeight = 10.0;
 
 const _tabOverview = 'T\u1ED5ng quan';
 const _tabSecurity = 'B\u1EA3o m\u1EADt';

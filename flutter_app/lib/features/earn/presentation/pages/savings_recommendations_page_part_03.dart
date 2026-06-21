@@ -193,9 +193,8 @@ class _BulletSection extends StatelessWidget {
             children: [
               Padding(
                 padding: AppSpacing.savingsRecommendationsBulletPadding,
-                child: SizedBox(
-                  width: AppSpacing.x1,
-                  height: AppSpacing.x1,
+                child: SizedBox.square(
+                  dimension: AppSpacing.x1,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
                       color: color,
@@ -210,7 +209,7 @@ class _BulletSection extends StatelessWidget {
                   item,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.savingsRecommendationsItemLineHeight,
+                    height: AppTextStyles.caption.height,
                   ),
                 ),
               ),
@@ -269,8 +268,8 @@ class _RoundIcon extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        width: AppSpacing.x7,
-        height: AppSpacing.x7,
+        width: AppSpacing.x6,
+        height: AppSpacing.x6,
         child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
     );
@@ -293,16 +292,15 @@ class _AssetBadge extends StatelessWidget {
           side: BorderSide(color: color.withValues(alpha: 0.25)),
         ),
       ),
-      child: SizedBox(
-        width: AppSpacing.x7,
-        height: AppSpacing.x7,
+      child: SizedBox.square(
+        dimension: AppSpacing.x7,
         child: Center(
           child: Text(
             asset,
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.savingsRecommendationsAssetLineHeight,
+              height: AppTextStyles.micro.height,
             ),
           ),
         ),

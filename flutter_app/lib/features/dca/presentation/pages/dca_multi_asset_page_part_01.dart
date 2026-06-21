@@ -32,11 +32,10 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaMultiAssetProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollBottom =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
-        AppSpacing.x6 +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -57,10 +56,10 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: DCAMultiAssetPage.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: AppSpacing.dcaBottomInsetPadding(scrollBottom),
+                physics: const ClampingScrollPhysics(),
+                padding: AppSpacing.dcaBottomInsetPadding(scrollEndClearance),
                 child: VitPageContent(
-                  customGap: AppSpacing.x4,
+                  gap: VitContentGap.tight,
                   children: [
                     if (_activeTab == _MultiAssetTab.setup)
                       ..._buildSetup(snapshot),

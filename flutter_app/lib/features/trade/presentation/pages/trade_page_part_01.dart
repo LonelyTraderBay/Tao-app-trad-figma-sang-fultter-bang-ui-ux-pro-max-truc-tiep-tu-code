@@ -507,7 +507,7 @@ class _DataTabs extends StatelessWidget {
       padding: AppSpacing.contentInsets,
       child: VitCard(
         density: VitDensity.tool,
-        padding: const EdgeInsets.all(AppSpacing.x1),
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
         variant: VitCardVariant.inner,
         radius: VitCardRadius.sm,
         child: Row(

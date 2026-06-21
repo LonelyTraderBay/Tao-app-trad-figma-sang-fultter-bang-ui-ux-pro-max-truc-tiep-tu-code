@@ -74,26 +74,39 @@ const double _portfolioPerformanceLastPoint = AppSpacing.x1;
 const double _portfolioPerformanceInnerPoint = 2;
 const double _portfolioPerformanceDateBottom = AppSpacing.x4;
 const double _portfolioSparklineStroke = 1.4;
-const EdgeInsets _portfolioHeroPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _portfolioHeroTogglePadding = EdgeInsets.all(AppSpacing.x1);
-const EdgeInsets _portfolioMiniStatPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _portfolioAllocationPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _portfolioHoldingRowPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
+const EdgeInsetsDirectional _portfolioHeroPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
 );
-const EdgeInsets _portfolioRiskPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _portfolioChipPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
+const EdgeInsetsDirectional _portfolioHeroTogglePadding =
+    EdgeInsetsDirectional.all(AppSpacing.x1);
+const EdgeInsetsDirectional _portfolioMiniStatPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x2);
+const EdgeInsetsDirectional _portfolioAllocationPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _portfolioHoldingRowPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x2,
+    );
+const EdgeInsetsDirectional _portfolioRiskPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
 );
-const EdgeInsets _portfolioHoldingDetailPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _portfolioChartCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _portfolioPnlRowPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _portfolioSummaryPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsetsDirectional _portfolioChipPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x2,
+    );
+const EdgeInsetsDirectional _portfolioHoldingDetailPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _portfolioChartCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _portfolioPnlRowPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x2,
+    );
+const EdgeInsetsDirectional _portfolioSummaryPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
 
 class PortfolioTrackerPage extends ConsumerStatefulWidget {
   const PortfolioTrackerPage({super.key, this.shellRenderMode});

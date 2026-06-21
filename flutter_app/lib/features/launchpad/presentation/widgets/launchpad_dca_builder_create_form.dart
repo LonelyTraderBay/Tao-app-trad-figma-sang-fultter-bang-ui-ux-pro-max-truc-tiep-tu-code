@@ -179,7 +179,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
                       submissionMessage!,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.launchpadLineHeightReadable,
+                        height: AppSpacing.launchpadLineHeightShort,
                       ),
                     ),
                   ),

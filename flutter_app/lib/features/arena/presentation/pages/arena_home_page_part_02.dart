@@ -30,7 +30,7 @@ class _FeaturedModesSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Row(
             children: [
               for (final item in modes) ...[
@@ -56,6 +56,7 @@ class _ModeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tags = mode.tags.take(2).join(' · ');
     return VitCard(
       key: ArenaHomePage.modeKey(mode.id),
       onTap: onTap,
@@ -83,7 +84,7 @@ class _ModeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             mode.creatorName,
             maxLines: 1,
@@ -93,7 +94,7 @@ class _ModeCard extends StatelessWidget {
               fontWeight: AppTextStyles.medium,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Row(
             children: [
               _MetaText('${mode.cloneCount} clone'),
@@ -101,10 +102,8 @@ class _ModeCard extends StatelessWidget {
               _MetaText('${mode.completionRate}%'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
-          Wrap(
-            spacing: AppSpacing.x2,
-            runSpacing: AppSpacing.x2,
+          const SizedBox(height: AppSpacing.x1),
+          Row(
             children: [
               if (mode.fairPlay)
                 const VitStatusPill(
@@ -112,11 +111,19 @@ class _ModeCard extends StatelessWidget {
                   status: VitStatusPillStatus.success,
                   size: VitStatusPillSize.sm,
                 ),
-              for (final tag in mode.tags.take(2))
-                VitStatusPill(
-                  label: tag,
-                  status: VitStatusPillStatus.neutral,
-                  size: VitStatusPillSize.sm,
+              if (mode.fairPlay && tags.isNotEmpty)
+                const SizedBox(width: AppSpacing.x2),
+              if (tags.isNotEmpty)
+                Expanded(
+                  child: Text(
+                    tags,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      fontWeight: AppTextStyles.medium,
+                    ),
+                  ),
                 ),
             ],
           ),
@@ -172,7 +179,7 @@ class _LiveRoomsSection extends StatelessWidget {
                 _RoomRow(room: rooms[i], onTap: () => onRoom(rooms[i].id)),
                 if (i < rooms.length - 1)
                   const Divider(
-                    height: AppSpacing.x2,
+                    height: AppSpacing.x1,
                     color: AppColors.divider,
                   ),
               ],
@@ -201,7 +208,10 @@ class _RoomRow extends StatelessWidget {
       key: ArenaHomePage.roomKey(room.id),
       onTap: onTap,
       child: Padding(
-        padding: VitDensity.compact.cardPadding,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x3,
+          vertical: AppSpacing.x2,
+        ),
         child: Column(
           children: [
             Row(
@@ -253,7 +263,7 @@ class _RoomRow extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.x1),
             Row(
               children: [
                 Expanded(
@@ -305,7 +315,7 @@ class _CreatorSpotlightSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Row(
             children: [
               for (final creator in creators) ...[
@@ -359,7 +369,7 @@ class _CreatorCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             creator.name,
             maxLines: 1,
@@ -370,15 +380,15 @@ class _CreatorCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             '${creator.modesCreated} modes · ${creator.totalChallenges} challenges',
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Wrap(
             alignment: WrapAlignment.center,
             spacing: AppSpacing.x1,

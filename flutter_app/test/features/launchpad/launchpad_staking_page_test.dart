@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_staking_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpStaking(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -78,6 +80,24 @@ void main() {
     expect(find.text('NexaAI Protocol'), findsOneWidget);
     expect(find.text('OmniDEX'), findsOneWidget);
     expect(find.text('Lưu ý rủi ro đầu tư'), findsOneWidget);
+  });
+
+  testWidgets('SC-298 first viewport reaches first staking pool', (
+    tester,
+  ) async {
+    await pumpStaking(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-298 LaunchpadStakingPage',
+      semanticLabel: 'SC-298 LaunchpadStakingPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadStakingPage.poolKey('pool1')),
+      routeName: 'SC-298 LaunchpadStakingPage',
+      actionLabel: 'the first staking pool',
+    );
   });
 
   testWidgets('SC-298 positions tab wires batch claim and receipt edges', (

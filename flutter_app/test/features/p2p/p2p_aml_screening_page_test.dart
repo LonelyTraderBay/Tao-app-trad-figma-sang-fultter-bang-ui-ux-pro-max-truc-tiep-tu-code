@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_aml_screen
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_compliance_overview_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAmlScreening(
     WidgetTester tester, {
@@ -82,6 +84,39 @@ void main() {
     expect(find.text('Review'), findsOneWidget);
     expect(find.byKey(P2PAmlScreeningPage.infoKey), findsOneWidget);
     expect(find.text('Về AML Screening'), findsOneWidget);
+  });
+
+  testWidgets('SC-268 first viewport reaches schedule and first check', (
+    tester,
+  ) async {
+    await pumpAmlScreening(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-268 P2PAMLScreeningPage',
+      semanticLabel: 'SC-268 P2PAMLScreeningPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAmlScreeningPage.heroKey),
+      routeName: 'SC-268 P2PAMLScreeningPage',
+      actionLabel: 'the AML status summary',
+      minVisibleHeight: 40,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAmlScreeningPage.scheduleKey),
+      routeName: 'SC-268 P2PAMLScreeningPage',
+      actionLabel: 'the AML schedule',
+      minVisibleHeight: 40,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAmlScreeningPage.checkKey('sanctions')),
+      routeName: 'SC-268 P2PAMLScreeningPage',
+      actionLabel: 'the first AML check row',
+      minVisibleHeight: 32,
+    );
   });
 
   testWidgets('SC-268 is reachable from compliance overview', (tester) async {

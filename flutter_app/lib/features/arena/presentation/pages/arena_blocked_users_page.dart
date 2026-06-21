@@ -8,7 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -17,6 +17,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+
+const _blockedActionExtent = AppSpacing.arenaBlockedActionHeight;
+const _blockedBodyLineRatio = AppSpacing.arenaBlockedBodyLineHeight;
+const _blockedDialogLineRatio = AppSpacing.arenaBlockedDialogLineHeight;
+const _blockedDividerExtent = AppSpacing.arenaPointsDividerHeight;
+const _blockedTinyGap = AppSpacing.arenaBlockedTinyGap;
 
 class ArenaBlockedUsersPage extends ConsumerStatefulWidget {
   const ArenaBlockedUsersPage({super.key, this.shellRenderMode});
@@ -54,11 +60,12 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
     }
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -82,8 +89,8 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaBlockedUsersPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: _blockedUsers.isEmpty
                         ? VitPageContent(
                             key: ArenaBlockedUsersPage.emptyKey,
@@ -97,7 +104,8 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                             ],
                           )
                         : VitPageContent(
-                            padding: VitContentPadding.defaultPadding,
+                            padding: VitContentPadding.compact,
+                            gap: VitContentGap.tight,
                             children: [
                               VitCard(
                                 padding: AppSpacing.zeroInsets,
@@ -188,7 +196,7 @@ class _BlockInfoBanner extends StatelessWidget {
                   snapshot.bannerDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.arenaBlockedBodyLineHeight,
+                    height: _blockedBodyLineRatio,
                   ),
                 ),
               ],
@@ -269,7 +277,7 @@ class _BlockedUserRow extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.arenaBlockedTinyGap),
+                    const SizedBox(height: _blockedTinyGap),
                     Text(
                       user.reason,
                       maxLines: 1,
@@ -278,7 +286,7 @@ class _BlockedUserRow extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.arenaBlockedTinyGap),
+                    const SizedBox(height: _blockedTinyGap),
                     Text(
                       '${user.blockedAt} · ${_sourceLabel(user.source)}',
                       style: AppTextStyles.micro.copyWith(
@@ -312,7 +320,7 @@ class _BlockedUserRow extends StatelessWidget {
         ),
         if (!isLast)
           const Divider(
-            height: AppSpacing.arenaPointsDividerHeight,
+            height: _blockedDividerExtent,
             color: AppColors.divider,
           ),
       ],
@@ -377,7 +385,7 @@ class _SmallActionButton extends StatelessWidget {
             minWidth: AppSpacing.arenaBlockedActionMinWidth,
           ),
           child: SizedBox(
-            height: AppSpacing.arenaBlockedActionHeight,
+            height: _blockedActionExtent,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: accentColor.withValues(alpha: 0.12),
@@ -425,7 +433,7 @@ class _UnblockDialog extends StatelessWidget {
         'Người này sẽ có thể thấy và tương tác với bạn trong Open Arena. Bạn có thể chặn lại bất cứ lúc nào.',
         style: AppTextStyles.body.copyWith(
           color: AppColors.text2,
-          height: AppSpacing.arenaBlockedDialogLineHeight,
+          height: _blockedDialogLineRatio,
         ),
       ),
       actions: [

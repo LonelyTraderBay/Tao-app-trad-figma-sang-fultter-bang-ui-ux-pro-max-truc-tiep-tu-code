@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBotPortfolioDashboard(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -73,5 +75,23 @@ void main() {
     expect(find.text('Allocation Breakdown'), findsOneWidget);
     expect(find.text('Bot Correlation Matrix'), findsOneWidget);
     expect(find.text('Portfolio Health: Excellent'), findsOneWidget);
+  });
+
+  testWidgets('SC-128 first viewport reaches equity curve section', (
+    tester,
+  ) async {
+    await pumpBotPortfolioDashboard(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-128 BotPortfolioDashboardPage',
+      semanticLabel: 'SC-128 BotPortfolioDashboardPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.text('Portfolio Equity Curve'),
+      targetLabel: 'the portfolio equity curve section',
+      minVisibleHeight: 12,
+    );
   });
 }

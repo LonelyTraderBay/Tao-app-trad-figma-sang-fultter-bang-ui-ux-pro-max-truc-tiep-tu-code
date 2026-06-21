@@ -231,7 +231,7 @@ class _UnderlinedTab extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: active ? _marketPrimary : AppColors.text3,
                     fontWeight: AppTextStyles.medium,
-                    height: 1,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
               ),
@@ -415,7 +415,7 @@ class _FilterChipButton extends StatelessWidget {
         ),
         child: Padding(
           padding: AppSpacing.marketSocialFilterPadding.add(
-            const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+            const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2),
           ),
           child: Center(
             child: Text(
@@ -423,7 +423,7 @@ class _FilterChipButton extends StatelessWidget {
               style: AppTextStyles.captionSm.copyWith(
                 color: active ? color : AppColors.text3,
                 fontWeight: AppTextStyles.medium,
-                height: 1,
+                height: AppTextStyles.numericMicro.height,
               ),
             ),
           ),
@@ -457,7 +457,7 @@ class _CategoryChip extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         child: Padding(
           padding: AppSpacing.marketSocialFilterPadding.add(
-            const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+            const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2),
           ),
           child: Center(
             child: Text(
@@ -465,7 +465,7 @@ class _CategoryChip extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: active ? _marketPrimary : AppColors.text3,
                 fontWeight: AppTextStyles.medium,
-                height: 1,
+                height: AppTextStyles.numericMicro.height,
               ),
             ),
           ),

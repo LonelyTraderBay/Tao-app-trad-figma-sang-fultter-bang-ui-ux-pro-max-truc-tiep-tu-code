@@ -40,7 +40,9 @@ class _SignalCard extends StatelessWidget {
                   children: [
                     Text(
                       signal.providerAvatar,
-                      style: AppTextStyles.base.copyWith(height: 1),
+                      style: AppTextStyles.base.copyWith(
+                        height: AppTextStyles.numericMicro.height,
+                      ),
                     ),
                     const SizedBox(width: AppSpacing.marketSocialGap),
                     Flexible(
@@ -74,7 +76,7 @@ class _SignalCard extends StatelessWidget {
                           signal.timeAgo,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            height: 1,
+                            height: AppTextStyles.numericMicro.height,
                           ),
                         ),
                       ),
@@ -201,7 +203,7 @@ class _ExpandedSignalDetail extends StatelessWidget {
                             side: BorderSide(color: AppColors.buy20),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: const EdgeInsetsDirectional.symmetric(
                               vertical: AppSpacing.x2,
                             ),
                             child: Column(
@@ -211,7 +213,7 @@ class _ExpandedSignalDetail extends StatelessWidget {
                                   'TP${index + 1}',
                                   style: AppTextStyles.micro.copyWith(
                                     color: AppColors.text3,
-                                    height: 1,
+                                    height: AppTextStyles.numericMicro.height,
                                   ),
                                 ),
                                 Text(
@@ -220,7 +222,7 @@ class _ExpandedSignalDetail extends StatelessWidget {
                                     color: AppColors.buy,
                                     fontWeight: AppTextStyles.bold,
                                     fontFeatures: AppTextStyles.tabularFigures,
-                                    height: 1,
+                                    height: AppTextStyles.numericMicro.height,
                                   ),
                                 ),
                               ],
@@ -317,7 +319,7 @@ class _SignalMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -329,7 +331,7 @@ class _SignalMetric extends StatelessWidget {
             color: valueColor,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
       ],
@@ -355,20 +357,17 @@ class _TinyBadge extends StatelessWidget {
     return Material(
       color: background,
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-      child: SizedBox(
-        height: AppSpacing.x4 + AppSpacing.x1,
-        child: Padding(
-          padding: padding,
-          child: Center(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-                height: 1,
-              ),
+      child: Padding(
+        padding: padding,
+        child: Center(
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
         ),
@@ -415,7 +414,7 @@ class _ProviderCard extends StatelessWidget {
                         color: rank <= 3 ? tierConfig.color : AppColors.text3,
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
-                        height: 1,
+                        height: AppTextStyles.numericMicro.height,
                       ),
                     ),
                   ),
@@ -426,7 +425,7 @@ class _ProviderCard extends StatelessWidget {
                 provider.avatar,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text1,
-                  height: 1,
+                  height: AppTextStyles.numericMicro.height,
                 ),
               ),
               const SizedBox(width: AppSpacing.marketSocialSectionGap),
@@ -444,7 +443,7 @@ class _ProviderCard extends StatelessWidget {
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
-                              height: 1,
+                              height: AppTextStyles.numericMicro.height,
                             ),
                           ),
                         ),
@@ -465,7 +464,7 @@ class _ProviderCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: 1,
+                        height: AppTextStyles.numericMicro.height,
                       ),
                     ),
                   ],
@@ -483,14 +482,14 @@ class _ProviderCard extends StatelessWidget {
                           : AppColors.warn,
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
-                      height: 1.15,
+                      height: AppTextStyles.numericMicro.height,
                     ),
                   ),
                   Text(
                     'Win rate',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
+                      height: AppTextStyles.numericMicro.height,
                     ),
                   ),
                 ],

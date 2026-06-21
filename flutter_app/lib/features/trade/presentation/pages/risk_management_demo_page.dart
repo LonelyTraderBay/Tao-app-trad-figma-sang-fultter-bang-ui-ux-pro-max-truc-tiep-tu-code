@@ -88,7 +88,9 @@ class _RiskManagementDemoPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: RiskManagementDemoPage.contentKey,
-                      padding: EdgeInsets.only(bottom: scrollEndClearance),
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollEndClearance,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,

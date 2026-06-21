@@ -94,7 +94,9 @@ class _TableHeader extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          padding: const EdgeInsetsDirectional.symmetric(
+            vertical: AppSpacing.x2,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -160,7 +162,9 @@ class _TableMetricRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          padding: const EdgeInsetsDirectional.symmetric(
+            vertical: AppSpacing.x2,
+          ),
           child: Row(
             children: [
               Expanded(

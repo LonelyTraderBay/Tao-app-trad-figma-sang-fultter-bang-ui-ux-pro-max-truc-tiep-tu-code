@@ -20,7 +20,7 @@ class _GasTabs extends StatelessWidget {
     return Material(
       color: _gasPanel,
       child: SizedBox(
-        height: 48,
+        height: _gasTabBarHeight,
         child: Column(
           children: [
             Expanded(

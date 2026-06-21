@@ -98,7 +98,7 @@ class _ProfileProductTile extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.profileProductLabelGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   shortcut.stateLabel,
                   maxLines: 1,
@@ -164,7 +164,7 @@ class _MenuRow extends StatelessWidget {
                       ),
                     ),
                     if (item.subtitle != null) ...[
-                      const SizedBox(height: AppSpacing.profileMenuSubtitleGap),
+                      const SizedBox(height: AppSpacing.x2),
                       Text(
                         item.subtitle!,
                         maxLines: 1,

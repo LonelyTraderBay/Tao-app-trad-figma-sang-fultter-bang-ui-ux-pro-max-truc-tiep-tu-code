@@ -80,7 +80,7 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: NotificationsPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.notificationsScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,

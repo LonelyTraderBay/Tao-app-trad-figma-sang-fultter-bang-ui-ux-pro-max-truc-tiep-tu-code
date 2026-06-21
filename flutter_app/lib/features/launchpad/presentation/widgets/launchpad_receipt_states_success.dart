@@ -21,7 +21,7 @@ class _ReceiptErrorState extends StatelessWidget {
       ),
       messageStyle: AppTextStyles.caption.copyWith(
         color: AppColors.text3,
-        height: AppSpacing.launchpadLineHeightLong,
+        height: AppSpacing.launchpadLineHeightShort,
       ),
     );
   }
@@ -120,7 +120,7 @@ class _SuccessHero extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.launchpadLineHeightReadable,
+              height: AppSpacing.launchpadLineHeightShort,
             ),
           ),
         ],

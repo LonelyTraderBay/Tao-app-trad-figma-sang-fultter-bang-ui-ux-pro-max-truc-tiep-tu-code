@@ -27,7 +27,7 @@ class _PaymentInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pOrderCardPadding,
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -56,7 +56,7 @@ class _PaymentInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           InkWell(
             key: P2POrderPage.qrToggleKey,
             onTap: onToggleQr,
@@ -92,9 +92,9 @@ class _PaymentInfoCard extends StatelessWidget {
             ),
           ),
           if (showQr) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
             _QrPanel(order: order),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.x2),
           ],
           for (final field in fields)
             _PaymentFieldLine(
@@ -102,7 +102,7 @@ class _PaymentInfoCard extends StatelessWidget {
               copied: copiedField == field.id,
               onCopy: () => onCopy(field.id),
             ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           _InlineWarning(title: warningTitle, message: warning),
         ],
       ),
@@ -232,7 +232,7 @@ class _ProofCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCardPadding,
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -263,7 +263,7 @@ class _ProofCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             step == _P2POrderUiStep.payment
                 ? 'Tải ảnh chụp giao dịch ngân hàng trước khi xác nhận thanh toán'
@@ -284,7 +284,7 @@ class _TimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCardPadding,
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -305,7 +305,7 @@ class _TimelineCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           for (var index = 0; index < timeline.length; index++)
             _TimelineItem(
               item: timeline[index],
@@ -475,7 +475,7 @@ class _QuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCardPadding,
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -486,7 +486,7 @@ class _QuickActions extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               for (var index = 0; index < actions.length; index++) ...[

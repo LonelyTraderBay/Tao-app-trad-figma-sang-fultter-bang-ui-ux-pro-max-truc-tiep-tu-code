@@ -49,8 +49,10 @@ const int _dcaPortfolioRiskGridColumns = 2;
 const double _dcaPortfolioRiskGridAspect = 1.35;
 const double _dcaPortfolioHeroIconExtent = AppSpacing.inputHeight;
 const double _dcaPortfolioIconBubbleExtent = AppSpacing.x6;
-const EdgeInsets _dcaPortfolioCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _dcaPortfolioHeroPadding = EdgeInsets.all(AppSpacing.x4);
+const EdgeInsetsDirectional _dcaPortfolioCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _dcaPortfolioHeroPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x4);
 
 class DCAPortfolioOptimizer extends ConsumerStatefulWidget {
   const DCAPortfolioOptimizer({super.key, this.shellRenderMode});
@@ -108,8 +110,8 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
                 ).copyWith(scrollbars: false),
                 child: SingleChildScrollView(
                   key: DCAPortfolioOptimizer.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,

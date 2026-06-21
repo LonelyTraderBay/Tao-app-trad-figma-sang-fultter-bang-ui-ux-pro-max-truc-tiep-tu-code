@@ -113,7 +113,7 @@ class _StrategyCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.chartLabelXs.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.launchpadLineHeightDense,
+              height: AppSpacing.launchpadLineHeightMicro,
             ),
           ),
         ],

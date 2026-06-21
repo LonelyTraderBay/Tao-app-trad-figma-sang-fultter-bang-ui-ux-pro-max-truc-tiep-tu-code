@@ -175,7 +175,7 @@ class _ReferenceCard extends StatelessWidget {
                 entry.refId,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
-                  height: AppSpacing.arenaPointsBodyLineHeight,
+                  height: _entryBodyLineRatio,
                 ),
               ),
             ),
@@ -235,7 +235,7 @@ class _AuditNotice extends StatelessWidget {
               '$disclaimer Bản ghi này được hệ thống tạo tự động và không thể chỉnh sửa.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaPointsNoticeLineHeight,
+                height: _entryNoticeLineRatio,
               ),
             ),
           ),
@@ -299,7 +299,7 @@ class _Section extends StatelessWidget {
           children: [
             SizedBox(
               width: AppSpacing.arenaPointsEntrySectionMarkerWidth,
-              height: AppSpacing.arenaPointsEntrySectionMarkerHeight,
+              height: _entrySectionMarkerExtent,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: accentColor,
@@ -355,7 +355,7 @@ class _DetailRow extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.arenaPointsBodyLineHeight,
+                height: _entryBodyLineRatio,
               ),
             ),
           ),

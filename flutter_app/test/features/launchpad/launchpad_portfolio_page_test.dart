@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_receipt_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPortfolio(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -84,6 +86,24 @@ void main() {
     expect(
       find.byKey(LaunchpadPortfolioPage.refundKey('sub1')),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-296 first viewport reaches first subscription', (
+    tester,
+  ) async {
+    await pumpPortfolio(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-296 LaunchpadPortfolioPage',
+      semanticLabel: 'SC-296 LaunchpadPortfolioPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadPortfolioPage.subscriptionKey('sub1')),
+      routeName: 'SC-296 LaunchpadPortfolioPage',
+      actionLabel: 'the first portfolio subscription',
     );
   });
 

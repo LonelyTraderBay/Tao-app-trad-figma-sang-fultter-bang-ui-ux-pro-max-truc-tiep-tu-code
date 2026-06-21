@@ -30,7 +30,8 @@ const double _stakingAnalyticsCaptionLineHeight = 1.22;
 const double _stakingAnalyticsInsightLineHeight = 1.22;
 const double _stakingAnalyticsFooterLineHeight = 1.18;
 const double _stakingAnalyticsLegendMarkerHeight = 6;
-const EdgeInsets _stakingAnalyticsCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsetsDirectional _stakingAnalyticsCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
 
 class StakingAnalyticsPage extends ConsumerStatefulWidget {
   const StakingAnalyticsPage({super.key, this.shellRenderMode});

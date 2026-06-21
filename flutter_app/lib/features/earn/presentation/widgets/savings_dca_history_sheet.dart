@@ -102,7 +102,7 @@ class _CreatePlanSheet extends StatelessWidget {
       child: VitCard(
         key: SavingsDCAPage.createSheetKey,
         radius: VitCardRadius.lg,
-        padding: AppSpacing.earnCardPaddingX5,
+        padding: AppSpacing.earnCardPaddingX3,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -110,7 +110,7 @@ class _CreatePlanSheet extends StatelessWidget {
             Row(
               children: [
                 Text('Tạo kế hoạch DCA', style: AppTextStyles.baseMedium),
-                const Spacer(),
+                const SizedBox(width: AppSpacing.x2),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(Icons.close_rounded),

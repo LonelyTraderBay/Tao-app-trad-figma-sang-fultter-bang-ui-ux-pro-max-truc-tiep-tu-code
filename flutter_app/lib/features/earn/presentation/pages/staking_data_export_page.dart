@@ -55,10 +55,10 @@ class _StakingDataExportPageState extends ConsumerState<StakingDataExportPage> {
         .watch(stakingDataExportRepositoryProvider)
         .getDataExport();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -76,11 +76,13 @@ class _StakingDataExportPageState extends ConsumerState<StakingDataExportPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollTailReserve,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.defaultPadding,
-                    gap: VitContentGap.defaultGap,
+                    gap: VitContentGap.tight,
                     children: [
                       _ExportHero(snapshot: snapshot),
                       _QuickExports(
@@ -122,7 +124,7 @@ class _ExportHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -135,7 +137,7 @@ class _ExportHero extends StatelessWidget {
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingDataExportBodyLineHeight,
+              height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
             ),
           ),
         ],
@@ -212,7 +214,7 @@ class _QuickExportCard extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.stakingDataExportQuickIcon,
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             item.name,
             maxLines: 1,
@@ -254,7 +256,7 @@ class _CustomExport extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -280,7 +282,7 @@ class _CustomExport extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x3),
               Text(
                 snapshot.formatLabel,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -291,10 +293,11 @@ class _CustomExport extends StatelessWidget {
                 options: snapshot.formatOptions,
                 onChanged: onFormatChanged,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x3),
               VitCtaButton(
                 key: StakingDataExportPage.exportKey,
                 onPressed: () {},
+                height: AppSpacing.buttonStandard,
                 child: Text(snapshot.exportLabel),
               ),
             ],
@@ -313,7 +316,7 @@ class _DateField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.inputHeight,
+      height: AppSpacing.buttonStandard,
       child: DecoratedBox(
         decoration: const ShapeDecoration(
           color: AppColors.surface2,
@@ -376,7 +379,7 @@ class _FormatSelect extends StatelessWidget {
           onChanged(next);
         },
         child: SizedBox(
-          height: AppSpacing.inputHeight,
+          height: AppSpacing.buttonStandard,
           child: DecoratedBox(
             decoration: const ShapeDecoration(
               shape: RoundedRectangleBorder(
@@ -424,13 +427,13 @@ class _FooterNote extends StatelessWidget {
       key: StakingDataExportPage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingDataExportBodyLineHeight,
+          height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
         ),
       ),
     );

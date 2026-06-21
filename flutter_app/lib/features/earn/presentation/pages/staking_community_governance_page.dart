@@ -39,10 +39,10 @@ class StakingCommunityGovernancePage extends ConsumerWidget {
         .watch(stakingCommunityGovernanceRepositoryProvider)
         .getGovernance();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -61,11 +61,13 @@ class StakingCommunityGovernancePage extends ConsumerWidget {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollTailReserve,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    gap: VitContentGap.tight,
                     children: [
                       _InfoBanner(snapshot: snapshot),
                       _OverviewCard(

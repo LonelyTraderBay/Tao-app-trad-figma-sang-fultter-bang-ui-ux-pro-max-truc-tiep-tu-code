@@ -50,7 +50,7 @@ class AdminSettingsPage extends ConsumerWidget {
             Expanded(
               child: SingleChildScrollView(
                 key: contentKey,
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 padding: AppSpacing.adminScrollPadding(bottomInset),
                 child: VitPageContent(
                   customGap: AppSpacing.x5,

@@ -74,23 +74,23 @@ class P2PKycStatusPage extends ConsumerWidget {
                     ).copyWith(scrollbars: false),
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(
-                        parent: BouncingScrollPhysics(),
+                        parent: ClampingScrollPhysics(),
                       ),
                       padding: AppSpacing.p2pKycScrollPadding(bottomInset),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           _OverallStatusCard(snapshot: snapshot),
-                          const SizedBox(height: AppSpacing.x5),
+                          const SizedBox(height: AppSpacing.x3),
                           Text(
                             'Chi tiết các bước',
                             style: AppTextStyles.baseMedium.copyWith(
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.x4),
+                          const SizedBox(height: AppSpacing.x2),
                           _StatusTimeline(steps: snapshot.steps),
-                          const SizedBox(height: AppSpacing.x5),
+                          const SizedBox(height: AppSpacing.x3),
                           _SupportCard(snapshot: snapshot),
                           VitPageContent(
                             padding: VitContentPadding.compact,

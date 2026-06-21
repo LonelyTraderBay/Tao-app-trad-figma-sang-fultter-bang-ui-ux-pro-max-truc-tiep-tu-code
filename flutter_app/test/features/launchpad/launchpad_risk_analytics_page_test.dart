@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_risk_analytics_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskAnalytics(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -82,6 +84,21 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Multiple security audits passed'), findsOneWidget);
+  });
+
+  testWidgets('SC-317 first viewport reaches risk score', (tester) async {
+    await pumpRiskAnalytics(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-317 LaunchpadRiskAnalyticsPage',
+      semanticLabel: 'SC-317 LaunchpadRiskAnalyticsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(LaunchpadRiskAnalyticsPage.scoreKey),
+      targetLabel: 'the risk score card',
+    );
   });
 
   testWidgets('SC-317 switches to due diligence tab', (tester) async {

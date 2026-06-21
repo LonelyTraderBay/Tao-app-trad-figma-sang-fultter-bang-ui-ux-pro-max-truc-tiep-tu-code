@@ -110,10 +110,10 @@ class _ProviderApplicationPageState
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: 0,
+                    gap: VitContentGap.tight,
                     children: [
                       _ProgressBars(steps: snapshot.steps, activeStep: step),
-                      const SizedBox(height: AppSpacing.x7 + AppSpacing.x1),
+                      const SizedBox(height: AppSpacing.x4),
                       switch (step) {
                         TradeProviderApplicationStep.intro => _IntroStep(
                           snapshot: snapshot,

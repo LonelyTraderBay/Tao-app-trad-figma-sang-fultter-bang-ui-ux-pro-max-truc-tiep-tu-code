@@ -16,7 +16,7 @@ class _FilterRail extends StatelessWidget {
     return SingleChildScrollView(
       key: AnnouncementsPage.filtersKey,
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       padding: AppSpacing.supportFilterRailPadding,
       child: Row(
         children: [

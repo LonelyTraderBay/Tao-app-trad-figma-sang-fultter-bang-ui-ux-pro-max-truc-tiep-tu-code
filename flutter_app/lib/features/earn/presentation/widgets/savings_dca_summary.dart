@@ -19,7 +19,7 @@ class _DcaSummaryCard extends StatelessWidget {
       key: SavingsDCAPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -59,14 +59,17 @@ class _DcaSummaryCard extends StatelessWidget {
                 icon: Icons.trending_up_rounded,
                 label: snapshot.gainUsd,
               ),
-              const Spacer(),
-              Text(
-                snapshot.gainLabel,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  snapshot.gainLabel,
+                  textAlign: TextAlign.end,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -94,14 +97,14 @@ class _DcaSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
                 child: VitCtaButton(
                   key: SavingsDCAPage.createPlanKey,
                   fullWidth: true,
-                  height: AppSpacing.ctaHeight,
+                  height: AppSpacing.buttonStandard,
                   variant: VitCtaButtonVariant.success,
                   leading: const Icon(Icons.add_rounded),
                   onPressed: onCreate,
@@ -226,7 +229,7 @@ class _HeroAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.ctaHeight,
+      height: AppSpacing.buttonStandard,
       child: Material(
         color: AppColors.portfolioBtnGhost,
         borderRadius: AppRadii.inputRadius,
@@ -267,7 +270,7 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

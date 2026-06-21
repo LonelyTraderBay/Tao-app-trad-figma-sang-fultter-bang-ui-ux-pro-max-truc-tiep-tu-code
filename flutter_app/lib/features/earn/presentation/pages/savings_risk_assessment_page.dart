@@ -57,10 +57,10 @@ class _SavingsRiskAssessmentPageState
     final controller = ref.watch(savingsRiskAssessmentControllerProvider);
     final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -79,11 +79,13 @@ class _SavingsRiskAssessmentPageState
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollTailReserve,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    gap: VitContentGap.tight,
                     children: _showResult
                         ? [
                             _ResultView(

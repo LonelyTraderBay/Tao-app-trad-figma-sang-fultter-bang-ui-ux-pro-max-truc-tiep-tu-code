@@ -70,15 +70,14 @@ class _P2PNotificationsSettingsPageState
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      gap: VitContentGap.tight,
                       children: [
                         _Hero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         _SettingsCard(
                           snapshot: snapshot,
                           enabledChannels: _enabledChannels,
@@ -128,25 +127,24 @@ class _Hero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PNotificationsSettingsPage.heroKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.md,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pComplianceCardPadding,
+      padding: AppSpacing.p2pComplianceCompactCardPadding,
       child: Row(
         children: [
           const Material(
             color: AppColors.primary,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-            child: SizedBox(
-              width: AppSpacing.p2pComplianceIconBox,
-              height: AppSpacing.p2pComplianceIconBox,
+            child: Padding(
+              padding: EdgeInsetsDirectional.all(AppSpacing.x2),
               child: Icon(
                 Icons.notifications_none_rounded,
                 color: AppColors.onAccent,
-                size: AppSpacing.p2pComplianceHeroIcon,
+                size: AppSpacing.iconSm,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,7 +153,7 @@ class _Hero extends StatelessWidget {
                   snapshot.heroTitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.sectionTitle.copyWith(
+                  style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.primary,
                     height: AppSpacing.p2pComplianceTitleLineHeight,
                   ),
@@ -163,7 +161,7 @@ class _Hero extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 Text(
                   snapshot.heroSubtitle,
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
@@ -192,7 +190,7 @@ class _SettingsCard extends StatelessWidget {
     return VitCard(
       key: P2PNotificationsSettingsPage.settingsKey,
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         children: [
@@ -228,7 +226,7 @@ class _SettingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pComplianceCardPadding,
+      padding: AppSpacing.p2pComplianceCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -241,9 +239,11 @@ class _SettingRow extends StatelessWidget {
           const SizedBox(height: AppSpacing.x1),
           Text(
             setting.description,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               for (final channel in _channels) ...[
@@ -256,7 +256,7 @@ class _SettingRow extends StatelessWidget {
                   ),
                 ),
                 if (channel != _channels.last)
-                  const SizedBox(width: AppSpacing.x3),
+                  const SizedBox(width: AppSpacing.x2),
               ],
             ],
           ),
@@ -292,16 +292,15 @@ class _ChannelButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.p2pComplianceChannelButtonHeight,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x2,
+            vertical: AppSpacing.x3,
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                channel.icon,
-                color: color,
-                size: AppSpacing.p2pComplianceChannelIcon,
-              ),
+              Icon(channel.icon, color: color, size: AppSpacing.iconSm),
               const SizedBox(height: AppSpacing.x1),
               Text(
                 channel.label,

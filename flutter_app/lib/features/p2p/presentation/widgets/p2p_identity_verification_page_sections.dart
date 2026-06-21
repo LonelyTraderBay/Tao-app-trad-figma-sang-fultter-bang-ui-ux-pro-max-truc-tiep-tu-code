@@ -11,45 +11,44 @@ class _IdentityHero extends StatelessWidget {
       key: P2PIdentityVerificationPage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pKycCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: AppSpacing.inputHeight,
-            height: AppSpacing.inputHeight,
-            child: Material(
-              color: AppColors.primary15,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.lgRadius,
-                side: const BorderSide(color: AppColors.primary20),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.description_outlined,
-                  color: AppModuleAccents.p2p,
-                  size: AppSpacing.iconMd,
-                ),
+          Material(
+            color: AppColors.primary15,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.lgRadius,
+              side: const BorderSide(color: AppColors.primary20),
+            ),
+            child: const Padding(
+              padding: EdgeInsetsDirectional.all(AppSpacing.x2),
+              child: Icon(
+                Icons.description_outlined,
+                color: AppModuleAccents.p2p,
+                size: AppSpacing.iconSm,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   snapshot.heroTitle,
-                  style: AppTextStyles.sectionTitle.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppModuleAccents.p2p,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
                 Text(
                   snapshot.heroBody,
-                  style: AppTextStyles.caption.copyWith(
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pKycReadableLineHeight,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
               ],
@@ -78,25 +77,22 @@ class _DocumentTypePicker extends StatelessWidget {
       children: [
         Text(
           'Chọn loại giấy tờ',
-          style: AppTextStyles.baseMedium.copyWith(
-            fontWeight: AppTextStyles.bold,
-          ),
+          style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         for (final document in documents) ...[
           VitCard(
             key: P2PIdentityVerificationPage.documentTypeKey(document.id),
             radius: VitCardRadius.lg,
-            padding: AppSpacing.p2pKycCardPadding,
+            padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
             onTap: () => onSelected(document),
             child: Row(
               children: [
-                SizedBox(
-                  width: AppSpacing.buttonCompact,
-                  height: AppSpacing.buttonCompact,
-                  child: Material(
-                    color: AppColors.primary12,
-                    borderRadius: AppRadii.smRadius,
+                Material(
+                  color: AppColors.primary12,
+                  borderRadius: AppRadii.smRadius,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
                     child: Icon(
                       _documentIcon(document.iconKey),
                       color: AppModuleAccents.p2p,
@@ -104,21 +100,23 @@ class _DocumentTypePicker extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.x4),
+                const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         document.label,
-                        style: AppTextStyles.baseMedium.copyWith(
+                        style: AppTextStyles.caption.copyWith(
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x1),
                       Text(
                         document.description,
-                        style: AppTextStyles.caption.copyWith(
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
                         ),
                       ),
@@ -133,7 +131,7 @@ class _DocumentTypePicker extends StatelessWidget {
               ],
             ),
           ),
-          if (document != documents.last) const SizedBox(height: AppSpacing.x4),
+          if (document != documents.last) const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -150,7 +148,7 @@ class _GuidelinesCard extends StatelessWidget {
     return VitCard(
       key: P2PIdentityVerificationPage.guidelinesKey,
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pKycCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -159,11 +157,11 @@ class _GuidelinesCard extends StatelessWidget {
             title: 'Hướng dẫn chụp ảnh',
             color: AppModuleAccents.p2p,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           for (final guide in snapshot.guidelines) ...[
             _ChecklistRow(text: guide, color: AppColors.buy),
             if (guide != snapshot.guidelines.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.x1),
           ],
         ],
       ),
@@ -197,11 +195,9 @@ class _UploadSection extends StatelessWidget {
       children: [
         Text(
           'Upload hình ảnh',
-          style: AppTextStyles.baseMedium.copyWith(
-            fontWeight: AppTextStyles.bold,
-          ),
+          style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         _UploadCard(
           key: P2PIdentityVerificationPage.frontUploadKey,
           label: 'Mặt trước',
@@ -212,7 +208,7 @@ class _UploadSection extends StatelessWidget {
           onUpload: onFrontUpload,
           onRemove: onFrontRemove,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         _UploadCard(
           key: P2PIdentityVerificationPage.backUploadKey,
           label: 'Mặt sau',
@@ -271,32 +267,31 @@ class _UploadCard extends StatelessWidget {
               : enabled
               ? AppColors.borderSolid
               : AppColors.cardBorder,
-          padding: AppSpacing.p2pKycCardPadding,
+          padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
           onTap: enabled && !uploaded ? onUpload : null,
           child: uploaded
               ? Row(
                   children: [
-                    SizedBox(
-                      width: AppSpacing.inputHeight,
-                      height: AppSpacing.inputHeight,
-                      child: Material(
-                        color: AppColors.buy10,
-                        borderRadius: AppRadii.lgRadius,
-                        child: const Icon(
+                    Material(
+                      color: AppColors.buy10,
+                      borderRadius: AppRadii.lgRadius,
+                      child: const Padding(
+                        padding: EdgeInsetsDirectional.all(AppSpacing.x2),
+                        child: Icon(
                           Icons.check_circle_outline_rounded,
                           color: AppColors.buy,
-                          size: AppSpacing.iconMd,
+                          size: AppSpacing.iconSm,
                         ),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.x4),
+                    const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             '$label đã sẵn sàng',
-                            style: AppTextStyles.baseMedium.copyWith(
+                            style: AppTextStyles.caption.copyWith(
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
@@ -319,37 +314,43 @@ class _UploadCard extends StatelessWidget {
                 )
               : Opacity(
                   opacity: enabled ? 1 : .52,
-                  child: SizedBox(
-                    height: AppSpacing.p2pKycUploadDropHeight,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: AppSpacing.x3,
+                      vertical: AppSpacing.x4,
+                    ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        SizedBox(
-                          width: AppSpacing.x7,
-                          height: AppSpacing.x7,
-                          child: Material(
-                            color: AppColors.primary12,
-                            shape: const CircleBorder(),
-                            child: const Icon(
+                        Material(
+                          color: AppColors.primary12,
+                          shape: const CircleBorder(),
+                          child: const Padding(
+                            padding: EdgeInsetsDirectional.all(AppSpacing.x3),
+                            child: Icon(
                               Icons.photo_camera_outlined,
                               color: AppModuleAccents.p2p,
-                              size: AppSpacing.iconMd,
+                              size: AppSpacing.iconSm,
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: AppSpacing.x2),
                         Text(
                           title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
-                          style: AppTextStyles.baseMedium.copyWith(
+                          style: AppTextStyles.caption.copyWith(
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x1),
                         Text(
                           subtitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
-                          style: AppTextStyles.caption.copyWith(
+                          style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
                           ),
                         ),

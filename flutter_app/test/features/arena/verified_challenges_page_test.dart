@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/verified_challenges_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpVerified(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -78,6 +80,25 @@ void main() {
     );
     expect(find.text('Leaderboard riêng cho verified players'), findsOneWidget);
     expect(find.text('Creator badges và trust score nâng cao'), findsOneWidget);
+  });
+
+  testWidgets('SC-195 first viewport exposes preview info card', (
+    tester,
+  ) async {
+    await pumpVerified(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-195 VerifiedChallengesPage',
+      semanticLabel: 'SC-195 VerifiedChallengesPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(VerifiedChallengesPage.infoCardKey),
+      routeName: 'SC-195 VerifiedChallengesPage',
+      actionLabel: 'the verified preview info card',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-195 uses a compact static preview state', (tester) async {

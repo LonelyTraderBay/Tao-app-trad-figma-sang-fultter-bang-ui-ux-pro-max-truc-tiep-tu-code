@@ -60,34 +60,30 @@ class P2PInsuranceScorePage extends ConsumerWidget {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pInsuranceScoreScrollPadding(
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _ScoreOverviewCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
                         _FactorBreakdownCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
                         _QuickActionsCard(actions: snapshot.quickActions),
-                        const SizedBox(height: AppSpacing.x5),
                         _TierPathCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
                         _DisclosureCard(text: snapshot.disclosure),
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: 0,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Insurance score state review',
-                              message:
-                                  'Protection score, factor breakdown, quick actions, tier path, and disclosure remain visible before changing P2P insurance readiness.',
-                              contractId: 'SC-240',
-                            ),
-                          ],
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: EdgeInsetsDirectional.all(AppSpacing.x3),
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Insurance score state review',
+                            message:
+                                'Protection score, factor breakdown, quick actions, tier path, and disclosure remain visible before changing P2P insurance readiness.',
+                            contractId: 'SC-240',
+                          ),
                         ),
                       ],
                     ),

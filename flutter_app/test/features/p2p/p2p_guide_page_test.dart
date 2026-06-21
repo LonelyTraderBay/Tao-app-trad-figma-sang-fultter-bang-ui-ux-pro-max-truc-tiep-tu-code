@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_guide_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpGuide(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -85,6 +87,52 @@ void main() {
     expect(find.textContaining('Peer-to-Peer'), findsOneWidget);
     expect(find.text('Phí giao dịch P2P là bao nhiêu?'), findsOneWidget);
     expect(find.text('VitTrade có an toàn không?'), findsOneWidget);
+  });
+
+  testWidgets('SC-280 first viewport reaches FAQ list depth', (tester) async {
+    await pumpGuide(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-280 P2PGuidePage',
+      semanticLabel: 'SC-280 P2PGuidePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PGuidePage.faqKey('fees')),
+      routeName: 'SC-280 P2PGuidePage',
+      actionLabel: 'the second FAQ item',
+      minVisibleHeight: 40,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PGuidePage.faqKey('escrow')),
+      routeName: 'SC-280 P2PGuidePage',
+      actionLabel: 'the escrow FAQ preview',
+      minVisibleHeight: 32,
+    );
+  });
+
+  testWidgets('SC-280 guide mode controls fit first viewport', (tester) async {
+    await pumpGuide(tester);
+
+    await tester.tap(find.byKey(P2PGuidePage.tabKey('guide')));
+    await tester.pumpAndSettle();
+
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PGuidePage.buyModeKey),
+      routeName: 'SC-280 P2PGuidePage',
+      actionLabel: 'the buy mode control',
+      minVisibleHeight: 40,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PGuidePage.startKey),
+      routeName: 'SC-280 P2PGuidePage',
+      actionLabel: 'the start P2P CTA',
+      minVisibleHeight: 32,
+    );
   });
 
   testWidgets('SC-280 FAQ accordion toggles expanded answer', (tester) async {

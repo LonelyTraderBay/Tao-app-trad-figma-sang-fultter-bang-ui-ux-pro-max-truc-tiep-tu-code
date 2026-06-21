@@ -28,8 +28,6 @@ const _marketNativeScrollClearance = 72.0;
 const _newsIconSize = 34.0;
 const _newsIconGlyph = 18.0;
 const _marketSaveIconSize = 20.0;
-const _marketTitleLineHeight = 1.2;
-const _marketSummaryLineHeight = 1.22;
 
 class MarketNewsPage extends ConsumerStatefulWidget {
   const MarketNewsPage({super.key, this.shellRenderMode});
@@ -89,7 +87,9 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketNewsPage.contentKey,
-                    padding: EdgeInsets.only(bottom: scrollEndClearance),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,

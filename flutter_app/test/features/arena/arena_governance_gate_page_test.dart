@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_govern
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpGovernance(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -77,6 +79,25 @@ void main() {
     expect(find.text('Tên challenge'), findsOneWidget);
     expect(find.text('Lĩnh vực'), findsOneWidget);
     expect(find.text('Loại challenge'), findsOneWidget);
+  });
+
+  testWidgets('SC-188 first viewport exposes governance setup controls', (
+    tester,
+  ) async {
+    await pumpGovernance(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-188 ArenaGovernanceGatePage',
+      semanticLabel: 'SC-188 ArenaGovernanceGatePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaGovernanceGatePage.titleKey),
+      routeName: 'SC-188 ArenaGovernanceGatePage',
+      actionLabel: 'the governance title field',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-188 governance form can reach publish-ready state', (

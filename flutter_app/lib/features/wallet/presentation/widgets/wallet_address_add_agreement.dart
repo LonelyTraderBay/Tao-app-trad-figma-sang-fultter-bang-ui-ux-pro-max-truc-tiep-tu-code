@@ -32,57 +32,55 @@ class AddressWhitelistCard extends StatelessWidget {
         borderColor: AppColors.overlayStroke,
         background: const ColoredBox(color: addressAddPanel),
         clip: true,
-          child: Row(
-            children: [
-              VitCard(
-                width: AppSpacing.walletAddressIconSize,
-                height: AppSpacing.walletAddressIconSize,
-                variant: VitCardVariant.ghost,
-                borderColor: enabled
-                    ? AppColors.buy.withValues(alpha: .30)
-                    : AppColors.borderSolid,
-                background: ColoredBox(
-                  color: enabled ? AppColors.buy10 : addressAddPanel2,
-                ),
-                alignment: Alignment.center,
-                clip: true,
-                child: Icon(
-                  Icons.shield_outlined,
-                  color: enabled ? addressAddGreen : AppColors.text3,
-                  size: AppSpacing.walletAddressAddIcon,
-                ),
+        child: Row(
+          children: [
+            VitCard(
+              width: AppSpacing.walletAddressIconSize,
+              height: AppSpacing.walletAddressIconSize,
+              variant: VitCardVariant.ghost,
+              borderColor: enabled
+                  ? AppColors.buy.withValues(alpha: .30)
+                  : AppColors.borderSolid,
+              background: ColoredBox(
+                color: enabled ? AppColors.buy10 : addressAddPanel2,
               ),
-              const SizedBox(width: AppSpacing.walletAddressPrimaryGap),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Thêm vào Whitelist',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      'Chỉ rút tiền đến địa chỉ whitelist',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
+              alignment: Alignment.center,
+              clip: true,
+              child: Icon(
+                Icons.shield_outlined,
+                color: enabled ? addressAddGreen : AppColors.text3,
+                size: AppSpacing.walletAddressAddIcon,
               ),
-              _SwitchPill(enabled: enabled),
-            ],
-          ),
+            ),
+            const SizedBox(width: AppSpacing.walletAddressPrimaryGap),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Thêm vào Whitelist',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    'Chỉ rút tiền đến địa chỉ whitelist',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
+              ),
+            ),
+            _SwitchPill(enabled: enabled),
+          ],
         ),
-      );
+      ),
+    );
   }
 }
 

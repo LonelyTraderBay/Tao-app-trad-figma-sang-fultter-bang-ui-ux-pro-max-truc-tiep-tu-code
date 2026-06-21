@@ -35,7 +35,7 @@ class _FaqCard extends StatelessWidget {
                     color: _faqPrimary,
                     size: AppSpacing.tradeBotQuestionIcon,
                   ),
-                  const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+                  const SizedBox(width: AppSpacing.x3),
                   Expanded(
                     child: Text(
                       item.question,
@@ -46,7 +46,7 @@ class _FaqCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.tradeBotRowGap),
+                  const SizedBox(width: AppSpacing.x2),
                   Icon(
                     expanded
                         ? Icons.keyboard_arrow_up_rounded
@@ -63,9 +63,7 @@ class _FaqCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  width:
-                      AppSpacing.tradeBotQuestionIconBox +
-                      AppSpacing.tradeBotCardIconGap,
+                  width: AppSpacing.tradeBotQuestionIconBox + AppSpacing.x3,
                 ),
                 Expanded(
                   child: VitCard(
@@ -79,7 +77,7 @@ class _FaqCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotCardGap),
+                const SizedBox(width: AppSpacing.x3),
               ],
             ),
         ],
@@ -101,7 +99,7 @@ class _StatsRow extends StatelessWidget {
         Expanded(
           child: _StatCard(label: 'Total FAQs', value: totalFaqs.toString()),
         ),
-        const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: _StatCard(label: 'Categories', value: categories.toString()),
         ),
@@ -119,9 +117,7 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotControlTall,
-      ),
+      constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
       alignment: Alignment.center,
       borderColor: AppColors.cardBorder,
       child: Column(
@@ -131,7 +127,7 @@ class _StatCard extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             value,
             style: AppTextStyles.amountSm.copyWith(
@@ -151,7 +147,7 @@ class _HelpCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: AppSpacing.tradeBotCompactCardPadding,
       borderColor: _faqPrimary.withValues(alpha: .25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -163,12 +159,12 @@ class _HelpCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             "Can't find your answer? Our support team is here to help 24/7.",
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeBotRowGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -177,7 +173,7 @@ class _HelpCard extends StatelessWidget {
                   variant: VitCtaButtonVariant.secondary,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: AppSpacing.x2),
               const Expanded(
                 child: _HelpButton(
                   label: 'Contact Support',
@@ -193,10 +189,7 @@ class _HelpCard extends StatelessWidget {
 }
 
 class _HelpButton extends StatelessWidget {
-  const _HelpButton({
-    required this.label,
-    required this.variant,
-  });
+  const _HelpButton({required this.label, required this.variant});
 
   final String label;
   final VitCtaButtonVariant variant;

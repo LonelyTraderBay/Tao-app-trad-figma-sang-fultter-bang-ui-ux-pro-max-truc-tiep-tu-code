@@ -170,7 +170,7 @@ class _ExpandedAddress extends StatelessWidget {
                       address.address,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text1,
-                        height: AppSpacing.launchpadLineHeightReadable,
+                        height: AppSpacing.launchpadLineHeightShort,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -198,7 +198,7 @@ class _ExpandedAddress extends StatelessWidget {
                     address.notes!,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.launchpadLineHeightDense,
+                      height: AppSpacing.launchpadLineHeightMicro,
                     ),
                   ),
                 ],

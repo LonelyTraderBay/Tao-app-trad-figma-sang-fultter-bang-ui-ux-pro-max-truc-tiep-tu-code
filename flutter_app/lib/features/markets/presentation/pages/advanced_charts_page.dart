@@ -46,42 +46,52 @@ const double _advancedLineHeightCaption = 1.15;
 const double _advancedLineHeightReadable = 1.25;
 const int _advancedGridColumns = 3;
 const double _advancedGridAspectRatio = 1.0;
-const EdgeInsets _advancedClearButtonPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x1,
-);
-const EdgeInsets _advancedActiveChipPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x1,
-);
-const EdgeInsets _advancedFilterChipPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _advancedIndicatorHeaderPadding = EdgeInsets.all(
+const EdgeInsetsGeometry _advancedClearButtonPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x2,
+      vertical: AppSpacing.x1,
+    );
+const EdgeInsetsGeometry _advancedActiveChipPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x2,
+      vertical: AppSpacing.x1,
+    );
+const EdgeInsetsGeometry _advancedFilterChipPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x2,
+    );
+const EdgeInsetsGeometry _advancedIndicatorHeaderPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsGeometry _advancedCategoryBadgePadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x2,
+      vertical: AppSpacing.x1,
+    );
+const EdgeInsetsGeometry _advancedDetailsPadding =
+    EdgeInsetsDirectional.fromSTEB(
+      AppSpacing.x3,
+      AppSpacing.x2,
+      AppSpacing.x3,
+      AppSpacing.x3,
+    );
+const EdgeInsetsGeometry _advancedParamPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x2,
+      vertical: AppSpacing.x1,
+    );
+const EdgeInsetsGeometry _advancedSignalMetricPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x2);
+const EdgeInsetsGeometry _advancedPivotPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x2,
+      vertical: AppSpacing.x1,
+    );
+const EdgeInsetsGeometry _advancedCardPadding = EdgeInsetsDirectional.all(
   AppSpacing.x3,
 );
-const EdgeInsets _advancedCategoryBadgePadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x1,
-);
-const EdgeInsets _advancedDetailsPadding = EdgeInsets.fromLTRB(
-  AppSpacing.x3,
-  AppSpacing.x2,
-  AppSpacing.x3,
-  AppSpacing.x3,
-);
-const EdgeInsets _advancedParamPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x1,
-);
-const EdgeInsets _advancedSignalMetricPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _advancedPivotPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x1,
-);
-const EdgeInsets _advancedCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _advancedCardPaddingCompact = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsetsGeometry _advancedCardPaddingCompact =
+    EdgeInsetsDirectional.all(AppSpacing.x2);
 
 class AdvancedChartsPage extends ConsumerStatefulWidget {
   const AdvancedChartsPage({super.key, this.shellRenderMode});

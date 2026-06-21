@@ -103,7 +103,9 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: BotTermsOfServicePage.contentKey,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

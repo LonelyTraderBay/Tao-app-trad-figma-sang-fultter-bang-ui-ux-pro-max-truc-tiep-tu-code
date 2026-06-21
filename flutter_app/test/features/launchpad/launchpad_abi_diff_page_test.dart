@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAbiDiff(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -76,6 +78,22 @@ void main() {
     expect(find.text('ABI Diff'), findsOneWidget);
     expect(find.text('Risk Score'), findsOneWidget);
     expect(find.text('Thong tin upgrade'), findsOneWidget);
+  });
+
+  testWidgets('SC-308 first viewport reaches ABI filter', (tester) async {
+    await pumpAbiDiff(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-308 LaunchpadABIDiffPage',
+      semanticLabel: 'SC-308 LaunchpadABIDiffPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadAbiDiffPage.functionsOnlyKey),
+      routeName: 'SC-308 LaunchpadABIDiffPage',
+      actionLabel: 'the functions-only ABI filter',
+    );
   });
 
   testWidgets('SC-308 filters stats and functions-only entries', (

@@ -67,6 +67,14 @@ class _ReceiptCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Text(
+            'Execution summary',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               _SideBadge(label: isBuy ? 'MUA' : 'BÁN', color: sideColor),
@@ -131,7 +139,7 @@ class _ReceiptCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x2),
           Text(
-            'Quản lý rủi ro',
+            'Risk controls',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.textMutedLight,
               fontWeight: AppTextStyles.bold,
@@ -238,50 +246,12 @@ class _DetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x1),
-      child: Row(
-        children: [
-          SizedBox(
-            width: _receiptDetailLabelExtent,
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Flexible(
-                  child: Text(
-                    value,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.right,
-                    style: AppTextStyles.caption.copyWith(
-                      color: highlight
-                          ? AppColors.text1
-                          : AppColors.receiptTextMuted,
-                      fontWeight: highlight
-                          ? AppTextStyles.bold
-                          : AppTextStyles.medium,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
-                  ),
-                ),
-                if (trailing != null) ...[
-                  const SizedBox(width: AppSpacing.x1),
-                  trailing!,
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
+    return VitInfoRow(
+      label: label,
+      value: value,
+      trailing: trailing,
+      density: VitDensity.compact,
+      valueColor: highlight ? AppColors.text1 : AppColors.receiptTextMuted,
     );
   }
 }

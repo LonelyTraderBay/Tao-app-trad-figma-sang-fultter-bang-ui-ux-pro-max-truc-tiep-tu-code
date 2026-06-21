@@ -21,71 +21,67 @@ class _CurrentLevelHero extends StatelessWidget {
           Material(
             color: accent.withValues(alpha: 0.12),
             child: Padding(
-              padding: AppSpacing.p2pTradingLevelHeroHeaderPadding,
+              padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
               child: Row(
-              children: [
-                _LevelIconBadge(
-                  level: level,
-                  size: AppSpacing.p2pTradingLevelHeroBadgeSize,
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              'Lv.${level.id} ${level.nameVi}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.pageTitle.copyWith(
-                                color: AppColors.text1,
-                                height:
-                                    AppSpacing.p2pTradingLevelTitleLineHeight,
+                children: [
+                  _LevelIconBadge(level: level, size: AppSpacing.x6),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                'Lv.${level.id} ${level.nameVi}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.sectionTitle.copyWith(
+                                  color: AppColors.text1,
+                                  height: AppTextStyles.sectionTitle.height,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(width: AppSpacing.x2),
-                          const VitStatusPill(
-                            label: 'Hiện tại',
-                            status: VitStatusPillStatus.success,
-                            size: VitStatusPillSize.sm,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.x2),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.bolt_rounded,
-                            color: accent,
-                            size: AppSpacing.iconSm,
-                          ),
-                          const SizedBox(width: AppSpacing.x1),
-                          Flexible(
-                            child: Text(
-                              'Phí giao dịch ${_formatFee(user.fee)}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.body.copyWith(
-                                color: accent,
-                                fontWeight: AppTextStyles.bold,
+                            const SizedBox(width: AppSpacing.x2),
+                            const VitStatusPill(
+                              label: 'Hiện tại',
+                              status: VitStatusPillStatus.success,
+                              size: VitStatusPillSize.sm,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.x2),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.bolt_rounded,
+                              color: accent,
+                              size: AppSpacing.iconSm,
+                            ),
+                            const SizedBox(width: AppSpacing.x1),
+                            Flexible(
+                              child: Text(
+                                'Phí giao dịch ${_formatFee(user.fee)}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.body.copyWith(
+                                  color: accent,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
               ),
             ),
           ),
           Padding(
-            padding: AppSpacing.p2pTradingLevelHeroBodyPadding,
+            padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -111,12 +107,12 @@ class _CurrentLevelHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.x2),
                 const Divider(
                   color: AppColors.divider,
                   height: AppSpacing.dividerHairline,
                 ),
-                const SizedBox(height: AppSpacing.x4),
+                const SizedBox(height: AppSpacing.x2),
                 Row(
                   children: [
                     Expanded(
@@ -135,11 +131,11 @@ class _CurrentLevelHero extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x2),
                 _ProgressTrack(
                   value: dailyRatio,
                   color: accent,
-                  height: AppSpacing.p2pTradingLevelDailyTrackHeight,
+                  height: AppSpacing.x1,
                 ),
                 const SizedBox(height: AppSpacing.x2),
                 Row(
@@ -206,65 +202,63 @@ class _HeroMetricCard extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minHeight: AppSpacing.p2pTradingLevelMetricMinHeight,
-        ),
+        constraints: const BoxConstraints(minHeight: AppSpacing.buttonCompact),
         child: Padding(
-          padding: AppSpacing.p2pTradingLevelMetricPadding,
+          padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
           child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox.square(
-                dimension: AppSpacing.p2pTradingLevelMetricIconSize,
-                child: Material(
-                  color: color.withValues(alpha: 0.14),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Center(
-                    child: Icon(
-                      icon,
-                      color: color,
-                      size: AppSpacing.p2pTradingLevelMetricGlyphSize,
+              Row(
+                children: [
+                  SizedBox.square(
+                    dimension: AppSpacing.iconMd,
+                    child: Material(
+                      color: color.withValues(alpha: 0.14),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadii.smRadius,
+                      ),
+                      child: Center(
+                        child: Icon(
+                          icon,
+                          color: color,
+                          size: AppSpacing.iconSm,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  label,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.medium,
-                    height: AppSpacing.p2pTradingLevelMicroLineHeight,
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: Text(
+                      label,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        fontWeight: AppTextStyles.medium,
+                        height: AppTextStyles.micro.height,
+                      ),
+                    ),
                   ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                value,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.sectionTitle.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
+              if (subvalue != null)
+                Text(
+                  subvalue!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
             ],
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          if (subvalue != null)
-            Text(
-              subvalue!,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-        ],
           ),
         ),
       ),
@@ -284,7 +278,7 @@ class _NextLevelProgress extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: AppColors.accent30,
-      padding: AppSpacing.p2pTradingLevelNextCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         children: [
           Row(
@@ -292,7 +286,7 @@ class _NextLevelProgress extends StatelessWidget {
               const Icon(
                 Icons.trending_up_rounded,
                 color: AppColors.accent,
-                size: AppSpacing.p2pTradingLevelInlineIcon,
+                size: AppSpacing.iconSm,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -317,7 +311,7 @@ class _NextLevelProgress extends StatelessWidget {
           _ProgressTrack(
             value: progress,
             color: AppColors.accent,
-            height: AppSpacing.p2pTradingLevelNextTrackHeight,
+            height: AppSpacing.x1,
           ),
         ],
       ),

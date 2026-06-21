@@ -141,7 +141,7 @@ class _QuickNavItem extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
         ],
@@ -230,7 +230,7 @@ class _MoverListCard extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: color,
                         fontWeight: AppTextStyles.bold,
-                        height: 1,
+                        height: AppTextStyles.numericMicro.height,
                       ),
                     ),
                   ),
@@ -276,7 +276,7 @@ class _QuickMoverRow extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: mover.color,
                   fontWeight: AppTextStyles.bold,
-                  height: 1,
+                  height: AppTextStyles.numericMicro.height,
                 ),
               ),
             ),
@@ -290,7 +290,7 @@ class _QuickMoverRow extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.body.copyWith(
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
         ),
@@ -306,7 +306,7 @@ class _QuickMoverRow extends StatelessWidget {
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
         ),
@@ -364,7 +364,7 @@ class _SectorPerformance extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: _marketPrimary,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
+                          height: AppTextStyles.numericMicro.height,
                         ),
                       ),
                       const SizedBox(width: AppSpacing.marketAnalyticsMicroGap),
@@ -400,7 +400,9 @@ class _SectorRow extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+            padding: const EdgeInsetsDirectional.symmetric(
+              vertical: AppSpacing.x2,
+            ),
             child: Row(
               children: [
                 _IconBubble(
@@ -420,7 +422,7 @@ class _SectorRow extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.body.copyWith(
                           fontWeight: AppTextStyles.bold,
-                          height: 1.15,
+                          height: AppTextStyles.numericMicro.height,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x1),
@@ -428,7 +430,7 @@ class _SectorRow extends StatelessWidget {
                         '${sector.coinCount} coins',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1,
+                          height: AppTextStyles.numericMicro.height,
                         ),
                       ),
                     ],
@@ -443,7 +445,7 @@ class _SectorRow extends StatelessWidget {
                         color: color,
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
-                        height: 1,
+                        height: AppTextStyles.numericMicro.height,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),
@@ -451,7 +453,7 @@ class _SectorRow extends StatelessWidget {
                       _formatCompact(sector.totalMarketCap, prefix: r'$'),
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: 1,
+                        height: AppTextStyles.numericMicro.height,
                       ),
                     ),
                   ],

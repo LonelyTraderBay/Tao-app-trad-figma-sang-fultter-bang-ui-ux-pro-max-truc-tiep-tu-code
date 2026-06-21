@@ -18,77 +18,77 @@ class _TierHero extends StatelessWidget {
       child: Padding(
         padding: AppSpacing.p2pTransactionLimitsCardPadding,
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.shield_outlined,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconMd,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Tier ${tier.tier} - ${tier.name}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.sectionTitle.copyWith(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.shield_outlined,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.iconMd,
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tier ${tier.tier} - ${tier.name}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.sectionTitle.copyWith(
+                          color: AppColors.onAccent,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        'Giới hạn hiện tại của bạn',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.onAccent.withValues(alpha: .90),
+                          fontWeight: AppTextStyles.medium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Material(
+                  type: MaterialType.transparency,
+                  color: AppColors.onAccent.withValues(alpha: .20),
+                  borderRadius: AppRadii.inputRadius,
+                  child: Padding(
+                    padding: AppSpacing.p2pTransactionLimitsBadgePadding,
+                    child: Text(
+                      tier.statusLabel,
+                      style: AppTextStyles.micro.copyWith(
                         color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      'Giới hạn hiện tại của bạn',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.onAccent.withValues(alpha: .90),
-                        fontWeight: AppTextStyles.medium,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Material(
-                type: MaterialType.transparency,
-                color: AppColors.onAccent.withValues(alpha: .20),
-                borderRadius: AppRadii.inputRadius,
-                child: Padding(
-                  padding: AppSpacing.p2pTransactionLimitsBadgePadding,
-                  child: Text(
-                    tier.statusLabel,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.onAccent,
-                      fontWeight: AppTextStyles.bold,
-                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x5),
-          Row(
-            children: [
-              Expanded(
-                child: _TierMetric(
-                  label: 'Mua/ngày',
-                  value: '${_formatMillions(tier.dailyBuy)} VND',
+              ],
+            ),
+            const SizedBox(height: AppSpacing.x5),
+            Row(
+              children: [
+                Expanded(
+                  child: _TierMetric(
+                    label: 'Mua/ngày',
+                    value: '${_formatMillions(tier.dailyBuy)} VND',
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: _TierMetric(
-                  label: 'Bán/ngày',
-                  value: '${_formatMillions(tier.dailySell)} VND',
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: _TierMetric(
+                    label: 'Bán/ngày',
+                    value: '${_formatMillions(tier.dailySell)} VND',
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
           ],
         ),
       ),

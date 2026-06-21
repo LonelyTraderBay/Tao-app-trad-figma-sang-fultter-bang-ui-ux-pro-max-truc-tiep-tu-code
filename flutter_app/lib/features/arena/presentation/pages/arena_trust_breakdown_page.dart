@@ -8,7 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -17,6 +17,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+
+const _trustDisclaimerLineRatio = AppSpacing.arenaTrustDisclaimerLineHeight;
+const _trustHeroLineRatio = AppSpacing.arenaTrustHeroLineHeight;
 
 class ArenaTrustBreakdownPage extends ConsumerWidget {
   const ArenaTrustBreakdownPage({
@@ -39,11 +42,12 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
         .watch(arenaReadModelControllerProvider)
         .getArenaTrustBreakdown(entityId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -67,8 +71,8 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: snapshot.creator == null
                         ? VitPageContent(
                             padding: VitContentPadding.none,
@@ -82,7 +86,7 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
                           )
                         : VitPageContent(
                             padding: VitContentPadding.compact,
-                            customGap: AppSpacing.x5,
+                            gap: VitContentGap.tight,
                             children: [
                               _TrustBreakdownCard(snapshot: snapshot),
                               _CreatorProfileLink(snapshot: snapshot),
@@ -168,7 +172,7 @@ class _TrustBreakdownCard extends StatelessWidget {
                       'Community metrics: Fair Play, completion, report rate và dispute rate.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.arenaTrustHeroLineHeight,
+                        height: _trustHeroLineRatio,
                       ),
                     ),
                     if (creator.fairPlayBadge) ...[
@@ -202,7 +206,7 @@ class _TrustBreakdownCard extends StatelessWidget {
             snapshot.disclaimer,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.arenaTrustDisclaimerLineHeight,
+              height: _trustDisclaimerLineRatio,
             ),
           ),
         ],
@@ -365,7 +369,7 @@ class _SafetyLink extends StatelessWidget {
                   snapshot.safetyDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.arenaTrustHeroLineHeight,
+                    height: _trustHeroLineRatio,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),

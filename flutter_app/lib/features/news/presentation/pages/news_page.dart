@@ -110,7 +110,9 @@ class _NewsPageState extends ConsumerState<NewsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: NewsPage.contentKey,
-                    padding: EdgeInsets.only(bottom: scrollEndPadding),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       density: VitDensity.compact,
                       children: [

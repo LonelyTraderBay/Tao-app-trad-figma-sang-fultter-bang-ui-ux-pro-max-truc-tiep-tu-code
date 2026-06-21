@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpWithdraw(
     WidgetTester tester, {
@@ -117,6 +119,24 @@ void main() {
     await tester.tap(find.byKey(WithdrawPage.allAmountKey));
     await tester.pumpAndSettle();
     expect(find.text('10,200.00'), findsOneWidget);
+  });
+
+  testWidgets('SC-139 first viewport reaches withdrawal controls', (
+    tester,
+  ) async {
+    await pumpWithdraw(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-139 WithdrawPage',
+      semanticLabel: 'SC-139 WithdrawPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(WithdrawPage.networkSelectorKey),
+      routeName: 'SC-139 WithdrawPage',
+      actionLabel: 'network selector',
+    );
   });
 
   testWidgets('SC-139 support opens contextual withdrawal support', (

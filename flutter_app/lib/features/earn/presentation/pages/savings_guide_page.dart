@@ -77,7 +77,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.defaultPadding,
@@ -136,7 +136,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                 child: SafeArea(
                   top: false,
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.earnSheetContentPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

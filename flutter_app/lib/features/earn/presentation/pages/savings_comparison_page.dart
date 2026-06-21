@@ -78,7 +78,7 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
@@ -192,7 +192,7 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
             child: SafeArea(
               top: false,
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 padding: AppSpacing.earnSheetContentPadding,
                 child: _ProductPickerSheet(
                   availableProducts: availableProducts,

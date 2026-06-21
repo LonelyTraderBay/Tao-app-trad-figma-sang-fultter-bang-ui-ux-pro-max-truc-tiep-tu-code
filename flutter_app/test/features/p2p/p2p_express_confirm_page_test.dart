@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_express_confirm_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PExpressConfirm(
     WidgetTester tester, {
@@ -69,6 +71,39 @@ void main() {
     expect(find.text('Escrow'), findsOneWidget);
     expect(find.text('Hủy bỏ'), findsOneWidget);
     expect(find.text('Xác nhận'), findsOneWidget);
+  });
+
+  testWidgets('SC-210 first viewport reaches escrow and confirm actions', (
+    tester,
+  ) async {
+    await pumpP2PExpressConfirm(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-210 P2PExpressConfirmPage',
+      semanticLabel: 'SC-210 P2PExpressConfirmPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.text('CryptoKing_VN').first,
+      routeName: 'SC-210 P2PExpressConfirmPage',
+      actionLabel: 'the selected merchant summary',
+      minVisibleHeight: 16,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PExpressConfirmPage.cancelKey),
+      routeName: 'SC-210 P2PExpressConfirmPage',
+      actionLabel: 'the cancel confirmation action',
+      minVisibleHeight: 40,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PExpressConfirmPage.confirmKey),
+      routeName: 'SC-210 P2PExpressConfirmPage',
+      actionLabel: 'the final confirm action after trade details',
+      minVisibleHeight: 40,
+    );
   });
 
   testWidgets('SC-210 query params drive sell state and payment method', (

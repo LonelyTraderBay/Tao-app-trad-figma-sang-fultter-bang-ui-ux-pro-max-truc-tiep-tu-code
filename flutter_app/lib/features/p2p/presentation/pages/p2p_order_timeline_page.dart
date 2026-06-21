@@ -70,7 +70,7 @@ class P2POrderTimelinePage extends ConsumerWidget {
                     },
                     child: SingleChildScrollView(
                       key: contentKey,
-                      physics: const BouncingScrollPhysics(
+                      physics: const ClampingScrollPhysics(
                         parent: AlwaysScrollableScrollPhysics(),
                       ),
                       padding: AppSpacing.p2pOrderLifecycleScrollPadding(
@@ -89,8 +89,8 @@ class P2POrderTimelinePage extends ConsumerWidget {
                               ],
                             )
                           : VitPageContent(
-                              padding: VitContentPadding.relaxed,
-                              customGap: AppSpacing.x5,
+                              padding: VitContentPadding.compact,
+                              gap: VitContentGap.tight,
                               children: [
                                 const _TimelineHeroCard(),
                                 _TimelineList(events: snapshot.events),
@@ -124,20 +124,20 @@ class _TimelineHeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pOrderLifecycleHeroPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
         children: [
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            width: AppSpacing.ctaHeight,
-            height: AppSpacing.ctaHeight,
+            width: AppSpacing.buttonCompact,
+            height: AppSpacing.buttonCompact,
             alignment: Alignment.center,
             borderColor: AppColors.primary20,
             child: const Icon(
               Icons.schedule_rounded,
               color: AppColors.primary,
-              size: AppSpacing.iconMd,
+              size: AppSpacing.iconSm,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -208,7 +208,7 @@ class _TimelineRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _statusColor(event.status);
     return Padding(
-      padding: AppSpacing.p2pOrderTimelineRowPadding(isLast: isLast),
+      padding: EdgeInsetsDirectional.only(bottom: isLast ? 0 : AppSpacing.x3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -229,10 +229,10 @@ class _TimelineRow extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x5),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: VitCard(
-              padding: AppSpacing.p2pOrderLifecycleHeroPadding,
+              padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

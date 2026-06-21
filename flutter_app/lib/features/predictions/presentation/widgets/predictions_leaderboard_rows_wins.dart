@@ -19,7 +19,9 @@ class _RankingRow extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: _boardSpace),
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: _boardSpace,
+            ),
             child: Row(
               children: [
                 SizedBox(

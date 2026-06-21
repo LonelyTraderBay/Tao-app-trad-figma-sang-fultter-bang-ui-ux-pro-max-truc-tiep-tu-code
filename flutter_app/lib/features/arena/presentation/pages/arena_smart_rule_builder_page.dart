@@ -5,11 +5,12 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,6 +25,10 @@ part 'arena_smart_rule_builder_page_part_02.dart';
 part 'arena_smart_rule_builder_page_part_03.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
+final double _smartRuleActionExtent = VitDensity.compact.controlHeight;
+const _smartRuleBodyLineRatio = AppSpacing.arenaSmartRuleBodyLineHeight;
+const _smartRuleStepperLineRatio = AppSpacing.arenaSmartRuleStepperLineHeight;
+const _smartRuleSubtitleLineRatio = AppSpacing.arenaSmartRuleSubtitleLineHeight;
 
 String _formatArenaRuleDateInput(String isoDate) {
   final parts = isoDate.split('-');
@@ -54,9 +59,22 @@ class ArenaSmartRuleBuilderPage extends ConsumerStatefulWidget {
   static const domainKey = Key('sc186_domain');
   static const subjectKey = Key('sc186_subject');
   static const actionKey = Key('sc186_action');
+  static const metricKey = Key('sc186_metric');
+  static const winTypeKey = Key('sc186_win_type');
+  static const deadlineContextKey = Key('sc186_deadline_context');
+  static const tieRuleKey = Key('sc186_tie_rule');
+  static const voidRuleKey = Key('sc186_void_rule');
+  static const resultDeadlineKey = Key('sc186_result_deadline');
   static const continueKey = Key('sc186_continue');
+  static const previewKey = Key('sc186_preview_payload');
+  static const submitKey = Key('sc186_submit_review');
+  static const confirmSubmitKey = Key('sc186_confirm_submit');
   static const saveKey = Key('sc186_save');
+  static const resetKey = Key('sc186_reset');
   static const guidanceKey = Key('sc186_guidance');
+  static const rulesAckKey = Key('sc186_rules_ack');
+  static const pointsAckKey = Key('sc186_points_ack');
+  static const moderationAckKey = Key('sc186_moderation_ack');
 
   static Key challengeTypeKey(String id) => Key('sc186_type_$id');
 
@@ -90,12 +108,15 @@ class _ArenaSmartRuleBuilderPageState
   String _resultDeadline = '';
   bool _rematchEnabled = false;
   bool _saveAsMode = false;
+  bool _ruleReviewAccepted = false;
+  bool _pointsBoundaryAccepted = false;
+  bool _moderationAccepted = false;
   String? _statusLabel;
 
   @override
   void initState() {
     super.initState();
-    _endDate = '2026-03-15';
+    _endDate = _defaultArenaRuleEndDate();
     _endDateController.text = _formatArenaRuleDateInput(_endDate);
   }
 
@@ -113,17 +134,18 @@ class _ArenaSmartRuleBuilderPageState
     final snapshot = ref
         .watch(arenaReadModelControllerProvider)
         .getArenaSmartRules();
+    final creationState = ref.watch(arenaCreationProvider);
     _endDate = _endDate.isEmpty ? snapshot.defaultEndDate : _endDate;
     if (_endDateController.text.isEmpty && _endDate.isNotEmpty) {
       _endDateController.text = _formatArenaRuleDateInput(_endDate);
     }
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
-        AppSpacing.x7 +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x7 + AppSpacing.x7,
+      nativeExtra: AppSpacing.x7 + AppSpacing.x7,
+    );
     final clarity = _computeClarity();
     final canProceed = _canProceed;
 
@@ -145,16 +167,13 @@ class _ArenaSmartRuleBuilderPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ArenaSmartRuleBuilderPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    customGap: AppSpacing.x5,
+                    gap: VitContentGap.tight,
                     children: [
                       _SmartStepper(steps: snapshot.steps, step: 3),
-                      _IntroSection(),
-                      _ClarityScoreCard(score: clarity.score),
-                      _GuidanceLink(onTap: _showGuidance),
                       _TitleField(
                         controller: _titleController,
                         suggestions: snapshot.titleSuggestions,
@@ -163,7 +182,7 @@ class _ArenaSmartRuleBuilderPageState
                       ),
                       _DomainField(
                         domain: _selectedDomain(snapshot),
-                        onTap: () => _selectDomain(snapshot, 'crypto'),
+                        onTap: () => _selectDomain(snapshot),
                       ),
                       _ChallengeTypeGrid(
                         types: snapshot.challengeTypes,
@@ -171,6 +190,9 @@ class _ArenaSmartRuleBuilderPageState
                         onSelected: (id) =>
                             setState(() => _challengeTypeId = id),
                       ),
+                      _IntroSection(),
+                      _ClarityScoreCard(score: clarity.score),
+                      _GuidanceLink(onTap: _showGuidance),
                       _ConditionBuilder(
                         subject: _subject,
                         action: _action,
@@ -178,17 +200,35 @@ class _ArenaSmartRuleBuilderPageState
                         winType: _winType,
                         deadlineContext: _deadlineContext,
                         customWinController: _customWinController,
-                        onSubject: () =>
-                            setState(() => _subject = snapshot.subjects.first),
-                        onAction: () =>
-                            setState(() => _action = snapshot.actions.first),
-                        onMetric: () =>
-                            setState(() => _metric = snapshot.metrics.first),
-                        onWinType: () =>
-                            setState(() => _winType = snapshot.winTypes.first),
-                        onDeadlineContext: () => setState(
-                          () => _deadlineContext =
-                              snapshot.deadlineContexts.first,
+                        onSubject: () => _selectTextOption(
+                          title: 'Chọn chủ thể',
+                          options: snapshot.subjects,
+                          selectedValue: _subject,
+                          onSelected: (value) => _subject = value,
+                        ),
+                        onAction: () => _selectTextOption(
+                          title: 'Chọn hành động',
+                          options: snapshot.actions,
+                          selectedValue: _action,
+                          onSelected: (value) => _action = value,
+                        ),
+                        onMetric: () => _selectTextOption(
+                          title: 'Chọn chỉ số / đối tượng',
+                          options: snapshot.metrics,
+                          selectedValue: _metric,
+                          onSelected: (value) => _metric = value,
+                        ),
+                        onWinType: () => _selectTextOption(
+                          title: 'Chọn kiểu thắng',
+                          options: snapshot.winTypes,
+                          selectedValue: _winType,
+                          onSelected: (value) => _winType = value,
+                        ),
+                        onDeadlineContext: () => _selectTextOption(
+                          title: 'Chọn thời điểm kết quả',
+                          options: snapshot.deadlineContexts,
+                          selectedValue: _deadlineContext,
+                          onSelected: (value) => _deadlineContext = value,
                         ),
                         onCustomWinChanged: (value) =>
                             setState(() => _customWinCondition = value),
@@ -217,14 +257,23 @@ class _ArenaSmartRuleBuilderPageState
                         rematchEnabled: _rematchEnabled,
                         saveAsMode: _saveAsMode,
                         onDate: (value) => setState(() => _endDate = value),
-                        onTieRule: () =>
-                            setState(() => _tieRule = snapshot.tieRules.first),
-                        onVoidRule: () => setState(
-                          () => _voidRule = snapshot.voidRules.first,
+                        onTieRule: () => _selectTextOption(
+                          title: 'Chọn luật hòa',
+                          options: snapshot.tieRules,
+                          selectedValue: _tieRule,
+                          onSelected: (value) => _tieRule = value,
                         ),
-                        onResultDeadline: () => setState(
-                          () =>
-                              _resultDeadline = snapshot.resultDeadlines.first,
+                        onVoidRule: () => _selectTextOption(
+                          title: 'Chọn luật hủy bỏ',
+                          options: snapshot.voidRules,
+                          selectedValue: _voidRule,
+                          onSelected: (value) => _voidRule = value,
+                        ),
+                        onResultDeadline: () => _selectTextOption(
+                          title: 'Chọn hạn chốt kết quả',
+                          options: snapshot.resultDeadlines,
+                          selectedValue: _resultDeadline,
+                          onSelected: (value) => _resultDeadline = value,
                         ),
                         onRematch: () =>
                             setState(() => _rematchEnabled = !_rematchEnabled),
@@ -241,13 +290,38 @@ class _ArenaSmartRuleBuilderPageState
                         resultDeadline: _resultDeadline,
                       ),
                       const _ModerationNote(),
+                      _BackendPayloadPreviewCard(
+                        creationState: creationState,
+                        draft: _buildCreationDraft(snapshot, clarity),
+                      ),
+                      _CreationSafetyChecklist(
+                        ruleReviewAccepted: _ruleReviewAccepted,
+                        pointsBoundaryAccepted: _pointsBoundaryAccepted,
+                        moderationAccepted: _moderationAccepted,
+                        onRuleReview: () => setState(
+                          () => _ruleReviewAccepted = !_ruleReviewAccepted,
+                        ),
+                        onPointsBoundary: () => setState(
+                          () => _pointsBoundaryAccepted =
+                              !_pointsBoundaryAccepted,
+                        ),
+                        onModeration: () => setState(
+                          () => _moderationAccepted = !_moderationAccepted,
+                        ),
+                      ),
                       _FooterActions(
                         canProceed: canProceed,
+                        canSubmit: _canSubmit(clarity),
                         clarityScore: clarity.score,
                         statusLabel: _statusLabel,
+                        commandStatusLabel: creationState.statusLabel,
                         onBack: _close,
                         onContinue: _continue,
-                        onSave: _saveDraft,
+                        onPreview: () =>
+                            _previewBackendPayload(snapshot, clarity),
+                        onSave: () => _saveDraftForBackend(snapshot, clarity),
+                        onSubmit: () => _submitForReview(snapshot, clarity),
+                        onReset: _resetForm,
                       ),
                     ],
                   ),
@@ -267,6 +341,17 @@ class _ArenaSmartRuleBuilderPageState
         _domainId.isNotEmpty &&
         _challengeTypeId.isNotEmpty &&
         (hasStructuredRule || hasCustomRule);
+  }
+
+  bool _canSubmit(_ClarityResult clarity) {
+    return _canProceed &&
+        clarity.score >= 35 &&
+        _tieRule.isNotEmpty &&
+        _voidRule.isNotEmpty &&
+        _resultDeadline.isNotEmpty &&
+        _ruleReviewAccepted &&
+        _pointsBoundaryAccepted &&
+        _moderationAccepted;
   }
 
   String get _generatedWinCondition {
@@ -342,11 +427,53 @@ class _ArenaSmartRuleBuilderPageState
     return _ClarityResult(score.clamp(0, 100));
   }
 
-  void _selectDomain(ArenaSmartRulesSnapshot snapshot, String id) {
-    if (snapshot.domains.any((domain) => domain.id == id)) {
-      HapticFeedback.selectionClick();
-      setState(() => _domainId = id);
-    }
+  Future<void> _selectDomain(ArenaSmartRulesSnapshot snapshot) async {
+    HapticFeedback.selectionClick();
+    FocusScope.of(context).unfocus();
+    final selected = await showVitBottomSheet<ArenaSmartOptionDraft>(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      useSafeArea: true,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: AppRadii.sheetTopRadius,
+      ),
+      builder: (context) => _SmartOptionSheet(
+        title: 'Chọn lĩnh vực',
+        options: snapshot.domains,
+        selectedId: _domainId,
+      ),
+    );
+    if (!mounted || selected == null) return;
+    setState(() => _domainId = selected.id);
+  }
+
+  Future<void> _selectTextOption({
+    required String title,
+    required List<String> options,
+    required String selectedValue,
+    required ValueChanged<String> onSelected,
+  }) async {
+    HapticFeedback.selectionClick();
+    FocusScope.of(context).unfocus();
+    final selected = await showVitBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      useSafeArea: true,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: AppRadii.sheetTopRadius,
+      ),
+      builder: (context) => _TextOptionSheet(
+        title: title,
+        options: options,
+        selectedValue: selectedValue,
+      ),
+    );
+    if (!mounted || selected == null) return;
+    setState(() => onSelected(selected));
   }
 
   void _setTitle(String value) {
@@ -371,14 +498,134 @@ class _ArenaSmartRuleBuilderPageState
   }
 
   void _continue() {
-    if (!_canProceed) return;
+    if (!_canProceed) {
+      setState(() => _statusLabel = _missingCoreRequirement());
+      return;
+    }
     HapticFeedback.selectionClick();
     setState(() => _statusLabel = 'Rule đã hoàn chỉnh');
   }
 
-  void _saveDraft() {
+  void _previewBackendPayload(
+    ArenaSmartRulesSnapshot snapshot,
+    _ClarityResult clarity,
+  ) {
     HapticFeedback.selectionClick();
-    setState(() => _statusLabel = 'Đã lưu nháp');
+    final result = ref
+        .read(arenaCreationProvider.notifier)
+        .preview(_buildCreationDraft(snapshot, clarity));
+    setState(() => _statusLabel = result.statusLabel);
+  }
+
+  void _saveDraftForBackend(
+    ArenaSmartRulesSnapshot snapshot,
+    _ClarityResult clarity,
+  ) {
+    HapticFeedback.selectionClick();
+    final result = ref
+        .read(arenaCreationProvider.notifier)
+        .saveDraft(_buildCreationDraft(snapshot, clarity));
+    setState(() => _statusLabel = result.statusLabel);
+  }
+
+  Future<void> _submitForReview(
+    ArenaSmartRulesSnapshot snapshot,
+    _ClarityResult clarity,
+  ) async {
+    HapticFeedback.selectionClick();
+    FocusScope.of(context).unfocus();
+    final draft = _buildCreationDraft(snapshot, clarity);
+    final errors = draft.submitValidationErrors();
+    if (errors.isNotEmpty) {
+      setState(() => _statusLabel = errors.first);
+      return;
+    }
+
+    final confirmed = await showVitBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      useSafeArea: true,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: AppRadii.sheetTopRadius,
+      ),
+      builder: (context) => _SubmitChallengeSheet(draft: draft),
+    );
+    if (!mounted || confirmed != true) return;
+
+    final result = ref
+        .read(arenaCreationProvider.notifier)
+        .submitForReview(draft);
+    setState(() => _statusLabel = result.statusLabel);
+    if (result.ok) {
+      context.go(AppRoutePaths.arenaMy);
+    }
+  }
+
+  void _resetForm() {
+    HapticFeedback.selectionClick();
+    _titleController.clear();
+    _customWinController.clear();
+    _descriptionController.clear();
+    _endDate = _defaultArenaRuleEndDate();
+    _endDateController.text = _formatArenaRuleDateInput(_endDate);
+    setState(() {
+      _title = '';
+      _domainId = '';
+      _challengeTypeId = '';
+      _subject = '';
+      _action = '';
+      _metric = '';
+      _winType = '';
+      _deadlineContext = '';
+      _customWinCondition = '';
+      _description = '';
+      _tieRule = '';
+      _voidRule = '';
+      _resultDeadline = '';
+      _rematchEnabled = false;
+      _saveAsMode = false;
+      _ruleReviewAccepted = false;
+      _pointsBoundaryAccepted = false;
+      _moderationAccepted = false;
+      _statusLabel = 'Đã làm mới form';
+    });
+  }
+
+  ArenaCreateChallengeDraft _buildCreationDraft(
+    ArenaSmartRulesSnapshot snapshot,
+    _ClarityResult clarity,
+  ) {
+    return ArenaCreateChallengeDraft(
+      title: _title,
+      domainLabel: _selectedDomain(snapshot)?.label ?? '',
+      challengeTypeLabel: _selectedChallengeType(snapshot)?.label ?? '',
+      winCondition: _generatedWinCondition,
+      description: _description,
+      endDate: _endDate,
+      tieRule: _tieRule,
+      voidRule: _voidRule,
+      resultDeadline: _resultDeadline,
+      clarityScore: clarity.score,
+      rematchEnabled: _rematchEnabled,
+      saveAsMode: _saveAsMode,
+      pointsBoundaryAccepted: _pointsBoundaryAccepted,
+      ruleReviewAccepted: _ruleReviewAccepted,
+      moderationAccepted: _moderationAccepted,
+    );
+  }
+
+  String _missingCoreRequirement() {
+    if (_title.trim().length < 3) {
+      return 'Nhập tên challenge tối thiểu 3 ký tự.';
+    }
+    if (_domainId.isEmpty) return 'Chọn lĩnh vực để phân loại challenge.';
+    if (_challengeTypeId.isEmpty) return 'Chọn loại challenge.';
+    if (_generatedWinCondition == '-') {
+      return 'Chọn điều kiện thắng hoặc tự nhập rule.';
+    }
+    return 'Hoàn thiện thêm rule để tiếp tục.';
   }
 
   void _close() {
@@ -388,4 +635,11 @@ class _ArenaSmartRuleBuilderPageState
     }
     context.go(AppRoutePaths.arenaStudio);
   }
+}
+
+String _defaultArenaRuleEndDate() {
+  final date = DateTime.now().add(const Duration(days: 7));
+  final month = date.month.toString().padLeft(2, '0');
+  final day = date.day.toString().padLeft(2, '0');
+  return '${date.year}-$month-$day';
 }

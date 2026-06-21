@@ -33,7 +33,7 @@ class _ResultView extends StatelessWidget {
           key: StakingRiskAssessmentPage.resultCardKey,
           radius: VitCardRadius.lg,
           borderColor: accent,
-          padding: AppSpacing.earnCardPaddingX5,
+          padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -64,7 +64,7 @@ class _ResultView extends StatelessWidget {
                           result.description,
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text2,
-                            height: AppSpacing.stakingAssessmentBodyLineHeight,
+                            height: AppTextStyles.caption.height,
                           ),
                         ),
                       ],
@@ -142,8 +142,8 @@ class _ResultIcon extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        width: AppSpacing.x7,
-        height: AppSpacing.x7,
+        width: AppSpacing.x6,
+        height: AppSpacing.x6,
         child: Center(
           child: Icon(
             Icons.shield_outlined,
@@ -237,7 +237,7 @@ class _BulletRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingAssessmentBodyLineHeight,
+              height: AppTextStyles.caption.height,
             ),
           ),
         ),
@@ -255,7 +255,7 @@ class _ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           Expanded(

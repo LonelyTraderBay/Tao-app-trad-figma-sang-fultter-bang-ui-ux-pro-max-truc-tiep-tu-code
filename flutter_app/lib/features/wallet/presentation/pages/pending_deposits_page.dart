@@ -36,12 +36,18 @@ const _pendingGap = 8.0;
 const _pendingTinyGap = 4.0;
 const _pendingInlineGap = 8.0;
 const _pendingScrollTopPad = 0.0;
-const _pendingCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 12);
-const _pendingDetailsPadding = EdgeInsets.symmetric(
+const _pendingCardPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 12,
+);
+const _pendingDetailsPadding = EdgeInsetsDirectional.symmetric(
   horizontal: 10,
   vertical: 10,
 );
-const _pendingNoticePadding = EdgeInsets.symmetric(horizontal: 10, vertical: 8);
+const _pendingNoticePadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 10,
+  vertical: 8,
+);
 
 double _pendingScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
@@ -100,7 +106,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                   padding: AppSpacing.walletPendingScrollPadding(
                     bottomInset,
                   ).copyWith(top: _pendingScrollTopPad),
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,

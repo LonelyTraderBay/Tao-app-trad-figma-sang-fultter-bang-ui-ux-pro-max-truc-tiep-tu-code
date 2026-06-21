@@ -63,7 +63,7 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pFinancialSafetyScrollPadding(
                       bottomInset,
                     ),
@@ -116,46 +116,46 @@ class _FundLockHero extends StatelessWidget {
       padding: AppSpacing.p2pFinancialSafetyCardPadding,
       clip: true,
       child: Row(
-          children: [
-            VitCard(
-              width: AppSpacing.p2pFinancialSafetyIconBox,
-              height: AppSpacing.p2pFinancialSafetyIconBox,
-              variant: VitCardVariant.ghost,
-              radius: VitCardRadius.lg,
-              background: ColoredBox(
-                color: AppColors.onAccent.withValues(alpha: .20),
-              ),
-              clip: true,
-              child: const Icon(
-                Icons.lock_outline_rounded,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconMd,
-              ),
+        children: [
+          VitCard(
+            width: AppSpacing.p2pFinancialSafetyIconBox,
+            height: AppSpacing.p2pFinancialSafetyIconBox,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            background: ColoredBox(
+              color: AppColors.onAccent.withValues(alpha: .20),
             ),
-            const SizedBox(width: AppSpacing.x4),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    snapshot.heroTitle,
-                    style: AppTextStyles.sectionTitle.copyWith(
-                      color: AppColors.onAccent,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    '${snapshot.records.length} giao dịch gần đây',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.onAccent.withValues(alpha: .88),
-                      fontWeight: AppTextStyles.medium,
-                    ),
-                  ),
-                ],
-              ),
+            clip: true,
+            child: const Icon(
+              Icons.lock_outline_rounded,
+              color: AppColors.onAccent,
+              size: AppSpacing.iconMd,
             ),
-          ],
+          ),
+          const SizedBox(width: AppSpacing.x4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  snapshot.heroTitle,
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    color: AppColors.onAccent,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  '${snapshot.records.length} giao dịch gần đây',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.onAccent.withValues(alpha: .88),
+                    fontWeight: AppTextStyles.medium,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

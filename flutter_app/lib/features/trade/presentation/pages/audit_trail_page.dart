@@ -52,10 +52,8 @@ class _AuditTrailPageState extends ConsumerState<AuditTrailPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.tradeToolBottomInsetRiskVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.tradeToolBottomInsetRiskNative) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
     final entries = _filteredEntries(snapshot.entries);
 
@@ -86,7 +84,7 @@ class _AuditTrailPageState extends ConsumerState<AuditTrailPage> {
                   padding: AppSpacing.tradeToolScrollPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.tradeToolPageTopGap,
+                    gap: VitContentGap.tight,
                     fullBleed: true,
                     children: [
                       const VitHighRiskStatePanel(

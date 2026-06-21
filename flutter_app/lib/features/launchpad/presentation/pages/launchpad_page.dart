@@ -121,8 +121,8 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
             ).copyWith(scrollbars: false),
             child: SingleChildScrollView(
               key: LaunchpadPage.contentKey,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: scrollEndPadding),
+              physics: const ClampingScrollPhysics(),
+              padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
               child: VitPageContent(
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,

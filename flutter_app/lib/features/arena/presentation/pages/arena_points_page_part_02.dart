@@ -243,7 +243,7 @@ class _TaskSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Row(
             children: [
               for (final filter in filters) ...[

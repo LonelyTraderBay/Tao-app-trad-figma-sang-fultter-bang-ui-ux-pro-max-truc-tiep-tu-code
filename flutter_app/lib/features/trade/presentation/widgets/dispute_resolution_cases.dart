@@ -28,7 +28,7 @@ class _DisputeTabs extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: const EdgeInsetsDirectional.symmetric(
                         vertical: AppSpacing.x2,
                         horizontal: AppSpacing.x1,
                       ),

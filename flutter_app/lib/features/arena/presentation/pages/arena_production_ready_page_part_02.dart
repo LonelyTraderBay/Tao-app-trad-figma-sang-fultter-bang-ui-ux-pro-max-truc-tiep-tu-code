@@ -33,7 +33,7 @@ class _FlowCard extends StatelessWidget {
               ),
               SizedBox(
                 width: AppSpacing.x4,
-                height: 3,
+                height: AppSpacing.x1,
                 child: Material(color: color, borderRadius: AppRadii.xsRadius),
               ),
             ],
@@ -81,9 +81,8 @@ class _FlowStepRow extends StatelessWidget {
             width: AppSpacing.arenaProductionFlowColumnWidth,
             child: Column(
               children: [
-                SizedBox(
-                  width: AppSpacing.arenaProductionFlowDot,
-                  height: 10,
+                SizedBox.square(
+                  dimension: AppSpacing.arenaProductionFlowDot,
                   child: Material(
                     color: first ? color : AppColors.transparent,
                     shape: CircleBorder(
@@ -129,7 +128,7 @@ class _FlowStepRow extends StatelessWidget {
                       step.description,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: 1.24,
+                        height: AppTextStyles.numericMicro.height,
                       ),
                     ),
                   ],
@@ -161,7 +160,7 @@ class _RegistrySection extends StatelessWidget {
           'Clear labels: Live = implemented local UI, Release-gated = not user-available, QA = internal only.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1.28,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
         VitCard(
@@ -205,7 +204,7 @@ class _StatusMetric extends StatelessWidget {
           style: AppTextStyles.sectionTitle.copyWith(
             color: color,
             fontWeight: AppTextStyles.heavy,
-            height: 1.05,
+            height: AppTextStyles.microTiny.height,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -237,9 +236,8 @@ class _StatusGroup extends StatelessWidget {
       children: [
         Row(
           children: [
-            SizedBox(
-              width: 8,
-              height: 8,
+            SizedBox.square(
+              dimension: AppSpacing.arenaProductionStatusDot,
               child: Material(color: color, shape: const CircleBorder()),
             ),
             const SizedBox(width: AppSpacing.x2),
@@ -355,7 +353,7 @@ class _HandoffSection extends StatelessWidget {
           '4 handoff boards: Route Registry, Component Registry, Trust & Governance Rules, Points Ledger / Resolution Dictionary.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1.28,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
         _HandoffBoard(

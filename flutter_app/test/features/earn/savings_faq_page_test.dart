@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.
 import 'package:vit_trade_flutter/features/support/presentation/pages/support_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpFAQ(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -72,6 +74,22 @@ void main() {
     expect(find.byKey(SavingsFAQPage.faqListKey), findsOneWidget);
     expect(find.text('Tiết kiệm Crypto là gì?'), findsOneWidget);
     expect(find.text('Tiết kiệm có khác Staking không?'), findsOneWidget);
+  });
+
+  testWidgets('SC-336 first viewport reaches first FAQ item', (tester) async {
+    await pumpFAQ(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-336 SavingsFAQPage',
+      semanticLabel: 'SC-336 SavingsFAQPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(SavingsFAQPage.firstFaqKey),
+      routeName: 'SC-336 SavingsFAQPage',
+      actionLabel: 'the first FAQ item',
+    );
   });
 
   testWidgets('SC-336 filters by category and search query', (tester) async {

@@ -62,7 +62,7 @@ class _GovernanceSummary extends StatelessWidget {
                         : 'Nên chuyển sang Private hoặc Unlisted cho đến khi rule rõ ràng hơn.',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.arenaGovernanceBodyLineHeight,
+                      height: _governanceBodyLineRatio,
                     ),
                   ),
                 ),
@@ -110,8 +110,8 @@ class _GovernanceFooter extends StatelessWidget {
               children: [
                 VitCard(
                   variant: VitCardVariant.inner,
-                  width: AppSpacing.ctaHeight,
-                  height: AppSpacing.ctaHeight,
+                  width: _governanceActionExtent,
+                  height: _governanceActionExtent,
                   onTap: onBack,
                   child: const Icon(
                     Icons.chevron_left_rounded,

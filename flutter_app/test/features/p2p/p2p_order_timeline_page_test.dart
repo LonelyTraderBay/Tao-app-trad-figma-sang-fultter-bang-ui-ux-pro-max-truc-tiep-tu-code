@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_timeline_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2POrderTimeline(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -72,6 +74,37 @@ void main() {
     expect(find.text('completed'), findsNWidgets(5));
     expect(find.text('pending'), findsOneWidget);
     expect(find.text('By: Seller'), findsNWidgets(3));
+  });
+
+  testWidgets('SC-212 first viewport reaches timeline start', (tester) async {
+    await pumpP2POrderTimeline(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-212 P2POrderTimelinePage',
+      semanticLabel: 'SC-212 P2POrderTimelinePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.text('Order Timeline'),
+      routeName: 'SC-212 P2POrderTimelinePage',
+      actionLabel: 'the timeline summary',
+      minVisibleHeight: 18,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.text('Order Created'),
+      routeName: 'SC-212 P2POrderTimelinePage',
+      actionLabel: 'the first timeline event',
+      minVisibleHeight: 18,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.text('Matched with Seller'),
+      routeName: 'SC-212 P2POrderTimelinePage',
+      actionLabel: 'the next useful timeline event',
+      minVisibleHeight: 18,
+    );
   });
 
   testWidgets('SC-212 back button returns to P2P order route', (tester) async {

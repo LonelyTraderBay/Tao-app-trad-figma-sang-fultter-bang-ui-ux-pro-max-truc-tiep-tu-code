@@ -62,9 +62,7 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.preCopyAssessmentBottomInsetVisualExtra
-            : AppSpacing.preCopyAssessmentBottomInsetNativeExtra);
+        (mode.usesVisualQaFrame ? AppSpacing.x7 : AppSpacing.x5);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -89,7 +87,7 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.preCopyAssessmentContentGap,
+                    gap: VitContentGap.tight,
                     fullBleed: true,
                     children: [
                       _started

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_login_hist
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_security_center_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpLoginHistory(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,39 @@ void main() {
     await tester.ensureVisible(find.byKey(P2PLoginHistoryPage.infoKey));
     expect(find.text('Lưu ý bảo mật'), findsOneWidget);
     expect(find.text('Lịch sử được lưu trong 90 ngày'), findsOneWidget);
+  });
+
+  testWidgets('SC-257 first viewport reaches filters and first event', (
+    tester,
+  ) async {
+    await pumpLoginHistory(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-257 P2PLoginHistoryPage',
+      semanticLabel: 'SC-257 P2PLoginHistoryPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PLoginHistoryPage.filterKey('all')),
+      routeName: 'SC-257 P2PLoginHistoryPage',
+      actionLabel: 'the all-login filter',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PLoginHistoryPage.warningKey),
+      routeName: 'SC-257 P2PLoginHistoryPage',
+      actionLabel: 'the suspicious-login warning',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PLoginHistoryPage.eventKey('login_iphone_current')),
+      routeName: 'SC-257 P2PLoginHistoryPage',
+      actionLabel: 'the first login event',
+      minVisibleHeight: 40,
+    );
   });
 
   testWidgets('SC-257 filters suspicious events and expands details', (

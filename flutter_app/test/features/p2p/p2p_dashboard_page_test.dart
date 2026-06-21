@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_dashboard_
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_my_orders_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDashboard(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -94,6 +96,24 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Tổng Volume (7 ngày)'), findsOneWidget);
+  });
+
+  testWidgets('SC-274 first viewport reaches weekly volume chart', (
+    tester,
+  ) async {
+    await pumpDashboard(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-274 P2PDashboardPage',
+      semanticLabel: 'SC-274 P2PDashboardPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(P2PDashboardPage.weeklyChartKey),
+      targetLabel: 'the weekly volume chart preview',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-274 navigation edges use safe P2P routes', (tester) async {

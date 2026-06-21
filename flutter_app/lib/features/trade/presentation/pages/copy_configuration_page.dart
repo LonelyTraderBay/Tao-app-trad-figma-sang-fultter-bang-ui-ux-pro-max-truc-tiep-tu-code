@@ -32,7 +32,6 @@ const _configurationNativeScrollClearance = 72.0;
 const _configurationVisualFooterClearance = 140.0;
 const _configurationNativeFooterClearance = 72.0;
 const _configurationProgressHeight = 5.0;
-const _configurationDividerHeight = 12.0;
 const _configurationPresetHeight = 34.0;
 const _configurationButtonHeight = 44.0;
 const _configurationDescriptionLineHeight = 1.24;
@@ -132,7 +131,9 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyConfigurationPage.contentKey,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
@@ -170,7 +171,7 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(
+                padding: EdgeInsetsDirectional.fromSTEB(
                   AppSpacing.x4,
                   AppSpacing.x2,
                   AppSpacing.x4,

@@ -63,7 +63,7 @@ class CopyTradingCardDemo extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyTradingCardDemo.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.tradeBotCopyDemoScrollPadding(
                     bottomInset,
                   ),

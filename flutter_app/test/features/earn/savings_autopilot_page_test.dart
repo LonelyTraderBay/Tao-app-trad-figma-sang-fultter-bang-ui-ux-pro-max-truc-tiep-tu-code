@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_dca_p
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAutoPilot(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -71,6 +73,24 @@ void main() {
     expect(find.text('APY hiệu quả'), findsOneWidget);
     expect(find.byKey(SavingsAutoPilotPage.moduleKey('dca')), findsOneWidget);
     expect(find.byKey(SavingsAutoPilotPage.actionKey('act1')), findsOneWidget);
+  });
+
+  testWidgets('SC-350 first viewport reaches first automation module', (
+    tester,
+  ) async {
+    await pumpAutoPilot(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-350 SavingsAutoPilotPage',
+      semanticLabel: 'SC-350 SavingsAutoPilotPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(SavingsAutoPilotPage.moduleKey('dca')),
+      routeName: 'SC-350 SavingsAutoPilotPage',
+      actionLabel: 'the DCA automation module',
+    );
   });
 
   testWidgets('SC-350 toggles status and approves queued action', (

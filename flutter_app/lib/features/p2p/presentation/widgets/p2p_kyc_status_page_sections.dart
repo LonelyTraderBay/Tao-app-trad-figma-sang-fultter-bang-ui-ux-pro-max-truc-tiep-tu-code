@@ -18,8 +18,8 @@ class _OverallStatusCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: AppSpacing.inputHeight,
-                height: AppSpacing.inputHeight,
+                width: AppSpacing.buttonCompact,
+                height: AppSpacing.buttonCompact,
                 child: Material(
                   color: AppColors.primary15,
                   shape: RoundedRectangleBorder(
@@ -30,19 +30,19 @@ class _OverallStatusCard extends StatelessWidget {
                     child: Icon(
                       Icons.shield_outlined,
                       color: AppModuleAccents.p2p,
-                      size: AppSpacing.iconMd,
+                      size: AppSpacing.iconSm,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Tier ${snapshot.tier} - ${snapshot.tierName}',
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.sectionTitle,
                     ),
@@ -65,7 +65,7 @@ class _OverallStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -88,7 +88,7 @@ class _OverallStatusCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x2),
           _ProgressTrack(value: snapshot.progress),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.md,
@@ -106,6 +106,8 @@ class _OverallStatusCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     snapshot.infoBody,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                       height: AppSpacing.p2pKycReadableLineHeight,
@@ -169,7 +171,7 @@ class _StatusTimeline extends StatelessWidget {
     return VitCard(
       key: P2PKycStatusPage.timelineKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pKycCardPadding,
+      padding: AppSpacing.p2pKycNoticePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -196,12 +198,12 @@ class _StepTimelineRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.inputHeight,
+            width: AppSpacing.buttonCompact,
             child: Column(
               children: [
                 SizedBox(
-                  width: AppSpacing.inputHeight,
-                  height: AppSpacing.inputHeight,
+                  width: AppSpacing.buttonCompact,
+                  height: AppSpacing.buttonCompact,
                   child: Material(
                     color: _stepBackground(step.status),
                     shape: RoundedRectangleBorder(
@@ -214,7 +216,7 @@ class _StepTimelineRow extends StatelessWidget {
                     child: Icon(
                       _stepIcon(step.iconKey),
                       color: color,
-                      size: AppSpacing.iconMd,
+                      size: AppSpacing.iconSm,
                     ),
                   ),
                 ),
@@ -232,7 +234,7 @@ class _StepTimelineRow extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Padding(
               padding: isLast
@@ -250,6 +252,8 @@ class _StepTimelineRow extends StatelessWidget {
                           children: [
                             Text(
                               step.label,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.baseMedium.copyWith(
                                 fontWeight: AppTextStyles.bold,
                               ),
@@ -257,6 +261,8 @@ class _StepTimelineRow extends StatelessWidget {
                             const SizedBox(height: AppSpacing.x1),
                             Text(
                               step.description,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text3,
                               ),
@@ -301,7 +307,7 @@ class _StepTimelineRow extends StatelessWidget {
                     ),
                   ],
                   if (step.hasAction) ...[
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.x2),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: _StepActionButton(step: step),

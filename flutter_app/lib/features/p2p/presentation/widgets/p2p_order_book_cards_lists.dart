@@ -29,7 +29,7 @@ class _DepthChartCard extends StatelessWidget {
               const _LegendDot(color: AppColors.sell, label: 'Bán'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           SizedBox(
             height: AppSpacing.p2pMarketplaceAnalyticsDepthChartHeight,
             child: CustomPaint(painter: _DepthChartPainter(snapshot)),
@@ -148,7 +148,7 @@ class _BestPriceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             _formatVnd(entry.priceVnd),
             overflow: TextOverflow.ellipsis,
@@ -157,7 +157,7 @@ class _BestPriceCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           _MiniLine(
             label: 'Volume',
             value: '${_formatVolume(entry.volume)} $asset',
@@ -313,12 +313,16 @@ class _OrderBookRow extends StatelessWidget {
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-                const Spacer(),
-                Text(
-                  _formatVolume(entry.volume),
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontFeatures: AppTextStyles.tabularFigures,
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    _formatVolume(entry.volume),
+                    textAlign: TextAlign.right,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
                   ),
                 ),
               ],

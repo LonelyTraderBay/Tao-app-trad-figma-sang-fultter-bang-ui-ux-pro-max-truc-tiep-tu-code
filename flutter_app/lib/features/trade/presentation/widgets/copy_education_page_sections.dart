@@ -91,9 +91,9 @@ class _HowItWorksContent extends StatelessWidget {
     return Column(
       children: [
         _StepsCard(steps: snapshot.steps),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         _CopyModesCard(modes: snapshot.copyModes),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         _ConceptsCard(concepts: snapshot.concepts),
       ],
     );
@@ -116,11 +116,10 @@ class _StepsCard extends StatelessWidget {
             'Copy Trading hoạt động như thế nào?',
             style: AppTextStyles.baseMedium,
           ),
-          const SizedBox(height: AppSpacing.walletAddressActionIcon),
+          const SizedBox(height: AppSpacing.x3),
           for (final step in steps) ...[
             _StepRow(step: step),
-            if (step != steps.last)
-              const SizedBox(height: AppSpacing.walletAddressActionIcon),
+            if (step != steps.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),
@@ -202,7 +201,7 @@ class _CopyModesCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Các chế độ sao chép', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.walletAddressAddSheetSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           for (final mode in modes) ...[
             _CopyModeTile(mode: mode),
             if (mode != modes.last) const SizedBox(height: AppSpacing.x4),
@@ -296,11 +295,10 @@ class _ConceptsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Khái niệm quan trọng', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.walletAddressAddSheetSectionGap),
+          const SizedBox(height: AppSpacing.x3),
           for (final concept in concepts) ...[
             _ConceptRow(concept: concept),
-            if (concept != concepts.last)
-              const SizedBox(height: AppSpacing.rowGapRegular),
+            if (concept != concepts.last) const SizedBox(height: AppSpacing.x3),
           ],
         ],
       ),

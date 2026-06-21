@@ -6,7 +6,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -14,6 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+
+const _resolutionBodyLineRatio = AppSpacing.arenaResolutionBodyLineHeight;
 
 class ArenaResolutionCenterPage extends ConsumerWidget {
   const ArenaResolutionCenterPage({super.key, this.shellRenderMode});
@@ -28,11 +30,12 @@ class ArenaResolutionCenterPage extends ConsumerWidget {
         .watch(arenaReadModelControllerProvider)
         .getArenaResolutionCenter();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -62,7 +65,7 @@ class ArenaResolutionCenterPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const NeverScrollableScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       children: [
@@ -158,7 +161,7 @@ class _ResolutionStatusContent extends StatelessWidget {
                 body,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.arenaResolutionBodyLineHeight,
+                  height: _resolutionBodyLineRatio,
                 ),
               ),
             ],

@@ -36,10 +36,10 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
     final controller = ref.watch(stakingEmergencyActionsControllerProvider);
     final snapshot = controller.state.snapshot;
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -58,11 +58,13 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollTailReserve,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    gap: VitContentGap.tight,
                     children: [
                       _WarningBanner(snapshot: snapshot),
                       _EmergencyActionsSection(
@@ -140,8 +142,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                         sheet.body,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text2,
-                          height:
-                              AppSpacing.stakingEmergencySheetBodyLineHeight,
+                          height: AppTextStyles.caption.height,
                         ),
                       ),
                       if (sheet.bullets.isNotEmpty) ...[
@@ -153,8 +154,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                               '- $bullet',
                               style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text3,
-                                height: AppSpacing
-                                    .stakingEmergencySheetBodyLineHeight,
+                                height: AppTextStyles.micro.height,
                               ),
                             ),
                           ),
@@ -167,7 +167,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                   variant: sheet.tone == 'danger'
                       ? VitCtaButtonVariant.destructive
                       : VitCtaButtonVariant.warning,
-                  height: AppSpacing.ctaHeight,
+                  height: AppSpacing.buttonStandard,
                   onPressed: () {
                     Navigator.of(sheetContext).pop();
                   },
@@ -193,16 +193,16 @@ class _WarningBanner extends StatelessWidget {
       key: StakingEmergencyActionsPage.warningKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.sell.withValues(alpha: 0.35),
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.sell,
-            size: AppSpacing.iconMd,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -213,7 +213,7 @@ class _WarningBanner extends StatelessWidget {
                   snapshot.warningBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingEmergencySheetBodyLineHeight,
+                    height: AppTextStyles.caption.height,
                   ),
                 ),
               ],
@@ -258,13 +258,13 @@ class _EmergencyActionCard extends StatelessWidget {
       key: StakingEmergencyActionsPage.actionKey(action.id),
       radius: VitCardRadius.lg,
       onTap: action.id == 'rebalance' ? null : onTap,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.ctaHeight,
-            height: AppSpacing.ctaHeight,
+            width: AppSpacing.buttonCompact,
+            height: AppSpacing.buttonCompact,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: 0.16),
@@ -275,7 +275,7 @@ class _EmergencyActionCard extends StatelessWidget {
               child: Icon(_actionIcon(action.id), color: color),
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -286,7 +286,7 @@ class _EmergencyActionCard extends StatelessWidget {
                   action.body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.stakingEmergencyActionLineHeight,
+                    height: AppTextStyles.caption.height,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -320,7 +320,7 @@ class _UseCasesSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnCardPaddingX4X3,
+          padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             children: [
               for (var i = 0; i < useCases.length; i++)
@@ -348,14 +348,14 @@ class _UseCaseRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.earnVerticalPaddingX3,
+          padding: AppSpacing.earnVerticalPaddingX2,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(
                 Icons.warning_amber_rounded,
                 color: color,
-                size: AppSpacing.stakingEmergencyUseCaseIcon,
+                size: AppSpacing.iconSm,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -369,12 +369,12 @@ class _UseCaseRow extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       useCase.description,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.stakingEmergencyActionLineHeight,
+                        height: AppTextStyles.micro.height,
                       ),
                     ),
                   ],
@@ -407,7 +407,7 @@ class _CurrentStatusSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: AppSpacing.earnCardPaddingX3,
           child: Row(
             children: [
               for (var i = 0; i < statusCards.length; i++) ...[
@@ -434,7 +434,7 @@ class _StatusTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: status.tone == 'success' ? AppColors.buy20 : null,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -443,9 +443,9 @@ class _StatusTile extends StatelessWidget {
                 ? Icons.shield_outlined
                 : Icons.history_rounded,
             color: color,
-            size: AppSpacing.iconMd,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             status.value,
             style: AppTextStyles.baseMedium.copyWith(color: color),
@@ -471,13 +471,13 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingEmergencyActionsPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingEmergencySheetBodyLineHeight,
+          height: AppTextStyles.micro.height,
         ),
       ),
     );

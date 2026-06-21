@@ -129,7 +129,9 @@ class _StatsLine extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+          padding: const EdgeInsetsDirectional.symmetric(
+            vertical: AppSpacing.x1,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -150,7 +152,7 @@ class _StatsLine extends StatelessWidget {
           ),
         ),
         const Divider(
-          height: 1,
+          height: AppSpacing.dividerHairline,
           thickness: AppSpacing.hairlineStroke,
           color: AppColors.divider,
         ),

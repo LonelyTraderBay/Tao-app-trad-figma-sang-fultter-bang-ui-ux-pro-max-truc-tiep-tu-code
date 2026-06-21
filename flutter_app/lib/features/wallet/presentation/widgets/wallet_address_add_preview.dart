@@ -152,11 +152,11 @@ class AddressSaveFooter extends StatelessWidget {
             Padding(
               padding: AppSpacing.walletAddressAddFooterPadding,
               child: AddressPrimaryActionButton(
-        key: const Key('sc143_address_save'),
-        enabled: enabled,
-        semanticLabel: 'Save wallet address',
-        label: 'Lưu địa chỉ',
-        onTap: onTap,
+                key: const Key('sc143_address_save'),
+                enabled: enabled,
+                semanticLabel: 'Save wallet address',
+                label: 'Lưu địa chỉ',
+                onTap: onTap,
               ),
             ),
           ],

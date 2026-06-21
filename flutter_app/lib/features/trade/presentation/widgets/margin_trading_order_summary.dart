@@ -11,55 +11,36 @@ class _OrderSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletAssetSectionGap,
-        top: AppSpacing.walletAssetHeroTopGap,
-        right: AppSpacing.walletAssetSectionGap,
-        bottom: AppSpacing.walletAssetHeroTopGap,
-      ),
-      variant: VitCardVariant.inner,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        density: VitDensity.compact,
-        children: [
-          _SummaryRow(
-            'Margin kha dung',
-            _formatMoney(available),
-            AppColors.onAccent,
-          ),
-          _SummaryRow('Liquidation estimate', liquidationPrice, _marginRed),
-          const _SummaryRow('Trading fee (0.05%)', '--', AppColors.text2),
-        ],
-      ),
-    );
-  }
-}
-
-class _SummaryRow extends StatelessWidget {
-  const _SummaryRow(this.label, this.value, this.color);
-
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          ),
+    return VitFinancialSafetySummary(
+      title: 'Margin order preview',
+      contractId: 'SC-085 Margin preview',
+      density: VitDensity.compact,
+      footer:
+          'Review margin, liquidation, fee, leverage, and side before opening a position.',
+      items: [
+        VitFinancialSafetyItem(
+          label: 'Available margin',
+          value: _formatMoney(available),
+          leading: const Icon(Icons.account_balance_wallet_outlined),
+          valueColor: AppColors.onAccent,
         ),
-        Text(
-          value,
-          style: AppTextStyles.caption.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
+        VitFinancialSafetyItem(
+          label: 'Liquidation estimate',
+          value: liquidationPrice,
+          leading: const Icon(Icons.warning_amber_rounded),
+          valueColor: _marginRed,
+        ),
+        const VitFinancialSafetyItem(
+          label: 'Trading fee',
+          value: '0.05% preview',
+          leading: Icon(Icons.receipt_long_outlined),
+          valueColor: AppColors.text2,
+        ),
+        const VitFinancialSafetyItem(
+          label: 'Risk check',
+          value: 'Confirm leverage before submit',
+          leading: Icon(Icons.verified_user_outlined),
+          valueColor: _marginAmber,
         ),
       ],
     );

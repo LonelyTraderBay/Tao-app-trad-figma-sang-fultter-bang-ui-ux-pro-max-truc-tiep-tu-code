@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/cross_module/data/tax_report_reposito
 import 'package:vit_trade_flutter/features/cross_module/presentation/pages/tax_report_center.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTaxReports(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -72,6 +74,22 @@ void main() {
     expect(find.text('Arena Points (Non-taxable)'), findsOneWidget);
     expect(find.text('Export Format'), findsOneWidget);
     expect(find.byKey(TaxReportCenter.generateButtonKey), findsOneWidget);
+  });
+
+  testWidgets('SC-324 first viewport reaches tax report tabs', (tester) async {
+    await pumpTaxReports(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-324 TaxReportCenter',
+      semanticLabel: 'SC-324 TaxReportCenter',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(TaxReportCenter.tabKey(TaxReportTab.generate)),
+      routeName: 'SC-324 TaxReportCenter',
+      actionLabel: 'the generate report tab',
+    );
   });
 
   testWidgets('SC-324 switches format, reports, and settings locally', (

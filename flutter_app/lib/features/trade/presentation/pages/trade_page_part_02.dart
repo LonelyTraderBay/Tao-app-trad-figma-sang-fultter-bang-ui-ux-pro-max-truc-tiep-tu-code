@@ -168,7 +168,7 @@ class _OrderTabs extends StatelessWidget {
     ];
     return VitCard(
       density: VitDensity.tool,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       child: Row(
@@ -313,7 +313,7 @@ class _SideSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       density: VitDensity.tool,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
       variant: VitCardVariant.inner,
       child: Row(
         children: [
@@ -451,7 +451,9 @@ class _OrderTypeChip extends StatelessWidget {
         onTap: () => onSelected(type),
         variant: active ? VitCardVariant.ghost : VitCardVariant.inner,
         density: VitDensity.compact,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x2,
+        ),
         alignment: Alignment.center,
         borderColor: active
             ? AppColors.buy.withValues(alpha: .75)

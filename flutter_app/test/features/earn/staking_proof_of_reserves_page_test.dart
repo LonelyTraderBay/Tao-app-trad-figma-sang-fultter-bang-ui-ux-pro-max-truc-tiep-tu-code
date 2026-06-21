@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_proof_of_reserves_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpProofOfReserves(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -79,6 +81,24 @@ void main() {
     expect(find.text('Reserve Ratio Trend (12 Months)'), findsOneWidget);
     expect(find.byKey(StakingProofOfReservesPage.auditsKey), findsOneWidget);
     expect(find.text('Armanino LLP'), findsNWidgets(3));
+  });
+
+  testWidgets('SC-380 first viewport reaches reserve trend preview', (
+    tester,
+  ) async {
+    await pumpProofOfReserves(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-380 StakingProofOfReservesPage',
+      semanticLabel: 'SC-380 StakingProofOfReservesPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(StakingProofOfReservesPage.trendKey),
+      targetLabel: 'the reserve ratio trend preview',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-380 assets tab renders per asset reserves', (tester) async {

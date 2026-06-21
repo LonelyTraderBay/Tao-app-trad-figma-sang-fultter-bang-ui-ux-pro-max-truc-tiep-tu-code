@@ -74,7 +74,7 @@ class _StakingRecommendationsPageState
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
@@ -172,7 +172,7 @@ class _StakingRecommendationsPageState
             child: SafeArea(
               top: false,
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 padding: AppSpacing.earnSheetContentPadding,
                 child: StakingRecommendationsStrategyDetailSheet(
                   strategy: strategy,

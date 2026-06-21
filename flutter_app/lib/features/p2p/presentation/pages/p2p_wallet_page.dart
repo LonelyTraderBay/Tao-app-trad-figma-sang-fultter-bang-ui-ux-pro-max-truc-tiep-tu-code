@@ -28,8 +28,11 @@ const double _p2pWalletIconBoxExtent = AppSpacing.inputHeight - AppSpacing.x2;
 const double _p2pWalletActionMinHeight = AppSpacing.inputHeight - AppSpacing.x1;
 const double _p2pWalletDividerExtent = AppSpacing.dividerHairline;
 const double _p2pWalletTransactionAmountMaxWidth = 132;
-const EdgeInsets _p2pWalletCardPadding = AppSpacing.p2pWalletCompactCardPadding;
-const EdgeInsets _p2pWalletHeroPadding = EdgeInsets.all(AppSpacing.x4);
+const EdgeInsetsGeometry _p2pWalletCardPadding =
+    AppSpacing.p2pWalletCompactCardPadding;
+const EdgeInsetsGeometry _p2pWalletHeroPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x4,
+);
 
 class P2PWalletPage extends ConsumerStatefulWidget {
   const P2PWalletPage({super.key, this.shellRenderMode});
@@ -100,8 +103,8 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.fromSTEB(
                       AppSpacing.contentPad,
                       AppSpacing.x3,
                       AppSpacing.contentPad,

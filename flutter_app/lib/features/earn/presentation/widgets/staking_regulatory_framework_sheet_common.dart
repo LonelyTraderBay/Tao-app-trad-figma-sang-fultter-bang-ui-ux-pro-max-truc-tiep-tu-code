@@ -46,7 +46,7 @@ class _LicenseDetailSheet extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.x2),
               Text(license.regulator, style: AppTextStyles.baseMedium),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x3),
               _SheetRow(label: 'License Number', value: license.licenseNumber),
               _SheetRow(label: 'Issued Date', value: license.issuedDate),
               if (license.expiryDate != null)
@@ -54,7 +54,7 @@ class _LicenseDetailSheet extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x4),
         Text(
           'Authorized Scope',
           style: AppTextStyles.caption.copyWith(
@@ -78,7 +78,7 @@ class _LicenseDetailSheet extends StatelessWidget {
                   scope,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingRegulatoryNoteLineHeight,
+                    height: AppTextStyles.caption.height,
                   ),
                 ),
               ),
@@ -87,7 +87,7 @@ class _LicenseDetailSheet extends StatelessWidget {
           if (scope != license.scope.last)
             const SizedBox(height: AppSpacing.x2),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x4),
         VitCtaButton(
           key: StakingRegulatoryFrameworkPage.detailCtaKey,
           variant: VitCtaButtonVariant.secondary,
@@ -154,7 +154,7 @@ class _InfoNote extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingRegulatoryNoteLineHeight,
+                height: AppTextStyles.micro.height,
               ),
             ),
           ),
@@ -174,7 +174,7 @@ class _WarningNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -189,7 +189,7 @@ class _WarningNote extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingRegulatoryFooterLineHeight,
+                height: AppTextStyles.micro.height,
               ),
             ),
           ),
@@ -209,13 +209,13 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingRegulatoryFrameworkPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingRegulatoryFooterLineHeight,
+          height: AppTextStyles.micro.height,
         ),
       ),
     );
@@ -280,9 +280,9 @@ class _RoundIcon extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        width: AppSpacing.stakingRegulatoryIconBox,
-        height: AppSpacing.stakingRegulatoryIconBox,
-        child: Icon(icon, color: color, size: AppSpacing.iconMd),
+        width: AppSpacing.buttonCompact,
+        height: AppSpacing.buttonCompact,
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
     );
   }

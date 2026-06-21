@@ -7,6 +7,11 @@ import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+const _modeRelatedDescriptionLineRatio =
+    AppSpacing.arenaModeRelatedDescriptionLineHeight;
+const _modeRelatedDividerExtent = AppSpacing.arenaModeRelatedDividerHeight;
+const _modeRelatedTitleLineRatio = AppSpacing.arenaModeRelatedTitleLineHeight;
+
 class ArenaModeRelatedRooms extends StatelessWidget {
   const ArenaModeRelatedRooms({
     super.key,
@@ -41,7 +46,7 @@ class ArenaModeRelatedRooms extends StatelessWidget {
                 ),
                 if (index != rooms.length - 1)
                   const Divider(
-                    height: AppSpacing.arenaModeRelatedDividerHeight,
+                    height: _modeRelatedDividerExtent,
                     color: AppColors.divider,
                   ),
               ],
@@ -136,7 +141,7 @@ class ArenaModeRelatedModes extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Row(
             children: [
               for (final item in modes) ...[
@@ -197,7 +202,7 @@ class _RelatedModeCard extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaModeRelatedTitleLineHeight,
+                    height: _modeRelatedTitleLineRatio,
                   ),
                 ),
               ),
@@ -210,7 +215,7 @@ class _RelatedModeCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.arenaModeRelatedDescriptionLineHeight,
+              height: _modeRelatedDescriptionLineRatio,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),

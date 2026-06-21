@@ -90,6 +90,28 @@ void main() {
       targetLabel: 'first arena template card',
       minVisibleHeight: 24,
     );
+    expect(
+      tester.getSize(find.byKey(ArenaHomePage.createChallengeKey)).height,
+      lessThanOrEqualTo(44),
+      reason: 'Arena hero CTAs should use compact touch-safe height.',
+    );
+    expect(
+      tester
+          .getSize(find.byKey(ArenaHomePage.templateKey('prediction')).first)
+          .height,
+      lessThanOrEqualTo(90),
+      reason: 'Arena template tiles should stay compact in the first viewport.',
+    );
+    final finalTemplateBottom = tester
+        .getRect(find.byKey(ArenaHomePage.templateKey('proof_challenge')).first)
+        .bottom;
+    final featuredModesTop = tester.getRect(find.text('Mode nổi bật')).top;
+    expect(
+      featuredModesTop - finalTemplateBottom,
+      lessThanOrEqualTo(16),
+      reason: 'Templates should hand off tightly to featured modes.',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-184 search filters modes and rooms', (tester) async {

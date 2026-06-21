@@ -82,7 +82,7 @@ class _QuestionCard extends StatelessWidget {
     return VitCard(
       key: StakingRiskAssessmentPage.questionCardKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -96,7 +96,7 @@ class _QuestionCard extends StatelessWidget {
                   question.question,
                   style: AppTextStyles.baseMedium.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.stakingAssessmentQuestionLineHeight,
+                    height: AppTextStyles.baseMedium.height,
                   ),
                 ),
               ),
@@ -108,11 +108,11 @@ class _QuestionCard extends StatelessWidget {
               question.helpText!,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.stakingAssessmentHelpLineHeight,
+                height: AppTextStyles.caption.height,
               ),
             ),
           ],
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           for (var index = 0; index < question.options.length; index++) ...[
             _RiskOptionTile(
               key: index == 0 ? StakingRiskAssessmentPage.firstOptionKey : null,
@@ -160,8 +160,8 @@ class _QuestionNumber extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        width: AppSpacing.x7,
-        height: AppSpacing.x7,
+        width: AppSpacing.x6,
+        height: AppSpacing.x6,
         child: Center(
           child: Text(
             '$number',
@@ -210,7 +210,7 @@ class _RiskOptionTile extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: AppSpacing.earnStaticSelectPadding,
+              padding: AppSpacing.earnCardPaddingX3,
               child: Row(
                 children: [
                   Expanded(
@@ -224,8 +224,7 @@ class _RiskOptionTile extends StatelessWidget {
                                 ? AppColors.primary
                                 : AppColors.text1,
                             fontWeight: AppTextStyles.bold,
-                            height:
-                                AppSpacing.stakingAssessmentQuestionLineHeight,
+                            height: AppTextStyles.caption.height,
                           ),
                         ),
                         if (option.description != null) ...[
@@ -234,8 +233,7 @@ class _RiskOptionTile extends StatelessWidget {
                             option.description!,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              height:
-                                  AppSpacing.stakingAssessmentHelpLineHeight,
+                              height: AppTextStyles.micro.height,
                             ),
                           ),
                         ],
@@ -270,7 +268,7 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -285,7 +283,7 @@ class _InfoBanner extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingAssessmentBodyLineHeight,
+                height: AppTextStyles.micro.height,
               ),
             ),
           ),

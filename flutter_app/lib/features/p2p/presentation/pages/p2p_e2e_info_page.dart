@@ -80,8 +80,8 @@ class P2PE2EInfoPage extends ConsumerWidget {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.fromSTEB(
                       AppSpacing.contentPad,
                       AppSpacing.x3,
                       AppSpacing.contentPad,

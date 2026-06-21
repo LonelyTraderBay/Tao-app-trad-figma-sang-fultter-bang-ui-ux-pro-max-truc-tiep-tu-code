@@ -84,17 +84,17 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pAddressProofScrollPadding(
                       bottomInset,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _AddressHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         _RequirementsCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x6),
                         if (selectedDocument == null)
                           _DocumentTypePicker(
                             documents: snapshot.documentTypes,
@@ -131,14 +131,10 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
                             },
                           ),
                           if (_uploaded) ...[
-                            const SizedBox(height: AppSpacing.x5),
                             _ExtractedDataCard(snapshot: snapshot),
-                            const SizedBox(height: AppSpacing.x5),
                             _AddressConfirmCard(address: _manualAddress),
                           ],
-                          const SizedBox(height: AppSpacing.x5),
                           _SecurityCard(snapshot: snapshot),
-                          const SizedBox(height: AppSpacing.x5),
                           VitCtaButton(
                             key: P2PAddressProofPage.submitKey,
                             onPressed: _uploaded && _manualAddress.isNotEmpty
@@ -151,18 +147,12 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
                             child: const Text('Gửi tài liệu'),
                           ),
                         ],
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: AppSpacing.p2pAddressProofContentGap,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Address proof state review',
-                              message:
-                                  'Document type, upload status, extracted address, manual confirmation, and next verification step remain visible before submitting P2P address proof.',
-                              contractId: 'SC-250',
-                            ),
-                          ],
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Address proof state review',
+                          message:
+                              'Document type, upload status, extracted address, manual confirmation, and next verification step remain visible before submitting P2P address proof.',
+                          contractId: 'SC-250',
                         ),
                       ],
                     ),

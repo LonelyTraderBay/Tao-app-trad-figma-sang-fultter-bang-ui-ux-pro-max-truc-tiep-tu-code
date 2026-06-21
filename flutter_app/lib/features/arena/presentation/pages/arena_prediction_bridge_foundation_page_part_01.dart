@@ -39,8 +39,10 @@ class _ArenaPredictionBridgeFoundationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaPredictionBridgeFoundationPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: scrollEndPadding),
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
@@ -155,7 +157,7 @@ class _SectionTabs extends StatelessWidget {
     return SingleChildScrollView(
       key: ArenaPredictionBridgeFoundationPage.tabsKey,
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Row(
         children: [
           for (final config in _sectionConfigs) ...[

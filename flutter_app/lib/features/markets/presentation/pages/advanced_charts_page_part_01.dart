@@ -47,7 +47,9 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: AdvancedChartsPage.contentKey,
-                    padding: EdgeInsets.only(bottom: scrollEndClearance),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,

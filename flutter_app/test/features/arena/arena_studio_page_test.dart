@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_smart_
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_studio_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpArenaStudio(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -97,6 +99,62 @@ void main() {
 
     expect(find.text('Cấu trúc trận đấu'), findsWidgets);
     expect(find.text('Bước 2 / 6'), findsOneWidget);
+  });
+
+  testWidgets('SC-186 opens Smart Rule Builder from rules step', (
+    tester,
+  ) async {
+    await pumpArenaStudio(tester);
+
+    await tester.ensureVisible(
+      find.byKey(ArenaStudioPage.templateKey('prediction')),
+    );
+    await tester.tap(find.byKey(ArenaStudioPage.templateKey('prediction')));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.byKey(ArenaStudioPage.continueKey));
+    await tester.tap(find.byKey(ArenaStudioPage.continueKey));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.byKey(ArenaStudioPage.continueKey));
+    await tester.tap(find.byKey(ArenaStudioPage.continueKey));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.byKey(ArenaStudioPage.smartRuleBuilderKey));
+    await tester.tap(find.byKey(ArenaStudioPage.smartRuleBuilderKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ArenaSmartRuleBuilderPage), findsOneWidget);
+    expect(find.text('Smart Rule Builder'), findsOneWidget);
+  });
+
+  testWidgets('SC-185 first viewport reaches template choice', (tester) async {
+    await pumpArenaStudio(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-185 ArenaStudioPage',
+      semanticLabel: 'SC-185 ArenaStudioPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaStudioPage.templateKey('prediction')),
+      routeName: 'SC-185 ArenaStudioPage',
+      actionLabel: 'the first Arena Studio template',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
+  });
+
+  testWidgets('SC-185 studio scroll clamps at the bottom on Android', (
+    tester,
+  ) async {
+    await pumpArenaStudio(tester);
+
+    final scrollView = tester.widget<SingleChildScrollView>(
+      find.byKey(ArenaStudioPage.contentKey),
+    );
+
+    expect(scrollView.physics, isA<ClampingScrollPhysics>());
   });
 
   testWidgets('SC-185 secondary draft actions expose local state', (

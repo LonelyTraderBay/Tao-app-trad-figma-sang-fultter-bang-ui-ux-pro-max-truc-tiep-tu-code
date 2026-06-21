@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_rebalance_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRebalance(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -77,6 +79,24 @@ void main() {
     expect(find.text('Tang truong'), findsOneWidget);
     expect(find.text('Hien tai vs Muc tieu'), findsOneWidget);
     expect(find.text('Do lech phan bo'), findsOneWidget);
+  });
+
+  testWidgets('SC-312 first viewport reaches strategy controls', (
+    tester,
+  ) async {
+    await pumpRebalance(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-312 LaunchpadRebalancePage',
+      semanticLabel: 'SC-312 LaunchpadRebalancePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadRebalancePage.strategyButtonKey('moderate')),
+      routeName: 'SC-312 LaunchpadRebalancePage',
+      actionLabel: 'the default rebalance strategy control',
+    );
   });
 
   testWidgets('SC-312 strategy selection updates summary risk', (tester) async {

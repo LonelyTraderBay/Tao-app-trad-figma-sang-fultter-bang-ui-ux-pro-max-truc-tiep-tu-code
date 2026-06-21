@@ -14,6 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPortfolio(
     WidgetTester tester, {
@@ -96,6 +98,27 @@ void main() {
     expect(find.byType(ProfilePage), findsOneWidget);
   });
 
+  testWidgets('SC-167 first viewport reaches profile portfolio controls', (
+    tester,
+  ) async {
+    await pumpPortfolio(
+      tester,
+      initialLocation: AppRoutePaths.profilePredictions,
+    );
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-167 PredictionsPortfolioPage',
+      semanticLabel: 'SC-167 PredictionsPortfolioPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(PredictionsPortfolioPage.visibilityToggleKey),
+      routeName: 'SC-167 PredictionsPortfolioPage',
+      actionLabel: 'the portfolio visibility toggle',
+    );
+  });
+
   testWidgets('SC-031 renders portfolio inside the Markets shell', (
     tester,
   ) async {
@@ -134,6 +157,24 @@ void main() {
         'Prediction positions and P/L stay separate from Arena Points.',
       ),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-031 first viewport reaches markets portfolio controls', (
+    tester,
+  ) async {
+    await pumpPortfolio(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-031 PredictionsPortfolioPage',
+      semanticLabel: 'SC-031 PredictionsPortfolioPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(PredictionsPortfolioPage.visibilityToggleKey),
+      routeName: 'SC-031 PredictionsPortfolioPage',
+      actionLabel: 'the portfolio visibility toggle',
     );
   });
 

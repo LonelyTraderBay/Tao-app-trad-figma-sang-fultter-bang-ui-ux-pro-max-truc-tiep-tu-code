@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskAssessment(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -94,6 +96,24 @@ void main() {
     expect(
       find.byKey(StakingRiskAssessmentPage.previousButtonKey),
       findsNothing,
+    );
+  });
+
+  testWidgets('SC-357 first viewport reaches first answer option', (
+    tester,
+  ) async {
+    await pumpRiskAssessment(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-357 StakingRiskAssessmentPage',
+      semanticLabel: 'SC-357 StakingRiskAssessmentPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingRiskAssessmentPage.firstOptionKey),
+      routeName: 'SC-357 StakingRiskAssessmentPage',
+      actionLabel: 'the first risk answer option',
     );
   });
 

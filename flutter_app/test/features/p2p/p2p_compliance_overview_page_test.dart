@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_kyc_status
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_transaction_limits_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpComplianceOverview(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,39 @@ void main() {
     expect(find.text('50M/ngày'), findsOneWidget);
     expect(find.text('Source of Funds'), findsOneWidget);
     expect(find.text('Đã khai báo'), findsOneWidget);
+  });
+
+  testWidgets('SC-267 first viewport reaches checklist actions', (
+    tester,
+  ) async {
+    await pumpComplianceOverview(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-267 P2PComplianceOverviewPage',
+      semanticLabel: 'SC-267 P2PComplianceOverviewPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PComplianceOverviewPage.heroKey),
+      routeName: 'SC-267 P2PComplianceOverviewPage',
+      actionLabel: 'the compliance status summary',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      P2PComplianceOverviewPage.itemKey('kyc').finder,
+      routeName: 'SC-267 P2PComplianceOverviewPage',
+      actionLabel: 'the KYC checklist action',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      P2PComplianceOverviewPage.itemKey('aml').finder,
+      routeName: 'SC-267 P2PComplianceOverviewPage',
+      actionLabel: 'the AML checklist action',
+      minVisibleHeight: 32,
+    );
   });
 
   testWidgets('SC-267 navigation opens confirmed checklist routes', (

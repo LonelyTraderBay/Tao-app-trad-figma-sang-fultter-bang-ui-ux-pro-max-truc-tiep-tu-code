@@ -68,11 +68,12 @@ class _LaunchpadAbiDiffPageState extends ConsumerState<LaunchpadAbiDiffPage> {
         .getAbiDiff(widget.contractId);
     final diff = snapshot.diff;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome
+            : DeviceMetrics.nativeBottomChrome) +
+        MediaQuery.paddingOf(context).bottom +
+        AppSpacing.x3;
     final entries = _filteredEntries(diff.entries);
 
     return VitPageLayout(
@@ -81,7 +82,7 @@ class _LaunchpadAbiDiffPageState extends ConsumerState<LaunchpadAbiDiffPage> {
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
+          bottomInset: scrollTailReserve,
           semanticLabel: 'SC-308 LaunchpadABIDiffPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
@@ -94,10 +95,10 @@ class _LaunchpadAbiDiffPageState extends ConsumerState<LaunchpadAbiDiffPage> {
             ).copyWith(scrollbars: false),
             child: SingleChildScrollView(
               key: LaunchpadAbiDiffPage.contentKey,
-              physics: const BouncingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               child: VitPageContent(
-                padding: VitContentPadding.defaultPadding,
-                customGap: AppSpacing.x4,
+                padding: VitContentPadding.compact,
+                gap: VitContentGap.tight,
                 children: [
                   _RiskHero(diff: diff),
                   _SummaryStats(

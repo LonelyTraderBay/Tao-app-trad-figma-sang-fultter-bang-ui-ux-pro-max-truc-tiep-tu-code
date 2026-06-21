@@ -91,7 +91,7 @@ class _P2PSuspiciousActivityPageState
                     ).copyWith(scrollbars: false),
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(
-                        parent: BouncingScrollPhysics(),
+                        parent: ClampingScrollPhysics(),
                       ),
                       padding: AppSpacing.p2pComplianceScrollPadding(
                         bottomInset,

@@ -89,7 +89,7 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: SecurityPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.securityScrollPadding(scrollClearance),
                   child: VitPageContent(
                     padding: VitContentPadding.none,

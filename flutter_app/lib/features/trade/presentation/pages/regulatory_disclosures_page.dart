@@ -81,7 +81,7 @@ class _RegulatoryDisclosuresPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: RegulatoryDisclosuresPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(
+                      padding: EdgeInsetsDirectional.fromSTEB(
                         AppSpacing.contentPad,
                         AppSpacing.tradeBotCardGap,
                         AppSpacing.contentPad,

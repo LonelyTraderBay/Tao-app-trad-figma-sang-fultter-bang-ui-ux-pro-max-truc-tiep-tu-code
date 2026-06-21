@@ -18,7 +18,7 @@ class _ApprovalCard extends StatelessWidget {
     final color = _actionTypeColor(action.type);
     return VitCard(
       borderColor: AppColors.primary30,
-      padding: AppSpacing.earnPaddingX4,
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -72,7 +72,7 @@ class _ApprovalCard extends StatelessWidget {
                   key: SavingsAutoPilotPage.skipActionKey,
                   onPressed: onSkip,
                   variant: VitCtaButtonVariant.ghost,
-                  height: AppSpacing.savingsAutoPilotApprovalButtonHeight,
+                  height: AppSpacing.buttonCompact,
                   leading: const Icon(Icons.close_rounded),
                   child: const Text('Bỏ qua'),
                 ),
@@ -82,7 +82,7 @@ class _ApprovalCard extends StatelessWidget {
                 child: VitCtaButton(
                   onPressed: onOpen,
                   variant: VitCtaButtonVariant.secondary,
-                  height: AppSpacing.savingsAutoPilotApprovalButtonHeight,
+                  height: AppSpacing.buttonCompact,
                   leading: const Icon(Icons.visibility_outlined),
                   child: const Text('Xem'),
                 ),
@@ -93,7 +93,7 @@ class _ApprovalCard extends StatelessWidget {
                   key: SavingsAutoPilotPage.approveActionKey,
                   onPressed: onApprove,
                   variant: VitCtaButtonVariant.success,
-                  height: AppSpacing.savingsAutoPilotApprovalButtonHeight,
+                  height: AppSpacing.buttonCompact,
                   leading: const Icon(Icons.check_circle_outline_rounded),
                   child: const Text('Duyệt'),
                 ),
@@ -220,7 +220,6 @@ class _SettingsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       key: SavingsAutoPilotPage.settingsKey,
-      customGap: AppSpacing.x4,
       children: [
         VitPageSection(
           label: 'Chế độ AutoPilot',
@@ -395,7 +394,7 @@ class _BudgetCard extends StatelessWidget {
           variant: VitCardVariant.inner,
           radius: VitCardRadius.lg,
           borderColor: AppColors.primary30,
-          padding: AppSpacing.earnCardPaddingX4X3,
+          padding: AppSpacing.earnCardPaddingX3X2,
           child: Row(
             children: [
               const Icon(

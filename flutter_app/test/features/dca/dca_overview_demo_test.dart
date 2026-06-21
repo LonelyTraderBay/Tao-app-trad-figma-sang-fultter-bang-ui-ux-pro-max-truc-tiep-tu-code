@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dar
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDcaOverviewDemo(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -86,6 +88,30 @@ void main() {
     expect(find.byTooltip('Loading demo'), findsOneWidget);
     expect(find.byKey(DCAOverviewDemo.loadingSectionKey), findsOneWidget);
     expect(find.byType(VitSkeleton), findsWidgets);
+  });
+
+  testWidgets('SC-400 first viewport reaches overview card action', (
+    tester,
+  ) async {
+    await pumpDcaOverviewDemo(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-400 DCAOverviewDemo',
+      semanticLabel: 'SC-400 DCAOverviewDemo',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(DCAOverviewDemo.loadingToggleKey),
+      routeName: 'SC-400 DCAOverviewDemo',
+      actionLabel: 'loading demo header action',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(DCAOverviewDemo.cardKey('profitable')),
+      routeName: 'SC-400 DCAOverviewDemo',
+      actionLabel: 'profitable overview card',
+    );
   });
 
   testWidgets('SC-400 renders mobile preview and action edge', (tester) async {

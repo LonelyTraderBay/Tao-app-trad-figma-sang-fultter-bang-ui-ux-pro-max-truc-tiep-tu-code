@@ -13,10 +13,10 @@ class _CategoryBreakdown extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 2,
+      crossAxisCount: AppSpacing.tradeBotGridColumns,
       crossAxisSpacing: AppSpacing.x3,
       mainAxisSpacing: AppSpacing.x3,
-      childAspectRatio: 1.45,
+      childAspectRatio: AppSpacing.tradeBotGridAspectRatio,
       children: [
         for (final category in categories)
           _CategoryScoreCard(

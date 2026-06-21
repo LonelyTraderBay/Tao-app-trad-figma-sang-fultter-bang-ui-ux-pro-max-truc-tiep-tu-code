@@ -17,8 +17,8 @@ class _AssetBadge extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        width: AppSpacing.x7,
-        height: AppSpacing.x7,
+        width: AppSpacing.x6,
+        height: AppSpacing.x6,
         child: Center(
           child: Text(
             asset.length > 3 ? asset.substring(0, 3) : asset,
@@ -50,7 +50,7 @@ class _StatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.savingsConsumerPillLineHeight,
+            height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
           ),
         ),
       ),

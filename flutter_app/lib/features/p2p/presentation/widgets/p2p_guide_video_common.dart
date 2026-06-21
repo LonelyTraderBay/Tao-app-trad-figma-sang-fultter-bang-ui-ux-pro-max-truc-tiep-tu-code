@@ -10,16 +10,16 @@ class _VideoTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Video hướng dẫn', style: AppTextStyles.sectionTitle),
+        Text('Video hướng dẫn', style: AppTextStyles.baseMedium),
         const SizedBox(height: AppSpacing.x1),
         Text(
           '${snapshot.videos.length} video',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         for (final video in snapshot.videos) ...[
           _VideoCard(video: video),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
         ],
         VitCard(
           variant: VitCardVariant.inner,
@@ -61,7 +61,7 @@ class _VideoCard extends StatelessWidget {
         children: [
           SizedBox(
             width: AppSpacing.p2pGuideThumbWidth,
-            height: AppSpacing.p2pGuideThumbHeight,
+            height: AppSpacing.buttonCompact,
             child: Material(
               color: color.withValues(alpha: .12),
               shape: const RoundedRectangleBorder(
@@ -69,28 +69,28 @@ class _VideoCard extends StatelessWidget {
               ),
               clipBehavior: Clip.antiAlias,
               child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Text(
-                  video.thumb,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox.square(
-                  dimension: AppSpacing.buttonCompact,
-                  child: Material(
-                    color: AppColors.bg,
-                    shape: CircleBorder(),
-                    child: Icon(
-                      Icons.play_arrow_rounded,
-                      color: AppColors.text1,
-                      size: AppSpacing.iconMd,
+                alignment: Alignment.center,
+                children: [
+                  Text(
+                    video.thumb,
+                    style: AppTextStyles.micro.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox.square(
+                    dimension: AppSpacing.buttonCompact,
+                    child: Material(
+                      color: AppColors.bg,
+                      shape: CircleBorder(),
+                      child: Icon(
+                        Icons.play_arrow_rounded,
+                        color: AppColors.text1,
+                        size: AppSpacing.iconMd,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -155,7 +155,7 @@ class _ConceptList extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.x2),
         for (final concept in concepts) ...[
           VitCard(
             variant: VitCardVariant.inner,
@@ -216,7 +216,7 @@ class _NumberIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.buttonStandard,
+      dimension: AppSpacing.buttonCompact,
       child: Material(
         color: color.withValues(alpha: .12),
         shape: RoundedRectangleBorder(
@@ -225,22 +225,22 @@ class _NumberIcon extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Icon(icon, color: color, size: AppSpacing.iconMd),
-          Positioned(
-            right: AppSpacing.x1,
-            bottom: AppSpacing.x1,
-            child: Text(
-              '$step',
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.p2pGuidePillLineHeight,
+          alignment: Alignment.center,
+          children: [
+            Icon(icon, color: color, size: AppSpacing.iconSm),
+            Positioned(
+              right: AppSpacing.x1,
+              bottom: AppSpacing.x1,
+              child: Text(
+                '$step',
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                  height: AppSpacing.p2pGuidePillLineHeight,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
         ),
       ),
     );

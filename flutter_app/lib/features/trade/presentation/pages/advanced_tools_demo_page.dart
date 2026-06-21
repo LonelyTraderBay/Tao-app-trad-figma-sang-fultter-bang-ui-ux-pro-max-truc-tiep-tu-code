@@ -90,7 +90,9 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: AdvancedToolsDemoPage.contentKey,
-                      padding: EdgeInsets.only(bottom: scrollEndClearance),
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollEndClearance,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,

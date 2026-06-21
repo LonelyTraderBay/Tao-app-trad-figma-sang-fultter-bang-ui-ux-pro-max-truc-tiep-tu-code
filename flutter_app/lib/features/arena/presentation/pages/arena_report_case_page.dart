@@ -42,11 +42,13 @@ const double _reportTimelineLineHeight = AppSpacing.x5;
 const double _reportTimelineDateGap = AppSpacing.x1 - 1;
 const double _reportAppealCtaHeight =
     AppSpacing.buttonCompact + AppSpacing.hairlineStroke;
-const EdgeInsets _reportInnerPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _reportTimelineDotMargin = EdgeInsets.only(top: AppSpacing.x1);
-const EdgeInsets _reportTimelineBodyPadding = EdgeInsets.only(
-  bottom: AppSpacing.x3,
+const EdgeInsetsDirectional _reportInnerPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
 );
+const EdgeInsetsDirectional _reportTimelineDotMargin =
+    EdgeInsetsDirectional.only(top: AppSpacing.x1);
+const EdgeInsetsDirectional _reportTimelineBodyPadding =
+    EdgeInsetsDirectional.only(bottom: AppSpacing.x3);
 
 class ArenaReportCasePage extends ConsumerStatefulWidget {
   const ArenaReportCasePage({
@@ -114,7 +116,7 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaReportCasePage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.arenaBottomScrollPadding(
                       scrollEndClearance,
                     ),

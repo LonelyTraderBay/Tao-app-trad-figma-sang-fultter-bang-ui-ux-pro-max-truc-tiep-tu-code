@@ -118,7 +118,9 @@ class _SampleCard extends StatelessWidget {
         aspectRatio: AppSpacing.p2pSelfieSampleAspectRatio,
         child: Material(
           color: AppColors.primary12,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

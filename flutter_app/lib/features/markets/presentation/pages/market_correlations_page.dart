@@ -112,7 +112,9 @@ class _MarketCorrelationsPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketCorrelationsPage.contentKey,
-                    padding: EdgeInsets.only(bottom: scrollEndClearance),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,

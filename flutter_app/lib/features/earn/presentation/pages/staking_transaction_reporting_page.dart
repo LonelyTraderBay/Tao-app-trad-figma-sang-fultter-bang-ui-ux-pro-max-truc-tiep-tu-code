@@ -32,9 +32,8 @@ const double _transactionReportingBodyLineHeight = 1.22;
 const double _transactionReportingMetricLineHeight = 1.18;
 const double _transactionReportingNoticeLineHeight = 1.2;
 const double _transactionReportingMethodLineHeight = 1.2;
-const EdgeInsets _transactionReportingCardPadding = EdgeInsets.all(
-  AppSpacing.x3,
-);
+const EdgeInsetsDirectional _transactionReportingCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
 
 class StakingTransactionReportingPage extends ConsumerStatefulWidget {
   const StakingTransactionReportingPage({super.key, this.shellRenderMode});
@@ -107,8 +106,8 @@ class _StakingTransactionReportingPageState
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,

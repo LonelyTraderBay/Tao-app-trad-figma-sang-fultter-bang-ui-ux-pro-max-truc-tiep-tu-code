@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/support/data/support_repository.dart'
 import 'package:vit_trade_flutter/features/support/presentation/pages/announcements_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAnnouncements(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,24 @@ void main() {
     expect(find.byKey(AnnouncementsPage.listKey), findsOneWidget);
     expect(find.text('Listing mới: MATIC/USDT'), findsOneWidget);
     expect(find.text('Bảo trì hệ thống định kỳ'), findsOneWidget);
+  });
+
+  testWidgets('SC-293 first viewport reaches announcement filters', (
+    tester,
+  ) async {
+    await pumpAnnouncements(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-293 AnnouncementsPage',
+      semanticLabel: 'SC-293 AnnouncementsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(AnnouncementsPage.filterKey('all')),
+      routeName: 'SC-293 AnnouncementsPage',
+      actionLabel: 'the all announcements filter',
+    );
   });
 
   testWidgets('SC-293 filters announcements by type', (tester) async {

@@ -97,7 +97,7 @@ class _LaunchpadSwapAggregatorPageState
         : DeviceMetrics.nativeBottomChrome;
     final safeBottom = MediaQuery.paddingOf(context).bottom;
     final ctaInset = _activeTab == _SwapTab.compare ? 118.0 : 0.0;
-    final bottomInset = navInset + safeBottom + AppSpacing.x6 + ctaInset;
+    final scrollTailReserve = navInset + safeBottom + AppSpacing.x3 + ctaInset;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -107,7 +107,7 @@ class _LaunchpadSwapAggregatorPageState
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
+              bottomInset: scrollTailReserve,
               semanticLabel:
                   'SC-314 LaunchpadSwapAggregatorPage scroll surface',
               header: VitHeader(
@@ -124,10 +124,10 @@ class _LaunchpadSwapAggregatorPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: LaunchpadSwapAggregatorPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       child: VitPageContent(
-                        padding: VitContentPadding.defaultPadding,
-                        customGap: AppSpacing.x4,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
                         children: [
                           if (_activeTab == _SwapTab.compare) ...[
                             _SwapInputCard(

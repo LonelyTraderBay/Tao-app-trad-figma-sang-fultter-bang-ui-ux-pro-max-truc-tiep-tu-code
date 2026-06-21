@@ -28,7 +28,7 @@ class _MarketCapHero extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
                   fontWeight: AppTextStyles.medium,
-                  height: 1.15,
+                  height: AppTextStyles.numericMicro.height,
                 ),
               ),
             ],
@@ -42,7 +42,9 @@ class _MarketCapHero extends StatelessWidget {
                   _formatCompact(stats.totalMarketCap, prefix: r'$'),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.pageTitle.copyWith(height: 1),
+                  style: AppTextStyles.pageTitle.copyWith(
+                    height: AppTextStyles.numericDisplayMd.height,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.marketAnalyticsGap),
@@ -107,7 +109,7 @@ class _HeroMetric extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.15,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
@@ -119,7 +121,7 @@ class _HeroMetric extends StatelessWidget {
               color: valueColor,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1.15,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
         ],
@@ -238,7 +240,7 @@ class _StatCard extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: 1.15,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
           if (change != null) ...[
@@ -258,7 +260,7 @@ class _StatCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: change! >= 0 ? AppColors.buy : AppColors.sell,
                     fontWeight: AppTextStyles.bold,
-                    height: 1,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
               ],
@@ -374,7 +376,7 @@ class _MarketBreadthCard extends StatelessWidget {
                 '${breadth.newATH} ATH mới',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppTextStyles.badge.height,
                 ),
               ),
             ),
@@ -382,7 +384,7 @@ class _MarketBreadthCard extends StatelessWidget {
               '${breadth.dropping10Pct} giảm >10%',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.sell,
-                height: 1,
+                height: AppTextStyles.badge.height,
               ),
             ),
           ],
@@ -417,7 +419,7 @@ class _BreadthLine extends StatelessWidget {
             label,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1,
+              height: AppTextStyles.badge.height,
             ),
           ),
         ),
@@ -427,7 +429,7 @@ class _BreadthLine extends StatelessWidget {
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1,
+            height: AppTextStyles.badge.height,
           ),
         ),
       ],
@@ -454,7 +456,10 @@ class _FearGreedGauge extends StatelessWidget {
         const SizedBox(height: AppSpacing.x1),
         Text(
           '$value',
-          style: AppTextStyles.amountSm.copyWith(color: color, height: 1),
+          style: AppTextStyles.amountSm.copyWith(
+            color: color,
+            height: AppTextStyles.badge.height,
+          ),
         ),
         const SizedBox(height: AppSpacing.x1),
         Text(
@@ -462,7 +467,7 @@ class _FearGreedGauge extends StatelessWidget {
           style: AppTextStyles.captionSm.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1,
+            height: AppTextStyles.badge.height,
           ),
         ),
       ],

@@ -19,12 +19,12 @@ class _BuyButton extends StatelessWidget {
       variant: VitCtaButtonVariant.success,
       height: AppSpacing.ctaHeight,
       child: Text(
-          enabled ? 'Mua $symbol' : 'Nhập số tiền mua',
-          style: AppTextStyles.baseMedium.copyWith(
-            color: enabled ? AppColors.onAccent : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-          ),
+        enabled ? 'Mua $symbol' : 'Nhập số tiền mua',
+        style: AppTextStyles.baseMedium.copyWith(
+          color: enabled ? AppColors.onAccent : AppColors.text3,
+          fontWeight: AppTextStyles.bold,
         ),
+      ),
     );
   }
 }
@@ -236,23 +236,23 @@ class BuyCryptoOptionRow extends StatelessWidget {
       ),
       onTap: onTap,
       child: Row(
-          children: [
-            _CryptoLogo(option: option),
-            const SizedBox(width: AppSpacing.walletBuyInlineGap),
-            Expanded(
-              child: Text(
-                '${option.symbol} · ${option.name}',
-                style: AppTextStyles.body,
-              ),
+        children: [
+          _CryptoLogo(option: option),
+          const SizedBox(width: AppSpacing.walletBuyInlineGap),
+          Expanded(
+            child: Text(
+              '${option.symbol} · ${option.name}',
+              style: AppTextStyles.body,
             ),
-            if (selected)
-              const Icon(
-                Icons.check_circle_rounded,
-                color: _buyPrimary,
-                size: 18,
-              ),
-          ],
-        ),
+          ),
+          if (selected)
+            const Icon(
+              Icons.check_circle_rounded,
+              color: _buyPrimary,
+              size: 18,
+            ),
+        ],
+      ),
     );
   }
 }

@@ -20,12 +20,12 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(launchpadControllerProvider).getMultisig();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome
             : DeviceMetrics.nativeBottomChrome) +
         MediaQuery.paddingOf(context).bottom +
-        AppSpacing.x7;
+        AppSpacing.x3;
     final selectedSafe = snapshot.safes.firstWhere(
       (safe) => safe.address == _selectedSafeAddress,
       orElse: () => snapshot.safes.first,
@@ -40,7 +40,7 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
+              bottomInset: scrollTailReserve,
               semanticLabel: 'SC-313 LaunchpadMultisigPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
@@ -49,7 +49,7 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
               ),
               child: SingleChildScrollView(
                 key: LaunchpadMultisigPage.contentKey,
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -69,8 +69,8 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
                       onChanged: (tab) => setState(() => _activeTab = tab),
                     ),
                     VitPageContent(
-                      padding: VitContentPadding.defaultPadding,
-                      customGap: AppSpacing.x4,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         if (_activeTab == _MultisigTab.queue) ...[
                           _CreateTxCard(

@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBotFaq(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -65,6 +67,30 @@ void main() {
     expect(find.text('Can I lose more than I invest?'), findsOneWidget);
     expect(find.text('Total FAQs'), findsOneWidget);
     expect(find.text('Still need help?'), findsOneWidget);
+  });
+
+  testWidgets('SC-132 first viewport reaches FAQ tabs and first item', (
+    tester,
+  ) async {
+    await pumpBotFaq(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-132 BotFAQPage',
+      semanticLabel: 'SC-132 BotFAQPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(BotFaqPage.tabKey('general')),
+      routeName: 'SC-132 BotFAQPage',
+      actionLabel: 'FAQ category tabs',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(BotFaqPage.questionKey('general', 0)),
+      routeName: 'SC-132 BotFAQPage',
+      actionLabel: 'the first FAQ item',
+    );
   });
 
   testWidgets('SC-132 category tabs and search filter FAQ data', (

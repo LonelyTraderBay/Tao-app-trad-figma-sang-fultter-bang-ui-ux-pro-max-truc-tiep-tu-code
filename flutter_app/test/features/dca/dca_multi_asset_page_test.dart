@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_multi_asset_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpMultiAsset(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -89,6 +91,22 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(DCAMultiAssetPage.thresholdFieldKey), findsNothing);
+  });
+
+  testWidgets('SC-177 first viewport reaches setup controls', (tester) async {
+    await pumpMultiAsset(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-177 DCAMultiAssetPage',
+      semanticLabel: 'SC-177 DCAMultiAssetPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(DCAMultiAssetPage.tabKey('setup')),
+      routeName: 'SC-177 DCAMultiAssetPage',
+      actionLabel: 'setup tab',
+    );
   });
 
   testWidgets('SC-177 supports assets and performance tabs', (tester) async {

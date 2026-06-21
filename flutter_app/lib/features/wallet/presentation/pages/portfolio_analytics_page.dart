@@ -85,7 +85,7 @@ class _PortfolioAnalyticsPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: PortfolioAnalyticsPage.contentKey,
-                  padding: EdgeInsets.only(bottom: scrollEndPadding),
+                  padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

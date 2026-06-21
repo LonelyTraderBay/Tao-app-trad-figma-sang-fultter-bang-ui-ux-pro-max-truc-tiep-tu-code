@@ -55,7 +55,7 @@ class _SummaryPill extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3,
+        padding: AppSpacing.earnCardPaddingX3X2,
         child: FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
@@ -101,7 +101,7 @@ class _SearchField extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX4X3,
+        padding: AppSpacing.earnCardPaddingX3,
         child: Row(
           children: [
             const Icon(
@@ -146,7 +146,7 @@ class _TypeFilterRow extends StatelessWidget {
     ];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Row(
         children: [
           for (final filter in filters) ...[
@@ -276,7 +276,7 @@ class _ResultsHeader extends StatelessWidget {
           '$count giao dịch',
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const Spacer(),
+        const Expanded(child: SizedBox()),
         DecoratedBox(
           decoration: const ShapeDecoration(
             color: AppColors.surface2,
@@ -328,7 +328,7 @@ class _DateHeader extends StatelessWidget {
         const Expanded(
           child: Divider(
             color: AppColors.divider,
-            height: AppSpacing.savingsHistoryDividerHeight,
+            height: AppSpacing.dividerHairline,
           ),
         ),
       ],

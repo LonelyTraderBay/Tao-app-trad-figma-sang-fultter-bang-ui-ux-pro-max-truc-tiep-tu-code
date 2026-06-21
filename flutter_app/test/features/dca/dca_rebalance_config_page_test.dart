@@ -123,6 +123,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(DCARebalanceConfig.previewSheetKey), findsOneWidget);
     expect(find.text('Preview Simulation'), findsOneWidget);
+    expect(find.text('Rebalance execution preview'), findsOneWidget);
+    expect(find.text('Estimated fees'), findsOneWidget);
+    expect(find.text('Risk check'), findsOneWidget);
 
     await tester.tap(find.byKey(DCARebalanceConfig.confirmSaveKey));
     await tester.pumpAndSettle();

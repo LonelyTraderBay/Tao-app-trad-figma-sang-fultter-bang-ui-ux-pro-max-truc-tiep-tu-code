@@ -84,12 +84,12 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PAdDetailPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pAdDetailScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.x4,
+                      gap: VitContentGap.tight,
                       children: [
                         _MerchantCard(snapshot: snapshot),
                         _TrustMarketRow(snapshot: snapshot),

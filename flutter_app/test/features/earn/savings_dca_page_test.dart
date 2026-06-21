@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_dca_p
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDca(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -60,6 +62,24 @@ void main() {
     expect(find.byKey(SavingsDCAPage.planKey('dca-usdt')), findsOneWidget);
     expect(find.text('USDT Linh hoạt'), findsOneWidget);
     expect(find.text('4.5%'), findsOneWidget);
+  });
+
+  testWidgets('SC-346 first viewport reaches create DCA action', (
+    tester,
+  ) async {
+    await pumpDca(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-346 SavingsDCAPage',
+      semanticLabel: 'SC-346 SavingsDCAPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(SavingsDCAPage.createPlanKey),
+      routeName: 'SC-346 SavingsDCAPage',
+      actionLabel: 'the create DCA action',
+    );
   });
 
   testWidgets('SC-346 switches to execution history', (tester) async {

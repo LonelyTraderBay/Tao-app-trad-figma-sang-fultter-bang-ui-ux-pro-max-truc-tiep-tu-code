@@ -12,8 +12,11 @@ class _QuickActionRow extends StatelessWidget {
     return VitCard(
       key: P2PInsuranceScorePage.quickActionKey(action.label),
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pInsuranceScoreInnerPadding,
+      radius: VitCardRadius.sm,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
       onTap: enabled
           ? () {
               HapticFeedback.selectionClick();
@@ -25,10 +28,10 @@ class _QuickActionRow extends StatelessWidget {
         child: Row(
           children: [
             SizedBox.square(
-              dimension: AppSpacing.p2pInsuranceScoreActionDot,
+              dimension: AppSpacing.x2,
               child: Material(color: color, shape: const CircleBorder()),
             ),
-            const SizedBox(width: AppSpacing.x3),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Text(
                 action.label,
@@ -38,7 +41,7 @@ class _QuickActionRow extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.x3),
+            const SizedBox(width: AppSpacing.x2),
             Text(
               action.gain,
               style: AppTextStyles.caption.copyWith(
@@ -51,7 +54,7 @@ class _QuickActionRow extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.p2pInsuranceScoreFactorIcon,
+                size: AppSpacing.iconSm,
               ),
             ],
           ],
@@ -70,7 +73,7 @@ class _TierPathCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pInsuranceScoreCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -79,18 +82,18 @@ class _TierPathCard extends StatelessWidget {
               const Icon(
                 Icons.diamond_outlined,
                 color: AppColors.accent,
-                size: AppSpacing.p2pInsuranceScoreHeaderIcon,
+                size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Text(
                 'Lộ trình nâng cấp',
-                style: AppTextStyles.baseMedium.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x2),
           for (var i = 0; i < snapshot.tierRequirements.length; i++) ...[
             _TierCard(
               tier: snapshot.tierRequirements[i],
@@ -99,7 +102,7 @@ class _TierPathCard extends StatelessWidget {
             if (i != snapshot.tierRequirements.length - 1)
               const Center(
                 child: SizedBox(
-                  height: AppSpacing.x5,
+                  height: AppSpacing.x3,
                   child: VerticalDivider(
                     width: AppSpacing.dividerHairline,
                     thickness: AppSpacing.dividerHairline,
@@ -133,7 +136,7 @@ class _TierCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: tier.isCurrent ? AppColors.primary40 : AppColors.divider,
-      padding: AppSpacing.p2pInsuranceScoreInnerPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -144,13 +147,13 @@ class _TierCard extends StatelessWidget {
                     ? Icons.check_circle_outline_rounded
                     : Icons.lock_outline_rounded,
                 color: color,
-                size: AppSpacing.p2pInsuranceScoreHeaderIcon,
+                size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   tier.isCurrent ? '${tier.name} - HIỆN TẠI' : tier.name,
-                  style: AppTextStyles.baseMedium.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
                   ),
@@ -158,7 +161,7 @@ class _TierCard extends StatelessWidget {
               ),
               Text(
                 tier.coveragePct,
-                style: AppTextStyles.baseMedium.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
                 ),
@@ -166,28 +169,31 @@ class _TierCard extends StatelessWidget {
             ],
           ),
           if (!tier.isUnlocked) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
             Row(
               children: [
                 Text(
                   'Tiến độ',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const Spacer(),
-                Text(
-                  '$score/${tier.requiredScore}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    '$score/${tier.requiredScore}',
+                    textAlign: TextAlign.right,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text2,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.x1),
             ClipRRect(
               borderRadius: AppRadii.xsRadius,
               child: SizedBox(
-                height: AppSpacing.p2pInsuranceScoreProgressHeight,
+                height: AppSpacing.x1,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -202,7 +208,7 @@ class _TierCard extends StatelessWidget {
               ),
             ),
           ],
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -242,22 +248,24 @@ class _DisclosureCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pInsuranceScoreInnerPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.text3,
-            size: AppSpacing.p2pInsuranceScoreSmallIcon,
+            size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
               text,
-              style: AppTextStyles.caption.copyWith(
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.p2pInsuranceScoreBodyLineHeight,
+                height: AppTextStyles.numericMicro.height,
               ),
             ),
           ),

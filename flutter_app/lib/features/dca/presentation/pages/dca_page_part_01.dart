@@ -41,7 +41,7 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                       ).copyWith(scrollbars: false),
                       child: SingleChildScrollView(
                         key: DCAPage.contentKey,
-                        physics: const BouncingScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         padding: AppSpacing.dcaBottomInsetPadding(
                           scrollEndPadding,
                         ),
@@ -176,7 +176,7 @@ class _DcaOverviewCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.numericDisplayHeroXs.copyWith(
                     fontWeight: AppTextStyles.heavy,
-                    height: 1.04,
+                    height: AppTextStyles.numericDisplayHeroXs.height,
                   ),
                 ),
               ),
@@ -348,7 +348,7 @@ class _DeltaPill extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.buy,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.04,
+                    height: AppTextStyles.badge.height,
                   ),
                 ),
               ),
@@ -386,9 +386,9 @@ class _OverviewMetric extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
-                width: 28,
-                height: 28,
+              SizedBox.square(
+                dimension:
+                    AppSpacing.buttonCompact - AppSpacing.formFieldLabelGap,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: color.withValues(alpha: .15),
@@ -409,7 +409,7 @@ class _OverviewMetric extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.portfolioTextDim,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.08,
+                    height: AppTextStyles.badge.height,
                   ),
                 ),
               ),
@@ -423,7 +423,7 @@ class _OverviewMetric extends StatelessWidget {
             style: AppTextStyles.amountXs.copyWith(
               color: color,
               fontWeight: AppTextStyles.heavy,
-              height: 1.04,
+              height: AppTextStyles.badge.height,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
@@ -434,7 +434,7 @@ class _OverviewMetric extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
               fontWeight: AppTextStyles.bold,
-              height: 1.04,
+              height: AppTextStyles.badge.height,
             ),
           ),
         ],

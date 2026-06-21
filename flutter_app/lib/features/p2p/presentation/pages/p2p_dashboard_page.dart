@@ -91,12 +91,12 @@ class _P2PDashboardPageState extends ConsumerState<P2PDashboardPage> {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pDashboardScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.p2pDashboardContentGap,
+                      gap: VitContentGap.tight,
                       children: [
                         _FilterRail(
                           snapshot: snapshot,

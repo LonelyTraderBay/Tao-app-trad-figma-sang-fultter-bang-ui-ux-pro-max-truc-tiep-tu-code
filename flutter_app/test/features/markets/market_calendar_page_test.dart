@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCalendar(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -87,6 +89,24 @@ void main() {
     expect(find.text('Tác động cao'), findsOneWidget);
     expect(find.text('WLD niêm yết trên Coinbase'), findsOneWidget);
     expect(find.text('Mở khóa ARB'), findsOneWidget);
+  });
+
+  testWidgets('SC-017 first viewport reaches calendar controls', (
+    tester,
+  ) async {
+    await pumpCalendar(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-017 MarketCalendarPage',
+      semanticLabel: 'SC-017 MarketCalendarPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(MarketCalendarPage.listTabKey),
+      routeName: 'SC-017 MarketCalendarPage',
+      actionLabel: 'the list calendar tab',
+    );
   });
 
   testWidgets('SC-017 filters by event type and impact', (tester) async {

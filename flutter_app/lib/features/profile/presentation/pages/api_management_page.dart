@@ -96,7 +96,7 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: ApiManagementPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.profileApiScrollPadding(scrollClearance),
                   child: VitPageContent(
                     padding: VitContentPadding.none,

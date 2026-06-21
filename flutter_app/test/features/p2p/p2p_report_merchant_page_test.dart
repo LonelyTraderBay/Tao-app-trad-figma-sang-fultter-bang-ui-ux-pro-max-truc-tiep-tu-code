@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_merchant_p
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_report_merchant_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PReportMerchant(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -83,6 +85,39 @@ void main() {
     expect(find.text('Lý do khác'), findsOneWidget);
     expect(find.text('Gửi báo cáo'), findsOneWidget);
     expect(find.byKey(P2PReportMerchantPage.detailFieldKey), findsNothing);
+  });
+
+  testWidgets('SC-229 first viewport reaches report actions and first reason', (
+    tester,
+  ) async {
+    await pumpP2PReportMerchant(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-229 P2PReportMerchantPage',
+      semanticLabel: 'SC-229 P2PReportMerchantPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PReportMerchantPage.blockButtonKey),
+      routeName: 'SC-229 P2PReportMerchantPage',
+      actionLabel: 'the block merchant action',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PReportMerchantPage.profileButtonKey),
+      routeName: 'SC-229 P2PReportMerchantPage',
+      actionLabel: 'the merchant profile action',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      P2PReportMerchantPage.reasonKey('scam').finder,
+      routeName: 'SC-229 P2PReportMerchantPage',
+      actionLabel: 'the first report reason',
+      minVisibleHeight: 32,
+    );
   });
 
   testWidgets('SC-229 reason selection reveals detail and submit returns', (

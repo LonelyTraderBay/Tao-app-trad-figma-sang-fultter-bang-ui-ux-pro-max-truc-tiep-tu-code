@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_histo
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_receipt_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpHistory(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -55,6 +57,24 @@ void main() {
     expect(find.text('08/03/2026'), findsOneWidget);
     expect(find.text('Rút sớm'), findsAtLeastNWidgets(1));
     expect(find.text('-10.0000 SOL'), findsOneWidget);
+  });
+
+  testWidgets('SC-334 first viewport reaches first transaction', (
+    tester,
+  ) async {
+    await pumpHistory(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-334 SavingsHistoryPage',
+      semanticLabel: 'SC-334 SavingsHistoryPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(SavingsHistoryPage.firstTransactionKey),
+      routeName: 'SC-334 SavingsHistoryPage',
+      actionLabel: 'the first savings transaction',
+    );
   });
 
   testWidgets('SC-334 type filter narrows to interest transactions', (

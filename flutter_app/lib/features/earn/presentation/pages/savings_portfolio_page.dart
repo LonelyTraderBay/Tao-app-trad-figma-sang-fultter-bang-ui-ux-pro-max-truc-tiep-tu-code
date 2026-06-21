@@ -33,7 +33,8 @@ const double _savingsPortfolioSectionMarkerExtent =
     AppSpacing.iconSm + AppSpacing.x1;
 const double _savingsPortfolioSecondaryButtonExtent = 36;
 const double _savingsPortfolioDaysLineHeight = 1.05;
-const EdgeInsets _savingsPortfolioCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsetsDirectional _savingsPortfolioCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
 
 class SavingsPortfolioPage extends ConsumerStatefulWidget {
   const SavingsPortfolioPage({super.key, this.shellRenderMode});

@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_insurance_
 import 'package:vit_trade_flutter/features/profile/presentation/pages/settings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PInsuranceScore(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -83,6 +85,30 @@ void main() {
     expect(find.text('Lộ trình nâng cấp'), findsOneWidget);
     expect(find.text('Pro - HIỆN TẠI'), findsOneWidget);
     expect(find.text('Elite'), findsOneWidget);
+  });
+
+  testWidgets('SC-240 first viewport reaches score factors safely', (
+    tester,
+  ) async {
+    await pumpP2PInsuranceScore(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-240 P2PInsuranceScorePage',
+      semanticLabel: 'SC-240 P2PInsuranceScorePage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(P2PInsuranceScorePage.factorsKey),
+      targetLabel: 'score factor breakdown',
+      minVisibleHeight: 80,
+    );
+    expect(
+      tester.getSize(find.byKey(P2PInsuranceScorePage.scoreCardKey)).height,
+      lessThanOrEqualTo(280),
+      reason:
+          'Protection score summary should not dominate the first viewport.',
+    );
   });
 
   testWidgets('SC-240 navigation edges open parent, settings, and P2P', (

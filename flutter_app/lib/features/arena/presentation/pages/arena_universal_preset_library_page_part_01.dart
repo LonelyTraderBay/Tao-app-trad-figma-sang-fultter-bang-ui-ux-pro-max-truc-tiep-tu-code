@@ -19,7 +19,7 @@ class _SectionTabs extends StatelessWidget {
       shape: const Border(bottom: BorderSide(color: AppColors.borderSolid)),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         padding: AppSpacing.arenaPresetSectionTabsPadding,
         child: Row(
           children: [
@@ -160,7 +160,7 @@ class _DomainPackCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.arenaPresetCaptionLineHeight,
+                          height: _presetCaptionLineRatio,
                         ),
                       ),
                     ],
@@ -185,7 +185,7 @@ class _DomainPackCard extends StatelessWidget {
                 children: [
                   const Divider(
                     color: AppColors.borderSolid,
-                    height: AppSpacing.arenaPresetDividerHeight,
+                    height: _presetDividerExtent,
                   ),
                   const SizedBox(height: AppSpacing.x3),
                   Text(
@@ -266,7 +266,7 @@ class _SuggestionsSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Row(
             children: [
               for (final pack in packs.take(6)) ...[
@@ -417,7 +417,7 @@ class _DemoFlowsSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Row(
             children: [
               for (var i = 0; i < flows.length; i++) ...[

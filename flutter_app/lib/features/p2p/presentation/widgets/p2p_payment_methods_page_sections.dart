@@ -272,13 +272,12 @@ class _MethodIcon extends StatelessWidget {
     return Material(
       color: tone == AppColors.accent ? AppColors.accent12 : AppColors.warn10,
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-      child: SizedBox(
-        width: AppSpacing.buttonCompact,
-        height: AppSpacing.buttonCompact,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
         child: Icon(
           isBank ? Icons.credit_card_rounded : Icons.phone_android_rounded,
           color: tone,
-          size: AppSpacing.iconMd,
+          size: AppSpacing.iconSm,
         ),
       ),
     );

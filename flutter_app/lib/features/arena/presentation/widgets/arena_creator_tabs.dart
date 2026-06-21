@@ -77,7 +77,7 @@ class _ModesTab extends StatelessWidget {
                 key: ArenaCreatorPage.viewModeKey,
                 onPressed: () => onMode(firstMode.id),
                 variant: VitCtaButtonVariant.secondary,
-                height: AppSpacing.arenaCreatorTabButtonHeight,
+                height: _creatorTabButtonExtent,
                 child: const Text('Xem mode'),
               ),
             ),
@@ -86,7 +86,7 @@ class _ModesTab extends StatelessWidget {
               child: VitCtaButton(
                 key: ArenaCreatorPage.useModeKey,
                 onPressed: onUseMode,
-                height: AppSpacing.arenaCreatorTabButtonHeight,
+                height: _creatorTabButtonExtent,
                 child: const Text('Dùng mode'),
               ),
             ),
@@ -211,7 +211,7 @@ class _AboutTab extends StatelessWidget {
             creator.bio,
             style: AppTextStyles.base.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.arenaCreatorAboutLineHeight,
+              height: _creatorAboutLineRatio,
             ),
           ),
         ),

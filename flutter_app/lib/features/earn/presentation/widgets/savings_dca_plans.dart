@@ -24,7 +24,7 @@ class _PlansList extends StatelessWidget {
                 plan.status == SavingsDcaPlanStatus.paused,
             onToggle: () => onToggle(plan),
           ),
-          if (plan != plans.last) const SizedBox(height: AppSpacing.x4),
+          if (plan != plans.last) const SizedBox(height: AppSpacing.x3),
         ],
       ],
     );
@@ -50,7 +50,7 @@ class _PlanCard extends StatelessWidget {
     return VitCard(
       key: SavingsDCAPage.planKey(plan.id),
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -117,7 +117,7 @@ class _PlanCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -146,10 +146,10 @@ class _PlanCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           const Divider(
             color: AppColors.divider,
-            height: AppSpacing.savingsConsumerDividerHeight,
+            height: AppSpacing.dividerHairline,
           ),
           const SizedBox(height: AppSpacing.x3),
           Row(

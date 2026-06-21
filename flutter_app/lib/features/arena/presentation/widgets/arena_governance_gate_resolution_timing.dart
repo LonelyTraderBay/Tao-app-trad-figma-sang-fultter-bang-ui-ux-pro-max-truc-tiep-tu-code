@@ -194,7 +194,7 @@ class _WarningStack extends StatelessWidget {
                       warning,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.arenaGovernanceBodyLineHeight,
+                        height: _governanceBodyLineRatio,
                       ),
                     ),
                   ),

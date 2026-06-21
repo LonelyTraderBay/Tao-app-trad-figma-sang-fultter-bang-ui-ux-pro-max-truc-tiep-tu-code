@@ -48,7 +48,7 @@ class _CriticalMetricsGrid extends StatelessWidget {
       crossAxisCount: AppSpacing.tradeBotGridColumns,
       crossAxisSpacing: AppSpacing.x2,
       mainAxisSpacing: AppSpacing.x2,
-      childAspectRatio: 1.85,
+      childAspectRatio: AppSpacing.tradeBotCriticalMetricAspectRatio,
       children: [for (final metric in metrics) _MetricCard(metric: metric)],
     );
   }

@@ -77,7 +77,7 @@ class _ScreenerRow extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.body.copyWith(
                           fontWeight: AppTextStyles.bold,
-                          height: 1.06,
+                          height: AppTextStyles.body.height,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x1),
@@ -87,7 +87,7 @@ class _ScreenerRow extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: 1.18,
+                          height: AppTextStyles.micro.height,
                         ),
                       ),
                     ],
@@ -117,7 +117,7 @@ class _ScreenerRow extends StatelessWidget {
                         style: AppTextStyles.body.copyWith(
                           fontWeight: AppTextStyles.bold,
                           fontFeatures: AppTextStyles.tabularFigures,
-                          height: 1.06,
+                          height: AppTextStyles.body.height,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x1),
@@ -142,7 +142,7 @@ class _ScreenerRow extends StatelessWidget {
                                   color: color,
                                   fontWeight: AppTextStyles.medium,
                                   fontFeatures: AppTextStyles.tabularFigures,
-                                  height: 1.12,
+                                  height: AppTextStyles.caption.height,
                                 ),
                               ),
                             ],

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_social_feed_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSocialFeed(
     WidgetTester tester, {
@@ -81,6 +83,22 @@ void main() {
     expect(find.text('VIP'), findsOneWidget);
     expect(find.text('Milestone'), findsOneWidget);
     expect(find.text('234'), findsOneWidget);
+  });
+
+  testWidgets('SC-387 first viewport reaches feed composer', (tester) async {
+    await pumpSocialFeed(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-387 StakingSocialFeedPage',
+      semanticLabel: 'SC-387 StakingSocialFeedPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingSocialFeedPage.composerKey),
+      routeName: 'SC-387 StakingSocialFeedPage',
+      actionLabel: 'the community composer',
+    );
   });
 
   testWidgets('SC-387 switches social feed section tabs', (tester) async {

@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_recom
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_risk_assessment_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskAssessment(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -95,6 +97,24 @@ void main() {
     expect(
       find.byKey(SavingsRiskAssessmentPage.previousButtonKey),
       findsNothing,
+    );
+  });
+
+  testWidgets('SC-339 first viewport reaches first risk option', (
+    tester,
+  ) async {
+    await pumpRiskAssessment(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-339 SavingsRiskAssessmentPage',
+      semanticLabel: 'SC-339 SavingsRiskAssessmentPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(SavingsRiskAssessmentPage.firstOptionKey),
+      routeName: 'SC-339 SavingsRiskAssessmentPage',
+      actionLabel: 'the first risk answer option',
     );
   });
 

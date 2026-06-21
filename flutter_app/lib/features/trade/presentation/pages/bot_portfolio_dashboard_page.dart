@@ -43,8 +43,8 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 92
-            : DeviceMetrics.nativeBottomChrome + 28) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x5
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -71,7 +71,7 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: AppSpacing.tradeBotCardGap,
+                    gap: VitContentGap.tight,
                     children: [
                       _SummaryGrid(summary: snapshot.summary),
                       VitPageSection(

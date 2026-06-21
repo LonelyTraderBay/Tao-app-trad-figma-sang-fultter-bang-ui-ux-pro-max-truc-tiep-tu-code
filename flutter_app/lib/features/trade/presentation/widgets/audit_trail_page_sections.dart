@@ -8,6 +8,7 @@ class _ComplianceNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      key: const Key('sc115_audit_trail_notice'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Icon(
@@ -80,10 +81,10 @@ class _StatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.tradeToolTinyGap),
           Text(
             stat.value,
-            style: AppTextStyles.sectionTitle.copyWith(
+            style: AppTextStyles.baseMedium.copyWith(
               color: stat.emphasized ? _auditGreen : AppColors.text1,
               fontFeatures: AppTextStyles.tabularFigures,
             ),

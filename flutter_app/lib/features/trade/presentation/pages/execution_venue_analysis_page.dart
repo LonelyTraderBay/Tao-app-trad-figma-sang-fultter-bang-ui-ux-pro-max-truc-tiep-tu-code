@@ -92,7 +92,7 @@ class _ExecutionVenueAnalysisPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: ExecutionVenueAnalysisPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(
+                      padding: EdgeInsetsDirectional.fromSTEB(
                         AppSpacing.contentPad,
                         AppSpacing.tradeBotCardGap,
                         AppSpacing.contentPad,

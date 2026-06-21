@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingSocialFeedPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +31,7 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingCommunityBodyLineHeight,
+                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
               ],
@@ -53,7 +53,7 @@ class _Composer extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.composerKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           const _Avatar(label: 'Me', icon: Icons.person_rounded),
@@ -89,7 +89,7 @@ class _FeedTabs extends StatelessWidget {
       key: StakingSocialFeedPage.tabsKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.earnHorizontalPaddingX4,
+      padding: AppSpacing.earnHorizontalPaddingX3,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
         activeKey: activeTabId,
@@ -130,7 +130,7 @@ class _PostCard extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.postKey(post.id),
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -180,7 +180,7 @@ class _PostCard extends StatelessWidget {
               _TypeChip(meta: typeMeta),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             post.content,
             style: AppTextStyles.body.copyWith(
@@ -189,7 +189,7 @@ class _PostCard extends StatelessWidget {
             ),
           ),
           if (post.asset != null || post.apy != null) ...[
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: AppSpacing.x3),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x2,
@@ -201,12 +201,12 @@ class _PostCard extends StatelessWidget {
               ],
             ),
           ],
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           const Divider(
-            height: AppSpacing.stakingCommunityDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               _ActionMetric(
@@ -218,7 +218,7 @@ class _PostCard extends StatelessWidget {
                 icon: Icons.chat_bubble_outline_rounded,
                 value: post.comments,
               ),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.x4),
               const Icon(
                 Icons.share_outlined,
                 color: AppColors.text3,
@@ -289,7 +289,7 @@ class _TypeChip extends StatelessWidget {
               meta.label,
               style: AppTextStyles.micro.copyWith(
                 color: meta.color,
-                height: AppSpacing.stakingCommunityPillLineHeight,
+                height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
               ),
             ),
           ],
@@ -334,12 +334,12 @@ class _CommunityStats extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.statsKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Community Stats', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               for (var i = 0; i < stats.length; i++) ...[

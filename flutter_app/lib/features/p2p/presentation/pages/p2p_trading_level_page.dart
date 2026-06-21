@@ -35,7 +35,7 @@ class P2PTradingLevelPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
+            ? DeviceMetrics.bottomChrome + AppSpacing.x4
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
@@ -61,14 +61,14 @@ class P2PTradingLevelPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PTradingLevelPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pTradingLevelScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.x4,
+                      gap: VitContentGap.tight,
                       children: [
                         _CurrentLevelHero(snapshot: snapshot),
                         if (snapshot.userLevel.currentLevel <

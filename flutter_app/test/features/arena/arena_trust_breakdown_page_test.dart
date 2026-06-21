@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_safety
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_trust_breakdown_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpTrust(WidgetTester tester, String entityId) async {
     tester.view.devicePixelRatio = 1;
@@ -69,6 +71,31 @@ void main() {
     expect(find.text('Độ tin cậy · Open Arena'), findsOneWidget);
     expect(find.text('Không tìm thấy'), findsOneWidget);
     expect(find.text('Creator không tồn tại'), findsOneWidget);
+  });
+
+  testWidgets('SC-199 first viewport exposes trust navigation links', (
+    tester,
+  ) async {
+    await pumpTrust(tester, 'cr001');
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-199 ArenaTrustBreakdownPage',
+      semanticLabel: 'SC-199 ArenaTrustBreakdownPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaTrustBreakdownPage.creatorLinkKey),
+      routeName: 'SC-199 ArenaTrustBreakdownPage',
+      actionLabel: 'the creator link',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaTrustBreakdownPage.safetyLinkKey),
+      routeName: 'SC-199 ArenaTrustBreakdownPage',
+      actionLabel: 'the safety link',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-199 creator trust links navigate safely', (tester) async {

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_blacklist_
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_blacklist_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBlacklist(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -77,6 +79,32 @@ void main() {
     expect(find.text('FakeTrader88'), findsOneWidget);
     expect(find.text('SlowPay_VN'), findsOneWidget);
     expect(find.text('Về danh sách chặn'), findsOneWidget);
+  });
+
+  testWidgets('SC-277 first viewport reaches search and first entry', (
+    tester,
+  ) async {
+    await pumpBlacklist(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-277 P2PBlacklistPage',
+      semanticLabel: 'SC-277 P2PBlacklistPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PBlacklistPage.searchKey),
+      routeName: 'SC-277 P2PBlacklistPage',
+      actionLabel: 'blacklist search',
+      minVisibleHeight: 40,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PBlacklistPage.entryKey('bl001')),
+      routeName: 'SC-277 P2PBlacklistPage',
+      actionLabel: 'first blocked user row',
+      minVisibleHeight: 40,
+    );
   });
 
   testWidgets('SC-277 filters blocked users by reason', (tester) async {

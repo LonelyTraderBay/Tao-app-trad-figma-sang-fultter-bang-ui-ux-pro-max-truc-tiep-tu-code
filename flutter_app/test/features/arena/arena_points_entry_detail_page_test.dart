@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_mode_d
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_points_entry_detail_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpEntry(WidgetTester tester, String entryId) async {
     tester.view.devicePixelRatio = 1;
@@ -69,6 +71,25 @@ void main() {
     expect(find.text('Arena Points · Open Arena'), findsOneWidget);
     expect(find.text('Không tìm thấy'), findsOneWidget);
     expect(find.text('Giao dịch điểm không tồn tại'), findsOneWidget);
+  });
+
+  testWidgets('SC-200 first viewport exposes linked Arena context', (
+    tester,
+  ) async {
+    await pumpEntry(tester, 'entry-demo');
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-200 ArenaPointsEntryDetailPage',
+      semanticLabel: 'SC-200 ArenaPointsEntryDetailPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaPointsEntryDetailPage.challengeLinkKey),
+      routeName: 'SC-200 ArenaPointsEntryDetailPage',
+      actionLabel: 'the linked challenge',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-200 detail state supports copy and safe navigation', (

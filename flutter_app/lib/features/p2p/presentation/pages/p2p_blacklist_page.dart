@@ -99,12 +99,12 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pBlacklistScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.p2pBlacklistContentGap,
+                      gap: VitContentGap.tight,
                       children: [
                         Padding(
                           padding: AppSpacing.p2pBlacklistSummaryPadding,

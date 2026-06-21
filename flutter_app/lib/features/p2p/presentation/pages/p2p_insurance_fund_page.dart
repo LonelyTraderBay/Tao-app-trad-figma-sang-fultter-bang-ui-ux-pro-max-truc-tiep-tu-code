@@ -134,8 +134,8 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                       ).copyWith(scrollbars: false),
                       child: SingleChildScrollView(
                         key: P2PInsuranceFundPage.contentKey,
-                        physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.fromLTRB(
+                        physics: const ClampingScrollPhysics(),
+                        padding: EdgeInsetsDirectional.fromSTEB(
                           AppSpacing.contentPad,
                           AppSpacing.x3,
                           AppSpacing.contentPad,

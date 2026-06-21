@@ -93,7 +93,7 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ReferralHistoryPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.referralPageScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,

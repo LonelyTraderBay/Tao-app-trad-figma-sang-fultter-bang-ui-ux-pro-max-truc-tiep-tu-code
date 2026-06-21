@@ -12,6 +12,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void _setPhoneViewport(WidgetTester tester) {
   tester.view.devicePixelRatio = 1;
   tester.view.physicalSize = const Size(440, 956);
@@ -64,6 +66,27 @@ void main() {
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.text('Thiết lập 2FA'), findsOneWidget);
     expect(find.text('Bước 1: Quét mã QR'), findsOneWidget);
+  });
+
+  testWidgets('SC-004 first viewport reaches 2FA setup controls', (
+    tester,
+  ) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-004 TwoFASetupPage',
+      semanticLabel: 'SC-004 TwoFASetupPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(TwoFASetupPage.copyKey),
+      routeName: 'SC-004 TwoFASetupPage',
+      actionLabel: 'the manual secret copy control',
+    );
   });
 
   testWidgets('/auth/2fa-setup visual QA shell keeps fake status only', (

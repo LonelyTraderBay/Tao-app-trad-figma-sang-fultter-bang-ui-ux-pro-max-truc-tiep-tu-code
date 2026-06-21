@@ -9,7 +9,7 @@ class _PriceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ad = snapshot.ad;
     return VitCard(
-      padding: AppSpacing.p2pAdDetailCardPadding,
+      padding: AppSpacing.p2pAdDetailCompactCardPadding,
       child: Column(
         children: [
           Row(
@@ -22,9 +22,10 @@ class _PriceCard extends StatelessWidget {
               ),
               Text(
                 _formatVnd(ad.price),
-                style: AppTextStyles.sectionTitle.copyWith(
+                style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.text1,
                   fontFeatures: AppTextStyles.tabularFigures,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -34,7 +35,7 @@ class _PriceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -113,15 +114,18 @@ class _AmountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ad = snapshot.ad;
     return VitCard(
-      padding: AppSpacing.p2pAdDetailCardPadding,
+      padding: AppSpacing.p2pAdDetailCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Nhập số lượng',
-            style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
+            style: AppTextStyles.baseMedium.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Số tiền (VND)',
             style: AppTextStyles.caption.copyWith(
@@ -129,7 +133,7 @@ class _AmountCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           _InputShell(
             value: fiatAmount == 0
                 ? '${_formatVnd(ad.minLimit)} - ${_formatVnd(ad.maxLimit)}'
@@ -137,7 +141,7 @@ class _AmountCard extends StatelessWidget {
             suffix: 'VND',
             muted: fiatAmount == 0,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Số lượng (${ad.asset})',
             style: AppTextStyles.caption.copyWith(
@@ -145,13 +149,13 @@ class _AmountCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           _InputShell(
             value: cryptoAmount == 0 ? '0.00' : cryptoAmount.toStringAsFixed(6),
             suffix: ad.asset,
             muted: cryptoAmount == 0,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               for (final percent in const [25, 50, 75, 100]) ...[
@@ -185,8 +189,8 @@ class _InputShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.inputHeight,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: AppSpacing.buttonCompact),
       child: Material(
         color: AppColors.surface2,
         shape: RoundedRectangleBorder(
@@ -239,17 +243,20 @@ class _PercentButton extends StatelessWidget {
     return GestureDetector(
       key: P2PAdDetailPage.percentKey(percent),
       onTap: onTap,
-      child: Material(
-        color: selected ? AppColors.primary12 : AppColors.transparent,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-        child: Padding(
-          padding: AppSpacing.p2pAdDetailPercentPadding,
-          child: Center(
-            child: Text(
-              '$percent%',
-              style: AppTextStyles.micro.copyWith(
-                color: selected ? AppModuleAccents.p2p : AppColors.text2,
-                fontWeight: AppTextStyles.bold,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: AppSpacing.buttonCompact),
+        child: Material(
+          color: selected ? AppColors.primary12 : AppColors.transparent,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
+          child: Padding(
+            padding: AppSpacing.p2pAdDetailPercentPadding,
+            child: Center(
+              child: Text(
+                '$percent%',
+                style: AppTextStyles.micro.copyWith(
+                  color: selected ? AppModuleAccents.p2p : AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
           ),
@@ -273,7 +280,7 @@ class _RequirementCard extends StatelessWidget {
         side: const BorderSide(color: AppColors.accent20),
       ),
       child: Padding(
-        padding: AppSpacing.p2pAdDetailCardPadding,
+        padding: AppSpacing.p2pAdDetailCompactCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -294,7 +301,7 @@ class _RequirementCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
             Wrap(
               spacing: AppSpacing.x2,
               runSpacing: AppSpacing.x2,
@@ -369,7 +376,7 @@ class _EscrowCard extends StatelessWidget {
         side: const BorderSide(color: AppColors.buy20),
       ),
       child: Padding(
-        padding: AppSpacing.p2pAdDetailCardPadding,
+        padding: AppSpacing.p2pAdDetailCompactCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -384,7 +391,7 @@ class _EscrowCard extends StatelessWidget {
                 'Tài sản được bảo vệ bởi hệ thống Escrow VitTrade. ${amount.toStringAsFixed(2)} ${snapshot.ad.asset} sẽ được khóa cho đến khi xác nhận thanh toán thành công.',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.buy,
-                  height: AppSpacing.p2pAdDetailEscrowLineHeight,
+                  height: 1.35,
                 ),
               ),
             ),

@@ -212,7 +212,7 @@ class _AlertSetting extends StatelessWidget {
             variant: VitCardVariant.inner,
             width: double.infinity,
             density: VitDensity.compact,
-            padding: const EdgeInsets.symmetric(
+            padding: const EdgeInsetsDirectional.symmetric(
               horizontal: AppSpacing.x3,
               vertical: AppSpacing.x2,
             ),

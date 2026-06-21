@@ -42,7 +42,8 @@ const double _savingsRebalanceTrackHeight = AppSpacing.x2;
 const double _savingsRebalanceDriftChartHeight = 150;
 const double _savingsRebalanceCompareLabelWidth = 84;
 const double _savingsRebalanceLegendDot = AppSpacing.x2;
-const EdgeInsets _savingsRebalanceCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsetsDirectional _savingsRebalanceCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
 
 class SavingsAutoRebalancePage extends ConsumerStatefulWidget {
   const SavingsAutoRebalancePage({super.key, this.shellRenderMode});
@@ -133,8 +134,8 @@ class _SavingsAutoRebalancePageState
                   ),
                   Expanded(
                     child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      padding: EdgeInsets.fromLTRB(
+                      physics: const ClampingScrollPhysics(),
+                      padding: EdgeInsetsDirectional.fromSTEB(
                         AppSpacing.contentPad,
                         AppSpacing.x3,
                         AppSpacing.contentPad,

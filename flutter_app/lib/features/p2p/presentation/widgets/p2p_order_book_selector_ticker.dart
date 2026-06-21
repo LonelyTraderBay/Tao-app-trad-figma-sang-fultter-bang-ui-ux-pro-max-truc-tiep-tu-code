@@ -120,24 +120,28 @@ class _MarketTicker extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               _ChangePill(value: market.changePct),
-              const Spacer(),
-              Material(
-                key: P2POrderBookPage.refreshKey,
-                color: AppColors.surface2,
-                borderRadius: AppRadii.inputRadius,
-                child: InkWell(
-                  onTap: onRefresh,
-                  borderRadius: AppRadii.inputRadius,
-                  child: SizedBox(
-                    width: AppSpacing.buttonCompact,
-                    height: AppSpacing.buttonCompact,
-                    child: AnimatedRotation(
-                      turns: isRefreshing ? 1 : 0,
-                      duration: const Duration(milliseconds: 600),
-                      child: const Icon(
-                        Icons.refresh_rounded,
-                        color: AppColors.text2,
-                        size: AppSpacing.iconSm,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Material(
+                    key: P2POrderBookPage.refreshKey,
+                    color: AppColors.surface2,
+                    borderRadius: AppRadii.inputRadius,
+                    child: InkWell(
+                      onTap: onRefresh,
+                      borderRadius: AppRadii.inputRadius,
+                      child: SizedBox(
+                        width: AppSpacing.buttonCompact,
+                        height: AppSpacing.buttonCompact,
+                        child: AnimatedRotation(
+                          turns: isRefreshing ? 1 : 0,
+                          duration: const Duration(milliseconds: 600),
+                          child: const Icon(
+                            Icons.refresh_rounded,
+                            color: AppColors.text2,
+                            size: AppSpacing.iconSm,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -145,7 +149,7 @@ class _MarketTicker extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -171,7 +175,7 @@ class _MarketTicker extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(

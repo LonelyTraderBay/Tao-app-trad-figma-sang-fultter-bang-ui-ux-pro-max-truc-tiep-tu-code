@@ -102,10 +102,14 @@ class _CreatorCard extends StatelessWidget {
                 const SizedBox(height: _challengeTinyGap),
                 Row(
                   children: [
-                    Text(
-                      creator.role,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
+                    Expanded(
+                      child: Text(
+                        creator.role,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
                       ),
                     ),
                     if (creator.fairPlayBadge) ...[
@@ -118,6 +122,8 @@ class _CreatorCard extends StatelessWidget {
                       const SizedBox(width: _challengeTinyGap),
                       Text(
                         'Fair Play',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.buy,
                         ),
@@ -196,7 +202,7 @@ class _Tabs extends StatelessWidget {
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Row(
         children: [
           for (var index = 0; index < entries.length; index++) ...[
@@ -269,7 +275,7 @@ class _RulesList extends StatelessWidget {
                     rules[index],
                     style: AppTextStyles.body.copyWith(
                       color: AppColors.text1,
-                      height: 1.35,
+                      height: AppTextStyles.numericMicro.height,
                     ),
                   ),
                 ),
@@ -365,7 +371,7 @@ class _ActivityPanel extends StatelessWidget {
                     item,
                     style: AppTextStyles.body.copyWith(
                       color: AppColors.text2,
-                      height: 1.35,
+                      height: AppTextStyles.numericMicro.height,
                     ),
                   ),
                 ),
@@ -459,7 +465,7 @@ class _PredictionBridgeCard extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.25,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
           const SizedBox(height: _challengeGap),
@@ -501,7 +507,7 @@ class _PredictionBridgeCard extends StatelessWidget {
             'Thông tin chỉ mang tính tham khảo. Arena Points và Prediction Markets là 2 hệ thống hoàn toàn riêng biệt.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.35,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
         ],

@@ -9,7 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -24,6 +24,9 @@ part '../widgets/arena_creator_tabs.dart';
 part '../widgets/arena_creator_common.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
+const _creatorAboutLineRatio = AppSpacing.arenaCreatorAboutLineHeight;
+const _creatorSectionMarkerExtent = AppSpacing.arenaCreatorSectionMarkerHeight;
+const _creatorTabButtonExtent = AppSpacing.arenaCreatorTabButtonHeight;
 
 enum _CreatorTab { modes, live, history, about }
 
@@ -58,11 +61,12 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
         .watch(arenaReadModelControllerProvider)
         .getArenaCreator(widget.creatorId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -86,11 +90,11 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaCreatorPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x3,
+                      gap: VitContentGap.tight,
                       children: [
                         _CreatorHero(
                           creator: snapshot.creator,

@@ -69,39 +69,50 @@ const double _sentimentVelocitySymbolWidth = 42;
 const double _sentimentVelocityBarHeight = 5;
 const double _sentimentVelocityGap = AppSpacing.x2;
 const double _sentimentVelocityValueWidth = 50;
-const EdgeInsets _sentimentHeroPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _sentimentHeroScorePadding = EdgeInsets.only(
-  bottom: AppSpacing.x1,
+const EdgeInsetsGeometry _sentimentHeroPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
 );
-const EdgeInsets _sentimentStatPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _sentimentDominancePadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _sentimentTimelinePadding = EdgeInsets.fromLTRB(
-  AppSpacing.x3,
-  AppSpacing.x2,
-  AppSpacing.x3,
+const EdgeInsetsGeometry _sentimentHeroScorePadding =
+    EdgeInsetsDirectional.only(bottom: AppSpacing.x1);
+const EdgeInsetsGeometry _sentimentStatPadding = EdgeInsetsDirectional.all(
   AppSpacing.x2,
 );
-const EdgeInsets _sentimentTimelineRowPadding = EdgeInsets.symmetric(
-  vertical: 3,
+const EdgeInsetsGeometry _sentimentDominancePadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
 );
-const EdgeInsets _sentimentRowPadding = EdgeInsets.symmetric(
+const EdgeInsetsGeometry _sentimentTimelinePadding =
+    EdgeInsetsDirectional.fromSTEB(
+      AppSpacing.x3,
+      AppSpacing.x2,
+      AppSpacing.x3,
+      AppSpacing.x2,
+    );
+const EdgeInsetsGeometry _sentimentTimelineRowPadding =
+    EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x1);
+const EdgeInsetsGeometry _sentimentRowPadding = EdgeInsetsDirectional.symmetric(
   horizontal: AppSpacing.x3,
   vertical: AppSpacing.x2,
 );
-const EdgeInsets _sentimentSortChipPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
+const EdgeInsetsGeometry _sentimentSortChipPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x2,
+    );
+const EdgeInsetsGeometry _sentimentTokenDetailPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsGeometry _sentimentTopicCardPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
 );
-const EdgeInsets _sentimentTokenDetailPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _sentimentTopicCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _sentimentLeaderboardRowPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _sentimentVelocityRowPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
+const EdgeInsetsGeometry _sentimentLeaderboardRowPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x2,
+    );
+const EdgeInsetsGeometry _sentimentVelocityRowPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x2,
+    );
 
 class SocialSentimentPage extends ConsumerStatefulWidget {
   const SocialSentimentPage({super.key, this.shellRenderMode});
@@ -163,7 +174,9 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: SocialSentimentPage.contentKey,
-                    padding: EdgeInsets.only(bottom: scrollEndClearance),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,

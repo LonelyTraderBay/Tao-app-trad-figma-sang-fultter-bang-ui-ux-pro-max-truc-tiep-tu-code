@@ -46,23 +46,30 @@ const double _launchpadWebhooksSheetHandleWidth =
     AppSpacing.inputHeight - AppSpacing.x1;
 const double _launchpadWebhooksSheetHandleHeight =
     AppSpacing.x1 + AppSpacing.hairlineStroke;
-const EdgeInsets _launchpadWebhooksHeaderStatsPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  AppSpacing.x1,
-);
-const EdgeInsets _launchpadWebhooksCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _launchpadWebhooksCompactCardPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _launchpadWebhooksSheetPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  AppSpacing.x4,
-);
+const EdgeInsetsGeometry _launchpadWebhooksHeaderStatsPadding =
+    EdgeInsetsDirectional.fromSTEB(
+      AppSpacing.contentPad,
+      AppSpacing.x2,
+      AppSpacing.contentPad,
+      AppSpacing.x1,
+    );
+const EdgeInsetsGeometry _launchpadWebhooksCardPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x3,
+    );
+const EdgeInsetsGeometry _launchpadWebhooksCompactCardPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x2,
+    );
+const EdgeInsetsGeometry _launchpadWebhooksSheetPadding =
+    EdgeInsetsDirectional.fromSTEB(
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+      AppSpacing.contentPad,
+      AppSpacing.x4,
+    );
 
 class LaunchpadWebhooksPage extends ConsumerStatefulWidget {
   const LaunchpadWebhooksPage({super.key, this.shellRenderMode});
@@ -184,8 +191,10 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
                       ).copyWith(scrollbars: false),
                       child: SingleChildScrollView(
                         key: LaunchpadWebhooksPage.contentKey,
-                        physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.only(bottom: scrollEndPadding),
+                        physics: const ClampingScrollPhysics(),
+                        padding: EdgeInsetsDirectional.only(
+                          bottom: scrollEndPadding,
+                        ),
                         child: VitPageContent(
                           padding: VitContentPadding.compact,
                           density: VitDensity.compact,

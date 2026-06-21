@@ -64,8 +64,7 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.tradeBotFooterBottomInsetNative
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
@@ -92,7 +91,7 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     fullBleed: true,
-                    customGap: AppSpacing.tradeBotCardGap,
+                    gap: VitContentGap.tight,
                     children: [
                       _WarningBanner(snapshot: snapshot),
                       _SectionLabel('Bots to Stop (${snapshot.bots.length})'),

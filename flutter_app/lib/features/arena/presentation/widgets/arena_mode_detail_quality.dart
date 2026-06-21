@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+const _modeTrustTextLineRatio = AppSpacing.arenaModeTrustTextLineHeight;
+
 class ArenaModeQualitySection extends StatelessWidget {
   const ArenaModeQualitySection({
     super.key,
@@ -174,7 +176,7 @@ class ArenaModeTrustSheet extends StatelessWidget {
                 'Các chỉ số dựa trên lịch sử challenge, báo cáo cộng đồng và hệ thống kiểm duyệt. Đây là tín hiệu an toàn của Open Arena, không phải chỉ số tài chính.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.arenaModeTrustTextLineHeight,
+                  height: _modeTrustTextLineRatio,
                 ),
               ),
             ),

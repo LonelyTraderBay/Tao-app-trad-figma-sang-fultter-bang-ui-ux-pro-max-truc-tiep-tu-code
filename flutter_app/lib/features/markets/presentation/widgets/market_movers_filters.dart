@@ -1,5 +1,7 @@
 part of '../pages/market_movers_page.dart';
 
+const double _marketMoverFilterMinHeight = 44;
+
 class _MoverTabs extends StatelessWidget {
   const _MoverTabs({
     required this.tabs,
@@ -14,7 +16,7 @@ class _MoverTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.marketCategoryHeight,
+      height: VitDensity.compact.controlHeight,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
@@ -25,6 +27,7 @@ class _MoverTabs extends StatelessWidget {
                 key: _tabKey(tab),
                 label: tab,
                 active: tab == activeTab,
+                minHeight: _marketMoverFilterMinHeight,
                 onTap: () => onSelected(tab),
               ),
               if (tab != tabs.last)
@@ -69,7 +72,7 @@ class _TimeframeSelector extends StatelessWidget {
         const SizedBox(width: AppSpacing.marketTimeframeLabelGap),
         Expanded(
           child: SizedBox(
-            height: AppSpacing.marketTimeframeSelectorHeight,
+            height: VitDensity.compact.controlHeight,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               clipBehavior: Clip.none,
@@ -84,7 +87,7 @@ class _TimeframeSelector extends StatelessWidget {
                       : Key('sc010_timeframe_$timeframe'),
                   label: timeframe,
                   active: timeframe == activeTimeframe,
-                  minHeight: AppSpacing.marketTimeframeSelectorHeight,
+                  minHeight: _marketMoverFilterMinHeight,
                   onTap: () => onSelected(timeframe),
                 );
               },
@@ -120,7 +123,7 @@ class _CategoryDropdown extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.cardRadius,
         child: SizedBox(
-          height: AppSpacing.marketCategoryDropdownHeight,
+          height: VitDensity.compact.controlHeight,
           child: Padding(
             padding: AppSpacing.marketCategoryDropdownPadding,
             child: Row(
@@ -206,7 +209,7 @@ class _SortSelector extends StatelessWidget {
             key: _sortKey(option.id),
             label: option.label,
             active: option.id == activeSort,
-            minHeight: 34,
+            minHeight: _marketMoverFilterMinHeight,
             onTap: () => onSelected(option.id),
           ),
       ],
@@ -246,7 +249,7 @@ class _ResultSummary extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.marketFilterGap),
         const VitAccentPill(label: 'LIVE', accentColor: AppColors.buy),
-        const Spacer(),
+        const Expanded(child: SizedBox.shrink()),
         Flexible(
           child: Text(
             'Sắp xếp theo $sortLabel $timeframe',
@@ -267,7 +270,7 @@ class _FilterChipButton extends StatelessWidget {
     required this.label,
     required this.active,
     required this.onTap,
-    this.minHeight = 36,
+    this.minHeight = _marketMoverFilterMinHeight,
   });
 
   final String label;

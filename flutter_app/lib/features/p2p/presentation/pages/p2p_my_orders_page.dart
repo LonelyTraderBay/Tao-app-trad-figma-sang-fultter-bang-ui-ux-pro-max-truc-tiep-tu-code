@@ -97,7 +97,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PMyOrdersPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pMerchantCommerceScrollPadding(
                       bottomInset,
                     ),

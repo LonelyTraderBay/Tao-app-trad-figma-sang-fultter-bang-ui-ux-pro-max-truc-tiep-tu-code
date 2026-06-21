@@ -25,6 +25,8 @@ docs/03_DESIGN_SYSTEM/VitTrade-Whole-App-Visual-Density-Real-Audit-Report.md
 flutter_app/run-artifacts/visual-density/whole_app_visual_density_root_cause_matrix.csv
 docs/03_DESIGN_SYSTEM/VitTrade-Shared-Components-Home-Standard-Implementation-Plan.md
 docs/03_DESIGN_SYSTEM/Guidelines.md
+docs/02_FLUTTER_MIGRATION/VitTrade-Visual-Density-Risk-Audit.csv
+docs/02_FLUTTER_MIGRATION/VitTrade-Visual-Density-Risk-Audit.md
 docs/02_FLUTTER_MIGRATION/VitTrade-Body-Component-Consistency-Audit.csv
 docs/02_FLUTTER_MIGRATION/VitTrade-Design-Token-Consistency-Audit.csv
 docs/02_FLUTTER_MIGRATION/VitTrade-UI-Fullscreen-Density-Audit.csv
@@ -59,6 +61,30 @@ Bring the whole Flutter app to the project UI optimization standard:
 - No regressions in routes, providers, domain behavior, masking, safety copy,
   business logic, tests, or navigation edges.
 
+CURRENT RESUME BASELINE - 2026-06-20
+
+Start from the latest reality check in section `0A` of:
+
+docs/03_DESIGN_SYSTEM/VitTrade-Whole-App-UI-Optimization-Tracking-Plan.md
+
+Do not restart Phase 0-4 unless a fresh audit proves the reality check is
+wrong. The current state is:
+
+```text
+overall_completion_estimate=75%
+routed_screens=414
+P0_CRITICAL_DENSITY_REVIEW=0
+P1_HIGH_DENSITY_REVIEW=0
+P1_TOOL_VISUAL_QA=5
+P2_MEDIUM_DENSITY_REVIEW=113
+P3_LOW_DENSITY_REVIEW=150
+PASS_MONITOR=146
+```
+
+Regular P0/P1 remediation is complete. The remaining work is to close release
+gates, finish manual tool QA, assign P2/P3 rows, and prove the whole app with
+current audits, analyzer, tests, and viewport evidence.
+
 THIS IS AN EXECUTION PROMPT, NOT A PLANNING PROMPT
 
 - Do not create another plan instead of doing the work.
@@ -66,14 +92,17 @@ THIS IS AN EXECUTION PROMPT, NOT A PLANNING PROMPT
 - Do not ask the user which phase, module, screen, or batch to run next when
   the tracking plan defines the order.
 - Do not jump to random screens.
-- Execute in this order:
-  1. Phase 0 - Baseline and governance.
-  2. Phase 1 - Shared density foundation.
-  3. Phase 2 - Reference vertical slice.
-  4. Phase 3 - Critical P0/P1 modules.
-  5. Phase 4 - Financial and cross-module expansion.
-  6. Phase 5 - P2/P3 sweep and reference protection.
-  7. Phase 6 - Final verification and release gate.
+- Execute the remaining work in this order unless fresh audits prove a different
+  earlier dependency is broken:
+  1. Regenerate or resolve stale generated audit artifacts.
+  2. Fix the `flutter analyze` warning in
+     `profile_api_key_create_result.dart`.
+  3. Fix 360x800 responsive overflows for Address Book, Prediction Event, and
+     Arena Challenge.
+  4. Capture/refresh manual QA evidence for all 5 `P1_TOOL_VISUAL_QA` routes.
+  5. Assign every P2/P3 row to fixed, accepted exception, or monitor
+     when-touched.
+  6. Run Phase 6 full verification and update final documentation.
 - Within each phase, execute tasks in order unless a fresh audit proves a task
   is already complete or a dependency forces another eligible task first.
 - If a task is already complete, verify it from source, audits, and tests, mark
@@ -297,29 +326,30 @@ rerun the `--check` command before selecting the next task.
 
 CURRENT EXPECTED BASELINE
 
-The 2026-06-19 planning snapshot reports:
+The latest checked baseline is the 2026-06-20 reality check from tracking-plan
+section `0A`:
 
 ```text
 routed_screens=414
 features=23
-P0_CRITICAL_DENSITY_REVIEW=101
-P1_HIGH_DENSITY_REVIEW=67
+P0_CRITICAL_DENSITY_REVIEW=0
+P1_HIGH_DENSITY_REVIEW=0
 P1_TOOL_VISUAL_QA=5
-P2_MEDIUM_DENSITY_REVIEW=111
-P3_LOW_DENSITY_REVIEW=119
-PASS_MONITOR=11
-official_audit_blind_spot=279
-shared_component_compliant_but_sparse=279
-tokenized_fixed_height_pressure=210
-vertical_gap_accumulation=131
-spacer_driven_looseness=108
-manual_content_density_bypass=99
-bottom_nav_inset_pressure=397
+P2_MEDIUM_DENSITY_REVIEW=113
+P3_LOW_DENSITY_REVIEW=150
+PASS_MONITOR=146
+official_audit_blind_spot=113
+shared_component_compliant_but_sparse=113
+tokenized_fixed_height_pressure=73
+vertical_gap_accumulation=16
+spacer_driven_looseness=33
+manual_content_density_bypass=18
+bottom_nav_inset_pressure=311
 root_top_chrome_first_viewport_cost=11
 ```
 
 If fresh audits disagree, trust fresh audits and update the tracking plan before
-continuing.
+continuing. Never use the older 2026-06-19 P0/P1 backlog as the starting queue.
 
 SKILL ROUTING
 
@@ -469,111 +499,70 @@ Open Arena:
 
 WORK QUEUE
 
-Follow the tracking plan phases.
+Follow the tracking plan, but start from the 2026-06-20 reality check. Phases
+0-2 are complete. Phases 3-4 have regular P0/P1 at zero, but still have open
+verification/tool QA/responsive issues. Phase 5 and Phase 6 remain active.
 
-Initial phase/task order:
-
-```text
-Phase 0:
-  Task 0.1 Promote visual-density matrix to an official audit artifact
-  Task 0.2 Define density thresholds and exception policy
-  Task 0.3 Add first-viewport definition to project completion docs
-  Checkpoint 0
-
-Phase 1:
-  Task 1.1 Introduce density semantics for shared components
-  Task 1.2 Add compact card, row, and section patterns
-  Task 1.3 Add first-viewport test utilities
-  Task 1.4 Create compact financial-safety pattern
-  Checkpoint 1
-
-Phase 2:
-  Task 2.1 Optimize ProfilePage as the account reference screen
-  Task 2.2 Apply account compact pattern to Profile P0/P1 routes
-  Task 2.3 Verify MyArenaPage shared route impact
-  Checkpoint 2
-
-Phase 3:
-  Task 3.1 Trade compliance/report archetype
-  Task 3.2 Trade bot/margin/analytics archetype
-  Task 3.3 Markets overview/signals archetype
-  Task 3.4 Predictions event/tournament/portfolio archetype
-  Checkpoint 3
-
-Phase 4:
-  Task 4.1 Wallet health, gas, and security surfaces
-  Task 4.2 Arena production/foundation/challenge surfaces
-  Task 4.3 DCA, Launchpad, P2P, Earn P0/P1 passes
-  Checkpoint 4
-
-Phase 5:
-  Task 5.1 P2 medium-risk sweep
-  Task 5.2 P3 low-risk monitor queue
-  Task 5.3 Protect pass/monitor reference screens
-  Checkpoint 5
-
-Phase 6:
-  Task 6.1 Run complete audit suite
-  Task 6.2 Emulator QA suite
-  Task 6.3 Final documentation update
-```
-
-Use the matrix for per-screen priority inside each module:
+Current next execution order:
 
 ```text
-flutter_app/run-artifacts/visual-density/whole_app_visual_density_root_cause_matrix.csv
+1. Regenerate or resolve stale audit artifacts:
+   - back_navigation_behavior_audit.dart
+   - body_component_consistency_audit.dart
+   - design_token_consistency_audit.dart
+   - home_entry_back_navigation_audit.dart
+   - navigation_edge_audit.dart
+   - top_header_action_audit.dart
+   - top_header_global_access_policy_audit.dart
+   - ui_fullscreen_density_audit.dart
+
+2. Fix analyzer warning:
+   - lib/features/profile/presentation/widgets/profile_api_key_create_result.dart
+   - optional parameter `height` in `_TextInput` is never provided
+
+3. Fix responsive QA failures at 360x800:
+   - Address Book: bottom overflow by 9.0 px
+   - Prediction Event: bottom overflow by 1.2 px
+   - Arena Challenge: right overflow by 14 px
+
+4. Capture/refresh manual QA evidence for all P1_TOOL_VISUAL_QA routes:
+   - '/trade/:pairId/futures' -> FuturesPage, score 104
+   - AppRoutePaths.tradeBots -> TradingBotsPage, score 66
+   - '/trade/advanced-chart/:pairId' -> AdvancedChartPage, score 42
+   - AppRoutePaths.enterpriseStates -> EnterpriseStatesPage, score 31
+   - '/p2p/chat/:orderId' -> P2PChatPage, score 30
+
+5. Process remaining P2/P3 queues:
+   - assign each row to fixed, accepted exception, or monitor when-touched
+   - prioritize highest P2 scores first
+   - do not churn PASS_MONITOR rows without evidence
+
+6. Run full release gate and final docs update.
 ```
 
-Highest initial route groups:
+Highest remaining P2 rows by current score:
 
 ```text
-Profile reference:
-  ProfilePage
-  Profile P0/P1 routes
-  MyArenaPage through AppRoutePaths.arenaMy and AppRoutePaths.profileArena
-
-Trade critical:
-  ClientCategorizationPage
-  ClientOptUpRequestPage
-  RegulatoryReportsDashboardPage
-  ClientMoneyProtectionPage
-  DisputeResolutionPage
-  InvestorCompensationPage
-  ExecutionVenueAnalysisPage
-  SafetyEducationPage
-  ComplaintsHandlingPage
-  RegulatoryDisclosuresPage
-  BestExecutionReportsPage
-  AdvancedAnalyticsPage
-  MarketDataAnalyticsPage
-  BotSecuritySettingsPage
-  TraderProfilePage
-  BotTaxReportingPage
-  ActiveCopiesPage
-  MarginTradingPage
-  BotGuidePage
-  BotSuitabilityAssessmentPage
-  CopySettingsPage
-
-Markets:
-  SocialSignalsPage
-  MarketOverviewPage
-  MarketScreenerPage
-  PriceAlertsPage
-
-Predictions:
-  PredictionEventDetailPage
-  PredictionAdvancedChartPage
-  PredictionTournamentDetailPage
-  PredictionTournamentsPage
-  PredictionPortfolioAnalyzerPage
-  PredictionDataIntegrationPage
-
-Wallet:
-  WalletGasOptimizerPage
-  WalletHealthScorePage
-  wallet P1/P2 rows from the matrix
+ReferralRewardsPage, AppRoutePaths.referralRewards, score 39
+P2PDashboardPage, AppRoutePaths.p2pDashboard, score 39
+StakingProofOfReservesPage, AppRoutePaths.earnProofOfReserves, score 39
+BotPortfolioDashboardPage, AppRoutePaths.tradeBotPortfolioDashboard, score 38
+LaunchpadGasTrackerPage, AppRoutePaths.launchpadGasTracker, score 38
+StakingRegulatoryFrameworkPage, AppRoutePaths.earnRegulatoryFramework, score 38
+CopyProviderDetailPage, '/trade/copy-provider/:providerId', score 37
+PositionDashboardPage, AppRoutePaths.tradePositions, score 37
+MarketMoversPage, AppRoutePaths.marketsMovers, score 37
+ArenaStudioPage, AppRoutePaths.arenaStudio, score 37
 ```
+
+Use the current official audit CSV for every per-screen decision:
+
+```text
+docs/02_FLUTTER_MIGRATION/VitTrade-Visual-Density-Risk-Audit.csv
+```
+
+Use the older root-cause matrix only for historical context or when the current
+audit CSV does not include a field needed for root-cause explanation.
 
 PER-SCREEN EXECUTION CHECKLIST
 
@@ -667,7 +656,7 @@ Do not declare completion until all are true:
 - P1 screens are zero or documented exceptions.
 - All 5 tool routes have current manual QA evidence.
 - P2 and P3 queues are not ignored; each row has fixed/accepted/monitor status.
-- The 11 pass/monitor screens remain stable.
+- The pass/monitor queue remains stable; current checked count is 146 unless fresh audits change it.
 - All 414 routed screens remain represented in the matrix.
 - Shared-component and token audits pass.
 - Route and navigation audits pass.

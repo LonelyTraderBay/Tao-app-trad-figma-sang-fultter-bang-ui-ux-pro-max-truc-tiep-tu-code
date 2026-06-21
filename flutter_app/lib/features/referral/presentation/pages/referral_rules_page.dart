@@ -8,7 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -48,10 +47,10 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(referralControllerProvider).getRules();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -76,8 +75,10 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ReferralRulesPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.referralPageScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.referralPageScrollPadding(
+                      scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       customGap: 0,

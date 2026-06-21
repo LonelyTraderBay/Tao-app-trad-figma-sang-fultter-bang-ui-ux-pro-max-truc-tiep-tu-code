@@ -20,13 +20,13 @@ class _ProtectionTab extends StatelessWidget {
                 for (final scheme in snapshot.protectionSchemes) ...[
                   _ProtectionCard(scheme: scheme),
                   if (scheme != snapshot.protectionSchemes.last)
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.x2),
                 ],
               ],
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.x2),
         _WarningNote(text: snapshot.protectionWarning),
       ],
     );
@@ -42,7 +42,7 @@ class _ProtectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -77,7 +77,7 @@ class _ProtectionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           VitCard(
             variant: VitCardVariant.inner,
             padding: AppSpacing.earnCardPaddingX3,
@@ -85,16 +85,16 @@ class _ProtectionCard extends StatelessWidget {
               scheme.description,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingRegulatoryFooterLineHeight,
+                height: AppTextStyles.caption.height,
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             'Eligibility: ${scheme.eligibility}',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.stakingRegulatoryNoteLineHeight,
+              height: AppTextStyles.micro.height,
             ),
           ),
         ],
@@ -120,7 +120,7 @@ class _ComplaintsTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: AppSpacing.earnCardPaddingX3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -128,25 +128,25 @@ class _ComplaintsTab extends StatelessWidget {
                     'How to File a Complaint',
                     style: AppTextStyles.baseMedium,
                   ),
-                  const SizedBox(height: AppSpacing.x4),
+                  const SizedBox(height: AppSpacing.x3),
                   for (final step in snapshot.complaintSteps) ...[
                     _ComplaintStep(step: step),
                     if (step != snapshot.complaintSteps.last)
-                      const SizedBox(height: AppSpacing.x4),
+                      const SizedBox(height: AppSpacing.x3),
                   ],
                 ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.x2),
         VitPageSection(
           label: 'Regulatory Authority Contacts',
           accentColor: AppColors.primarySoft,
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: AppSpacing.earnCardPaddingX3,
               child: Column(
                 children: [
                   for (final contact in snapshot.authorityContacts) ...[
@@ -154,8 +154,7 @@ class _ComplaintsTab extends StatelessWidget {
                     if (contact != snapshot.authorityContacts.last)
                       const Divider(
                         color: AppColors.divider,
-                        height:
-                            AppSpacing.stakingRegulatoryContactDividerHeight,
+                        height: AppSpacing.dividerHairline,
                       ),
                   ],
                 ],
@@ -184,8 +183,8 @@ class _ComplaintStep extends StatelessWidget {
             shape: CircleBorder(),
           ),
           child: SizedBox(
-            width: AppSpacing.x7,
-            height: AppSpacing.x7,
+            width: AppSpacing.x6,
+            height: AppSpacing.x6,
             child: Center(
               child: Text(
                 '${step.step}',
@@ -214,7 +213,7 @@ class _ComplaintStep extends StatelessWidget {
                 step.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.stakingRegulatoryNoteLineHeight,
+                  height: AppTextStyles.caption.height,
                 ),
               ),
               const SizedBox(height: AppSpacing.x1),

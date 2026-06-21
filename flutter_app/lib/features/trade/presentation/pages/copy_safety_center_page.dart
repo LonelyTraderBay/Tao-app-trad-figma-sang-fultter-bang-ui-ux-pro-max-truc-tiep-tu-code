@@ -89,7 +89,9 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: CopySafetyCenterPage.contentKey,
-                      padding: EdgeInsets.only(bottom: scrollEndClearance),
+                      padding: EdgeInsetsDirectional.only(
+                        bottom: scrollEndClearance,
+                      ),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,

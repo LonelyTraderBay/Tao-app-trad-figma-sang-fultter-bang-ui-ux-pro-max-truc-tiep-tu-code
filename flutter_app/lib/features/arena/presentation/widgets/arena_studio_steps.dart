@@ -6,12 +6,14 @@ class _StepBody extends StatelessWidget {
     required this.snapshot,
     required this.selectedTemplateId,
     required this.onTemplateSelected,
+    required this.onOpenSmartRules,
   });
 
   final int step;
   final ArenaStudioSnapshot snapshot;
   final String? selectedTemplateId;
   final ValueChanged<String> onTemplateSelected;
+  final VoidCallback onOpenSmartRules;
 
   @override
   Widget build(BuildContext context) {
@@ -84,15 +86,40 @@ class _StepBody extends StatelessWidget {
                       description,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.arenaStudioDescriptionLineHeight,
+                        height: _studioDescriptionLineRatio,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x3),
-                    const VitStatusPill(
-                      label: 'Mock data',
-                      status: VitStatusPillStatus.neutral,
-                      size: VitStatusPillSize.sm,
+                    Wrap(
+                      spacing: AppSpacing.x2,
+                      runSpacing: AppSpacing.x2,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        const VitStatusPill(
+                          label: 'Mock data',
+                          status: VitStatusPillStatus.neutral,
+                          size: VitStatusPillSize.sm,
+                        ),
+                        if (step == 3)
+                          VitStatusPill(
+                            label: 'Smart Builder',
+                            status: VitStatusPillStatus.orange,
+                            icon: Icons.rule_folder_outlined,
+                            size: VitStatusPillSize.sm,
+                            onTap: onOpenSmartRules,
+                          ),
+                      ],
                     ),
+                    if (step == 3) ...[
+                      const SizedBox(height: AppSpacing.x3),
+                      VitCtaButton(
+                        key: ArenaStudioPage.smartRuleBuilderKey,
+                        onPressed: onOpenSmartRules,
+                        variant: VitCtaButtonVariant.secondary,
+                        leading: const Icon(Icons.rule_folder_outlined),
+                        child: const Text('Mở Smart Rule Builder'),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -134,14 +161,14 @@ class _TemplateStep extends StatelessWidget {
           title: 'Chọn template',
           accentColor: _arenaAccent,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         for (final template in templates) ...[
           _TemplateCard(
             template: template,
             selected: selectedTemplateId == template.id,
             onTap: () => onTemplateSelected(template.id),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          if (template != templates.last) const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -165,14 +192,14 @@ class _TemplateCard extends StatelessWidget {
       key: ArenaStudioPage.templateKey(template.id),
       borderColor: selected ? _arenaAccent : null,
       radius: VitCardRadius.md,
-      padding: AppSpacing.arenaStudioTemplatePadding,
+      padding: AppSpacing.arenaPaddingX3,
       onTap: template.verifiedOnly ? null : onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.arenaStudioTemplateIconBox,
-            height: AppSpacing.arenaStudioTemplateIconBox,
+            width: AppSpacing.arenaBridgeIconBox,
+            height: AppSpacing.arenaBridgeIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: _templateAccent(template.kind).withValues(alpha: .14),
@@ -189,7 +216,7 @@ class _TemplateCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,10 +253,10 @@ class _TemplateCard extends StatelessWidget {
                   template.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.arenaStudioTemplateLineHeight,
+                    height: _studioTemplateLineRatio,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x2),
                 Wrap(
                   spacing: AppSpacing.x2,
                   runSpacing: AppSpacing.x2,
@@ -309,16 +336,22 @@ class _CommunityRulesFooter extends StatelessWidget {
       children: [
         TextButton.icon(
           onPressed: onTapRules,
+          style: TextButton.styleFrom(
+            minimumSize: Size.zero,
+            padding: AppSpacing.zeroInsets,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            visualDensity: VisualDensity.compact,
+          ),
           icon: const Icon(
             Icons.menu_book_outlined,
             size: AppSpacing.arenaStudioCommunityIcon,
           ),
           label: const Text('Quy tắc cộng đồng'),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.x1),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.arenaStudioCardPadding,
+          padding: AppSpacing.arenaPaddingX3,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -327,13 +360,13 @@ class _CommunityRulesFooter extends StatelessWidget {
                 color: _arenaAccent,
                 size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
                   'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính. Không thỏa thuận giao dịch ngoài nền tảng.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaStudioTemplateLineHeight,
+                    height: _studioTemplateLineRatio,
                   ),
                 ),
               ),
@@ -343,8 +376,8 @@ class _CommunityRulesFooter extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         Wrap(
           spacing: AppSpacing.x2,
-          runSpacing: AppSpacing.x2,
-          alignment: WrapAlignment.center,
+          runSpacing: AppSpacing.x1,
+          alignment: WrapAlignment.start,
           children: [
             for (final signal in trustSignals)
               VitStatusPill(

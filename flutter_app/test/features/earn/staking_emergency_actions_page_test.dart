@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_emerg
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_risk_dashboard_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpEmergencyActions(
     WidgetTester tester, {
@@ -75,6 +77,24 @@ void main() {
     expect(find.text('Moderate Impact - Reversible'), findsOneWidget);
     expect(find.text('High Impact - Penalties Apply'), findsOneWidget);
     expect(find.text('Low Impact - Recommended'), findsOneWidget);
+  });
+
+  testWidgets('SC-385 first viewport reaches primary emergency action', (
+    tester,
+  ) async {
+    await pumpEmergencyActions(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-385 StakingEmergencyActionsPage',
+      semanticLabel: 'SC-385 StakingEmergencyActionsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingEmergencyActionsPage.actionKey('pause')),
+      routeName: 'SC-385 StakingEmergencyActionsPage',
+      actionLabel: 'the primary emergency action',
+    );
   });
 
   testWidgets('SC-385 renders use cases, status, and footer', (tester) async {

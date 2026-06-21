@@ -47,6 +47,7 @@ class _VitTradeMaterialApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'VitTrade Flutter',
       debugShowCheckedModeBanner: false,
+      scrollBehavior: const _VitTradeScrollBehavior(),
       routerConfig: routerConfig,
       theme: ThemeData(
         useMaterial3: true,
@@ -81,5 +82,14 @@ class _VitTradeMaterialApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _VitTradeScrollBehavior extends MaterialScrollBehavior {
+  const _VitTradeScrollBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return const ClampingScrollPhysics();
   }
 }

@@ -53,32 +53,33 @@ const double _alertsAddGap = AppSpacing.x3;
 const double _alertsLineHeightTight = 1.0;
 const double _alertsLineHeightShort = 1.1;
 const double _alertsLineHeightCaption = 1.2;
-const EdgeInsets _alertsScrollPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.contentPad,
-);
-const EdgeInsets _alertsNoticePadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x4,
-  vertical: AppSpacing.x3,
-);
-const EdgeInsets _alertsFilterHeaderPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-);
-const EdgeInsets _alertsFilterTabPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-);
-const EdgeInsets _alertsCardPadding = EdgeInsets.fromLTRB(
+const EdgeInsetsDirectional _alertsScrollPadding =
+    EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.contentPad);
+const EdgeInsetsDirectional _alertsNoticePadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x4,
+      vertical: AppSpacing.x3,
+    );
+const EdgeInsetsDirectional _alertsFilterHeaderPadding =
+    EdgeInsetsDirectional.fromSTEB(
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+    );
+const EdgeInsetsDirectional _alertsFilterTabPadding =
+    EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3);
+const EdgeInsetsDirectional _alertsCardPadding = EdgeInsetsDirectional.fromSTEB(
   AppSpacing.x4,
   AppSpacing.x3,
   AppSpacing.x4,
   AppSpacing.x3,
 );
-const EdgeInsets _alertsEmptyPadding = EdgeInsets.symmetric(
-  vertical: AppSpacing.x6,
-  horizontal: AppSpacing.x4,
-);
+const EdgeInsetsDirectional _alertsEmptyPadding =
+    EdgeInsetsDirectional.symmetric(
+      vertical: AppSpacing.x6,
+      horizontal: AppSpacing.x4,
+    );
 
 enum _AlertFilter { all, active, triggered }
 

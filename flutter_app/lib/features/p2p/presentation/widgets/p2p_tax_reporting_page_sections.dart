@@ -17,47 +17,47 @@ class _TaxHero extends StatelessWidget {
       child: Padding(
         padding: AppSpacing.p2pDocumentCardPadding,
         child: Row(
-        children: [
-          SizedBox.square(
-            dimension: AppSpacing.p2pDocumentIconBox,
-            child: Material(
-              color: AppColors.onAccent.withValues(alpha: .20),
-              shape: const RoundedRectangleBorder(
-                borderRadius: AppRadii.lgRadius,
-              ),
-              child: const Icon(
-                Icons.description_outlined,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconMd,
+          children: [
+            SizedBox.square(
+              dimension: AppSpacing.p2pDocumentIconBox,
+              child: Material(
+                color: AppColors.onAccent.withValues(alpha: .20),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.lgRadius,
+                ),
+                child: const Icon(
+                  Icons.description_outlined,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.iconMd,
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Tax Year ${snapshot.selectedYear}',
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    color: AppColors.onAccent,
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tax Year ${snapshot.selectedYear}',
+                    style: AppTextStyles.sectionTitle.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  '${snapshot.selectedJurisdiction.name} · ${snapshot.selectedJurisdiction.form}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.onAccent.withValues(alpha: .90),
-                    fontWeight: AppTextStyles.bold,
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    '${snapshot.selectedJurisdiction.name} · ${snapshot.selectedJurisdiction.form}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.onAccent.withValues(alpha: .90),
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
           ],
         ),
       ),

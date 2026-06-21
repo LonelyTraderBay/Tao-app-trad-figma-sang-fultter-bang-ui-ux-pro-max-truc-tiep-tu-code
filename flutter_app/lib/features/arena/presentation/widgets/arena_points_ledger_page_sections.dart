@@ -97,7 +97,7 @@ class _FilterRail extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Row(
         children: [
           for (final filter in filters) ...[
@@ -155,7 +155,7 @@ class _FilterButton extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: active ? AppColors.primary : AppColors.text2,
                     fontWeight: AppTextStyles.medium,
-                    height: AppSpacing.arenaPointsCompactLineHeight,
+                    height: _ledgerCompactLineRatio,
                   ),
                 ),
               ),
@@ -183,7 +183,7 @@ class _LedgerList extends StatelessWidget {
             _LedgerRow(entry: entries[i]),
             if (i < entries.length - 1)
               const Divider(
-                height: AppSpacing.arenaPointsDividerHeight,
+                height: _ledgerDividerExtent,
                 color: AppColors.divider,
               ),
           ],
@@ -241,7 +241,7 @@ class _LedgerRow extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              height: AppSpacing.arenaPointsCompactLineHeight,
+                              height: _ledgerCompactLineRatio,
                             ),
                           ),
                         ),
@@ -259,7 +259,7 @@ class _LedgerRow extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: _amountColor(entry.amount),
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.arenaPointsCompactLineHeight,
+                      height: _ledgerCompactLineRatio,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
@@ -279,7 +279,7 @@ class _LedgerRow extends StatelessWidget {
                         formatArenaPoints(entry.balanceAfter),
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.arenaPointsCompactLineHeight,
+                          height: _ledgerCompactLineRatio,
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
@@ -342,7 +342,7 @@ class _TypeBadge extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.arenaPointsCompactLineHeight,
+            height: _ledgerCompactLineRatio,
           ),
         ),
       ),
@@ -373,7 +373,7 @@ class _AuditNotice extends StatelessWidget {
               disclaimer,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaPointsNoticeLineHeight,
+                height: _ledgerNoticeLineRatio,
               ),
             ),
           ),

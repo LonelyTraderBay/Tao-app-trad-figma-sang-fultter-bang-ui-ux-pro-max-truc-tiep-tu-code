@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -81,12 +80,10 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
     final snapshot = controller.state.snapshot;
     final selected = controller.selectedNetwork(_selectedNetworkId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletBottomInsetVisualChrome
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletBottomInsetNativeChrome) +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -115,11 +112,11 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
                   key: WithdrawPage.contentKey,
                   padding: AppSpacing.contentInsets.copyWith(
                     top: AppSpacing.x4,
-                    bottom: bottomInset,
+                    bottom: scrollEndClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.walletWithdrawPrimaryGap,
+                    gap: VitContentGap.tight,
                     fullBleed: true,
                     children: [
                       VitCard(
@@ -135,7 +132,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
                         padding: AppSpacing.cardPadding,
                         child: VitPageContent(
                           padding: VitContentPadding.none,
-                          customGap: AppSpacing.walletWithdrawSectionGap,
+                          gap: VitContentGap.tight,
                           fullBleed: true,
                           children: [
                             WithdrawNetworkSelector(
@@ -174,7 +171,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
                         padding: AppSpacing.cardPadding,
                         child: VitPageContent(
                           padding: VitContentPadding.none,
-                          customGap: AppSpacing.walletWithdrawPrimaryGap,
+                          gap: VitContentGap.tight,
                           fullBleed: true,
                           children: [
                             const WithdrawWarning(),

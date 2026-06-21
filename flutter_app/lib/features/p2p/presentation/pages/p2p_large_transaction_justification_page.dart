@@ -96,7 +96,7 @@ class _P2PLargeTransactionJustificationPageState
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pFinancialSafetyScrollPadding(
                       bottomInset,
                     ),

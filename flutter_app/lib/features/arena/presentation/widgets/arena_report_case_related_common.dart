@@ -13,7 +13,7 @@ class _RelatedReports extends StatelessWidget {
       children: [
         for (final report in reports)
           Padding(
-            padding: EdgeInsets.only(
+            padding: EdgeInsetsDirectional.only(
               bottom: report == reports.last ? 0 : AppSpacing.x3,
             ),
             child: VitCard(

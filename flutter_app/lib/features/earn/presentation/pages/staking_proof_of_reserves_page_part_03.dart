@@ -126,14 +126,11 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingProofOfReservesPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnPaddingX4,
+      padding: AppSpacing.earnPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text3,
-          height: AppSpacing.stakingProofInfoLineHeight,
-        ),
+        style: AppTextStyles.micro.copyWith(color: AppColors.text3),
       ),
     );
   }

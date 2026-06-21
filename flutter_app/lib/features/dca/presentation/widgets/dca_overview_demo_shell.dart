@@ -15,7 +15,7 @@ class _DemoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
-      customGap: AppSpacing.x3,
+      gap: VitContentGap.tight,
       children: [
         VitModuleSectionHeader(
           title: title,

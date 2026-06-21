@@ -50,7 +50,7 @@ class _EntryList extends StatelessWidget {
             onUnblock: () => onUnblock(entries[index].id),
           ),
           if (index != entries.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -85,11 +85,11 @@ class _EntryCard extends StatelessWidget {
           InkWell(
             onTap: onToggle,
             child: Padding(
-              padding: AppSpacing.p2pBlacklistCardPadding,
+              padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
               child: Row(
                 children: [
                   _Avatar(entry: entry, reason: reason),
-                  const SizedBox(width: AppSpacing.x3),
+                  const SizedBox(width: AppSpacing.x2),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +111,7 @@ class _EntryCard extends StatelessWidget {
                               const Icon(
                                 Icons.verified_outlined,
                                 color: AppColors.primary,
-                                size: AppSpacing.p2pBlacklistVerifiedIcon,
+                                size: AppSpacing.iconSm,
                               ),
                             ],
                             if (entry.badge != null) ...[
@@ -180,94 +180,94 @@ class _ExpandedEntry extends StatelessWidget {
           child: ColoredBox(color: AppColors.divider),
         ),
         Padding(
-          padding: AppSpacing.p2pBlacklistCardPadding,
+          padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-          VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.p2pBlacklistCompactCardPadding,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  _reasonIcon(reason.iconKey),
-                  color: color,
-                  size: AppSpacing.p2pBlacklistInlineIcon,
+              VitCard(
+                variant: VitCardVariant.inner,
+                padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      _reasonIcon(reason.iconKey),
+                      color: color,
+                      size: AppSpacing.iconSm,
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    Expanded(
+                      child: Text(
+                        entry.reasonText,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text2,
+                          height: 1.25,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Text(
-                    entry.reasonText,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      height: AppSpacing.p2pBlacklistReadableLineHeight,
+              ),
+              const SizedBox(height: AppSpacing.x3),
+              Row(
+                children: [
+                  Expanded(
+                    child: _TinyStat(
+                      value: '${entry.tradesBefore}',
+                      label: 'Đơn trước chặn',
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              Expanded(
-                child: _TinyStat(
-                  value: '${entry.tradesBefore}',
-                  label: 'Đơn trước chặn',
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _TinyStat(
-                  value: '${entry.completionRate.toStringAsFixed(1)}%',
-                  label: 'Tỷ lệ HT',
-                  color: entry.completionRate < 50
-                      ? AppColors.sell
-                      : AppColors.warn,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _TinyStat(
-                  value: _shortDate(entry.blockedAt),
-                  label: 'Ngày chặn',
-                ),
-              ),
-            ],
-          ),
-          if (entry.orderId != null) ...[
-            const SizedBox(height: AppSpacing.x3),
-            _OrderLink(orderId: entry.orderId!),
-          ],
-          const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              Expanded(
-                child: VitCtaButton(
-                  key: P2PBlacklistPage.unblockKey(entry.id),
-                  variant: VitCtaButtonVariant.success,
-                  height: AppSpacing.p2pBlacklistActionHeight,
-                  onPressed: onUnblock,
-                  leading: const Icon(Icons.check_circle_outline_rounded),
-                  child: const Text('Bỏ chặn'),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: VitCtaButton(
-                  variant: VitCtaButtonVariant.ghost,
-                  height: AppSpacing.p2pBlacklistActionHeight,
-                  onPressed: () => HapticFeedback.selectionClick(),
-                  leading: const Icon(
-                    Icons.report_problem_outlined,
-                    color: AppColors.warn,
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: _TinyStat(
+                      value: '${entry.completionRate.toStringAsFixed(1)}%',
+                      label: 'Tỷ lệ HT',
+                      color: entry.completionRate < 50
+                          ? AppColors.sell
+                          : AppColors.warn,
+                    ),
                   ),
-                  child: const Text('Báo cáo'),
-                ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: _TinyStat(
+                      value: _shortDate(entry.blockedAt),
+                      label: 'Ngày chặn',
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+              if (entry.orderId != null) ...[
+                const SizedBox(height: AppSpacing.x3),
+                _OrderLink(orderId: entry.orderId!),
+              ],
+              const SizedBox(height: AppSpacing.x3),
+              Row(
+                children: [
+                  Expanded(
+                    child: VitCtaButton(
+                      key: P2PBlacklistPage.unblockKey(entry.id),
+                      variant: VitCtaButtonVariant.success,
+                      height: AppSpacing.ctaHeight - AppSpacing.x2,
+                      onPressed: onUnblock,
+                      leading: const Icon(Icons.check_circle_outline_rounded),
+                      child: const Text('Bỏ chặn'),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: VitCtaButton(
+                      variant: VitCtaButtonVariant.ghost,
+                      height: AppSpacing.ctaHeight - AppSpacing.x2,
+                      onPressed: () => HapticFeedback.selectionClick(),
+                      leading: const Icon(
+                        Icons.report_problem_outlined,
+                        color: AppColors.warn,
+                      ),
+                      child: const Text('Báo cáo'),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -289,14 +289,14 @@ class _Avatar extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         SizedBox(
-          width: AppSpacing.p2pBlacklistAvatarSize,
-          height: AppSpacing.p2pBlacklistAvatarSize,
+          width: AppSpacing.x6,
+          height: AppSpacing.x6,
           child: Material(
             color: AppColors.sell10,
             shape: const CircleBorder(
               side: BorderSide(
                 color: AppColors.sell20,
-                width: AppSpacing.p2pBlacklistAvatarBorder,
+                width: AppSpacing.dividerHairline,
               ),
             ),
             child: Center(
@@ -311,23 +311,23 @@ class _Avatar extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: AppSpacing.p2pBlacklistAvatarBadgeOffset,
-          bottom: AppSpacing.p2pBlacklistAvatarBadgeOffset,
+          right: -AppSpacing.x1,
+          bottom: -AppSpacing.x1,
           child: SizedBox(
-            width: AppSpacing.p2pBlacklistAvatarBadgeSize,
-            height: AppSpacing.p2pBlacklistAvatarBadgeSize,
+            width: AppSpacing.iconMd,
+            height: AppSpacing.iconMd,
             child: Material(
               color: color,
               shape: const CircleBorder(
                 side: BorderSide(
                   color: AppColors.surface,
-                  width: AppSpacing.p2pBlacklistAvatarBadgeBorder,
+                  width: AppSpacing.dividerHairline,
                 ),
               ),
               child: Icon(
                 _reasonIcon(reason.iconKey),
                 color: AppColors.onAccent,
-                size: AppSpacing.p2pBlacklistAvatarBadgeIcon,
+                size: AppSpacing.iconSm,
               ),
             ),
           ),
@@ -346,7 +346,7 @@ class _OrderLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.p2pBlacklistCompactCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
       child: Row(
         children: [
           const Icon(

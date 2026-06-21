@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_universal_preset_library_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpPresetLibrary(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -85,6 +87,31 @@ void main() {
     expect(find.text('CHALLENGE TYPES HỖ TRỢ'), findsOneWidget);
     expect(find.text('BTC vượt mốc \$100K không?'), findsOneWidget);
     expect(find.text('ETH ở mức nào tại thời điểm Y?'), findsOneWidget);
+  });
+
+  testWidgets('SC-187 first viewport reaches first domain pack', (
+    tester,
+  ) async {
+    await pumpPresetLibrary(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-187 ArenaUniversalPresetLibraryPage',
+      semanticLabel: 'SC-187 ArenaUniversalPresetLibraryPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaUniversalPresetLibraryPage.sectionTabsKey),
+      routeName: 'SC-187 ArenaUniversalPresetLibraryPage',
+      actionLabel: 'the preset section tabs',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaUniversalPresetLibraryPage.domainKey('crypto')),
+      routeName: 'SC-187 ArenaUniversalPresetLibraryPage',
+      actionLabel: 'the crypto domain pack',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-187 section tabs expose suggestion and dropdown states', (

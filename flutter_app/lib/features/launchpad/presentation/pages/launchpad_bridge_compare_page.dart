@@ -62,12 +62,13 @@ class _LaunchpadBridgeComparePageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(launchpadControllerProvider).getBridgeCompare();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navInset = mode.usesVisualQaFrame
+    final chromeReserve = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
     final safeBottom = MediaQuery.paddingOf(context).bottom;
     final footerHeight = _selectedRouteId == null ? 0.0 : 122.0;
-    final bottomInset = navInset + safeBottom + AppSpacing.x6 + footerHeight;
+    final scrollTailReserve =
+        chromeReserve + safeBottom + AppSpacing.x3 + footerHeight;
     final routes = _sortedRoutes(snapshot.comparison.routes);
     final selectedRoutes = snapshot.comparison.routes
         .where((route) => route.id == _selectedRouteId)
@@ -82,7 +83,7 @@ class _LaunchpadBridgeComparePageState
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
+              bottomInset: scrollTailReserve,
               semanticLabel: 'SC-305 LaunchpadBridgeComparePage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
@@ -104,10 +105,10 @@ class _LaunchpadBridgeComparePageState
               ),
               child: SingleChildScrollView(
                 key: LaunchpadBridgeComparePage.contentKey,
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  customGap: AppSpacing.x4,
+                  padding: VitContentPadding.compact,
+                  gap: VitContentGap.tight,
                   children: [
                     _InputSummaryHero(comparison: snapshot.comparison),
                     _QuickComparisonCard(comparison: snapshot.comparison),
@@ -143,7 +144,7 @@ class _LaunchpadBridgeComparePageState
               Positioned(
                 left: 0,
                 right: 0,
-                bottom: navInset + safeBottom,
+                bottom: chromeReserve + safeBottom,
                 child: _SelectedRouteFooter(
                   route: selectedRoute,
                   outputToken: snapshot.comparison.outputToken,

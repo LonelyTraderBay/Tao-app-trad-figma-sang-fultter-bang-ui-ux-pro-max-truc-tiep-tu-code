@@ -46,7 +46,7 @@ class _SmartStepper extends StatelessWidget {
               padding: AppSpacing.arenaSmartRuleStepperLineMargin,
               child: SizedBox(
                 width: AppSpacing.x5,
-                height: AppSpacing.arenaSmartRuleStepperLineHeight,
+                height: _smartRuleStepperLineRatio,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: steps[i].index < step
@@ -148,7 +148,7 @@ class _IntroSection extends StatelessWidget {
           'Chọn rule có cấu trúc để room dễ hiểu và dễ được tin tưởng hơn',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaSmartRuleSubtitleLineHeight,
+            height: _smartRuleSubtitleLineRatio,
           ),
         ),
       ],

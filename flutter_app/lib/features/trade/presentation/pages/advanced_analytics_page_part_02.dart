@@ -142,7 +142,7 @@ class _SignalCard extends StatelessWidget {
           ],
           const SizedBox(height: AppSpacing.x2),
           SizedBox(
-            height: 1,
+            height: AppSpacing.dividerHairline,
             child: ColoredBox(color: _advancedBorder.withValues(alpha: .72)),
           ),
           const SizedBox(height: AppSpacing.x2),

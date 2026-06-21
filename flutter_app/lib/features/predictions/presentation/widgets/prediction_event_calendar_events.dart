@@ -108,7 +108,7 @@ class _CalendarEventCard extends StatelessWidget {
                     color: statusBg,
                     borderRadius: AppRadii.smRadius,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: const EdgeInsetsDirectional.symmetric(
                         horizontal: AppSpacing.x2,
                         vertical: AppSpacing.x1,
                       ),
@@ -167,7 +167,7 @@ class _CalendarEventCard extends StatelessWidget {
                     color: AppColors.searchBg,
                     borderRadius: AppRadii.smRadius,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: const EdgeInsetsDirectional.symmetric(
                         horizontal: AppSpacing.x2,
                         vertical: AppSpacing.x1,
                       ),

@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_mode_d
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_studio_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpModeDetail(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,6 +72,25 @@ void main() {
     expect(find.text('Tóm tắt luật chơi'), findsOneWidget);
     expect(find.text('Chất lượng & Tin cậy'), findsOneWidget);
     expect(find.text('Dùng mode này'), findsOneWidget);
+  });
+
+  testWidgets('SC-189 first viewport exposes mode action controls', (
+    tester,
+  ) async {
+    await pumpModeDetail(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-189 ArenaModeDetailPage',
+      semanticLabel: 'SC-189 ArenaModeDetailPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaModeDetailPage.useModeKey),
+      routeName: 'SC-189 ArenaModeDetailPage',
+      actionLabel: 'the use mode action',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-189 trust sheet exposes metric explanations', (tester) async {

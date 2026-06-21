@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_anti_phish
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_security_center_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAntiPhishing(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -76,6 +78,37 @@ void main() {
     await tester.ensureVisible(find.byKey(P2PAntiPhishingCodePage.warningKey));
     expect(find.text('Cảnh báo quan trọng'), findsOneWidget);
     expect(find.text('Không chia sẻ code này với bất kỳ ai'), findsOneWidget);
+  });
+
+  testWidgets('SC-256 first viewport reaches code actions', (tester) async {
+    await pumpAntiPhishing(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-256 P2PAntiPhishingCodePage',
+      semanticLabel: 'SC-256 P2PAntiPhishingCodePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAntiPhishingCodePage.codeCardKey),
+      routeName: 'SC-256 P2PAntiPhishingCodePage',
+      actionLabel: 'the current anti-phishing code card',
+      minVisibleHeight: 48,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAntiPhishingCodePage.revealKey),
+      routeName: 'SC-256 P2PAntiPhishingCodePage',
+      actionLabel: 'the reveal code control',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAntiPhishingCodePage.editKey),
+      routeName: 'SC-256 P2PAntiPhishingCodePage',
+      actionLabel: 'the edit code action',
+      minVisibleHeight: 32,
+    );
   });
 
   testWidgets('SC-256 reveals and updates the anti-phishing code', (

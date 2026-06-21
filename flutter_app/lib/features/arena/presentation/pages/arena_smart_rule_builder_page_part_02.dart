@@ -90,16 +90,19 @@ class _ConditionBuilder extends StatelessWidget {
                       onTap: onAction,
                     ),
                     _BuilderBox(
+                      key: ArenaSmartRuleBuilderPage.metricKey,
                       label: 'C. Chỉ số / đối tượng',
                       value: metric,
                       onTap: onMetric,
                     ),
                     _BuilderBox(
+                      key: ArenaSmartRuleBuilderPage.winTypeKey,
                       label: 'D. Kiểu thắng',
                       value: winType,
                       onTap: onWinType,
                     ),
                     _BuilderBox(
+                      key: ArenaSmartRuleBuilderPage.deadlineContextKey,
                       wide: true,
                       label: 'E. Thời điểm / hạn kết quả',
                       value: deadlineContext,
@@ -118,7 +121,7 @@ class _ConditionBuilder extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.arenaSmartRuleBodyLineHeight,
+                        height: _smartRuleBodyLineRatio,
                       ),
                     ),
                   ),
@@ -354,16 +357,19 @@ class _TimingRulesCard extends StatelessWidget {
             ),
           ),
           _EdgeRuleField(
+            fieldKey: ArenaSmartRuleBuilderPage.tieRuleKey,
             label: 'Luật hòa (Tie rule)',
             value: tieRule,
             onTap: onTieRule,
           ),
           _EdgeRuleField(
+            fieldKey: ArenaSmartRuleBuilderPage.voidRuleKey,
             label: 'Luật hủy bỏ (Void rule)',
             value: voidRule,
             onTap: onVoidRule,
           ),
           _EdgeRuleField(
+            fieldKey: ArenaSmartRuleBuilderPage.resultDeadlineKey,
             label: 'Hạn chốt kết quả (Result deadline)',
             value: resultDeadline,
             onTap: onResultDeadline,
@@ -389,11 +395,13 @@ class _TimingRulesCard extends StatelessWidget {
 
 class _EdgeRuleField extends StatelessWidget {
   const _EdgeRuleField({
+    required this.fieldKey,
     required this.label,
     required this.value,
     required this.onTap,
   });
 
+  final Key fieldKey;
   final String label;
   final String value;
   final VoidCallback onTap;
@@ -406,6 +414,7 @@ class _EdgeRuleField extends StatelessWidget {
         label: label,
         hint: 'Nên có',
         child: VitCard(
+          key: fieldKey,
           variant: VitCardVariant.inner,
           borderColor: value.isEmpty ? AppColors.borderSolid : AppColors.buy20,
           padding: AppSpacing.arenaSmartRuleSelectorPadding,

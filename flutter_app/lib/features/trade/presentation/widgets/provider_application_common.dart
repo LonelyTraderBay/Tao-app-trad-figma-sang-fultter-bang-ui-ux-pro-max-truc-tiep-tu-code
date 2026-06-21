@@ -64,7 +64,7 @@ class _TogglePanel extends StatelessWidget {
             Text(description, style: _panelDescriptionStyle),
             const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
             SizedBox(
-              height: AppSpacing.inputHeight - AppSpacing.x4,
+              height: AppSpacing.buttonCompact,
               width: double.infinity,
               child: FilledButton(
                 onPressed: onTap,
@@ -241,11 +241,10 @@ class _PanelHeader extends StatelessWidget {
   }
 }
 
-TextStyle get _panelDescriptionStyle =>
-    AppTextStyles.caption.copyWith(
-      color: AppColors.text3,
-      height: AppSpacing.providerApplicationPanelDescriptionLineHeight,
-    );
+TextStyle get _panelDescriptionStyle => AppTextStyles.caption.copyWith(
+  color: AppColors.text3,
+  height: AppSpacing.providerApplicationPanelDescriptionLineHeight,
+);
 
 InputDecoration _inputDecoration(String hint) {
   return InputDecoration(

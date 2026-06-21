@@ -90,7 +90,7 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pFinancialSafetyScrollPadding(
                       bottomInset,
                     ),

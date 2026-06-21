@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_points
 import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpArenaPoints(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -72,6 +74,25 @@ void main() {
     expect(find.text('Arena Points'), findsOneWidget);
     expect(find.textContaining('Check-in'), findsOneWidget);
     expect(find.byKey(ArenaPointsPage.claimAllKey), findsOneWidget);
+  });
+
+  testWidgets('SC-196 first viewport reaches Arena points claim action', (
+    tester,
+  ) async {
+    await pumpArenaPoints(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-196 ArenaPointsPage',
+      semanticLabel: 'SC-319 RewardsHubPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaPointsPage.claimAllKey),
+      routeName: 'SC-196 ArenaPointsPage',
+      actionLabel: 'the claim all Arena points action',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-196 filters reward tasks and supports claim-all state', (

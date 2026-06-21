@@ -126,7 +126,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
     };
 
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: content,
     );
   }

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_dynamic_am
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDynamicAmount(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -93,5 +95,29 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(DCAPage), findsOneWidget);
+  });
+
+  testWidgets('SC-175 first viewport reaches dynamic strategy controls', (
+    tester,
+  ) async {
+    await pumpDynamicAmount(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-175 DCADynamicAmount',
+      semanticLabel: 'SC-175 DCADynamicAmount',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(DCADynamicAmount.settingsKey),
+      routeName: 'SC-175 DCADynamicAmount',
+      actionLabel: 'dynamic amount settings action',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(DCADynamicAmount.strategyKey(DcaDynamicStrategy.volatility)),
+      routeName: 'SC-175 DCADynamicAmount',
+      actionLabel: 'active volatility strategy chip',
+    );
   });
 }

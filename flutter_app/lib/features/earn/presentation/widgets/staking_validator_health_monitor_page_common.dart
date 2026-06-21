@@ -11,7 +11,7 @@ class _ActionRequiredCard extends StatelessWidget {
       key: StakingValidatorHealthMonitorPage.actionKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn.withValues(alpha: 0.35),
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +31,7 @@ class _ActionRequiredCard extends StatelessWidget {
                   snapshot.actionBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingValidatorHealthBodyLineHeight,
+                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x3),
@@ -74,13 +74,13 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingValidatorHealthMonitorPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingValidatorHealthFooterLineHeight,
+          height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
         ),
       ),
     );

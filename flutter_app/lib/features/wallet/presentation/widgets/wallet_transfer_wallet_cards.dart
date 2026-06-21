@@ -26,7 +26,7 @@ class TransferWalletCard extends StatelessWidget {
           child: Row(
             children: [
               SizedBox(
-                width: 34,
+                width: _transferWalletLabelWidth,
                 child: Text(
                   label,
                   style: AppTextStyles.badge.copyWith(color: AppColors.text3),

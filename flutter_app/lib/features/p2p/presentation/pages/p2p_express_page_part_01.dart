@@ -37,9 +37,10 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.p2pExpressBottomInsetVisual
+            ? DeviceMetrics.bottomChrome +
+                  AppSpacing.p2pExpressBottomInsetVisual
             : DeviceMetrics.nativeBottomChrome +
-                AppSpacing.p2pExpressBottomInsetNative) +
+                  AppSpacing.p2pExpressBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -71,7 +72,7 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PExpressPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pExpressScrollPadding(bottomInset),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -394,9 +395,7 @@ class _AssetCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           Material(
             color: AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.inputRadius,
-            ),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
             child: Padding(
               padding: AppSpacing.p2pExpressSelectorPadding,
               child: Row(

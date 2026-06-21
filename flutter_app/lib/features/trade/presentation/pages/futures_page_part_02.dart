@@ -259,50 +259,42 @@ class _PreviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rows = [
-      ('Giá trị hợp đồng', _formatMoney(preview.positionSize), AppColors.text1),
-      (
-        'Số lượng',
-        '${preview.contractQty.toStringAsFixed(4)} ${pair.baseAsset}',
-        AppColors.text1,
-      ),
-      ('Giá thanh lý', _formatMoney(preview.liquidationPrice), _futuresRed),
-      (
-        'Phí mở vị thế',
-        '\$${preview.openFee.toStringAsFixed(4)}',
-        AppColors.primary,
-      ),
-    ];
-    return VitCard(
-      variant: VitCardVariant.inner,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.rowPy,
-        top: AppSpacing.rowPy,
-        right: AppSpacing.rowPy,
-        bottom: AppSpacing.rowPy,
-      ),
-      borderColor: AppColors.onAccent.withValues(alpha: .06),
-      child: Column(
-        children: [
-          for (final row in rows)
-            Padding(
-              padding: AppSpacing.zeroInsets.copyWith(bottom: AppSpacing.x3),
-              child: Row(
-                children: [
-                  Text(row.$1, style: AppTextStyles.caption),
-                  const Spacer(),
-                  Text(
-                    row.$2,
-                    style: AppTextStyles.numericCode.copyWith(
-                      color: row.$3,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
+    return VitFinancialSafetySummary(
+      title: 'Futures order preview',
+      contractId: 'SC-057 Futures preview',
+      density: VitDensity.compact,
+      footer:
+          'Review leverage, margin, liquidation, fee, TP/SL, and side before opening a futures position.',
+      items: [
+        VitFinancialSafetyItem(
+          label: 'Contract value',
+          value: _formatMoney(preview.positionSize),
+          leading: const Icon(Icons.stacked_line_chart_rounded),
+        ),
+        VitFinancialSafetyItem(
+          label: 'Contract quantity',
+          value: '${preview.contractQty.toStringAsFixed(4)} ${pair.baseAsset}',
+          leading: const Icon(Icons.format_list_numbered_rounded),
+        ),
+        VitFinancialSafetyItem(
+          label: 'Liquidation estimate',
+          value: _formatMoney(preview.liquidationPrice),
+          leading: const Icon(Icons.warning_amber_rounded),
+          valueColor: _futuresRed,
+        ),
+        VitFinancialSafetyItem(
+          label: 'Open fee',
+          value: '\$${preview.openFee.toStringAsFixed(4)}',
+          leading: const Icon(Icons.receipt_long_outlined),
+          valueColor: AppColors.primary,
+        ),
+        const VitFinancialSafetyItem(
+          label: 'Risk check',
+          value: 'Confirm before submit',
+          leading: Icon(Icons.verified_user_outlined),
+          valueColor: AppColors.warn,
+        ),
+      ],
     );
   }
 }

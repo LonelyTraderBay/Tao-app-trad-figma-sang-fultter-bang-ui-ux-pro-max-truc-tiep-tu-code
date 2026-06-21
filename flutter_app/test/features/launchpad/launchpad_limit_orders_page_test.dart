@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_empty_state.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpLimitOrders(
     WidgetTester tester, {
@@ -85,6 +87,24 @@ void main() {
     expect(find.text('Buy AVAX'), findsOneWidget);
     expect(find.text(r'$4.2K'), findsOneWidget);
     expect(find.text('PARTIAL OK'), findsWidgets);
+  });
+
+  testWidgets('SC-315 first viewport reaches first active order', (
+    tester,
+  ) async {
+    await pumpLimitOrders(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-315 LaunchpadLimitOrdersPage',
+      semanticLabel: 'SC-315 LaunchpadLimitOrdersPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadLimitOrdersPage.orderKey('lo_001')),
+      routeName: 'SC-315 LaunchpadLimitOrdersPage',
+      actionLabel: 'the first active limit order',
+    );
   });
 
   testWidgets('SC-315 renders shared empty state for no active orders', (

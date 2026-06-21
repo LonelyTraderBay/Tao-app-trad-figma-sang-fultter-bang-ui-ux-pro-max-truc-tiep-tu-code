@@ -35,14 +35,23 @@ const _depositTinyGap = 4.0;
 const _depositInlineGap = 8.0;
 const _depositSelectorHeight = 60.0;
 const _depositQrSize = 132.0;
+const _depositStatusDotSize = AppSpacing.x2 - AppSpacing.dividerHairline * 2;
 const _depositCopyButtonHeight = 44.0;
 const _depositRefreshHeight = 44.0;
-const _depositCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 12);
-const _depositCompactPadding = EdgeInsets.symmetric(
-  horizontal: 12,
-  vertical: 8,
+const _depositCardPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x3,
 );
-const _depositSheetPadding = EdgeInsets.fromLTRB(16, 14, 16, 16);
+const _depositCompactPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const _depositSheetPadding = EdgeInsetsDirectional.fromSTEB(
+  AppSpacing.x4,
+  AppSpacing.x4 - AppSpacing.dividerHairline * 2,
+  AppSpacing.x4,
+  AppSpacing.x4,
+);
 
 double _depositScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame

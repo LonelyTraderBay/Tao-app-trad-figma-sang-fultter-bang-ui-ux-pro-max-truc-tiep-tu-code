@@ -28,11 +28,13 @@ const double _stakingSuitabilityBodyLineHeight = 1.24;
 const double _stakingSuitabilityFooterLineHeight = 1.2;
 const double _stakingSuitabilityQuestionLineHeight = 1.16;
 const double _stakingSuitabilityOptionLineHeight = 1.18;
-const EdgeInsets _stakingSuitabilityCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _stakingSuitabilityOptionPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x3,
-);
+const EdgeInsetsDirectional _stakingSuitabilityCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _stakingSuitabilityOptionPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x3,
+    );
 
 class StakingSuitabilityAssessmentPage extends ConsumerStatefulWidget {
   const StakingSuitabilityAssessmentPage({super.key, this.shellRenderMode});
@@ -101,8 +103,8 @@ class _StakingSuitabilityAssessmentPageState
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,
@@ -151,7 +153,7 @@ class _StakingSuitabilityAssessmentPageState
               ),
               if (!_showResult)
                 Padding(
-                  padding: EdgeInsets.only(bottom: footerEndPadding),
+                  padding: EdgeInsetsDirectional.only(bottom: footerEndPadding),
                   child: VitStickyFooter(
                     child: Row(
                       children: [

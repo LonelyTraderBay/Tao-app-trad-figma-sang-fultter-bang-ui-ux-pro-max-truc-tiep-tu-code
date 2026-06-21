@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_safety
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_studio_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpArenaGuide(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -66,6 +68,25 @@ void main() {
     expect(find.text('Chọn Template'), findsOneWidget);
     expect(find.text('So sánh challenge'), findsOneWidget);
     expect(find.text('Thuật ngữ quan trọng'), findsOneWidget);
+  });
+
+  testWidgets('SC-209 first viewport exposes guide mode controls', (
+    tester,
+  ) async {
+    await pumpArenaGuide(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-209 ArenaGuidePage',
+      semanticLabel: 'SC-209 ArenaGuidePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaGuidePage.modeCreateKey),
+      routeName: 'SC-209 ArenaGuidePage',
+      actionLabel: 'the create guide mode',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-209 tab controls reveal tips, safety, and FAQ', (

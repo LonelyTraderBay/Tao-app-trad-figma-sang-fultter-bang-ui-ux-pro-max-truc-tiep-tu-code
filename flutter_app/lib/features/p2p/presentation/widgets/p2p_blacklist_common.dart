@@ -139,11 +139,7 @@ class _ReasonIconBubble extends StatelessWidget {
       child: Material(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.cardRadius,
-        child: Icon(
-          icon,
-          color: color,
-          size: AppSpacing.p2pBlacklistReasonBubbleIcon,
-        ),
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
     );
   }
@@ -161,7 +157,7 @@ class _TinyStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pBlacklistTinyCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
       child: Column(
         children: [
           Text(

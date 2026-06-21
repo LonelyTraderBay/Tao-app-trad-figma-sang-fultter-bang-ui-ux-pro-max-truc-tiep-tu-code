@@ -66,7 +66,7 @@ class _P2PContributionHistoryPageState
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pTrustProgressScrollPadding(
                       bottomInset,
                     ),
@@ -459,10 +459,7 @@ class _CoinPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitAccentPill(
-      label: label,
-      accentColor: AppColors.text3,
-    );
+    return VitAccentPill(label: label, accentColor: AppColors.text3);
   }
 }
 

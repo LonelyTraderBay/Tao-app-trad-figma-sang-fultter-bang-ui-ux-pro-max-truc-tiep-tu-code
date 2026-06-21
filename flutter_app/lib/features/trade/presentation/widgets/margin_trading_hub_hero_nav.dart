@@ -79,7 +79,7 @@ class _HeroStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       density: VitDensity.compact,
-      padding: const EdgeInsets.symmetric(
+      padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x2,
         vertical: AppSpacing.x1,
       ),

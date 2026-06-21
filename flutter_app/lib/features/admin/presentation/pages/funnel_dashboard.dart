@@ -9,7 +9,6 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -55,11 +54,10 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
     final snapshot = controller.state.snapshot;
     final selectedFunnel = controller.selectedFunnel(_selectedFunnelId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollBottom =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
-        AppSpacing.x6 +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -77,10 +75,10 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
             Expanded(
               child: SingleChildScrollView(
                 key: FunnelDashboard.contentKey,
-                physics: const BouncingScrollPhysics(),
-                padding: AppSpacing.adminScrollPadding(scrollBottom),
+                physics: const ClampingScrollPhysics(),
+                padding: AppSpacing.adminScrollPadding(scrollEndClearance),
                 child: VitPageContent(
-                  customGap: AppSpacing.x4,
+                  gap: VitContentGap.tight,
                   children: [
                     AdminDashboardStateContent(
                       status: controller.state.status,

@@ -91,13 +91,13 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                             key: BotOptimizationPage.contentKey,
                             padding: AppSpacing.tradeBotScrollPaddingWithBottom(
                               footerBottom +
-                                  AppSpacing.tradeBotSecurityCardMinHeight +
-                                  AppSpacing.hairlineStroke,
+                                  AppSpacing.tradeBotSheetActionHeight +
+                                  AppSpacing.x3,
                             ),
                             child: VitPageContent(
                               padding: VitContentPadding.none,
                               fullBleed: true,
-                              customGap: 14,
+                              gap: VitContentGap.tight,
                               children: [
                                 const _IntroCard(),
                                 const VitCard(
@@ -114,9 +114,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                                             'Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.',
                                         contractId: 'bot-optimization-review',
                                       ),
-                                      SizedBox(
-                                        height: AppSpacing.tradeBotSmallGap,
-                                      ),
+                                      SizedBox(height: AppSpacing.x3),
                                       VitStatusPill(
                                         label: 'Queued before apply',
                                         status: VitStatusPillStatus.info,

@@ -35,9 +35,7 @@ class _LimitDetailRow extends StatelessWidget {
                   item.label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
@@ -177,24 +175,24 @@ class _UpgradeCard extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                        Flexible(
-                          child: Text(
-                            'Bắt đầu nâng cấp',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.baseMedium.copyWith(
-                              color: AppColors.onAccent,
-                              fontWeight: AppTextStyles.bold,
+                            Flexible(
+                              child: Text(
+                                'Bắt đầu nâng cấp',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.baseMedium.copyWith(
+                                  color: AppColors.onAccent,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.x2),
-                        const Icon(
-                          Icons.chevron_right_rounded,
-                          color: AppColors.onAccent,
-                          size: AppSpacing.iconMd,
-                        ),
-                      ],
+                            const SizedBox(width: AppSpacing.x2),
+                            const Icon(
+                              Icons.chevron_right_rounded,
+                              color: AppColors.onAccent,
+                              size: AppSpacing.iconMd,
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -227,40 +225,40 @@ class _LimitInfoNotice extends StatelessWidget {
       child: Padding(
         padding: AppSpacing.p2pTransactionLimitsInnerPadding,
         child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppModuleAccents.p2p,
-            size: AppSpacing.p2pTransactionLimitsInfoIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Lưu ý về giới hạn',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppModuleAccents.p2p,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x2),
-                for (final item in items) ...[
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(
+              Icons.info_outline_rounded,
+              color: AppModuleAccents.p2p,
+              size: AppSpacing.p2pTransactionLimitsInfoIcon,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    '• $item',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      height: AppSpacing.p2pTransactionLimitsInfoLineHeight,
+                    'Lưu ý về giới hạn',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppModuleAccents.p2p,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x1),
+                  const SizedBox(height: AppSpacing.x2),
+                  for (final item in items) ...[
+                    Text(
+                      '• $item',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text2,
+                        height: AppSpacing.p2pTransactionLimitsInfoLineHeight,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
         ),
       ),
     );
@@ -301,4 +299,3 @@ String _formatComma(double value, int decimals) {
   if (decimals == 0) return buffer.toString();
   return '$buffer.${parts.last}';
 }
-

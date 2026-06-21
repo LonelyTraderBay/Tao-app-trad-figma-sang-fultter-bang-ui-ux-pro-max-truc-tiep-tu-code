@@ -87,7 +87,9 @@ class _PodiumColumn extends StatelessWidget {
         ),
         const SizedBox(height: _boardSpace),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: _boardTinySpace),
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: _boardTinySpace,
+          ),
           child: Material(
             color: color.withValues(alpha: .10),
             shape: RoundedRectangleBorder(
@@ -99,7 +101,9 @@ class _PodiumColumn extends StatelessWidget {
             child: SizedBox(
               height: extent,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: _boardTinySpace),
+                padding: const EdgeInsetsDirectional.symmetric(
+                  vertical: _boardTinySpace,
+                ),
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Row(
@@ -179,7 +183,9 @@ class _RankingHeader extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: _boardSpace),
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: _boardSpace,
+            ),
             child: Row(
               children: [
                 const SizedBox(width: _boardRankSlot, child: _HeaderLabel('#')),

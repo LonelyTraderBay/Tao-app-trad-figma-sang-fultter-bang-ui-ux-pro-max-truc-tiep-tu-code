@@ -1,5 +1,8 @@
 part of 'staking_proof_of_reserves_page.dart';
 
+const double _reserveProgressRingExtent = AppSpacing.x7 * 2 + AppSpacing.x4;
+const double _reserveTrendChartExtent = AppSpacing.x7 * 2;
+
 class _StakingProofOfReservesPageState
     extends ConsumerState<StakingProofOfReservesPage> {
   _ReserveTab _tab = _ReserveTab.overview;
@@ -10,10 +13,10 @@ class _StakingProofOfReservesPageState
         .watch(stakingProofOfReservesRepositoryProvider)
         .getProofOfReserves();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -32,11 +35,13 @@ class _StakingProofOfReservesPageState
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollTailReserve,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    gap: VitContentGap.tight,
                     children: [
                       _InfoBanner(snapshot: snapshot),
                       _ReserveTabs(
@@ -144,7 +149,7 @@ class _OverviewTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.earnPaddingX5,
+              density: VitDensity.compact,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -169,9 +174,9 @@ class _OverviewTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x5),
+                  const SizedBox(height: AppSpacing.x3),
                   Center(child: _ReserveProgress(ratio: overall.reserveRatio)),
-                  const SizedBox(height: AppSpacing.x5),
+                  const SizedBox(height: AppSpacing.x3),
                   Row(
                     children: [
                       Expanded(
@@ -209,11 +214,11 @@ class _OverviewTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.lg,
-              padding: AppSpacing.earnPaddingX4,
+              padding: AppSpacing.earnPaddingX3,
               child: Column(
                 children: [
                   SizedBox(
-                    height: AppSpacing.stakingProofTrendChartHeight,
+                    height: _reserveTrendChartExtent,
                     child: CustomPaint(
                       painter: _ReserveTrendPainter(snapshot.history),
                       child: const SizedBox.expand(),
@@ -315,9 +320,8 @@ class _VerifyTab extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: AppSpacing.ctaHeight,
-                        height: AppSpacing.ctaHeight,
+                      SizedBox.square(
+                        dimension: VitDensity.compact.controlHeight,
                         child: const Material(
                           color: AppColors.primary12,
                           borderRadius: AppRadii.lgRadius,
@@ -342,7 +346,6 @@ class _VerifyTab extends StatelessWidget {
                               'Prove your staked balance is included in our Proof of Reserves using cryptographic Merkle tree proofs.',
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height: AppSpacing.stakingProofBodyLineHeight,
                               ),
                             ),
                           ],
@@ -385,10 +388,7 @@ class _VerifyTab extends StatelessWidget {
               Expanded(
                 child: Text(
                   snapshot.privacyNote,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.stakingProofInfoLineHeight,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
             ],
@@ -407,8 +407,8 @@ class _ReserveProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.stakingProofProgressRing,
-      height: AppSpacing.stakingProofProgressRing,
+      width: _reserveProgressRingExtent,
+      height: _reserveProgressRingExtent,
       child: Stack(
         alignment: Alignment.center,
         children: [

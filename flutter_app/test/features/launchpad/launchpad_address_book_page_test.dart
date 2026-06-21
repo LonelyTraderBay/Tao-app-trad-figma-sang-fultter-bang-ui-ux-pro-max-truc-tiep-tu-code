@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAddressBook(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -74,6 +76,22 @@ void main() {
     expect(find.text('Vi chinh'), findsOneWidget);
     expect(find.text('Vi BSC'), findsOneWidget);
     expect(find.text('Vi Arbitrum'), findsOneWidget);
+  });
+
+  testWidgets('SC-309 first viewport reaches address search', (tester) async {
+    await pumpAddressBook(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-309 LaunchpadAddressBookPage',
+      semanticLabel: 'SC-309 LaunchpadAddressBookPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadAddressBookPage.searchKey),
+      routeName: 'SC-309 LaunchpadAddressBookPage',
+      actionLabel: 'the address search field',
+    );
   });
 
   testWidgets('SC-309 filters search and chain state', (tester) async {

@@ -56,7 +56,7 @@ class _ReportTab extends StatelessWidget {
                       'Risk analysis is for reference only. Always do your own research before investing. Past performance does not guarantee future results.',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.launchpadLineHeightLoose,
+                        height: AppSpacing.launchpadLineHeightShort,
                       ),
                     ),
                   ),
@@ -153,8 +153,7 @@ class _RiskDistributionCard extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.inputRadius,
             child: SizedBox(
-              height:
-                  AppSpacing.statusPillHeightSm + AppSpacing.launchpadGapXxs,
+              height: AppSpacing.launchpadBox18,
               child: Row(
                 children: [
                   for (final level in levels)
@@ -318,7 +317,7 @@ class _RiskPill extends StatelessWidget {
           style: labelStyle.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.launchpadLineHeightBody,
+            height: AppSpacing.launchpadLineHeightMicro,
           ),
         ),
       ),

@@ -44,7 +44,7 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.predictionTournamentScrollPadding(
                     footerPadding,
                   ),

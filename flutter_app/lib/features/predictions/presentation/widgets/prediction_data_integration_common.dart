@@ -24,7 +24,7 @@ class _CompactMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1.1,
+            height: AppSpacing.predictionDataCompactLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -76,7 +76,7 @@ class _MiniStatusPill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: 1.1,
+            height: AppSpacing.predictionDataCompactLineHeight,
           ),
         ),
       ),
@@ -238,7 +238,7 @@ class _NoticeCard extends StatelessWidget {
               message,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: 1.2,
+                height: AppSpacing.predictionDataMetricLineHeight,
               ),
             ),
           ),

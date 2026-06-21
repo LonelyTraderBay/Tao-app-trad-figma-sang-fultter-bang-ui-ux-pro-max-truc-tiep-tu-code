@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_recommendations_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRecommendations(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -86,6 +88,22 @@ void main() {
     expect(find.text('Tăng trưởng Cân bằng'), findsOneWidget);
     expect(find.text('Tối đa Lợi suất'), findsOneWidget);
     expect(find.text('Gợi ý Cá nhân hóa'), findsOneWidget);
+  });
+
+  testWidgets('SC-338 first viewport reaches compare action', (tester) async {
+    await pumpRecommendations(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-338 SavingsRecommendationsPage',
+      semanticLabel: 'SC-338 SavingsRecommendationsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(SavingsRecommendationsPage.compareButtonKey),
+      routeName: 'SC-338 SavingsRecommendationsPage',
+      actionLabel: 'the strategy compare action',
+    );
   });
 
   testWidgets('SC-338 quick amount updates projected yearly yield', (

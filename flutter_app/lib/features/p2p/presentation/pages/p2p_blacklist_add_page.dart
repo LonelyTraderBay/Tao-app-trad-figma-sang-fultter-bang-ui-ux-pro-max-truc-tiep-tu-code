@@ -91,18 +91,20 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pBlacklistFormScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.p2pBlacklistFormContentGap,
+                      gap: VitContentGap.tight,
                       children: [
                         _Hero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
                         VitInput(
+                          key: const Key(
+                            'sc276_p2p_blacklist_add_username_control',
+                          ),
                           controller: _usernameController,
                           fieldKey: P2PBlacklistAddPage.usernameKey,
                           label: snapshot.usernameLabel,
@@ -110,7 +112,6 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                           textInputAction: TextInputAction.next,
                           onChanged: (_) => setState(() {}),
                         ),
-                        const SizedBox(height: AppSpacing.x2),
                         _ReasonSelector(
                           reasons: snapshot.reasons,
                           selectedReasonId: _reasonId,
@@ -119,15 +120,12 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                             setState(() => _reasonId = id);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x2),
                         _NoteField(
                           controller: _noteController,
                           label: snapshot.noteLabel,
                           hint: snapshot.noteHint,
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _WarningCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
                         VitCtaButton(
                           key: P2PBlacklistAddPage.submitKey,
                           variant: VitCtaButtonVariant.danger,
@@ -136,10 +134,9 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                           leading: const Icon(Icons.block_rounded),
                           child: Text(snapshot.submitLabel),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pBlacklistCompactCardPadding,
+                          padding: EdgeInsetsDirectional.all(AppSpacing.x3),
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Blacklist action review',
@@ -168,42 +165,53 @@ class _Hero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitCard(
       key: P2PBlacklistAddPage.heroKey,
-      children: [
-        SizedBox(
-          width: AppSpacing.buttonStandard,
-          height: AppSpacing.buttonStandard,
-          child: Material(
+      radius: VitCardRadius.md,
+      borderColor: AppColors.sell15,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Material(
             color: AppColors.sell10,
             borderRadius: AppRadii.cardRadius,
-            child: const Icon(
-              Icons.person_remove_alt_1_outlined,
-              color: AppColors.sell,
-              size: AppSpacing.iconLg,
+            child: const Padding(
+              padding: EdgeInsetsDirectional.all(AppSpacing.x2),
+              child: Icon(
+                Icons.person_remove_alt_1_outlined,
+                color: AppColors.sell,
+                size: AppSpacing.iconSm,
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.x4),
-        Text(
-          snapshot.heroTitle,
-          textAlign: TextAlign.center,
-          style: AppTextStyles.pageTitle.copyWith(
-            height: AppSpacing.p2pBlacklistHeroTitleLineHeight,
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  snapshot.heroTitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.sell,
+                    fontWeight: AppTextStyles.bold,
+                    height: AppTextStyles.caption.height,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  snapshot.heroSubtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.x3),
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: AppSpacing.p2pBlacklistHeroSubtitleMaxWidth,
-          ),
-          child: Text(
-            snapshot.heroSubtitle,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -235,7 +243,7 @@ class _ReasonSelector extends StatelessWidget {
             selected: reason.id == selectedReasonId,
             onTap: () => onChanged(reason.id),
           ),
-          if (reason != reasons.last) const SizedBox(height: AppSpacing.x3),
+          if (reason != reasons.last) const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -271,38 +279,45 @@ class _ReasonTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: AppSpacing.p2pBlacklistReasonTilePadding,
-          child: Row(
-            children: [
-              SizedBox(
-                width: AppSpacing.buttonCompact,
-                height: AppSpacing.buttonCompact,
-                child: Material(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: AppSpacing.buttonCompact + AppSpacing.x2,
+          ),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x2,
+            ),
+            child: Row(
+              children: [
+                Material(
                   color: color.withValues(alpha: .12),
                   borderRadius: AppRadii.cardRadius,
-                  child: Icon(
-                    _reasonIcon(reason.iconKey),
-                    color: color,
-                    size: AppSpacing.p2pBlacklistReasonIcon,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+                    child: Icon(
+                      _reasonIcon(reason.iconKey),
+                      color: color,
+                      size: AppSpacing.iconSm,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Text(
-                  reason.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: selected ? color : AppColors.text2,
-                    fontWeight: selected
-                        ? AppTextStyles.bold
-                        : AppTextStyles.medium,
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Text(
+                    reason.label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: selected ? color : AppColors.text2,
+                      fontWeight: selected
+                          ? AppTextStyles.bold
+                          : AppTextStyles.medium,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -332,7 +347,7 @@ class _NoteField extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         SizedBox(
-          height: AppSpacing.p2pBlacklistNoteFieldHeight,
+          height: AppSpacing.ctaHeight + AppSpacing.x5,
           child: Material(
             color: AppColors.surface2,
             shape: RoundedRectangleBorder(
@@ -343,7 +358,7 @@ class _NoteField extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: AppSpacing.p2pBlacklistReasonTilePadding,
+              padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
               child: TextField(
                 key: P2PBlacklistAddPage.noteKey,
                 controller: controller,
@@ -378,7 +393,7 @@ class _WarningCard extends StatelessWidget {
     return VitCard(
       key: P2PBlacklistAddPage.warningKey,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.p2pBlacklistCompactCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -393,7 +408,7 @@ class _WarningCard extends StatelessWidget {
               snapshot.warning,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
-                height: AppSpacing.p2pBlacklistReadableLineHeight,
+                height: 1.25,
               ),
             ),
           ),

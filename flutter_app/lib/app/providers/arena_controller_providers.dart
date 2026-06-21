@@ -1,13 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/features/arena/data/providers/arena_repository_provider.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_creation_controller.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+
+export 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_creation_controller.dart';
 
 final arenaReadModelControllerProvider = Provider<ArenaReadModelController>((
   ref,
 ) {
   return ref.watch(arenaRepositoryProvider);
 });
+
+final arenaCreationProvider =
+    NotifierProvider<ArenaCreationController, ArenaCreationViewState>(
+      ArenaCreationController.new,
+    );
 
 final arenaGovernanceControllerProvider = Provider<ArenaGovernanceController>((
   ref,

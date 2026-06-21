@@ -346,17 +346,45 @@ class _ConvertRiskReviewPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitHighRiskStatePanel(
-      state: quote.canSubmit
-          ? VitHighRiskUiState.riskReview
-          : VitHighRiskUiState.empty,
-      title: quote.canSubmit
-          ? 'Preview convert quote'
-          : 'Enter amount to preview',
-      message:
-          'Confirm $fromSymbol/$toSymbol rate, fee, ${slippage.toStringAsFixed(1)}% slippage limit, network risk, and next-step receipt before submitting.',
+    return VitFinancialSafetySummary(
+      title: 'Quote review',
       contractId: 'SC-056 Convert preview',
       density: VitDensity.compact,
+      footer: quote.canSubmit
+          ? 'Confirm rate, fee, slippage limit, network risk, and receipt path before submitting.'
+          : 'Enter an amount to unlock final quote review before submitting.',
+      items: [
+        VitFinancialSafetyItem(
+          label: 'Rate',
+          value: quote.quoteLabel,
+          leading: const Icon(Icons.sync_alt_rounded),
+        ),
+        VitFinancialSafetyItem(
+          label: 'Estimated receive',
+          value:
+              '${formatConvertQuoteAmount(quote.toAmount, toSymbol)} $toSymbol',
+          leading: const Icon(Icons.account_balance_wallet_outlined),
+          valueColor: quote.canSubmit ? AppColors.buy : AppColors.text3,
+        ),
+        VitFinancialSafetyItem(
+          label: 'Fee',
+          value: '\$${quote.feeUsd.toStringAsFixed(quote.feeUsd < 1 ? 4 : 2)}',
+          leading: const Icon(Icons.receipt_long_outlined),
+          valueColor: AppColors.text2,
+        ),
+        VitFinancialSafetyItem(
+          label: 'Slippage limit',
+          value: '${slippage.toStringAsFixed(1)}%',
+          leading: const Icon(Icons.speed_outlined),
+          valueColor: AppColors.text2,
+        ),
+        VitFinancialSafetyItem(
+          label: 'Risk check',
+          value: quote.canSubmit ? 'Ready to submit' : 'Amount required',
+          leading: const Icon(Icons.verified_user_outlined),
+          valueColor: quote.canSubmit ? AppColors.warn : AppColors.text3,
+        ),
+      ],
     );
   }
 }

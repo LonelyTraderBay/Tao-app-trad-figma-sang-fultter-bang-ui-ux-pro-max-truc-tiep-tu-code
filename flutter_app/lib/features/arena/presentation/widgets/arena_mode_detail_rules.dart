@@ -6,6 +6,9 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+const _modeDescriptionLineRatio = AppSpacing.arenaModeDescriptionLineHeight;
+const _modeRuleValueLineRatio = AppSpacing.arenaModeRuleValueLineHeight;
+
 class ArenaModeDescriptionCard extends StatelessWidget {
   const ArenaModeDescriptionCard({super.key, required this.description});
 
@@ -28,7 +31,7 @@ class ArenaModeDescriptionCard extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.medium,
-              height: AppSpacing.arenaModeDescriptionLineHeight,
+              height: _modeDescriptionLineRatio,
             ),
           ),
         ),
@@ -103,7 +106,7 @@ class _RuleRow extends StatelessWidget {
                     style: AppTextStyles.body.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.arenaModeRuleValueLineHeight,
+                      height: _modeRuleValueLineRatio,
                     ),
                   ),
           ),

@@ -10,40 +10,45 @@ class _ScoreOverviewCard extends StatelessWidget {
     return VitCard(
       key: P2PInsuranceScorePage.scoreCardKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pInsuranceScoreLargeCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         children: [
           _ScoreRing(snapshot: snapshot),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             snapshot.gradeLabel,
-            style: AppTextStyles.baseMedium.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: AppModuleAccents.p2p,
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             snapshot.gradeDescription,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.p2pInsuranceScoreBodyLineHeight,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.lg,
             borderColor: AppColors.buy20,
-            padding: AppSpacing.p2pInsuranceScoreGainPadding,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x2,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
                   Icons.trending_up_rounded,
                   color: AppColors.buy,
-                  size: AppSpacing.p2pInsuranceScoreSmallIcon,
+                  size: AppSpacing.iconSm,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Flexible(
@@ -51,7 +56,7 @@ class _ScoreOverviewCard extends StatelessWidget {
                     fit: BoxFit.scaleDown,
                     child: Text(
                       '+${snapshot.potentialGain} điểm có thể cải thiện',
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTextStyles.micro.copyWith(
                         color: AppColors.buy,
                         fontWeight: AppTextStyles.bold,
                       ),
@@ -75,18 +80,16 @@ class _ScoreRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = snapshot.overallScore / snapshot.maxScore;
-    return SizedBox(
-      width: AppSpacing.p2pInsuranceScoreRingBox,
-      height: AppSpacing.p2pInsuranceScoreRingBox,
+    return SizedBox.square(
+      dimension: AppSpacing.x7 + AppSpacing.x6 + AppSpacing.x1,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          SizedBox(
-            width: AppSpacing.p2pInsuranceScoreRingTrack,
-            height: AppSpacing.p2pInsuranceScoreRingTrack,
+          SizedBox.square(
+            dimension: AppSpacing.x7 + AppSpacing.x5 + AppSpacing.x3,
             child: CircularProgressIndicator(
               value: progress,
-              strokeWidth: AppSpacing.p2pInsuranceScoreRingStroke,
+              strokeWidth: AppSpacing.x2 + AppSpacing.dividerHairline,
               backgroundColor: AppColors.surface3,
               valueColor: const AlwaysStoppedAnimation<Color>(
                 AppModuleAccents.p2p,
@@ -98,7 +101,7 @@ class _ScoreRing extends StatelessWidget {
             children: [
               Text(
                 '${snapshot.overallScore}',
-                style: AppTextStyles.display.copyWith(
+                style: AppTextStyles.numericDisplaySm.copyWith(
                   color: AppModuleAccents.p2p,
                   fontWeight: AppTextStyles.bold,
                 ),
@@ -107,7 +110,7 @@ class _ScoreRing extends StatelessWidget {
                 '/ ${snapshot.maxScore}',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: AppSpacing.x1),
               Text(
                 snapshot.grade,
                 style: AppTextStyles.caption.copyWith(
@@ -133,7 +136,7 @@ class _FactorBreakdownCard extends StatelessWidget {
     return VitCard(
       key: P2PInsuranceScorePage.factorsKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pInsuranceScoreCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -142,22 +145,22 @@ class _FactorBreakdownCard extends StatelessWidget {
               const Icon(
                 Icons.track_changes_rounded,
                 color: AppColors.text2,
-                size: AppSpacing.p2pInsuranceScoreHeaderIcon,
+                size: AppSpacing.iconSm,
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
                 'Chi tiết điểm số',
-                style: AppTextStyles.baseMedium.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x2),
           for (var i = 0; i < snapshot.factors.length; i++) ...[
             _ScoreFactorRow(factor: snapshot.factors[i]),
             if (i != snapshot.factors.length - 1)
-              const Divider(height: AppSpacing.x6, color: AppColors.divider),
+              const Divider(height: AppSpacing.x2, color: AppColors.divider),
           ],
         ],
       ),
@@ -180,19 +183,19 @@ class _ScoreFactorRow extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox.square(
-              dimension: AppSpacing.p2pInsuranceScoreFactorIconBox,
-              child: Material(
-                color: color.withValues(alpha: .12),
-                borderRadius: AppRadii.mdRadius,
+            Material(
+              color: color.withValues(alpha: .12),
+              borderRadius: AppRadii.mdRadius,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
                 child: Icon(
                   _iconFor(factor.iconKey),
                   color: color,
-                  size: AppSpacing.p2pInsuranceScoreFactorIcon,
+                  size: AppSpacing.iconSm,
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.x4),
+            const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,9 +210,11 @@ class _ScoreFactorRow extends StatelessWidget {
                   const SizedBox(height: AppSpacing.x1),
                   Text(
                     factor.description,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.p2pInsuranceScoreMicroLineHeight,
+                      height: AppTextStyles.numericMicro.height,
                     ),
                   ),
                 ],
@@ -221,7 +226,7 @@ class _ScoreFactorRow extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: '${factor.score}',
-                    style: AppTextStyles.baseMedium.copyWith(
+                    style: AppTextStyles.caption.copyWith(
                       color: color,
                       fontWeight: AppTextStyles.bold,
                     ),
@@ -235,16 +240,16 @@ class _ScoreFactorRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: AppSpacing.x2),
         Padding(
-          padding: AppSpacing.p2pInsuranceScoreFactorRailPadding,
+          padding: const EdgeInsetsDirectional.only(start: AppSpacing.x6),
           child: Row(
             children: [
               Expanded(
                 child: ClipRRect(
                   borderRadius: AppRadii.xsRadius,
                   child: SizedBox(
-                    height: AppSpacing.p2pInsuranceScoreProgressHeight,
+                    height: AppSpacing.x1,
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
@@ -259,9 +264,9 @@ class _ScoreFactorRow extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               SizedBox(
-                width: AppSpacing.p2pInsuranceScoreFactorStatusWidth,
+                width: AppSpacing.x7,
                 child: Text(
                   factor.statusLabel,
                   textAlign: TextAlign.right,
@@ -275,20 +280,23 @@ class _ScoreFactorRow extends StatelessWidget {
           ),
         ),
         if (factor.recommendation != null) ...[
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Padding(
-            padding: AppSpacing.p2pInsuranceScoreFactorRailPadding,
+            padding: const EdgeInsetsDirectional.only(start: AppSpacing.x6),
             child: VitCard(
               variant: VitCardVariant.inner,
               radius: VitCardRadius.sm,
-              padding: AppSpacing.p2pInsuranceScoreRecommendationPadding,
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x2,
+                vertical: AppSpacing.x1,
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
                     Icons.bolt_rounded,
                     color: color,
-                    size: AppSpacing.p2pInsuranceScoreRecommendationIcon,
+                    size: AppSpacing.iconSm,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -296,7 +304,7 @@ class _ScoreFactorRow extends StatelessWidget {
                       factor.recommendation!,
                       style: AppTextStyles.micro.copyWith(
                         color: color,
-                        height: AppSpacing.p2pInsuranceScoreBodyLineHeight,
+                        height: AppTextStyles.numericMicro.height,
                       ),
                     ),
                   ),
@@ -319,7 +327,7 @@ class _QuickActionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pInsuranceScoreCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -328,21 +336,21 @@ class _QuickActionsCard extends StatelessWidget {
               const Icon(
                 Icons.north_east_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.p2pInsuranceScoreHeaderIcon,
+                size: AppSpacing.iconSm,
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
                 'Cải thiện nhanh',
-                style: AppTextStyles.baseMedium.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           for (final action in actions) ...[
             _QuickActionRow(action: action),
-            const SizedBox(height: AppSpacing.x3),
+            if (action != actions.last) const SizedBox(height: AppSpacing.x1),
           ],
         ],
       ),

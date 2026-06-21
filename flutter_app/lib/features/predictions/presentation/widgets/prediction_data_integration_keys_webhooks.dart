@@ -244,7 +244,7 @@ class _WebhookCard extends StatelessWidget {
                       webhook.url,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text1,
-                        height: 1.2,
+                        height: AppSpacing.predictionDataMetricLineHeight,
                       ),
                     ),
                   ],

@@ -34,23 +34,29 @@ const double _flowMapBodyLineHeight = 1.25;
 const double _flowMapQaLineHeight = 1.25;
 const double _flowMapMarkerWidth = AppSpacing.pageSectionAccentWidth;
 const double _flowMapMarkerHeight = AppSpacing.rowPy + AppSpacing.x1;
-const EdgeInsets _flowMapCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _flowMapInnerPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _flowMapStatPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x3,
+const EdgeInsetsDirectional _flowMapCardPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
 );
-const EdgeInsets _flowMapSectionTogglePadding = EdgeInsets.symmetric(
-  vertical: AppSpacing.x2,
+const EdgeInsetsDirectional _flowMapInnerPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
 );
-const EdgeInsets _flowMapRouteHeaderPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x4,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _flowMapRouteRowPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x4,
-  vertical: AppSpacing.x2,
-);
+const EdgeInsetsDirectional _flowMapStatPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x2,
+      vertical: AppSpacing.x3,
+    );
+const EdgeInsetsDirectional _flowMapSectionTogglePadding =
+    EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2);
+const EdgeInsetsDirectional _flowMapRouteHeaderPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x4,
+      vertical: AppSpacing.x2,
+    );
+const EdgeInsetsDirectional _flowMapRouteRowPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x4,
+      vertical: AppSpacing.x2,
+    );
 
 class ArenaFlowMapPage extends ConsumerStatefulWidget {
   const ArenaFlowMapPage({super.key, this.shellRenderMode});
@@ -107,7 +113,7 @@ class _ArenaFlowMapPageState extends ConsumerState<ArenaFlowMapPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaFlowMapPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.arenaBottomScrollPadding(
                       scrollEndClearance,
                     ),

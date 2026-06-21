@@ -36,9 +36,15 @@ const _limitsIconBox = 38.0;
 const _limitsStatHeight = 50.0;
 const _limitsTierHeight = 72.0;
 const _limitsProgressHeight = 6.0;
-const _limitsCardPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 12);
-const _limitsTierPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
-const _limitsCompactStatPadding = EdgeInsets.symmetric(
+const _limitsCardPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 12,
+);
+const _limitsTierPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 12,
+  vertical: 8,
+);
+const _limitsCompactStatPadding = EdgeInsetsDirectional.symmetric(
   horizontal: 8,
   vertical: 6,
 );
@@ -86,7 +92,7 @@ class WithdrawLimitsPage extends ConsumerWidget {
                     top: _limitsScrollTopPad,
                     bottom: bottomInset,
                   ),
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,

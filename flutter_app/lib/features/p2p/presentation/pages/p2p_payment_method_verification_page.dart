@@ -98,7 +98,7 @@ class _P2PPaymentMethodVerificationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodVerificationPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,

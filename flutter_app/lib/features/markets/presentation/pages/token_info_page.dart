@@ -66,27 +66,34 @@ const double _tokenInfoProjectLinkOpenIcon = 15;
 const double _tokenInfoDisclaimerIcon = 14;
 const double _tokenInfoDisclaimerIconGap = AppSpacing.x2;
 const double _tokenInfoDisclaimerLineHeight = 1.25;
-const EdgeInsets _tokenInfoHeroPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _tokenInfoInfoCardPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
+const EdgeInsetsDirectional _tokenInfoHeroPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
 );
-const EdgeInsets _tokenInfoInfoRowPadding = EdgeInsets.symmetric(
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _tokenInfoSupplyCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _tokenInfoMetricLinePadding = EdgeInsets.symmetric(
-  vertical: AppSpacing.x1,
-);
-const EdgeInsets _tokenInfoRecordCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _tokenInfoChartCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _tokenInfoOnchainCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _tokenInfoMiniStatPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _tokenInfoProjectCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _tokenInfoProjectLinkPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _tokenInfoDisclaimerPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
+const EdgeInsetsDirectional _tokenInfoInfoCardPadding =
+    EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3);
+const EdgeInsetsDirectional _tokenInfoInfoRowPadding =
+    EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2);
+const EdgeInsetsDirectional _tokenInfoSupplyCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _tokenInfoMetricLinePadding =
+    EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x1);
+const EdgeInsetsDirectional _tokenInfoRecordCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _tokenInfoChartCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _tokenInfoOnchainCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _tokenInfoMiniStatPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _tokenInfoProjectCardPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _tokenInfoProjectLinkPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _tokenInfoDisclaimerPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x2,
+    );
 
 enum _TokenInfoTab { overview, onchain, project }
 
@@ -148,7 +155,9 @@ class _TokenInfoPageState extends ConsumerState<TokenInfoPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: TokenInfoPage.contentKey,
-                    padding: EdgeInsets.only(bottom: scrollEndClearance),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,

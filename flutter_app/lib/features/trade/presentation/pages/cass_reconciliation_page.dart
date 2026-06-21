@@ -86,7 +86,9 @@ class _CassReconciliationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: CassReconciliationPage.contentKey,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

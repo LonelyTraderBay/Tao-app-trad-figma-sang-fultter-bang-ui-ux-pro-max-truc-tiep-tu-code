@@ -93,7 +93,7 @@ class _BotApiDocumentationPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: BotApiDocumentationPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.tradeBotCardGap,
                     AppSpacing.contentPad,

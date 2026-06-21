@@ -107,8 +107,8 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: scrollEndPadding),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
                   child: VitPageContent(
                     density: VitDensity.compact,
                     children: [

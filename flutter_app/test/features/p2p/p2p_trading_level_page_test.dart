@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_trading_level_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PTradingLevel(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -83,6 +85,23 @@ void main() {
     expect(find.text('Tất cả cấp độ'), findsOneWidget);
     expect(find.text('Lv.1 Cơ bản'), findsOneWidget);
     expect(find.text('Lv.2 Tiêu chuẩn'), findsOneWidget);
+  });
+
+  testWidgets('SC-230 first viewport reaches level list', (tester) async {
+    await pumpP2PTradingLevel(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-230 P2PTradingLevelPage',
+      semanticLabel: 'SC-230 P2PTradingLevelPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PTradingLevelPage.levelKey(1)),
+      routeName: 'SC-230 P2PTradingLevelPage',
+      actionLabel: 'first trading level card',
+      minVisibleHeight: 72,
+    );
   });
 
   testWidgets('SC-230 scrolls through all levels and upgrade CTA', (

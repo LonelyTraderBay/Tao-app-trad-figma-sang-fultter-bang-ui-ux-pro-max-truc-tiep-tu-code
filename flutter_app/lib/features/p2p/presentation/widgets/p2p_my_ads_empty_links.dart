@@ -94,9 +94,9 @@ class _QuickLinkTile extends StatelessWidget {
           padding: AppSpacing.p2pMerchantCommerceQuickLinkPadding,
           child: Row(
             children: [
-        VitCard(
-          width: AppSpacing.p2pMerchantCommerceQuickLinkIconBox,
-          height: AppSpacing.p2pMerchantCommerceQuickLinkIconBox,
+              VitCard(
+                width: AppSpacing.p2pMerchantCommerceQuickLinkIconBox,
+                height: AppSpacing.p2pMerchantCommerceQuickLinkIconBox,
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.sm,
                 background: ColoredBox(color: color.withValues(alpha: .10)),

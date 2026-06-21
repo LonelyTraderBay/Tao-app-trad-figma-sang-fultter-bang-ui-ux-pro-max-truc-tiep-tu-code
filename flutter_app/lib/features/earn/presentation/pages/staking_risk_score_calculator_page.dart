@@ -79,8 +79,9 @@ class _StakingRiskScoreCalculatorPageState
     final navInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final footerBottomInset = navInset + safeBottom;
-    final bottomInset = navInset + safeBottom + AppSpacing.x7 + AppSpacing.x7;
+    final stickyTailReserve = navInset + safeBottom;
+    final scrollTailReserve =
+        stickyTailReserve + AppSpacing.buttonStandard + AppSpacing.x3;
     final riskScore = _riskScore;
     final riskColor = _riskColor(riskScore);
 
@@ -100,11 +101,13 @@ class _StakingRiskScoreCalculatorPageState
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollTailReserve,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    gap: VitContentGap.tight,
                     children: [
                       _ScenarioInputs(
                         snapshot: snapshot,
@@ -140,12 +143,12 @@ class _StakingRiskScoreCalculatorPageState
                 ),
               ),
               Padding(
-                padding: AppSpacing.earnBottomInsetPadding(footerBottomInset),
+                padding: EdgeInsetsDirectional.only(bottom: stickyTailReserve),
                 child: VitStickyFooter(
                   backgroundColor: AppColors.bg,
                   child: VitCtaButton(
                     key: StakingRiskScoreCalculatorPage.footerButtonKey,
-                    height: AppSpacing.ctaHeight,
+                    height: AppSpacing.buttonStandard,
                     onPressed: () {},
                     child: Text(snapshot.proceedLabel),
                   ),

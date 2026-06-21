@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/features/rewards/presentation/pages/rewards_hu
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRewards(
     WidgetTester tester, {
@@ -72,6 +74,24 @@ void main() {
     expect(find.text('Arena Points'), findsOneWidget);
     expect(find.textContaining('Check-in'), findsOneWidget);
     expect(find.byKey(RewardsHubPage.claimAllKey), findsOneWidget);
+  });
+
+  testWidgets('SC-319 first viewport reaches reward claim action', (
+    tester,
+  ) async {
+    await pumpRewards(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-319 RewardsHubPage',
+      semanticLabel: 'SC-319 RewardsHubPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(RewardsHubPage.claimAllKey),
+      routeName: 'SC-319 RewardsHubPage',
+      actionLabel: 'the claim all rewards action',
+    );
   });
 
   testWidgets('SC-319 auto-hides rewards header on scroll', (tester) async {

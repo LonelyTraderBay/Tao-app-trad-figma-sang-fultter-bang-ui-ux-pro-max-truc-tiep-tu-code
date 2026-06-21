@@ -86,7 +86,7 @@ class _FileComplaintTab extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.x1),
+          padding: const EdgeInsetsDirectional.only(top: AppSpacing.x1),
           child: _UploadEvidenceButton(
             attached: evidenceAttached,
             onPressed: onUpload,

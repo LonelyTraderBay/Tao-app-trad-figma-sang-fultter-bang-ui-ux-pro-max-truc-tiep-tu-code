@@ -60,12 +60,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.profileBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.profileBottomInsetNative) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x5
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
-    final compactGap = VitDensity.compact.pageContentGap;
-
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-156 ProfilePage',
@@ -79,10 +76,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           child: SingleChildScrollView(
             key: ProfilePage.contentKey,
             padding: AppSpacing.profileScrollPadding(bottomInset),
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: VitPageContent(
               padding: VitContentPadding.none,
-              customGap: 0,
               density: VitDensity.compact,
               fullBleed: true,
               children: [
@@ -97,29 +93,23 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     setState(() => _copiedReferral = true);
                   },
                 ),
-                SizedBox(height: compactGap),
                 _VipCard(vip: snapshot.vip),
-                SizedBox(height: compactGap),
                 const _SectionLabel(
                   label: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
                   accent: _profilePurple,
                 ),
-                SizedBox(height: compactGap),
                 _PredictionCard(
                   prediction: snapshot.prediction,
                   onTap: () => context.go(AppRoutePaths.profilePredictions),
                 ),
-                SizedBox(height: compactGap),
                 _ArenaCard(
                   arena: snapshot.arena,
                   onTap: () => context.go(AppRoutePaths.profileArena),
                 ),
-                SizedBox(height: compactGap),
                 const _SectionLabel(
                   label: 'S\u1EA2N PH\u1EA8M & H\u1ED6 TR\u1EE2',
                   accent: _profileAmber,
                 ),
-                SizedBox(height: compactGap),
                 if (snapshot.productShortcuts.isEmpty)
                   const VitEmptyState(
                     title: 'Ch\u01B0a c\u00F3 s\u1EA3n ph\u1EA9m',
@@ -129,7 +119,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   )
                 else
                   _ProfileProductHub(shortcuts: snapshot.productShortcuts),
-                SizedBox(height: compactGap),
                 if (snapshot.sections.isEmpty)
                   const VitEmptyState(
                     title: 'Ch\u01B0a c\u00F3 m\u1EE5c t\u00E0i kho\u1EA3n',
@@ -143,16 +132,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       label: section.label,
                       accent: Color(section.accentHex),
                     ),
-                    SizedBox(height: compactGap),
                     _MenuSection(section: section),
-                    SizedBox(height: compactGap),
                   ],
                 _ActivityButton(
                   onTap: () => context.go(AppRoutePaths.profileActivity),
                 ),
-                SizedBox(height: compactGap),
                 _LogoutButton(onTap: () => context.go(AppRoutePaths.authLogin)),
-                SizedBox(height: compactGap),
                 Text(
                   'VitTrade v2.4.1 \u2022 Tham gia t\u1EEB ${snapshot.user.joinDate}',
                   textAlign: TextAlign.center,

@@ -217,8 +217,8 @@ class _ReportCard extends StatelessWidget {
                             report.errorMessage!,
                             style: AppTextStyles.micro.copyWith(
                               color: transactionReportRed,
-                              height:
-                                  AppSpacing.transactionReportingErrorLineHeight,
+                              height: AppSpacing
+                                  .transactionReportingErrorLineHeight,
                             ),
                           ),
                         ),

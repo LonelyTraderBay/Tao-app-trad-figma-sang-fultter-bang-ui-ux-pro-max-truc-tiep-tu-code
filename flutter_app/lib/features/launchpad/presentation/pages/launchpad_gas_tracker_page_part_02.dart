@@ -147,9 +147,8 @@ class _AddAlertCard extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          const SizedBox(
-            width: AppSpacing.launchpadBox40,
-            height: AppSpacing.launchpadBox40,
+          const SizedBox.square(
+            dimension: AppSpacing.launchpadBox40,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.primary15,
@@ -207,9 +206,8 @@ class _AlertCard extends StatelessWidget {
       padding: AppSpacing.launchpadPaddingX3,
       child: Row(
         children: [
-          SizedBox(
-            width: AppSpacing.launchpadBox34,
-            height: AppSpacing.launchpadBox34,
+          SizedBox.square(
+            dimension: AppSpacing.launchpadBox34,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: alert.accent.withValues(alpha: .12),
@@ -339,7 +337,7 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                     Center(
                       child: SizedBox(
                         width: AppSpacing.launchpadBox40,
-                        height: AppSpacing.launchpadSheetHandleHeight,
+                        height: AppSpacing.x1,
                         child: DecoratedBox(
                           decoration: const ShapeDecoration(
                             color: AppColors.borderSolid,

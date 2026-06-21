@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_risk_
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_risk_score_calculator_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskCalculator(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -77,6 +79,22 @@ void main() {
     expect(find.text('Low Risk'), findsOneWidget);
     expect(find.byKey(StakingRiskScoreCalculatorPage.radarKey), findsOneWidget);
     expect(find.text('Proceed with This Configuration'), findsOneWidget);
+  });
+
+  testWidgets('SC-384 first viewport reaches amount input', (tester) async {
+    await pumpRiskCalculator(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-384 StakingRiskScoreCalculatorPage',
+      semanticLabel: 'SC-384 StakingRiskScoreCalculatorPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingRiskScoreCalculatorPage.amountFieldKey),
+      routeName: 'SC-384 StakingRiskScoreCalculatorPage',
+      actionLabel: 'the stake amount input',
+    );
   });
 
   testWidgets('SC-384 recalculates amount-driven state and recommendations', (

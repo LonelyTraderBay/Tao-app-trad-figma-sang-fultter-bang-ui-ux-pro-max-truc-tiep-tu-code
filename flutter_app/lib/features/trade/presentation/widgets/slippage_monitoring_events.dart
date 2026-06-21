@@ -114,7 +114,7 @@ class _SlippageEventCard extends StatelessWidget {
                 VitCard(
                   variant: VitCardVariant.inner,
                   density: VitDensity.compact,
-                  padding: const EdgeInsets.symmetric(
+                  padding: const EdgeInsetsDirectional.symmetric(
                     horizontal: AppSpacing.x3,
                     vertical: AppSpacing.x2,
                   ),
@@ -163,7 +163,7 @@ class _EventMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       density: VitDensity.compact,
-      padding: const EdgeInsets.symmetric(
+      padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x2,
       ),

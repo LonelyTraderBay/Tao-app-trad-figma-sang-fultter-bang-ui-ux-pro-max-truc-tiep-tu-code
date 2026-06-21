@@ -91,7 +91,7 @@ class _P2PFraudPreventionPageState
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pFraudScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,

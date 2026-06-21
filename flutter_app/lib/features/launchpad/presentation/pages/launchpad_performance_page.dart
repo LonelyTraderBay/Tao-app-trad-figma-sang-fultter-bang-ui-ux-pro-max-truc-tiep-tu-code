@@ -32,12 +32,16 @@ const double _launchpadPerformanceChartHeight = 176;
 const double _launchpadPerformanceSparklineHeight = 164;
 const double _launchpadPerformanceAxisLabelWidth = AppSpacing.inputHeight;
 const double _launchpadPerformanceProjectIconBox = AppSpacing.inputHeight;
-const EdgeInsets _launchpadPerformanceCardPadding = EdgeInsets.all(
-  AppSpacing.x3,
-);
-const EdgeInsets _launchpadPerformanceHeroPadding = EdgeInsets.all(
-  AppSpacing.x4,
-);
+const EdgeInsetsGeometry _launchpadPerformanceCardPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x3,
+      vertical: AppSpacing.x3,
+    );
+const EdgeInsetsGeometry _launchpadPerformanceHeroPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x4,
+      vertical: AppSpacing.x4,
+    );
 
 class LaunchpadPerformancePage extends ConsumerStatefulWidget {
   const LaunchpadPerformancePage({super.key, this.shellRenderMode});
@@ -102,8 +106,10 @@ class _LaunchpadPerformancePageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: LaunchpadPerformancePage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: scrollEndPadding),
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,

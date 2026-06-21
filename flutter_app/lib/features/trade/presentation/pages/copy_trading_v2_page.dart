@@ -94,7 +94,9 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
               Expanded(
                 child: SingleChildScrollView(
                   key: CopyTradingV2Page.contentKey,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

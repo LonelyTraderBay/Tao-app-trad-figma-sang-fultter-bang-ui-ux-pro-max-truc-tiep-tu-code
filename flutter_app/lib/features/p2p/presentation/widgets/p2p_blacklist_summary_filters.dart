@@ -12,7 +12,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: P2PBlacklistPage.summaryKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pBlacklistCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -22,14 +22,14 @@ class _SummaryCard extends StatelessWidget {
                 icon: Icons.person_remove_alt_1_outlined,
                 color: AppColors.sell,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       '${entries.length} người dùng',
-                      style: AppTextStyles.sectionTitle.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -45,18 +45,22 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
-          Wrap(
-            spacing: AppSpacing.x2,
-            runSpacing: AppSpacing.x2,
-            children: [
-              for (final reason in snapshot.reasons)
-                if ((counts[reason.id] ?? 0) > 0)
-                  _ReasonCountPill(
-                    reason: reason,
-                    count: counts[reason.id] ?? 0,
-                  ),
-            ],
+          const SizedBox(height: AppSpacing.x2),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.none,
+            child: Row(
+              children: [
+                for (final reason in snapshot.reasons)
+                  if ((counts[reason.id] ?? 0) > 0) ...[
+                    _ReasonCountPill(
+                      reason: reason,
+                      count: counts[reason.id] ?? 0,
+                    ),
+                    const SizedBox(width: AppSpacing.x1),
+                  ],
+              ],
+            ),
           ),
         ],
       ),
@@ -101,7 +105,7 @@ class _FilterRail extends StatelessWidget {
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       padding: AppSpacing.p2pBlacklistFilterRailPadding,
       child: Row(
         children: [

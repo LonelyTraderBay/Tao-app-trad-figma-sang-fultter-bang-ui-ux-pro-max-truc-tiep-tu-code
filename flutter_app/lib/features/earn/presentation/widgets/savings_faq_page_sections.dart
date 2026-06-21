@@ -10,7 +10,7 @@ class _HeroCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +30,7 @@ class _HeroCard extends StatelessWidget {
                   snapshot.heroSubtitle,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.earnGuideHeroLineHeight,
+                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
               ],
@@ -76,7 +76,7 @@ class _CategoryScroller extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Row(
         children: [
           for (final category in categories) ...[
@@ -224,7 +224,7 @@ class _FAQCard extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.earnFaqQuestionLineHeight,
+                        height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                       ),
                     ),
                   ),
@@ -252,13 +252,13 @@ class _FAQCard extends StatelessWidget {
                     item.answer,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.earnFaqAnswerLineHeight,
+                      height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x3),
                   const Divider(
                     color: AppColors.divider,
-                    height: AppSpacing.earnFaqDividerHeight,
+                    height: AppSpacing.dividerHairline,
                   ),
                   const SizedBox(height: AppSpacing.x2),
                   Row(

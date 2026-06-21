@@ -1,5 +1,10 @@
 part of 'p2p_dashboard_page.dart';
 
+const double _dashboardLargeChartExtent =
+    AppSpacing.x7 + AppSpacing.x6 + AppSpacing.x5 + AppSpacing.x4;
+const double _dashboardMediumChartExtent =
+    AppSpacing.x7 + AppSpacing.x6 + AppSpacing.x5;
+
 class _FilterRail extends StatelessWidget {
   const _FilterRail({required this.snapshot, required this.onChanged});
 
@@ -219,9 +224,9 @@ class _MetricCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _IconBubble(icon: config.icon, color: config.color, small: true),
-              const Spacer(),
               if (config.trend != null) _TrendBadge(value: config.trend!),
             ],
           ),
@@ -269,7 +274,7 @@ class _WeeklyVolumeCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: AppSpacing.p2pDashboardChartLargeHeight,
+            height: _dashboardLargeChartExtent,
             child: CustomPaint(
               painter: _LineChartPainter(snapshot.weeklyVolume),
             ),
@@ -309,7 +314,7 @@ class _MonthlyOrdersCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: AppSpacing.p2pDashboardChartMediumHeight,
+            height: _dashboardMediumChartExtent,
             child: CustomPaint(
               painter: _MonthlyBarPainter(snapshot.monthlyOrders),
             ),
@@ -386,11 +391,13 @@ class _AssetLine extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
-          Text(
-            item.asset,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+          Expanded(
+            child: Text(
+              item.asset,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+            ),
           ),
-          const Spacer(),
           Text(
             '${item.percentage.toStringAsFixed(0)}%',
             style: AppTextStyles.micro.copyWith(

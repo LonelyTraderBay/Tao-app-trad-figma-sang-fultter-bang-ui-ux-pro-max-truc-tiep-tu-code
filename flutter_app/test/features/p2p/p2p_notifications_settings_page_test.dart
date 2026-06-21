@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_notificati
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_settings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpNotifications(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -75,6 +77,36 @@ void main() {
         P2PNotificationsSettingsPage.channelKey('order_updates', 'push'),
       ),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-278 first viewport reaches notification controls', (
+    tester,
+  ) async {
+    await pumpNotifications(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-278 P2PNotificationsSettingsPage',
+      semanticLabel: 'SC-278 P2PNotificationsSettingsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(
+        P2PNotificationsSettingsPage.channelKey('order_updates', 'push'),
+      ),
+      routeName: 'SC-278 P2PNotificationsSettingsPage',
+      actionLabel: 'order update push toggle',
+      minVisibleHeight: 44,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(
+        P2PNotificationsSettingsPage.channelKey('payment_received', 'push'),
+      ),
+      routeName: 'SC-278 P2PNotificationsSettingsPage',
+      actionLabel: 'payment received push toggle',
+      minVisibleHeight: 32,
     );
   });
 

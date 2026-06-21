@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_book_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpOrderBook(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -88,6 +90,39 @@ void main() {
     expect(find.byKey(P2POrderBookPage.orderListsKey), findsOneWidget);
     expect(find.text('MUA (BID)'), findsOneWidget);
     expect(find.text('BÁN (ASK)'), findsOneWidget);
+  });
+
+  testWidgets('SC-273 first viewport reaches ticker and best prices', (
+    tester,
+  ) async {
+    await pumpOrderBook(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-273 P2POrderBookPage',
+      semanticLabel: 'SC-273 P2POrderBookPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2POrderBookPage.assetKey('USDT')),
+      routeName: 'SC-273 P2POrderBookPage',
+      actionLabel: 'selected asset chip',
+      minVisibleHeight: 44,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2POrderBookPage.refreshKey),
+      routeName: 'SC-273 P2POrderBookPage',
+      actionLabel: 'market refresh action',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2POrderBookPage.bestPricesKey),
+      routeName: 'SC-273 P2POrderBookPage',
+      actionLabel: 'best bid and ask cards',
+      minVisibleHeight: 56,
+    );
   });
 
   testWidgets('SC-273 supports asset state and refresh action', (tester) async {

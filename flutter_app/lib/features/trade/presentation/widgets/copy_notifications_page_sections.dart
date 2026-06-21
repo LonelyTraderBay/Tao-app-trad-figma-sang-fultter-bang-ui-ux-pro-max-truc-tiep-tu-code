@@ -153,7 +153,7 @@ class _NotificationCard extends StatelessWidget {
     final read = notification.read;
     return VitCard(
       variant: read ? VitCardVariant.standard : VitCardVariant.inner,
-      padding: AppSpacing.cardPadding,
+      padding: AppSpacing.cardPaddingCompact,
       borderColor: read ? AppColors.cardBorder : color,
       onTap: onTap,
       child: Row(
@@ -172,7 +172,7 @@ class _NotificationCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.rowPy),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Opacity(
               opacity: read ? .7 : 1,
@@ -193,19 +193,17 @@ class _NotificationCard extends StatelessWidget {
                         ),
                       ),
                       if (!read) ...[
-                        const SizedBox(width: AppSpacing.rowGap),
+                        const SizedBox(width: AppSpacing.x2),
                         const ClipOval(
                           child: ColoredBox(
                             color: _notificationPrimary,
-                            child: SizedBox.square(
-                              dimension: AppSpacing.rowGap,
-                            ),
+                            child: SizedBox.square(dimension: AppSpacing.x2),
                           ),
                         ),
                       ],
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.rowGap),
+                  const SizedBox(height: AppSpacing.x2),
                   Text(
                     notification.message,
                     style: AppTextStyles.caption.copyWith(
@@ -213,7 +211,7 @@ class _NotificationCard extends StatelessWidget {
                       fontWeight: AppTextStyles.normal,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.rowGap),
+                  const SizedBox(height: AppSpacing.x2),
                   Wrap(
                     spacing: AppSpacing.statusPillHorizontalPaddingMd,
                     runSpacing: AppSpacing.statusPillGapMd,
@@ -241,9 +239,7 @@ class _NotificationCard extends StatelessWidget {
                     ],
                   ),
                   if (notification.pair != null) ...[
-                    const SizedBox(
-                      height: AppSpacing.statusPillHorizontalPaddingMd,
-                    ),
+                    const SizedBox(height: AppSpacing.x2),
                     _PairChip(notification: notification, color: color),
                   ],
                 ],

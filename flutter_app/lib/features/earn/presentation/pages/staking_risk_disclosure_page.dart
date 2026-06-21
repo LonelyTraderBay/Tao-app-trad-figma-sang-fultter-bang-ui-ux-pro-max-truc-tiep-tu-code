@@ -42,11 +42,13 @@ const double _stakingRiskBodyLineHeight = 1.35;
 const double _stakingRiskSummaryLineHeight = 1.3;
 const double _stakingRiskNoticeLineHeight = 1.3;
 const double _stakingRiskCompactLineHeight = 1.1;
-const EdgeInsets _stakingRiskCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _stakingRiskDetailsPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _stakingRiskDetailBulletPadding = EdgeInsets.only(
-  top: AppSpacing.x2,
+const EdgeInsetsDirectional _stakingRiskCardPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
 );
+const EdgeInsetsDirectional _stakingRiskDetailsPadding =
+    EdgeInsetsDirectional.all(AppSpacing.x3);
+const EdgeInsetsDirectional _stakingRiskDetailBulletPadding =
+    EdgeInsetsDirectional.only(top: AppSpacing.x2);
 
 class StakingRiskDisclosurePage extends ConsumerStatefulWidget {
   const StakingRiskDisclosurePage({super.key, this.shellRenderMode});
@@ -100,8 +102,8 @@ class _StakingRiskDisclosurePageState
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.x3,
                     AppSpacing.contentPad,

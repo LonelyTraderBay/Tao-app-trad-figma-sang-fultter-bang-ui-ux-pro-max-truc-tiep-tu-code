@@ -116,7 +116,7 @@ class _LimitOrderCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           const Divider(
-            height: AppSpacing.launchpadDividerHeight,
+            height: AppSpacing.dividerHairline,
             color: AppColors.border,
           ),
           const SizedBox(height: AppSpacing.x3),

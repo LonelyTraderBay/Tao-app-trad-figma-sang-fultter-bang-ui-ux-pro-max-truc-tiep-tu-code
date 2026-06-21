@@ -95,7 +95,7 @@ class _LaunchpadLimitOrdersPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(launchpadControllerProvider).getLimitOrders();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navInset = mode.usesVisualQaFrame
+    final chromeReserve = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
     final safeBottom = MediaQuery.paddingOf(context).bottom;
@@ -103,8 +103,9 @@ class _LaunchpadLimitOrdersPageState
         _activeTab == _LimitOrderTab.create &&
         _targetPriceController.text.trim().isNotEmpty &&
         _amountController.text.trim().isNotEmpty;
-    final ctaInset = showCta ? 118.0 : 0.0;
-    final bottomInset = navInset + safeBottom + AppSpacing.x6 + ctaInset;
+    final ctaTailReserve = showCta ? 104.0 : 0.0;
+    final scrollTailReserve =
+        chromeReserve + safeBottom + AppSpacing.x3 + ctaTailReserve;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -114,7 +115,7 @@ class _LaunchpadLimitOrdersPageState
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
+              bottomInset: scrollTailReserve,
               semanticLabel: 'SC-315 LaunchpadLimitOrdersPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
@@ -139,10 +140,10 @@ class _LaunchpadLimitOrdersPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: LaunchpadLimitOrdersPage.contentKey,
-                      physics: const BouncingScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       child: VitPageContent(
-                        padding: VitContentPadding.defaultPadding,
-                        customGap: AppSpacing.x4,
+                        padding: VitContentPadding.compact,
+                        gap: VitContentGap.tight,
                         children: [
                           if (_activeTab == _LimitOrderTab.active) ...[
                             _StatsCard(snapshot: snapshot),
@@ -180,7 +181,7 @@ class _LaunchpadLimitOrdersPageState
               Positioned(
                 left: 0,
                 right: 0,
-                bottom: navInset + safeBottom,
+                bottom: chromeReserve + safeBottom,
                 child: VitStickyFooter(
                   backgroundColor: AppColors.surface.withValues(alpha: .94),
                   child: VitCtaButton(

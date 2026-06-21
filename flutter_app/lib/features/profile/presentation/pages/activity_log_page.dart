@@ -85,7 +85,7 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: ActivityLogPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.profileActivityScrollPadding(
                     scrollClearance,
                   ),

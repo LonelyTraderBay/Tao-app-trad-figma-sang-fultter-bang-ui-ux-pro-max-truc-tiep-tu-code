@@ -130,9 +130,11 @@ class _SecurityInfo extends StatelessWidget {
                   for (final tip in snapshot.securityTips) ...[
                     Text(
                       tip,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.p2pLoginHistoryInfoLineHeight,
+                        height: 1.35,
                       ),
                     ),
                     if (tip != snapshot.securityTips.last)

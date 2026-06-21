@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -64,7 +65,7 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
     final bottomInset =
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 104 : 28);
+        (mode.usesVisualQaFrame ? AppSpacing.x7 : AppSpacing.x5);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -93,22 +94,21 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
                   padding: AppSpacing.tradeBotScrollPaddingWithBottom(
                     bottomInset,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    fullBleed: true,
+                    gap: VitContentGap.tight,
                     children: [
-                      if (unreadCount > 0) ...[
+                      if (unreadCount > 0)
                         _UnreadSummary(
                           unreadCount: unreadCount,
                           onMarkAllRead: _markAllRead,
                         ),
-                        const SizedBox(height: AppSpacing.sectionGapRegular),
-                      ],
                       _FilterTabs(
                         tabs: tabs,
                         activeTab: activeTab,
                         onChanged: (id) => setState(() => _activeTab = id),
                       ),
-                      const SizedBox(height: AppSpacing.sectionGapRegular),
                       if (filteredNotifications.isEmpty)
                         _EmptyNotifications(activeTab: activeTab)
                       else
@@ -121,11 +121,8 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
                             onTap: () => _handleNotificationTap(notification),
                           ),
                           if (notification != filteredNotifications.last)
-                            const SizedBox(
-                              height: AppSpacing.walletAssetPillGap,
-                            ),
+                            const SizedBox(height: AppSpacing.x2),
                         ],
-                      const SizedBox(height: AppSpacing.cardGap),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: AppSpacing.cardPaddingCompact,
@@ -137,7 +134,6 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
                           contractId: 'copy-notifications-review',
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.cardGap),
                       const TradeBodyReviewSection(
                         title: 'Notification body review',
                         message: 'Copy notification body reviewed',

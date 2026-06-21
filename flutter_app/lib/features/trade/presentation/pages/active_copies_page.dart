@@ -94,7 +94,7 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       key: ActiveCopiesPage.contentKey,
-                      padding: EdgeInsets.fromLTRB(
+                      padding: EdgeInsetsDirectional.fromSTEB(
                         AppSpacing.contentPad,
                         AppSpacing.tradeBotCardGap,
                         AppSpacing.contentPad,

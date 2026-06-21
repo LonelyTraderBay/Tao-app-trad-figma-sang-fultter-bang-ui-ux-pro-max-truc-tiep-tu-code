@@ -80,7 +80,7 @@ class _ComplaintsHandlingPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ComplaintsHandlingPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.tradeBotCardGap,
                     AppSpacing.contentPad,

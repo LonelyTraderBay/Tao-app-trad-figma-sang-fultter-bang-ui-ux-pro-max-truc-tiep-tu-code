@@ -125,7 +125,7 @@ class _EmailCta extends StatelessWidget {
                   child: SizedBox(
                     height: _breakingCtaHeight,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: const EdgeInsetsDirectional.symmetric(
                         horizontal: AppSpacing.x3,
                       ),
                       child: Center(

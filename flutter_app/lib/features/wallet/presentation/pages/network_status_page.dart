@@ -41,7 +41,7 @@ const _networkActionIconBoxSize = 34.0;
 const _networkStatHeight = 52.0;
 const _networkAvailabilityHeight = 32.0;
 const _networkLegendIconSize = 28.0;
-const _networkCompactStatPadding = EdgeInsets.symmetric(
+const _networkCompactStatPadding = EdgeInsetsDirectional.symmetric(
   horizontal: 8,
   vertical: 4,
 );
@@ -87,7 +87,7 @@ class NetworkStatusPage extends ConsumerWidget {
                   key: NetworkStatusPage.contentKey,
                   padding: AppSpacing.walletNetworkStatusPageScrollPadding
                       .copyWith(top: _networkScrollTopPad, bottom: bottomInset),
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,

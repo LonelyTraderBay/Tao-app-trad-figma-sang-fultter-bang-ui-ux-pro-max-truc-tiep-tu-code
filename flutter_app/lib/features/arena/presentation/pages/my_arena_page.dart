@@ -65,10 +65,14 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
   @override
   Widget build(BuildContext context) {
     final repository = ref.watch(arenaReadModelControllerProvider);
-    final snapshot = switch (widget.contractScope) {
+    final baseSnapshot = switch (widget.contractScope) {
       MyArenaContractScope.profile => repository.getMyArena(),
       MyArenaContractScope.arena => repository.getArenaMy(),
     };
+    final snapshot = _mergeArenaCreationSnapshot(
+      baseSnapshot,
+      ref.watch(arenaCreationProvider),
+    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance =
         (mode.usesVisualQaFrame
@@ -100,7 +104,7 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MyArenaPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.myArenaScrollPadding(scrollClearance),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
@@ -182,4 +186,55 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
           : AppRoutePaths.profile,
     );
   }
+}
+
+MyArenaSnapshot _mergeArenaCreationSnapshot(
+  MyArenaSnapshot snapshot,
+  ArenaCreationViewState creationState,
+) {
+  if (!creationState.hasLocalWork) return snapshot;
+
+  final localChallengeIds = creationState.createdChallenges
+      .map((challenge) => challenge.id)
+      .toSet();
+  final localDraftIds = creationState.savedDrafts
+      .map((draft) => draft.id)
+      .toSet();
+  final createdChallenges = [
+    ...creationState.createdChallenges,
+    ...snapshot.myRooms.where(
+      (challenge) => !localChallengeIds.contains(challenge.id),
+    ),
+  ];
+  final savedDrafts = [
+    ...creationState.savedDrafts,
+    ...snapshot.drafts.where((draft) => !localDraftIds.contains(draft.id)),
+  ];
+
+  return MyArenaSnapshot(
+    endpoint: snapshot.endpoint,
+    actionDraft: snapshot.actionDraft,
+    stats: MyArenaStats(
+      currentBalance: snapshot.stats.currentBalance,
+      pointsEarned: snapshot.stats.pointsEarned,
+      pointsSpent: snapshot.stats.pointsSpent,
+      activeChallenges:
+          snapshot.stats.activeChallenges +
+          creationState.createdChallenges.length,
+      modesCreated: snapshot.stats.modesCreated,
+      creatorScore: snapshot.stats.creatorScore,
+      rank: snapshot.stats.rank,
+      pendingNotifications:
+          snapshot.stats.pendingNotifications +
+          creationState.createdChallenges.length +
+          creationState.savedDrafts.length,
+    ),
+    myRooms: createdChallenges,
+    joinedChallenges: snapshot.joinedChallenges,
+    savedModes: snapshot.savedModes,
+    drafts: savedDrafts,
+    history: snapshot.history,
+    rewardHistory: snapshot.rewardHistory,
+    supportedStates: snapshot.supportedStates,
+  );
 }

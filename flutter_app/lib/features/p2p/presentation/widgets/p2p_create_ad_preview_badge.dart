@@ -10,9 +10,6 @@ class P2PCreateAdPreviewBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitAccentPill(
-      label: label,
-      accentColor: AppColors.buy,
-    );
+    return VitAccentPill(label: label, accentColor: AppColors.buy);
   }
 }

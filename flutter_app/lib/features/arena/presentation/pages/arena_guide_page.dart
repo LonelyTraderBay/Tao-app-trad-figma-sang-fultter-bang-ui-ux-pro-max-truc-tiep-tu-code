@@ -5,11 +5,12 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -26,6 +27,13 @@ part 'arena_guide_page_part_03.dart';
 enum _GuideTab { guide, tips, safety, faq }
 
 enum _GuideMode { create, join }
+
+final double _guideActionExtent = VitDensity.compact.controlHeight;
+const _guideAccordionBodyLineRatio =
+    AppSpacing.arenaGuideAccordionBodyLineHeight;
+const _guideChecklistLineRatio = AppSpacing.arenaGuideChecklistLineHeight;
+const _guideSmallBadgeLineRatio = AppSpacing.arenaGuideSmallBadgeLineHeight;
+const _guideStepBodyLineRatio = AppSpacing.arenaGuideStepBodyLineHeight;
 
 class ArenaGuidePage extends ConsumerStatefulWidget {
   const ArenaGuidePage({super.key, this.shellRenderMode});

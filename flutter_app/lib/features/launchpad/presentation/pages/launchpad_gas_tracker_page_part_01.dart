@@ -1,5 +1,8 @@
 part of 'launchpad_gas_tracker_page.dart';
 
+const double _gasChartExtent =
+    AppSpacing.x7 + AppSpacing.x6 + AppSpacing.x5 + AppSpacing.x4;
+
 class _FeaturedGasCard extends StatelessWidget {
   const _FeaturedGasCard({required this.price});
 
@@ -107,7 +110,7 @@ class _TierValue extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
-              height: AppSpacing.launchpadLineHeightShort,
+              height: AppSpacing.launchpadLineHeightTight,
             ),
           ),
         ],
@@ -294,7 +297,7 @@ class _GasChartCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           SizedBox(
-            height: AppSpacing.launchpadGasChartHeight,
+            height: _gasChartExtent,
             child: CustomPaint(
               painter: _GasChartPainter(price),
               child: const SizedBox.expand(),

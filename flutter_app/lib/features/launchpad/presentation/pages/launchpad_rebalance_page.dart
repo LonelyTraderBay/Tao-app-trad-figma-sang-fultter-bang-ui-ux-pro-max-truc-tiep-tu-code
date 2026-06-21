@@ -68,12 +68,13 @@ class _LaunchpadRebalancePageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(launchpadControllerProvider).getRebalance();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navInset = mode.usesVisualQaFrame
+    final chromeReserve = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
     final safeBottom = MediaQuery.paddingOf(context).bottom;
     const footerHeight = 92.0;
-    final bottomInset = navInset + safeBottom + AppSpacing.x6 + footerHeight;
+    final scrollTailReserve =
+        chromeReserve + safeBottom + AppSpacing.x3 + footerHeight;
     final strategy = snapshot.strategies.firstWhere(
       (item) => item.id == _strategyId,
       orElse: () => snapshot.strategies.first,
@@ -104,7 +105,7 @@ class _LaunchpadRebalancePageState
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              bottomInset: bottomInset,
+              bottomInset: scrollTailReserve,
               semanticLabel: 'SC-312 LaunchpadRebalancePage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
@@ -117,10 +118,10 @@ class _LaunchpadRebalancePageState
                 ).copyWith(scrollbars: false),
                 child: SingleChildScrollView(
                   key: LaunchpadRebalancePage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    customGap: AppSpacing.x4,
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.tight,
                     children: [
                       LaunchpadRebalanceHero(
                         key: LaunchpadRebalancePage.heroKey,
@@ -175,7 +176,7 @@ class _LaunchpadRebalancePageState
             Positioned(
               left: 0,
               right: 0,
-              bottom: navInset + safeBottom,
+              bottom: chromeReserve + safeBottom,
               child: VitStickyFooter(
                 backgroundColor: AppColors.surface.withValues(alpha: .94),
                 child: VitCtaButton(
@@ -193,7 +194,7 @@ class _LaunchpadRebalancePageState
                   cancelKey: LaunchpadRebalancePage.cancelKey,
                   suggestions: suggestions,
                   totalGas: totalGas,
-                  bottomInset: navInset,
+                  bottomReserve: chromeReserve,
                   onClose: () => setState(() => _showConfirm = false),
                 ),
               ),

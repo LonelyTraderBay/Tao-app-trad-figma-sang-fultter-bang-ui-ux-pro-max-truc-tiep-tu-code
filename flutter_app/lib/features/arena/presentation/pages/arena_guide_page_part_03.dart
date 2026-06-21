@@ -289,7 +289,7 @@ class _AccordionCard extends StatelessWidget {
                     description,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.arenaGuideAccordionBodyLineHeight,
+                      height: _guideAccordionBodyLineRatio,
                     ),
                   ),
                 ),
@@ -326,7 +326,7 @@ class _SmallBadge extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.arenaGuideSmallBadgeLineHeight,
+            height: _guideSmallBadgeLineRatio,
           ),
         ),
       ),

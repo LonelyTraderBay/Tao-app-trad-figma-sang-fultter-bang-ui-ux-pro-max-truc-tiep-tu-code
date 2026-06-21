@@ -33,7 +33,9 @@ const double _p2pSecurityCompactLine =
     AppSpacing.p2pSecurityCenterCompactLineHeight;
 const double _p2pSecurityLabelLine =
     AppSpacing.p2pSecurityCenterLabelLineHeight;
-const EdgeInsets _p2pSecurityCompactPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsetsGeometry _p2pSecurityCompactPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
+);
 
 class P2PSecurityCenterPage extends ConsumerWidget {
   const P2PSecurityCenterPage({super.key, this.shellRenderMode});
@@ -91,12 +93,12 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.fromLTRB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
-                      scrollEndPadding,
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.only(
+                      start: AppSpacing.contentPad,
+                      top: AppSpacing.x3,
+                      end: AppSpacing.contentPad,
+                      bottom: scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -221,12 +223,12 @@ class P2PWhitelistModePage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    scrollEndPadding,
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(
+                    start: AppSpacing.contentPad,
+                    top: AppSpacing.x3,
+                    end: AppSpacing.contentPad,
+                    bottom: scrollEndPadding,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

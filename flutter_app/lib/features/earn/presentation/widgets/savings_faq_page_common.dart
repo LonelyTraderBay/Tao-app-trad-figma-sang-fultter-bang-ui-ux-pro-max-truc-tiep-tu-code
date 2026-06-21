@@ -48,7 +48,7 @@ class _EmptyResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         children: [
           const Icon(
@@ -84,7 +84,7 @@ class _SupportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           const _QuestionIcon(color: AppColors.primary),
@@ -144,7 +144,7 @@ class _Disclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.primary,
-                height: AppSpacing.earnGuideBodyLineHeight,
+                height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
               ),
             ),
           ),

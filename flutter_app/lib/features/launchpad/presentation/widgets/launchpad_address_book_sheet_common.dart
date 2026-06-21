@@ -32,7 +32,7 @@ class _AddAddressSheet extends StatelessWidget {
                   Center(
                     child: SizedBox(
                       width: AppSpacing.launchpadBox44,
-                      height: AppSpacing.launchpadSheetHandleHeight,
+                      height: AppSpacing.x1,
                       child: DecoratedBox(
                         decoration: const ShapeDecoration(
                           color: AppColors.borderSolid,
@@ -104,7 +104,7 @@ class _InfoBanner extends StatelessWidget {
               'So dia chi duoc luu tren thiet bi. Luon kiem tra lai dia chi truoc khi thuc hien giao dich.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.launchpadLineHeightReadable,
+                height: AppSpacing.launchpadLineHeightShort,
               ),
             ),
           ),

@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_performance_compare_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpCompare(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -88,5 +90,21 @@ void main() {
     expect(find.text('Multi-Dimensional Comparison'), findsOneWidget);
     expect(find.text('Pros'), findsNWidgets(2));
     expect(find.text('Cons'), findsNWidgets(2));
+  });
+
+  testWidgets('SC-178 first viewport reaches compare controls', (tester) async {
+    await pumpCompare(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-178 DCAPerformanceComparePage',
+      semanticLabel: 'SC-178 DCAPerformanceComparePage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(DCAPerformanceComparePage.tabKey('compare')),
+      routeName: 'SC-178 DCAPerformanceComparePage',
+      actionLabel: 'compare tab',
+    );
   });
 }

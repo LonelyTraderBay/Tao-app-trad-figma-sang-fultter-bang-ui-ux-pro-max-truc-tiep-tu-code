@@ -56,11 +56,11 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2POrderPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pOrderScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
-                      customGap: AppSpacing.p2pOrderContentGap,
+                      gap: VitContentGap.tight,
                       fullBleed: true,
                       children: [
                         _SafetyBanner(
@@ -165,7 +165,10 @@ class _StatusBanner extends StatelessWidget {
     return Material(
       color: color.withValues(alpha: .08),
       child: Padding(
-        padding: AppSpacing.p2pOrderStatusPadding,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.contentPad,
+          vertical: AppSpacing.x2,
+        ),
         child: Row(
           children: [
             Expanded(
@@ -179,7 +182,7 @@ class _StatusBanner extends StatelessWidget {
             ),
             Text(
               countdown,
-              style: AppTextStyles.baseMedium.copyWith(
+              style: AppTextStyles.caption.copyWith(
                 color: color,
                 fontFeatures: AppTextStyles.tabularFigures,
                 fontWeight: AppTextStyles.bold,
@@ -201,9 +204,12 @@ class _OrderStepper extends StatelessWidget {
   Widget build(BuildContext context) {
     final activeIndex = step == _P2POrderUiStep.payment ? 1 : 2;
     return Padding(
-      padding: AppSpacing.p2pOrderStepperPadding,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.contentPad,
+        vertical: AppSpacing.x1,
+      ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           for (var index = 0; index < 3; index++) ...[
             Expanded(
@@ -214,16 +220,17 @@ class _OrderStepper extends StatelessWidget {
               ),
             ),
             if (index < 2)
-              Expanded(
-                child: Padding(
-                  padding: AppSpacing.p2pOrderStepperConnectorPadding,
-                  child: SizedBox(
-                    height: AppSpacing.p2pOrderStepperConnectorHeight,
-                    child: ColoredBox(
-                      color: index < activeIndex - 1
-                          ? AppModuleAccents.p2p
-                          : AppColors.borderSolid,
-                    ),
+              Padding(
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.x2,
+                ),
+                child: SizedBox(
+                  width: AppSpacing.x3,
+                  height: AppSpacing.p2pOrderStepperConnectorHeight,
+                  child: ColoredBox(
+                    color: index < activeIndex - 1
+                        ? AppModuleAccents.p2p
+                        : AppColors.borderSolid,
                   ),
                 ),
               ),
@@ -248,44 +255,56 @@ class _StepperNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCompleted = index < activeIndex;
-    return Column(
-      children: [
-        Material(
-          color: isCompleted ? AppModuleAccents.p2p : AppColors.surface2,
-          shape: CircleBorder(
-            side: BorderSide(
-              color: isCompleted ? AppModuleAccents.p2p : AppColors.borderSolid,
-            ),
+    final color = isCompleted ? AppModuleAccents.p2p : AppColors.text3;
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: isCompleted ? AppColors.warn10 : AppColors.surface2,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.pillRadius,
+          side: BorderSide(
+            color: isCompleted ? AppModuleAccents.p2p : AppColors.borderSolid,
           ),
-          child: SizedBox(
-            width: AppSpacing.x6,
-            height: AppSpacing.x6,
-            child: Center(
-              child: isCompleted
-                  ? const Icon(
-                      Icons.check_rounded,
-                      color: AppColors.onAccent,
-                      size: AppSpacing.iconSm,
-                    )
-                  : Text(
-                      '${index + 1}',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        fontWeight: AppTextStyles.bold,
-                      ),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x2,
+          vertical: AppSpacing.x1,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            isCompleted
+                ? const Icon(
+                    Icons.check_rounded,
+                    color: AppModuleAccents.p2p,
+                    size: AppSpacing.iconSm,
+                  )
+                : Text(
+                    '${index + 1}',
+                    style: AppTextStyles.micro.copyWith(
+                      color: color,
+                      fontWeight: AppTextStyles.bold,
                     ),
+                  ),
+            const SizedBox(width: AppSpacing.x1),
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: isCompleted
+                      ? AppTextStyles.bold
+                      : AppTextStyles.medium,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-        const SizedBox(height: AppSpacing.x2),
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: AppTextStyles.micro.copyWith(
-            color: isCompleted ? AppModuleAccents.p2p : AppColors.text3,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -298,9 +317,13 @@ class _SafetyBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final safetyCopy = bullets.join(' · ');
     return VitCard(
       borderColor: AppColors.sell20,
-      padding: AppSpacing.p2pOrderCardPadding,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -308,8 +331,8 @@ class _SafetyBanner extends StatelessWidget {
             color: AppColors.sell10,
             shape: const CircleBorder(),
             child: const SizedBox(
-              width: AppSpacing.x6,
-              height: AppSpacing.x6,
+              width: AppSpacing.x5,
+              height: AppSpacing.x5,
               child: Center(
                 child: Icon(
                   Icons.shield_outlined,
@@ -326,23 +349,22 @@ class _SafetyBanner extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTextStyles.caption.copyWith(
+                  style: AppTextStyles.micro.copyWith(
                     color: AppColors.sell,
                     fontWeight: AppTextStyles.bold,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
-                for (final item in bullets)
-                  Padding(
-                    padding: AppSpacing.p2pOrderBulletPadding,
-                    child: Text(
-                      item,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.sell,
-                        height: 1.35,
-                      ),
-                    ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  safetyCopy,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.sell,
+                    height: AppTextStyles.numericMicro.height,
                   ),
+                ),
               ],
             ),
           ),
@@ -362,45 +384,52 @@ class _EscrowBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.buy10,
-      borderRadius: AppRadii.cardRadius,
+      borderRadius: AppRadii.mdRadius,
       child: InkWell(
         key: P2POrderPage.escrowKey,
         onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
+        borderRadius: AppRadii.mdRadius,
         child: VitCard(
           variant: VitCardVariant.ghost,
           borderColor: AppColors.buy20,
-          padding: AppSpacing.p2pOrderCardPadding,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x2,
+          ),
           child: Row(
             children: [
               const Icon(
                 Icons.lock_outline_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.iconMd,
+                size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Escrow: ${_formatCrypto(order.escrowAmount)} ${order.asset} đã khóa',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.buy,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Tài sản được bảo vệ cho đến khi xác nhận thanh toán',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
+                        height: AppTextStyles.numericMicro.height,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
               Material(
                 color: AppColors.buy10,
                 borderRadius: AppRadii.inputRadius,
@@ -441,7 +470,7 @@ class _OrderInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCardPadding,
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -463,7 +492,7 @@ class _OrderInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           _InfoLine(
             label: 'Giao dịch',
             value:

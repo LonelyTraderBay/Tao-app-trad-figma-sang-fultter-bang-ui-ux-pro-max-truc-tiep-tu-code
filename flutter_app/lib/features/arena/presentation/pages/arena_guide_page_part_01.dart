@@ -13,11 +13,12 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
         .watch(arenaReadModelControllerProvider)
         .getArenaGuide();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -42,11 +43,11 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaGuidePage.contentKey,
-                    physics: const BouncingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      customGap: AppSpacing.x5,
+                      gap: VitContentGap.tight,
                       children: _tabChildren(context, snapshot),
                     ),
                   ),
@@ -327,7 +328,7 @@ class _ModeButton extends StatelessWidget {
         onTap: onPressed,
         borderRadius: AppRadii.inputRadius,
         child: SizedBox(
-          height: AppSpacing.ctaHeight,
+          height: _guideActionExtent,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -450,7 +451,7 @@ class _StepRow extends StatelessWidget {
                   step.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.arenaGuideStepBodyLineHeight,
+                    height: _guideStepBodyLineRatio,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),

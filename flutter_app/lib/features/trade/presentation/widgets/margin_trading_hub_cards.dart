@@ -134,7 +134,7 @@ class _ComplianceCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+              crossAxisCount: _hubComplianceGridColumns,
               mainAxisExtent: _hubComplianceGridExtent,
               crossAxisSpacing: _hubTinySpace,
               mainAxisSpacing: _hubTinySpace,

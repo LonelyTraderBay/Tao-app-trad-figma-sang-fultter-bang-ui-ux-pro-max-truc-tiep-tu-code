@@ -10,7 +10,7 @@ class _AssetReserveCard extends StatelessWidget {
     final progress = math.min(asset.reserveRatio / 150, 1.0);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -146,10 +146,7 @@ class _AuditReportCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           Text(
             report.findings,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: AppSpacing.stakingProofReportLineHeight,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           const SizedBox(height: AppSpacing.x3),
           VitCtaButton(
@@ -174,7 +171,7 @@ class _VerificationStepCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: AppSpacing.earnPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -204,10 +201,7 @@ class _VerificationStepCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 Text(
                   step.description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    height: AppSpacing.stakingProofReportLineHeight,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -276,10 +270,7 @@ class _VerifySheetState extends State<_VerifySheet> {
           padding: AppSpacing.earnPaddingX4,
           child: Text(
             widget.snapshot.verifyInfo,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: AppSpacing.stakingProofInfoLineHeight,
-            ),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
         const SizedBox(height: AppSpacing.x4),
@@ -334,10 +325,7 @@ class _VerifySheetState extends State<_VerifySheet> {
               Text(
                 'Your balance of ${proof.balance.toStringAsFixed(2)} ETH is included in the Proof of Reserves Merkle tree.',
                 textAlign: TextAlign.center,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  height: AppSpacing.stakingProofInfoLineHeight,
-                ),
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ],
           ),

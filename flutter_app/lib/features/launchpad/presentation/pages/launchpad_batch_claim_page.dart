@@ -95,7 +95,7 @@ class _LaunchpadBatchClaimPageState
               ),
               child: SingleChildScrollView(
                 key: LaunchpadBatchClaimPage.contentKey,
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 child: VitPageContent(
                   padding: VitContentPadding.defaultPadding,
                   customGap: AppSpacing.x4,

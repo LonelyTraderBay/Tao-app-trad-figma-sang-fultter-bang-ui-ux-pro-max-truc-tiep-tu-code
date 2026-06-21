@@ -40,7 +40,7 @@ class _ArenaProductionReadyPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ArenaProductionReadyPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.arenaBottomScrollPadding(
                       scrollEndPadding,
                     ),
@@ -112,7 +112,7 @@ class _ProductionHero extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.primary,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.18,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -120,7 +120,7 @@ class _ProductionHero extends StatelessWidget {
                   'QA/Dev handoff dashboard. Internal-only release checks, not an end-user production claim.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: 1.28,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
               ],
@@ -143,7 +143,7 @@ class _SectionTabs extends StatelessWidget {
     return SingleChildScrollView(
       key: ArenaProductionReadyPage.tabsKey,
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Row(
         children: [
           for (final config in _sectionConfigs) ...[
@@ -285,7 +285,7 @@ class _ScreensSection extends StatelessWidget {
           '7 core screens đã được consolidate thành bản vFinal. Mỗi screen đã audit: trust-first, accessibility, states đầy đủ.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1.28,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
         for (final screen in screens)
@@ -322,7 +322,7 @@ class _ProductionScreenCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.body.copyWith(
                           fontWeight: AppTextStyles.bold,
-                          height: 1.14,
+                          height: AppTextStyles.numericMicro.height,
                         ),
                       ),
                     ),
@@ -354,7 +354,7 @@ class _ProductionScreenCard extends StatelessWidget {
             screen.notes,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: 1.28,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -392,7 +392,7 @@ class _StatesSection extends StatelessWidget {
           'Lưới states cho từng core screen. Chỉ hiển thị states thực sự áp dụng.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1.28,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
         VitCard(
@@ -457,7 +457,7 @@ class _FlowsSection extends StatelessWidget {
           'Các flow chính có prototype link thật. Tap step để navigate bằng route canonical.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1.28,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
         for (final flow in flows) _FlowCard(flow: flow, onRoute: onRoute),

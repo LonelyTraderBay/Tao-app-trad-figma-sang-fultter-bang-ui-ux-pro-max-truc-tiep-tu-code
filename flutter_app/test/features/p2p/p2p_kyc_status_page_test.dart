@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_kyc_requir
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_kyc_status_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PKycStatus(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -91,6 +93,23 @@ void main() {
     await tester.ensureVisible(find.byKey(P2PKycStatusPage.supportKey));
     expect(find.text('Cần hỗ trợ?'), findsOneWidget);
     expect(find.text('Mở Support Chat'), findsOneWidget);
+  });
+
+  testWidgets('SC-248 first viewport reaches next KYC step', (tester) async {
+    await pumpP2PKycStatus(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-248 P2PKycStatusPage',
+      semanticLabel: 'SC-248 P2PKycStatusPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PKycStatusPage.stepKey('selfie_verification')),
+      routeName: 'SC-248 P2PKycStatusPage',
+      actionLabel: 'selfie verification step preview',
+      minVisibleHeight: 48,
+    );
   });
 
   testWidgets('SC-248 wires step action, support, and back navigation', (

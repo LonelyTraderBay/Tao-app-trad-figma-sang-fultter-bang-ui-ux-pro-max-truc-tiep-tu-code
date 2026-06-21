@@ -86,7 +86,7 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pEscrowDetailScrollPadding(
                       bottomInset,
                     ),

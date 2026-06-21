@@ -465,7 +465,7 @@ class _SheetFrame extends StatelessWidget {
         child: SafeArea(
           top: false,
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             padding: AppSpacing.earnSheetContentPadding,
             child: child,
           ),

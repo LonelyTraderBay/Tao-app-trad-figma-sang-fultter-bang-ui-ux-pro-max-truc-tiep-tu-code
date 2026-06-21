@@ -31,96 +31,96 @@ class _LevelCard extends StatelessWidget {
                   ? accent.withValues(alpha: 0.05)
                   : AppColors.surface2,
               child: Padding(
-                padding: AppSpacing.p2pTradingLevelCardHeaderPadding,
+                padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
                 child: Row(
-                children: [
-                  _LevelIconBadge(
-                    level: level,
-                    size: AppSpacing.p2pTradingLevelLevelBadgeSize,
-                    locked: locked,
-                  ),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Text(
-                                'Lv.${level.id} ${level.nameVi}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.baseMedium.copyWith(
-                                  color: AppColors.text1,
+                  children: [
+                    _LevelIconBadge(
+                      level: level,
+                      size: AppSpacing.x6,
+                      locked: locked,
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  'Lv.${level.id} ${level.nameVi}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.baseMedium.copyWith(
+                                    color: AppColors.text1,
+                                    fontWeight: AppTextStyles.bold,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: AppSpacing.x2),
+                              if (current)
+                                const VitStatusPill(
+                                  label: 'Hiện tại',
+                                  status: VitStatusPillStatus.success,
+                                  size: VitStatusPillSize.sm,
+                                )
+                              else if (passed)
+                                const Icon(
+                                  Icons.check_circle_outline_rounded,
+                                  color: AppColors.buy,
+                                  size: AppSpacing.iconSm,
+                                )
+                              else
+                                const VitStatusPill(
+                                  label: 'Chưa đạt',
+                                  status: VitStatusPillStatus.neutral,
+                                  size: VitStatusPillSize.sm,
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: AppSpacing.x1),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.bolt_rounded,
+                                color: locked ? AppColors.text3 : accent,
+                                size: AppSpacing.iconSm,
+                              ),
+                              const SizedBox(width: AppSpacing.x1),
+                              Text(
+                                'Phí ${_formatFee(level.fee)}',
+                                style: AppTextStyles.caption.copyWith(
+                                  color: locked ? AppColors.text3 : accent,
                                   fontWeight: AppTextStyles.bold,
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: AppSpacing.x2),
-                            if (current)
-                              const VitStatusPill(
-                                label: 'Hiện tại',
-                                status: VitStatusPillStatus.success,
-                                size: VitStatusPillSize.sm,
-                              )
-                            else if (passed)
-                              const Icon(
-                                Icons.check_circle_outline_rounded,
-                                color: AppColors.buy,
-                                size: AppSpacing.p2pTradingLevelInlineIcon,
-                              )
-                            else
-                              const VitStatusPill(
-                                label: 'Chưa đạt',
-                                status: VitStatusPillStatus.neutral,
-                                size: VitStatusPillSize.sm,
-                              ),
-                          ],
-                        ),
-                        const SizedBox(height: AppSpacing.x1),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.bolt_rounded,
-                              color: locked ? AppColors.text3 : accent,
-                              size: AppSpacing.p2pTradingLevelInlineIcon,
-                            ),
-                            const SizedBox(width: AppSpacing.x1),
-                            Text(
-                              'Phí ${_formatFee(level.fee)}',
-                              style: AppTextStyles.caption.copyWith(
-                                color: locked ? AppColors.text3 : accent,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                            if (!locked && level.id > 1) ...[
-                              const SizedBox(width: AppSpacing.x2),
-                              VitStatusPill(
-                                label:
-                                    '-${_discountFromBasic(snapshot, level)}%',
-                                status: level.id == 3
-                                    ? VitStatusPillStatus.purple
-                                    : VitStatusPillStatus.info,
-                                size: VitStatusPillSize.sm,
-                              ),
+                              if (!locked && level.id > 1) ...[
+                                const SizedBox(width: AppSpacing.x2),
+                                VitStatusPill(
+                                  label:
+                                      '-${_discountFromBasic(snapshot, level)}%',
+                                  status: level.id == 3
+                                      ? VitStatusPillStatus.purple
+                                      : VitStatusPillStatus.info,
+                                  size: VitStatusPillSize.sm,
+                                ),
+                              ],
                             ],
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.iconMd,
-                  ),
-                ],
+                    const Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ],
                 ),
               ),
             ),
             Padding(
-              padding: AppSpacing.p2pTradingLevelCardBodyPadding,
+              padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -134,7 +134,7 @@ class _LevelCard extends StatelessWidget {
                           highlighted: current,
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.x3),
+                      const SizedBox(width: AppSpacing.x2),
                       Expanded(
                         child: _LimitTile(
                           label: 'Hạn mức/đơn',
@@ -145,7 +145,7 @@ class _LevelCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.x2),
                   Text(
                     'Yêu cầu:',
                     style: AppTextStyles.micro.copyWith(
@@ -161,7 +161,7 @@ class _LevelCard extends StatelessWidget {
                         Icon(
                           Icons.check_circle_outline_rounded,
                           color: locked ? AppColors.text3 : AppColors.buy,
-                          size: AppSpacing.p2pTradingLevelRequirementIcon,
+                          size: AppSpacing.iconSm,
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Expanded(
@@ -169,8 +169,7 @@ class _LevelCard extends StatelessWidget {
                             requirement,
                             style: AppTextStyles.caption.copyWith(
                               color: locked ? AppColors.text3 : AppColors.text2,
-                              height: AppSpacing
-                                  .p2pTradingLevelRequirementLineHeight,
+                              height: AppTextStyles.caption.height,
                             ),
                           ),
                         ),
@@ -179,16 +178,16 @@ class _LevelCard extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x1),
                   ],
                   if (locked && level.id == currentLevel + 1) ...[
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.x2),
                     const Divider(
                       color: AppColors.divider,
                       height: AppSpacing.dividerHairline,
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.x2),
                     VitCtaButton(
                       key: P2PTradingLevelPage.upgradeButtonKey,
                       variant: VitCtaButtonVariant.warning,
-                      height: AppSpacing.p2pTradingLevelUpgradeButtonHeight,
+                      height: AppSpacing.ctaHeight - AppSpacing.x2,
                       leading: const Icon(Icons.trending_up_rounded),
                       onPressed: () {},
                       child: Text('Nâng cấp lên ${level.nameVi}'),
@@ -222,7 +221,7 @@ class _LevelIconBadge extends StatelessWidget {
       dimension: size,
       child: Material(
         color: locked ? AppColors.surface2 : accent,
-        elevation: locked ? 0 : AppSpacing.p2pTradingLevelBadgeElevation,
+        elevation: locked ? 0 : 2,
         shadowColor: accent.withValues(alpha: 0.26),
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
         clipBehavior: Clip.antiAlias,
@@ -230,7 +229,7 @@ class _LevelIconBadge extends StatelessWidget {
           child: Icon(
             _levelIcon(level.id),
             color: locked ? AppColors.text3 : AppColors.navCenterIcon,
-            size: size * AppSpacing.p2pTradingLevelBadgeIconScale,
+            size: size * .5,
           ),
         ),
       ),
@@ -265,39 +264,39 @@ class _LimitTile extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: Padding(
-        padding: AppSpacing.p2pTradingLevelLimitPadding,
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.stacked_line_chart_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.p2pTradingLevelTinyIcon,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Expanded(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.stacked_line_chart_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconSm,
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.body.copyWith(
-              color: accent,
-              fontWeight: AppTextStyles.bold,
+                const SizedBox(width: AppSpacing.x1),
+                Expanded(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.body.copyWith(
+                color: accent,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ],
         ),
       ),
     );

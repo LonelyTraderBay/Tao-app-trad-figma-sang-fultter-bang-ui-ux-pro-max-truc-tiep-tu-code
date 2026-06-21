@@ -164,7 +164,7 @@ class _QuickTogglesCard extends StatelessWidget {
           ),
           const Divider(
             color: AppColors.divider,
-            height: AppSpacing.launchpadDividerHeight,
+            height: AppSpacing.dividerHairline,
           ),
           _QuickToggleRow(
             id: 'dnd',

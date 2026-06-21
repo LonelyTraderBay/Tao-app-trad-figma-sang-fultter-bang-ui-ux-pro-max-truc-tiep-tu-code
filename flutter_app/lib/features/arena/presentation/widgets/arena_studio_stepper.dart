@@ -21,7 +21,7 @@ class _StudioStepper extends StatelessWidget {
                 padding: AppSpacing.arenaStudioStepperLineMargin,
                 child: SizedBox(
                   width: AppSpacing.x5,
-                  height: AppSpacing.arenaStudioStepperLineHeight,
+                  height: _studioStepperLineExtent,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
                       color: steps[i].index < step
@@ -104,7 +104,7 @@ class _StepMarker extends StatelessWidget {
                 ? AppColors.buy
                 : AppColors.text3,
             fontWeight: AppTextStyles.medium,
-            height: AppSpacing.arenaStudioStepLabelLineHeight,
+            height: _studioStepLabelLineRatio,
           ),
         ),
       ],

@@ -91,7 +91,9 @@ class _ProviderLeaderboardPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ProviderLeaderboardPage.contentKey,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

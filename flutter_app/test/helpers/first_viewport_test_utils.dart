@@ -143,3 +143,27 @@ void expectActionableInFirstViewport(
         'inside the usable first viewport.',
   );
 }
+
+void expectNoArenaFinancialBoundaryCopyRegression() {
+  const forbiddenPhrases = [
+    'wallet balance',
+    'payout',
+    'profit',
+    'stake-return',
+    'stake return',
+    'P/L',
+    'casino',
+    'jackpot',
+  ];
+
+  for (final phrase in forbiddenPhrases) {
+    expect(
+      find.textContaining(
+        RegExp(RegExp.escape(phrase), caseSensitive: false),
+        findRichText: true,
+      ),
+      findsNothing,
+      reason: 'Open Arena copy must stay points-only: "$phrase" found.',
+    );
+  }
+}

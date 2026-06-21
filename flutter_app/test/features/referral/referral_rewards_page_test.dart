@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRewards(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -100,6 +102,22 @@ void main() {
       findsOneWidget,
     );
     expect(find.byKey(ReferralRewardsPage.recordKey('cr-01')), findsOneWidget);
+  });
+
+  testWidgets('SC-287 first viewport reaches rewards chart', (tester) async {
+    await pumpRewards(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-287 ReferralRewardsPage',
+      semanticLabel: 'SC-287 ReferralRewardsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ReferralRewardsPage.chartKey),
+      targetLabel: 'the referral rewards chart',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-287 local export and dispute actions open safe sheets', (

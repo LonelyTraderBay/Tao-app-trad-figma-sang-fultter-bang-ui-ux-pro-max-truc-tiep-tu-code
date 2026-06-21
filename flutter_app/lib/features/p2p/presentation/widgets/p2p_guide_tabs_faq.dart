@@ -23,7 +23,12 @@ class _GuideTabs extends StatelessWidget {
           activeKey: active,
           onChanged: onChanged,
           tabs: [
-            for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
+            for (final tab in tabs)
+              VitTabItem(
+                key: tab.id,
+                label: tab.label,
+                widgetKey: P2PGuidePage.tabKey(tab.id),
+              ),
           ],
         ),
       ),
@@ -84,13 +89,13 @@ class _FaqTab extends StatelessWidget {
       key: P2PGuidePage.faqListKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Câu hỏi thường gặp', style: AppTextStyles.sectionTitle),
+        Text('Câu hỏi thường gặp', style: AppTextStyles.baseMedium),
         const SizedBox(height: AppSpacing.x1),
         Text(
           '${snapshot.faqItems.length} câu hỏi',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x2),
         for (var index = 0; index < snapshot.faqItems.length; index++) ...[
           _FaqCard(
             faq: snapshot.faqItems[index],
@@ -98,7 +103,7 @@ class _FaqTab extends StatelessWidget {
             onTap: () => onFaqToggle(snapshot.faqItems[index].id),
           ),
           if (index != snapshot.faqItems.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -134,7 +139,7 @@ class _FaqCard extends StatelessWidget {
                     icon: Icons.help_outline_rounded,
                     color: expanded ? AppModuleAccents.p2p : AppColors.text3,
                   ),
-                  const SizedBox(width: AppSpacing.x4),
+                  const SizedBox(width: AppSpacing.x2),
                   Expanded(
                     child: Text(
                       faq.question,
@@ -162,9 +167,11 @@ class _FaqCard extends StatelessWidget {
               padding: AppSpacing.p2pGuideFaqAnswerPadding,
               child: Text(
                 faq.answer,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.p2pGuideAnswerLineHeight,
+                  height: 1.35,
                 ),
               ),
             ),

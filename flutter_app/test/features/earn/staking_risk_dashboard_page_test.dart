@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_risk_dashboard_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpRiskDashboard(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -81,6 +83,24 @@ void main() {
     expect(find.text('Validator Health'), findsOneWidget);
     expect(find.text('Slashing Risk'), findsOneWidget);
     expect(find.text('Smart Contract Risk'), findsOneWidget);
+  });
+
+  testWidgets('SC-381 first viewport reaches first risk metric', (
+    tester,
+  ) async {
+    await pumpRiskDashboard(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-381 StakingRiskDashboardPage',
+      semanticLabel: 'SC-381 StakingRiskDashboardPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingRiskDashboardPage.metricKey('Validator Health')),
+      routeName: 'SC-381 StakingRiskDashboardPage',
+      actionLabel: 'the first risk metric card',
+    );
   });
 
   testWidgets('SC-381 renders exposure, events, actions, and footer', (

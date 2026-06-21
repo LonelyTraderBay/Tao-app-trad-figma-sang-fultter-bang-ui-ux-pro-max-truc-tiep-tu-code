@@ -13,9 +13,8 @@ class _NextPurchaseRow extends StatelessWidget {
       density: VitDensity.compact,
       child: Row(
         children: [
-          SizedBox(
-            width: 28,
-            height: 28,
+          SizedBox.square(
+            dimension: AppSpacing.buttonCompact - AppSpacing.formFieldLabelGap,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.primary12,
@@ -41,7 +40,7 @@ class _NextPurchaseRow extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.portfolioTextMuted,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.04,
+                    height: AppTextStyles.badge.height,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -52,7 +51,7 @@ class _NextPurchaseRow extends StatelessWidget {
                   style: AppTextStyles.base.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.04,
+                    height: AppTextStyles.badge.height,
                   ),
                 ),
               ],
@@ -106,7 +105,7 @@ class _OverviewAction extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: 1.04,
+                height: AppTextStyles.badge.height,
               ),
             ),
           ],
@@ -192,9 +191,8 @@ class _ToolCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 32,
-            height: 32,
+          SizedBox.square(
+            dimension: AppSpacing.buttonCompact - AppSpacing.hairlineStroke,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: .13),
@@ -214,7 +212,7 @@ class _ToolCard extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: 1.04,
+              height: AppTextStyles.badge.height,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
@@ -224,7 +222,7 @@ class _ToolCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: 1.18,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
         ],
@@ -317,7 +315,7 @@ class _DcaPlanCard extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 3,
+            height: AppSpacing.dcaMainPlanStatusBarHeight,
             child: ColoredBox(
               color: plan.status == DcaPlanStatus.active
                   ? AppColors.buy
@@ -346,7 +344,7 @@ class _DcaPlanCard extends StatelessWidget {
                                   style: AppTextStyles.base.copyWith(
                                     color: AppColors.text1,
                                     fontWeight: AppTextStyles.bold,
-                                    height: 1.04,
+                                    height: AppTextStyles.badge.height,
                                   ),
                                 ),
                               ),
@@ -365,7 +363,7 @@ class _DcaPlanCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text2,
-                              height: 1.04,
+                              height: AppTextStyles.badge.height,
                             ),
                           ),
                         ],

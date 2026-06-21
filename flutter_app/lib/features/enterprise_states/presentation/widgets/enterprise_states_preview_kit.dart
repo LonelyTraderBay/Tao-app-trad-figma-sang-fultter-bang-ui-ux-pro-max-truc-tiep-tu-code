@@ -32,7 +32,7 @@ class _StateKitSection extends StatelessWidget {
           const SizedBox(height: AppSpacing.x5),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: Row(
               children: [
                 for (final state in snapshot.previewStates) ...[

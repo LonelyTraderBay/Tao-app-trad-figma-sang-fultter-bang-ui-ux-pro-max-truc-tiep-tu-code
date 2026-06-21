@@ -87,7 +87,7 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
                 ).copyWith(scrollbars: false),
                 child: SingleChildScrollView(
                   key: DCAScheduleConfig.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.dcaBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     customGap: AppSpacing.x5,

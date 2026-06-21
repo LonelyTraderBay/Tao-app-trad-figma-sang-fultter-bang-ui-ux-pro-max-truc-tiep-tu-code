@@ -25,10 +25,10 @@ class _SavingsRecommendationsPageState
         .watch(savingsRecommendationsRepositoryProvider)
         .getRecommendations();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -47,11 +47,13 @@ class _SavingsRecommendationsPageState
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollTailReserve,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    gap: VitContentGap.tight,
                     children: [
                       _HeroCard(snapshot: snapshot),
                       _ProfileCard(snapshot: snapshot),
@@ -152,7 +154,7 @@ class _SavingsRecommendationsPageState
             child: SafeArea(
               top: false,
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 padding: AppSpacing.earnSheetContentPadding,
                 child: _StrategyDetailSheet(
                   strategy: strategy,
@@ -186,7 +188,7 @@ class _SavingsRecommendationsPageState
             child: SafeArea(
               top: false,
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 padding: AppSpacing.earnSheetContentPadding,
                 child: _CompareSheet(strategies: strategies, amount: _amount),
               ),
@@ -217,7 +219,7 @@ class _HeroCard extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnPaddingX4,
+        padding: AppSpacing.earnPaddingX3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -237,7 +239,7 @@ class _HeroCard extends StatelessWidget {
                     snapshot.heroSubtitle,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.savingsConsumerBodyLineHeight,
+                      height: AppTextStyles.caption.height,
                     ),
                   ),
                 ],
@@ -260,7 +262,7 @@ class _ProfileCard extends StatelessWidget {
     final profile = snapshot.profile;
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -396,7 +398,7 @@ class _AmountSimulator extends StatelessWidget {
     final activeAmount = int.tryParse(amountText);
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnPaddingX4,
+      padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

@@ -151,7 +151,7 @@ class _CategoryTabButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.mdRadius,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
+          padding: const EdgeInsetsDirectional.symmetric(
             horizontal: AppSpacing.x3,
             vertical: AppSpacing.x2,
           ),
@@ -299,7 +299,7 @@ class _ChangeBadge extends StatelessWidget {
       color: color.withValues(alpha: .14),
       borderRadius: AppRadii.badgeRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
+        padding: const EdgeInsetsDirectional.symmetric(
           horizontal: AppSpacing.x2,
           vertical: AppSpacing.x1,
         ),
@@ -337,7 +337,7 @@ class _TinyBadge extends StatelessWidget {
       color: _predictionPrimary.withValues(alpha: .14),
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
+        padding: const EdgeInsetsDirectional.symmetric(
           horizontal: AppSpacing.x2,
           vertical: AppSpacing.x1,
         ),

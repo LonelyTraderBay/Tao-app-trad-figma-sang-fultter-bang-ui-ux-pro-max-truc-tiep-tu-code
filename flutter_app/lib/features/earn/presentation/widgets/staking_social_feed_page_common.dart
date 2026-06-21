@@ -48,11 +48,14 @@ class _FooterNote extends StatelessWidget {
       key: StakingSocialFeedPage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,
-        style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.text3,
+          height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+        ),
       ),
     );
   }
@@ -88,7 +91,7 @@ class _Pill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingCommunityPillLineHeight,
+            height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
           ),
         ),
       ),

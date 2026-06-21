@@ -74,7 +74,7 @@ class _ClientMoneyProtectionPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ClientMoneyProtectionPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.tradeBotCardGap,
                     AppSpacing.contentPad,

@@ -302,7 +302,9 @@ class _AchievementIconBubble extends StatelessWidget {
           height: size,
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.md,
-          background: ColoredBox(color: color.withValues(alpha: locked ? .34 : .22)),
+          background: ColoredBox(
+            color: color.withValues(alpha: locked ? .34 : .22),
+          ),
           clip: true,
           child: Icon(
             icon,

@@ -39,8 +39,11 @@ const _assetInlineGap = 10.0;
 const _assetSmallGap = 5.0;
 const _assetTransactionVerticalPad = 10.0;
 const _assetScrollTopPad = 0.0;
-const _assetStatPillPadding = EdgeInsets.symmetric(horizontal: 8, vertical: 4);
-const _assetActionTilePadding = EdgeInsets.symmetric(
+const _assetStatPillPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: 8,
+  vertical: 4,
+);
+const _assetActionTilePadding = EdgeInsetsDirectional.symmetric(
   horizontal: 6,
   vertical: 8,
 );

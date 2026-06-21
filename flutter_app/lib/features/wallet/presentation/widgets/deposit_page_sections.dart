@@ -68,8 +68,8 @@ class _NetworkSelector extends StatelessWidget {
         Row(
           children: [
             const SizedBox(
-              width: 6,
-              height: 6,
+              width: _depositStatusDotSize,
+              height: _depositStatusDotSize,
               child: ClipOval(child: ColoredBox(color: _depositGreen)),
             ),
             const SizedBox(width: _depositTinyGap),
@@ -205,7 +205,9 @@ class _QrAddressCard extends StatelessWidget {
             variant: copied
                 ? VitCtaButtonVariant.success
                 : VitCtaButtonVariant.primary,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+            ),
             leading: Icon(
               copied ? Icons.check_circle_outline : Icons.copy_rounded,
               size: AppSpacing.iconSm,
@@ -235,7 +237,7 @@ class _QrCode extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
         clipBehavior: Clip.antiAlias,
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
           child: CustomPaint(painter: _QrPainter(address)),
         ),
       ),

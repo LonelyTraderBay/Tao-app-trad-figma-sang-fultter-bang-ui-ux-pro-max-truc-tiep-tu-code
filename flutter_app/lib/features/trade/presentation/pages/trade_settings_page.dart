@@ -34,7 +34,7 @@ const _settingsChipHeightSm = 30.0;
 const _settingsToggleWidth = 42.0;
 const _settingsToggleHeight = 24.0;
 const _settingsToggleKnob = 18.0;
-const _settingsToggleKnobMargin = EdgeInsets.all(3);
+const _settingsToggleKnobMargin = AppSpacing.settingsSwitchKnobMargin;
 const _settingsButtonHeight = 44.0;
 
 class TradeSettingsPage extends ConsumerStatefulWidget {
@@ -98,7 +98,9 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

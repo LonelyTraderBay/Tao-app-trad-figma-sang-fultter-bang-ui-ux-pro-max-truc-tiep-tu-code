@@ -90,7 +90,7 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pSecurityDetailsScrollPadding(
                       bottomInset,
                     ),

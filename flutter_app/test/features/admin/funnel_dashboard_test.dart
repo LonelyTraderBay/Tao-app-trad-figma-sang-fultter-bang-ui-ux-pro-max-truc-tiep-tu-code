@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/admin/presentation/pages/admin_home.d
 import 'package:vit_trade_flutter/features/admin/presentation/pages/funnel_dashboard.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpFunnels(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -65,6 +67,22 @@ void main() {
     expect(find.text('Tỷ lệ hoàn thành'), findsOneWidget);
     expect(find.text('Funnel Waterfall'), findsOneWidget);
     expect(find.text('Wallet Page View'), findsWidgets);
+  });
+
+  testWidgets('SC-183 first viewport reaches funnel selector', (tester) async {
+    await pumpFunnels(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-183 FunnelDashboard',
+      semanticLabel: 'SC-183 FunnelDashboard',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(FunnelDashboard.selectorKey('wallet_to_creation')),
+      routeName: 'SC-183 FunnelDashboard',
+      actionLabel: 'the primary funnel selector',
+    );
   });
 
   testWidgets('SC-183 supports selector state and back route', (tester) async {

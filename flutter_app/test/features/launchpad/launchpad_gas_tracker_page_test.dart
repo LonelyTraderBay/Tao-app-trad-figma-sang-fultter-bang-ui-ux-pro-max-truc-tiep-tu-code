@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpGasTracker(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -88,6 +90,22 @@ void main() {
     expect(find.text('Polygon Gas'), findsOneWidget);
     expect(find.text('Gas 24h - Polygon'), findsOneWidget);
     expect(find.byKey(LaunchpadGasTrackerPage.eipKey), findsNothing);
+  });
+
+  testWidgets('SC-311 first viewport reaches gas chart', (tester) async {
+    await pumpGasTracker(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-311 LaunchpadGasTrackerPage',
+      semanticLabel: 'SC-311 LaunchpadGasTrackerPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(LaunchpadGasTrackerPage.chartKey),
+      targetLabel: 'the gas trend chart',
+      minVisibleHeight: 24,
+    );
   });
 
   testWidgets('SC-311 estimator tab renders operation cost table', (

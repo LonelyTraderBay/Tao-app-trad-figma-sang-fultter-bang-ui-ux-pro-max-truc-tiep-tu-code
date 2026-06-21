@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_smart_
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSmartRules(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -25,6 +27,77 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+  }
+
+  Future<void> pickOption(
+    WidgetTester tester,
+    Finder trigger,
+    String option,
+  ) async {
+    await tester.ensureVisible(trigger);
+    await tester.tap(trigger);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(option).last);
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> completeCoreRule(WidgetTester tester) async {
+    await tester.enterText(
+      find.byKey(ArenaSmartRuleBuilderPage.titleKey),
+      'BTC Weekly Predict - Investor Demo',
+    );
+    await pickOption(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.domainKey),
+      'Crypto / Markets',
+    );
+    await tester.tap(
+      find.byKey(ArenaSmartRuleBuilderPage.challengeTypeKey('yes_no')),
+    );
+    await tester.pumpAndSettle();
+    await pickOption(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.subjectKey),
+      'Người chơi',
+    );
+    await pickOption(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.actionKey),
+      'đoán gần đúng nhất',
+    );
+  }
+
+  Future<void> completeEdgeRules(WidgetTester tester) async {
+    await pickOption(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.metricKey),
+      'giá',
+    );
+    await pickOption(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.winTypeKey),
+      'sẽ thắng',
+    );
+    await pickOption(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.deadlineContextKey),
+      'vào ngày kết thúc',
+    );
+    await pickOption(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.tieRuleKey),
+      'Chia đều pool',
+    );
+    await pickOption(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.voidRuleKey),
+      'Sự kiện gốc bị hủy -> hủy',
+    );
+    await pickOption(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.resultDeadlineKey),
+      '24 giờ sau kết thúc',
+    );
   }
 
   test('SC-186 mock repository exposes Smart Rule BE draft', () {
@@ -70,6 +143,30 @@ void main() {
     expect(find.text('Yes / No'), findsOneWidget);
   });
 
+  testWidgets('SC-186 first viewport exposes rule setup controls', (
+    tester,
+  ) async {
+    await pumpSmartRules(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-186 ArenaSmartRuleBuilderPage',
+      semanticLabel: 'SC-186 ArenaSmartRuleBuilderPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.titleKey),
+      targetLabel: 'the smart rule title field',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaSmartRuleBuilderPage.challengeTypeKey('yes_no')),
+      routeName: 'SC-186 ArenaSmartRuleBuilderPage',
+      actionLabel: 'the yes/no challenge type',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
+  });
+
   testWidgets('SC-186 structured rule controls enable continue', (
     tester,
   ) async {
@@ -78,24 +175,9 @@ void main() {
     final blockedCta = tester.widget<VitCtaButton>(
       find.byKey(ArenaSmartRuleBuilderPage.continueKey),
     );
-    expect(blockedCta.onPressed, isNull);
+    expect(blockedCta.onPressed, isNotNull);
 
-    await tester.enterText(
-      find.byKey(ArenaSmartRuleBuilderPage.titleKey),
-      'BTC Weekly Predict — Tuần 10',
-    );
-    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.domainKey));
-    await tester.pumpAndSettle();
-    await tester.tap(
-      find.byKey(ArenaSmartRuleBuilderPage.challengeTypeKey('yes_no')),
-    );
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(
-      find.byKey(ArenaSmartRuleBuilderPage.subjectKey),
-    );
-    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.subjectKey));
-    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.actionKey));
-    await tester.pumpAndSettle();
+    await completeCoreRule(tester);
 
     expect(find.text('Crypto / Markets'), findsWidgets);
     expect(find.text('Người chơi'), findsWidgets);
@@ -109,6 +191,79 @@ void main() {
     expect(find.text('Rule đã hoàn chỉnh'), findsOneWidget);
   });
 
+  testWidgets('SC-186 incomplete actions explain what is missing', (
+    tester,
+  ) async {
+    await pumpSmartRules(tester);
+
+    await tester.ensureVisible(
+      find.byKey(ArenaSmartRuleBuilderPage.previewKey),
+    );
+    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.previewKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Nhập tên challenge tối thiểu 3 ký tự.'), findsWidgets);
+  });
+
+  testWidgets('SC-186 selectors expose real option choices', (tester) async {
+    await pumpSmartRules(tester);
+
+    await tester.ensureVisible(find.byKey(ArenaSmartRuleBuilderPage.domainKey));
+    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.domainKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Thể thao'), findsWidgets);
+    await tester.tap(find.text('Thể thao').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Thể thao'), findsWidgets);
+
+    await tester.ensureVisible(
+      find.byKey(ArenaSmartRuleBuilderPage.subjectKey),
+    );
+    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.subjectKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Đội'), findsWidgets);
+    await tester.tap(find.text('Đội').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Đội'), findsWidgets);
+  });
+
+  testWidgets('SC-186 previews backend payload and submits local challenge', (
+    tester,
+  ) async {
+    await pumpSmartRules(tester);
+
+    await completeCoreRule(tester);
+    await completeEdgeRules(tester);
+
+    await tester.ensureVisible(
+      find.byKey(ArenaSmartRuleBuilderPage.previewKey),
+    );
+    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.previewKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Payload sẵn sàng cho BE'), findsWidgets);
+    expect(find.text('POST /arena/challenges'), findsOneWidget);
+
+    await tester.ensureVisible(
+      find.byKey(ArenaSmartRuleBuilderPage.rulesAckKey),
+    );
+    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.rulesAckKey));
+    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.pointsAckKey));
+    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.moderationAckKey));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.byKey(ArenaSmartRuleBuilderPage.submitKey));
+    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.submitKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Xác nhận gửi challenge'), findsOneWidget);
+    expect(find.byType(VitBottomNav).hitTestable(), findsNothing);
+
+    await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.confirmSubmitKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sân chơi của tôi'), findsOneWidget);
+    expect(find.text('BTC Weekly Predict - Investor Demo'), findsOneWidget);
+  });
+
   testWidgets('SC-186 guidance and draft actions expose local state', (
     tester,
   ) async {
@@ -118,9 +273,14 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Public room cần rule rõ ràng hơn'), findsOneWidget);
 
+    await tester.enterText(
+      find.byKey(ArenaSmartRuleBuilderPage.titleKey),
+      'Investor draft challenge',
+    );
+    await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(ArenaSmartRuleBuilderPage.saveKey));
     await tester.tap(find.byKey(ArenaSmartRuleBuilderPage.saveKey));
     await tester.pumpAndSettle();
-    expect(find.text('Đã lưu nháp'), findsOneWidget);
+    expect(find.text('Đã lưu nháp'), findsWidgets);
   });
 }

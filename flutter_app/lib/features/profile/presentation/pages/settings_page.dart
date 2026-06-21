@@ -85,7 +85,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: SettingsPage.contentKey,
-                  physics: const BouncingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.settingsScrollPadding(scrollClearance),
                   child: VitPageContent(
                     padding: VitContentPadding.none,

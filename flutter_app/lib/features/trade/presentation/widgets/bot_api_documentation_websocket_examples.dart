@@ -124,7 +124,9 @@ class _ExamplesView extends StatelessWidget {
                 variant: selected.language == example.language
                     ? VitCtaButtonVariant.secondary
                     : VitCtaButtonVariant.ghost,
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.x3,
+                ),
                 child: Text(
                   example.label,
                   style: AppTextStyles.caption.copyWith(

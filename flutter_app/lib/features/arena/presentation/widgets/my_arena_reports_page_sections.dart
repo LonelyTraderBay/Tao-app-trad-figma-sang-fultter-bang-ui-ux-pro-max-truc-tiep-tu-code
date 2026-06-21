@@ -88,10 +88,10 @@ class _FilterRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.myArenaReportsFilterHeight,
+      height: _reportsFilterExtent,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemCount: filters.length,
         separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.x2),
         itemBuilder: (context, index) {
@@ -130,7 +130,7 @@ class _FilterChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: SizedBox(
-          height: AppSpacing.myArenaReportsFilterHeight,
+          height: _reportsFilterExtent,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: active ? AppColors.primary12 : AppColors.cardBg,
@@ -160,7 +160,7 @@ class _FilterChip extends StatelessWidget {
                         minWidth: AppSpacing.myArenaReportsBadgeMinWidth,
                       ),
                       child: SizedBox(
-                        height: AppSpacing.myArenaReportsBadgeHeight,
+                        height: _reportsBadgeExtent,
                         child: DecoratedBox(
                           decoration: ShapeDecoration(
                             color: active
@@ -229,7 +229,7 @@ class _ProcessBanner extends StatelessWidget {
                   snapshot.bannerDescription,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.myArenaReportsBodyLineHeight,
+                    height: _reportsBodyLineRatio,
                   ),
                 ),
               ],
@@ -362,7 +362,7 @@ class _ReportRow extends StatelessWidget {
           ),
           if (!isLast)
             const Divider(
-              height: AppSpacing.myArenaReportsDividerHeight,
+              height: _reportsDividerExtent,
               color: AppColors.divider,
             ),
         ],

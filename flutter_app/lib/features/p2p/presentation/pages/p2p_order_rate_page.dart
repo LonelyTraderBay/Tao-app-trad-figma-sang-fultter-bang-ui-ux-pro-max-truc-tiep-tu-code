@@ -95,13 +95,13 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
                         ).copyWith(scrollbars: false),
                         child: SingleChildScrollView(
                           key: P2POrderRatePage.contentKey,
-                          physics: const BouncingScrollPhysics(),
+                          physics: const ClampingScrollPhysics(),
                           padding: AppSpacing.p2pOrderLifecycleScrollPadding(
                             bottomInset,
                           ),
                           child: VitPageContent(
-                            padding: VitContentPadding.relaxed,
-                            customGap: AppSpacing.x6,
+                            padding: VitContentPadding.compact,
+                            customGap: AppSpacing.x3,
                             children: [
                               _MerchantSummary(order: snapshot.order),
                               _RatingCard(

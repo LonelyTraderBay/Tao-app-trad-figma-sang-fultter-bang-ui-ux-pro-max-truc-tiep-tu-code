@@ -81,7 +81,9 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
                 child: SingleChildScrollView(
                   key: BotRiskDisclosurePage.contentKey,
                   clipBehavior: Clip.none,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

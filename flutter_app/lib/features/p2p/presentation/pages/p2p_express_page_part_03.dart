@@ -103,89 +103,89 @@ class _MerchantOfferRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-        padding: AppSpacing.p2pExpressMerchantRowPadding,
-        child: Row(
-          children: [
-            SizedBox.square(
-              dimension: AppSpacing.p2pExpressIconBoxSize,
-              child: Material(
-                color: AppColors.primary,
-                shape: const CircleBorder(),
-                child: Center(
-                  child: Text(
-                    ad.merchant.substring(0, 1),
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.onAccent,
-                      fontWeight: AppTextStyles.bold,
+          padding: AppSpacing.p2pExpressMerchantRowPadding,
+          child: Row(
+            children: [
+              SizedBox.square(
+                dimension: AppSpacing.p2pExpressIconBoxSize,
+                child: Material(
+                  color: AppColors.primary,
+                  shape: const CircleBorder(),
+                  child: Center(
+                    child: Text(
+                      ad.merchant.substring(0, 1),
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.onAccent,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          ad.merchant,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text1,
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            ad.merchant,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.x1),
+                        const Icon(
+                          Icons.shield_outlined,
+                          color: AppColors.primary,
+                          size: AppSpacing.iconSm,
+                        ),
+                      ],
+                    ),
+                    Wrap(
+                      spacing: AppSpacing.x2,
+                      runSpacing: AppSpacing.x1,
+                      children: [
+                        Text(
+                          '${ad.completedOrders} đơn',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                        Text(
+                          '${ad.completionRate.toStringAsFixed(1)}%',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.buy,
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                      ),
-                      const SizedBox(width: AppSpacing.x1),
-                      const Icon(
-                        Icons.shield_outlined,
-                        color: AppColors.primary,
-                        size: AppSpacing.iconSm,
-                      ),
-                    ],
-                  ),
-                  Wrap(
-                    spacing: AppSpacing.x2,
-                    runSpacing: AppSpacing.x1,
-                    children: [
-                      Text(
-                        '${ad.completedOrders} đơn',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
+                        Text(
+                          ad.avgResponseTime,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '${ad.completionRate.toStringAsFixed(1)}%',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.buy,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      Text(
-                        ad.avgResponseTime,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            IconButton(
-              onPressed: onMerchant,
-              icon: const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.iconMd,
+              IconButton(
+                onPressed: onMerchant,
+                icon: const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconMd,
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
         ),
         const SizedBox(
           height: AppSpacing.dividerHairline,

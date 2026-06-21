@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_payment_me
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_payment_methods_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2PPaymentMethods(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -80,6 +82,33 @@ void main() {
       findsOneWidget,
     );
     expect(find.textContaining('VitTrade không lưu trữ'), findsOneWidget);
+  });
+
+  testWidgets('SC-237 first viewport reaches saved payment methods', (
+    tester,
+  ) async {
+    await pumpP2PPaymentMethods(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-237 P2PPaymentMethodsPage',
+      semanticLabel: 'SC-237 P2PPaymentMethodsPage',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(P2PPaymentMethodsPage.methodKey('vietcombank-primary')),
+      targetLabel: 'first saved bank method',
+      minVisibleHeight: 80,
+    );
+    expect(
+      tester
+          .getSize(
+            find.byKey(P2PPaymentMethodsPage.methodKey('vietcombank-primary')),
+          )
+          .height,
+      lessThanOrEqualTo(112),
+      reason: 'Default payment method card should not dominate the viewport.',
+    );
   });
 
   testWidgets('SC-237 add buttons route to bank and e-wallet add flows', (

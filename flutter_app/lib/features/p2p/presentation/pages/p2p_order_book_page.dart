@@ -78,7 +78,7 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pMarketplaceAnalyticsScrollPadding(
                       bottomInset,
                     ),
@@ -95,19 +95,19 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                             setState(() => _selectedAsset = asset);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         _MarketTicker(
                           snapshot: snapshot,
                           isRefreshing: _isRefreshing,
                           onRefresh: _refresh,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
-                        _DepthChartCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        _BestPriceCards(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        _OrderBookLists(snapshot: snapshot),
                         const SizedBox(height: AppSpacing.x3),
+                        _DepthChartCard(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x3),
+                        _BestPriceCards(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x3),
+                        _OrderBookLists(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x2),
                         const VitCard(
                           variant: VitCardVariant.inner,
                           padding:

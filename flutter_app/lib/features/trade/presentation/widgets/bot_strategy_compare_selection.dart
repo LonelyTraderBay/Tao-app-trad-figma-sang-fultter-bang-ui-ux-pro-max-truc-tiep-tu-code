@@ -17,7 +17,7 @@ class _StrategySelectionGrid extends StatelessWidget {
       crossAxisCount: AppSpacing.tradeBotGridColumns,
       crossAxisSpacing: AppSpacing.x2,
       mainAxisSpacing: AppSpacing.x2,
-      childAspectRatio: 2.25,
+      childAspectRatio: AppSpacing.tradeBotStrategyGridAspectRatio,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: [

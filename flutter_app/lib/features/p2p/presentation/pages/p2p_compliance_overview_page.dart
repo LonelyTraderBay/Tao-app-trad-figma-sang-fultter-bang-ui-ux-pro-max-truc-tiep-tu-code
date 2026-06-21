@@ -59,24 +59,27 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      gap: VitContentGap.tight,
                       children: [
                         _ComplianceHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        Text(
-                          'Compliance Checklist',
-                          style: AppTextStyles.baseMedium.copyWith(
-                            fontWeight: AppTextStyles.bold,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Compliance Checklist',
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         _ComplianceChecklist(items: snapshot.items),
-                        const SizedBox(height: AppSpacing.x3),
                         const VitCard(
                           variant: VitCardVariant.inner,
                           padding: AppSpacing.p2pComplianceCompactCardPadding,
@@ -116,7 +119,7 @@ class _ComplianceHero extends StatelessWidget {
         side: BorderSide(color: AppColors.buy),
       ),
       child: Padding(
-        padding: AppSpacing.p2pComplianceCardPadding,
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -126,12 +129,12 @@ class _ComplianceHero extends StatelessWidget {
                 borderRadius: AppRadii.lgRadius,
               ),
               child: const SizedBox(
-                width: AppSpacing.p2pComplianceIconBox,
-                height: AppSpacing.p2pComplianceIconBox,
+                width: AppSpacing.x6,
+                height: AppSpacing.x6,
                 child: Icon(
                   Icons.shield_outlined,
                   color: AppColors.onAccent,
-                  size: AppSpacing.iconMd,
+                  size: AppSpacing.iconSm,
                 ),
               ),
             ),
@@ -144,7 +147,7 @@ class _ComplianceHero extends StatelessWidget {
                     snapshot.heroTitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.sectionTitle.copyWith(
+                    style: AppTextStyles.caption.copyWith(
                       color: AppColors.onAccent,
                       fontWeight: AppTextStyles.bold,
                     ),
@@ -152,9 +155,9 @@ class _ComplianceHero extends StatelessWidget {
                   const SizedBox(height: AppSpacing.x1),
                   Text(
                     snapshot.heroSubtitle,
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.micro.copyWith(
                       color: AppColors.onAccent.withValues(alpha: .90),
                       fontWeight: AppTextStyles.bold,
                     ),
@@ -179,7 +182,7 @@ class _ComplianceChecklist extends StatelessWidget {
     return VitCard(
       key: P2PComplianceOverviewPage.checklistKey,
       radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
+      padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
         children: [
@@ -213,7 +216,10 @@ class _ComplianceRow extends StatelessWidget {
           context.go(item.route);
         },
         child: Padding(
-          padding: AppSpacing.p2pComplianceCardPadding,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x2,
+          ),
           child: Row(
             children: [
               Material(
@@ -222,12 +228,12 @@ class _ComplianceRow extends StatelessWidget {
                   borderRadius: AppRadii.lgRadius,
                 ),
                 child: SizedBox(
-                  width: AppSpacing.p2pComplianceIconBox,
-                  height: AppSpacing.p2pComplianceIconBox,
+                  width: AppSpacing.x6,
+                  height: AppSpacing.x6,
                   child: Icon(
                     _iconFor(item.iconKey),
                     color: AppColors.buy,
-                    size: AppSpacing.iconMd,
+                    size: AppSpacing.iconSm,
                   ),
                 ),
               ),
@@ -240,7 +246,7 @@ class _ComplianceRow extends StatelessWidget {
                       item.label,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.baseMedium.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -249,7 +255,7 @@ class _ComplianceRow extends StatelessWidget {
                       item.value,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.captionSm.copyWith(
+                      style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
                     ),

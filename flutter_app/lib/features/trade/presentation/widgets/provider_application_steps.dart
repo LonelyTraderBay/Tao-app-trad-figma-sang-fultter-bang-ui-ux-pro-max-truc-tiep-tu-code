@@ -187,7 +187,7 @@ class _FooterButton extends StatelessWidget {
       variant: submit
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.primary,
-      height: AppSpacing.inputHeight,
+      height: AppSpacing.buttonCompact,
       leading: Icon(
         submit ? Icons.workspace_premium_outlined : Icons.chevron_right,
       ),

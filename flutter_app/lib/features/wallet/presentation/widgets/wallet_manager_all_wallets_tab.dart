@@ -218,190 +218,182 @@ class _WalletCard extends StatelessWidget {
       ),
       clip: true,
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _WalletTypeIcon(wallet: wallet),
-                const SizedBox(width: AppSpacing.walletManagerWalletIconGap),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              wallet.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.control.copyWith(
-                                fontWeight: AppTextStyles.bold,
-                                height: AppSpacing.tradeBotLineHeightTight,
-                              ),
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _WalletTypeIcon(wallet: wallet),
+              const SizedBox(width: AppSpacing.walletManagerWalletIconGap),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            wallet.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.control.copyWith(
+                              fontWeight: AppTextStyles.bold,
+                              height: AppSpacing.tradeBotLineHeightTight,
                             ),
                           ),
-                          if (wallet.isDefault) ...[
-                            const SizedBox(
-                              width: AppSpacing.walletManagerWalletBadgeGap,
-                            ),
-                            const WalletManagerDefaultBadge(),
-                          ],
-                          if (wallet.isFavorite) ...[
-                            const SizedBox(
-                              width: AppSpacing.walletManagerWalletBadgeGap,
-                            ),
-                            const Icon(
-                              Icons.star_rounded,
-                              color: AppColors.caution,
-                              size: AppSpacing.walletManagerWalletFavoriteIcon,
-                            ),
-                          ],
+                        ),
+                        if (wallet.isDefault) ...[
+                          const SizedBox(
+                            width: AppSpacing.walletManagerWalletBadgeGap,
+                          ),
+                          const WalletManagerDefaultBadge(),
                         ],
-                      ),
-                      const SizedBox(
-                        height: AppSpacing.walletManagerWalletAddressGap,
-                      ),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              revealed ? wallet.address : wallet.maskedAddress,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.text3,
-                                height: AppSpacing.tradeBotLineHeightTight,
-                              ),
-                            ),
-                          ),
+                        if (wallet.isFavorite) ...[
                           const SizedBox(
-                            width: AppSpacing.walletManagerWalletInlineGap,
+                            width: AppSpacing.walletManagerWalletBadgeGap,
                           ),
-                          WalletManagerTinyIconButton(
-                            buttonKey: Key(
-                              'sc148_multi_manager_reveal_${wallet.id}',
-                            ),
-                            icon: revealed
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility_outlined,
-                            color: AppColors.text3,
-                            onTap: onReveal,
-                          ),
-                          const SizedBox(
-                            width: AppSpacing.walletManagerWalletActionGap,
-                          ),
-                          WalletManagerTinyIconButton(
-                            buttonKey: Key(
-                              'sc148_multi_manager_copy_${wallet.id}',
-                            ),
-                            icon: copied
-                                ? Icons.check_circle_outline_rounded
-                                : Icons.copy_rounded,
-                            color: copied
-                                ? walletManagerGreen
-                                : AppColors.text3,
-                            onTap: onCopy,
+                          const Icon(
+                            Icons.star_rounded,
+                            color: AppColors.caution,
+                            size: AppSpacing.walletManagerWalletFavoriteIcon,
                           ),
                         ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.walletManagerWalletMoreGap),
-                const Icon(
-                  Icons.more_vert_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.walletManagerWalletMoreIcon,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: AppSpacing.walletManagerWalletBalanceBlockGap,
-            ),
-            Text(
-              'Balance',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: AppSpacing.tradeBotLineHeightTight,
-              ),
-            ),
-            const SizedBox(
-              height: AppSpacing.walletManagerWalletBalanceLabelGap,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  formatWalletManagerUsd(wallet.balanceUsd, decimals: 0),
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
-                ),
-                const SizedBox(
-                  width: AppSpacing.walletManagerWalletBalanceValueGap,
-                ),
-                Icon(
-                  positive
-                      ? Icons.trending_up_rounded
-                      : Icons.south_east_rounded,
-                  color: positive ? walletManagerGreen : walletManagerRed,
-                  size: AppSpacing.walletManagerWalletTrendIcon,
-                ),
-                const SizedBox(width: AppSpacing.walletManagerWalletTrendGap),
-                Text(
-                  formatWalletManagerPct(wallet.change24hPct, decimals: 1),
-                  style: AppTextStyles.badge.copyWith(
-                    color: positive ? walletManagerGreen : walletManagerRed,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.walletManagerWalletAssetTopGap),
-            Row(
-              children: [
-                for (final asset in wallet.assets.take(3)) ...[
-                  WalletManagerAssetChip(symbol: asset.symbol),
-                  const SizedBox(width: AppSpacing.walletManagerWalletAssetGap),
-                ],
-              ],
-            ),
-            const Spacer(),
-            const SizedBox(
-              height: AppSpacing.walletManagerWalletDividerHeight,
-              child: ColoredBox(color: AppColors.border),
-            ),
-            const SizedBox(height: AppSpacing.walletManagerWalletFooterGap),
-            Row(
-              children: [
-                const Icon(
-                  Icons.access_time_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.walletManagerWalletFooterIcon,
-                ),
-                const SizedBox(
-                  width: AppSpacing.walletManagerWalletFooterIconGap,
-                ),
-                Expanded(
-                  child: Text(
-                    wallet.lastActiveLabel,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: AppSpacing.tradeBotLineHeightTight,
+                      ],
                     ),
+                    const SizedBox(
+                      height: AppSpacing.walletManagerWalletAddressGap,
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            revealed ? wallet.address : wallet.maskedAddress,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                              height: AppSpacing.tradeBotLineHeightTight,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: AppSpacing.walletManagerWalletInlineGap,
+                        ),
+                        WalletManagerTinyIconButton(
+                          buttonKey: Key(
+                            'sc148_multi_manager_reveal_${wallet.id}',
+                          ),
+                          icon: revealed
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          color: AppColors.text3,
+                          onTap: onReveal,
+                        ),
+                        const SizedBox(
+                          width: AppSpacing.walletManagerWalletActionGap,
+                        ),
+                        WalletManagerTinyIconButton(
+                          buttonKey: Key(
+                            'sc148_multi_manager_copy_${wallet.id}',
+                          ),
+                          icon: copied
+                              ? Icons.check_circle_outline_rounded
+                              : Icons.copy_rounded,
+                          color: copied ? walletManagerGreen : AppColors.text3,
+                          onTap: onCopy,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppSpacing.walletManagerWalletMoreGap),
+              const Icon(
+                Icons.more_vert_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.walletManagerWalletMoreIcon,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.walletManagerWalletBalanceBlockGap),
+          Text(
+            'Balance',
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: AppSpacing.tradeBotLineHeightTight,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.walletManagerWalletBalanceLabelGap),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                formatWalletManagerUsd(wallet.balanceUsd, decimals: 0),
+                style: AppTextStyles.sectionTitle.copyWith(
+                  height: AppSpacing.tradeBotLineHeightTight,
+                ),
+              ),
+              const SizedBox(
+                width: AppSpacing.walletManagerWalletBalanceValueGap,
+              ),
+              Icon(
+                positive ? Icons.trending_up_rounded : Icons.south_east_rounded,
+                color: positive ? walletManagerGreen : walletManagerRed,
+                size: AppSpacing.walletManagerWalletTrendIcon,
+              ),
+              const SizedBox(width: AppSpacing.walletManagerWalletTrendGap),
+              Text(
+                formatWalletManagerPct(wallet.change24hPct, decimals: 1),
+                style: AppTextStyles.badge.copyWith(
+                  color: positive ? walletManagerGreen : walletManagerRed,
+                  height: AppSpacing.tradeBotLineHeightTight,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.walletManagerWalletAssetTopGap),
+          Row(
+            children: [
+              for (final asset in wallet.assets.take(3)) ...[
+                WalletManagerAssetChip(symbol: asset.symbol),
+                const SizedBox(width: AppSpacing.walletManagerWalletAssetGap),
+              ],
+            ],
+          ),
+          const Spacer(),
+          const SizedBox(
+            height: AppSpacing.walletManagerWalletDividerHeight,
+            child: ColoredBox(color: AppColors.border),
+          ),
+          const SizedBox(height: AppSpacing.walletManagerWalletFooterGap),
+          Row(
+            children: [
+              const Icon(
+                Icons.access_time_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.walletManagerWalletFooterIcon,
+              ),
+              const SizedBox(
+                width: AppSpacing.walletManagerWalletFooterIconGap,
+              ),
+              Expanded(
+                child: Text(
+                  wallet.lastActiveLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    height: AppSpacing.tradeBotLineHeightTight,
                   ),
                 ),
-                WalletManagerTypeBadge(
-                  label: wallet.type.toUpperCase(),
-                  color: typeColor,
-                ),
-              ],
-            ),
-          ],
+              ),
+              WalletManagerTypeBadge(
+                label: wallet.type.toUpperCase(),
+                color: typeColor,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

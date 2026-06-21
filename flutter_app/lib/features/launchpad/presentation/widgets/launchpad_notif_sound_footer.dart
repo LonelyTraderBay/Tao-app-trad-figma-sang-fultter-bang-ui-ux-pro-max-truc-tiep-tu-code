@@ -30,7 +30,7 @@ class _InfoBanner extends StatelessWidget {
                 'Âm thanh chỉ phát khi ứng dụng đang hoạt động. Thông báo push ngoài app sử dụng cài đặt hệ thống thiết bị.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.launchpadLineHeightReadable,
+                  height: AppSpacing.launchpadLineHeightShort,
                 ),
               ),
             ),

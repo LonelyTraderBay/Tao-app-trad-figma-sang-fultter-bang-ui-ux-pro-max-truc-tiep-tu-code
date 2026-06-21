@@ -83,7 +83,7 @@ class _QuestionCard extends StatelessWidget {
     return VitCard(
       key: SavingsRiskAssessmentPage.questionCardKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -103,7 +103,7 @@ class _QuestionCard extends StatelessWidget {
                         question.helpText!,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.savingsConsumerBodyLineHeight,
+                          height: AppTextStyles.caption.height,
                         ),
                       ),
                     ],
@@ -112,7 +112,7 @@ class _QuestionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           for (final option in question.options) ...[
             _RiskOptionTile(
               key: option.value == 0
@@ -127,7 +127,7 @@ class _QuestionCard extends StatelessWidget {
               onTap: () => onSelected(question, option.value),
             ),
             if (option != question.options.last)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: AppSpacing.x2),
           ],
           if (index > 0) ...[
             const SizedBox(height: AppSpacing.x4),
@@ -209,7 +209,7 @@ class _RiskOptionTile extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: AppSpacing.earnCardPaddingX3,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -232,8 +232,7 @@ class _RiskOptionTile extends StatelessWidget {
                             option.description!,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
-                              height: AppSpacing
-                                  .savingsConsumerDescriptionLineHeight,
+                              height: AppTextStyles.caption.height,
                             ),
                           ),
                         ],

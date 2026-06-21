@@ -17,10 +17,10 @@ class _AutoCompoundSettingsPageState
       for (final position in snapshot.positions) _resolved(position),
     ];
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -48,13 +48,13 @@ class _AutoCompoundSettingsPageState
                 children: [
                   Expanded(
                     child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       padding: AppSpacing.zeroInsets.copyWith(
-                        bottom: bottomInset,
+                        bottom: scrollTailReserve,
                       ),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
-                        gap: VitContentGap.defaultGap,
+                        gap: VitContentGap.tight,
                         children: [
                           _SummaryCard(positions: positions),
                           VitPageSection(
@@ -212,7 +212,7 @@ class _SummaryCard extends StatelessWidget {
       key: AutoCompoundSettingsPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.cardPaddingHero,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -230,7 +230,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -328,7 +328,7 @@ class _PositionCard extends StatelessWidget {
     return VitCard(
       key: AutoCompoundSettingsPage.positionKey(position.id),
       radius: VitCardRadius.lg,
-      padding: AppSpacing.cardPadding,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -372,7 +372,7 @@ class _PositionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           if (position.autoCompound)
             _CompoundDetails(position: position)
           else
@@ -500,7 +500,7 @@ class _DisabledWarning extends StatelessWidget {
               'Auto-compound đang tắt — lãi sẽ tích luỹ riêng, không cộng vào gốc',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
-                height: AppSpacing.autoCompoundSettingsWarningLineHeight,
+                height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
               ),
             ),
           ),

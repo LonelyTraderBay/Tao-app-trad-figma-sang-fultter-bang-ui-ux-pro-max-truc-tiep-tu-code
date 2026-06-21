@@ -79,7 +79,7 @@ class _PctButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       density: VitDensity.compact,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+      padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2),
       alignment: Alignment.center,
       radius: VitCardRadius.sm,
       borderColor: AppColors.borderSolid,
@@ -142,48 +142,35 @@ class _FeeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitFinancialSafetySummary(
+      title: 'Order preview',
       density: VitDensity.compact,
-      padding: AppSpacing.cardPaddingCompact,
-      child: Column(
-        children: [
-          _LabelValue(
-            label: 'Thành tiền',
-            value: '\$${preview.total.toStringAsFixed(2)}',
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              Text(
-                'Phí (Maker)',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              const VitAccentPill(
-                label: 'VIP 1',
-                accentColor: AppColors.primary,
-              ),
-              Text(
-                '  -5%',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.buy,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  '0.085% ≈ \$${preview.fee.toStringAsFixed(2)}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.right,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+      footer: 'Review price, amount, fee, and risk before sending this order.',
+      items: [
+        VitFinancialSafetyItem(
+          label: 'Estimated total',
+          value: '\$${preview.total.toStringAsFixed(2)}',
+          leading: const Icon(Icons.payments_outlined),
+        ),
+        VitFinancialSafetyItem(
+          label: 'Maker fee',
+          value: '0.085% ~= \$${preview.fee.toStringAsFixed(2)}',
+          leading: const Icon(Icons.receipt_long_outlined),
+          valueColor: AppColors.text2,
+        ),
+        const VitFinancialSafetyItem(
+          label: 'VIP tier',
+          value: 'VIP 1 discount -5%',
+          leading: Icon(Icons.workspace_premium_outlined),
+          valueColor: AppColors.buy,
+        ),
+        const VitFinancialSafetyItem(
+          label: 'Risk check',
+          value: 'Preview before submit',
+          leading: Icon(Icons.verified_user_outlined),
+          valueColor: AppColors.warn,
+        ),
+      ],
     );
   }
 }

@@ -28,12 +28,12 @@ class _ScenarioInputs extends StatelessWidget {
     return VitCard(
       key: StakingRiskScoreCalculatorPage.formKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Scenario Inputs', style: AppTextStyles.baseMedium),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           _FieldLabel(
             label: 'Stake Amount (USD)',
             child: _AmountInput(
@@ -41,7 +41,7 @@ class _ScenarioInputs extends StatelessWidget {
               onChanged: onAmountChanged,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           _FieldLabel(
             label: 'Asset',
             child: _RiskDropdown(
@@ -51,7 +51,7 @@ class _ScenarioInputs extends StatelessWidget {
               onChanged: onAssetChanged,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           _FieldLabel(
             label: 'Lock-up Period',
             child: _RiskDropdown(
@@ -61,7 +61,7 @@ class _ScenarioInputs extends StatelessWidget {
               onChanged: onDurationChanged,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           _ValidatorSlider(
             validators: validators,
             onChanged: onValidatorsChanged,
@@ -140,7 +140,7 @@ class _RiskDropdown extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
       onTap: () => _showOptions(context),
-      padding: AppSpacing.earnStaticSelectPadding,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
           Expanded(

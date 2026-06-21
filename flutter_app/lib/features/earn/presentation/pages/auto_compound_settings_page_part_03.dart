@@ -25,7 +25,7 @@ class _InfoSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.cardPaddingHero,
+          padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             children: [
               const Icon(
@@ -41,19 +41,19 @@ class _InfoSheet extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.autoCompoundSettingsBodyLineHeight,
+                  height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x4),
         for (final item in snapshot.infoItems) ...[
           _InfoItem(item: item),
           if (item != snapshot.infoItems.last)
             const SizedBox(height: AppSpacing.x3),
         ],
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x4),
         _NoteCard(text: snapshot.note),
       ],
     );
@@ -75,8 +75,8 @@ class _InfoItem extends StatelessWidget {
           color: color.withValues(alpha: 0.12),
           borderRadius: AppRadii.mdRadius,
           child: SizedBox(
-            width: AppSpacing.x7,
-            height: AppSpacing.x7,
+            width: AppSpacing.x6,
+            height: AppSpacing.x6,
             child: Icon(
               Icons.check_rounded,
               color: color,
@@ -100,7 +100,7 @@ class _InfoItem extends StatelessWidget {
                 item.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.autoCompoundSettingsInfoLineHeight,
+                  height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                 ),
               ),
             ],
@@ -171,7 +171,7 @@ class _ToggleSwitch extends StatelessWidget {
           borderRadius: AppRadii.mdRadius,
           child: SizedBox(
             width: AppSpacing.autoCompoundSettingsSwitchWidth,
-            height: AppSpacing.autoCompoundSettingsSwitchHeight,
+            height: AppSpacing.buttonCompact - AppSpacing.x2,
             child: Padding(
               padding: AppSpacing.zeroInsets.copyWith(
                 left: AppSpacing.x1,
@@ -211,15 +211,15 @@ class _AssetBadge extends StatelessWidget {
         side: BorderSide(color: color.withValues(alpha: 0.25)),
       ),
       child: SizedBox(
-        width: AppSpacing.x7,
-        height: AppSpacing.x7,
+        width: AppSpacing.x6,
+        height: AppSpacing.x6,
         child: Center(
           child: Text(
             asset.length > 3 ? asset.substring(0, 3) : asset,
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.autoCompoundSettingsAssetLineHeight,
+              height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
             ),
           ),
         ),

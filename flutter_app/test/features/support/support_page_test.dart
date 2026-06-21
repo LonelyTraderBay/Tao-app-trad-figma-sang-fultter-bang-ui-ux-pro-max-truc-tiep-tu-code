@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/features/support/presentation/pages/help_cente
 import 'package:vit_trade_flutter/features/support/presentation/pages/support_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpSupport(
     WidgetTester tester, {
@@ -81,6 +83,24 @@ void main() {
     expect(find.text('ĐÃ HOÀN THÀNH'), findsOneWidget);
     expect(find.byKey(SupportPage.ticketKey('ticket002')), findsOneWidget);
     expect(find.text('Không thể đăng nhập vào tài khoản'), findsOneWidget);
+  });
+
+  testWidgets('SC-294 first viewport reaches support quick actions', (
+    tester,
+  ) async {
+    await pumpSupport(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-294 SupportPage',
+      semanticLabel: 'SC-294 SupportPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(SupportPage.quickLinkKey('help')),
+      routeName: 'SC-294 SupportPage',
+      actionLabel: 'the help center quick action',
+    );
   });
 
   testWidgets('SC-294 renders contextual support route metadata', (

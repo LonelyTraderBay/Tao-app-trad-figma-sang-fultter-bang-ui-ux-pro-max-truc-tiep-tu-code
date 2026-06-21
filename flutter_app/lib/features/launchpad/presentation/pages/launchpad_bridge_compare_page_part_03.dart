@@ -67,7 +67,7 @@ class _DetailsRow extends StatelessWidget {
           ),
         ),
         const Divider(
-          height: AppSpacing.launchpadDividerHeight,
+          height: AppSpacing.dividerHairline,
           color: AppColors.divider,
         ),
       ],
@@ -224,7 +224,7 @@ class _RouteConfirmOverlay extends StatelessWidget {
                     children: [
                       const SizedBox(
                         width: AppSpacing.launchpadBox40,
-                        height: AppSpacing.launchpadSheetHandleHeight,
+                        height: AppSpacing.x1,
                         child: DecoratedBox(
                           decoration: ShapeDecoration(
                             color: AppColors.borderSolid,

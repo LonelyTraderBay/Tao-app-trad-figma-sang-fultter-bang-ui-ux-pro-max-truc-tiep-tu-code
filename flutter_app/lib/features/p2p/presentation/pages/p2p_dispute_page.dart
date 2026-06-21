@@ -93,27 +93,37 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: P2PDisputePage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pDisputeScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: 0,
+                      gap: VitContentGap.tight,
                       children: [
                         _DisputeHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.p2pDisputeSectionGap),
                         _SectionTitle(label: 'Lý do tranh chấp'),
-                        const SizedBox(height: AppSpacing.p2pDisputeSmallGap),
-                        for (final reason in snapshot.reasons) ...[
-                          _ReasonTile(
-                            key: P2PDisputePage.reasonKey(reason),
-                            reason: reason,
-                            selected: reason == _selectedReason,
-                            onTap: () => _selectReason(reason),
-                          ),
-                          const SizedBox(height: AppSpacing.p2pDisputeSmallGap),
-                        ],
-                        const SizedBox(height: AppSpacing.p2pDisputeSectionGap),
+                        LayoutBuilder(
+                          builder: (context, constraints) {
+                            final tileWidth =
+                                (constraints.maxWidth - AppSpacing.x2) / 2;
+                            return Wrap(
+                              spacing: AppSpacing.x2,
+                              runSpacing: AppSpacing.x2,
+                              children: [
+                                for (final reason in snapshot.reasons)
+                                  SizedBox(
+                                    width: tileWidth,
+                                    child: _ReasonTile(
+                                      key: P2PDisputePage.reasonKey(reason),
+                                      reason: reason,
+                                      selected: reason == _selectedReason,
+                                      onTap: () => _selectReason(reason),
+                                    ),
+                                  ),
+                              ],
+                            );
+                          },
+                        ),
                         VitInput(
                           controller: _descriptionController,
                           fieldKey: P2PDisputePage.descriptionKey,
@@ -122,14 +132,12 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                           textCapitalization: TextCapitalization.sentences,
                           onChanged: (_) => setState(() {}),
                         ),
-                        const SizedBox(height: AppSpacing.p2pDisputeSectionGap),
                         _EvidenceUploadBox(
                           title: snapshot.uploadTitle,
                           subtitle: snapshot.uploadSubtitle,
                           uploaded: _evidenceUploaded,
                           onTap: _markEvidenceUploaded,
                         ),
-                        const SizedBox(height: AppSpacing.p2pDisputeSectionGap),
                         VitCtaButton(
                           key: P2PDisputePage.submitKey,
                           onPressed: _canSubmit
@@ -138,7 +146,6 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                           variant: VitCtaButtonVariant.danger,
                           child: const Text('Gửi tranh chấp'),
                         ),
-                        const SizedBox(height: AppSpacing.p2pDisputeSmallGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
                           padding: AppSpacing.p2pDisputeCompactCardPadding,
@@ -189,7 +196,7 @@ class _DisputeHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: AppColors.sell15,
-      padding: AppSpacing.p2pDisputeCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -198,13 +205,12 @@ class _DisputeHero extends StatelessWidget {
             shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.inputRadius,
             ),
-            child: const SizedBox(
-              width: AppSpacing.p2pDisputeHeroIconBox,
-              height: AppSpacing.p2pDisputeHeroIconBox,
+            child: const Padding(
+              padding: EdgeInsetsDirectional.all(AppSpacing.x2),
               child: Icon(
                 Icons.warning_amber_rounded,
                 color: AppColors.sell,
-                size: AppSpacing.iconMd,
+                size: AppSpacing.iconSm,
               ),
             ),
           ),
@@ -215,7 +221,7 @@ class _DisputeHero extends StatelessWidget {
               children: [
                 Text(
                   snapshot.title,
-                  style: AppTextStyles.sectionTitle.copyWith(
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.sell,
                     fontWeight: AppTextStyles.bold,
                   ),
@@ -223,7 +229,9 @@ class _DisputeHero extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   snapshot.subtitle,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ],
             ),
@@ -243,7 +251,7 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: AppTextStyles.body.copyWith(
+      style: AppTextStyles.caption.copyWith(
         color: AppColors.text1,
         fontWeight: AppTextStyles.bold,
       ),
@@ -276,12 +284,17 @@ class _ReasonTile extends StatelessWidget {
           radius: VitCardRadius.sm,
           borderColor: selected ? AppColors.sell : AppColors.borderSolid,
           constraints: const BoxConstraints(
-            minHeight: AppSpacing.p2pDisputeReasonMinHeight,
+            minHeight: AppSpacing.buttonCompact + AppSpacing.x2,
           ),
-          padding: AppSpacing.p2pDisputeReasonTilePadding,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x2,
+          ),
           alignment: Alignment.centerLeft,
           child: Text(
             reason,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: selected ? AppColors.sell : AppColors.text1,
               fontWeight: AppTextStyles.bold,
@@ -321,22 +334,27 @@ class _EvidenceUploadBox extends StatelessWidget {
           key: P2PDisputePage.uploadKey,
           onTap: onTap,
           borderRadius: AppRadii.cardRadius,
-          child: SizedBox(
-            height: AppSpacing.p2pDisputeUploadHeight,
+          child: Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+              vertical: AppSpacing.x2,
+            ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   uploaded
                       ? Icons.check_circle_outline_rounded
                       : Icons.upload_outlined,
                   color: color,
-                  size: AppSpacing.iconMd,
+                  size: AppSpacing.iconSm,
                 ),
                 const SizedBox(height: AppSpacing.x2),
                 Text(
                   uploaded ? 'evidence_p2p001.png' : title,
-                  style: AppTextStyles.body.copyWith(
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                   ),
@@ -344,6 +362,8 @@ class _EvidenceUploadBox extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   uploaded ? 'Đã thêm bằng chứng' : subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],

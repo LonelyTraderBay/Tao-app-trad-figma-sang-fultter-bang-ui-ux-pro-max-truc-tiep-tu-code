@@ -22,7 +22,7 @@ class _HubStat extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: AppSpacing.p2pHomeTinyIcon),
+            Icon(icon, color: color, size: AppSpacing.iconSm),
             const SizedBox(width: AppSpacing.x1),
             Flexible(
               child: Text(
@@ -67,13 +67,12 @@ class _AccentIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.iconLg,
-      height: AppSpacing.iconLg,
-      child: Material(
-        color: color.withValues(alpha: .16),
-        borderRadius: AppRadii.mdRadius,
-        child: Icon(icon, color: color, size: AppSpacing.p2pHomeAccentIcon),
+    return Material(
+      color: color.withValues(alpha: .16),
+      borderRadius: AppRadii.mdRadius,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+        child: Icon(icon, color: color, size: AppSpacing.iconMd),
       ),
     );
   }
@@ -87,13 +86,12 @@ class _ActionIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.buttonCompact,
-      height: AppSpacing.buttonCompact,
-      child: Material(
-        color: color.withValues(alpha: .18),
-        borderRadius: AppRadii.mdRadius,
-        child: Icon(icon, color: color, size: AppSpacing.p2pHomeActionIcon),
+    return Material(
+      color: color.withValues(alpha: .18),
+      borderRadius: AppRadii.mdRadius,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
     );
   }
@@ -107,29 +105,12 @@ class _SmallIconBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.x5,
-      height: AppSpacing.x5,
-      child: Material(
-        color: color.withValues(alpha: .14),
-        borderRadius: AppRadii.xsRadius,
-        child: Icon(icon, color: color, size: AppSpacing.p2pHomeSmallIcon),
-      ),
-    );
-  }
-}
-
-class _VerticalDivider extends StatelessWidget {
-  const _VerticalDivider();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.p2pHomeDividerMargin,
-      child: const SizedBox(
-        width: AppSpacing.dividerHairline,
-        height: AppSpacing.x7,
-        child: ColoredBox(color: AppColors.divider),
+    return Material(
+      color: color.withValues(alpha: .14),
+      borderRadius: AppRadii.xsRadius,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
     );
   }
@@ -158,25 +139,28 @@ class _EscrowPill extends StatelessWidget {
         side: const BorderSide(color: AppColors.buy20),
       ),
       child: Padding(
-        padding: AppSpacing.p2pHomePillPadding,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x2,
+          vertical: AppSpacing.x1,
+        ),
         child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.shield_outlined,
-            color: AppColors.buy,
-            size: AppSpacing.p2pHomeTinyIcon,
-          ),
-          const SizedBox(width: AppSpacing.x1),
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.shield_outlined,
               color: AppColors.buy,
-              fontWeight: AppTextStyles.bold,
-              height: AppSpacing.p2pHomeTextTightLineHeight,
+              size: AppSpacing.iconSm,
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x1),
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.buy,
+                fontWeight: AppTextStyles.bold,
+                height: AppTextStyles.numericMicro.height,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -206,13 +190,16 @@ class _PaymentPill extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.p2pHomeSmallPillPadding,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x2,
+          vertical: AppSpacing.x1,
+        ),
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.p2pHomeTextTightLineHeight,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
       ),

@@ -10,7 +10,7 @@ class _VotingPower extends StatelessWidget {
     return VitCard(
       key: StakingCommunityGovernancePage.votingPowerKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -56,7 +56,7 @@ class _VotingPower extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.lg,
-            padding: AppSpacing.earnCardPaddingX4,
+            padding: AppSpacing.earnCardPaddingX3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -123,11 +123,14 @@ class _FooterNote extends StatelessWidget {
       key: StakingCommunityGovernancePage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: AppSpacing.earnCardPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,
-        style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.text3,
+          height: AppTextStyles.caption.height,
+        ),
       ),
     );
   }
@@ -163,7 +166,7 @@ class _Pill extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingGovernancePillLineHeight,
+            height: AppTextStyles.micro.height,
           ),
         ),
       ),

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpEventLog(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -73,6 +75,22 @@ void main() {
     expect(find.text('Bridge transaction initiated'), findsOneWidget);
     expect(find.text('Token approval confirmed'), findsOneWidget);
     expect(find.byKey(LaunchpadEventLogPage.exportButtonKey), findsOneWidget);
+  });
+
+  testWidgets('SC-307 first viewport reaches event search', (tester) async {
+    await pumpEventLog(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-307 LaunchpadEventLogPage',
+      semanticLabel: 'SC-307 LaunchpadEventLogPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(LaunchpadEventLogPage.searchKey),
+      routeName: 'SC-307 LaunchpadEventLogPage',
+      actionLabel: 'the event search field',
+    );
   });
 
   testWidgets('SC-307 filters search and source states', (tester) async {

@@ -49,7 +49,7 @@ class _ChallengeIntro extends StatelessWidget {
           style: AppTextStyles.sectionTitle.copyWith(
             color: AppColors.text1,
             fontWeight: AppTextStyles.heavy,
-            height: 1.15,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
         const SizedBox(height: _challengeTinyGap),
@@ -65,7 +65,7 @@ class _ChallengeIntro extends StatelessWidget {
           challenge.description,
           style: AppTextStyles.body.copyWith(
             color: AppColors.text2,
-            height: 1.35,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
       ],
@@ -103,7 +103,10 @@ class _LiveStatusCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: _challengeGap),
-          const Divider(height: 1, color: AppColors.divider),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
           const SizedBox(height: _challengeGap),
           Row(
             children: [
@@ -437,7 +440,7 @@ class _MemberChip extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
                   fontWeight: AppTextStyles.medium,
-                  height: 1.2,
+                  height: AppTextStyles.numericMicro.height,
                 ),
               ),
             ),
@@ -451,7 +454,7 @@ class _MemberChip extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
-                    height: 1.2,
+                    height: AppTextStyles.numericMicro.height,
                   ),
                 ),
               ),

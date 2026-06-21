@@ -43,10 +43,10 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(savingsHistoryRepositoryProvider).getHistory();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x3
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
         MediaQuery.paddingOf(context).bottom;
     final transactions = _filteredTransactions(
       snapshot.transactions,
@@ -70,11 +70,13 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollTailReserve,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
+                    gap: VitContentGap.tight,
                     children: [
                       VitCard(
                         variant: VitCardVariant.standard,
@@ -102,10 +104,10 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
                         _DateHeader(date: group.date),
                         for (final tx in group.transactions)
                           Padding(
-                            padding: AppSpacing.earnBottomInsetPadding(
-                              tx == group.transactions.last
-                                  ? AppSpacing.x4
-                                  : AppSpacing.x3,
+                            padding: EdgeInsetsDirectional.only(
+                              bottom: tx == group.transactions.last
+                                  ? AppSpacing.x3
+                                  : AppSpacing.x2,
                             ),
                             child: _TransactionCard(
                               key: tx == transactions.first

@@ -60,7 +60,7 @@ class _FilterPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             'Thanh toán',
             style: AppTextStyles.caption.copyWith(
@@ -68,7 +68,7 @@ class _FilterPanel extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -90,10 +90,7 @@ class _FilterPanel extends StatelessWidget {
             const SizedBox(height: AppSpacing.x3),
             TextButton.icon(
               onPressed: onClear,
-              icon: const Icon(
-                Icons.close_rounded,
-                size: AppSpacing.p2pHomeInlineIcon,
-              ),
+              icon: const Icon(Icons.close_rounded, size: AppSpacing.iconSm),
               label: const Text('Xóa bộ lọc'),
             ),
           ],
@@ -179,7 +176,7 @@ class _OfferCard extends StatelessWidget {
                           const Icon(
                             Icons.verified_rounded,
                             color: AppModuleAccents.p2p,
-                            size: AppSpacing.p2pHomeVerifiedIcon,
+                            size: AppSpacing.iconSm,
                           ),
                         ],
                         if (badge != null) ...[
@@ -241,7 +238,7 @@ class _OfferCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               Padding(
-                padding: AppSpacing.p2pHomePriceBaselinePadding,
+                padding: const EdgeInsetsDirectional.only(top: AppSpacing.x1),
                 child: Text(
                   ad.currency,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -249,7 +246,7 @@ class _OfferCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               Padding(
-                padding: AppSpacing.p2pHomePriceBaselinePadding,
+                padding: const EdgeInsetsDirectional.only(top: AppSpacing.x1),
                 child: Text(
                   _priceDelta(ad),
                   style: AppTextStyles.micro.copyWith(
@@ -264,7 +261,7 @@ class _OfferCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -302,7 +299,7 @@ class _OfferCard extends StatelessWidget {
               Icon(
                 Icons.schedule_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.p2pHomeSmallIcon,
+                size: AppSpacing.iconSm,
               ),
               const SizedBox(width: AppSpacing.x1),
               Text(
@@ -312,7 +309,7 @@ class _OfferCard extends StatelessWidget {
             ],
           ),
           if (ad.isNewMerchant) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
             const VitBanner(
               variant: VitBannerVariant.warning,
               icon: Icons.warning_amber_rounded,
@@ -372,13 +369,16 @@ class _ChipButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: AppSpacing.p2pHomeChipPadding,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x2,
+          ),
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
               color: active ? AppColors.primary : AppColors.text3,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.p2pHomeTextTightLineHeight,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
         ),
@@ -407,13 +407,16 @@ class _ActionButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: AppSpacing.p2pHomeActionButtonPadding,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x2,
+          ),
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.onAccent,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.p2pHomeTextTightLineHeight,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
         ),
@@ -445,8 +448,8 @@ class _MerchantAvatar extends StatelessWidget {
           border: true,
         ),
         Positioned(
-          right: AppSpacing.p2pHomeMerchantOnlineOffset,
-          bottom: AppSpacing.p2pHomeMerchantOnlineOffset,
+          right: -AppSpacing.x1,
+          bottom: -AppSpacing.x1,
           child: SizedBox(
             width: AppSpacing.x3,
             height: AppSpacing.x3,
@@ -455,7 +458,7 @@ class _MerchantAvatar extends StatelessWidget {
               shape: CircleBorder(
                 side: BorderSide(
                   color: AppColors.surface,
-                  width: AppSpacing.p2pHomeMerchantOnlineBorderWidth,
+                  width: AppSpacing.dividerHairline,
                 ),
               ),
             ),

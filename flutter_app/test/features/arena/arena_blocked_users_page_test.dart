@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_blocke
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_creator_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpBlockedUsers(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -64,6 +66,25 @@ void main() {
     expect(find.text('SpamBot_X'), findsOneWidget);
     expect(find.text('ToxicTrader'), findsOneWidget);
     expect(find.text('2 người đã bị chặn'), findsOneWidget);
+  });
+
+  testWidgets('SC-203 first viewport exposes the first blocked user', (
+    tester,
+  ) async {
+    await pumpBlockedUsers(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-203 ArenaBlockedUsersPage',
+      semanticLabel: 'SC-203 ArenaBlockedUsersPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(ArenaBlockedUsersPage.userKey('blk001')),
+      routeName: 'SC-203 ArenaBlockedUsersPage',
+      actionLabel: 'the first blocked user row',
+    );
+    expectNoArenaFinancialBoundaryCopyRegression();
   });
 
   testWidgets('SC-203 unblock flow removes users and reaches empty state', (

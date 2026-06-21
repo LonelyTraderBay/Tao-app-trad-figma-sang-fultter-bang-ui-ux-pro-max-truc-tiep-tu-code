@@ -75,7 +75,7 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
               Expanded(
                 child: SingleChildScrollView(
                   key: SafetyEducationPage.contentKey,
-                  padding: EdgeInsets.fromLTRB(
+                  padding: EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.contentPad,
                     AppSpacing.tradeBotCardGap,
                     AppSpacing.contentPad,

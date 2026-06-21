@@ -101,23 +101,23 @@ class _CertificateIdBlock extends StatelessWidget {
       children: [
         Padding(
           padding: AppSpacing.p2pDocumentDividerBottomPadding,
-        child: Column(
-          children: [
-            Text(
-              'Mã chứng nhận',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-            const SizedBox(height: AppSpacing.x2),
-            Text(
-              snapshot.certId,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.baseMedium.copyWith(
-                color: AppModuleAccents.p2p,
-                fontWeight: AppTextStyles.bold,
+          child: Column(
+            children: [
+              Text(
+                'Mã chứng nhận',
+                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
-            ),
-          ],
-        ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                snapshot.certId,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.baseMedium.copyWith(
+                  color: AppModuleAccents.p2p,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
         ),
         const Divider(height: AppSpacing.dividerHairline),
       ],
@@ -207,12 +207,12 @@ class _ValidityRow extends StatelessWidget {
       children: [
         Padding(
           padding: AppSpacing.p2pDocumentDividerBottomPadding,
-        child: _CertificateInfoRow(
-          icon: Icons.calendar_month_outlined,
-          label: 'Hiệu lực',
-          value: '${snapshot.issueDate} — ${snapshot.validUntil}',
-          bottomGap: 0,
-        ),
+          child: _CertificateInfoRow(
+            icon: Icons.calendar_month_outlined,
+            label: 'Hiệu lực',
+            value: '${snapshot.issueDate} — ${snapshot.validUntil}',
+            bottomGap: 0,
+          ),
         ),
         const Divider(height: AppSpacing.dividerHairline),
       ],

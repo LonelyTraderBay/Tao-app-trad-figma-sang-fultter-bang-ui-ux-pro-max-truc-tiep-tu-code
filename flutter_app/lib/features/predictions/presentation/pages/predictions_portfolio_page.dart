@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_history.dart';
@@ -61,15 +60,11 @@ class _PredictionsPortfolioPageState
     final controller = ref.watch(predictionsPortfolioControllerProvider);
     final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.predictionPortfolioBottomInsetVisual
-            : AppSpacing.predictionPortfolioBottomInsetNative);
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
+        MediaQuery.paddingOf(context).bottom;
     final openOrders = controller.openOrdersExcluding(_cancelledOrderIds);
     final resolvedBackPath = resolveSafeBackPath(
       candidate: widget.backPath,
@@ -101,11 +96,11 @@ class _PredictionsPortfolioPageState
                   child: SingleChildScrollView(
                     key: PredictionsPortfolioPage.contentKey,
                     padding: AppSpacing.predictionPortfolioScrollPadding(
-                      bottomInset,
+                      scrollEndClearance,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.relaxed,
-                      customGap: AppSpacing.predictionPortfolioContentGap,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         VitCard(
                           padding: EdgeInsets.zero,

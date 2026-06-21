@@ -239,7 +239,7 @@ class _SettingsSection extends StatelessWidget {
                           'Luon kiem tra dia chi hop dong va chi swap tren cac DEX uy tin. Khong chia se private key.',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text2,
-                            height: AppSpacing.launchpadLineHeightLong,
+                            height: AppSpacing.launchpadLineHeightShort,
                           ),
                         ),
                       ),
@@ -273,7 +273,7 @@ class _SlippageButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: AppRadii.inputRadius,
       child: SizedBox(
-        height: AppSpacing.launchpadBox40,
+        height: AppSpacing.buttonCompact,
         child: DecoratedBox(
           decoration: ShapeDecoration(
             color: active ? AppColors.primary : AppColors.bg,

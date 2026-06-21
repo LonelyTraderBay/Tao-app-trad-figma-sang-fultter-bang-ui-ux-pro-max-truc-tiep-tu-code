@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_risk_
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_validator_health_monitor_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpValidatorHealth(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -81,6 +83,22 @@ void main() {
     expect(find.text('15,000 ETH'), findsOneWidget);
     expect(find.text('10,000 ETH'), findsOneWidget);
     expect(find.text('15'), findsOneWidget);
+  });
+
+  testWidgets('SC-383 first viewport reaches first validator', (tester) async {
+    await pumpValidatorHealth(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-383 StakingValidatorHealthMonitorPage',
+      semanticLabel: 'SC-383 StakingValidatorHealthMonitorPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingValidatorHealthMonitorPage.validatorKey('v1')),
+      routeName: 'SC-383 StakingValidatorHealthMonitorPage',
+      actionLabel: 'the first validator card',
+    );
   });
 
   testWidgets('SC-383 expands warning validator details', (tester) async {

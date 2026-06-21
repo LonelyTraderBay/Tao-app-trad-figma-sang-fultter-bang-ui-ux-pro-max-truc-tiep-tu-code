@@ -19,7 +19,7 @@ class _ResultsState extends StatelessWidget {
     }
 
     return VitPageSection(
-      customGap: AppSpacing.x5,
+      gap: VitContentGap.tight,
       children: [
         Text.rich(
           TextSpan(
@@ -116,7 +116,7 @@ class _ResultSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
-      customGap: AppSpacing.x3,
+      gap: VitContentGap.tight,
       children: [
         Row(
           children: [

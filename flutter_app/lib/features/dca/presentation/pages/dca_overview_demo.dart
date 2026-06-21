@@ -8,7 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -47,10 +46,10 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaOverviewDemoProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -83,10 +82,10 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
               Expanded(
                 child: SingleChildScrollView(
                   key: DCAOverviewDemo.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
-                    gap: VitContentGap.defaultGap,
+                    gap: VitContentGap.tight,
                     children: [
                       if (_showLoading)
                         _DemoSection(

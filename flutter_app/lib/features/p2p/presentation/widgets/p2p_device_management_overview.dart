@@ -132,7 +132,8 @@ class _TrustedDeviceNotice extends StatelessWidget {
                     snapshot.infoBody,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.p2pSecurityDetailsDeviceNoticeLineHeight,
+                      height:
+                          AppSpacing.p2pSecurityDetailsDeviceNoticeLineHeight,
                     ),
                   ),
                 ],

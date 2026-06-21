@@ -31,6 +31,25 @@ That CSV contains all 414 routed screens. Each row includes:
 - root-cause labels,
 - recommended action.
 
+### 2026-06-20 Closeout
+
+The maintained current gate is now:
+
+- `docs/02_FLUTTER_MIGRATION/VitTrade-Visual-Density-Risk-Audit.csv`
+- `docs/02_FLUTTER_MIGRATION/VitTrade-Visual-Density-Risk-Audit.md`
+
+Final checked counts: P0 `0`, P1 `0`, tool QA `5`, P2 `113`, P3 `143`, and
+pass/monitor `153`.
+
+Tool-screen evidence is saved in:
+
+- `flutter_app/run-artifacts/whole_app_tool_visual_qa/report.md`
+
+P2/P3 assignment is tracked in:
+
+- `docs/03_DESIGN_SYSTEM/VitTrade-Whole-App-P2-P3-Assignment-Ledger.csv`
+- `docs/03_DESIGN_SYSTEM/VitTrade-Whole-App-P2-P3-Assignment-Ledger.md`
+
 ## 2. Main Conclusion
 
 The same root cause found on `ProfilePage` exists across the app.

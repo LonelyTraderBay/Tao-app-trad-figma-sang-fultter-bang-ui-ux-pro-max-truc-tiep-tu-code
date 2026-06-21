@@ -20,7 +20,7 @@ class _ProviderMetric extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
         Text(
@@ -30,7 +30,7 @@ class _ProviderMetric extends StatelessWidget {
             color: color,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
       ],
@@ -56,7 +56,7 @@ class _PerformanceSummary extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.portfolioTextMuted,
               fontWeight: AppTextStyles.medium,
-              height: 1,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -110,14 +110,14 @@ class _HeroMetric extends StatelessWidget {
           style: AppTextStyles.sectionTitleSm.copyWith(
             color: color,
             fontFeatures: AppTextStyles.tabularFigures,
-            height: 1.15,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.portfolioTextMuted,
-            height: 1,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
       ],
@@ -149,7 +149,7 @@ class _StatusBreakdown extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppTextStyles.numericMicro.height,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
@@ -214,7 +214,7 @@ class _LegendItem extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: 1,
+            height: AppTextStyles.numericMicro.height,
           ),
         ),
       ],
@@ -255,7 +255,7 @@ class _SignalResultRow extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: 1,
+                          height: AppTextStyles.numericMicro.height,
                         ),
                       ),
                       const SizedBox(width: AppSpacing.marketSocialGap),
@@ -277,7 +277,7 @@ class _SignalResultRow extends StatelessWidget {
                     '${signal.providerName} · ${signal.timeAgo}',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: 1,
+                      height: AppTextStyles.numericMicro.height,
                     ),
                   ),
                 ],
@@ -289,7 +289,7 @@ class _SignalResultRow extends StatelessWidget {
                 color: positive ? AppColors.buy : AppColors.sell,
                 fontWeight: AppTextStyles.bold,
                 fontFeatures: AppTextStyles.tabularFigures,
-                height: 1,
+                height: AppTextStyles.numericMicro.height,
               ),
             ),
           ],
@@ -323,7 +323,7 @@ class _SignalsEmptyState extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.x5),
+        padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x5),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -338,7 +338,7 @@ class _SignalsEmptyState extends StatelessWidget {
                 'Không có tín hiệu phù hợp',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: 1,
+                  height: AppTextStyles.numericMicro.height,
                 ),
               ),
             ],

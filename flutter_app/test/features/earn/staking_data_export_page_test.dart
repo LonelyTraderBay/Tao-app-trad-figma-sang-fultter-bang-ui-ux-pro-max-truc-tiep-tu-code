@@ -9,6 +9,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpDataExport(
     WidgetTester tester, {
@@ -91,6 +93,24 @@ void main() {
     expect(find.byKey(StakingDataExportPage.exportKey), findsOneWidget);
     expect(find.text('Export Custom Range'), findsOneWidget);
     expect(find.byKey(StakingDataExportPage.footerKey), findsOneWidget);
+  });
+
+  testWidgets('SC-394 first viewport reaches quick export action', (
+    tester,
+  ) async {
+    await pumpDataExport(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-394 StakingDataExportPage',
+      semanticLabel: 'SC-394 StakingDataExportPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(StakingDataExportPage.quickExportKey('transactions')),
+      routeName: 'SC-394 StakingDataExportPage',
+      actionLabel: 'the first quick export card',
+    );
   });
 
   testWidgets('SC-394 quick export selection and format state update', (

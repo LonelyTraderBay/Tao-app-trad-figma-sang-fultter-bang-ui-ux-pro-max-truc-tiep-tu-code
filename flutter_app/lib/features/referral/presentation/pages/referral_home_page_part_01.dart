@@ -363,7 +363,9 @@ class _ReferralHero extends StatelessWidget {
                 fullWidth: false,
                 height: _ctaExtent,
                 variant: VitCtaButtonVariant.secondary,
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.x3,
+                ),
                 child: const Icon(Icons.share_rounded),
               ),
             ],

@@ -12,13 +12,7 @@ class _PositionTile extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      margin: AppSpacing.pageHorizontal,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletAssetSectionGap,
-        top: AppSpacing.walletDepositCopyIcon,
-        right: AppSpacing.walletAssetSectionGap,
-        bottom: AppSpacing.walletTransactionAfterHashGap,
-      ),
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -40,7 +34,7 @@ class _PositionTile extends StatelessWidget {
               const SizedBox(width: AppSpacing.x3),
               Text(
                 _formatSignedMoney(position.pnl),
-                style: AppTextStyles.amountSm.copyWith(
+                style: AppTextStyles.baseMedium.copyWith(
                   color: pnlColor,
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
@@ -48,7 +42,7 @@ class _PositionTile extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -80,7 +74,7 @@ class _PositionTile extends StatelessWidget {
             ],
           ),
           if (position.takeProfit != null || position.stopLoss != null) ...[
-            const SizedBox(height: AppSpacing.rowGapRegular),
+            const SizedBox(height: AppSpacing.x2),
             Wrap(
               spacing: AppSpacing.x3,
               runSpacing: AppSpacing.formFieldLabelGap,
@@ -178,7 +172,7 @@ class _PositionMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.transferTileGap),
+        const SizedBox(height: AppSpacing.x1),
         Text(
           value,
           maxLines: 1,

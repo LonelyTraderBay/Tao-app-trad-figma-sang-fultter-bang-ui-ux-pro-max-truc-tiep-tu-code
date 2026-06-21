@@ -77,7 +77,9 @@ class ComplaintTrackingPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: contentKey,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
@@ -295,7 +297,9 @@ class _TimelineStepRow extends StatelessWidget {
               ),
               if (hasConnector)
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.x1),
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    vertical: AppSpacing.x1,
+                  ),
                   child: SizedBox(
                     width: AppSpacing.hairlineStroke,
                     height: _trackingTimelineConnectorHeight,
@@ -314,7 +318,7 @@ class _TimelineStepRow extends StatelessWidget {
         const SizedBox(width: _trackingSpace),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.x2),
+            padding: const EdgeInsetsDirectional.only(bottom: AppSpacing.x2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

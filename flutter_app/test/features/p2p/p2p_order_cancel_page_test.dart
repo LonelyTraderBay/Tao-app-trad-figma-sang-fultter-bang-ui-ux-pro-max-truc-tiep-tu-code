@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_cancel_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpP2POrderCancel(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -70,6 +72,43 @@ void main() {
     expect(find.text('Lưu ý quan trọng'), findsOneWidget);
     expect(find.text('Quay lại'), findsOneWidget);
     expect(find.text('Xác nhận hủy'), findsOneWidget);
+  });
+
+  testWidgets('SC-214 first viewport reaches reason and actions', (
+    tester,
+  ) async {
+    await pumpP2POrderCancel(tester);
+    final firstReason = const MockP2PRepository()
+        .getOrderCancel('p2p001')
+        .reasons
+        .first;
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-214 P2POrderCancelPage',
+      semanticLabel: 'SC-214 P2POrderCancelPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.text('VT-P2P-20240223-001'),
+      routeName: 'SC-214 P2POrderCancelPage',
+      actionLabel: 'the order summary',
+      minVisibleHeight: 18,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2POrderCancelPage.reasonKey(firstReason)),
+      routeName: 'SC-214 P2POrderCancelPage',
+      actionLabel: 'the first cancel reason',
+      minVisibleHeight: 32,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2POrderCancelPage.backKey),
+      routeName: 'SC-214 P2POrderCancelPage',
+      actionLabel: 'the safe return action',
+      minVisibleHeight: 40,
+    );
   });
 
   testWidgets('SC-214 requires reason before cancel action submits', (

@@ -64,7 +64,7 @@ class _DemoFlowCard extends StatelessWidget {
                     flow.generatedRule,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
-                      height: AppSpacing.arenaPresetCheckLineHeight,
+                      height: _presetCheckLineRatio,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -293,7 +293,7 @@ class _ProcessRow extends StatelessWidget {
                   text,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.arenaPresetBodyLineHeight,
+                    height: _presetBodyLineRatio,
                   ),
                 ),
               ),
@@ -328,7 +328,7 @@ class _PresetEngineNote extends StatelessWidget {
               'Hệ preset dùng 1 rule engine chung. Tất cả domains tái sử dụng cùng challenge types, dropdowns và suggestion pipeline.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaPresetNoticeLineHeight,
+                height: _presetNoticeLineRatio,
               ),
             ),
           ),

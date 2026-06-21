@@ -45,12 +45,12 @@ class _HowItWorksTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         for (final step in steps) ...[
           _StepRow(step: step),
-          if (step.id != steps.last.id) const SizedBox(height: AppSpacing.x2),
+          if (step.id != steps.last.id) const SizedBox(height: AppSpacing.x1),
         ],
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         VitCard(
           radius: VitCardRadius.lg,
           borderColor: AppColors.buy20,
@@ -78,7 +78,7 @@ class _HowItWorksTab extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x2),
               VitCtaButton(
                 key: P2PGuidePage.startKey,
                 variant: VitCtaButtonVariant.success,
@@ -88,7 +88,7 @@ class _HowItWorksTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         _ConceptList(),
       ],
     );
@@ -97,14 +97,15 @@ class _HowItWorksTab extends StatelessWidget {
 
 class _ModeButton extends StatelessWidget {
   const _ModeButton({
-    super.key,
+    Key? key,
     required this.label,
     required this.icon,
     required this.selected,
     required this.color,
     required this.onTap,
-  });
+  }) : widgetKey = key;
 
+  final Key? widgetKey;
   final String label;
   final IconData icon;
   final bool selected;
@@ -114,6 +115,7 @@ class _ModeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      key: widgetKey,
       color: selected ? color : AppColors.transparent,
       borderRadius: AppRadii.inputRadius,
       child: InkWell(
@@ -161,7 +163,7 @@ class _StepRow extends StatelessWidget {
           icon: _guideIcon(step.iconKey),
           color: color,
         ),
-        const SizedBox(width: AppSpacing.x4),
+        const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Padding(
             padding: AppSpacing.p2pGuideStepContentPadding,
@@ -186,9 +188,11 @@ class _StepRow extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   step.description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pGuideBodyLineHeight,
+                    height: 1.35,
                   ),
                 ),
               ],
@@ -241,10 +245,10 @@ class _SafetyTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x2),
         for (final tip in snapshot.safetyTips) ...[
           _SafetyTipCard(tip: tip),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
         ],
         VitCard(
           radius: VitCardRadius.lg,
@@ -275,7 +279,7 @@ class _SafetyTab extends StatelessWidget {
                 'Nếu bạn nghi ngờ giao dịch có dấu hiệu lừa đảo, hãy mở tranh chấp ngay lập tức. Không giải phóng crypto cho đến khi đã nhận đủ tiền.',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: AppSpacing.x2),
               VitCtaButton(
                 key: P2PGuidePage.supportKey,
                 variant: VitCtaButtonVariant.danger,
@@ -314,9 +318,11 @@ class _SafetyTipCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   tip.description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pGuideBodyLineHeight,
+                    height: 1.35,
                   ),
                 ),
               ],

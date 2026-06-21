@@ -15,12 +15,12 @@ class _StatusCard extends StatelessWidget {
       color: color,
       borderRadius: AppRadii.cardLargeRadius,
       child: Padding(
-        padding: AppSpacing.p2pSecurityDetailsCardPadding,
+        padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox.square(
-              dimension: AppSpacing.p2pSecurityDetailsIconBox,
+              dimension: AppSpacing.buttonCompact,
               child: Material(
                 type: MaterialType.transparency,
                 color: AppColors.onAccent.withValues(alpha: .18),
@@ -32,21 +32,25 @@ class _StatusCard extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.x4),
+            const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     snapshot.statusTitle,
-                    style: AppTextStyles.sectionTitle.copyWith(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.baseMedium.copyWith(
                       color: AppColors.onAccent,
-                      height: AppSpacing.p2pSecurityDetailsHeroLineHeight,
+                      height: AppTextStyles.baseMedium.height,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: AppSpacing.x1),
                   Text(
                     snapshot.statusBody,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.onAccent.withValues(alpha: .9),
                       fontWeight: AppTextStyles.bold,
@@ -72,7 +76,7 @@ class _ExplainerCard extends StatelessWidget {
     return VitCard(
       key: P2PAntiPhishingCodePage.explainerKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pSecurityDetailsCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -94,15 +98,17 @@ class _ExplainerCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             snapshot.explainerBody,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.p2pSecurityDetailsBodyLineHeight,
+              height: 1.35,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
           for (final benefit in snapshot.benefits) ...[
             _CheckRow(text: benefit),
             if (benefit != snapshot.benefits.last)
@@ -128,7 +134,7 @@ class _EmailExamples extends StatelessWidget {
         for (var index = 0; index < examples.length; index++) ...[
           _EmailExampleCard(example: examples[index]),
           if (index != examples.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -148,7 +154,7 @@ class _EmailExampleCard extends StatelessWidget {
       key: P2PAntiPhishingCodePage.exampleKey(example.id),
       radius: VitCardRadius.lg,
       borderColor: color,
-      padding: AppSpacing.p2pSecurityDetailsCardPadding,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -188,7 +194,7 @@ class _EmailExampleCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.x3),
+                    const SizedBox(height: AppSpacing.x2),
                     VitCard(
                       radius: VitCardRadius.sm,
                       variant: VitCardVariant.inner,
@@ -196,9 +202,11 @@ class _EmailExampleCard extends StatelessWidget {
                       padding: AppSpacing.p2pSecurityDetailsInnerPadding,
                       child: Text(
                         example.preview,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
-                          height: AppSpacing.p2pSecurityDetailsBodyLineHeight,
+                          height: 1.35,
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
@@ -208,7 +216,7 @@ class _EmailExampleCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Align(
             alignment: Alignment.centerLeft,
             child: VitStatusPill(
@@ -312,9 +320,11 @@ class _CheckRow extends StatelessWidget {
         Expanded(
           child: Text(
             text,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.p2pSecurityDetailsCaptionLineHeight,
+              height: 1.35,
             ),
           ),
         ),
@@ -347,7 +357,7 @@ class _BulletRow extends StatelessWidget {
             text,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.p2pSecurityDetailsCaptionLineHeight,
+              height: 1.35,
             ),
           ),
         ),

@@ -212,7 +212,7 @@ class _GenerateFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final child = VitCard(
       variant: VitCardVariant.ghost,
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.contentPad,
         AppSpacing.x2,
         AppSpacing.contentPad,

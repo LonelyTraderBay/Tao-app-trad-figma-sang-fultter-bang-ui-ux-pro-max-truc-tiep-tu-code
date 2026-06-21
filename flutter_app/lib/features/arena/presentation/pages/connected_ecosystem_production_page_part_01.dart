@@ -73,7 +73,7 @@ class _SectionTabs extends StatelessWidget {
     return SingleChildScrollView(
       key: ConnectedEcosystemProductionPage.tabsKey,
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Row(
         children: [
           for (final config in _sectionConfigs) ...[

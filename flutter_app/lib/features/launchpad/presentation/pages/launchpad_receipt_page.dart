@@ -41,11 +41,12 @@ class LaunchpadReceiptPage extends ConsumerWidget {
         .watch(launchpadControllerProvider)
         .getReceipt(subscriptionId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+            ? DeviceMetrics.bottomChrome
+            : DeviceMetrics.nativeBottomChrome) +
+        MediaQuery.paddingOf(context).bottom +
+        AppSpacing.x3;
     final hasSubscription = snapshot.subscription != null;
 
     return VitPageLayout(
@@ -54,7 +55,7 @@ class LaunchpadReceiptPage extends ConsumerWidget {
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
+          bottomInset: scrollTailReserve,
           semanticLabel: 'SC-301 LaunchpadReceiptPage scroll surface',
           header: VitHeader(
             title: hasSubscription ? 'Biên lai đăng ký' : snapshot.title,
@@ -63,10 +64,10 @@ class LaunchpadReceiptPage extends ConsumerWidget {
           ),
           child: SingleChildScrollView(
             key: contentKey,
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: VitPageContent(
-              padding: VitContentPadding.defaultPadding,
-              customGap: AppSpacing.x4,
+              padding: VitContentPadding.compact,
+              gap: VitContentGap.tight,
               children: [
                 if (!hasSubscription)
                   const _ReceiptErrorState()

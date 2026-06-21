@@ -12,7 +12,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
+            ? DeviceMetrics.bottomChrome + AppSpacing.x5
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
@@ -38,11 +38,11 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ReferralRewardsPage.contentKey,
-                    physics: const BouncingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.referralPageScrollPadding(bottomInset),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
-                      customGap: 0,
+                      gap: VitContentGap.tight,
                       fullBleed: true,
                       children: [
                         _RewardHero(
@@ -51,15 +51,12 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                           onDisputes: () =>
                               _showDisputeHistorySheet(context, snapshot),
                         ),
-                        const SizedBox(height: AppSpacing.x5),
                         _SectionTitle(
                           title: 'Hoa hồng theo tháng',
                           trailing:
                               '+${_formatUsd(snapshot.thisMonthCommission)} tháng này',
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         _RewardChart(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
                         _RewardTabs(
                           filters: snapshot.filters,
                           active: snapshot.filter,
@@ -68,7 +65,6 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                             setState(() => _filter = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _SortRail(
                           options: snapshot.sortOptions,
                           active: snapshot.sort,
@@ -77,13 +73,11 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                             setState(() => _sort = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _RewardLedger(
                           snapshot: snapshot,
                           onReport: (record) =>
                               _showReportSheet(context, snapshot, record),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         const _DisputeInfo(),
                       ],
                     ),
@@ -252,7 +246,7 @@ class _RewardHero extends StatelessWidget {
       key: ReferralRewardsPage.heroKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.referralCardPaddingLarge,
+      padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -334,7 +328,7 @@ class _RewardHero extends StatelessWidget {
                   key: ReferralRewardsPage.exportKey,
                   onPressed: onExport,
                   variant: VitCtaButtonVariant.secondary,
-                  height: AppSpacing.inputHeight,
+                  height: VitDensity.compact.controlHeight,
                   leading: const Icon(Icons.download_rounded),
                   child: const Text('Xuất báo cáo'),
                 ),
@@ -345,7 +339,7 @@ class _RewardHero extends StatelessWidget {
                   key: ReferralRewardsPage.disputeHistoryKey,
                   onPressed: onDisputes,
                   variant: VitCtaButtonVariant.ghost,
-                  height: AppSpacing.inputHeight,
+                  height: VitDensity.compact.controlHeight,
                   leading: const Icon(Icons.shield_outlined),
                   child: const Text('Lịch sử báo lỗi'),
                 ),

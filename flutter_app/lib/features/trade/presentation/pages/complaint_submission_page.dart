@@ -116,7 +116,9 @@ class _ComplaintSubmissionPageState
               Expanded(
                 child: SingleChildScrollView(
                   key: ComplaintSubmissionPage.contentKey,
-                  padding: EdgeInsets.only(bottom: scrollEndClearance),
+                  padding: EdgeInsetsDirectional.only(
+                    bottom: scrollEndClearance,
+                  ),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
@@ -177,7 +179,7 @@ class _ComplaintSubmissionPageState
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(
+                padding: EdgeInsetsDirectional.fromSTEB(
                   AppSpacing.contentPad,
                   _submissionSmallSpace,
                   AppSpacing.contentPad,

@@ -233,7 +233,7 @@ class _ViolationProcessCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(
+                    padding: EdgeInsetsDirectional.only(
                       bottom: item == items.last ? 0 : AppSpacing.x3,
                     ),
                     child: Column(

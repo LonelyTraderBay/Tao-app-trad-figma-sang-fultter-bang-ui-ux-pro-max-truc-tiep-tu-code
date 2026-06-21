@@ -88,6 +88,8 @@ void main() {
     expect(find.text('Vốn copy'), findsOneWidget);
     expect(find.text('Fixed Ratio'), findsWidgets);
     expect(find.text('Dự kiến chi phí'), findsOneWidget);
+    expect(find.text('Copy fee preview'), findsOneWidget);
+    expect(find.text('Risk check'), findsOneWidget);
 
     await tester.tap(
       find.byKey(

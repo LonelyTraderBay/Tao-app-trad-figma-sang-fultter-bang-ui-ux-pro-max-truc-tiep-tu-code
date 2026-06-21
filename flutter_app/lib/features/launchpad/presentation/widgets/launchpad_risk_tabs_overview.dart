@@ -120,7 +120,7 @@ class _RiskBreakdownCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           SizedBox(
-            height: AppSpacing.launchpadRiskChartHeight,
+            height: AppSpacing.launchpadBox150 + AppSpacing.launchpadBox64,
             child: CustomPaint(
               painter: _RadarChartPainter(metrics),
               child: Stack(
@@ -245,7 +245,7 @@ class _QuickCheckCard extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
+            const SizedBox(height: AppSpacing.x3),
             Text(
               check.label,
               style: AppTextStyles.captionSm.copyWith(

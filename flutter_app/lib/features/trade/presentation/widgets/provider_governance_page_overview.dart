@@ -121,7 +121,7 @@ class _GovernanceTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       density: VitDensity.compact,
-      padding: const EdgeInsets.all(AppSpacing.x1),
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
         activeKey: activeId,
@@ -154,7 +154,7 @@ class _ModificationsTab extends StatelessWidget {
       children: [
         _Notice(text: snapshot.warning),
         Padding(
-          padding: const EdgeInsets.only(left: AppSpacing.x2),
+          padding: const EdgeInsetsDirectional.only(start: AppSpacing.x2),
           child: Text(
             'Strategy Modification Log',
             style: AppTextStyles.captionSm.copyWith(

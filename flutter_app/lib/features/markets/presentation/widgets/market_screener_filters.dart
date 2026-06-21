@@ -45,9 +45,11 @@ class _PresetScroller extends StatelessWidget {
               key: MarketScreenerPage.presetKey(preset.id),
               onTap: () => onPresetSelected(preset),
               borderRadius: AppRadii.lgRadius,
-              child: SizedBox(
-                width: chipWidth,
-                height: _presetHeight,
+              child: ConstrainedBox(
+                constraints: BoxConstraints.tightFor(
+                  width: chipWidth,
+                  height: _presetHeight,
+                ),
                 child: Padding(
                   padding: const EdgeInsetsDirectional.symmetric(
                     horizontal: AppSpacing.x2,
@@ -68,7 +70,7 @@ class _PresetScroller extends StatelessWidget {
                           style: AppTextStyles.caption.copyWith(
                             color: active ? _marketPrimary : AppColors.text2,
                             fontWeight: AppTextStyles.medium,
-                            height: 1.0,
+                            height: AppTextStyles.caption.height,
                           ),
                         ),
                       ],
@@ -264,7 +266,7 @@ class _CategoryChip extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: active ? _marketPrimary : AppColors.text3,
                   fontWeight: AppTextStyles.medium,
-                  height: 1.0,
+                  height: AppTextStyles.caption.height,
                 ),
               ),
             ),
@@ -377,7 +379,7 @@ class _SortScroller extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: 1.0,
+                height: AppTextStyles.caption.height,
               ),
             ),
           ),
@@ -436,7 +438,7 @@ class _SortChip extends StatelessWidget {
                         fontWeight: active
                             ? AppTextStyles.bold
                             : AppTextStyles.medium,
-                        height: 1.0,
+                        height: AppTextStyles.caption.height,
                       ),
                     ),
                     if (active) ...[

@@ -9,7 +9,6 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -47,10 +46,10 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaDynamicAmountProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
     final activeOption = _strategyOption(snapshot.strategies, _activeStrategy);
     final adjustment = _adjustmentFor(_activeStrategy, snapshot.adjustment);
@@ -81,10 +80,10 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
                 ).copyWith(scrollbars: false),
                 child: SingleChildScrollView(
                   key: DCADynamicAmount.contentKey,
-                  physics: const BouncingScrollPhysics(),
-                  padding: AppSpacing.dcaBottomInsetPadding(bottomInset),
+                  physics: const ClampingScrollPhysics(),
+                  padding: AppSpacing.dcaBottomInsetPadding(scrollEndClearance),
                   child: VitPageContent(
-                    customGap: AppSpacing.x5,
+                    gap: VitContentGap.tight,
                     children: [
                       _DynamicHero(
                         option: activeOption,

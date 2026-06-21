@@ -13,7 +13,7 @@ class _MerchantCard extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pMerchant(ad.merchantId));
       },
-      padding: AppSpacing.p2pAdDetailCardPadding,
+      padding: AppSpacing.p2pAdDetailCompactCardPadding,
       child: Row(
         children: [
           Stack(
@@ -21,7 +21,7 @@ class _MerchantCard extends StatelessWidget {
               VitAssetAvatar(
                 label: ad.merchant,
                 accentColor: AppColors.accent,
-                size: AppSpacing.p2pAdDetailAvatarSize,
+                size: AppSpacing.x6,
                 radius: AppRadii.pillRadius,
               ),
               Positioned(
@@ -42,7 +42,7 @@ class _MerchantCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +70,7 @@ class _MerchantCard extends StatelessWidget {
                     const _Badge(label: 'Elite'),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.x1),
                 Wrap(
                   spacing: AppSpacing.x3,
                   runSpacing: AppSpacing.x1,
@@ -167,10 +167,10 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.buttonHero + AppSpacing.x6,
-      padding: AppSpacing.p2pAdDetailCardPadding,
+      padding: AppSpacing.p2pAdDetailCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -186,15 +186,16 @@ class _InfoCard extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 value,
-                style: AppTextStyles.sectionTitle.copyWith(
+                style: AppTextStyles.baseMedium.copyWith(
                   color: color,
                   fontFeatures: AppTextStyles.tabularFigures,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
               if (unit != null) ...[
@@ -215,7 +216,7 @@ class _InfoCard extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           if (progress != null) ...[
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: AppSpacing.x1),
             ClipRRect(
               borderRadius: AppRadii.smRadius,
               child: LinearProgressIndicator(
@@ -228,6 +229,8 @@ class _InfoCard extends StatelessWidget {
           ],
           Text(
             subtitle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,

@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+const _modeTitleLineRatio = AppSpacing.arenaModeTitleLineHeight;
+
 class ArenaModeHero extends StatelessWidget {
   const ArenaModeHero({
     super.key,
@@ -51,7 +53,7 @@ class ArenaModeHero extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.sectionTitle.copyWith(
                         fontWeight: AppTextStyles.heavy,
-                        height: AppSpacing.arenaModeTitleLineHeight,
+                        height: _modeTitleLineRatio,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),

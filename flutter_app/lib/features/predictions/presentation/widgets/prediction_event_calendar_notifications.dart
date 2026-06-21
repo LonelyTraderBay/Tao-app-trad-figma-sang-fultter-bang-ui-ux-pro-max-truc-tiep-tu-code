@@ -74,7 +74,7 @@ class _WatchingSection extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
+                  padding: const EdgeInsetsDirectional.symmetric(
                     horizontal: AppSpacing.x2,
                     vertical: AppSpacing.x1,
                   ),
@@ -183,7 +183,9 @@ class _NotificationSettingRow extends StatelessWidget {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
+          padding: const EdgeInsetsDirectional.symmetric(
+            vertical: AppSpacing.x2,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -212,7 +214,9 @@ class _NotificationSettingRow extends StatelessWidget {
                 width: VitDensity.compact.controlHeight,
                 height: VitDensity.compact.controlHeight - AppSpacing.x3,
                 knobSize: VitDensity.compact.controlHeight - AppSpacing.x4,
-                knobMargin: const EdgeInsets.all(2),
+                knobMargin: const EdgeInsetsDirectional.all(
+                  AppSpacing.dividerHairline * 2,
+                ),
               ),
             ],
           ),

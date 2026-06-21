@@ -6,7 +6,6 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -73,13 +72,10 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
               )
               .toList();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.tradeBotBottomInsetVisual +
-                  AppSpacing.hairlineStroke
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.tradeBotBottomInsetNative) +
+            ? AppSpacing.x7 + AppSpacing.x6
+            : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -101,11 +97,11 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                   key: BotFaqPage.contentKey,
                   clipBehavior: Clip.none,
                   padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
+                    scrollEndClearance,
                   ),
                   child: VitPageContent(
                     padding: VitContentPadding.none,
-                    customGap: AppSpacing.tradeBotPageTopGap,
+                    gap: VitContentGap.tight,
                     fullBleed: true,
                     children: [
                       _SearchField(
@@ -142,7 +138,7 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                             }),
                           ),
                           if (i != items.length - 1)
-                            const SizedBox(height: AppSpacing.tradeBotRowGap),
+                            const SizedBox(height: AppSpacing.x2),
                         ],
                       _StatsRow(
                         totalFaqs: snapshot.totalFaqs,
